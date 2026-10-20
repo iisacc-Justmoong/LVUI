@@ -1,0 +1,20 @@
+import counter CounterBackend
+
+ApplicationWindow(title: "Counter", accentColor: .blue) {
+    VStack(spacing: 16) {
+        Label(text: "Counter")
+        Label(text: counter.value)
+
+        HStack(spacing: 12) {
+            PushButton(counter.decrement) {
+                text: "−"
+                type: .borderless
+            }
+
+            PushButton(counter.increment) {
+                text: "+"
+                type: .borderless
+            }
+        }
+    }
+}

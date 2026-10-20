@@ -1,0 +1,13 @@
+import vm CounterViewModel
+
+Column {
+    Label(text: vm.value)
+
+    PushButton(vm.increment) {
+        text: "+"
+    }
+
+    PushButton(vm.reset) {
+        text: "Reset"
+    }
+}
