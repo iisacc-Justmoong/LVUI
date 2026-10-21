@@ -111,12 +111,12 @@ Core는 LVUI 소스 구문과 애플리케이션 ViewModel로부터 독립성을
 ## 현재 구현 범위
 
 기존 패키지는 [HTML 형태의 LVUI 0.1 계약](Language.md)을 위한 C++23 파서이다.
-`CMakeLists.txt`는 `src/Parser.cpp`를 `LVUI::LVUI`로 빌드하며 AOT 컴파일러 드라이버를 정의하지 않는다.
+`CMakeLists.txt`는 `src/LVUI/Parser.cpp`를 `LVUI::LVUI`로 빌드하며 AOT 컴파일러 드라이버를 정의하지 않는다.
 
 현재 iiGUI 연동은 이미 파싱한 `lvui::Document`를 받는다.
 
-- `SDK/iiGUI/include/iiGUI/LVUI.h`는 `layout_view`를 선언한다.
-- `SDK/iiGUI/include/iiGUI/Host.h`는 `Host::set_view`와 `Host::set_canvas`를 선언한다.
+- `SDK/iiGUI/src/iiGUI/LVUI.h`는 `layout_view`를 선언한다.
+- `SDK/iiGUI/src/iiGUI/Host.h`는 `Host::set_view`와 `Host::set_canvas`를 선언한다.
 - `SDK/iiGUI/src/LVUI.cpp`는 문서의 레이아웃을 계산하고 `set_canvas`를 통해 프레임을 제출한다.
 
 기존 파싱·레이아웃 경로는 AOT 컴파일러나 컴파일된 대상의 마운트 API를 입증하지 않는다.

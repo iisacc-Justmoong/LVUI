@@ -4,12 +4,12 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CTest)
 find_package(iiSDKCore 0.16 CONFIG REQUIRED COMPONENTS Contracts)
-add_library(LVUI STATIC src/Parser.cpp)
+add_library(LVUI STATIC src/LVUI/Parser.cpp)
 add_library(LVUI::LVUI ALIAS LVUI)
 target_compile_features(LVUI PUBLIC cxx_std_23)
 target_link_libraries(LVUI PUBLIC iiSDKCore::Contracts)
 target_include_directories(LVUI PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 set_target_properties(LVUI PROPERTIES CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
 if(MSVC)
@@ -19,7 +19,9 @@ else()
 endif()
 set(_package "${CMAKE_INSTALL_LIBDIR}/cmake/LVUI")
 install(TARGETS LVUI EXPORT LVUITargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(DIRECTORY include/LVUI DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES
+    src/LVUI/Document.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/LVUI)
 install(EXPORT LVUITargets NAMESPACE LVUI:: DESTINATION "${_package}")
 configure_package_config_file(cmake/LVUIConfig.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/LVUIConfig.cmake" INSTALL_DESTINATION "${_package}")

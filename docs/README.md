@@ -87,7 +87,7 @@ instance ownership.
 ## Implementation boundary
 
 The current implementation section of the [package description](../README.md),
-`CMakeLists.txt` and public `include/LVUI/Document.h` describe a C++23 parser
+`CMakeLists.txt` and public `src/LVUI/Document.h` describe a C++23 parser
 and an immutable container/text document tree. The package currently depends
 on iiSDKCore Contracts, and its implemented syntax is specified in
 [Language.md](Language.md).

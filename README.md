@@ -74,3 +74,15 @@ CMake 3.31+, C++23 and iiSDKCore 0.16+ Contracts are required. The parser tests
 do not open windows or require GPU hardware. Installation above is staged under
 `build/`; it does not replace a user's installed SDK. Source and test results
 describe this implementation, not full HTML/CSS or Svelte compatibility.
+
+## Source header layout
+
+Public headers and implementations live together in `src/LVUI/`.
+There is no separate authored `include/` tree. Existing public `#include` names
+and exported CMake targets are unchanged; installation still places only public
+headers in the package include directory. Generated export headers belong to
+`build/`, not to the authored source tree.
+
+Validate this layout from the SDK workspace with
+`python3 -B tests/test_source_header_layout.py`. Reconfigure, build, run CTest,
+and verify a staged installed consumer after changing source/header paths.
