@@ -1,5 +1,6 @@
 #include <LVUI/Document.h>
 #include <iiSDKCore/Core/Text/Utf8.h>
+#include <iiSDKCore/Core/Text/Number.h>
 #include <algorithm>
 #include <charconv>
 #include <cmath>
@@ -88,12 +89,10 @@ struct Parser final {
         Unit unit=Unit::pixels;
         if (value.ends_with('%') && percent) { unit=Unit::percent; value.remove_suffix(1); }
         else if (value.ends_with("px")) value.remove_suffix(2);
-        float number=0;
-        const auto read=std::from_chars(value.data(),value.data()+value.size(),number);
-        if (value.empty() || read.ec!=std::errc{} || read.ptr!=value.data()+value.size() ||
-            !std::isfinite(number) || number<0 || number>(unit==Unit::percent?100:8192))
+        const auto number=ii::core::parse_decimal(value);
+        if (!number || *number<0 || *number>(unit==Unit::percent?100:8192))
             error(offset,"Invalid length; use nonnegative logical pixels, px, % or auto where supported");
-        return {unit,number};
+        return {unit,float(*number)};
     }
     Color color(std::string_view value, std::size_t offset) const {
         if (value=="transparent") return {0,0,0,0};

@@ -1,0 +1,23 @@
+import vm ExampleBackend
+let title: String = "Native LVUI"
+
+ApplicationWindow(title: title) {
+    VStack(spacing: 16) {
+        AppHeader() {
+            Label(text: title)
+        }
+        HStack(spacing: 8) {
+            Avatar(source: "avatar.png")
+            PushButton(vm.save) {
+                text: "Save"
+                enabled: true
+            }
+            Tab(iconName: "home", text: "Home")
+        }
+        Card() {
+            CardInformationContent()
+        }
+        ColorPickerSurface(field: .Wheel)
+        WindowNoiseTexture()
+    }
+}

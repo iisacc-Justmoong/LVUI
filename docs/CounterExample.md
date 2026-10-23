@@ -4,7 +4,7 @@
 
 상태: 채택한 스코프 기반 백엔드 설계의 가상 뷰 예제이다.
 소스는 [examples/Counter.lvui](examples/Counter.lvui)이다.
-설계 산출물이며 현재 LVUI 0.1 파서로 실행할 수 있는 예제는 아니다.
+`lvui-check`의 구문 검사 대상으로 검증한다. C++ 백엔드·이벤트·화면을 실행하는 예제는 아니다.
 
 <a id="view-structure"></a>
 
@@ -92,7 +92,9 @@ Core의 `PropertyRead`, `PropertyInvoke`, `PropertyChange`를 구성 요소로 �
 
 ## 예제에 한정한 표기 가정
 
-`Label`, `HStack`, 창의 `title` 입력, 스택의 `spacing` 입력은 이 예제의 설명용 컴포넌트 어휘를 확장한다.
+`Label`과 `HStack`은 [실제 시각 예약어](ReservedWords.md)이다.
+창의 `title`과 스택의 `spacing`은 파서가 입력 구문으로 보관하며,
+컴포넌트별 입력 스키마와 실행 동작은 별도 구현 과제이다.
 `Label(text: ...)`에 정수를 전달하면 해당 값을 10진수 텍스트로 표시한다고 가정한다.
 일반적인 숫자 서식이나 변환 규칙은 아직 정하지 않았다.
 

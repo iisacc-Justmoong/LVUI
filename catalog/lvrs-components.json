@@ -1,0 +1,2530 @@
+{
+  "schema": 1,
+  "source_repository": "https://github.com/iisacc-Justmoong/LVRS",
+  "source_revision": "13b657b21a8ca9babe40ac790bb547c3f7758eea",
+  "files": [
+    {
+      "path": "src/LVRS/Alert.cpp",
+      "sha256": "d3c8ee368f81de6f3352907a9f642d7815376e7f1d5ad2662553e9c1d3167524"
+    },
+    {
+      "path": "src/LVRS/Alert.h",
+      "sha256": "530867b75857fea487069d37ed7edaedc37cefa943330880846a6199ceb47561"
+    },
+    {
+      "path": "src/LVRS/AlertButton.cpp",
+      "sha256": "a5ac18e8fcabe4147be9c48f432fe0d2057cc9b45526880c2f82dbe8396263f0"
+    },
+    {
+      "path": "src/LVRS/AlertButton.h",
+      "sha256": "01d32e87696eafd68734e8fab389cf4303f548ddbdf1d23da79fb0daba070826"
+    },
+    {
+      "path": "src/LVRS/AppCard.cpp",
+      "sha256": "99163f80a929ab4efcac3041a8f2e2e3350532eb53f23723e641b0d147b8dfd1"
+    },
+    {
+      "path": "src/LVRS/AppCard.h",
+      "sha256": "102f602c1cc784f96339c03d16ab3c7890f7c5c6ca01185fe95afda59619ee1d"
+    },
+    {
+      "path": "src/LVRS/AppHeader.cpp",
+      "sha256": "fe88fa1d2d3d6b4712305b4f135e8c8c4db90104030ffa0ce8ee94c1e28d91e2"
+    },
+    {
+      "path": "src/LVRS/AppHeader.h",
+      "sha256": "a10788ddb607f9b5e89122661aa4bed8fd5c7602b7f9a2ae1fcf3f6a2797e931"
+    },
+    {
+      "path": "src/LVRS/ButtonMethod.cpp",
+      "sha256": "c5ae3ed292010a069c1aef5a4e5c7d2cd2ce762976d74db3b6bef87ecd93cae0"
+    },
+    {
+      "path": "src/LVRS/ButtonMethod.h",
+      "sha256": "ebc668214cc831ee60c62eac49809427ea5df828a4018458a86594432daef3f0"
+    },
+    {
+      "path": "src/LVRS/ColorPicker.cpp",
+      "sha256": "ebda816c6e0f52bf4a8575ddaf835783c84f9113d86fe0238d1a866931d29a66"
+    },
+    {
+      "path": "src/LVRS/ColorPicker.h",
+      "sha256": "4a6e5d4f9940d2aeba994c4ab50bad0f43e46158f806c97be70cda5f840f46c2"
+    },
+    {
+      "path": "src/LVRS/ColorPickerButton.cpp",
+      "sha256": "8e7b4ea9e44164f5da29cddf4c67e59d85b9bc91d99466641b5db65d20c60011"
+    },
+    {
+      "path": "src/LVRS/ColorPickerButton.h",
+      "sha256": "f436074e6a3302abb2e46933f84ae17a7d4a1a8720f1f812b3d026e5c1e15178"
+    },
+    {
+      "path": "src/LVRS/HierarchyToolbar.cpp",
+      "sha256": "89811b8d93bd9ee731865e7a0b95a6e626440aebdc3c612dc0fc2735f20a928c"
+    },
+    {
+      "path": "src/LVRS/HierarchyToolbar.h",
+      "sha256": "c926dfd4d9bfa1735312198d4d2abc70e5a759268ab6272e38e0a9ab8dbdf1f9"
+    },
+    {
+      "path": "src/LVRS/Icons.cpp",
+      "sha256": "70feb2c8a4e0d596067359495b5d0d9d081eca34df53a411d507de699cd5deef"
+    },
+    {
+      "path": "src/LVRS/Icons.h",
+      "sha256": "ecce1e99d3a09d6648613ed8943f826e054a6f689937de6c5241af1916033a9e"
+    },
+    {
+      "path": "src/LVRS/Link.cpp",
+      "sha256": "4e312df03a875b40096a2aa2475b839f19aae135168463a136ae654840ddaedb"
+    },
+    {
+      "path": "src/LVRS/Link.h",
+      "sha256": "760814c16ba3d69a38ff08c71c04cf5740f14a917c08623bd8aae651de3470b2"
+    },
+    {
+      "path": "src/LVRS/List.cpp",
+      "sha256": "0e013d80eed32ae9b068552101bcc5282acb841068799c491213baf00e56d2af"
+    },
+    {
+      "path": "src/LVRS/List.h",
+      "sha256": "01f8d4d299cc386a1739449003d6eeeb7a0ea08295b2e2272f2c964e7616d695"
+    },
+    {
+      "path": "src/LVRS/ListFooter.cpp",
+      "sha256": "610afd6d408dde3cc9638ea90a03bd4e96e18112923fb86404f9ecd9dc2f9d49"
+    },
+    {
+      "path": "src/LVRS/ListFooter.h",
+      "sha256": "04185abd592783eae1b6b1309381081c7e0dcb01b43cb88f55edc34b8e615d3b"
+    },
+    {
+      "path": "src/LVRS/ListModel.cpp",
+      "sha256": "2c51094a42c5fb026e135e1df912244a4e6338509b00077998d668442f38e898"
+    },
+    {
+      "path": "src/LVRS/ListModel.h",
+      "sha256": "876733d2af52201e8bedc430ec2f251e2e9619ace6277a45a5fe0195e15d4de7"
+    },
+    {
+      "path": "src/LVRS/ListToolbar.cpp",
+      "sha256": "a9565a4c9cbda6d99d888c3c220769d0a8ca28692e91b7f63516ba6be04e1b1e"
+    },
+    {
+      "path": "src/LVRS/ListToolbar.h",
+      "sha256": "ceb10066b95c4240b0e8bbd53bbf320bb5dd4d0e1d37d7bbc68f40197604b6ea"
+    },
+    {
+      "path": "src/LVRS/Modal.cpp",
+      "sha256": "cef7e231ccc19c1f6ebbe7a286ca4ebd38be58f6f1a6da90fd42438211315f42"
+    },
+    {
+      "path": "src/LVRS/Modal.h",
+      "sha256": "da8d2c508dfda0305323ce1b56c8ad8fe546fc4f955acef06d3a117be1c73f9d"
+    },
+    {
+      "path": "src/LVRS/Motion.cpp",
+      "sha256": "1c7ce9e586c5c7c4d5d56b1e04f53b63a1552ff2dc9c34a4099a1fd7810b68fa"
+    },
+    {
+      "path": "src/LVRS/Motion.h",
+      "sha256": "92da284131e38fffdd652f7d37a30ebdaed2fdfc30a832e2e94547e58b695a1f"
+    },
+    {
+      "path": "src/LVRS/NavigationStackModel.cpp",
+      "sha256": "946501482ef83240b99dca2a16df18060a45e31da85c186804069136cb8c2db2"
+    },
+    {
+      "path": "src/LVRS/NavigationStackModel.h",
+      "sha256": "3624a79521c33115c4b3f0d80744b213a03f907b4b280303f8bce3bef03ef2e6"
+    },
+    {
+      "path": "src/LVRS/NavigationTarget.cpp",
+      "sha256": "f74983947c2a67e2a95813dc37f6f087b36ceba5d71430f9f5862d83d2249e7b"
+    },
+    {
+      "path": "src/LVRS/NavigationTarget.h",
+      "sha256": "bcfae3d0f5734be7939dd33030caf9bb63abda38621453d15df28d1a966bc787"
+    },
+    {
+      "path": "src/LVRS/Navigator.cpp",
+      "sha256": "f4906d50b59da2098e8dbae5ae025e26996cad8600984ad4a99ee338a71c8ede"
+    },
+    {
+      "path": "src/LVRS/Navigator.h",
+      "sha256": "fd8665fdd254003cdcf55503c6e4f150b4c208f3e2638116b6fb587b9ea72a50"
+    },
+    {
+      "path": "src/LVRS/PageMonitor.cpp",
+      "sha256": "7f9b2969bee9b1979bf8a06a9488014a7d6c3e6e2a0d1cf9db2663eecd4c345d"
+    },
+    {
+      "path": "src/LVRS/PageMonitor.h",
+      "sha256": "75cccc03fcb50d418ca06fcbb88f022e16af620d6cf5f07e5c891e6c84ec09ba"
+    },
+    {
+      "path": "src/LVRS/PageRouter.cpp",
+      "sha256": "d91d6f6908f72abc94cda23c6a752e2d65df142c6c0cc1e512e16ef8cfeef9a5"
+    },
+    {
+      "path": "src/LVRS/PageRouter.h",
+      "sha256": "742a80fe7921c6e0d828e1cbd5333a7431fb687c463ec0021b522b85896d5f2c"
+    },
+    {
+      "path": "src/LVRS/RouteMatcher.cpp",
+      "sha256": "540ebe94576f9db0206ec05fb4039c21aa1fbb0480c0d108ee6145f76a4160e6"
+    },
+    {
+      "path": "src/LVRS/RouteMatcher.h",
+      "sha256": "7105f85a1d563810a0e8a9859cfcddb518d1dadd7a267efbe9f2aa6841a95aaf"
+    },
+    {
+      "path": "src/LVRS/RouteResolver.cpp",
+      "sha256": "c9c31ad79a0cbb6b16523e88fc2ead0acd2600fbc8b674ad945f1b1d29a51bd8"
+    },
+    {
+      "path": "src/LVRS/RouteResolver.h",
+      "sha256": "fcbb84efceb92bf1226dfb40460b2dd8a314e07331527dfb4573be4c8c626054"
+    },
+    {
+      "path": "src/LVRS/RoutingDetail.cpp",
+      "sha256": "7fe8ea7bfce8f97cbd0b7ad79a772d3393d62e357a614c4eb6a33460c7f3a8cc"
+    },
+    {
+      "path": "src/LVRS/RoutingDetail.h",
+      "sha256": "022a0a3fa6d87318291dccc214606c8109770fb4ed5bff02fafc35cc3a334216"
+    },
+    {
+      "path": "src/LVRS/Sheet.cpp",
+      "sha256": "548777c429f9021b44b75bf656f9ffca37e72118de02888d3063123da3389585"
+    },
+    {
+      "path": "src/LVRS/Sheet.h",
+      "sha256": "eff6329ddc54aea507335c9697f90b6e50e83d1dce7e1e064a88beeec6070d79"
+    },
+    {
+      "path": "src/LVRS/SurfaceDetail.cpp",
+      "sha256": "ad8f0190da3876e9785ef277de0e3c9fc65c6008f0ea276381d6fb39612bd542"
+    },
+    {
+      "path": "src/LVRS/SurfaceDetail.h",
+      "sha256": "7f814e74b3b9cca3cc7925eb47c282328f170d8068ec33af16319b7a94f3b35f"
+    },
+    {
+      "path": "src/LVRS/Table.cpp",
+      "sha256": "a13cf700081640c3300748dd29cba117326e856ff9606357c0baa9970b6dd58a"
+    },
+    {
+      "path": "src/LVRS/Table.h",
+      "sha256": "dbbd6ac49ff3c171f1dc68a925892e11208da30bc7952dde488e8dbc1389ca5f"
+    },
+    {
+      "path": "src/LVRS/TableCellItem.cpp",
+      "sha256": "5e0b5c962889456c604c69d382a984e43e801241e51ccf0c981a39e53933546e"
+    },
+    {
+      "path": "src/LVRS/TableCellItem.h",
+      "sha256": "2ba304cdee02f6057463dd4f788111b95d8fd0bdfb075600ca562cbc8b682034"
+    },
+    {
+      "path": "src/LVRS/TableDetail.cpp",
+      "sha256": "90a7372b2ee668266c9cd82385bdaf0ac80e3cc8d0e7930317ddbe25105fe2ca"
+    },
+    {
+      "path": "src/LVRS/TableDetail.h",
+      "sha256": "c11fc4a09fd95c39dde1a023e94bfcd8da47d86279a9bf8e71c779e6db0a1782"
+    },
+    {
+      "path": "src/LVRS/TableHeader.cpp",
+      "sha256": "df906635afb2e294df91160ee944e4a6de861ce4188d585d7e9ab49b7f1025d5"
+    },
+    {
+      "path": "src/LVRS/TableHeader.h",
+      "sha256": "8d51eaac44655684dfafee0b5c36120cffd3f1edc68ccc8e1f310d72e9b61588"
+    },
+    {
+      "path": "src/LVRS/TableHeaderModel.cpp",
+      "sha256": "e698262d11c8b6007cb87f6d67c80c75843329cb800fb06e1fc68bc7258f0204"
+    },
+    {
+      "path": "src/LVRS/TableHeaderModel.h",
+      "sha256": "443ca0ceb71706d63064e8e4058b206f84594b37ba4b90c46a28be4d9d4542be"
+    },
+    {
+      "path": "src/LVRS/TableModel.cpp",
+      "sha256": "2ec2a415b57c21d976f17d899c76a4b0db78d2e18e807d56cf6437b70d65c3f5"
+    },
+    {
+      "path": "src/LVRS/TableModel.h",
+      "sha256": "059c86c30a9c1bd2044e984aabd23b87120f952707016b64a22d576ce8d5bae5"
+    },
+    {
+      "path": "src/LVRS/TableRow.cpp",
+      "sha256": "813129b89942f80e62e13ced50a6f1e08ed4585e09553ea6f47a016e83cd2ab3"
+    },
+    {
+      "path": "src/LVRS/TableRow.h",
+      "sha256": "8e5a541534ddeaa34de8b13923203b5b3460e86fad84fb0ed3ed9bb15a098d96"
+    },
+    {
+      "path": "src/LVRS/TableTransfer.cpp",
+      "sha256": "13fffadb48a7ea8d47da986591500a33890e54dbd8d9d8fda65dd589af332190"
+    },
+    {
+      "path": "src/LVRS/TableTransfer.h",
+      "sha256": "7b1f720e366fcc54becc60de174301feb997aa79aa07115a24489b4f00e97718"
+    },
+    {
+      "path": "src/LVRS/TableValue.cpp",
+      "sha256": "fd2d7b98459f2ee35cf50c3170be7754af252650c4017366fc428e0d79b98a9f"
+    },
+    {
+      "path": "src/LVRS/TableValue.h",
+      "sha256": "168cd6c4301d76f4e1c8b9ffb7f6d4d4f659fec8a11d43b23c3cf0551fc5dbf0"
+    },
+    {
+      "path": "src/LVRS/Theme.cpp",
+      "sha256": "0147244cf835021edb091a66fa83faca1afc50d4c06835a405c26add725da4f2"
+    },
+    {
+      "path": "src/LVRS/Theme.h",
+      "sha256": "4c3fc587ff2414ad8c8dda9ee95132e2e3e0a3f7ba46f8e521180ea1a89ff5fa"
+    },
+    {
+      "path": "src/LVRS/ToolbarButton.cpp",
+      "sha256": "4abe63f6d03d3bf503bf65a221e183fe7ad60c7d74fffc0b23e11772d3e2619b"
+    },
+    {
+      "path": "src/LVRS/ToolbarButton.h",
+      "sha256": "b02b133323b84d637d1e08b94eac06117d8845994b2e03bae387e5eff7f54b80"
+    },
+    {
+      "path": "src/LVRS/ToolbarDetail.cpp",
+      "sha256": "cb19bba2fad51717e81c655f5d0588111d8f4eeeeeffb4a9578347990bd02e9e"
+    },
+    {
+      "path": "src/LVRS/ToolbarDetail.h",
+      "sha256": "fb43bdab37dad0e06eb09506ebb0a2ca9d8fb974a903ebd2f6cc4632fdc82369"
+    },
+    {
+      "path": "src/LVRS/TrackingDetail.cpp",
+      "sha256": "67b5835e4a7438d296b362def0c954fa5e12a5cfa8ac6c13e1d6cf50ef3aa8c1"
+    },
+    {
+      "path": "src/LVRS/TrackingDetail.h",
+      "sha256": "957fb9159be74f60641839db054205691302e96dc2547839d10039b8d615ee61"
+    },
+    {
+      "path": "src/LVRS/ViewStateTracker.cpp",
+      "sha256": "08b86adfa2bc56b2c9191219b29d1d99934706ee7476d055f144ecb41c6824ad"
+    },
+    {
+      "path": "src/LVRS/ViewStateTracker.h",
+      "sha256": "339e763fe404425a6618bc1d25bc50f84371624c98ad58faaf012f9818e6f2df"
+    },
+    {
+      "path": "src/LVRS/Widgets.cpp",
+      "sha256": "9974222c20e68537e9a9e2d6318de6c4166aa8bf06a8bf4b5129631c4656aa9d"
+    },
+    {
+      "path": "src/LVRS/Widgets.h",
+      "sha256": "d1f7e123d80e6acc6279ab3d972b08db512de23cd9a9a6af8a52d14053c607fc"
+    },
+    {
+      "path": "src/backend/CMakeLists.txt",
+      "sha256": "6d939d070806b380db44715296503c73a8f54a97f233017a99929cbfe57a4671"
+    },
+    {
+      "path": "src/backend/fonts/fontpolicy.cpp",
+      "sha256": "1864d96c5ccba044fcf45c08212938ec26457c06188e91a90a31ecf665a53ab3"
+    },
+    {
+      "path": "src/backend/fonts/fontpolicy.h",
+      "sha256": "da9af5f0d3f4fc068442f6b745931b193f91ead4df9e143bd5bf76017f534620"
+    },
+    {
+      "path": "src/backend/graphics/colorpickermodel.cpp",
+      "sha256": "5335317604941032fe1a0cd0bdfb07456ca6c8ae88f6c92a89101a7899776f3b"
+    },
+    {
+      "path": "src/backend/graphics/colorpickermodel.h",
+      "sha256": "b5fd4f1bd11fb9c2adeaf112ea0444cc19d1efd6b587d0625e61bcd01646062c"
+    },
+    {
+      "path": "src/backend/graphics/colorpickersurface.cpp",
+      "sha256": "ade32f659e15f84bf31fcff2687b4b1506b8649708a9fd4df18ebbe503c5697d"
+    },
+    {
+      "path": "src/backend/graphics/colorpickersurface.h",
+      "sha256": "8256a0e02c6ff3c5de0bfda969fd67cb255cdd0d7b5a59210fe8a0a6128ce2d9"
+    },
+    {
+      "path": "src/backend/graphics/svgmanager.cpp",
+      "sha256": "40e0f81e86941f211386195ca75779f828a85d495b4cf014ff650c734a088a38"
+    },
+    {
+      "path": "src/backend/graphics/svgmanager.h",
+      "sha256": "6774dc36e004e81bd9d0c071964f4493e0528c88108c59c5eb5eaa42969a9846"
+    },
+    {
+      "path": "src/backend/graphics/windownoisetexture.cpp",
+      "sha256": "df67b725f20fe74e2c20865418f207ea807950d3154d9efd32fe5a7e39d4b912"
+    },
+    {
+      "path": "src/backend/graphics/windownoisetexture.h",
+      "sha256": "608bbcaebcfdf168bfc8d7416274cb42142050662cde1c1811223870ebb8986f"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchycodec.cpp",
+      "sha256": "a29875bb0f331edd27499d6c617f78e7cafb057e29109f0191dad4e36be78460"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchycodec.h",
+      "sha256": "eaead15ac6d02450f755d816561215328b27193df84bbfd5c9bb92a3650011e1"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchycommandstack.cpp",
+      "sha256": "4863ac4e46a78347beb8f8218120982dc06daaa5fae0885e6d5a5a5c893e7ad4"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchycommandstack.h",
+      "sha256": "4ca74ee4813ea2c653f753272a8d6a9bff6eadbab5240bf99a9b409febe7d6ed"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchycontroller.cpp",
+      "sha256": "4db3fbc8b505d2c6e407aa8204fa4fa19cf2171979d4ad1c34b32794ec4b769b"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchycontroller.h",
+      "sha256": "2808f230a1b99e16227ad04115292d2741ba19e6c5aedc43fc139e0fd41f459a"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchymoveintent.h",
+      "sha256": "584d88afa051957b923f1690035e9cc826c9088a91ae08fe3a6b8c31644a0849"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchynode.h",
+      "sha256": "2280ba422c1e649cecfd22f5a94f21bd705072f55410037e4e6f5529e05acb2f"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchyops.cpp",
+      "sha256": "42f530e71798ec3e3e99583b00843b778ab955c9b7c2c5ef516e5c8fdcb097a1"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchyops.h",
+      "sha256": "66f0723288cf30f65fdb8e6b1a27c85880bf41bb71b072a542646c923b26aff1"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchyselectionstate.h",
+      "sha256": "24b4d2e3f452855034e6d2d176e0215abed04e13b4c3c7883e96ac5cff13619d"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchyvisibility.cpp",
+      "sha256": "cf08aa906b447116ed80c53f6d0c53b9c278169cfa48224f37432a2e97b4388b"
+    },
+    {
+      "path": "src/backend/hierarchy/hierarchyvisibility.h",
+      "sha256": "d808588dbefaaade2cde5a2631e016bfc91d95b22b6973dbc1d822e36cdfa5f2"
+    },
+    {
+      "path": "src/backend/io/backend.cpp",
+      "sha256": "14bb581738ba2f20b4279c4ad49c5afa3fbeeeb0c52032db8a78d8cfd91ba4f6"
+    },
+    {
+      "path": "src/backend/io/backend.h",
+      "sha256": "ed04d02fc96faa06591de9797e90267e4e2bc285050093973bfadec0524c37bb"
+    },
+    {
+      "path": "src/backend/model/hierarchymodel.cpp",
+      "sha256": "0bdca896390b530ad961cade22b25f07a0caf71fbde71d42123893dce9dca0ea"
+    },
+    {
+      "path": "src/backend/model/hierarchymodel.h",
+      "sha256": "3762ec92d363933e71ed7dec3bac6734a926b60fc92acb2350b8038469f89cc3"
+    },
+    {
+      "path": "src/backend/model/modelsource.cpp",
+      "sha256": "43aa45d3f317e3388d2700010f602afea45e17c5c39ff3174d63c0846ae3d8e3"
+    },
+    {
+      "path": "src/backend/model/modelsource.h",
+      "sha256": "9fd630f17ebbabe5ad0eac9b71c7739697512a23d9c54826de8ce0bc836d953a"
+    },
+    {
+      "path": "src/backend/model/modelundostack.cpp",
+      "sha256": "8e45d8d619e205fc405f7b4d3160f2aabfa55c9a2c1859c8b61527c755d9c467"
+    },
+    {
+      "path": "src/backend/model/modelundostack.h",
+      "sha256": "5da5684e8697b25fa4d6f5d07fe6b87cdc40ef8b207fe77ca0c0a8cd3de89be7"
+    },
+    {
+      "path": "src/backend/model/progressmodel.cpp",
+      "sha256": "cb98fc68743da6f98602fec9a8a9ca19cb4bf85d7a4960ee6d15df12a7ecb022"
+    },
+    {
+      "path": "src/backend/model/progressmodel.h",
+      "sha256": "58e9ea1728e7cdec0597ed4c560f1af18bb164b0fb2b0f9baec6f06ebfdcde63"
+    },
+    {
+      "path": "src/backend/model/tableheadermodel.cpp",
+      "sha256": "ad522ba3bdb917dd46a7aba847cfabcc29f81741863253e07102e6e3c7c86fb0"
+    },
+    {
+      "path": "src/backend/model/tableheadermodel.h",
+      "sha256": "d599d23af178d32e4d7eed6f9bcd0b8552941aa5524e44bdbb9e0de8f83b743c"
+    },
+    {
+      "path": "src/backend/model/tablemodel.cpp",
+      "sha256": "676f685ac6558fafdd41115e0cafec0ed676d2afe493dfb3be7c2c2b3e61b7a7"
+    },
+    {
+      "path": "src/backend/model/tablemodel.h",
+      "sha256": "8e0ec291423e7bc7bf41d1eb5ed6e24d242ef2d7ce0c1b3ac43e4c9ec31beb8b"
+    },
+    {
+      "path": "src/backend/navigation/modeladapter.cpp",
+      "sha256": "9f616c6b54653292774d480574c821e9f855fbe1b66d94b0075f6d4b31751327"
+    },
+    {
+      "path": "src/backend/navigation/modeladapter.h",
+      "sha256": "f358c46a7a743708de7796c71bcffa92dc288f9fe176ef983e9b1b82314fa95e"
+    },
+    {
+      "path": "src/backend/navigation/navigationstackmodel.cpp",
+      "sha256": "ce3e4daa53b0bb383bbf5668360b325f9242585b119fbb5e558b8698b06b6911"
+    },
+    {
+      "path": "src/backend/navigation/navigationstackmodel.h",
+      "sha256": "6d035428d6517573ef5e870262b38bfa406c630cd904caea775385198fa75982"
+    },
+    {
+      "path": "src/backend/navigation/pagemonitor.cpp",
+      "sha256": "fac0e4606046f8f8cf9fc86be6c523895c1177eb4e6eba7cd0e0c351d5f1cbee"
+    },
+    {
+      "path": "src/backend/navigation/pagemonitor.h",
+      "sha256": "c7348f7249de4d900bb4fb105ed6073535ed91973604dacef9e64fd7075f2fc6"
+    },
+    {
+      "path": "src/backend/navigation/routematcher.cpp",
+      "sha256": "caf644e7cf643953b9b95edd4e534683ec500d752abea6acdf754c220205d24f"
+    },
+    {
+      "path": "src/backend/navigation/routematcher.h",
+      "sha256": "cbf74130799414aacd34a02cfd3993b7599f6689523c052ef8c4ce2a60478bbf"
+    },
+    {
+      "path": "src/backend/navigation/routeresolver.cpp",
+      "sha256": "ef4010a783c35919adab8f7bea3fdf71c416fda98bf06cc2fa5db70f04a0e985"
+    },
+    {
+      "path": "src/backend/navigation/routeresolver.h",
+      "sha256": "7b7321533a7cf729795c741b272c27ab7240d35433aac20ff1e072000754ad52"
+    },
+    {
+      "path": "src/backend/navigation/viewstatetracker.cpp",
+      "sha256": "b84b488720d30e1398483f5077f58195a430637114c910a1b9a1118ebc4e28e9"
+    },
+    {
+      "path": "src/backend/navigation/viewstatetracker.h",
+      "sha256": "88ea1d2e03b2e03316981ac4dc1a348b13791effdfa6eefaeb218b287a40d6aa"
+    },
+    {
+      "path": "src/backend/platform/nativewindowinteraction.cpp",
+      "sha256": "c6fd3080c4cd15e0b31ede4d1d0ec751f4edcc1e369d549eb885023cc2c94242"
+    },
+    {
+      "path": "src/backend/platform/nativewindowinteraction.h",
+      "sha256": "8d4b8c5e2fdbd17e716a0f9f78040aba8e45f7ef119851c1995599c02d452bda"
+    },
+    {
+      "path": "src/backend/platform/nativewindowstyle.cpp",
+      "sha256": "d8d4cf3777f50a050d30a7ef1bdc61c16d617828d73f80fb0f5ffff495fbf4b3"
+    },
+    {
+      "path": "src/backend/platform/nativewindowstyle.h",
+      "sha256": "411506a487acc372f657e177fbda8a18e06660165602e159ac1cdb0f31ca778d"
+    },
+    {
+      "path": "src/backend/platform/nativewindowstyle.mm",
+      "sha256": "691759480def56ec4f0c8065f69c4ff18e05fb4978d944775ebf5a7ac95dbe5c"
+    },
+    {
+      "path": "src/backend/platform/platforminfo.cpp",
+      "sha256": "cfc179b72632429815c0eb64fe2a613f78846be2345ca0b783352ba0359df193"
+    },
+    {
+      "path": "src/backend/platform/platforminfo.h",
+      "sha256": "7a8fdb0368c749a414bc355a09f056d3db06757c1fd81d13ca4c31166204573f"
+    },
+    {
+      "path": "src/backend/platform/windowsafeareaobserver.cpp",
+      "sha256": "3208b2167230df5c459b6884c2584a7367958ba864ec8a4f2742b35704ee0581"
+    },
+    {
+      "path": "src/backend/platform/windowsafeareaobserver.h",
+      "sha256": "00365922f738b4ed3d53533c958e5051f2d8e09d2b0bf2de210168dd9d8725f3"
+    },
+    {
+      "path": "src/backend/runtime/appbootstrap.cpp",
+      "sha256": "28ac6ff5dd08de30f4c552069d1fa36fff5588ad543237a64d51e78140619be6"
+    },
+    {
+      "path": "src/backend/runtime/appbootstrap.h",
+      "sha256": "25ca5a513a9aed3ae72995b408febf815174a39f7811cb2b550b08e1f653c49a"
+    },
+    {
+      "path": "src/backend/runtime/appentry.cpp",
+      "sha256": "8388be7801f026a2ad0975cf8196f23a827ef5d7e0d49d85241aaffedb9c5188"
+    },
+    {
+      "path": "src/backend/runtime/appentry.h",
+      "sha256": "7ba4902d3c208c4d33ed727297c434982da6491a8d86e5b860f04f35802dd832"
+    },
+    {
+      "path": "src/backend/runtime/bootstrapparallel.cpp",
+      "sha256": "4aebf564b51228b383850c30dbfa94bca5517d030f0c18142a5032e91b7ee66b"
+    },
+    {
+      "path": "src/backend/runtime/bootstrapparallel.h",
+      "sha256": "b000e9e3eba91aaa67c4013ac478a4930e338ebcc205f5b3e3a939108cfe755d"
+    },
+    {
+      "path": "src/backend/runtime/debuglogger.cpp",
+      "sha256": "824b5b028b171e682978f06339ef69cc81564eedca7e591b075ad083fa2d031d"
+    },
+    {
+      "path": "src/backend/runtime/debuglogger.h",
+      "sha256": "d79c06dab23609d285d23cd173ecf8058d309c6d7b0967f177f9d61084d989f7"
+    },
+    {
+      "path": "src/backend/runtime/foregroundservices.cpp",
+      "sha256": "f249829bd0fe55f11ea5f48d16127cf1e92ecefff95837c59a529d08a102d0c3"
+    },
+    {
+      "path": "src/backend/runtime/foregroundservices.h",
+      "sha256": "7dd409b073ddf8321356c178aa77b248baca981862f4e8911dda885bd27bbcb7"
+    },
+    {
+      "path": "src/backend/runtime/gestureevents.cpp",
+      "sha256": "f4a257313b3b9cd3e0d0329b59946d35b9682fa0c9be694ce5f9e016f0b808b0"
+    },
+    {
+      "path": "src/backend/runtime/gestureevents.h",
+      "sha256": "bdb99a71c76750722f3ecb8c8fc1335c80e55c7fddc85b3d98f38472b57f9dc5"
+    },
+    {
+      "path": "src/backend/runtime/permissionsequencer.cpp",
+      "sha256": "9d67a6d9ecce8a883854c1b72a45d3344f9eb929ab7979ddfd99f2b6763a8974"
+    },
+    {
+      "path": "src/backend/runtime/permissionsequencer.h",
+      "sha256": "98881b912af02db5e0b87cf6b8ed032fc03348eb3a7de066c7463bba0605d323"
+    },
+    {
+      "path": "src/backend/runtime/qmlcontextbinder.cpp",
+      "sha256": "12c766e77b2b80f59ccac34e7bc56eed1d59cdd389ade13718fef0d6b0777e1f"
+    },
+    {
+      "path": "src/backend/runtime/qmlcontextbinder.h",
+      "sha256": "72f6615f0f277ea955860009b7bfc0ab49a357b052b5e97fd2be62ab73bf848c"
+    },
+    {
+      "path": "src/backend/runtime/qmltyperegistrar.cpp",
+      "sha256": "9173ecc6ec8e364cc5054acf64d9f3f661334c6c7edb82e27506126af15db94e"
+    },
+    {
+      "path": "src/backend/runtime/qmltyperegistrar.h",
+      "sha256": "8bb36f3649b1e9e62314fcc693044ab48c37da0c40e03c4b960e60909928d429"
+    },
+    {
+      "path": "src/backend/runtime/renderingmonitor.cpp",
+      "sha256": "51f2390a1e664597d4142a0b5f62c63c6ce765ca55981063c6d3ea85facbb28e"
+    },
+    {
+      "path": "src/backend/runtime/renderingmonitor.h",
+      "sha256": "4b3d62112ea122ef6dc6e43cbc2cba854c5240035b5dea04796b9ccd70032018"
+    },
+    {
+      "path": "src/backend/runtime/renderquality.cpp",
+      "sha256": "bfd72f35d37303b96ff87887ff20330d21e630179e19755f0b1b7a4aed3bf76a"
+    },
+    {
+      "path": "src/backend/runtime/renderquality.h",
+      "sha256": "74c37d7a6ada9da7788a6e2b619315f8bc62547a47f646885b4e7d0e8cded989"
+    },
+    {
+      "path": "src/backend/runtime/runtimeevents.cpp",
+      "sha256": "5cc55cd06dfbebcbf4673a082429de5e98fd1fbbed4761e51ef602da9cd7fd0e"
+    },
+    {
+      "path": "src/backend/runtime/runtimeevents.h",
+      "sha256": "64e7ef01203b1034f6caaa528c2271c8ed5d26638152050fe157376e42888af2"
+    },
+    {
+      "path": "src/backend/runtime/vulkanbootstrap.cpp",
+      "sha256": "c5c626bd2e0c7bc66058a480eb1ce5901c9086805c1ad38b77b696115da036fc"
+    },
+    {
+      "path": "src/backend/runtime/vulkanbootstrap.h",
+      "sha256": "56e1d485b5d95abcd0a557e4a1fe9f004f0300f7e69acc3aa7392cb98caf6a2e"
+    },
+    {
+      "path": "src/backend/state/appstate.cpp",
+      "sha256": "31f3107f37287018c682bb5ab7cccc9ed1fce02b368d8a8e935d4cfae7a575e0"
+    },
+    {
+      "path": "src/backend/state/appstate.h",
+      "sha256": "e1c3b9bec329992c0940d768d0f28ced2114c960522add89afae06afe25b5dce"
+    },
+    {
+      "path": "src/backend/state/appstate_macros.h",
+      "sha256": "f2fa9315e522b216f9b02a34714fd1f6f4ef87107e761857612f341f8c08c099"
+    },
+    {
+      "path": "src/backend/state/statemodel.cpp",
+      "sha256": "8c5174090a6aff2f2229c93c95b16d61895ba7e8ea9dde189a3da7f971976d61"
+    },
+    {
+      "path": "src/backend/state/statemodel.h",
+      "sha256": "6ea07c59ed34454c90292049c4131536620e46167b7bfd951d847c55ba1347bc"
+    },
+    {
+      "path": "src/backend/state/viewmodel.cpp",
+      "sha256": "4c5ea4d26f5a845dfecceabc19efd6380a4bbc198445ec446ea292bb6dfd5db2"
+    },
+    {
+      "path": "src/backend/state/viewmodel.h",
+      "sha256": "9b609adeee6e14618aa078fb846e36963d83ee2f83e1f72eb0481017d4c86aba"
+    },
+    {
+      "path": "src/backend/state/viewmodelregistry.cpp",
+      "sha256": "1548cf7022f17bdc314a4a5e17d36a1adeed2514aa86fcd548a6a2062d3dca0a"
+    },
+    {
+      "path": "src/backend/state/viewmodelregistry.h",
+      "sha256": "96b0785be765f981c8393121b67b91dbd19b435278f82d6cafa6643cc305a3d1"
+    },
+    {
+      "path": "src/backend/text/textdocumentmodel.cpp",
+      "sha256": "894c86b8febbeea0de1f5879ed3cbab59916f1e09ec7d41484a033b8e2cf46b1"
+    },
+    {
+      "path": "src/backend/text/textdocumentmodel.h",
+      "sha256": "07541f97336b7425eb7983883f8b4a8ed6ea6c2fdaab10f75e210edb3df79fcf"
+    },
+    {
+      "path": "src/backend/text/textmarkup.cpp",
+      "sha256": "6df29635fe97dffc79ae2413e666c027d0a014b19c8ded13331d138d5bd8b0eb"
+    },
+    {
+      "path": "src/backend/text/textmarkup.h",
+      "sha256": "6f6e0aadcfb1d5eb7bfc013925762b7481ed4dd5429fa87e34135720de65e474"
+    },
+    {
+      "path": "src/main.cpp",
+      "sha256": "504480f1c9043590e6a196d15db09d087e632f19a01f8de4fdfe8867938768c2"
+    },
+    {
+      "path": "src/qml/AppBootstrapWindow.qml",
+      "sha256": "7685a664b5ab0606714cc6297d64cb4ad142946316f01a8599458b5c4b2a3227"
+    },
+    {
+      "path": "src/qml/AppShell.qml",
+      "sha256": "27b37b37f083f0cfefdf0cb51c95b18e991dcf0907e3047d81f645ef8b3b3d24"
+    },
+    {
+      "path": "src/qml/ApplicationWindow.qml",
+      "sha256": "9c2c59b78333446bf1ae4164bb54485637e05f8bd7c32f4c76e5120b2d13bd90"
+    },
+    {
+      "path": "src/qml/CMakeLists.txt",
+      "sha256": "6b7f5356e71d349edcf2b5db2f7a90e41dfbcc9b7f5dc17e5204da9ec338bde1"
+    },
+    {
+      "path": "src/qml/Motion.qml",
+      "sha256": "1a2f9e2552fb561b3837a6ab49c447b4fa2cbd697bdfe5eb5297215acc4cbca0"
+    },
+    {
+      "path": "src/qml/Theme.qml",
+      "sha256": "52a4bdb3ad2f345b6bac0baec041884d2a22ce130811089ee3ba61d44c9597ac"
+    },
+    {
+      "path": "src/qml/Window.qml",
+      "sha256": "fdd97bb6b056661c921754994860e5383f26ad9f461c66f5d21e1ecb530ab6a6"
+    },
+    {
+      "path": "src/qml/WindowChromeInteraction.qml",
+      "sha256": "813feb828639d83b8a70135e32a00dbf3d3e3cacf7b5a78e3d482ca0b2df19c9"
+    },
+    {
+      "path": "src/qml/components/CMakeLists.txt",
+      "sha256": "57c2477d485cbc56aa039cf849fb338e2f5ff6aadb34be56b8594bf8480385b8"
+    },
+    {
+      "path": "src/qml/components/control/CMakeLists.txt",
+      "sha256": "2e267f8a911c198cb1a72ced2a5e7eb8f6b2aa10eca8132be3d3c76ae2a34d30"
+    },
+    {
+      "path": "src/qml/components/control/buttons/AbstractButton.qml",
+      "sha256": "e34599e6234316d190a96e0d729a6433822a992fea6afd63a36984817ddf7509"
+    },
+    {
+      "path": "src/qml/components/control/buttons/ButtonMethodRegistry.qml",
+      "sha256": "12530b4fdad02f016abe982ce6617da4d4680480b5f1d43a17fdd6725335cdc8"
+    },
+    {
+      "path": "src/qml/components/control/buttons/CMakeLists.txt",
+      "sha256": "97acd4b6817f62536ca008bb213b4191ebe4e581160f2c7af8ef3c12a67b9bf8"
+    },
+    {
+      "path": "src/qml/components/control/buttons/ColorPickerButton.qml",
+      "sha256": "689665b95f9eeed83630cf213bbb7e1077788daf0bbd8d92b913aff7fcefea41"
+    },
+    {
+      "path": "src/qml/components/control/buttons/ComboBox.qml",
+      "sha256": "9109892c0304f98d2b4d87f1d1bb0a33ffc83c946a209d4bf00352fff96bc0f6"
+    },
+    {
+      "path": "src/qml/components/control/buttons/DropdownButton.qml",
+      "sha256": "44916be79c0050423fceaa5a42333b32a431008544c7e314879aac084dd579f1"
+    },
+    {
+      "path": "src/qml/components/control/buttons/HelpButton.qml",
+      "sha256": "13ebb4d7a14b003519a6734fdef69204915a26b1e93beb3d23c8b2e82ee407f6"
+    },
+    {
+      "path": "src/qml/components/control/buttons/IconButton.qml",
+      "sha256": "f7342a01946ab674413faad4024b5c31300d74580ff21009ce97ac4b3fd72aa5"
+    },
+    {
+      "path": "src/qml/components/control/buttons/IconMenuButton.qml",
+      "sha256": "f61151e128fe07e78fb12877a6b0a2bbacc0ecfe179b2b24eabea870d0a57bc1"
+    },
+    {
+      "path": "src/qml/components/control/buttons/IconSegmentedControl.qml",
+      "sha256": "1f917e290ce550195fde17e23818fd1f85617d72e59ed0db4d9742d2abfc97bc"
+    },
+    {
+      "path": "src/qml/components/control/buttons/LabelButton.qml",
+      "sha256": "0af699ae56a6915061cd3b284ee03433dde869826090621d0c18881232497683"
+    },
+    {
+      "path": "src/qml/components/control/buttons/LabelMenuButton.qml",
+      "sha256": "aee4448c115968bd5172ae7b4258ea8db556e0afe7d83cf930c5fc3a275128c7"
+    },
+    {
+      "path": "src/qml/components/control/buttons/LabelSegmentedControl.qml",
+      "sha256": "71e46fbd453e5d6b99ea168bb4eef3db3eb53e5238c6e8cd6b253560dc60822f"
+    },
+    {
+      "path": "src/qml/components/control/buttons/PushButton.qml",
+      "sha256": "783026b48922ec9d3470d8578bc1ac8f1d265b94130b7d4b2887e42fd6e4e66b"
+    },
+    {
+      "path": "src/qml/components/control/buttons/Stepper.qml",
+      "sha256": "1a67045a8699870ba76bf39f27726088a82dbe3f2499f786fc946fa531a73512"
+    },
+    {
+      "path": "src/qml/components/control/check/CMakeLists.txt",
+      "sha256": "3dbece788da9ca9d7dd2b211a84fbbd9dcf98dd21583f78defdccf7c42a97831"
+    },
+    {
+      "path": "src/qml/components/control/check/CheckBox.qml",
+      "sha256": "a69f1d550a5071ddd545843123384b7c9ba1ec6223ec10d4218bcf28aa267c5c"
+    },
+    {
+      "path": "src/qml/components/control/check/RadioButton.qml",
+      "sha256": "3357d21034e3b43ef5b58994691612cfe10bc39946ecb8bb9b499f8a14b88ecf"
+    },
+    {
+      "path": "src/qml/components/control/check/ToggleSwitch.qml",
+      "sha256": "79a60e4c72c0ca1fa0cd0f9a9e62321d4b6f6944082d416cfd7c7ca5970a6344"
+    },
+    {
+      "path": "src/qml/components/control/display/Avatar.qml",
+      "sha256": "6d41ec9395e78f24907bf19539f67248f1b215ef0d18f52773d7c3eb6a69968a"
+    },
+    {
+      "path": "src/qml/components/control/display/CMakeLists.txt",
+      "sha256": "df6e513ed0db0c240778bf61768c584af927412dc003c38e0d0ec1d4b3197bec"
+    },
+    {
+      "path": "src/qml/components/control/display/Label.qml",
+      "sha256": "a0b5d0ee4f91d1b2cf15aace8a6f6af8d4d1e7058acbd6651d76e041950cc5a9"
+    },
+    {
+      "path": "src/qml/components/control/display/ProgressBar.qml",
+      "sha256": "69884c68329843648ebd17b5e68f895869aa0ddf2f5df6bc80750710b356953c"
+    },
+    {
+      "path": "src/qml/components/control/display/Table.qml",
+      "sha256": "9855b0a2a76e289bed0f1bd8b25ea56658c454bf47949f869177f0ed5c8c4c01"
+    },
+    {
+      "path": "src/qml/components/control/display/TableCellItem.qml",
+      "sha256": "07962319ee275fe9be6ab7ec1b5c9871cf339cd119e62de9061c52b12d26a815"
+    },
+    {
+      "path": "src/qml/components/control/display/TableHeader.qml",
+      "sha256": "e9e7bdd690d6d6e669a60fd67ee0b1b8b4d00ca74788b30371ade2b4c4433c7c"
+    },
+    {
+      "path": "src/qml/components/control/display/TableRow.qml",
+      "sha256": "8a3e50ac06b8ce7568c52ee5d33dc9c36773174eeda043a725b11b0c7792ebfd"
+    },
+    {
+      "path": "src/qml/components/control/input/AbstractInputBar.qml",
+      "sha256": "85f9d36d212461025cd38e0b300672f4ab3f06fd3a12f23ccb4d5d65345bd21e"
+    },
+    {
+      "path": "src/qml/components/control/input/CMakeLists.txt",
+      "sha256": "8c1d19e0a3abc28adaef881937dc6d95427353b221ff7e16f30ac7d8c287c020"
+    },
+    {
+      "path": "src/qml/components/control/input/CodeEditor.qml",
+      "sha256": "45dc4088341e99fcb6c66849eaa7d687408cadd4f0c9d8d45b298c2d3089171b"
+    },
+    {
+      "path": "src/qml/components/control/input/ColorPicker.qml",
+      "sha256": "a78f97507eb874792a47ebb306b56dbe3ad4de7e93a8faad3fd8fd8c52cd36d7"
+    },
+    {
+      "path": "src/qml/components/control/input/InputField.qml",
+      "sha256": "d7f0c554bff96a512e75140a30bb07a257614e2a5455bb4c26b7034ffcf6c160"
+    },
+    {
+      "path": "src/qml/components/control/input/Slider.qml",
+      "sha256": "7892a85fdd9a67e6eb7deb642105e19a223b29cd5a04895f9fec774fbcb5935c"
+    },
+    {
+      "path": "src/qml/components/control/input/TextEditor.qml",
+      "sha256": "6774ee715faed1753f7d72ef0d1386c9c7f8277f33617843f44d5b61d298115c"
+    },
+    {
+      "path": "src/qml/components/control/util/CMakeLists.txt",
+      "sha256": "85eaa3f5fd424945e732ca6330bf4e28067c0cdbfafb1c5148480b33e206aece"
+    },
+    {
+      "path": "src/qml/components/control/util/EventListener.qml",
+      "sha256": "1ba01b4b2cac43b789e1d99497f03180eb94892b9f9af8f3c83ad373a43dcbac"
+    },
+    {
+      "path": "src/qml/components/control/util/FocusRing.qml",
+      "sha256": "1bf9a2137ba91c9e0aabd80e0c39cfc62ed386d5a564ff6d3951bcb859e5cdab"
+    },
+    {
+      "path": "src/qml/components/control/util/InputMethodGuard.qml",
+      "sha256": "fdfaa3b63e5e40435d408e2e0f9d694950b8a1008f28f8a67599be3fbbe6c4a0"
+    },
+    {
+      "path": "src/qml/components/control/util/InteractionMotion.qml",
+      "sha256": "da6a9f320bc45e5174f54590138b5f3c08639544fc4078181bbb24c9f6f85541"
+    },
+    {
+      "path": "src/qml/components/control/util/InteractionState.qml",
+      "sha256": "425dc5dd9be0dc8a61a7dae0932b89dc52b836ebfea43e619b4434969b556a51"
+    },
+    {
+      "path": "src/qml/components/control/util/SpringBehavior.qml",
+      "sha256": "fefe239b4d669ea7514a41233388d2fb46e090feffe99c81f0b941dc5d891604"
+    },
+    {
+      "path": "src/qml/components/control/util/StateColorBehavior.qml",
+      "sha256": "7d26643135c447309d834b496bb53edebf17960306024a7b7d8a95310e226299"
+    },
+    {
+      "path": "src/qml/components/control/util/WheelScrollGuard.qml",
+      "sha256": "45bd20b305e922cd9cbe9852ff57a1db0da63aa156bb367d6d574debf943d0ce"
+    },
+    {
+      "path": "src/qml/components/layout/AppHeader.qml",
+      "sha256": "83612a9db16e483d1fbcf748924360fbeaafb39769c89531b4c5821206a24985"
+    },
+    {
+      "path": "src/qml/components/layout/CMakeLists.txt",
+      "sha256": "dbbda77ad4d2107c83d90b909480be798fa2832e761a07dfb2f9c2547533b82a"
+    },
+    {
+      "path": "src/qml/components/layout/HStack.qml",
+      "sha256": "976b7ff0d0cb1b62ebb0f5d2083875544d1371cee67aebc7104f66b926fea705"
+    },
+    {
+      "path": "src/qml/components/layout/Spacer.qml",
+      "sha256": "c2a5bcd993a0beaed38e8b8499115d41312b35a0ec3d95f2c4ed6d20e6c519d6"
+    },
+    {
+      "path": "src/qml/components/layout/VStack.qml",
+      "sha256": "dddadcc005f58cfc0de2d2a86b30ac8147be5a7ab5bf0137cc4fed54a62abc04"
+    },
+    {
+      "path": "src/qml/components/layout/ZStack.qml",
+      "sha256": "73409c312d4b45576da4a85069fd4a750e377933e8294caf0bd4a971bc2b25a7"
+    },
+    {
+      "path": "src/qml/components/navigation/CMakeLists.txt",
+      "sha256": "5cc182ffa3be880b2a416a6185a09ec580ae88150ee70bf83deefbb382369bb0"
+    },
+    {
+      "path": "src/qml/components/navigation/ContextMenu.qml",
+      "sha256": "3f888384700e69c6c91fec9fd79c060fe1ff8f1b7ebbddfc8a3431308d36a9a9"
+    },
+    {
+      "path": "src/qml/components/navigation/ContextMenuDivider.qml",
+      "sha256": "d520aa52982219604857223001a59b444b84c8775e2cf8429d0806af2364a670"
+    },
+    {
+      "path": "src/qml/components/navigation/ContextMenuItem.qml",
+      "sha256": "cbaf9ea6f1e9a82ccdb46938d28a30082eecde60be71f4ff8de232ac0ec96dbb"
+    },
+    {
+      "path": "src/qml/components/navigation/Hierarchy.qml",
+      "sha256": "0f4e91e1fd80576a812378277a7b315cbb348e11333edd9b097f8112d1e74738"
+    },
+    {
+      "path": "src/qml/components/navigation/HierarchyItem.qml",
+      "sha256": "fb9bb0689e68e86ff4e0836d336febcb56fe754c05bf6069df939284fb10d048"
+    },
+    {
+      "path": "src/qml/components/navigation/HierarchyList.qml",
+      "sha256": "ce5b221779ec0b35116eacaa7555b44880076eac863f7ef2c8944c95d7343b0b"
+    },
+    {
+      "path": "src/qml/components/navigation/HierarchyToolbar.qml",
+      "sha256": "d6b71ef5c2430b0276b3a525105bcef26d7dacce8041775cc2f904e768d63f3a"
+    },
+    {
+      "path": "src/qml/components/navigation/Link.qml",
+      "sha256": "e8cf1da13c0f6e37e0b136f39831dc8d8f8e3b378a70a6ef40fffd4d5156e5bb"
+    },
+    {
+      "path": "src/qml/components/navigation/List.qml",
+      "sha256": "38fdd42c0cb6fadcbd20a1b553c1ffbb0748e51a53d074649de69c7e48b5681e"
+    },
+    {
+      "path": "src/qml/components/navigation/ListFooter.qml",
+      "sha256": "31b14b8bda054b1a1166a2951707325e97f80cc18bfe5b8b9738b37b2b39dacf"
+    },
+    {
+      "path": "src/qml/components/navigation/ListItem.qml",
+      "sha256": "61af7c9efe514f0b94f05ad18402b406fded363a87f0ffa118c9d79352fe865b"
+    },
+    {
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "sha256": "54eed0a83d19950087fa4b57141130b971744e5011542b410685636e4a4d1e72"
+    },
+    {
+      "path": "src/qml/components/navigation/ListItemSelector.qml",
+      "sha256": "c1237af8e060fe918cff57ac788a31a8212b534be2d249d62c7e524d7207c967"
+    },
+    {
+      "path": "src/qml/components/navigation/ListToolbar.qml",
+      "sha256": "a095b30aaf73ef37b60f6abb433794f6af56e8703666397c7641b243f8fcfad6"
+    },
+    {
+      "path": "src/qml/components/navigation/Menu.qml",
+      "sha256": "06912c3b766268f6659d2f86234522e1ec53785cade57488fe3bf57c18bb3e93"
+    },
+    {
+      "path": "src/qml/components/navigation/MenuDivider.qml",
+      "sha256": "c192a1e4d991c2c910d878a867e24ad20d3fe3e0012f42a88c91f2f8fbc88b49"
+    },
+    {
+      "path": "src/qml/components/navigation/MenuItem.qml",
+      "sha256": "873eeb576ac5e9019227362bf74388fae41ebac7e5c269d847494e6120797638"
+    },
+    {
+      "path": "src/qml/components/navigation/MobileNavigationBar.qml",
+      "sha256": "10dd2b6cdf741927332fc4074f1a08a443eb1c2fbbf4dcfd7714dee367caeda1"
+    },
+    {
+      "path": "src/qml/components/navigation/MobileNavigationTab.qml",
+      "sha256": "c39c1710c7c8f992bb218c7357fb022b48b4a5efd397b4955213d38bebb88716"
+    },
+    {
+      "path": "src/qml/components/navigation/MobileTab.qml",
+      "sha256": "a9b077b308a8eea9984d8dc51812abf011e6ba11dcf895cc9ebff04abaf52dda"
+    },
+    {
+      "path": "src/qml/components/navigation/MobileTabBar.qml",
+      "sha256": "41e67ea4492cfab7fa287013646ddad42a8a5398ef19b8b272a86c52f63a277a"
+    },
+    {
+      "path": "src/qml/components/navigation/Navigator.qml",
+      "sha256": "8954ba15fd1bc717d1cdd7b11271561361f32031ee662c424275d82f2de10c20"
+    },
+    {
+      "path": "src/qml/components/navigation/PageRouter.qml",
+      "sha256": "1e0261d46837bd3ee3874a63e0a5943ee06e43c89207d0848c976df3faceca6d"
+    },
+    {
+      "path": "src/qml/components/navigation/PageRouterTransitionDriver.qml",
+      "sha256": "3741ef081d97bf845740bbeea8e496ad8c488a8268b5ac77c8ddca466596413d"
+    },
+    {
+      "path": "src/qml/components/navigation/PageTransitionController.qml",
+      "sha256": "edc87a8e27c1dcaa4220c4cdaa33c4ecae29213c4a10e205a08c4e2508ce967e"
+    },
+    {
+      "path": "src/qml/components/navigation/Tab.qml",
+      "sha256": "d9fafca9c6aa332aba9eeaf825d9ccd8d3df6aa7a239990ecdc25270682693fe"
+    },
+    {
+      "path": "src/qml/components/navigation/TabBar.qml",
+      "sha256": "1245117ea51dc424c3f5226c14283faa86281b5f23acdc6219367b7fa6f3466f"
+    },
+    {
+      "path": "src/qml/components/navigation/ToolbarButton.qml",
+      "sha256": "904c77a21b8ddd08d852be5fda5ac6e8d11b3fb9b1b250e309f94d9cd90ed45e"
+    },
+    {
+      "path": "src/qml/components/surfaces/Alert.qml",
+      "sha256": "72d9d35b998fa0cef88b231083ac93647f16808aafa0bf95c5270b13d606f44a"
+    },
+    {
+      "path": "src/qml/components/surfaces/AlertButton.qml",
+      "sha256": "cf14a8ad35e68b7cbf0d8a8c74439e8d7e16edd55359e8d189664e839c9e21ee"
+    },
+    {
+      "path": "src/qml/components/surfaces/AppCard.qml",
+      "sha256": "05b9838a2d0102a3cfb9968b33b5dfb46e0e649576c9de489b7a0a0baac7253c"
+    },
+    {
+      "path": "src/qml/components/surfaces/CMakeLists.txt",
+      "sha256": "1c2b2ec5607da068d933ea9f2c822b76d6e93fdfab9935161209e3ba02160b8b"
+    },
+    {
+      "path": "src/qml/components/surfaces/Card.qml",
+      "sha256": "3f0afefdb2f6e5ec3d11ba5a7a693b127bf126d73250d12052025a2500468ac3"
+    },
+    {
+      "path": "src/qml/components/surfaces/CardImageContent.qml",
+      "sha256": "a6864f13329f1ef84c0240543a12bb21a05473cd9371bcd9c3273ff4f0e50655"
+    },
+    {
+      "path": "src/qml/components/surfaces/CardInformationContent.qml",
+      "sha256": "caffa9727b4958ad0919c8437e94c8354ededd9c1382b198a91cc4dc896b71ff"
+    },
+    {
+      "path": "src/qml/components/surfaces/MaterialSurface.qml",
+      "sha256": "a81d21e8a2123a6ddf8d559ca363005cfa73d48690817305bfce00ebc579d082"
+    },
+    {
+      "path": "src/qml/components/surfaces/Modal.qml",
+      "sha256": "deca377b689009eb9d0fa3dbb2cbf7c4db56b03abbf351bda3e12e1f3ed9ce1f"
+    },
+    {
+      "path": "src/qml/components/surfaces/PanelMaterial.qml",
+      "sha256": "fe0e1a7d41ab8dfede6634072a01499e3c60125804f3e76cc2e6455ae2e15b58"
+    },
+    {
+      "path": "src/qml/components/surfaces/Popover.qml",
+      "sha256": "4f7b28294e43c6654430f99a928074448d64c72455bfbe4e9c07309db5d00704"
+    },
+    {
+      "path": "src/qml/components/surfaces/Sheet.qml",
+      "sha256": "69cc3fe6b8ad334a3263fdb01bfd513ab1176481644392f158ec4c4544a4095b"
+    },
+    {
+      "path": "src/qml/components/surfaces/Tooltip.qml",
+      "sha256": "2f506fce08e7f33c52004d41c91c676d8dff7dcea0522dacbc6dd14788f16d6d"
+    },
+    {
+      "path": "src/qml/components/surfaces/WindowMaterial.qml",
+      "sha256": "14b8e029d7587ffc74a64faf8510aff9a25c0ba6cdbd837c4ac8000051330a0d"
+    },
+    {
+      "path": "src/rust-cli/.gitignore",
+      "sha256": "8024a6c3162263180d9c4c316df278b98c410863e6df46138f139f35a3991794"
+    },
+    {
+      "path": "src/rust-cli/Cargo.lock",
+      "sha256": "2d339139538fe358eafffab01a4cafbbcb13ece40ea9c0b3d5faa1aaaf81c03f"
+    },
+    {
+      "path": "src/rust-cli/Cargo.toml",
+      "sha256": "589835a3322ca632d0e2251a6977339a5c820d7b7a97300a16de76d252bac8c6"
+    },
+    {
+      "path": "src/rust-cli/README.md",
+      "sha256": "2c425b5f7534dbaff95a0af4becc0db47fdd08df5c418263a30bc949401ac7ba"
+    },
+    {
+      "path": "src/rust-cli/src/cli.rs",
+      "sha256": "195ea59969244660301c465c1e402ec6cabf839077399ddad03189177797162e"
+    },
+    {
+      "path": "src/rust-cli/src/commands/bootstrap.rs",
+      "sha256": "2d9cd7f85895895623fe10983de4e64c9021edec8479bad7b3bfbb0cae0f7392"
+    },
+    {
+      "path": "src/rust-cli/src/commands/doctor.rs",
+      "sha256": "1ac0f2776de50137c462bcf4a52ba60ecb8a7daa659748f12af52b0c92b50f1d"
+    },
+    {
+      "path": "src/rust-cli/src/commands/install.rs",
+      "sha256": "44f817383c68259e34934e5119db02eeeef4ac89e0db2d39fed8a39d573f36bc"
+    },
+    {
+      "path": "src/rust-cli/src/commands/mod.rs",
+      "sha256": "49fa74cb518bcf563881b3f502b119aad43a826ba9e63d6c03c0a92c78640d4b"
+    },
+    {
+      "path": "src/rust-cli/src/commands/platform.rs",
+      "sha256": "00acef8387d8c82079318906d1789609353027045381acc6183a76513bab5277"
+    },
+    {
+      "path": "src/rust-cli/src/main.rs",
+      "sha256": "ceb10edf2fbd34c9704807598e79b914025e86811ca379aa39b8329ca1d20da4"
+    },
+    {
+      "path": "src/rust-cli/tests/install_qt_discovery.rs",
+      "sha256": "2d8251d89fb1d436bce5a11a74b3724f83a50c0d3c8bf8464709069f66819980"
+    }
+  ],
+  "declarations": [
+    {
+      "name": "FontPolicy",
+      "base": "QObject",
+      "path": "src/backend/fonts/fontpolicy.h",
+      "line": 11,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ColorPickerModel",
+      "base": "QObject",
+      "path": "src/backend/graphics/colorpickermodel.h",
+      "line": 13,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ColorPickerSurface",
+      "base": "QQuickPaintedItem",
+      "path": "src/backend/graphics/colorpickersurface.h",
+      "line": 13,
+      "origin": "cpp",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "SvgManager",
+      "base": "QObject",
+      "path": "src/backend/graphics/svgmanager.h",
+      "line": 20,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "WindowNoiseTexture",
+      "base": "QQuickPaintedItem",
+      "path": "src/backend/graphics/windownoisetexture.h",
+      "line": 15,
+      "origin": "cpp",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Backend",
+      "base": "QObject",
+      "path": "src/backend/io/backend.h",
+      "line": 25,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "HierarchyModel",
+      "base": "QObject",
+      "path": "src/backend/model/hierarchymodel.h",
+      "line": 17,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ModelSource",
+      "base": "QObject",
+      "path": "src/backend/model/modelsource.h",
+      "line": 15,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ModelUndoStack",
+      "base": "QObject",
+      "path": "src/backend/model/modelundostack.h",
+      "line": 12,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ProgressModel",
+      "base": "QObject",
+      "path": "src/backend/model/progressmodel.h",
+      "line": 15,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "TableHeaderModel",
+      "base": "QObject",
+      "path": "src/backend/model/tableheadermodel.h",
+      "line": 13,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "TableModel",
+      "base": "QObject",
+      "path": "src/backend/model/tablemodel.h",
+      "line": 19,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ModelAdapter",
+      "base": "QObject",
+      "path": "src/backend/navigation/modeladapter.h",
+      "line": 14,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "NavigationStackModel",
+      "base": "QObject",
+      "path": "src/backend/navigation/navigationstackmodel.h",
+      "line": 14,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "PageMonitor",
+      "base": "QObject",
+      "path": "src/backend/navigation/pagemonitor.h",
+      "line": 11,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "RouteMatcher",
+      "base": "QObject",
+      "path": "src/backend/navigation/routematcher.h",
+      "line": 11,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "RouteResolver",
+      "base": "QObject",
+      "path": "src/backend/navigation/routeresolver.h",
+      "line": 16,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ViewStateTracker",
+      "base": "QObject",
+      "path": "src/backend/navigation/viewstatetracker.h",
+      "line": 15,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "NativeWindowInteraction",
+      "base": "QObject",
+      "path": "src/backend/platform/nativewindowinteraction.h",
+      "line": 16,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "NativeWindowStyle",
+      "base": "QObject",
+      "path": "src/backend/platform/nativewindowstyle.h",
+      "line": 12,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "Platform",
+      "base": "QObject",
+      "path": "src/backend/platform/platforminfo.h",
+      "line": 17,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "WindowSafeAreaObserver",
+      "base": "QObject",
+      "path": "src/backend/platform/windowsafeareaobserver.h",
+      "line": 15,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "Debug",
+      "base": "QObject",
+      "path": "src/backend/runtime/debuglogger.h",
+      "line": 13,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "GestureEvents",
+      "base": "QObject",
+      "path": "src/backend/runtime/gestureevents.h",
+      "line": 18,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "RenderMonitor",
+      "base": "QObject",
+      "path": "src/backend/runtime/renderingmonitor.h",
+      "line": 16,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "RenderQuality",
+      "base": "QObject",
+      "path": "src/backend/runtime/renderquality.h",
+      "line": 16,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "RuntimeEvents",
+      "base": "QObject",
+      "path": "src/backend/runtime/runtimeevents.h",
+      "line": 25,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "AppState",
+      "base": "QObject",
+      "path": "src/backend/state/appstate.h",
+      "line": 13,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "StateModel",
+      "base": "ViewModel",
+      "path": "src/backend/state/statemodel.h",
+      "line": 14,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ViewModel",
+      "base": "QObject",
+      "path": "src/backend/state/viewmodel.h",
+      "line": 11,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ViewModels",
+      "base": "QObject",
+      "path": "src/backend/state/viewmodelregistry.h",
+      "line": 18,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "TextDocumentModel",
+      "base": "QAbstractListModel",
+      "path": "src/backend/text/textdocumentmodel.h",
+      "line": 17,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "TextMarkup",
+      "base": "QObject",
+      "path": "src/backend/text/textmarkup.h",
+      "line": 11,
+      "origin": "cpp",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "AppBootstrapWindow",
+      "base": "ApplicationWindow",
+      "path": "src/qml/AppBootstrapWindow.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppShell",
+      "base": "ApplicationWindow",
+      "path": "src/qml/AppShell.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ApplicationWindow",
+      "base": "Controls.ApplicationWindow",
+      "path": "src/qml/ApplicationWindow.qml",
+      "line": 8,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AdaptiveLayoutHost",
+      "base": "Item",
+      "path": "src/qml/ApplicationWindow.qml",
+      "line": 566,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Motion",
+      "base": "QtObject",
+      "path": "src/qml/Motion.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "Theme",
+      "base": "QtObject",
+      "path": "src/qml/Theme.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "Window",
+      "base": "QtQuickWindow.Window",
+      "path": "src/qml/Window.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "WindowChromeInteraction",
+      "base": "Item",
+      "path": "src/qml/WindowChromeInteraction.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AbstractButton",
+      "base": "Controls.AbstractButton",
+      "path": "src/qml/components/control/buttons/AbstractButton.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ButtonMethodRegistry",
+      "base": "QtObject",
+      "path": "src/qml/components/control/buttons/ButtonMethodRegistry.qml",
+      "line": 3,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "ColorPickerButton",
+      "base": "AbstractButton",
+      "path": "src/qml/components/control/buttons/ColorPickerButton.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ComboBox",
+      "base": "Item",
+      "path": "src/qml/components/control/buttons/ComboBox.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "DropdownButton",
+      "base": "AbstractButton",
+      "path": "src/qml/components/control/buttons/DropdownButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HelpButton",
+      "base": "AbstractButton",
+      "path": "src/qml/components/control/buttons/HelpButton.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconButton",
+      "base": "PushButton",
+      "path": "src/qml/components/control/buttons/IconButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconMenuButton",
+      "base": "DropdownButton",
+      "path": "src/qml/components/control/buttons/IconMenuButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconSegmentedControl",
+      "base": "Item",
+      "path": "src/qml/components/control/buttons/IconSegmentedControl.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "LabelButton",
+      "base": "PushButton",
+      "path": "src/qml/components/control/buttons/LabelButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "LabelMenuButton",
+      "base": "DropdownButton",
+      "path": "src/qml/components/control/buttons/LabelMenuButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "LabelSegmentedControl",
+      "base": "Item",
+      "path": "src/qml/components/control/buttons/LabelSegmentedControl.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PushButton",
+      "base": "AbstractButton",
+      "path": "src/qml/components/control/buttons/PushButton.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Stepper",
+      "base": "Item",
+      "path": "src/qml/components/control/buttons/Stepper.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "CheckBox",
+      "base": "AbstractButton",
+      "path": "src/qml/components/control/check/CheckBox.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "RadioButton",
+      "base": "AbstractButton",
+      "path": "src/qml/components/control/check/RadioButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ToggleSwitch",
+      "base": "Controls.Switch",
+      "path": "src/qml/components/control/check/ToggleSwitch.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Avatar",
+      "base": "Item",
+      "path": "src/qml/components/control/display/Avatar.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Label",
+      "base": "Item",
+      "path": "src/qml/components/control/display/Label.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ProgressBar",
+      "base": "Item",
+      "path": "src/qml/components/control/display/ProgressBar.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Table",
+      "base": "Item",
+      "path": "src/qml/components/control/display/Table.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TableCellItem",
+      "base": "Item",
+      "path": "src/qml/components/control/display/TableCellItem.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TableHeader",
+      "base": "Item",
+      "path": "src/qml/components/control/display/TableHeader.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TableRow",
+      "base": "Item",
+      "path": "src/qml/components/control/display/TableRow.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AbstractInputBar",
+      "base": "FocusScope",
+      "path": "src/qml/components/control/input/AbstractInputBar.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "CodeEditor",
+      "base": "FocusScope",
+      "path": "src/qml/components/control/input/CodeEditor.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ColorPicker",
+      "base": "Item",
+      "path": "src/qml/components/control/input/ColorPicker.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ColorInput",
+      "base": "InputField",
+      "path": "src/qml/components/control/input/ColorPicker.qml",
+      "line": 71,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Swatch",
+      "base": "Canvas",
+      "path": "src/qml/components/control/input/ColorPicker.qml",
+      "line": 102,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ChannelRow",
+      "base": "Item",
+      "path": "src/qml/components/control/input/ColorPicker.qml",
+      "line": 131,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ColorField",
+      "base": "ColorPickerSurface",
+      "path": "src/qml/components/control/input/ColorPicker.qml",
+      "line": 225,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "InputField",
+      "base": "AbstractInputBar",
+      "path": "src/qml/components/control/input/InputField.qml",
+      "line": 7,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MaterialSurface",
+      "base": "Item",
+      "path": "src/qml/components/control/input/InputField.qml",
+      "line": 120,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Slider",
+      "base": "T.Slider",
+      "path": "src/qml/components/control/input/Slider.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Endpoint",
+      "base": "Row",
+      "path": "src/qml/components/control/input/Slider.qml",
+      "line": 103,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Material",
+      "base": "Canvas",
+      "path": "src/qml/components/control/input/Slider.qml",
+      "line": 140,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "TextEditor",
+      "base": "FocusScope",
+      "path": "src/qml/components/control/input/TextEditor.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "EventListener",
+      "base": "Item",
+      "path": "src/qml/components/control/util/EventListener.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "FocusRing",
+      "base": "Rectangle",
+      "path": "src/qml/components/control/util/FocusRing.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "InputMethodGuard",
+      "base": "Item",
+      "path": "src/qml/components/control/util/InputMethodGuard.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "InteractionMotion",
+      "base": "Scale",
+      "path": "src/qml/components/control/util/InteractionMotion.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "modifier",
+      "internal": false
+    },
+    {
+      "name": "InteractionState",
+      "base": "QtObject",
+      "path": "src/qml/components/control/util/InteractionState.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "SpringBehavior",
+      "base": "Behavior",
+      "path": "src/qml/components/control/util/SpringBehavior.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "modifier",
+      "internal": false
+    },
+    {
+      "name": "StateColorBehavior",
+      "base": "Behavior",
+      "path": "src/qml/components/control/util/StateColorBehavior.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "modifier",
+      "internal": false
+    },
+    {
+      "name": "WheelScrollGuard",
+      "base": "Item",
+      "path": "src/qml/components/control/util/WheelScrollGuard.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppHeader",
+      "base": "ToolBar",
+      "path": "src/qml/components/layout/AppHeader.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HStack",
+      "base": "Item",
+      "path": "src/qml/components/layout/HStack.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Spacer",
+      "base": "Item",
+      "path": "src/qml/components/layout/Spacer.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "VStack",
+      "base": "Item",
+      "path": "src/qml/components/layout/VStack.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ZStack",
+      "base": "Item",
+      "path": "src/qml/components/layout/ZStack.qml",
+      "line": 3,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ContextMenu",
+      "base": "Controls.Popup",
+      "path": "src/qml/components/navigation/ContextMenu.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ContextMenuDivider",
+      "base": "MenuDivider",
+      "path": "src/qml/components/navigation/ContextMenuDivider.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ContextMenuItem",
+      "base": "MenuItem",
+      "path": "src/qml/components/navigation/ContextMenuItem.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Hierarchy",
+      "base": "Rectangle",
+      "path": "src/qml/components/navigation/Hierarchy.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HierarchyItem",
+      "base": "AbstractButton",
+      "path": "src/qml/components/navigation/HierarchyItem.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HierarchyList",
+      "base": "Item",
+      "path": "src/qml/components/navigation/HierarchyList.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HierarchyToolbar",
+      "base": "Item",
+      "path": "src/qml/components/navigation/HierarchyToolbar.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Link",
+      "base": "AbstractButton",
+      "path": "src/qml/components/navigation/Link.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "List",
+      "base": "Item",
+      "path": "src/qml/components/navigation/List.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListFooter",
+      "base": "Item",
+      "path": "src/qml/components/navigation/ListFooter.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListItem",
+      "base": "AbstractButton",
+      "path": "src/qml/components/navigation/ListItem.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListItemComposite",
+      "base": "Column",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "BodyText",
+      "base": "Label",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 16,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "CaptionText",
+      "base": "Label",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 27,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Glyph",
+      "base": "Item",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 41,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Slot",
+      "base": "Loader",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 62,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ContentText",
+      "base": "ColumnLayout",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 82,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ActionSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 99,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "MoreSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 118,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ToggleSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 150,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "SelectionSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 162,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "SelectorSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 175,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "QuantityControl",
+      "base": "FocusScope",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 189,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "InputSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 227,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "QuantitySlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 257,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "SegmentsSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 263,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "PreviewSlot",
+      "base": "Slot",
+      "path": "src/qml/components/navigation/ListItemComposite.qml",
+      "line": 292,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ListItemSelector",
+      "base": "FocusScope",
+      "path": "src/qml/components/navigation/ListItemSelector.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListToolbar",
+      "base": "Item",
+      "path": "src/qml/components/navigation/ListToolbar.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Menu",
+      "base": "ContextMenu",
+      "path": "src/qml/components/navigation/Menu.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MenuDivider",
+      "base": "Item",
+      "path": "src/qml/components/navigation/MenuDivider.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MenuItem",
+      "base": "AbstractButton",
+      "path": "src/qml/components/navigation/MenuItem.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileNavigationBar",
+      "base": "Controls.Control",
+      "path": "src/qml/components/navigation/MobileNavigationBar.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileNavigationTab",
+      "base": "Tab",
+      "path": "src/qml/components/navigation/MobileNavigationTab.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileTab",
+      "base": "Tab",
+      "path": "src/qml/components/navigation/MobileTab.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileTabBar",
+      "base": "TabBar",
+      "path": "src/qml/components/navigation/MobileTabBar.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Navigator",
+      "base": "QtObject",
+      "path": "src/qml/components/navigation/Navigator.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "PageRouter",
+      "base": "Item",
+      "path": "src/qml/components/navigation/PageRouter.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PageRouterTransitionDriver",
+      "base": "QtObject",
+      "path": "src/qml/components/navigation/PageRouterTransitionDriver.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "PageTransitionController",
+      "base": "QtObject",
+      "path": "src/qml/components/navigation/PageTransitionController.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "nonvisual",
+      "internal": false
+    },
+    {
+      "name": "Tab",
+      "base": "AbstractButton",
+      "path": "src/qml/components/navigation/Tab.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TabBar",
+      "base": "Controls.Control",
+      "path": "src/qml/components/navigation/TabBar.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ToolbarButton",
+      "base": "IconButton",
+      "path": "src/qml/components/navigation/ToolbarButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Alert",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/Alert.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AlertButton",
+      "base": "AbstractButton",
+      "path": "src/qml/components/surfaces/AlertButton.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppCard",
+      "base": "Rectangle",
+      "path": "src/qml/components/surfaces/AppCard.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Card",
+      "base": "AbstractButton",
+      "path": "src/qml/components/surfaces/Card.qml",
+      "line": 6,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "CardImageContent",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/CardImageContent.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "CardInformationContent",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/CardInformationContent.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "DetailRow",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/CardInformationContent.qml",
+      "line": 10,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "MaterialSurface",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/MaterialSurface.qml",
+      "line": 7,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "RadialLayer",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/MaterialSurface.qml",
+      "line": 95,
+      "origin": "qml-inline",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Modal",
+      "base": "Item",
+      "path": "src/qml/components/surfaces/Modal.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PanelMaterial",
+      "base": "MaterialSurface",
+      "path": "src/qml/components/surfaces/PanelMaterial.qml",
+      "line": 4,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Popover",
+      "base": "Controls.Popup",
+      "path": "src/qml/components/surfaces/Popover.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Sheet",
+      "base": "Controls.Popup",
+      "path": "src/qml/components/surfaces/Sheet.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Tooltip",
+      "base": "Controls.ToolTip",
+      "path": "src/qml/components/surfaces/Tooltip.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "WindowMaterial",
+      "base": "MaterialSurface",
+      "path": "src/qml/components/surfaces/WindowMaterial.qml",
+      "line": 5,
+      "origin": "qml",
+      "kind": "view",
+      "internal": false
+    }
+  ]
+}

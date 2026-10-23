@@ -1,11 +1,19 @@
 # LVUI documentation
 
-This directory separates the current implementation contract from the selected
-LVUI language and runtime design as of 2026-10-20.
 
-LVUI is an AOT-compiled native language whose compiled UI is mounted in the
-iiSDK runtime as an iiGUI drawing target. Its execution model does not include
-a language interpreter, JVM or .NET/CLR layer.
+- [Current LVRS self-rendered native implementation](LVRSNative.md)
+
+This directory separates the current implementation contract from the selected
+LVUI language and runtime design, including the native widget and acceleration
+contract and the `View` type/child-argument rules clarified on 2026-10-22.
+
+LVUI is an AOT-compiled native language. At compile time it targets OS-native
+widgets, including Cocoa/AppKit on macOS and Win32 on Windows, and the selected
+Metal, DirectX/Direct3D or Vulkan acceleration path. The resulting native code
+is handed to iiGUI for hosting, events, lifecycle and presentation in the iiSDK
+runtime. Native objects and GPU resources are instantiated at runtime by the
+compiled code. Its execution model does not include a language interpreter,
+JVM or .NET/CLR layer.
 
 The selected design follows the supplied scoped-ownership proposal. The earlier
 metadata-only import and per-click instance model is retired.
@@ -14,9 +22,17 @@ metadata-only import and per-click instance model is retired.
 
 | Document | Scope | Status |
 |---|---|---|
-| [CompilationModel.md](CompilationModel.md) | AOT native compilation, iiSDK runtime mounting and iiGUI drawing integration | Selected architecture; compiler and compiled-target mount API remain unimplemented |
+| [NativeWidgetRuntime.md](NativeWidgetRuntime.md) | Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment | Implemented macOS path; Core remains independent of GUI/DSL |
+| [CoreWidgetVerification.md](CoreWidgetVerification.md) | Core entrypoint, C++ widget lifetime, native LVRS appearance and installed consumer | Verification of the Core-owned application path |
+| [CompilationModel.md](CompilationModel.md) | AOT native widget compilation, Metal/DirectX/Vulkan acceleration and delivery to iiGUI | Architecture; bounded C++23/Cocoa implementation now available |
+| [NativeAOT.md](NativeAOT.md) | Actual C++ generation, supported inputs, scoped callbacks, CMake and Cocoa mount lifecycle | Implemented for ApplicationWindow, stacks, Label and PushButton |
+| [EmbeddedPages.md](EmbeddedPages.md) | 기존 빌더에 독립 뷰 본문·스코프 구성, LVRS PageRouter AOT 연결 | 코드 생성·컴파일 검증, 실행 보류 |
+| [NativeAOTVerification.md](NativeAOTVerification.md) | Native Hello World, AppKit tests, binary and relocated installed-consumer checks | macOS arm64 execution evidence |
 | [Language.md](Language.md) | HTML-shaped LVUI 0.1 syntax, styles, layout and diagnostics | Current implementation contract |
-| [DeclarativeSyntax.md](DeclarativeSyntax.md) | Component declarations, imported instance names, bound actions and properties | Selected design; draft grammar |
+| [ComponentLanguage.md](ComponentLanguage.md) | Native C++23 tokenizer, reserved identifiers, typed child View AST and lvui-check | Implemented front end; feeds the separate native AOT generator |
+| [ReservedWords.md](ReservedWords.md) | All 107 visual LVRS component keywords, three modifiers and six core words with source evidence | Generated from the audited source snapshot; verified against the actual parser |
+| [Verification.md](Verification.md) | Earlier source inventory, front-end tests, CLI diagnostics and staged installed consumer | Historical front-end evidence; see NativeAOTVerification for native execution |
+| [DeclarativeSyntax.md](DeclarativeSyntax.md) | Common `View` type, `{}` child-view arguments, component declarations, imported instance names, bound actions and properties | Selected design; draft grammar |
 | [MethodReferences.md](MethodReferences.md) | Method references versus immediate calls, typed callback inputs and component-owned event semantics | Selected callable semantics; concrete callable/component APIs remain open |
 | [ReactiveState.md](ReactiveState.md) | Reactive values by default, the static exception and the supplied [increment/reset counter](examples/ReactiveCounter.lvui) | Selected general value semantics; native tracking remains unimplemented |
 | [VariableDeclarations.md](VariableDeclarations.md) | `let` constants, `var` variables, typed initializers and no-semicolon syntax | Selected declaration rules; full type system remains open |
@@ -71,8 +87,11 @@ instance ownership.
     and is optional. `@Static` prevents value changes
     during the lifetime established for that declaration; its precise owner
     remains to be specified.
-13. LVUI is compiled ahead of time into native code. The compiled UI mounts in
-    the iiSDK runtime as an iiGUI drawing target. Execution does not interpret
+13. LVUI is compiled ahead of time into OS-native widget code, including
+    Cocoa/AppKit and Win32, together with the selected Metal, DirectX/Direct3D
+    or Vulkan acceleration path. The compiled UI and graphics integration are
+    handed to iiGUI and mounted in the iiSDK runtime. Native widgets and GPU
+    resources are created when this code runs. Execution does not interpret
     LVUI source or bytecode and does not use a JVM or .NET/CLR layer.
 14. `vm.method` references a method bound to its receiver; `vm.method()`
     explicitly invokes it when evaluated. Component interfaces declare callback
@@ -83,20 +102,28 @@ instance ownership.
     LVUI variables. `Label(text: vm.value)` follows source changes without an
     observation annotation. `@Static` explicitly fixes a value for its lifetime.
     This does not relax `let`, read-only or C++ constness restrictions.
+16. `View` is the common type for everything displayed visually in LVUI,
+    including visual controls, layout containers and composed views. A view can
+    take other views as child arguments through `{}`; those children can in turn
+    take further child views through nested braces. The language type does not
+    prescribe a shared C++ base class.
 
 ## Implementation boundary
 
-The current implementation section of the [package description](../README.md),
-`CMakeLists.txt` and public `src/LVUI/Document.h` describe a C++23 parser
-and an immutable container/text document tree. The package currently depends
-on iiSDKCore Contracts, and its implemented syntax is specified in
-[Language.md](Language.md).
+The package implements two C++23 front ends: `parse`/`Document` for the existing
+[HTML-shaped grammar](Language.md), and `tokenize`/`parse_view`/`ViewDocument` for
+the [component grammar](ComponentLanguage.md). The latter uses the audited LVRS
+reserved-word table and owns typed child Views, inputs, scalar declarations and
+import syntax. The native `lvui-check` tool validates component source files.
+The package depends only on iiSDKCore Contracts.
 
-These design documents do not establish implemented support for the
-component-shaped grammar, constant and variable declarations, declaration
-annotations, owned imports, event binding or reactive properties. The AOT
-compiler and compiled-target mounting contract are also unimplemented.
-This revision changes documentation only.
+Parsing alone does not activate C++ objects or execute a UI. The separate
+`compile_native`/`lvui-compile` path generates C++23 for the documented native
+subset. iiGUI mounts actual Cocoa widgets, owns imported scopes and connects
+compiled method-reference callbacks. Runtime UI property changes are explicit
+native C++ calls. General reactive field bindings, annotations, View-valued
+declarations, custom component definitions, other native widget backends and
+GPU code generation remain outside that implementation.
 
 ## Remaining design work
 
@@ -111,6 +138,7 @@ This revision changes documentation only.
 - [Default ViewModel binding, query mapping and value delivery](ViewModelQueries.md).
 - [General reactive values and the static exception](ReactiveState.md).
 
-The ownership model and native AOT execution model are selected. Exact syntax
-details, compiled binding-data formats, the native compiler backend and concrete
-mounting/runtime APIs still require implementation design.
+The ownership model and native AOT execution model are selected. The C++23/Cocoa
+subset has concrete code generation and mounting APIs. Full language syntax,
+reactive binding formats, asynchronous scope ownership and remaining backends
+still require implementation work.

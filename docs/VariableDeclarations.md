@@ -2,7 +2,9 @@
 
 # 상수와 변수
 
-상태: 2026-10-20에 채택한 언어 설계이다. 현재 LVUI 0.1 파서는 이 선언을 구현하지 않는다.
+상태: 2026-10-20에 채택한 언어 설계이다.
+2026-10-22의 `parse_view`는 스칼라·참조·목록·호출 초기값의 선언 구문과 예약어 충돌을 검사한다.
+타입 검사·저장·반응형 실행은 [현재 프런트엔드 범위](ComponentLanguage.md)와 구분한다.
 
 <a id="declaration-syntax"></a>
 
@@ -25,6 +27,11 @@ var variable: Int = 6
 
 `constant`는 초기화 이후 재대입할 수 없다. 일반 `variable`은 선언한 타입에 따라 재대입할 수 있다.
 `Int`는 채택한 예제의 타입 표기이며, 전체 타입 체계는 추가 명세가 필요하다.
+
+시각적으로 표시되는 모든 요소의 공통 타입으로 `View`를 채택한다.
+뷰는 `{}`를 통해 다른 `View`를 자식 인자로 받을 수 있다.
+예제와 구성 규칙은 [View 타입과 자식 뷰 인자](DeclarativeSyntax.md#view-type-and-child-arguments)를 참조한다.
+`View`의 구체적인 값·참조 표현과 변수 저장 의미는 추가 명세가 필요하다.
 
 <a id="declaration-annotations"></a>
 
