@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repository": "https://github.com/iisacc-Justmoong/LVRS",
-  "source_revision": "13b657b21a8ca9babe40ac790bb547c3f7758eea",
+  "source_revision": "2aeb162a6b1a2ea3bf2bc796a2174cc310f186fa",
   "files": [
     {
       "path": "src/LVRS/Alert.cpp",
@@ -36,12 +36,56 @@
       "sha256": "a10788ddb607f9b5e89122661aa4bed8fd5c7602b7f9a2ae1fcf3f6a2797e931"
     },
     {
+      "path": "src/LVRS/Avatar.cpp",
+      "sha256": "86af73d0fcadf5b509f6ca14b92ca2f0778cb5ace2025f1af16d1d4ec567c290"
+    },
+    {
+      "path": "src/LVRS/Avatar.h",
+      "sha256": "26130b5824bd0c17009869eb18ca97da49ceab73f9007062042f07ee8e1422f5"
+    },
+    {
       "path": "src/LVRS/ButtonMethod.cpp",
       "sha256": "c5ae3ed292010a069c1aef5a4e5c7d2cd2ce762976d74db3b6bef87ecd93cae0"
     },
     {
       "path": "src/LVRS/ButtonMethod.h",
       "sha256": "ebc668214cc831ee60c62eac49809427ea5df828a4018458a86594432daef3f0"
+    },
+    {
+      "path": "src/LVRS/Card.cpp",
+      "sha256": "0506ccecf845237bf4ca824339bb487c862be5b2cadbe267b236823392be1d2f"
+    },
+    {
+      "path": "src/LVRS/Card.h",
+      "sha256": "0135824deb7f59fe49b61278e846774527f69114effb23074261b7514c2c0fd6"
+    },
+    {
+      "path": "src/LVRS/CardAssets.cpp",
+      "sha256": "fd050bec9c1c8098ad88421edf26c6e7a98299756daaf519e8366d825343ee6a"
+    },
+    {
+      "path": "src/LVRS/CardDetail.cpp",
+      "sha256": "72bbe731a09a667d4a3dcbe3cd5fc5c3cd9276af944a5bc82561c6fbe7316946"
+    },
+    {
+      "path": "src/LVRS/CardDetail.h",
+      "sha256": "3f9a85944bfc41269a0c02be503ef6a6a4f3aa78c3833f38dc4d2c59bfab6c30"
+    },
+    {
+      "path": "src/LVRS/CodeEditor.cpp",
+      "sha256": "675e28dfa594b1af217d02f7c743cfb2a24054ec9e2148a87b7bac2d71f969fb"
+    },
+    {
+      "path": "src/LVRS/CodeEditor.h",
+      "sha256": "91985c6be7855676ba5d31c904b42c52d5b9f494c7f1568c5491cd1208be36e7"
+    },
+    {
+      "path": "src/LVRS/CodeEditorDetail.cpp",
+      "sha256": "0a0ab051e0254dcde5b1d74d85fbea7bec71979d114d3205d92bd05406c0a51b"
+    },
+    {
+      "path": "src/LVRS/CodeEditorDetail.h",
+      "sha256": "82964da86b7a599af6c5035605e945927ac46645bbc554ce6ba7cef757eb9e65"
     },
     {
       "path": "src/LVRS/ColorPicker.cpp",
@@ -60,12 +104,36 @@
       "sha256": "f436074e6a3302abb2e46933f84ae17a7d4a1a8720f1f812b3d026e5c1e15178"
     },
     {
+      "path": "src/LVRS/HierarchyModel.cpp",
+      "sha256": "713b739aaf1bd0fbbd436515306d0fbc16d755aa58d1d0171932dac98e8e99ee"
+    },
+    {
+      "path": "src/LVRS/HierarchyModel.h",
+      "sha256": "74f37af576adb6872473a30e1e603f38bddbe7a96cc5a524da898816bafdc277"
+    },
+    {
+      "path": "src/LVRS/HierarchyProjection.cpp",
+      "sha256": "88ebcc0bab46d137d66d56313c1a36d044408266fe7c9121ab1b8eac27394d82"
+    },
+    {
+      "path": "src/LVRS/HierarchyProjection.h",
+      "sha256": "7b283669e1bb65257298053a0ffed3418bee54ab9e675a48fefeb6f9e99b9951"
+    },
+    {
       "path": "src/LVRS/HierarchyToolbar.cpp",
-      "sha256": "89811b8d93bd9ee731865e7a0b95a6e626440aebdc3c612dc0fc2735f20a928c"
+      "sha256": "287e33d11b45245324a10be7f90b87af476dbc974c3cf5775b6303c342bca078"
     },
     {
       "path": "src/LVRS/HierarchyToolbar.h",
       "sha256": "c926dfd4d9bfa1735312198d4d2abc70e5a759268ab6272e38e0a9ab8dbdf1f9"
+    },
+    {
+      "path": "src/LVRS/HierarchyVisibility.cpp",
+      "sha256": "12f24408ca8e3b374a5f02b452dd6333f49ca63ff0a1332ea868ff146a48decf"
+    },
+    {
+      "path": "src/LVRS/HierarchyVisibility.h",
+      "sha256": "e1bb206c24db6637e6263f9466bb37bc88ed81467c3b80bfb58c90ef0b9ece77"
     },
     {
       "path": "src/LVRS/Icons.cpp",
@@ -93,7 +161,7 @@
     },
     {
       "path": "src/LVRS/ListFooter.cpp",
-      "sha256": "610afd6d408dde3cc9638ea90a03bd4e96e18112923fb86404f9ecd9dc2f9d49"
+      "sha256": "29f5d3603634921af810bda9bbc829d3bdf93d4f6011538a7211e4381c8a4bc5"
     },
     {
       "path": "src/LVRS/ListFooter.h",
@@ -114,6 +182,22 @@
     {
       "path": "src/LVRS/ListToolbar.h",
       "sha256": "ceb10066b95c4240b0e8bbd53bbf320bb5dd4d0e1d37d7bbc68f40197604b6ea"
+    },
+    {
+      "path": "src/LVRS/MaterialDetail.cpp",
+      "sha256": "fdec7ee635707785dc2e00f38a75efef35dc9222149d31bda55785757ee9b07b"
+    },
+    {
+      "path": "src/LVRS/MaterialDetail.h",
+      "sha256": "92eb4e278f84314d9485beae54e9e55f1299d6bcfd7618f6223e509b14d02fbd"
+    },
+    {
+      "path": "src/LVRS/MaterialSurface.cpp",
+      "sha256": "5ef0f32937748f0304de1a89f41c07526e1899ef638a0ed9bb0d6c8f96e4a410"
+    },
+    {
+      "path": "src/LVRS/MaterialSurface.h",
+      "sha256": "15057f963c2dff72282eba248cf3944ca6f61855b663ba704a99a541f8def1c9"
     },
     {
       "path": "src/LVRS/Modal.cpp",
@@ -172,6 +256,14 @@
       "sha256": "742a80fe7921c6e0d828e1cbd5333a7431fb687c463ec0021b522b85896d5f2c"
     },
     {
+      "path": "src/LVRS/PanelMaterial.cpp",
+      "sha256": "d46c59859187c4ed9dc7b910a6abc6d47481bdc338abea5ad2b5f4716d6b5930"
+    },
+    {
+      "path": "src/LVRS/PanelMaterial.h",
+      "sha256": "d6cd29d4b6b666e7d394c5ccce7649de83fef7cc9c82e5323a1f66a1c33517d3"
+    },
+    {
       "path": "src/LVRS/RouteMatcher.cpp",
       "sha256": "540ebe94576f9db0206ec05fb4039c21aa1fbb0480c0d108ee6145f76a4160e6"
     },
@@ -213,7 +305,7 @@
     },
     {
       "path": "src/LVRS/Table.cpp",
-      "sha256": "a13cf700081640c3300748dd29cba117326e856ff9606357c0baa9970b6dd58a"
+      "sha256": "bfd39ead96fb4eb37accd6882788881716d64f4327da416944f9c8031af0e211"
     },
     {
       "path": "src/LVRS/Table.h",
@@ -233,7 +325,7 @@
     },
     {
       "path": "src/LVRS/TableDetail.h",
-      "sha256": "c11fc4a09fd95c39dde1a023e94bfcd8da47d86279a9bf8e71c779e6db0a1782"
+      "sha256": "26c8a5f20b4879e6e3696bae4432b5f04982c97c25ecf9a4bb9caac2ade7ceb2"
     },
     {
       "path": "src/LVRS/TableHeader.cpp",
@@ -284,6 +376,46 @@
       "sha256": "168cd6c4301d76f4e1c8b9ffb7f6d4d4f659fec8a11d43b23c3cf0551fc5dbf0"
     },
     {
+      "path": "src/LVRS/TextDocumentDetail.cpp",
+      "sha256": "61e92e8b7a020ffff1785414eb1642c68fb65119be4c7ca51a34dd21651cf44a"
+    },
+    {
+      "path": "src/LVRS/TextDocumentDetail.h",
+      "sha256": "93a64151fbf7c7c0e77c20d92b12feb9893e7d0cf59b64cc515ff40315b6aa2e"
+    },
+    {
+      "path": "src/LVRS/TextDocumentEdit.cpp",
+      "sha256": "4e2b651ac2392f22af716dfa876129d26bca225b8ba3bf4f79dfb5bb8b98ccc8"
+    },
+    {
+      "path": "src/LVRS/TextDocumentEdit.h",
+      "sha256": "668953b5af7ab2f991a4973d483e218f097f01d03524f45b272229131159c27c"
+    },
+    {
+      "path": "src/LVRS/TextDocumentModel.cpp",
+      "sha256": "35f1492151bff9751d488b08f1de375285e370a30c338a219c926cc8a0d4799b"
+    },
+    {
+      "path": "src/LVRS/TextDocumentModel.h",
+      "sha256": "b4cfdba8c2e243df37a663c895dc71c00df79273538e0755bde8ca53376a1dc2"
+    },
+    {
+      "path": "src/LVRS/TextDocumentStorage.cpp",
+      "sha256": "5b7942969c37c0624ca6db6e1c48067d051a1acacb481734501e9de01fb7a26c"
+    },
+    {
+      "path": "src/LVRS/TextDocumentStorage.h",
+      "sha256": "e738c742057ce3f2d3528c973d22ba1bbc69601277f6f048834a352a51c154c8"
+    },
+    {
+      "path": "src/LVRS/TextMarkup.cpp",
+      "sha256": "edc7de4522554812567b852795af36232fbe46c5449e46b0ca9b7182bb4a5e74"
+    },
+    {
+      "path": "src/LVRS/TextMarkup.h",
+      "sha256": "32b7f52dd5137b333f7faaaca5679e5c06ffc089fe9852bd0bf9c42609897fc5"
+    },
+    {
       "path": "src/LVRS/Theme.cpp",
       "sha256": "0147244cf835021edb091a66fa83faca1afc50d4c06835a405c26add725da4f2"
     },
@@ -301,11 +433,27 @@
     },
     {
       "path": "src/LVRS/ToolbarDetail.cpp",
-      "sha256": "cb19bba2fad51717e81c655f5d0588111d8f4eeeeeffb4a9578347990bd02e9e"
+      "sha256": "1b30784b0ce8485bd4fb81c0ebce3180b03ccc0736077a5fdb0e0ce8f6ac27aa"
     },
     {
       "path": "src/LVRS/ToolbarDetail.h",
       "sha256": "fb43bdab37dad0e06eb09506ebb0a2ca9d8fb974a903ebd2f6cc4632fdc82369"
+    },
+    {
+      "path": "src/LVRS/Tooltip.cpp",
+      "sha256": "074dabb538b8cfdc4e522dbe2ed769b024070940b1a44848251d79fe20d75beb"
+    },
+    {
+      "path": "src/LVRS/Tooltip.h",
+      "sha256": "5af194ed27e51475934a4148574ec19fc8be589604395c806e134d8f4fff5806"
+    },
+    {
+      "path": "src/LVRS/TooltipLayout.cpp",
+      "sha256": "2625d8440d7c6813bfcded6ee304074921cc736b1c6dba18dcd10c9f9674e523"
+    },
+    {
+      "path": "src/LVRS/TooltipLayout.h",
+      "sha256": "71b800d5e500f85477c7dcf95395bdd3fb9fb2220956b5f98174cdfb05b221aa"
     },
     {
       "path": "src/LVRS/TrackingDetail.cpp",
@@ -325,11 +473,19 @@
     },
     {
       "path": "src/LVRS/Widgets.cpp",
-      "sha256": "9974222c20e68537e9a9e2d6318de6c4166aa8bf06a8bf4b5129631c4656aa9d"
+      "sha256": "663bac50a4d0a39768a40961d7909e37d65a8f7fb83b7bda9c460786ef2142dc"
     },
     {
       "path": "src/LVRS/Widgets.h",
-      "sha256": "d1f7e123d80e6acc6279ab3d972b08db512de23cd9a9a6af8a52d14053c607fc"
+      "sha256": "b15e0d12419bd843c178826a884f61e18201108cbbcb4e54a69c6e3842ccf6a5"
+    },
+    {
+      "path": "src/LVRS/WindowMaterial.cpp",
+      "sha256": "218dc37b456bd7563d9773e5e59ae476c7f81c1f50e29ddb2885e7acc9398b98"
+    },
+    {
+      "path": "src/LVRS/WindowMaterial.h",
+      "sha256": "5a9dc92f237374b97750dd4308e787bed068c482992b5cd490157b3c42f26b9e"
     },
     {
       "path": "src/backend/CMakeLists.txt",
@@ -709,7 +865,7 @@
     },
     {
       "path": "src/backend/text/textdocumentmodel.cpp",
-      "sha256": "894c86b8febbeea0de1f5879ed3cbab59916f1e09ec7d41484a033b8e2cf46b1"
+      "sha256": "f72ee243adb2ac82fdad962220dd7ac9d13bcf035d8073a3b08875f1b4b0fceb"
     },
     {
       "path": "src/backend/text/textdocumentmodel.h",
@@ -749,7 +905,7 @@
     },
     {
       "path": "src/qml/Theme.qml",
-      "sha256": "52a4bdb3ad2f345b6bac0baec041884d2a22ce130811089ee3ba61d44c9597ac"
+      "sha256": "6f69e02da269421e6fac8608a3b944fe5d79a78c0a61423f0152690851b17484"
     },
     {
       "path": "src/qml/Window.qml",

@@ -158,16 +158,16 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--snapshot-only', action='store_true')
     args = parser.parse_args()
-    snapshot = json.loads(CATALOG.read_text()) if args.snapshot_only else audit(args.lvrs_root.resolve())
+    snapshot = json.loads(CATALOG.read_text(encoding='utf-8')) if args.snapshot_only else audit(args.lvrs_root.resolve())
     outputs = render(snapshot)
     outputs[CATALOG] = json.dumps(snapshot, ensure_ascii=False, indent=2) + '\n'
     for path, content in outputs.items():
         if args.check:
-            if not path.exists() or path.read_text() != content:
+            if not path.exists() or path.read_text(encoding='utf-8') != content:
                 raise SystemExit(f'Stale keyword inventory: {path.relative_to(ROOT)}')
-        elif not path.exists() or path.read_text() != content:
+        elif not path.exists() or path.read_bytes() != content.encode('utf-8'):
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content)
+            path.write_text(content, encoding='utf-8', newline='\n')
     entries = words(snapshot)
     print(f'{len(snapshot["files"])} source files; {len(snapshot["declarations"])} declarations; '
           f'{sum(e["kind"] == "view" for e in entries)} View keywords; '

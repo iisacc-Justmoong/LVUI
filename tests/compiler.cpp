@@ -40,7 +40,9 @@ ApplicationWindow(title: greeting, width: 600, height: 360) {
 }
 void validation() {
     bad("Label(text: \"Hello\")", "ApplicationWindow");
-    bad("ApplicationWindow { Avatar() }", "not supported");
+    bad("ApplicationWindow { Avatar() }", "FRAMEWORK LVRS");
+    check(bool(lvui::compile_native("Window { Avatar() }", {.framework="LVRS"})),
+          "LVRS Avatar must compile with its explicit framework declaration");
     bad("ApplicationWindow { Label(text: 42) }", "String");
     bad("ApplicationWindow { Label(text: \"x\", typo: 1) }", "Unknown input");
     bad("ApplicationWindow(width: 2) { Label(text: \"x\") }", "minimum");

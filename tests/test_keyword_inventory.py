@@ -33,7 +33,7 @@ class InventoryTests(unittest.TestCase):
     def write(self, name, text):
         path = self.root / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text)
+        path.write_text(text, encoding='utf-8', newline='\n')
 
     def audit(self):
         files = sorted(p.relative_to(self.root).as_posix() for p in (self.root / 'src').rglob('*') if p.is_file())
@@ -96,6 +96,9 @@ class InventoryTests(unittest.TestCase):
         before = self.audit()
         generate(before)
         for path in (definitions, document, catalog):
+            content = path.read_bytes()
+            self.assertNotIn(b'\r\n', content)
+            self.assertEqual(content.decode('utf-8'), path.read_text(encoding='utf-8'))
             os.utime(path, (1000, 1000))
         timestamps = {p: p.stat().st_mtime_ns for p in (definitions, document, catalog)}
         generate(before)
