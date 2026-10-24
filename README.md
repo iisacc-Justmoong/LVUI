@@ -168,3 +168,15 @@ full Table model, selection, sorting, and virtualization work.
 
 LVRS toolbar keywords generate typed native objects, retained manual registration
 and scoped model/property bindings; see [toolbar AOT](docs/Toolbars.md).
+
+See [native Card and Avatar AOT](docs/NativeMedia.md) for typed images, retained preview factories and explicit unsupported-loader diagnostics.
+
+See [native material AOT](docs/NativeMaterials.md) for typed density, capture domains, custom silhouettes and shared Core motion.
+
+See [native CodeEditor AOT](docs/NativeCodeEditor.md) for a retained PlainText/NoWrap
+editor, scoped document models, typed edit callbacks and Core property bindings.
+RichText TextEditor remains a separate migration requirement.
+
+See [native Tooltip AOT](docs/NativeTooltip.md) for forward target-ID attachment,
+retained custom content, checked millisecond inputs and same-instance bindings.
+Application and test execution remains deferred to the final whole-goal batch.

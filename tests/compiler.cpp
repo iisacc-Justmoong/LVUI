@@ -255,6 +255,59 @@ void lvrs_table_view(){
     bad("Window { Table() }","FRAMEWORK LVRS");
     for(auto source:{"Window { Table(width: 32, structureControlsVisible: true) }","Window { Table(height: 26, structureControlsVisible: true) }"})check(!lvui::compile_native(source,{.framework="LVRS"}),"Structure gutter erased the Table viewport");
 }
+void lvrs_tooltip(){
+    auto result=lvui::compile_native(R"(import vm TooltipBackend
+Window { VStack {
+ Tooltip(id: "help", targetId: "origin", text: vm.help, delay: vm.delay, preferredPlacement: vm.side, maximumWidth: vm.width, onOpened: vm.opened) { VStack { Label(text: vm.detail) } }
+ LabelButton(id: "origin", text: "Help")
+}})",{.framework="LVRS"});
+    check(bool(result),"Native Tooltip AOT failed");
+    for(auto token:{"lvrs::Tooltip::create(","lvrs::TooltipContentFactory","tooltip_milliseconds(","->set_target(*","tooltip.set_options(","scope->backend_0.detail"})
+        check(result->find(token)!=result->npos,"Tooltip lost its target, retained content, checked duration or bindings");
+    for(auto source:{"Window { Tooltip(targetId: \"missing\") }","Window { Tooltip(delay: -1) }","Window { Tooltip(preferredPlacement: .Center) }","import vm Backend\nWindow { Tooltip(targetId: \"x\", target: vm.target) }"})
+        check(!lvui::compile_native(source,{.framework="LVRS"}),"Invalid Tooltip input silently accepted");
+    bad("Window { Tooltip() }","FRAMEWORK LVRS");
+}
+void lvrs_code_editor(){
+    auto result=lvui::compile_native(R"(import vm EditorBackend
+Window { VStack {
+ CodeEditor(model: vm.document, snippetTitle: vm.title, snippetLanguage: "C++23", width: vm.width, readOnly: vm.locked, cursorPosition: vm.cursor, onDocumentEdited: vm.changed, onSubmitted: vm.submitted)
+ CodeEditor(text: "Hello\n한글 😀", showSnippetHeader: false, textColor: "#ffffff", tabStopDistance: 64, editorHeight: 240)
+}})",{.framework="LVRS"});
+    check(result.has_value(),"Native CodeEditor AOT failed");
+    for(auto token:{"lvrs::CodeEditor::create(","value.model = scope->backend_0.document","value.text = \"Hello\\n","editor.set_text(","editor.set_options(","editor.set_cursor_position(value)","const lvrs::TextDocumentChange& change"}){
+        if(std::string_view(token)=="editor.set_text(")continue;
+        check(result->find(token)!=result->npos,"CodeEditor AOT lost its scoped model, bindings or callbacks");
+    }
+    auto bound=lvui::compile_native("var source: String = \"Native\"\nWindow { CodeEditor(text: source) }",{.framework="LVRS"});
+    check(bound&&bound->find("editor.set_text(ii::gui::binding_text(value))")!=bound->npos,"CodeEditor text binding reconstructed its view");
+    for(auto source:{"Window { CodeEditor(readOnly: 1) }","Window { CodeEditor(textFormat: .RichText) }","Window { CodeEditor { Label() } }","Window { CodeEditor(height: 160, editorHeight: 200) }","import vm Backend\nWindow { CodeEditor(model: vm.document, text: \"ambiguous\") }"})
+        check(!lvui::compile_native(source,{.framework="LVRS"}),"Invalid or unimplemented CodeEditor contract silently accepted");
+    bad("Window { CodeEditor() }","FRAMEWORK LVRS");
+}
+void lvrs_materials(){
+    auto result=lvui::compile_native(R"(import vm Backend
+Window { VStack {
+ MaterialSurface(width: vm.width, height: 120, density: .Dense75, primaryColor: vm.accent, backdrop: .PreviousLayers, outlinePath: vm.path, motion: vm.motion) { Label(text: "Native") }
+ PanelMaterial(tintOpacity: 0.25, blurEnabled: vm.blur, innerHighlightOffsetY: -1, shadowOpacity: 0)
+ WindowMaterial(density: vm.density, backdropBaseColor: "#01020380", motionEnabled: vm.animated)
+}})",{.framework="LVRS"});check(result.has_value(),"Native material generation failed");
+    for(auto token:{"lvrs::MaterialSurface::create(","lvrs::PanelMaterial::create(","lvrs::WindowMaterial::create(","lvrs::MaterialDensity::dense75","lvrs::MaterialBackdrop::previous_layers","options->primary_color = value","options->outline_path = ii::gui::binding_text(value)","material.set_options(std::move(*options))"})check(result->find(token)!=result->npos,"Material AOT lost typed style, scope or bindings");
+    for(auto source:{"Window { MaterialSurface(density: .Unknown) }","Window { PanelMaterial(tintOpacity: 2) }","Window { WindowMaterial(blurEnabled: 1) }","Window { MaterialSurface(width: -1) }","Window { MaterialSurface(backdropSource: \"canvas\") }","Window { MaterialSurface(outlinePath: 1) }"})check(!lvui::compile_native(source,{.framework="LVRS"}),"Invalid/unsupported material input silently accepted");
+    bad("Window { MaterialSurface {} }","FRAMEWORK LVRS");
+}
+void lvrs_media(){
+    auto result=lvui::compile_native(R"(import vm MediaBackend
+Window { HStack {
+ Avatar(size: .Small, source: vm.image, width: vm.width, enabled: vm.enabled)
+ Card(type: .File, size: .Large, detail: .Detailed, filename: vm.title, selected: vm.selected, previewSource: vm.image, onSelectedChanged: vm.selectedChanged) { Label(text: "Preview") }
+ Card(type: .Project, rows: vm.rows, progress: vm.progress, showMenu: vm.enabled, actionText: "View", onMenuRequested: vm.menu, onActionTriggered: vm.open)
+ Card(type: .Link, domain: "iisacc.com", previewComponent: vm.preview, iconComponent: vm.icon)
+}})",{.framework="LVRS"});check(result.has_value(),"Native media code generation failed");
+    for(auto token:{"lvrs::Avatar::create(","lvrs::Card::create(","lvrs::AvatarSize::small","lvrs::CardSize::large","lvrs::CardDetail::detailed","lvrs::CardType::project","options->preview_source = value","options->selected = value","component.set_preview_content(lvrs::card_component(value))","scope->backend_0.selectedChanged(value)",".progress = ii::gui::binding_value("})check(result->find(token)!=result->npos,"Media AOT lost typed native construction, retained scope or binding");
+    for(auto source:{"Window { Card(type: .Unknown) }","Window { Card(size: 1) }","Window { Card(title: \"a\", filename: \"b\") }","Window { Card(previewSource: \"file.png\") }","Window { Avatar(source: \"avatar.png\") }","Window { Avatar(cache: true) }","Window { Card(asynchronous: true) }","Window { Card(rows: [1]) }","Window { Avatar(width: -1) }","Window { Card(showMenu: 1) }","import vm Backend\nWindow { Card(previewComponent: vm.preview) { Label(text: \"ambiguous\") } }","import vm Backend\nWindow { Card(onMenuRequested: vm.menu()) }","Window { Avatar { Label(text: \"invalid\") } }"})check(!lvui::compile_native(source,{.framework="LVRS"}),"Invalid or unimplemented media input was silently accepted");
+    bad("Window { Card {} }","FRAMEWORK LVRS");bad("Window { Avatar {} }","FRAMEWORK LVRS");
+}
 void lvrs_toolbars(){
     auto result=lvui::compile_native(R"(import vm Backend
 Window { VStack {
@@ -379,6 +432,10 @@ int main(int argc, char** argv) {
         else if (name == "embedded_build") embedded_build();
         else if (name == "lvrs_router") lvrs_router();
         else if (name == "lvrs_link") lvrs_link();
+        else if (name == "lvrs_materials") lvrs_materials();
+        else if (name == "lvrs_code_editor") lvrs_code_editor();
+        else if (name == "lvrs_tooltip") lvrs_tooltip();
+        else if (name == "lvrs_media") lvrs_media();
         else if (name == "lvrs_toolbars") lvrs_toolbars();
         else if (name == "lvrs_app_surfaces") lvrs_app_surfaces();
         else if (name == "lvrs_controls") lvrs_controls();

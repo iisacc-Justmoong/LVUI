@@ -149,6 +149,13 @@ struct Parser final {
         while (accept(TokenKind::dot)) result += "." + identifier();
         return result;
     }
+    std::string enumeration_path() {
+        const auto name=[&]() -> std::string {
+            if(at(TokenKind::keyword)&&current().reserved&&current().reserved->kind==KeywordKind::view)return tokens[cursor++].text;
+            return identifier();
+        };
+        auto result=name();while(accept(TokenKind::dot))result+="."+name();return result;
+    }
     std::vector<Value> values(TokenKind end, std::size_t depth) {
         std::vector<Value> result;
         newlines();
@@ -168,7 +175,7 @@ struct Parser final {
         if (negative) error("Expected a number after '-'");
         if (word("true") || word("false")) return {ValueKind::boolean, tokens[cursor++].text, {}};
         if (accept(TokenKind::left_bracket)) return {ValueKind::list, {}, values(TokenKind::right_bracket, depth)};
-        if (accept(TokenKind::dot)) return {ValueKind::enumeration, "." + path(), {}};
+        if (accept(TokenKind::dot)) return {ValueKind::enumeration, "." + enumeration_path(), {}};
         if (at(TokenKind::identifier)) {
             auto reference = path();
             if (accept(TokenKind::left_paren)) return {ValueKind::call, std::move(reference), values(TokenKind::right_paren, depth)};

@@ -86,6 +86,9 @@ ApplicationWindow(title: title) {
     check(good("VStack { Label()\n HStack { Avatar()\n Spacer() } }").root().children.size() == 2, "Optional empty parentheses/nested braces failed");
 }
 void shadowing() {
+    const auto enumeration=good("Card(type: .Link)");
+    check(enumeration.root().inputs[0].value.kind==lvui::ValueKind::enumeration&&enumeration.root().inputs[0].value.text==".Link","Component keyword cannot be used as an enum value");
+    bad("Card(type: .import)","reserved");
     for (const auto& word : lvui::keywords()) {
         auto name = std::string(word.spelling);
         bad("let " + name + " = 1\nLabel()", "reserved");

@@ -70,7 +70,7 @@ class Generator final {
     std::set<std::string, std::less<>> ids;
     std::map<std::string,std::string,std::less<>> widget_variables;
     std::map<std::string,std::string,std::less<>> toolbar_parents;
-    struct ContextBinding final {std::string menu,target;SourcePosition position;};
+    struct ContextBinding final {std::string menu,target;SourcePosition position;bool tooltip=false;};
     std::vector<ContextBinding> context_bindings;
     std::vector<std::string> initial_open;
     std::size_t factory_depth=0;
@@ -203,7 +203,7 @@ class Generator final {
         auto outer_body=std::move(body);auto outer_ids=std::move(ids);auto outer_variables=std::move(widget_variables);auto outer_bindings=std::move(context_bindings);
         body.clear();ids=isolated?std::set<std::string,std::less<>>{}:outer_ids;widget_variables.clear();context_bindings.clear();++factory_depth;
         for(const auto& child:view.children)emit(child,"content");
-        for(const auto& binding:context_bindings){auto target=widget_variables.find(binding.target);if(target==widget_variables.end())error(binding.position,"Unknown context menu targetId in content scope");body+="            if (auto bound = "+target->second+"->set_context_menu(*"+binding.menu+"); !bound) return bound;\n";}
+        for(const auto& binding:context_bindings){auto target=widget_variables.find(binding.target);if(target==widget_variables.end())error(binding.position,binding.tooltip?"Unknown Tooltip targetId in content scope":"Unknown context menu targetId in content scope");body+="            if (auto bound = "+(binding.tooltip?binding.menu+"->set_target(*"+target->second+")":target->second+"->set_context_menu(*"+binding.menu+")")+"; !bound) return bound;\n";}
         auto children=std::move(body);--factory_depth;body=std::move(outer_body);if(isolated)ids=std::move(outer_ids);widget_variables=std::move(outer_variables);context_bindings=std::move(outer_bindings);
         return "lvrs::"+std::string(factory_type)+"{"+std::string(backends.empty()&&reactive.empty()?"[]":"[scope]")+"(ii::gui::WidgetBuilder& widgets, ii::gui::Widget content) -> ii::core::Result<void> {\n            lvrs::Widgets controls(widgets);\n"+binding_owner()+children+"            return {};\n        }}";
     }
@@ -310,6 +310,94 @@ class Generator final {
         if(auto it=values.find("visible");it!=values.end()&&property(it->second->value).empty())body+="            if (auto visible = "+variable+"->set_visible("+boolean(values,"visible",true)+"); !visible) return visible;\n";
         if(values.contains("flex"))body+="            if (auto flex = "+variable+"->set_flex("+decimal(numeric(values,"flex",0,0,1024))+"); !flex) return flex;\n";
     }
+    std::string media_enum(const Inputs& v,std::string_view name,std::string_view type,std::string fallback,std::initializer_list<std::pair<std::string_view,std::string_view>> choices)const{
+        auto it=v.find(name);if(it==v.end())return "lvrs::"+std::string(type)+"::"+fallback;
+        if(!property(it->second->value).empty())return link_value(v,name,"");
+        const auto value=resolve(it->second->value,it->second->position);
+        if(value.kind==ValueKind::enumeration)for(auto [key,target]:choices)if(value.text=="."+std::string(key))return "lvrs::"+std::string(type)+"::"+std::string(target);
+        error(it->second->position,"Unknown native "+std::string(type)+" value");
+    }
+    std::string media_size(const Inputs& v,bool avatar)const{return media_enum(v,"size",avatar?"AvatarSize":"CardSize",avatar?"large":"medium",{{"Small","small"},{"Medium","medium"},{"Large","large"},{"small","small"},{"medium","medium"},{"large","large"}});}
+    std::string media_call(std::string_view kind,const std::string& args,const Inputs& v)const{
+        const auto n=[&](std::string_view key,std::string value){return surface_number(v,key,std::move(value));};
+        const auto b=[&](std::string_view key,bool value){return link_bool(v,key,value);};
+        if(kind=="Avatar")return "lvrs::Avatar::create(widgets, "+args+", {.size = "+media_size(v,true)+", .source = "+link_value(v,"source","{}")+", .background = "+surface_color(v,"backgroundColor","ii::gui::WidgetColor{.1935568452,.1978072077,.1999323964,1}")+", .width = "+n("width","0")+", .height = "+n("height","0")+", .enabled = "+b("enabled",true)+", .accessibility_name = "+link_text(v,"accessibilityName","User avatar")+"})";
+        const auto title=alias_key(v,"title","filename"),icon=alias_key(v,"icon","iconSource");
+        const auto optional_bool=[&](std::string_view key){return v.contains(key)?b(key,true):"std::nullopt";};
+        const auto optional_text=[&](std::string_view key){return v.contains(key)?link_text(v,key):"std::nullopt";};
+        return "lvrs::Card::create(widgets, "+args+", {.type = "+media_enum(v,"type","CardType","file",{{"File","file"},{"FilePreview","file_preview"},{"Folder","folder"},{"Project","project"},{"Device","device"},{"Model","model"},{"Member","member"},{"Link","link"}})+", .size = "+media_size(v,false)+", .detail = "+media_enum(v,"detail","CardDetail","brief",{{"Brief","brief"},{"Detailed","detailed"}})+", .display_state = "+media_enum(v,"displayState","CardDisplayState","automatic",{{"Automatic","automatic"},{"DefaultState","normal"},{"HoverState","hover"},{"SelectedState","selected"}})+", .selected = "+b("selected",false)+", .enabled = "+b("enabled",true)+", .show_description = "+b("showDescription",true)+", .show_status = "+b("showStatus",true)+", .selectable = "+optional_bool("selectable")+", .show_menu = "+optional_bool("showMenu")+", .show_action = "+optional_bool("showAction")+", .title = "+link_text(v,title)+", .description = "+link_text(v,"description")+", .details = "+link_text(v,"details")+", .metadata = "+link_text(v,"metadata")+", .status_text = "+link_text(v,"statusText")+", .summary = "+link_text(v,"summary")+", .footnote = "+link_text(v,"footnote")+", .domain = "+link_text(v,"domain")+", .preview_title = "+link_text(v,"previewTitle")+", .icon_name = "+link_text(v,"iconName")+", .menu_accessibility_name = "+link_text(v,"menuAccessibleName","More actions")+", .action_text = "+optional_text("actionText")+", .progress_label = "+optional_text("progressLabel")+", .progress_text = "+link_text(v,"progressText")+", .rows = "+link_value(v,"rows","{}")+", .progress = "+(v.contains("progress")&&!property(v.at("progress")->value).empty()?link_value(v,"progress",""):decimal(numeric(v,"progress",0,-1e9,1e9)))+", .progress_color = "+link_color(v,"progressColor")+", .status_color = "+link_color(v,"statusColor")+", .icon = "+link_value(v,icon,"{}")+", .preview_source = "+link_value(v,"previewSource","{}")+", .width = "+n("width","0")+", .height = "+n("height","0")+"}, {.clicked = "+action(v)+", .menu_requested = "+action(v,"onMenuRequested")+", .action_triggered = "+action(v,"onActionTriggered")+", .selected_changed = "+action(v,"onSelectedChanged","bool value")+"}, {.preview = lvrs::card_component("+link_value(v,"previewComponent","ii::gui::WidgetFactory{}")+"), .icon = lvrs::card_component("+link_value(v,"iconComponent","ii::gui::WidgetFactory{}")+")})";
+    }
+    void emit_media_bindings(const Inputs& v,const std::string& variable,const std::string& native,bool avatar){
+        const std::map<std::string,std::string,std::less<>> fields{{"size","size"},{"type","type"},{"detail","detail"},{"displayState","display_state"},{"selected","selected"},{"enabled","enabled"},{"showDescription","show_description"},{"showStatus","show_status"},{"selectable","selectable"},{"showMenu","show_menu"},{"showAction","show_action"},{"title","title"},{"filename","title"},{"description","description"},{"details","details"},{"metadata","metadata"},{"statusText","status_text"},{"summary","summary"},{"footnote","footnote"},{"domain","domain"},{"previewTitle","preview_title"},{"iconName","icon_name"},{"menuAccessibleName","menu_accessibility_name"},{"actionText","action_text"},{"progressLabel","progress_label"},{"progressText","progress_text"},{"rows","rows"},{"progress","progress"},{"progressColor","progress_color"},{"statusColor","status_color"},{"icon","icon"},{"iconSource","icon"},{"previewSource","preview_source"},{"source","source"},{"backgroundColor","background"},{"width","width"},{"height","height"},{"accessibilityName","accessibility_name"}};
+        const std::set<std::string,std::less<>> texts{"title","filename","description","details","metadata","statusText","summary","footnote","domain","previewTitle","iconName","menuAccessibleName","actionText","progressLabel","progressText","accessibilityName"};
+        for(const auto& [name,input]:v){auto source=property(input->value);if(source.empty())continue;std::string update;
+            if(name=="visible")update="return widget.set_visible(value);";
+            else if(!avatar&&(name=="previewComponent"||name=="iconComponent"))update="return component.set_"+std::string(name=="previewComponent"?"preview":"icon")+"_content(lvrs::card_component(value));";
+            else if(auto it=fields.find(name);it!=fields.end())update="auto options = component.options(); if (!options) return std::unexpected(options.error()); options->"+it->second+" = "+(texts.contains(name)?"ii::gui::binding_text(value)":"value")+"; return component.set_options(std::move(*options));";
+            if(!update.empty())body+="            if (auto binding = ii::gui::bind_member(*bindings, *"+variable+", "+source+", [component = *"+native+"](ii::gui::Widget widget, const auto& value) -> ii::core::Result<void> { (void)widget; "+update+" }); !binding) return binding;\n";
+        }
+        if(auto it=v.find("visible");it!=v.end()&&property(it->second->value).empty())body+="            if (auto visible = "+variable+"->set_visible("+boolean(v,"visible",true)+"); !visible) return visible;\n";
+        if(v.contains("flex"))body+="            if (auto flex = "+variable+"->set_flex("+decimal(numeric(v,"flex",0,0,1024))+"); !flex) return flex;\n";
+    }
+    const std::map<std::string,std::string,std::less<>> material_fields{{"density","density"},{"primaryColor","primary_color"},{"color","color"},{"borderColor","border_color"},{"backdropBaseColor","backdrop_base_color"},{"tintOpacity","tint_opacity"},{"blurRadius","blur_radius"},{"radius","radius"},{"innerHighlightOpacity","inner_highlight_opacity"},{"shadowRadius","shadow_radius"},{"shadowOffsetY","shadow_offset_y"},{"shadowOpacity","shadow_opacity"},{"borderWidth","border_width"},{"innerHighlightOffsetY","inner_highlight_offset_y"},{"intenseOpacity","intense_opacity"},{"faintOpacity","faint_opacity"},{"blurEnabled","blur_enabled"},{"motionEnabled","motion_enabled"},{"enabled","enabled"},{"backdrop","backdrop"},{"outlinePath","outline_path"},{"width","width"},{"height","height"},{"motion","motion"}};
+    std::string material_call(std::string_view kind,const std::string& args,const Inputs& v)const{
+        std::string setup;
+        for(const auto& [name,input]:v){auto field=material_fields.find(name);if(field==material_fields.end())continue;std::string value;
+            if(name=="density")value=media_enum(v,name,"MaterialDensity","glass25",{{"Dense75","dense75"},{"Glass25","glass25"}});
+            else if(name=="backdrop")value=media_enum(v,name,"MaterialBackdrop","none",{{"None","none"},{"Content","content"},{"PreviousLayers","previous_layers"}});
+            else if(name=="outlinePath")value=link_text(v,name);
+            else if(name=="motion")value=link_value(v,name,"{}");
+            else if(name=="primaryColor"||name=="color"||name=="borderColor"||name=="backdropBaseColor")value=surface_color(v,name,"{}");
+            else if(name=="blurEnabled"||name=="motionEnabled"||name=="enabled")value=link_bool(v,name,true);
+            else if(!property(input->value).empty())value=link_value(v,name,"");
+            else{const bool opacity=name=="tintOpacity"||name=="innerHighlightOpacity"||name=="shadowOpacity"||name=="intenseOpacity"||name=="faintOpacity";const bool offset=name=="shadowOffsetY"||name=="innerHighlightOffsetY";value=decimal(numeric(v,name,0,offset?-8192:0,opacity?1:8192));}
+            setup+="value."+field->second+" = "+value+"; ";
+        }
+        return "([&]() { lvrs::MaterialOptions value; "+setup+"return lvrs::"+std::string(kind)+"::create(widgets, "+args+", std::move(value)); }())";
+    }
+    void emit_material_bindings(const Inputs& v,const std::string& variable,const std::string& native){
+        for(const auto& [name,input]:v){const auto source=property(input->value);if(source.empty())continue;std::string update;
+            if(name=="visible")update="return widget.set_visible(value);";
+            else if(auto field=material_fields.find(name);field!=material_fields.end())update="auto options = material.options(); if (!options) return std::unexpected(options.error()); options->"+field->second+" = "+(name=="outlinePath"?"ii::gui::binding_text(value)":"value")+"; return material.set_options(std::move(*options));";
+            if(!update.empty())body+="            if (auto binding = ii::gui::bind_member(*bindings, *"+variable+", "+source+", [material = *"+native+"](ii::gui::Widget widget, const auto& value) -> ii::core::Result<void> { (void)widget; "+update+" }); !binding) return binding;\n";
+        }
+        if(auto it=v.find("visible");it!=v.end()&&property(it->second->value).empty())body+="            if (auto visible = "+variable+"->set_visible("+boolean(v,"visible",true)+"); !visible) return visible;\n";
+        if(v.contains("flex"))body+="            if (auto flex = "+variable+"->set_flex("+decimal(numeric(v,"flex",0,0,1024))+"); !flex) return flex;\n";
+    }
+    const std::map<std::string,std::string,std::less<>> code_editor_text_fields{{"text","text"},{"placeholderText","placeholder_text"},{"snippetTitle","snippet_title"},{"snippetLanguage","snippet_language"},{"fontFamily","font_family"},{"accessibilityName","accessibility_name"}};
+    const std::map<std::string,std::string,std::less<>> code_editor_number_fields{{"width","width"},{"height","editor_height"},{"editorHeight","editor_height"},{"fieldMinHeight","field_min_height"},{"headerHeight","header_height"},{"headerSpacing","header_spacing"},{"insetHorizontal","inset_horizontal"},{"insetVertical","inset_vertical"},{"cornerRadius","corner_radius"},{"fontPixelSize","font_pixel_size"},{"fontWeight","font_weight"},{"textLineHeight","text_line_height"},{"centeredTextHeight","centered_text_height"},{"tabStopDistance","tab_stop_distance"},{"textMargin","text_margin"},{"placeholderOpacity","placeholder_opacity"}};
+    const std::map<std::string,std::string,std::less<>> code_editor_bool_fields{{"enabled","enabled"},{"readOnly","read_only"},{"showSnippetHeader","show_snippet_header"},{"showScrollBar","show_scroll_bar"},{"autoFocusOnPress","auto_focus_on_press"},{"selectByMouse","select_by_mouse"},{"selectByKeyboard","select_by_keyboard"},{"persistentSelection","persistent_selection"},{"overwriteMode","overwrite_mode"}};
+    const std::map<std::string,std::string,std::less<>> code_editor_color_fields{{"textColor","text_color"},{"textColorDisabled","text_color_disabled"},{"placeholderColor","placeholder_color"},{"placeholderColorDisabled","placeholder_color_disabled"},{"selectedTextColor","selected_text_color"},{"headerTextColor","header_text_color"},{"backgroundColor","background_color"},{"backgroundColorHover","background_color_hover"},{"backgroundColorFocused","background_color_focused"},{"backgroundColorDisabled","background_color_disabled"},{"selectionColor","selection_color"}};
+    std::string code_editor_call(const std::string& args,const Inputs& v)const{
+        if(v.contains("height")&&v.contains("editorHeight"))error(v.at("height")->position,"Use height or editorHeight for CodeEditor");
+        if(v.contains("model")&&v.contains("text"))error(v.at("text")->position,"Use a scoped CodeEditor model or initial text");
+        std::string setup;
+        for(const auto& [name,field]:code_editor_text_fields)if(v.contains(name))setup+="value."+field+" = "+link_text(v,name)+"; ";
+        for(const auto& [name,field]:code_editor_bool_fields)if(v.contains(name))setup+="value."+field+" = "+link_bool(v,name,false)+"; ";
+        for(const auto& [name,field]:code_editor_number_fields)if(v.contains(name))setup+="value."+field+" = "+surface_number(v,name,"0")+"; ";
+        for(const auto& [name,field]:code_editor_color_fields)if(v.contains(name))setup+="value."+field+" = "+surface_color(v,name,"{}")+"; ";
+        if(v.contains("model"))setup+="value.model = "+scoped_member(v,"model")+"; ";
+        return "([&]() { lvrs::CodeEditorOptions value; "+setup+"return lvrs::CodeEditor::create(widgets, "+args+", std::move(value), {.document_edited = "+action(v,"onDocumentEdited","const lvrs::TextDocumentChange& change","change")+", .text_edited = "+action(v,"onTextEdited","std::string value","value")+", .submitted = "+action(v,"onSubmitted","std::string value","value")+", .selection_changed = "+action(v,"onSelectionChanged","ii::gui::TextRange range","range")+"}); }())";
+    }
+    void emit_code_editor_bindings(const Inputs& v,const std::string& variable,const std::string& native){
+        for(const auto& [name,input]:v){const auto source=property(input->value);if(source.empty())continue;std::string update;
+            if(name=="visible")update="return widget.set_visible(value);";
+            else if(name=="text")update="auto changed = editor.set_text(ii::gui::binding_text(value)); if (!changed) return std::unexpected(changed.error()); return {};";
+            else if(name=="cursorPosition")update="auto changed = editor.set_cursor_position(value); if (!changed) return std::unexpected(changed.error()); return {};";
+            else {
+                std::string field,expression="value";
+                if(auto found=code_editor_text_fields.find(name);found!=code_editor_text_fields.end()){field=found->second;expression="ii::gui::binding_text(value)";}
+                else if(auto found=code_editor_number_fields.find(name);found!=code_editor_number_fields.end())field=found->second;
+                else if(auto found=code_editor_bool_fields.find(name);found!=code_editor_bool_fields.end())field=found->second;
+                else if(auto found=code_editor_color_fields.find(name);found!=code_editor_color_fields.end())field=found->second;
+                if(!field.empty())update="auto options = editor.options(); if (!options) return std::unexpected(options.error()); options->"+field+" = "+expression+"; return editor.set_options(std::move(*options));";
+            }
+            if(!update.empty())body+="            if (auto binding = ii::gui::bind_member(*bindings, *"+variable+", "+source+", [editor = *"+native+"](ii::gui::Widget widget, const auto& value) -> ii::core::Result<void> { (void)widget; "+update+" }); !binding) return binding;\n";
+        }
+        if(v.contains("cursorPosition")&&property(v.at("cursorPosition")->value).empty())body+="            if (auto cursor = "+native+"->set_cursor_position("+decimal(numeric(v,"cursorPosition",0,0,1e12))+"); !cursor) return std::unexpected(cursor.error());\n";
+        if(v.contains("visible")&&property(v.at("visible")->value).empty())body+="            if (auto visible = "+variable+"->set_visible("+boolean(v,"visible",true)+"); !visible) return visible;\n";
+        if(v.contains("flex"))body+="            if (auto flex = "+variable+"->set_flex("+decimal(numeric(v,"flex",0,0,1024))+"); !flex) return flex;\n";
+    }
     std::string table_call(std::string_view kind,const std::string& args,const Inputs& v)const{
         const auto n=[&](std::string_view key,double fallback,double low=0.){return decimal(numeric(v,key,fallback,low,8192));};
         const auto b=[&](std::string_view key,bool fallback){return boolean(v,key,fallback);};
@@ -347,15 +435,53 @@ class Generator final {
         }
         return "controls.table_header("+args+", {.layout = {.width = "+n("width",717,1)+", .row_height = "+n("rowHeight",24,1)+", .horizontal_padding = "+n("cellHorizontalPadding",8)+", .fallback_cell_width = "+n("fallbackCellWidth",0)+", .minimum_column_width = "+n("minColumnWidth",32,1)+widths+strings("columns","lvrs::TableHeaderColumn",false)+"}, .interactive = "+b("interactive",false)+", .enabled = "+b("enabled",true)+", .separator_height = "+n("separatorHeight",1)+", .text_color = "+c("textColor","ii::gui::WidgetColor{1,1,1,.6}")+", .separator_color = "+c("separatorColor",divider)+"}, {.column_clicked = "+action(v,"onColumnClicked","std::size_t index, const lvrs::TableHeaderColumn& column","index, column")+"})";
     }
+    const std::map<std::string,std::string,std::less<>> tooltip_numbers{{"maximumWidth","maximum_width"},{"maximumHeight","maximum_height"},{"contentPadding","content_padding"},{"edgeMargin","edge_margin"},{"cornerRadius","corner_radius"},{"tailLength","tail_length"},{"tailWidth","tail_width"},{"surfaceOpacity","surface_opacity"}};
+    const std::map<std::string,std::string,std::less<>> tooltip_booleans{{"automatic","automatic"},{"scrollContent","scroll_content"},{"motionEnabled","motion_enabled"}};
+    const std::map<std::string,std::string,std::less<>> tooltip_durations{{"delay","delay"},{"timeout","timeout"},{"hideDelay","hide_delay"},{"animationDuration","animation_duration"}};
+    const std::map<std::string,std::string,std::less<>> tooltip_colors{{"surfaceColor","surface_color"},{"borderColor","border_color"},{"primaryColor","primary_color"}};
+    std::string tooltip_call(const std::string& args,const Inputs& v,const View& view){
+        if(v.contains("target")&&v.contains("targetId"))error(view.position,"Use Tooltip target or targetId");
+        std::string setup;
+        for(auto name:{"text","accessibilityName"})if(v.contains(name))setup+="value."+std::string(name==std::string_view("text")?"text":"accessibility_name")+" = "+link_text(v,name)+"; ";
+        for(const auto& [name,field]:tooltip_numbers)if(v.contains(name))setup+="value."+field+" = "+surface_number(v,name,"0")+"; ";
+        for(const auto& [name,field]:tooltip_booleans)if(v.contains(name))setup+="value."+field+" = "+link_bool(v,name,false)+"; ";
+        for(const auto& [name,field]:tooltip_colors)if(v.contains(name))setup+="value."+field+" = "+surface_color(v,name,"{}")+"; ";
+        for(const auto& [name,field]:tooltip_durations)if(v.contains(name)){
+            auto expression=property(v.at(name)->value).empty()?decimal(numeric(v,name,0,0,86400000)):link_value(v,name,"0");
+            setup+="{ auto duration = lvrs::tooltip_milliseconds("+expression+"); if (!duration) return std::unexpected(duration.error()); value."+field+" = *duration; } ";
+        }
+        for(auto [name,field]:{std::pair{"motion","motion"},{"target","target"},{"availableRect","available_rect"}})if(v.contains(name))setup+="value."+std::string(field)+" = "+link_value(v,name,"{}")+"; ";
+        if(v.contains("anchorX")||v.contains("anchorY"))setup+="value.anchor_point = lvrs::TooltipPoint{"+surface_number(v,"anchorX","0")+", "+surface_number(v,"anchorY","0")+"}; ";
+        if(v.contains("preferredPlacement"))setup+="value.preferred_placement = "+(property(v.at("preferredPlacement")->value).empty()?media_enum(v,"preferredPlacement","TooltipPlacement","automatic",{{"Automatic","automatic"},{"Above","above"},{"Below","below"},{"LeftSide","left_side"},{"RightSide","right_side"}}):link_value(v,"preferredPlacement","{}"))+"; ";
+        if(v.contains("backdrop"))setup+="value.backdrop = "+media_enum(v,"backdrop","MaterialBackdrop","content",{{"None","none"},{"Content","content"},{"PreviousLayers","previous_layers"}})+"; ";
+        return "([&]() -> ii::core::Result<lvrs::Tooltip> { lvrs::TooltipOptions value; "+setup+"return lvrs::Tooltip::create(widgets, "+args+", std::move(value), {.opened = "+action(v,"onOpened")+", .closed = "+action(v,"onClosed")+"}, "+modal_content(view,"TooltipContentFactory",false)+"); }())";
+    }
+    void emit_tooltip_bindings(const Inputs& v,const std::string& variable,const std::string& native){
+        for(const auto& [name,input]:v){auto source=property(input->value);if(source.empty())continue;std::string update;
+            if(name=="text"||name=="accessibilityName")update="options->"+std::string(name=="text"?"text":"accessibility_name")+" = ii::gui::binding_text(value);";
+            else if(auto field=tooltip_numbers.find(name);field!=tooltip_numbers.end())update="options->"+field->second+" = value;";
+            else if(auto field=tooltip_booleans.find(name);field!=tooltip_booleans.end())update="options->"+field->second+" = value;";
+            else if(auto field=tooltip_colors.find(name);field!=tooltip_colors.end())update="options->"+field->second+" = value;";
+            else if(auto field=tooltip_durations.find(name);field!=tooltip_durations.end())update="auto duration = lvrs::tooltip_milliseconds(value); if (!duration) return std::unexpected(duration.error()); options->"+field->second+" = *duration;";
+            else if(name=="anchorX"||name=="anchorY")update="if (!options->anchor_point) options->anchor_point = lvrs::TooltipPoint{}; options->anchor_point->"+std::string(name=="anchorX"?"x":"y")+" = value;";
+            else if(name=="target"||name=="motion"||name=="availableRect"||name=="preferredPlacement"||name=="backdrop"){
+                const auto field=name=="availableRect"?"available_rect":name=="preferredPlacement"?"preferred_placement":name.c_str();update="options->"+std::string(field)+" = value;";
+            }
+            if(!update.empty())body+="            if (auto binding = ii::gui::bind_member(*bindings, *"+variable+", "+source+", [tooltip = *"+native+"](ii::gui::Widget widget, const auto& value) -> ii::core::Result<void> { (void)widget; auto options = tooltip.options(); if (!options) return std::unexpected(options.error()); "+update+" return tooltip.set_options(std::move(*options)); }); !binding) return binding;\n";
+        }
+    }
     void emit(const View& view, const std::string& parent,const Inputs* menu_parent=nullptr) {
         const auto kind=view.component->spelling;
         const bool stack=kind=="VStack" || kind=="HStack" || kind=="ZStack";
         const bool icon_button=kind=="IconButton" || kind=="IconMenuButton";
         const bool dropdown=kind=="DropdownButton" || kind=="IconMenuButton" || kind=="LabelMenuButton";
         const bool button=kind=="PushButton" || kind=="LabelButton" || kind=="AbstractButton" || icon_button || dropdown || kind=="HelpButton" || kind=="ListItem";
+        const bool material=kind=="MaterialSurface"||kind=="PanelMaterial"||kind=="WindowMaterial";
+        const bool code_editor=kind=="CodeEditor",tooltip=kind=="Tooltip";
+        const bool media_card=kind=="Card",avatar=kind=="Avatar";
         const bool toolbar=kind=="ToolbarButton"||kind=="HierarchyToolbar"||kind=="ListToolbar"||kind=="ListFooter";
         const bool list=kind=="List"||kind=="Hierarchy",card=kind=="AppCard",header=kind=="AppHeader",listener=kind=="EventListener",router=kind=="PageRouter",link=kind=="Link";
-        if((toolbar||list||card||header||listener||router||link||kind=="ListItem")&&options.framework!="LVRS")error(view.position,"This LVRS component requires FRAMEWORK LVRS");
+        if((tooltip||code_editor||material||media_card||avatar||toolbar||list||card||header||listener||router||link||kind=="ListItem")&&options.framework!="LVRS")error(view.position,"This LVRS component requires FRAMEWORK LVRS");
         const bool tabbar=kind=="TabBar",tab=kind=="Tab";
         const bool combo=kind=="ComboBox",stepper=kind=="Stepper",segmented=kind=="LabelSegmentedControl" || kind=="IconSegmentedControl";
         const bool menu=kind=="Menu" || kind=="ContextMenu",menu_item=kind=="MenuItem" || kind=="ContextMenuItem",divider=kind=="MenuDivider" || kind=="ContextMenuDivider";
@@ -371,12 +497,17 @@ class Generator final {
         const bool check=kind=="CheckBox" || kind=="RadioButton" || kind=="ToggleSwitch";
         Inputs values;
         if(stack) values=inputs(view,{"id","spacing","padding","alignment","width","height"});
+        else if(tooltip)values=inputs(view,{"id","targetId","target","text","anchorX","anchorY","availableRect","preferredPlacement","automatic","scrollContent","motionEnabled","maximumWidth","maximumHeight","contentPadding","edgeMargin","cornerRadius","tailLength","tailWidth","delay","timeout","hideDelay","animationDuration","surfaceColor","borderColor","primaryColor","surfaceOpacity","backdrop","motion","accessibilityName","onOpened","onClosed"});
+        else if(code_editor)values=inputs(view,{"id","model","text","placeholderText","snippetTitle","snippetLanguage","fontFamily","accessibilityName","width","height","editorHeight","fieldMinHeight","headerHeight","headerSpacing","insetHorizontal","insetVertical","cornerRadius","fontPixelSize","fontWeight","textLineHeight","centeredTextHeight","tabStopDistance","textMargin","placeholderOpacity","enabled","readOnly","showSnippetHeader","showScrollBar","autoFocusOnPress","selectByMouse","selectByKeyboard","persistentSelection","overwriteMode","textColor","textColorDisabled","placeholderColor","placeholderColorDisabled","selectedTextColor","headerTextColor","backgroundColor","backgroundColorHover","backgroundColorFocused","backgroundColorDisabled","selectionColor","cursorPosition","onDocumentEdited","onTextEdited","onSubmitted","onSelectionChanged"});
         else if(link)values=inputs(view,{"id","text","href","to","params","router","navigator","targetComponent","replace","enabled","underline","tone","linkColor","hoverColor","pressedColor","disabledColor","horizontalPadding","verticalPadding","minimumHeight","cornerRadius","width","height","showFocusRing","accessibilityName","method","methods","onClick","onPressed","onReleased","onCanceled","onNavigated","onNavigationFailed"},true);
         else if(router){values=inputs(view,{"id","router","width","height"});if(!values.contains("router"))error(view.position,"PageRouter requires a scoped router member");}
         else if(kind=="ToolbarButton")values=inputs(view,{"id","buttonId","iconName","accessibilityName","text","icon","enabled","width","height","iconSize","leftPadding","rightPadding","cornerRadius","tone","onClick"},true);
         else if(kind=="ListToolbar")values=inputs(view,{"id","icon1","icon2","icon3","iconSize","buttonSize","horizontalPadding","verticalPadding","spacing","backgroundColor","interactive","enabled","width","height","onIconClicked"});
         else if(kind=="ListFooter")values=inputs(view,{"id","button1","button2","button3","horizontalPadding","verticalPadding","spacing","interactive","enabled","width","height","onButtonClicked"});
         else if(kind=="HierarchyToolbar")values=inputs(view,{"id","minimumToolbarWidth","horizontalPadding","verticalPadding","spacing","slotSize","backgroundColor","backgroundOpacity","distributeSpacing","enabled","width","height","buttonItems","activeButtonId","onActiveChanged","onButtonTriggered","onButtonEventTriggered"});
+        else if(material)values=inputs(view,{"id","density","primaryColor","color","borderColor","backdropBaseColor","tintOpacity","blurRadius","radius","innerHighlightOpacity","shadowRadius","shadowOffsetY","shadowOpacity","borderWidth","innerHighlightOffsetY","intenseOpacity","faintOpacity","blurEnabled","motionEnabled","enabled","backdrop","outlinePath","width","height","motion"});
+        else if(media_card)values=inputs(view,{"id","type","size","detail","displayState","selected","selectable","enabled","title","filename","description","details","metadata","statusText","summary","footnote","actionText","domain","previewTitle","rows","progressLabel","progressText","progress","progressColor","statusColor","showDescription","showStatus","showMenu","showAction","menuAccessibleName","iconName","icon","iconSource","previewSource","previewComponent","iconComponent","width","height","onClick","onSelectedChanged","onMenuRequested","onActionTriggered"},true);
+        else if(avatar)values=inputs(view,{"id","size","source","backgroundColor","width","height","enabled","accessibilityName"});
         else if(card)values=inputs(view,{"id","title","subtitle","enabled","width","height","padding","spacing","cornerRadius","shapeStyle","backgroundColor","titleColor","subtitleColor"});
         else if(header)values=inputs(view,{"id","title","subtitle","menuVisible","compact","enabled","contentHorizontalPadding","contentVerticalPadding","rowSpacing","actionSpacing","menuButtonPadding","width","height","backgroundColor","titleColor","subtitleColor","menuBackgroundColor","menuPressedBackgroundColor","onMenuClicked"});
         else if(listener)values=inputs(view,{"id","width","height","onInput","onResized"});
@@ -409,7 +540,8 @@ class Generator final {
         else if(alert_button) values=inputs(view,{"id","text","enabled","tone","dialogStyle","height","horizontalPadding","cornerRadius","textColor","primaryColor","method","onClick","onPressed","onReleased","onCanceled"},true);
         else if(alert) values=inputs(view,{"id","open","title","message","description","buttonCount","primaryText","secondaryText","tertiaryText","button1Text","button2Text","button3Text","button1Method","button2Method","button3Method","primaryEnabled","secondaryEnabled","tertiaryEnabled","secondaryDestructive","dismissOnBackground","closeOnEscape","minWidth","maxWidth","preferredWidth","sidePadding","cardCornerRadius","shapeStyle","backdropColor","cardBackgroundColor","glassEnabled","glassBlurRadius","shadowEnabled","shadowColor","shadowBlurRadius","shadowOffsetX","shadowOffsetY","motionEnabled","motion","showIcon","appIconSource","imageSource","appIconSize","iconFrameSize","appIconBackgroundColor","appIconFrameColor","appIconInnerColor","primaryColor","accessibilityName","onPrimaryClicked","onSecondaryClicked","onTertiaryClicked","onDismissed","onOpened","onClosed"});
         else error(view.position,"Component '"+std::string(kind)+"' is not supported by native AOT yet");
-        if(kind!="HierarchyToolbar" && !stack && !link && !card && !header && !tabbar && !segmented && !menu && !menu_item && !popover && !modal && !sheet && !view.children.empty()) error(view.position,"This C++ control cannot accept children");
+        if(kind!="HierarchyToolbar" && !stack && !link && !material && !media_card && !card && !header && !tabbar && !segmented && !menu && !menu_item && !popover && !modal && !sheet && !tooltip && !view.children.empty()) error(view.position,"This C++ control cannot accept children");
+        if(media_card&&values.contains("previewComponent")&&!view.children.empty())error(view.position,"Use previewComponent or inline Card content, not both");
         if(modal&&view.children.size()>1)error(view.position,"Modal accepts one content View; wrap children in a stack");
         if(popover){unsigned content=0;for(const auto& child:view.children)if(child.component->spelling!="Menu"&&child.component->spelling!="ContextMenu"&&child.component->spelling!="Popover")++content;if(content>1)error(view.position,"Popover accepts one content View; wrap children in a stack");}
         if(toolbar&&kind!="HierarchyToolbar"&&!view.children.empty())error(view.position,"This toolbar component has fixed native slots and accepts no child views");
@@ -426,7 +558,11 @@ class Generator final {
         const auto prefix=std::string(api);
         const auto args=parent+", "+literal(id);
         std::string call;
-        if(toolbar)call=toolbar_call(kind,args,values);
+        if(tooltip)call=tooltip_call(args,values,view);
+        else if(code_editor)call=code_editor_call(args,values);
+        else if(material)call=material_call(kind,args,values);
+        else if(media_card||avatar)call=media_call(kind,args,values);
+        else if(toolbar)call=toolbar_call(kind,args,values);
         else if(router){
             call=prefix+"page_router("+args+", "+scoped_member(values,"router")+", {"+decimal(numeric(values,"width",640,1,8192))+", "+decimal(numeric(values,"height",400,1,8192))+"})";
         } else
@@ -693,6 +829,10 @@ class Generator final {
             if(kind=="HierarchyToolbar")toolbar_parents["*"+variable]=native;
             if(kind=="ToolbarButton")if(auto owner=toolbar_parents.find(parent);owner!=toolbar_parents.end())body+="            if (auto attached = "+owner->second+"->register_button(*"+native+", false); !attached) return attached;\n";
         }
+        else if(tooltip){const auto native="tooltip_"+variable;body+="            auto "+native+" = "+call+";\n            if (!"+native+") return std::unexpected("+native+".error());\n            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";emit_tooltip_bindings(values,variable,native);if(values.contains("targetId"))context_bindings.push_back({native,text(values,"targetId"),values.at("targetId")->position,true});}
+        else if(code_editor){const auto native="editor_"+variable;body+="            auto "+native+" = "+call+";\n            if (!"+native+") return std::unexpected("+native+".error());\n            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";emit_code_editor_bindings(values,variable,native);}
+        else if(material){const auto native="material_"+variable;body+="            auto "+native+" = "+call+";\n            if (!"+native+") return std::unexpected("+native+".error());\n            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";emit_material_bindings(values,variable,native);}
+        else if(media_card||avatar){const auto native="media_"+variable;body+="            auto "+native+" = "+call+";\n            if (!"+native+") return std::unexpected("+native+".error());\n            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";emit_media_bindings(values,variable,native,avatar);}
         else if(link||card||header){const auto native=std::string(link?"link_":"surface_")+variable;body+="            auto "+native+" = "+call+";\n            if (!"+native+") return std::unexpected("+native+".error());\n            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";if(link)emit_link_bindings(values,variable,native);else emit_surface_bindings(values,variable,native);}
         else{body+="            auto "+variable+" = "+call+";\n            if (!"+variable+") return std::unexpected("+variable+".error());\n";emit_bindings(values,variable);}
         if(stack&&(values.contains("width")||values.contains("height")))body+="            if (auto extent = "+variable+"->set_extent({"+decimal(numeric(values,"width",0,0,8192))+", "+decimal(numeric(values,"height",0,0,8192))+"}); !extent) return extent;\n";
@@ -709,7 +849,7 @@ class Generator final {
                 body+="            auto "+name+" = "+prefix+method+"(*"+variable+", "+literal(id)+", {.label = "+literal(value.text)+", .shortcut = \"\", .icon_name = \"\", .key_visible = false, .show_icon_slot = "+boolean(values,"showIconSlot",true)+", .has_child_items = false});\n            if (!"+name+") return std::unexpected("+name+".error());\n";
             }
         }
-        if(!modal&&!sheet)for(const auto& child:view.children) emit(child,"*"+variable,menu?&values:nullptr);
+        if(!modal&&!sheet&&!tooltip)for(const auto& child:view.children) emit(child,"*"+variable,menu?&values:nullptr);
         if(kind=="HierarchyToolbar")body+="            if (auto normalized = toolbar_"+variable+"->normalize(); !normalized) return normalized;\n";
     }
 
@@ -766,8 +906,8 @@ public:
         if (width < min_width || height < min_height) error(root.position, "Window size must be at least its minimum size");
         emit(root.children.front(), "native_parent");
         for(const auto& binding:context_bindings) {
-            auto target=widget_variables.find(binding.target);if(target==widget_variables.end()) error(binding.position,"Unknown context menu targetId");
-            body+="            if (auto bound = "+target->second+"->set_context_menu(*"+binding.menu+"); !bound) return bound;\n";
+            auto target=widget_variables.find(binding.target);if(target==widget_variables.end()) error(binding.position,binding.tooltip?"Unknown Tooltip targetId":"Unknown context menu targetId");
+            body+="            if (auto bound = "+(binding.tooltip?binding.menu+"->set_target(*"+target->second+")":target->second+"->set_context_menu(*"+binding.menu+")")+"; !bound) return bound;\n";
         }
         std::string result = "// Generated by lvui-compile. C++23 native widget construction; do not edit.\n#pragma once\n#include <iiGUI/NativeWidgets.h>\n#include <iiGUI/Bindings.h>\n#include <iiGUI/Host.h>\n#include <memory>\n";
         if(options.framework=="LVRS") result += "#include <LVRS/Widgets.h>\n";
