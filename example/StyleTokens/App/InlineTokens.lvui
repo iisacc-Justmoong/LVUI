@@ -1,0 +1,12 @@
+<script>
+var distance: Metric = .space8
+</script>
+<ApplicationWindow title="LVUI inline tokens"
+    style="background:Color.window;font-family:var(--lvrs-theme-typography-font-font-body)">
+    <div id="inline-panel"
+        style="width:400px;height:240px;gap:Metric.space12;padding:.space24;background:.window;border-radius:Metric.radius6">
+        <span id="inline-body"
+            style="font-size:Metric.textBody;font-weight:.weightMedium;line-height:Metric.textBodyLineHeight;color:Color.text.body">Inline native tokens</span>
+        <Slider id="distance" from={0} to={20} value={distance}/>
+    </div>
+</ApplicationWindow>

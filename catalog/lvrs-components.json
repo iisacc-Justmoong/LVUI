@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repository": "https://github.com/iisacc-Justmoong/LVRS",
-  "source_revision": "2aeb162a6b1a2ea3bf2bc796a2174cc310f186fa",
+  "source_revision": "8360f4dcafe2e4a72605299d5dfeb010bba6e818",
   "files": [
     {
       "path": "src/LVRS/Alert.cpp",

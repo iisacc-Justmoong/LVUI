@@ -53,7 +53,7 @@ std::string literal(std::string_view value) {
 }
 double number(const Value& value, SourcePosition at) {
     auto result = ii::core::parse_decimal(value.text);
-    if (value.kind != ValueKind::number || !result)
+    if ((value.kind != ValueKind::number && value.kind != ValueKind::metric) || !result)
         error(at, "Expected a finite Number");
     return *result;
 }
@@ -67,6 +67,7 @@ class Generator final {
     std::map<std::string, std::size_t, std::less<>> backends;
     std::map<std::string,std::string,std::less<>> reactive;
     std::map<std::string,std::string,std::less<>> variable_types;
+    std::map<std::string, ValueKind, std::less<>> binding_kinds;
     std::set<std::string, std::less<>> ids;
     std::map<std::string,std::string,std::less<>> widget_variables;
     std::map<std::string,std::string,std::less<>> toolbar_parents;
@@ -91,10 +92,188 @@ class Generator final {
     }
 
     Value resolve(const Value& value, SourcePosition at) const {
+        if (value.kind == ValueKind::style_member)
+            return style_member(value.text, at);
+        if (value.kind == ValueKind::call && (value.text == "Color" || value.text == "Metric")) {
+            if (value.text == "Color" && value.elements.size() == 4) {
+                double channels[4]{};
+                for (std::size_t i = 0; i < 4; ++i)
+                    channels[i] = number(resolve_in(value.elements[i], StyleTokenType::number, at), at);
+                StyleColor color{channels[0], channels[1], channels[2], channels[3]};
+                if (!valid_style_token_value(color))
+                    error(at, "Color RGBA channels must be finite and within 0..1");
+                return style_token_literal(color);
+            }
+            if (value.elements.size() != 1)
+                error(at, value.text + "() requires one value");
+            if (value.text == "Color")
+                return style_token_literal(color_value(value.elements.front(), at));
+            auto result = resolve_in(value.elements.front(), StyleTokenType::number, at);
+            (void)number(result, at);
+            result.kind = ValueKind::metric;
+            return result;
+        }
+        if (value.kind == ValueKind::call && value.text == "token") {
+            if (value.elements.size() != 1)
+                error(at, "token() requires one String token name");
+            auto name = resolve(value.elements.front(), at);
+            if (name.kind != ValueKind::string)
+                error(at, "token() requires one String token name");
+            auto resolved = default_style_tokens().resolve(name.text, options.style_tokens);
+            if (!resolved)
+                error(at, resolved.error().message);
+            return style_token_literal(*resolved);
+        }
+        if (value.kind == ValueKind::call && value.text == "composite") {
+            if (value.elements.size() != 2)
+                error(at, "composite() requires foreground and background Colors");
+            return style_token_literal(
+                composite_srgb(color_value(value.elements[0], at), color_value(value.elements[1], at)));
+        }
         if (value.kind != ValueKind::reference) return value;
         if (auto it = constants.find(value.text); it != constants.end()) return it->second;
         if (value.text.find('.') != value.text.npos) error(at, "Reactive C++ property bindings are not supported by native AOT yet");
         error(at, "Unknown value '" + value.text + "'");
+    }
+    Value style_member(std::string_view name, SourcePosition at) const {
+        auto selected = default_style_tokens().select(name, options.style_tokens);
+        if (!selected)
+            error(at, selected.error().message);
+        auto value = style_token_literal(*selected);
+        if (name.starts_with("Metric."))
+            value.kind = ValueKind::metric;
+        return value;
+    }
+    Value resolve_in(const Value &value, StyleTokenType context, SourcePosition at) const {
+        if (value.kind == ValueKind::enumeration)
+            return style_member(
+                std::string(context == StyleTokenType::color ? "Color" : "Metric") + value.text, at);
+        return resolve(value, at);
+    }
+    double token_number(std::string_view name, double low, double high) const {
+        auto value = default_style_tokens().number(name, options.style_tokens);
+        if (!value)
+            error({}, value.error().message);
+        if (*value < low || *value > high)
+            error({}, "Default style token outside supported range: " + std::string(name));
+        return *value;
+    }
+    StyleColor token_color(std::string_view name) const {
+        auto value = default_style_tokens().color(name, options.style_tokens);
+        if (!value)
+            error({}, value.error().message);
+        return *value;
+    }
+    StyleColor color_value(const Value &original, SourcePosition at) const {
+        const auto value = resolve_in(original, StyleTokenType::color, at);
+        if (value.kind == ValueKind::color && value.elements.size() == 4) {
+            StyleColor c{number(value.elements[0], at), number(value.elements[1], at),
+                         number(value.elements[2], at), number(value.elements[3], at)};
+            if (!valid_style_token_value(c))
+                error(at, "Invalid Color channels");
+            return c;
+        }
+        if (value.kind == ValueKind::string) {
+            auto parsed = parse_style_color(value.text);
+            if (!parsed && (value.text.size() == 6 || value.text.size() == 8) && !value.text.starts_with('#'))
+                parsed = parse_style_color("#" + value.text);
+            if (parsed)
+                return *parsed;
+        }
+        error(at, "Color requires a Color token or a hexadecimal RGB/RGBA String");
+    }
+    static std::string color_literal(StyleColor c) {
+        return "ii::gui::WidgetColor{" + decimal(c.red) + ", " + decimal(c.green) + ", " + decimal(c.blue) +
+               ", " + decimal(c.alpha) + "}";
+    }
+    static std::string linear_color_literal(StyleColor c) {
+        const auto linear = [](double v) {
+            return v <= .04045 ? v / 12.92 : std::pow((v + .055) / 1.055, 2.4);
+        };
+        return "ii::gui::Color{" + decimal(linear(c.red)) + ", " + decimal(linear(c.green)) + ", " +
+               decimal(linear(c.blue)) + ", " + decimal(c.alpha) + "}";
+    }
+    void emit_stack_style(const Inputs &values, const std::string &variable) {
+        const auto background = values.find("backgroundColor"), border = values.find("borderColor");
+        if (background == values.end() && border == values.end() && !values.contains("borderWidth") &&
+            !values.contains("cornerRadius"))
+            return;
+        const auto radius = decimal(numeric(values, "cornerRadius", 0, 0, 8192));
+        const auto width = decimal(numeric(
+            values, "borderWidth",
+            border == values.end() ? 0 : token_number("--lvrs-theme-metrics-stroke-1", 0, 8192), 0, 8192));
+        std::string panels;
+        if (background != values.end()) {
+            const auto c =
+                linear_color_literal(color_value(background->second->value, background->second->position));
+            panels +=
+                "                drawing->panels.push_back({.bounds = {0, 0, "
+                "static_cast<float>(state.size.width), static_cast<float>(state.size.height)}, .top = " +
+                c + ", .bottom = " + c + ", .radius = " + radius + "});\n";
+        }
+        if (width != "0") {
+            if (border == values.end())
+                error(values.at("borderWidth")->position, "A stack borderWidth requires borderColor");
+            const auto c = linear_color_literal(color_value(border->second->value, border->second->position));
+            panels +=
+                "                drawing->panels.push_back({.bounds = {0, 0, "
+                "static_cast<float>(state.size.width), static_cast<float>(state.size.height)}, .top = " +
+                c + ", .bottom = " + c + ", .radius = " + radius + ", .stroke_width = " + width + "});\n";
+        }
+        body += "            if (auto painted = " + variable +
+                "->set_paint_handler([](const ii::gui::WidgetPaintState& state) -> "
+                "ii::core::Result<std::shared_ptr<const ii::gui::WidgetDrawing>> {\n                auto "
+                "drawing = std::make_shared<ii::gui::WidgetDrawing>();\n" +
+                panels +
+                "                return std::shared_ptr<const ii::gui::WidgetDrawing>(std::move(drawing));\n "
+                "           }); !painted) return painted;\n";
+    }
+    std::string appearance_code(const Inputs &values, const std::string &accent) const {
+        std::string code =
+            "    static ii::gui::WidgetAppearance appearance() {\n        auto result = " +
+            (options.framework == "LVRS" ? "lvrs::Theme(lvrs::Accent::" + accent + ").appearance()"
+                                         : "ii::gui::lvrs_appearance()") +
+            ";\n";
+        const auto font =
+            default_style_tokens().string("--lvrs-theme-typography-font-font-body", options.style_tokens);
+        if (!font)
+            error({}, font.error().message);
+        const auto family = text(values, "fontFamily", *font);
+        if (family.empty())
+            error({}, "Default font family cannot be empty");
+        code += "        result.window = " +
+                widget_color(values, "backgroundColor",
+                             color_literal(token_color("--lvrs-theme-colors-panel-window"))) +
+                ";\n        result.font_family = " + literal(family) + ";\n";
+        code += "        result.disabled_background = " +
+                color_literal(token_color("--lvrs-theme-colors-panel-sub-surface")) + ";\n";
+        const auto base = "--lvrs-theme-colors-accent-" + accent;
+        if (default_style_tokens().find(base + "-default")) {
+            code += "        result.primary = " +
+                    color_literal(token_color(accent == "blue" ? "--lvrs-theme-colors-action-primary"
+                                                               : base + "-default")) +
+                    ";\n";
+            code += "        result.hover = " + color_literal(token_color(base + "-hover")) +
+                    ";\n        result.pressed = " + color_literal(token_color(base + "-pressed")) + ";\n";
+        }
+        code += "        result.text_alpha = {";
+        bool first = true;
+        for (auto role :
+             {"title", "title2", "header", "header2", "body", "description", "caption", "disabled"}) {
+            if (!first)
+                code += ", ";
+            first = false;
+            code += decimal(text_color(role).alpha);
+        }
+        code += "};\n";
+        code += "        result.button_height = " +
+                decimal(token_number("--lvrs-theme-metrics-size-22", 1, 8192)) +
+                ";\n        result.button_padding = " +
+                decimal(token_number("--lvrs-theme-metrics-space-8", 0, 8192)) +
+                ";\n        result.button_radius = " +
+                decimal(token_number("--lvrs-theme-metrics-radius-8", 0, 8192)) +
+                ";\n        return result;\n    }\n";
+        return code;
     }
     Inputs inputs(const View& view, std::initializer_list<std::string_view> allowed, bool action = false) const {
         Inputs out;
@@ -118,7 +297,7 @@ class Generator final {
     double numeric(const Inputs& values, std::string_view name, double fallback, double low, double high) const {
         auto it = values.find(name);
         if (it == values.end()) return fallback;
-        auto value = resolve(it->second->value, it->second->position);
+        auto value = resolve_in(it->second->value, StyleTokenType::number, it->second->position);
         auto result = number(value, it->second->position);
         if (result < low || result > high) error(it->second->position, "Number outside supported range for '" + std::string(name) + "'");
         return result;
@@ -177,13 +356,33 @@ class Generator final {
     }
     std::pair<std::string,double> text_role(const Inputs& values) const {
         const auto found=values.find("style");
-        if (found==values.end()) return {"description",12};
-        const auto& input=*found->second;
-        constexpr std::pair<std::string_view,double> roles[]{
-            {"title",26},{"title2",22},{"header",17},{"header2",15},{"body",13},{"description",12},{"caption",11},{"disabled",11}};
-        for (const auto& [role,size]:roles)
-            if (input.value.kind==ValueKind::enumeration && input.value.text=="."+std::string(role)) return {std::string(role),size};
-        error(input.position,"Unknown LVRS text style");
+        if (found != values.end() && found->second->value.kind != ValueKind::enumeration)
+            error(found->second->position, "Unknown LVRS text style");
+        const auto role =
+            found == values.end() ? std::string("description") : found->second->value.text.substr(1);
+        const auto metric = text_metric(role);
+        if (metric.empty())
+            error(found->second->position, "Unknown LVRS text style");
+        return {role, token_number(metric, 1, 256)};
+    }
+    static std::string text_metric(std::string_view role) {
+        constexpr std::pair<std::string_view, std::string_view> names[]{
+            {"title", "title-text-title"},       {"title2", "subtitle-text-subtitle"},
+            {"header", "header-text-header"},    {"header2", "subheader-text-subheader"},
+            {"body", "body-text-body"},          {"description", "description-text-description"},
+            {"caption", "caption-text-caption"}, {"disabled", "caption-text-caption"}};
+        for (auto [name, metric] : names)
+            if (name == role)
+                return "--lvrs-theme-typography-" + std::string(metric);
+        return {};
+    }
+    StyleColor text_color(std::string_view role) const {
+        return token_color("--lvrs-theme-colors-text-" +
+                           std::string(role == "body"          ? "body-color"
+                                       : role == "description" ? "description-color"
+                                       : role == "caption"     ? "caption-color"
+                                       : role == "disabled"    ? "disabled-color"
+                                                               : "title-header-color"));
     }
     std::string stepper_arrow(const Inputs& values) const {
         auto it=values.find("arrow");if(it==values.end()) return "up_down";
@@ -208,10 +407,10 @@ class Generator final {
         return "lvrs::"+std::string(factory_type)+"{"+std::string(backends.empty()&&reactive.empty()?"[]":"[scope]")+"(ii::gui::WidgetBuilder& widgets, ii::gui::Widget content) -> ii::core::Result<void> {\n            lvrs::Widgets controls(widgets);\n"+binding_owner()+children+"            return {};\n        }}";
     }
     std::string widget_color(const Inputs& values,std::string_view name,std::string fallback) const {
-        auto item=values.find(name);if(item==values.end())return fallback;const auto& input=*item->second;auto value=resolve(input.value,input.position);auto hex=std::string_view(value.text);if(hex.starts_with('#'))hex.remove_prefix(1);
-        if(value.kind!=ValueKind::string||(hex.size()!=6&&hex.size()!=8))error(input.position,"Color requires a six/eight-digit RGB/RGBA HEX String");
-        unsigned rgba[]{0,0,0,255};for(unsigned i=0;i<hex.size()/2;++i){auto parsed=std::from_chars(hex.data()+2*i,hex.data()+2*i+2,rgba[i],16);if(parsed.ec!=std::errc{}||parsed.ptr!=hex.data()+2*i+2)error(input.position,"Invalid color HEX");}
-        return "ii::gui::WidgetColor{"+decimal(rgba[0]/255.)+", "+decimal(rgba[1]/255.)+", "+decimal(rgba[2]/255.)+", "+decimal(rgba[3]/255.)+"}";
+        auto item = values.find(name);
+        if (item == values.end())
+            return fallback;
+        return color_literal(color_value(item->second->value, item->second->position));
     }
     std::string alias_key(const Inputs& values,std::string_view name,std::string_view alias)const{const auto found=values.find(alias);if(values.contains(name)&&found!=values.end())error(found->second->position,"Use a property or its alias, not both");return std::string(found!=values.end()?alias:name);}
     std::string button_method(const Inputs& values,std::string_view name)const{
@@ -431,7 +630,16 @@ class Generator final {
         if(kind=="TableRow")return "controls.table_row("+args+", {.width = "+n("width",717,1)+", .cell_width = "+n("cellWidth",234,1)+", .cell_height = "+n("cellHeight",24,1)+", .content_spacing = "+n("contentSpacing",8)+", .inputable = "+b("inputable",false)+", .enabled = "+b("enabled",true)+", .divider_color = "+c("dividerColor",divider)+", .text_color = "+c("textColor",body)+strings("cells","lvrs::TableCellOptions",true)+"}, {.edited = "+action(v,"onCellInputEdited","std::size_t index, std::string value","index, value")+", .submitted = "+action(v,"onCellInputSubmitted","std::size_t index, std::string value","index, value")+"})";
         std::string widths;if(auto it=v.find("columnWidths");it!=v.end()){
             auto list=resolve(it->second->value,it->second->position);if(list.kind!=ValueKind::list||list.elements.size()>512)error(it->second->position,"TableHeader columnWidths require at most 512 Numbers");
-            for(const auto& item:list.elements){auto value=number(resolve(item,it->second->position),it->second->position);if(std::abs(value)>8192)error(it->second->position,"Column width outside supported range");if(!widths.empty())widths+=", ";widths+=decimal(value);}widths=", .column_widths = {"+widths+"}";
+            for (const auto &item : list.elements) {
+                auto value = number(resolve_in(item, StyleTokenType::number, it->second->position),
+                                    it->second->position);
+                if (std::abs(value) > 8192)
+                    error(it->second->position, "Column width outside supported range");
+                if (!widths.empty())
+                    widths += ", ";
+                widths += decimal(value);
+            }
+            widths = ", .column_widths = {" + widths + "}";
         }
         return "controls.table_header("+args+", {.layout = {.width = "+n("width",717,1)+", .row_height = "+n("rowHeight",24,1)+", .horizontal_padding = "+n("cellHorizontalPadding",8)+", .fallback_cell_width = "+n("fallbackCellWidth",0)+", .minimum_column_width = "+n("minColumnWidth",32,1)+widths+strings("columns","lvrs::TableHeaderColumn",false)+"}, .interactive = "+b("interactive",false)+", .enabled = "+b("enabled",true)+", .separator_height = "+n("separatorHeight",1)+", .text_color = "+c("textColor","ii::gui::WidgetColor{1,1,1,.6}")+", .separator_color = "+c("separatorColor",divider)+"}, {.column_clicked = "+action(v,"onColumnClicked","std::size_t index, const lvrs::TableHeaderColumn& column","index, column")+"})";
     }
@@ -496,7 +704,9 @@ class Generator final {
         if((icon_button || dropdown || kind=="HelpButton" || tab || tabbar || combo || stepper || segmented || menu || menu_item || divider || color_surface || color_picker || color_button || popover || modal || sheet || alert || alert_button) && options.framework!="LVRS") error(view.position,"This LVRS component requires FRAMEWORK LVRS");
         const bool check=kind=="CheckBox" || kind=="RadioButton" || kind=="ToggleSwitch";
         Inputs values;
-        if(stack) values=inputs(view,{"id","spacing","padding","alignment","width","height"});
+        if (stack)
+            values = inputs(view, {"id", "spacing", "padding", "alignment", "width", "height",
+                                   "backgroundColor", "borderColor", "borderWidth", "cornerRadius"});
         else if(tooltip)values=inputs(view,{"id","targetId","target","text","anchorX","anchorY","availableRect","preferredPlacement","automatic","scrollContent","motionEnabled","maximumWidth","maximumHeight","contentPadding","edgeMargin","cornerRadius","tailLength","tailWidth","delay","timeout","hideDelay","animationDuration","surfaceColor","borderColor","primaryColor","surfaceOpacity","backdrop","motion","accessibilityName","onOpened","onClosed"});
         else if(code_editor)values=inputs(view,{"id","model","text","placeholderText","snippetTitle","snippetLanguage","fontFamily","accessibilityName","width","height","editorHeight","fieldMinHeight","headerHeight","headerSpacing","insetHorizontal","insetVertical","cornerRadius","fontPixelSize","fontWeight","textLineHeight","centeredTextHeight","tabStopDistance","textMargin","placeholderOpacity","enabled","readOnly","showSnippetHeader","showScrollBar","autoFocusOnPress","selectByMouse","selectByKeyboard","persistentSelection","overwriteMode","textColor","textColorDisabled","placeholderColor","placeholderColorDisabled","selectedTextColor","headerTextColor","backgroundColor","backgroundColorHover","backgroundColorFocused","backgroundColorDisabled","selectionColor","cursorPosition","onDocumentEdited","onTextEdited","onSubmitted","onSelectionChanged"});
         else if(link)values=inputs(view,{"id","text","href","to","params","router","navigator","targetComponent","replace","enabled","underline","tone","linkColor","hoverColor","pressedColor","disabledColor","horizontalPadding","verticalPadding","minimumHeight","cornerRadius","width","height","showFocusRing","accessibilityName","method","methods","onClick","onPressed","onReleased","onCanceled","onNavigated","onNavigationFailed"},true);
@@ -617,10 +827,7 @@ class Generator final {
         else if(popover) {
             std::string surface;
             if(auto item=values.find("surfaceColor");item!=values.end()){
-                auto value=resolve(item->second->value,item->second->position);auto hex=std::string_view(value.text);if(hex.starts_with('#'))hex.remove_prefix(1);
-                if(value.kind!=ValueKind::string||hex.size()!=6)error(item->second->position,"Popover surfaceColor requires a six-digit RGB HEX String");
-                unsigned rgb[3]{};for(unsigned c=0;c<3;++c){auto result=std::from_chars(hex.data()+2*c,hex.data()+2*c+2,rgb[c],16);if(result.ec!=std::errc{}||result.ptr!=hex.data()+2*c+2)error(item->second->position,"Invalid popover RGB HEX");}
-                surface=", .surface_color = ii::gui::WidgetColor{"+decimal(rgb[0]/255.)+", "+decimal(rgb[1]/255.)+", "+decimal(rgb[2]/255.)+", 1}";
+                surface = ", .surface_color = " + widget_color(values, "surfaceColor", "std::nullopt");
             }
             call=prefix+"popover("+args+", {.width = "+decimal(numeric(values,"width",0,0,8192))+", .height = "+decimal(numeric(values,"height",0,0,8192))+", .padding = "+decimal(numeric(values,"padding",12,0,8192))+", .margins = "+decimal(numeric(values,"margins",8,0,32767))+", .corner_radius = "+decimal(numeric(values,"cornerRadius",12,0,32767))+", .surface_opacity = "+decimal(numeric(values,"surfaceOpacity",.25,0,1))+surface+", .modal = "+boolean(values,"modal",false)+", .dim = "+boolean(values,"dim",false)+", .focus_on_open = "+boolean(values,"focus",true)+", .clip_content = "+boolean(values,"clip",false)+", .dismiss_on_escape = "+boolean(values,"closeOnEscape",true)+", .dismiss_on_outside_press = "+boolean(values,"closeOnPressOutside",true)+", .accessibility_name = "+literal(text(values,"accessibilityName","Popover"))+"}, {.opened = "+action(values,"onOpened")+", .closed = "+action(values,"onClosed")+"})";
         }
@@ -632,10 +839,7 @@ class Generator final {
                 if(value.kind!=ValueKind::reference||backend==backends.end()||!identifier(member))error(input.position,"Color model must be one public scoped C++ member");model="scope->backend_"+std::to_string(backend->second)+"."+member;
             }
             if(auto item=values.find("currentColor");item!=values.end()) {
-                auto value=resolve(item->second->value,item->second->position);auto hex=std::string_view(value.text);if(hex.starts_with('#'))hex.remove_prefix(1);
-                if(value.kind!=ValueKind::string||(hex.size()!=6&&hex.size()!=8))error(item->second->position,"currentColor requires a RRGGBB or RRGGBBAA String");
-                unsigned rgba[4]{0,0,0,255};for(unsigned c=0;c<hex.size()/2;++c){auto p=std::from_chars(hex.data()+c*2,hex.data()+c*2+2,rgba[c],16);if(p.ec!=std::errc{}||p.ptr!=hex.data()+c*2+2)error(item->second->position,"Invalid currentColor HEX");}
-                current=", .current_color = ii::gui::WidgetColor{"+decimal(rgba[0]/255.)+", "+decimal(rgba[1]/255.)+", "+decimal(rgba[2]/255.)+", "+decimal(rgba[3]/255.)+"}";
+                current = ", .current_color = " + widget_color(values, "currentColor", "std::nullopt");
             }
             if(auto item=values.find("buttonSize");item!=values.end()) {
                 auto value=resolve(item->second->value,item->second->position);
@@ -659,13 +863,16 @@ class Generator final {
                 const auto entry=types.find(item->second->value.text);if(item->second->value.kind!=ValueKind::enumeration || entry==types.end())error(item->second->position,"Unknown color picker type");type=entry->second;
             }
             if(auto item=values.find("recentColors");item!=values.end()) {
-                auto value=resolve(item->second->value,item->second->position);if(value.kind!=ValueKind::list)error(item->second->position,"Recent colors must be a literal HEX String list");
+                auto value = resolve(item->second->value, item->second->position);
+                if (value.kind != ValueKind::list)
+                    error(item->second->position, "Recent colors must be a Color/HEX String list");
                 recent=", .recent_colors = std::vector<ii::gui::WidgetColor>{";unsigned count=0;
                 for(const auto& element:value.elements) {
-                    if(count++==10)break;auto color=resolve(element,item->second->position);auto hex=std::string_view(color.text);if(hex.starts_with('#'))hex.remove_prefix(1);
-                    if(color.kind!=ValueKind::string || (hex.size()!=6 && hex.size()!=8))error(item->second->position,"Recent colors require RRGGBB or RRGGBBAA Strings");
-                    unsigned rgba[4]{0,0,0,255};for(unsigned c=0;c<hex.size()/2;++c){auto parsed=std::from_chars(hex.data()+c*2,hex.data()+c*2+2,rgba[c],16);if(parsed.ec!=std::errc{}||parsed.ptr!=hex.data()+c*2+2)error(item->second->position,"Invalid recent color HEX");}
-                    if(count>1)recent+=", ";recent+="{"+decimal(rgba[0]/255.)+", "+decimal(rgba[1]/255.)+", "+decimal(rgba[2]/255.)+", "+decimal(rgba[3]/255.)+"}";
+                    if (count++ == 10)
+                        break;
+                    if (count > 1)
+                        recent += ", ";
+                    recent += color_literal(color_value(element, item->second->position));
                 }recent+="}";
             }
             const auto width=numeric(values,"width",320,320,1024),padding=numeric(values,"padding",12,0,64);if(width-2*padding<228)error(view.position,"ColorPicker padding must leave 228 content units");
@@ -689,13 +896,42 @@ class Generator final {
         }
         else if(stack){
             std::string alignment="center";if(auto input=values.find("alignment");input!=values.end()){auto value=resolve(input->second->value,input->second->position);if(value.kind!=ValueKind::enumeration||(value.text!=".center"&&value.text!=".leading"&&value.text!=".trailing"&&value.text!=".stretch"))error(input->second->position,"Invalid stack alignment");alignment=value.text.substr(1);}
-            call=prefix+(kind=="VStack"?"vstack":kind=="HStack"?"hstack":"zstack")+"("+args+", {.spacing = "+decimal(numeric(values,"spacing",8,0,32767))+", .padding = "+decimal(numeric(values,"padding",0,0,32767))+", .alignment = ii::gui::StackAlignment::"+alignment+"})";
+            call = prefix +
+                   (kind == "VStack"   ? "vstack"
+                    : kind == "HStack" ? "hstack"
+                                       : "zstack") +
+                   "(" + args + ", {.spacing = " +
+                   decimal(numeric(values, "spacing", token_number("--lvrs-theme-metrics-space-8", 0, 32767),
+                                   0, 32767)) +
+                   ", .padding = " +
+                   decimal(numeric(values, "padding", token_number("--lvrs-theme-metrics-space-0", 0, 32767),
+                                   0, 32767)) +
+                   ", .alignment = ii::gui::StackAlignment::" + alignment + "})";
         }
         else if(kind=="Spacer") call=prefix+"spacer("+args+", "+decimal(numeric(values,"minLength",0,0,32767))+")";
         else if(kind=="Label") {
             const auto [role,size]=text_role(values);
-            call=prefix+"label("+args+", {.text = "+text_expression(values,"text")+", .font_size = "+decimal(numeric(values,"fontSize",size,1,256))+
-                ", .selectable = "+boolean(values,"selectable",true)+", .role = ii::gui::TextRole::"+role+", .color = "+widget_color(values,"color","std::nullopt")+", .line_height = "+decimal(numeric(values,"lineHeight",0,0,8192))+std::string(values.contains("fontWeight")?", .font_weight = "+decimal(numeric(values,"fontWeight",400,400,700)):"")+"})";
+            const auto font_size = numeric(values, "fontSize", size, 1, 256);
+            const auto line_height = values.contains("fontSize")
+                                         ? font_size
+                                         : token_number(text_metric(role) + "-line-height", 1, 8192);
+            const auto weight = token_number(
+                "--lvrs-theme-typography-weight-" +
+                    std::string(role == "title" || role == "title2"                              ? "bold"
+                                : role == "header" || role == "header2" || role == "description" ? "semi-bold"
+                                : role == "body"                                                 ? "medium"
+                                                                                                 : "regular"),
+                100, 900);
+            const auto font_weight = numeric(values, "fontWeight", weight, 400, 700);
+            if (font_weight != 400 && font_weight != 500 && font_weight != 600 && font_weight != 700)
+                error(view.position, "fontWeight must be 400/500/600/700 for native fonts");
+            call = prefix + "label(" + args + ", {.text = " + text_expression(values, "text") +
+                   ", .font_size = " + decimal(numeric(values, "fontSize", size, 1, 256)) +
+                   ", .selectable = " + boolean(values, "selectable", true) +
+                   ", .role = ii::gui::TextRole::" + role +
+                   ", .color = " + widget_color(values, "color", color_literal(text_color(role))) +
+                   ", .line_height = " + decimal(numeric(values, "lineHeight", line_height, 0, 8192)) +
+                   ", .font_weight = " + decimal(font_weight) + "})";
         } else if(button) {
             std::string tone=kind=="AbstractButton" || kind=="HelpButton"?"normal":"primary";
             if(auto it=values.find("tone");it!=values.end()) {
@@ -836,6 +1072,8 @@ class Generator final {
         else if(link||card||header){const auto native=std::string(link?"link_":"surface_")+variable;body+="            auto "+native+" = "+call+";\n            if (!"+native+") return std::unexpected("+native+".error());\n            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";if(link)emit_link_bindings(values,variable,native);else emit_surface_bindings(values,variable,native);}
         else{body+="            auto "+variable+" = "+call+";\n            if (!"+variable+") return std::unexpected("+variable+".error());\n";emit_bindings(values,variable);}
         if(stack&&(values.contains("width")||values.contains("height")))body+="            if (auto extent = "+variable+"->set_extent({"+decimal(numeric(values,"width",0,0,8192))+", "+decimal(numeric(values,"height",0,0,8192))+"}); !extent) return extent;\n";
+        if (stack)
+            emit_stack_style(values, variable);
         if(menu && values.contains("targetId")) context_bindings.push_back({variable,text(values,"targetId"),values.at("targetId")->position});
         if(menu && values.contains("items")) {
             if(!view.children.empty()) error(view.position,"Use menu items or typed children, not both");
@@ -855,6 +1093,37 @@ class Generator final {
 
 public:
     Generator(const ViewDocument& value, const NativeCompileOptions& config) : document(value), options(config) {}
+    void profile(StyleTokenOptions &output) {
+        if (!document.imports().empty() || !document.root().children.empty() ||
+            !document.root().inputs.empty())
+            error({}, "A style profile contains only typed let declarations");
+        for (const auto &binding : document.bindings()) {
+            if (binding.mutable_value || (binding.type != "Color" && binding.type != "Metric") ||
+                !identifier(binding.name))
+                error(binding.position, "A style profile requires named Color/Metric let declarations");
+            const auto kind = binding.type == "Color" ? StyleTokenType::color : StyleTokenType::number;
+            auto value = resolve_in(binding.initializer, kind, binding.position);
+            StyleTokenValue scalar;
+            if (kind == StyleTokenType::color)
+                scalar = color_value(value, binding.position);
+            else
+                scalar = number(value, binding.position);
+            const auto name = binding.type + "." + binding.name;
+            if (constants.contains(binding.name))
+                error(binding.position, "Duplicate style declaration");
+            constants.emplace(binding.name, style_token_literal(scalar));
+            if (const auto builtin = default_style_tokens().find(name);
+                builtin && builtin->selector == name) {
+                // A profile supersedes the same builtin selected by any public
+                // identity in the base options, without creating two overrides.
+                std::erase_if(output.overrides, [&](const auto &entry) {
+                    return default_style_tokens().find(entry.first) == builtin;
+                });
+                output.overrides[name] = std::move(scalar);
+            } else
+                output.members[name] = std::move(scalar);
+        }
+    }
     std::string run() {
         if (!identifier(options.name)) error({}, "Invalid or reserved C++ identifier for generated view name");
         if (options.framework!="iiGUI" && options.framework!="LVRS") error({}, "Unknown native component framework");
@@ -868,23 +1137,51 @@ public:
             if(!identifier(binding.name))error(binding.position,"Invalid C++ binding identifier");
             if(auto source=property(binding.initializer);!source.empty()) {
                 if(binding.mutable_value)error(binding.position,"Reactive var initializer must own a scalar value");
+                auto known = binding_kinds.find(binding.initializer.text);
+                if (known != binding_kinds.end()) {
+                    const auto kind = known->second;
+                    if ((binding.type == "Color" && kind != ValueKind::color) ||
+                        (binding.type == "Metric" && kind != ValueKind::metric && kind != ValueKind::number))
+                        error(binding.position, "Style declaration type does not match reactive initializer");
+                    binding_kinds.emplace(binding.name, binding.type == "Metric" ? ValueKind::metric : kind);
+                }
                 reactive.emplace(binding.name,std::move(source));continue;
             }
-            auto value = resolve(binding.initializer, binding.position);
-            if (value.kind != ValueKind::string && value.kind != ValueKind::number && value.kind != ValueKind::boolean)
+            auto value =
+                binding.type == "Color" || binding.type == "Metric"
+                    ? resolve_in(binding.initializer,
+                                 binding.type == "Color" ? StyleTokenType::color : StyleTokenType::number,
+                                 binding.position)
+                    : resolve(binding.initializer, binding.position);
+            if (binding.type == "Color" && value.kind == ValueKind::string)
+                value = style_token_literal(color_value(value, binding.position));
+            if (binding.type == "Metric" && value.kind == ValueKind::number)
+                value.kind = ValueKind::metric;
+            if ((binding.type == "Double" || binding.type == "Float" || binding.type == "Int") &&
+                value.kind == ValueKind::metric)
+                value.kind = ValueKind::number;
+            if (value.kind != ValueKind::string && value.kind != ValueKind::number &&
+                value.kind != ValueKind::boolean && value.kind != ValueKind::color &&
+                value.kind != ValueKind::metric)
                 error(binding.position, "Native let initializer must be a scalar constant");
             if (!binding.type.empty()) {
                 const auto& type = binding.type;
                 const bool valid = (type == "String" && value.kind == ValueKind::string) ||
-                    (type == "Bool" && value.kind == ValueKind::boolean) ||
-                    ((type == "Double" || type == "Float" || type == "Int") && value.kind == ValueKind::number);
+                                   (type == "Bool" && value.kind == ValueKind::boolean) ||
+                                   (type == "Color" && value.kind == ValueKind::color) ||
+                                   (type == "Metric" && value.kind == ValueKind::metric) ||
+                                   ((type == "Double" || type == "Float" || type == "Int") &&
+                                    value.kind == ValueKind::number);
                 if (!valid) error(binding.position, "Scalar declaration type does not match initializer or is unsupported");
                 if (type == "Int") {
                     auto n = number(value, binding.position);
                     if (std::trunc(n) != n || std::abs(n) > 9007199254740991.0) error(binding.position, "Int constant must be an exactly representable integer");
                 }
             }
+            binding_kinds.emplace(binding.name, value.kind);
             if(binding.mutable_value){
+                if (value.kind == ValueKind::color)
+                    error(binding.position, "Color token declarations currently require immutable let");
                 const auto type=value.kind==ValueKind::string?"std::string":value.kind==ValueKind::boolean?"bool":binding.type=="Int"?"std::int64_t":"double";
                 const auto initial=value.kind==ValueKind::string?literal(value.text):value.kind==ValueKind::boolean?value.text:decimal(number(value,binding.position));
                 scope+="        ii::core::Observable<"+std::string(type)+"> value_"+binding.name+"{"+initial+"};\n";
@@ -894,7 +1191,11 @@ public:
         const auto& root = document.root();
         if (root.component->spelling != "ApplicationWindow" && root.component->spelling != "Window") error(root.position, "Native AOT root must be ApplicationWindow or Window");
         if (root.children.size() != 1) error(root.position, "ApplicationWindow requires exactly one child View");
-        const auto values = options.framework=="LVRS" ? inputs(root, {"title", "width", "height", "minimumWidth", "minimumHeight", "accent"}) : inputs(root, {"title", "width", "height", "minimumWidth", "minimumHeight"});
+        const auto values = options.framework == "LVRS"
+                                ? inputs(root, {"title", "width", "height", "minimumWidth", "minimumHeight",
+                                                "accent", "backgroundColor", "fontFamily"})
+                                : inputs(root, {"title", "width", "height", "minimumWidth", "minimumHeight",
+                                                "backgroundColor", "fontFamily"});
         std::string accent="blue";
         if(auto found=values.find("accent");found!=values.end()) {
             const auto& v=found->second->value; constexpr std::string_view choices=" blue purple rose red orange yellow green gray brown cyan teal white ";
@@ -920,6 +1221,7 @@ public:
         }
         result += "\nnamespace lvui_generated {\nstruct " + options.name + " final {\n    static ii::gui::HostOptions options() {\n        return {.title = " + literal(text(values, "title", "LVUI")) +
             ", .size = {" + decimal(width) + ", " + decimal(height) + "}, .minimum_size = {" + decimal(min_width) + ", " + decimal(min_height) + "}};\n    }\n";
+        result += appearance_code(values, accent);
         if (!scope.empty()) result += "    struct Scope final {\n" + scope + "    };\n";
         result += "    " + options.name + "() = default;\n    " + options.name + "(const " + options.name + "&) = delete;\n    " + options.name + "& operator=(const " + options.name + "&) = delete;\n";
         const auto scope_parameters=scope.empty()?std::string{}:", const std::function<void(Scope&)>& configure = {}, std::shared_ptr<Scope>* scope_owner = nullptr";
@@ -933,7 +1235,12 @@ public:
         if(!initial_open.empty())result+="        (void)widgets; (void)native_parent;"+std::string(scope.empty()?"":" (void)configure; (void)scope_owner;")+"\n        return ii::core::fail(ii::core::ErrorCode::unsupported, \"Embedded pages must open dialogs after activation\");\n";
         else result+="        return construct(widgets, native_parent"+scope_arguments+");\n";
         result+="    }\n    static ii::core::Result<ii::gui::WidgetMount> mount(ii::gui::Host& host"+scope_parameters+") {\n";
-        result+=std::string(initial_open.empty()?"        return host.mount_widgets(":"        auto mounted = host.mount_widgets(")+std::string(scope.empty()?"[]":"[&configure, scope_owner]")+"(ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n            return construct(widgets, {}"+scope_arguments+");\n        }, "+(options.framework=="LVRS"?"lvrs::Theme(lvrs::Accent::"+accent+").appearance()":"ii::gui::lvrs_appearance()")+");\n";
+        result += std::string(initial_open.empty() ? "        return host.mount_widgets("
+                                                   : "        auto mounted = host.mount_widgets(") +
+                  std::string(scope.empty() ? "[]" : "[&configure, scope_owner]") +
+                  "(ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n            return "
+                  "construct(widgets, {}" +
+                  scope_arguments + ");\n        }, appearance());\n";
         if(!initial_open.empty()){result+="        if (!mounted) return mounted;\n";for(const auto& id:initial_open)result+="        { auto dialog = mounted->find("+literal(id)+"); if (!dialog) { (void)host.unmount_widgets(*mounted); return std::unexpected(dialog.error()); } if (auto opened = dialog->open_at(0,0); !opened) { (void)host.unmount_widgets(*mounted); return std::unexpected(opened.error()); } }\n";result+="        return mounted;\n";}
         result+="    }\n";
         const auto configuration=scope.empty() ? std::string{} : ", const std::function<void(Scope&)>& configure = {}";
@@ -964,10 +1271,96 @@ public:
 };
 } // namespace
 NativeCompileResult compile_native(std::string_view source, const NativeCompileOptions& options) {
+    auto valid = default_style_tokens().validate(options.style_tokens);
+    if (!valid)
+        return std::unexpected(Diagnostic{0, 1, 1, valid.error().message});
     const auto first=source.find_first_not_of(" \t\r\n");
-    auto document = first!=source.npos&&source[first]=='<'?parse_native_markup(source):parse_view(source);
+    auto document = first != source.npos && source[first] == '<'
+                        ? parse_native_markup(source, options.style_tokens)
+                        : parse_view(source);
     if (!document) return std::unexpected(std::move(document.error()));
     try { return Generator(*document, options).run(); }
     catch (Diagnostic& diagnostic) { return std::unexpected(std::move(diagnostic)); }
+}
+StyleProfileResult compile_style_profile(std::string_view source, const StyleTokenOptions &base) {
+    if (source.size() > 1024 * 1024)
+        return std::unexpected(Diagnostic{0, 1, 1, "Style profile exceeds 1 MiB"});
+    if (auto valid = default_style_tokens().validate(base); !valid)
+        return std::unexpected(Diagnostic{0, 1, 1, valid.error().message});
+    auto parsed = parse_view(std::string(source) + "\nWindow {}\n");
+    if (!parsed)
+        return std::unexpected(parsed.error());
+    NativeCompileOptions options;
+    options.style_tokens = base;
+    try {
+        Generator(*parsed, options).profile(options.style_tokens);
+        auto valid = default_style_tokens().validate(options.style_tokens);
+        if (!valid)
+            error({}, valid.error().message);
+        return std::move(options.style_tokens);
+    } catch (const Diagnostic &diagnostic) {
+        return std::unexpected(diagnostic);
+    }
+}
+NativeCompileResult compile_style_header(const StyleTokenOptions &options, std::string_view cpp_namespace) {
+    try {
+        auto valid = default_style_tokens().validate(options);
+        if (!valid)
+            error({}, valid.error().message);
+        auto ns = qualified(cpp_namespace, {}).substr(2);
+        std::map<std::string, StyleTokenValue, std::less<>> values;
+        for (const auto &token : default_style_tokens().tokens())
+            if (!token.selector.empty())
+                values.emplace(token.selector, *default_style_tokens().resolve(token.id, options));
+        for (const auto &[name, value] : options.members)
+            values.emplace(name, value);
+        std::string output = "// Generated by lvui-compile from a typed style profile. Do not edit.\n#pragma "
+                             "once\n#include <iiGUI/Appearance.h>\nnamespace " +
+                             ns + " {\n";
+        for (auto type : {std::string("Color"), std::string("Metric")}) {
+            output += "struct " + type + " final {\n";
+            std::set<std::string> names;
+            for (const auto &[selector, value] : values)
+                if (selector.starts_with(type + ".")) {
+                    std::string field;
+                    bool upper = false;
+                    for (char c : std::string_view(selector).substr(type.size() + 1)) {
+                        if (c == '.') {
+                            upper = true;
+                            continue;
+                        }
+                        field += upper && c >= 'a' && c <= 'z' ? char(c - 'a' + 'A') : c;
+                        upper = false;
+                    }
+                    if (!identifier(field) || !names.insert(field).second)
+                        error({}, "C++ style member collision or invalid name: " + field);
+                    if (auto c = std::get_if<StyleColor>(&value))
+                        output += "    static constexpr ii::gui::WidgetColor " + field + "{" +
+                                  decimal(c->red) + ", " + decimal(c->green) + ", " + decimal(c->blue) +
+                                  ", " + decimal(c->alpha) + "};\n";
+                    else {
+                        auto n = std::get<double>(value);
+                        // Integer geometry/weights retain integral constant conversion;
+                        // fractional geometry remains float-compatible with native Rect.
+                        auto scalar = n >= -2147483647. && n <= 2147483647. && std::trunc(n) == n
+                                          ? std::to_string(static_cast<int>(n))
+                                          : decimal(n);
+                        if (std::trunc(n) != n) {
+                            if (scalar.find_first_of(".eE") == scalar.npos)
+                                scalar += ".0";
+                            scalar += "f";
+                        } else if (n > 2147483647. || n < -2147483647.) {
+                            if (scalar.find_first_of(".eE") == scalar.npos)
+                                scalar += ".0";
+                        }
+                        output += "    static constexpr auto " + field + " = " + scalar + ";\n";
+                    }
+                }
+            output += "};\n";
+        }
+        return output + "}\n";
+    } catch (const Diagnostic &diagnostic) {
+        return std::unexpected(diagnostic);
+    }
 }
 } // namespace lvui

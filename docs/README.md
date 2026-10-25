@@ -1,5 +1,9 @@
 # LVUI documentation
 
+- [LVRS default style tokens and Figma snapshot](StyleTokens.md)
+- [Color and Metric value types](StyleTypes.md)
+- [Complete Color and Metric member catalog](StyleTokenMembers.md)
+
 
 - [Current LVRS self-rendered native implementation](LVRSNative.md)
 
@@ -142,3 +146,5 @@ The ownership model and native AOT execution model are selected. The C++23/Cocoa
 subset has concrete code generation and mounting APIs. Full language syntax,
 reactive binding formats, asynchronous scope ownership and remaining backends
 still require implementation work.
+
+- [Shared application style profiles](StyleProfiles.md): build-time Color/Metric members for LVUI and native C++ panels.

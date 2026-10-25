@@ -17,6 +17,10 @@ spec.loader.exec_module(inventory)
 
 
 class InventoryTests(unittest.TestCase):
+    def test_style_types_are_reserved_without_becoming_views(self):
+        words={v['name']:v for v in inventory.words({'declarations':[]})}
+        self.assertEqual(words['Color']['kind'],'type')
+        self.assertEqual(words['Metric']['kind'],'type')
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='keyword-audit-', dir=ROOT / 'build')
         self.root = Path(self.temp.name)
@@ -33,7 +37,8 @@ class InventoryTests(unittest.TestCase):
     def write(self, name, text):
         path = self.root / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text, encoding='utf-8', newline='\n')
+        with path.open('w', encoding='utf-8', newline='\n') as output:
+            output.write(text)
 
     def audit(self):
         files = sorted(p.relative_to(self.root).as_posix() for p in (self.root / 'src').rglob('*') if p.is_file())

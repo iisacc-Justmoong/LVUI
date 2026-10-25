@@ -6,6 +6,7 @@
 #include <string_view>
 #include <utility>
 #include <vector>
+#include "StyleTokens.h"
 
 namespace lvui {
 // Encoded sRGB; the renderer converts to its working color space.
@@ -39,6 +40,7 @@ struct Diagnostic final {
 class Document;
 using ParseResult = std::expected<Document, Diagnostic>;
 [[nodiscard]] ParseResult parse(std::string_view source);
+[[nodiscard]] ParseResult parse(std::string_view source, const StyleTokenOptions&);
 // A parsed value owns all strings and exposes an immutable tree. No source lifetime dependency.
 class Document final {
 public:
@@ -46,6 +48,7 @@ public:
 private:
     explicit Document(Node root) : root_(std::move(root)) {}
     friend ParseResult parse(std::string_view);
+    friend ParseResult parse(std::string_view, const StyleTokenOptions&);
     Node root_;
 };
 // UTF-8 input <=1 MiB, <=4096 elements and <=64 levels (including root).

@@ -1,5 +1,16 @@
 # LVUI
 
+[LVRS default style tokens](docs/StyleTokens.md) preserve all 208 variables from
+the LVRS Figma source, including types, modes and aliases.
+[Color and Metric value types](docs/StyleTypes.md) provide concise selections such
+as `Color.primary`, `Metric.space8`, and contextual `.primary` / `.space8`.
+Native inline styles use the same members; `var(--lvrs-...)` and `token("...")`
+remain available. Window appearance,
+typography and shared layout/control defaults resolve at compile time, with
+isolated per-compilation overrides and no runtime Figma or token parser.
+The [installed-package example](example/StyleTokens/README.md) compiles both
+syntaxes into native LVRS C++23.
+
 [AppHeader and AppCard](docs/AppSurfaces.md) compile to retained native C++
 composition with typed live inputs and ordinary child slots in FRAMEWORK LVRS.
 Runtime verification remains deferred to the final whole-goal batch.
@@ -59,7 +70,7 @@ Component interfaces declare callback inputs; method references and explicit
 calls follow the [callable semantics](docs/MethodReferences.md).
 The package now implements a C++23 component-language front end alongside the
 earlier HTML-shaped parsing/rendering surface. It recognizes 107 LVRS visual
-component keywords, three visual modifiers and six core words, and parses
+component keywords, three visual modifiers and eight core words, and parses
 brace-delimited child `View` arguments. It now implements [native AOT code generation](docs/NativeAOT.md)
 for supported LVRS components listed in the native implementation guide,
 mounted as iiGUI C++ widgets on a Cocoa surface. The native Hello World compiles generated C++23
@@ -180,3 +191,5 @@ RichText TextEditor remains a separate migration requirement.
 See [native Tooltip AOT](docs/NativeTooltip.md) for forward target-ID attachment,
 retained custom content, checked millisecond inputs and same-instance bindings.
 Application and test execution remains deferred to the final whole-goal batch.
+
+[Application style profiles](docs/StyleProfiles.md) share typed Color/Metric values between LVUI views and handwritten native C++ panels through a generated constexpr header. `STYLE_FILE` and `lvui_generate_styles` track the same build input; no runtime LVUI parser is required.

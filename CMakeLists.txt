@@ -4,7 +4,7 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CTest)
 find_package(iiSDKCore 0.18.1 CONFIG REQUIRED COMPONENTS Contracts)
-add_library(LVUI STATIC src/LVUI/Parser.cpp src/LVUI/Language.cpp src/LVUI/NativeMarkup.cpp src/LVUI/Compiler.cpp)
+add_library(LVUI STATIC src/LVUI/Parser.cpp src/LVUI/Language.cpp src/LVUI/NativeMarkup.cpp src/LVUI/Compiler.cpp src/LVUI/StyleTokens.cpp)
 add_library(LVUI::LVUI ALIAS LVUI)
 target_compile_features(LVUI PUBLIC cxx_std_23)
 target_link_libraries(LVUI PUBLIC iiSDKCore::Contracts)
@@ -33,6 +33,7 @@ install(FILES
     src/LVUI/Document.h
     src/LVUI/Language.h
     src/LVUI/Compiler.h
+    src/LVUI/StyleTokens.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/LVUI)
 install(EXPORT LVUITargets NAMESPACE LVUI:: DESTINATION "${_package}")
 configure_package_config_file(cmake/LVUIConfig.cmake.in
@@ -46,6 +47,12 @@ install(FILES README.md DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI)
 install(DIRECTORY docs DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI PATTERN .DS_Store EXCLUDE)
 install(DIRECTORY catalog DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI)
 if(BUILD_TESTING)
+    add_executable(LVUIStyleTokenTests tests/style_tokens.cpp)
+    target_link_libraries(LVUIStyleTokenTests PRIVATE LVUI::LVUI)
+    foreach(_case catalog aliases modes overrides css composite parser aot diagnostics selectors typed_syntax typed_values typed_diagnostics profile)
+        add_test(NAME LVUI.StyleTokens.${_case} COMMAND LVUIStyleTokenTests ${_case})
+        set_tests_properties(LVUI.StyleTokens.${_case} PROPERTIES TIMEOUT 15)
+    endforeach()
     add_executable(LVUICompilerTests tests/compiler.cpp)
     target_link_libraries(LVUICompilerTests PRIVATE LVUI::LVUI)
     add_test(NAME LVUI.AOT.lvrs_code_editor COMMAND LVUICompilerTests lvrs_code_editor)
@@ -54,7 +61,11 @@ if(BUILD_TESTING)
         add_test(NAME LVUI.AOT.${_case} COMMAND LVUICompilerTests ${_case})
         set_tests_properties(LVUI.AOT.${_case} PROPERTIES TIMEOUT 10)
     endforeach()
-    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    find_package(Python3 3.9 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME LVUI.StyleTokens.Snapshot COMMAND "${Python3_EXECUTABLE}" -B
+        "${CMAKE_CURRENT_SOURCE_DIR}/tools/update_style_tokens.py" --check)
+    add_test(NAME LVUI.StyleTokens.Generator COMMAND "${Python3_EXECUTABLE}" -B
+        "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_style_token_generator.py")
     add_test(NAME LVUI.AOT.tooling COMMAND "${Python3_EXECUTABLE}" -B
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/aot_tooling.py" $<TARGET_FILE:lvui-compile>
         "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake/RunLVUICompiler.cmake")

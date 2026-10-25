@@ -30,6 +30,17 @@ struct Parser final {
     std::string_view source;
     std::size_t position=0, nodes=0;
     std::unordered_set<std::string> ids;
+    const StyleTokenOptions& style_tokens;
+
+    double default_number(std::string_view name, double low, double high, bool font_weight = false) const {
+        auto value = default_style_tokens().number(name, style_tokens);
+        if (!value)
+            error(0, value.error().message);
+        if (*value < low || *value > high ||
+            (font_weight && *value != 400 && *value != 500 && *value != 600 && *value != 700))
+            error(0, "Default style token outside supported range: " + std::string(name));
+        return *value;
+    }
 
     [[noreturn]] void error(std::size_t offset, std::string message) const {
         Diagnostic diagnostic{offset,1,1,std::move(message)};
@@ -85,6 +96,17 @@ struct Parser final {
         return result;
     }
     Length length(std::string_view value, std::size_t offset, bool automatic, bool percent) const {
+        auto token = default_style_tokens().style_value(value, StyleTokenType::number, style_tokens);
+        if (!token)
+            error(offset, token.error().message);
+        if (*token) {
+            const auto n = std::get_if<double>(&**token);
+            if (!n)
+                error(offset, "Style length requires a Number token");
+            if (*n < 0 || *n > 8192)
+                error(offset, "Style length token outside supported range");
+            return {Unit::pixels, float(*n)};
+        }
         if (value=="auto" && automatic) return {};
         Unit unit=Unit::pixels;
         if (value.ends_with('%') && percent) { unit=Unit::percent; value.remove_suffix(1); }
@@ -95,6 +117,15 @@ struct Parser final {
         return {unit,float(*number)};
     }
     Color color(std::string_view value, std::size_t offset) const {
+        auto token = default_style_tokens().style_value(value, StyleTokenType::color, style_tokens);
+        if (!token)
+            error(offset, token.error().message);
+        if (*token) {
+            const auto c = std::get_if<StyleColor>(&**token);
+            if (!c)
+                error(offset, "Style color requires a Color token");
+            return {float(c->red), float(c->green), float(c->blue), float(c->alpha)};
+        }
         if (value=="transparent") return {0,0,0,0};
         if (value=="black") return {0,0,0,1};
         if (value=="white") return {1,1,1,1};
@@ -134,9 +165,25 @@ struct Parser final {
                 if (size<8 || size>256) error(at,"font-size must be 8..256 logical pixels");
                 style.font_size=size;
             } else if (key=="font-weight") {
-                if (value=="normal" || value=="400") style.font_weight=400;
-                else if (value=="bold" || value=="700") style.font_weight=700;
-                else error(at,"font-weight must be normal, bold, 400 or 700");
+                const auto token =
+                    default_style_tokens().style_value(value, StyleTokenType::number, style_tokens);
+                if (!token)
+                    error(at, token.error().message);
+                if (*token) {
+                    const auto n = std::get_if<double>(&**token);
+                    if (!n || (*n != 400 && *n != 500 && *n != 600 && *n != 700))
+                        error(at, "font-weight requires a 400/500/600/700 Number token");
+                    style.font_weight = unsigned(*n);
+                } else if (value == "normal")
+                    style.font_weight = 400;
+                else if (value == "bold")
+                    style.font_weight = 700;
+                else {
+                    const auto n = ii::core::parse_decimal(value);
+                    if (!n || (*n != 400 && *n != 500 && *n != 600 && *n != 700))
+                        error(at, "font-weight must be normal, bold or 400/500/600/700");
+                    style.font_weight = unsigned(*n);
+                }
             } else if (key=="text-align") {
                 if (value=="left") style.text_align=Alignment::left;
                 else if (value=="center") style.text_align=Alignment::center;
@@ -152,7 +199,18 @@ struct Parser final {
                 std::vector<float> edges;
                 auto remaining=value;
                 while (!remaining.empty()) {
-                    auto n=remaining.find_first_of(" \t\r\n");
+                    auto n = remaining.npos;
+                    unsigned parentheses = 0;
+                    for (std::size_t i = 0; i < remaining.size(); ++i) {
+                        if (remaining[i] == '(')
+                            ++parentheses;
+                        else if (remaining[i] == ')' && parentheses)
+                            --parentheses;
+                        else if (space(remaining[i]) && !parentheses) {
+                            n = i;
+                            break;
+                        }
+                    }
                     edges.push_back(length(remaining.substr(0,n),at,false,false).value);
                     if (edges.size()>4) error(at,"padding requires 1..4 lengths");
                     if (n==remaining.npos) break;
@@ -172,7 +230,11 @@ struct Parser final {
         if (node.tag=="text" || node.tag=="p" || node.tag=="h1" || node.tag=="span") node.kind=Kind::text;
         else if (node.tag!="view" && node.tag!="div" && node.tag!="section" && node.tag!="main")
             error(tag_at,"Unsupported tag '"+node.tag+"'");
-        if (node.tag=="h1") { node.style.font_size=28; node.style.font_weight=700; }
+        if (node.tag == "h1") {
+            node.style.font_size = float(default_number("--lvrs-theme-typography-title-text-title", 8, 256));
+            node.style.font_weight =
+                unsigned(default_number("--lvrs-theme-typography-weight-bold", 100, 900, true));
+        }
         std::unordered_set<std::string> attributes;
         for (;;) {
             const auto before=position; whitespace();
@@ -227,17 +289,35 @@ struct Parser final {
     }
 };
 }
-ParseResult parse(std::string_view source) {
-    Parser parser{source,0,0,{}};
+ParseResult parse(std::string_view source, const StyleTokenOptions& options) {
+    Parser parser{source, 0, 0, {}, options};
     try {
         if (source.size()>1024*1024) parser.error(0,"LVUI input exceeds 1 MiB");
         if (source.find('\0')!=source.npos) parser.error(source.find('\0'),"NUL is not allowed in LVUI");
         if (!ii::core::valid_utf8(source)) parser.error(0,"LVUI requires valid UTF-8");
+        const auto valid = default_style_tokens().validate(options);
+        if (!valid)
+            parser.error(0, valid.error().message);
         parser.trivia();
         if (!parser.starts("<")) parser.error(parser.position,"Expected one root element");
         auto root=parser.element(1); parser.trivia();
+        if (!root.style.background) {
+            const auto c = *default_style_tokens().color("--lvrs-theme-colors-panel-window", options);
+            root.style.background = Color{float(c.red), float(c.green), float(c.blue), float(c.alpha)};
+        }
+        if (!root.style.color) {
+            const auto c = *default_style_tokens().color("--lvrs-theme-colors-text-body-color", options);
+            root.style.color = Color{float(c.red), float(c.green), float(c.blue), float(c.alpha)};
+        }
+        if (!root.style.font_size)
+            root.style.font_size =
+                float(parser.default_number("--lvrs-theme-typography-body-text-body", 8, 256));
+        if (!root.style.font_weight)
+            root.style.font_weight =
+                unsigned(parser.default_number("--lvrs-theme-typography-weight-medium", 100, 900, true));
         if (parser.position!=source.size()) parser.error(parser.position,"Expected exactly one root element");
         return Document(std::move(root));
     } catch (Diagnostic& diagnostic) { return std::unexpected(std::move(diagnostic)); }
 }
+ParseResult parse(std::string_view source) { return parse(source, {}); }
 } // namespace lvui

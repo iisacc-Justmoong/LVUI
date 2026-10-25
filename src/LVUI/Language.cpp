@@ -5,8 +5,29 @@
 #include <charconv>
 #include <cmath>
 #include <unordered_set>
+#include <type_traits>
 
 namespace lvui {
+Value style_token_literal(const StyleTokenValue& value) {
+    return std::visit(
+        [](const auto& item) -> Value {
+            using T = std::decay_t<decltype(item)>;
+            if constexpr (std::is_same_v<T, double>)
+                return {ValueKind::number, ii::core::format_decimal(item), {}};
+            else if constexpr (std::is_same_v<T, std::string>)
+                return {ValueKind::string, item, {}};
+            else if constexpr (std::is_same_v<T, bool>)
+                return {ValueKind::boolean, item ? "true" : "false", {}};
+            else
+                return {ValueKind::color,
+                        "",
+                        {{ValueKind::number, ii::core::format_decimal(item.red), {}},
+                         {ValueKind::number, ii::core::format_decimal(item.green), {}},
+                         {ValueKind::number, ii::core::format_decimal(item.blue), {}},
+                         {ValueKind::number, ii::core::format_decimal(item.alpha), {}}}};
+        },
+        value);
+}
 namespace {
 constexpr Keyword words[]{
 #define LVUI_KEYWORD(name, kind, file, line, internal) {name, KeywordKind::kind, file, line, internal},
@@ -176,6 +197,13 @@ struct Parser final {
         if (word("true") || word("false")) return {ValueKind::boolean, tokens[cursor++].text, {}};
         if (accept(TokenKind::left_bracket)) return {ValueKind::list, {}, values(TokenKind::right_bracket, depth)};
         if (accept(TokenKind::dot)) return {ValueKind::enumeration, "." + enumeration_path(), {}};
+        if (word("Color") || word("Metric")) {
+            auto type = tokens[cursor++].text;
+            if (accept(TokenKind::left_paren))
+                return {ValueKind::call, std::move(type), values(TokenKind::right_paren, depth)};
+            expect(TokenKind::dot, "Expected '.' and a member after a style type");
+            return {ValueKind::style_member, type + "." + enumeration_path(), {}};
+        }
         if (at(TokenKind::identifier)) {
             auto reference = path();
             if (accept(TokenKind::left_paren)) return {ValueKind::call, std::move(reference), values(TokenKind::right_paren, depth)};
@@ -199,8 +227,10 @@ struct Parser final {
         auto name = identifier(); bind(names, name, *this);
         std::string type;
         if (accept(TokenKind::colon)) {
-            if (word("View")) { type = "View"; ++cursor; }
-            else type = path();
+            if (word("View") || word("Color") || word("Metric")) {
+                type = tokens[cursor++].text;
+            } else
+                type = path();
         }
         expect(TokenKind::equal, "Expected '=' in value declaration");
         if (type == "View") error("View-valued declarations require a later typed initializer implementation");

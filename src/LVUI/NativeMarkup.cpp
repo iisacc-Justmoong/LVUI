@@ -10,6 +10,7 @@ std::string_view trim(std::string_view text){const auto first=text.find_first_no
 struct Markup final {
     std::string_view source;std::size_t offset=0,line=1,column=1,nodes=0;
     std::vector<BackendImport> imports;std::vector<Binding> bindings;
+    const StyleTokenOptions& style_tokens;
     SourcePosition position()const{return {offset,line,column};}
     [[noreturn]]void fail(std::string message)const{throw Diagnostic{offset,line,column,std::move(message)};}
     char peek()const{return offset<source.size()?source[offset]:'\0';}
@@ -45,8 +46,22 @@ struct Markup final {
         view.inputs.push_back({std::move(key),std::move(val),at});
     }
     void style(View& view,std::string_view styles,std::string& direction){
-        static const std::map<std::string_view,std::string_view> names{{"width","width"},{"height","height"},{"gap","spacing"},{"padding","padding"},
-            {"font-size","fontSize"},{"font-weight","fontWeight"},{"line-height","lineHeight"},{"color","color"},{"border-radius","cornerRadius"},{"flex","flex"}};
+        static const std::map<std::string_view, std::string_view> names{
+            {"width", "width"},
+            {"height", "height"},
+            {"gap", "spacing"},
+            {"padding", "padding"},
+            {"font-size", "fontSize"},
+            {"font-weight", "fontWeight"},
+            {"line-height", "lineHeight"},
+            {"color", "color"},
+            {"background", "backgroundColor"},
+            {"background-color", "backgroundColor"},
+            {"border-color", "borderColor"},
+            {"border-width", "borderWidth"},
+            {"font-family", "fontFamily"},
+            {"border-radius", "cornerRadius"},
+            {"flex", "flex"}};
         while(!styles.empty()){auto end=styles.find(';');auto part=trim(styles.substr(0,end));if(end==styles.npos)styles={};else styles.remove_prefix(end+1);if(part.empty())continue;
             const auto colon=part.find(':');if(colon==part.npos)fail("Inline style requires name: value");auto key=trim(part.substr(0,colon)),raw=trim(part.substr(colon+1));
             if(key=="display"){if(raw!="flex")fail("Native markup supports display: flex");continue;}
@@ -54,7 +69,20 @@ struct Markup final {
             if(key=="align-items"){const auto alignment=raw=="flex-start"?".leading":raw=="flex-end"?".trailing":raw=="center"?".center":raw=="stretch"?".stretch":"";if(!*alignment)fail("Unsupported native alignment");input(view,"alignment",expression(alignment),view.position);continue;}
             auto known=names.find(key);if(known==names.end())fail("Unsupported native inline style: "+std::string(key));
             if((key=="width"||key=="height")&&raw=="auto")continue;
-            if(key=="color")input(view,std::string(known->second),{ValueKind::string,std::string(raw),{}},view.position);
+            const auto context =
+                key == "color" || key == "background" || key == "background-color" || key == "border-color"
+                    ? StyleTokenType::color
+                : key == "font-family" ? StyleTokenType::string
+                                       : StyleTokenType::number;
+            auto token = default_style_tokens().style_value(raw, context, style_tokens);
+            if (!token)
+                fail(token.error().message);
+            if (*token)
+                input(view, std::string(known->second), style_token_literal(**token), view.position);
+            else if (key == "color" || key == "background" || key == "background-color" ||
+                     key == "border-color" || key == "font-family")
+                input(view, std::string(known->second), {ValueKind::string, std::string(raw), {}},
+                      view.position);
             else {if(raw.ends_with("px"))raw.remove_suffix(2);input(view,std::string(known->second),expression(raw),view.position);}
         }
     }
@@ -96,14 +124,26 @@ struct Markup final {
     }
 };
 }
-ViewParseResult parse_native_markup(std::string_view source){
+ViewParseResult parse_native_markup(std::string_view source, const StyleTokenOptions& style_tokens) {
     if(source.size()>1024*1024||!ii::core::valid_utf8(source)||source.find('\0')!=source.npos)return std::unexpected(Diagnostic{0,1,1,"Native markup must be UTF-8 within 1 MiB"});
-    try{Markup parser{source};parser.skip();while(parser.starts("<!--")){parser.comment();parser.skip();}
+    const auto valid = default_style_tokens().validate(style_tokens);
+    if (!valid)
+        return std::unexpected(Diagnostic{0, 1, 1, valid.error().message});
+    try {
+        Markup parser{.source = source, .style_tokens = style_tokens};
+        parser.skip();
+        while (parser.starts("<!--")) {
+            parser.comment();
+            parser.skip();
+        }
         if(parser.starts("<script>")){parser.script();parser.skip();}
         auto root=parser.view(0);parser.skip();while(parser.starts("<!--")){parser.comment();parser.skip();}
         if(parser.peek())parser.fail("Native markup requires one root window");
         if(root.component->spelling!="Window"&&root.component->spelling!="ApplicationWindow")parser.fail("The root native component must be a Window or ApplicationWindow");
         return ViewDocument(std::move(root),std::move(parser.imports),std::move(parser.bindings));
-    }catch(Diagnostic& error){return std::unexpected(std::move(error));}
+    } catch (Diagnostic& error) {
+        return std::unexpected(std::move(error));
+    }
 }
+ViewParseResult parse_native_markup(std::string_view source) { return parse_native_markup(source, {}); }
 }

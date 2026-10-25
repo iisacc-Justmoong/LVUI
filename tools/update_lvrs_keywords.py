@@ -19,7 +19,7 @@ VIEW_BASES = {
 }
 NONVISUAL_BASES = {"QtObject", "QObject", "QAbstractListModel"}
 MODIFIER_BASES = {"Scale", "Behavior"}
-CORE = {"View": "type", "import": "declaration", "let": "declaration",
+CORE = {"View": "type", "Color": "type", "Metric": "type", "import": "declaration", "let": "declaration",
         "var": "declaration", "true": "literal", "false": "literal"}
 
 
@@ -148,7 +148,9 @@ def render(snapshot):
                  '일반 빌드와 설치 소비자는 LVRS·Qt·이 스크립트를 요구하지 않는다. '
                  '원본 조사 테스트에서 새 파일·등록·상속·내용 변경이 발견되면 목록을 다시 조사해야 한다. '
                  '내용이 같은 출력은 파일과 수정 시각을 보존한다. 비시각 소스의 내용만 바뀌었을 때 '
-                 '같은 예약어 헤더를 다시 써서 하위 C++ 모듈을 재컴파일시키지 않는다.\n')
+                 '같은 예약어 헤더를 다시 써서 하위 C++ 모듈을 재컴파일시키지 않는다. '
+                 '조사 도구와 회귀 검사는 Python 3.9 이상에서 동작하며, '
+                 'macOS와 Windows 모두 UTF-8·LF 출력과 변경 없는 파일의 수정 시각을 보존한다.\n')
     return {DEFINITIONS: definitions, DOCUMENT: document}
 
 
@@ -167,7 +169,10 @@ def main():
                 raise SystemExit(f'Stale keyword inventory: {path.relative_to(ROOT)}')
         elif not path.exists() or path.read_bytes() != content.encode('utf-8'):
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding='utf-8', newline='\n')
+            # Path.write_text(newline=...) requires Python 3.10; CMake also
+            # supports the Python 3.9 interpreter shipped with macOS tools.
+            with path.open('w', encoding='utf-8', newline='\n') as output:
+                output.write(content)
     entries = words(snapshot)
     print(f'{len(snapshot["files"])} source files; {len(snapshot["declarations"])} declarations; '
           f'{sum(e["kind"] == "view" for e in entries)} View keywords; '

@@ -1,7 +1,7 @@
 # 예약어와 LVRS 시각 컴포넌트
 
 이 문서는 `tools/update_lvrs_keywords.py`로 소스 조사 결과에서 생성한다.
-조사 기준 LVRS 커밋은 `2aeb162a6b1a2ea3bf2bc796a2174cc310f186fa`이며, `src/`의 334개 파일을 읽고 LF 개행으로 정규화한 SHA-256을 기록했다.
+조사 기준 LVRS 커밋은 `8360f4dcafe2e4a72605299d5dfeb010bba6e818`이며, `src/`의 334개 파일을 읽고 LF 개행으로 정규화한 SHA-256을 기록했다.
 시각 컴포넌트의 고유 이름 107개와 시각 효과·동작 보조 예약어 3개를 포함한다.
 
 ## 실제 언어 구현
@@ -37,6 +37,7 @@ QML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 �
 | `ChannelRow` | View | `src/qml/components/control/input/ColorPicker.qml:131` | 예 |
 | `CheckBox` | View | `src/qml/components/control/check/CheckBox.qml:4` | 아니오 |
 | `CodeEditor` | View | `src/qml/components/control/input/CodeEditor.qml:5` | 아니오 |
+| `Color` | 타입 | LVUI 언어 | 아니오 |
 | `ColorField` | View | `src/qml/components/control/input/ColorPicker.qml:225` | 예 |
 | `ColorInput` | View | `src/qml/components/control/input/ColorPicker.qml:71` | 예 |
 | `ColorPicker` | View | `src/qml/components/control/input/ColorPicker.qml:5` | 아니오 |
@@ -82,6 +83,7 @@ QML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 �
 | `Menu` | View | `src/qml/components/navigation/Menu.qml:5` | 아니오 |
 | `MenuDivider` | View | `src/qml/components/navigation/MenuDivider.qml:4` | 아니오 |
 | `MenuItem` | View | `src/qml/components/navigation/MenuItem.qml:4` | 아니오 |
+| `Metric` | 타입 | LVUI 언어 | 아니오 |
 | `MobileNavigationBar` | View | `src/qml/components/navigation/MobileNavigationBar.qml:6` | 아니오 |
 | `MobileNavigationTab` | View | `src/qml/components/navigation/MobileNavigationTab.qml:6` | 아니오 |
 | `MobileTab` | View | `src/qml/components/navigation/MobileTab.qml:6` | 아니오 |
@@ -185,4 +187,4 @@ python3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS --check
 python3 tools/update_lvrs_keywords.py --snapshot-only --check
 ```
 
-일반 빌드와 설치 소비자는 LVRS·Qt·이 스크립트를 요구하지 않는다. 원본 조사 테스트에서 새 파일·등록·상속·내용 변경이 발견되면 목록을 다시 조사해야 한다. 내용이 같은 출력은 파일과 수정 시각을 보존한다. 비시각 소스의 내용만 바뀌었을 때 같은 예약어 헤더를 다시 써서 하위 C++ 모듈을 재컴파일시키지 않는다.
+일반 빌드와 설치 소비자는 LVRS·Qt·이 스크립트를 요구하지 않는다. 원본 조사 테스트에서 새 파일·등록·상속·내용 변경이 발견되면 목록을 다시 조사해야 한다. 내용이 같은 출력은 파일과 수정 시각을 보존한다. 비시각 소스의 내용만 바뀌었을 때 같은 예약어 헤더를 다시 써서 하위 C++ 모듈을 재컴파일시키지 않는다. 조사 도구와 회귀 검사는 Python 3.9 이상에서 동작하며, macOS와 Windows 모두 UTF-8·LF 출력과 변경 없는 파일의 수정 시각을 보존한다.
