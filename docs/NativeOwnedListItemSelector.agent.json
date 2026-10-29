@@ -1,0 +1,107 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:98de27293b13f0df8e1f689e4df48d4594c94dee3d25daf42344f3b8dc63fe9e",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeOwnedListItemSelector.md",
+    "sha256": "afbac33229645ab253dfc43414c50ae5b504dcfab94f762e614c76f68db8f0c4",
+    "bytes": 1412,
+    "line_count": 17,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 목록 선택기",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 목록 선택기\n",
+      "level": 1,
+      "title": "LVUI 독립 목록 선택기"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`NativeListItemSelector`는 [옵션 모델](ListItemSelector.md), LVUI의 `NativeComboBox`와\n`NativeMenu`를 조합한다. 옵션은 텍스트와 활성 여부를 가지며 선택 인덱스와 화면\n크기, 표시 여부, 접근성 이름을 C++ 입력으로 제공한다. 위·아래 키는 비활성 옵션을\n건너뛰고 목록 끝에서 멈춘다. 버튼을 누르면 같은 위젯 세대에 속한 메뉴가 열리고,\n사용 가능한 옵션을 선택하면 메뉴를 닫은 뒤 변경 이벤트를 전달한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "옵션 목록이나 크기가 바뀌면 새 버튼과 메뉴를 준비해 기존 세대를 교체한다. 잘못된\n옵션은 거부하며 동일한 값을 반응형으로 되돌려 받으면 중복 이벤트를 만들지 않는다.\n선택 콜백 안에서 옵션 목록을 변경하면 콜백이 반환된 뒤 안전하게 화면을 교체한다.\n선택기 및 메뉴를 교체하거나 부모가 제거된 뒤에는 이전 위젯 핸들을 사용할 수 없다.\n긴 메뉴의 스크롤과 호스트 접근성 역할, 실제 플랫폼 표시 동작은 별도의 구현 또는 기기 검증이 필요하다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 17,
+      "raw": "`LVUI.OwnedListItem.SelectorHost`는 창을 열지 않는 위젯 트리에서 키보드, 메뉴 선택,\n옵션 변경, 비활성 상태, 소유 스레드와 수명을 검사한다. 선언형 목록 항목에서도\n`.Select`로 사용할 수 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 목록 선택기",
+      "anchor": "lvui-독립-목록-선택기",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "옵션 모델",
+        "target": "ListItemSelector.md",
+        "kind": "relative",
+        "line": 3
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

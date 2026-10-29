@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemSelectModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: .Select, label: "Status", selector: vm.options,
+                 selectorIndex: vm.index, selectorEnabled: vm.enabled,
+                 onSelectorIndexChanged: vm.changed, onEdited: vm.edited)
+    }
+}

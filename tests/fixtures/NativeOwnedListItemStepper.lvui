@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemStepperModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: .Stepper, label: "Copies", quantity: vm.quantity,
+                 minimumQuantity: 1, maximumQuantity: 3, stepSize: 0.5, stepperEnabled: vm.enabled,
+                 onQuantityChanged: vm.changed, onEdited: vm.edited)
+    }
+}

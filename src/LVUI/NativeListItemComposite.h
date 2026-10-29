@@ -192,7 +192,7 @@ class NativeListItemComposite final {
         const auto label_shown=has_quantity(state->input)&&label_width>0&&label_height>0;
         if(auto visible=state->quantity_label.set_visible(label_shown);!visible)return visible;
         if(label_shown)if(auto frame=state->quantity_label.set_frame({float(label_right-label_width),float((height-label_height)/2),float(label_width),float(label_height)});!frame)return frame;
-        return place(state->selector->root(),has_selector(state->input),state->input.selector_width,20);
+        return place(state->selector->root(),has_selector(state->input)&&state->input.row.configuration.visible,state->input.selector_width,20);
     }
     [[nodiscard]] static ii::core::Result<bool> apply(const std::shared_ptr<State>& state,std::uint64_t revision){
         const auto step=[&](auto&& operation)->ii::core::Result<bool>{if(state->revision!=revision)return false;auto result=operation();

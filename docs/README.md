@@ -303,6 +303,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativeOwnedHierarchyToolbar.md`](NativeOwnedHierarchyToolbar.md) | [JSON](NativeOwnedHierarchyToolbar.agent.json) |
 | [`docs/NativeOwnedListFooter.md`](NativeOwnedListFooter.md) | [JSON](NativeOwnedListFooter.agent.json) |
 | [`docs/NativeOwnedListItem.md`](NativeOwnedListItem.md) | [JSON](NativeOwnedListItem.agent.json) |
+| [`docs/NativeOwnedListItemSelector.md`](NativeOwnedListItemSelector.md) | [JSON](NativeOwnedListItemSelector.agent.json) |
 | [`docs/NativeOwnedListPanel.md`](NativeOwnedListPanel.md) | [JSON](NativeOwnedListPanel.agent.json) |
 | [`docs/NativeOwnedListToolbar.md`](NativeOwnedListToolbar.md) | [JSON](NativeOwnedListToolbar.agent.json) |
 | [`docs/NativeOwnedListView.md`](NativeOwnedListView.md) | [JSON](NativeOwnedListView.agent.json) |

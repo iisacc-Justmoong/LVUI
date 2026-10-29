@@ -61,7 +61,7 @@ class NativeMenu final {
     }
     [[nodiscard]] static ii::gui::PopoverOptions popup_options(const MenuConfiguration& c,const MenuLayout& extent){
         ii::gui::PopoverOptions value;value.width=extent.width;value.height=std::max(1.,extent.height);value.padding=0;value.margins=c.edge_margin;
-        value.corner_radius=c.corner_radius;value.surface_opacity=0;value.opaque_base=false;value.fit_to_viewport=true;
+        value.corner_radius=c.corner_radius;value.surface_opacity=0;value.opaque_base=false;value.fit_to_viewport=true;value.clip_content=true;
         value.dismiss_on_outside_press=c.dismiss_outside;value.dismiss_on_context_request=c.dismiss_context;value.accessibility_name=c.accessibility_name;return value;
     }
     [[nodiscard]] static ii::gui::Color linear(StyleColor c)noexcept{
