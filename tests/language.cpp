@@ -96,8 +96,8 @@ ApplicationWindow(title: title) {
     check(types.imports().size() == 2 && types.imports()[0].type_only && types.imports()[0].name == "Model" &&
           !types.imports()[1].type_only, "Type blueprint import created an instance declaration");
     bad("import class Domain.Model\nlet Model = 1\nLabel()", "Duplicate");
-    const auto aliases=good("import class Row lvrs.HierarchyItem\nimport class AppWindow App.Window\nimport state App.Color\nLabel()");
-    check(aliases.imports()[0].name=="Row"&&aliases.imports()[0].type=="lvrs.HierarchyItem"&&aliases.imports()[0].type_only&&aliases.imports()[1].name=="AppWindow"&&aliases.imports()[2].type=="App.Color"&&!aliases.imports()[2].type_only,"A C++ type alias lost its blueprint-only contract or native type name");
+    const auto aliases=good("import class Row App.HierarchyItem\nimport class AppWindow App.Window\nimport state App.Color\nLabel()");
+    check(aliases.imports()[0].name=="Row"&&aliases.imports()[0].type=="App.HierarchyItem"&&aliases.imports()[0].type_only&&aliases.imports()[1].name=="AppWindow"&&aliases.imports()[2].type=="App.Color"&&!aliases.imports()[2].type_only,"A C++ type alias lost its blueprint-only contract or native type name");
     bad("import class Bad.Alias App.Window\nLabel()","unqualified");
     bad("import class Row App.import\nLabel()","reserved");
 }
@@ -113,7 +113,7 @@ void shadowing() {
     }
     (void)good("let label = \"Label\"\nimport custom Backend\nLabel(text: label)");
     check(good("import vm PushButton\nLabel()").imports()[0].type=="PushButton","A C++ type name was confused with the declaration's binding name");
-    bad("import class lvrs.HierarchyItem\nLabel()","alias");
+    bad("import class App.HierarchyItem\nLabel()","alias");
     bad("let name = 1\nvar name = 2\nLabel()", "Duplicate");
 }
 void diagnostics() {

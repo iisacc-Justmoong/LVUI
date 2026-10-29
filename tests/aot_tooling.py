@@ -79,14 +79,40 @@ class AotToolingTests(unittest.TestCase):
             self.assertEqual(invalid.stdout,'')
         for choice in ['Theme Colors','Theme Colors=','=Dark']:
             self.assertEqual(self.invoke(source,'--style-mode',choice).returncode,2)
-    def test_native_lvrs_framework_cli(self):
-        result=self.invoke('ApplicationWindow(accent: .green) { CheckBox(checked: true) }','--framework','LVRS')
-        self.assertEqual(result.returncode,0,result.stderr)
-        self.assertIn('lvrs::Widgets controls',result.stdout)
-        self.assertIn('lvrs::Accent::green',result.stdout)
-        rejected=self.invoke('ApplicationWindow { Label() }','--framework','unknown')
-        self.assertEqual(rejected.returncode,1)
-        self.assertEqual(rejected.stdout,'')
+    def test_framework_selection_cannot_generate_legacy_components(self):
+        source = 'ApplicationWindow { CheckBox(checked: true) }'
+        native = self.invoke(source, '--framework', 'iiGUI')
+        self.assertEqual(native.returncode, 0, native.stderr)
+        self.assertIn('lvui::native::NativeCheckBox::create(', native.stdout)
+        self.assertNotIn('lvrs::', native.stdout)
+        self.assertNotIn('LVRS/Widgets.h', native.stdout)
+        for framework in ('LVRS', 'unknown'):
+            rejected = self.invoke(source, '--framework', framework)
+            self.assertEqual(rejected.returncode, 1)
+            self.assertEqual(rejected.stdout, '')
+            self.assertIn('iiGUI', rejected.stderr)
+
+    def test_cmake_rejects_legacy_framework_without_replacing_output(self):
+        self.source.write_text('Window { Label() }', encoding='utf-8')
+        output = self.root / 'existing.generated.h'
+        output.write_text('existing valid generated code', encoding='utf-8')
+        result = subprocess.run(
+            ['cmake', f'-DLVUI_AOT_COMPILER={compiler}', f'-DLVUI_AOT_SOURCE={self.source}',
+             f'-DLVUI_AOT_OUTPUT={output}', '-DLVUI_AOT_FRAMEWORK=LVRS', '-P', str(runner)],
+            capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('iiGUI', result.stderr)
+        self.assertEqual(output.read_text(encoding='utf-8'), 'existing valid generated code')
+
+        configure = self.root / 'unsupported-framework.cmake'
+        configure.write_text(
+            f'include([==[{runner.parent / "LVUIAot.cmake"}]==])\n'
+            f'lvui_generate(NAME Example SOURCE [==[{self.source}]==] '
+            'OUTPUT_VARIABLE result FRAMEWORK LVRS)\n',
+            encoding='utf-8')
+        result = subprocess.run(['cmake', '-P', str(configure)], capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('iiGUI', result.stderr)
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(prefix='aot tooling ', dir=build_root)
         self.addCleanup(self.temp.cleanup)

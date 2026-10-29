@@ -1,3 +1,7 @@
 # LVUI native examples
 
-The runnable contracts and examples are maintained in [`tests/`](../tests/). Build them in the repository `build/` directory. Use the installed native SDK kit documented in `docs/`; the Congregation integration uses C++23 and contains no Qt runtime.
+The [getting-started guide](../docs/GettingStarted.md) covers three native
+applications in [GettingStarted/App](GettingStarted/App): a basic window, a
+reactive reading list, and an editable table. The independent
+[style-token example](StyleTokens/README.md) demonstrates compiled appearances.
+Build in the repository `build/` directory with a compatible native iiSDK kit.

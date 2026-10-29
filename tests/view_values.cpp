@@ -32,9 +32,9 @@ void identity() {
     auto code = compile("let tile: View = VStack(id: \"tile\") { Label(id: \"label\", text: \"content\") }\nWindow { VStack { tile()\ntile() } }");
     for (auto id : {"tile@0/tile", "tile@0/label", "tile@1/tile", "tile@1/label"})
         check(code.find(id) != code.npos, "Repeated View values share explicit child IDs");
-    auto typed = compile("let item: View = Tab(iconName: \"generaladd\")\nWindow { TabBar { item()\nitem() } }", "LVRS");
-    check(typed.find("controls.tab(") != typed.npos, "A typed child slot did not resolve a View value");
-    auto targets = compile("let box: View = VStack { Label(id: \"target\")\nTooltip(targetId: \"target\", text: \"help\") }\nWindow { VStack { box()\nbox() } }", "LVRS");
+    auto typed = compile("let item: View = Tab(iconName: \"generaladd\")\nWindow { TabBar { item()\nitem() } }", "iiGUI");
+    check(typed.find("lvui::native::NativeTab::create(") != typed.npos, "A typed child slot did not resolve a View value");
+    auto targets = compile("let box: View = VStack { Label(id: \"target\")\nTooltip(targetId: \"target\", text: \"help\") }\nWindow { VStack { box()\nbox() } }", "iiGUI");
     check(targets.find("->set_target(*") != targets.npos, "View-local tooltip targets were lost");
 }
 void root() {
@@ -56,14 +56,14 @@ void inputs_and_slots() {
     auto application = compile("let app: View = Window { Label(text: \"default\") }\napp(width: 900) { Label(text: \"replacement\") }");
     check(application.find(".size = {900, 420}") != application.npos && application.find("replacement") != application.npos,
           "A Window-valued composition did not accept root inputs and content");
-    auto typed = compile("let bar: View = TabBar()\nWindow { let item: View = Tab(iconName: \"generaladd\")\nbar() { item() } }", "LVRS");
-    check(typed.find("controls.tab(") != typed.npos,"A supplied typed child did not use the caller's View definitions");
+    auto typed = compile("let bar: View = TabBar()\nWindow { let item: View = Tab(iconName: \"generaladd\")\nbar() { item() } }", "iiGUI");
+    check(typed.find("lvui::native::NativeTab::create(") != typed.npos,"A supplied typed child did not use the caller's View definitions");
     const auto quoted = compile("import vm Backend\nlet item: View = Label() { import vm OtherBackend }\nWindow { item(text: vm.title + \"scope->\") }");
     check(quoted.find("std::string(\"scope->\")") != quoted.npos && quoted.find("scope->parent->backend_0.title") != quoted.npos,
           "Borrowing a supplied expression changed a string literal");
-    const auto model = compile("import vm Backend\nlet code: View = CodeEditor(model: vm.editor)\nWindow { import vm OtherBackend\ncode(model: vm.editor) }", "LVRS");
+    const auto model = compile("import vm Backend\nlet code: View = CodeEditor(model: vm.editor)\nWindow { import vm OtherBackend\ncode(model: vm.editor) }", "iiGUI");
     check(model.find("scope->backend_1") != model.npos,"A supplied opaque model lost its stable member reference");
-    const auto invalid_model = lvui::compile_native("import vm Backend\nlet code: View = CodeEditor(model: vm.editor)\nWindow { code(model: vm.makeEditor()) }", {.framework="LVRS"});
+    const auto invalid_model = lvui::compile_native("import vm Backend\nlet code: View = CodeEditor(model: vm.editor)\nWindow { code(model: vm.makeEditor()) }", {.framework="iiGUI"});
     check(!invalid_model,"An opaque input accepted an ephemeral call result through a View override");
 }
 void diagnostics() {

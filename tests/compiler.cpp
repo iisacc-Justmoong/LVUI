@@ -41,8 +41,6 @@ ApplicationWindow(title: greeting, width: 600, height: 360) {
 void validation() {
     bad("Label(text: \"Hello\")", "ApplicationWindow");
     check(bool(lvui::compile_native("ApplicationWindow { Avatar() }")), "Independent Avatar must compile without a framework declaration");
-    check(bool(lvui::compile_native("Window { Avatar() }", {.framework="LVRS"})),
-          "LVRS Avatar must compile with its explicit framework declaration");
     bad("ApplicationWindow { Label(text: 42) }", "String");
     bad("ApplicationWindow { Label(text: \"x\", typo: 1) }", "Unknown input");
     bad("ApplicationWindow(width: 2) { Label(text: \"x\") }", "minimum");
@@ -73,7 +71,7 @@ ApplicationWindow { PushButton(vm.close, text: "Close", enabled: true) })",
     auto returned=lvui::compile_native("import vm Demo\nApplicationWindow { PushButton(vm.makeHandler(), text: \"Close\") }");
     check(returned&&returned->find("lvui::native::returned_callback(")!=returned->npos&&returned->find("scope->backend_0.makeHandler()")!=returned->npos,
           "An explicit C++ callable factory was rejected or deferred until click");
-    auto events=lvui::compile_native("import vm Backend\nWindow { VStack { AppHeader(onMenuClicked: vm.makeHandler())\nCard(onMenuRequested: vm.makeHandler())\nColorPicker(onAccepted: vm.makeHandler())\nPopover(onOpened: vm.makeHandler()) {}\nAlertButton(method: vm.makeHandler()) } }",{.framework="LVRS"});
+    auto events=lvui::compile_native("import vm Backend\nWindow { VStack { AppHeader(onMenuClicked: vm.makeHandler())\nCard(onMenuRequested: vm.makeHandler())\nColorPicker(onAccepted: vm.makeHandler())\nPopover(onOpened: vm.makeHandler()) {}\nAlertButton(method: vm.makeHandler()) } }",{.framework="iiGUI"});
     check(events&&events->find("lvui::native::returned_callback(")!=events->npos,
           "A component-specific callback incorrectly rejected a C++ callable factory");
     bad("ApplicationWindow { PushButton(vm.close, text: \"Close\") }", "Unknown backend");
@@ -107,9 +105,9 @@ void embedded_build(){
     check(code.find("return construct(widgets, native_parent, configure, scope_owner, factories)")!=code.npos&&code.find("widgets.retain(scope)")!=code.npos&&code.find("widgets.retain(native_bindings)")!=code.npos,"Embedded page lost scope, construction inputs or binding ownership");
     check(code.find("factories.create<::Backend>(\"Backend\", \"vm\", this->backend_activation)")!=code.npos&&code.find("ScopeFactoryStorage(factories)")!=code.npos,
           "A native import lost its typed constructor or activation-owned dependencies");
-    auto popup=lvui::compile_native("Window { Modal(open: true) {} }",{.framework="LVRS"});
+    auto popup=lvui::compile_native("Window { Modal(open: true) {} }",{.framework="iiGUI"});
     check(popup&&popup->find("Embedded pages must open dialogs after activation")!=popup->npos,"Embedded eager dialog construction was silently admitted");
-    auto scoped_popup=lvui::compile_native("import vm Backend\nWindow { VStack { Label(text: vm.title)\nModal(open: true) {} } }",{.framework="LVRS"});
+    auto scoped_popup=lvui::compile_native("import vm Backend\nWindow { VStack { Label(text: vm.title)\nModal(open: true) {} } }",{.framework="iiGUI"});
     check(scoped_popup&&scoped_popup->find("(void)configure; (void)scope_owner; (void)factories;")!=scoped_popup->npos,"A rejected eager dialog page left a newly added factory parameter unused");
 }
 void lvrs_router(){
@@ -413,8 +411,8 @@ Window { AppCard(width: 900, height: 600) { HStack {
     check(r->find("WidgetInput& value")!=r->npos&&r->find("std::string key, std::string parent, std::string before")!=r->npos,"Editor callback types were lost");
 }
 void markup(){
-    auto editor=lvui::compile_native(R"(<Window><InputField multiline={true} height={70}/></Window>)",{.framework="LVRS"});
-    check(editor&&editor->find("InputStyle{.height = 70}")!=editor->npos,"Multiline editor height did not compile");
+    auto editor=lvui::compile_native(R"(<Window><InputField multiline={true} height={70}/></Window>)",{.framework="iiGUI"});
+    check(editor&&editor->find("value.multiline = true; value.height = 70;")!=editor->npos,"Multiline editor height did not compile");
     auto result=lvui::compile_native(R"(<script>
 import vm Backend
 var caption: String = "Ready"

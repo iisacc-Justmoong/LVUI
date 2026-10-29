@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/NativeCodeEditor.md",
-    "sha256": "aa70e93ba7e1eee8bac5216c7f0ebe00210c483d51e5530ed89b2a1b4afa3a84",
-    "bytes": 4775,
+    "sha256": "0ec2ee92ef3ca308bd29939ac2b8c65cdf27294043843f9853514dcc63e6efe7",
+    "bytes": 4777,
     "line_count": 54,
     "encoding": "utf-8",
     "language": "ko"
@@ -130,7 +130,7 @@
       "kind": "paragraph",
       "start_line": 46,
       "end_line": 46,
-      "raw": "아래는 아직 남아 있는 별도의 레거시 AOT 생성 경로다.\n"
+      "raw": "아래는 제거된 레거시 AOT 생성 경로의 역사적 기록이다.\n"
     },
     {
       "id": "b000016",

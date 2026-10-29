@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/LVRSNative.md",
-    "sha256": "039605843f1a20067b8405a975894951416008bfd0901b44f846f9df0c91e5e0",
-    "bytes": 23089,
-    "line_count": 321,
+    "sha256": "05e742fe48f0b20fd5c38477dda773cd659f191f9d0bfa966af37e5a2ec93d3b",
+    "bytes": 23390,
+    "line_count": 325,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -40,24 +40,24 @@
     },
     {
       "id": "b000003",
-      "kind": "paragraph",
+      "kind": "quote",
       "start_line": 3,
-      "end_line": 6,
-      "raw": "LVRS의 네이티브 구현은 `lvui_generate(... FRAMEWORK LVRS ...)` 또는\n`lvui-compile --framework LVRS`로 선택한다. 생성한 코드는 `LVRS/Widgets.h`와\n`lvrs::Widgets`를 사용하며 최종 앱은 `LVRS::LVRS`에 연결한다.\nLVUI 컴파일러 자체는 LVRS·iiGUI 런타임에 의존하지 않는다.\n"
+      "end_line": 5,
+      "raw": "> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은\n> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은\n> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 7,
-      "end_line": 7,
+      "start_line": 6,
+      "end_line": 6,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 8,
+      "start_line": 7,
       "end_line": 10,
-      "raw": "이전 문서의 Cocoa 컨트롤 래핑 방식은 현재 구현을 설명하지 않는다.\n현재 iiGUI C++ 위젯이 레이아웃·입력 상태·그리기를 소유한다. Cocoa는 단일 표면과\n이벤트·IME·접근성 연결을 제공하며, 버튼·레이블마다 OS 위젯을 만들지 않는다.\n"
+      "raw": "LVRS의 네이티브 구현은 `lvui_generate(... FRAMEWORK LVRS ...)` 또는\n`lvui-compile --framework LVRS`로 선택한다. 생성한 코드는 `LVRS/Widgets.h`와\n`lvrs::Widgets`를 사용하며 최종 앱은 `LVRS::LVRS`에 연결한다.\nLVUI 컴파일러 자체는 LVRS·iiGUI 런타임에 의존하지 않는다.\n"
     },
     {
       "id": "b000006",
@@ -70,22 +70,22 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 12,
-      "end_line": 23,
-      "raw": "현재 AOT는 `ApplicationWindow`, `Window`, `VStack`, `HStack`, `ZStack`, `Spacer`,\n`Label`, `AbstractButton`, `PushButton`, `LabelButton`, `CheckBox`, `RadioButton`,\n`ToggleSwitch`, `InputField`, `Slider`, `ProgressBar`, `IconButton`, `HelpButton`,\n`DropdownButton`, `IconMenuButton`, `LabelMenuButton`, `Tab`, `TabBar`, `ComboBox`,\n`Stepper`, `LabelSegmentedControl`, `IconSegmentedControl`, `Menu`, `ContextMenu`,\n`MenuItem`, `ContextMenuItem`, `MenuDivider`, `ContextMenuDivider`, `ColorPicker`, `ColorPickerSurface`,\n`ColorField`, `Popover`, `ColorPickerButton`, `Modal`, `Alert`, `AlertButton`, `Sheet`,\n`TableCellItem`, `TableRow`, `TableHeader`를 C++ 위젯 호출로 생성한다.\n각 컴포넌트의 지원 입력은 LVRS의 `catalog/native/parity.json`을 기준으로 한다.\n[ProgressBar](NativeProgress.md)는 단순 iiGUI 막대 대신 원본의 상태 제공자·스타일·모션을\n가진 네이티브 컨트롤을 생성한다. 직접 scoped import와 타입 지정 View 입력도 연결한다.\n현재 지원은 기본 동작의 부분 이식이며 기존 LVRS 전체의 동등성 달성을 의미하지 않는다.\n"
+      "end_line": 14,
+      "raw": "이전 문서의 Cocoa 컨트롤 래핑 방식은 현재 구현을 설명하지 않는다.\n현재 iiGUI C++ 위젯이 레이아웃·입력 상태·그리기를 소유한다. Cocoa는 단일 표면과\n이벤트·IME·접근성 연결을 제공하며, 버튼·레이블마다 OS 위젯을 만들지 않는다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 24,
-      "end_line": 24,
+      "start_line": 15,
+      "end_line": 15,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 25,
+      "start_line": 16,
       "end_line": 27,
-      "raw": "[페이지와 모델 수명](NativeRouteModels.md)은 스코프의 네이티브 PageRouter와\nViewModelRegistry를 연결한다. LVUI는 반응형 표시와 C++ 명령 참조를 생성하며 경로·권한·\n정리를 C++ 컨트롤러가 소유한다. 생성 팩터리와 설치 소비자 빌드, 최종 실행 증거를 구분한다.\n"
+      "raw": "현재 AOT는 `ApplicationWindow`, `Window`, `VStack`, `HStack`, `ZStack`, `Spacer`,\n`Label`, `AbstractButton`, `PushButton`, `LabelButton`, `CheckBox`, `RadioButton`,\n`ToggleSwitch`, `InputField`, `Slider`, `ProgressBar`, `IconButton`, `HelpButton`,\n`DropdownButton`, `IconMenuButton`, `LabelMenuButton`, `Tab`, `TabBar`, `ComboBox`,\n`Stepper`, `LabelSegmentedControl`, `IconSegmentedControl`, `Menu`, `ContextMenu`,\n`MenuItem`, `ContextMenuItem`, `MenuDivider`, `ContextMenuDivider`, `ColorPicker`, `ColorPickerSurface`,\n`ColorField`, `Popover`, `ColorPickerButton`, `Modal`, `Alert`, `AlertButton`, `Sheet`,\n`TableCellItem`, `TableRow`, `TableHeader`를 C++ 위젯 호출로 생성한다.\n각 컴포넌트의 지원 입력은 LVRS의 `catalog/native/parity.json`을 기준으로 한다.\n[ProgressBar](NativeProgress.md)는 단순 iiGUI 막대 대신 원본의 상태 제공자·스타일·모션을\n가진 네이티브 컨트롤을 생성한다. 직접 scoped import와 타입 지정 View 입력도 연결한다.\n현재 지원은 기본 동작의 부분 이식이며 기존 LVRS 전체의 동등성 달성을 의미하지 않는다.\n"
     },
     {
       "id": "b000010",
@@ -98,36 +98,36 @@
       "id": "b000011",
       "kind": "paragraph",
       "start_line": 29,
-      "end_line": 35,
-      "raw": "`Sheet`는 `presentation: .automatic/.mobile/.desktop`, `detent: .fit/.medium/.large`,\n제목·설명·표시 플래그·크기/여백·안전 영역·닫기 정책·RGBA 색상·motion과 밀리초 단위의\n정수 animationDuration을 받는다. 본문은 네이티브 생성 시 한 번 실행하는\n`SheetContentFactory`이며 닫힌 뒤에도 같은 C++ 객체를 유지한다. 여러 본문 View의 ID도\n마운트 전체에서 유일해야 한다. 자식들은 부모 스코프 backend를 빌린다. Modal의 열림\n단위 본문과 수명을 혼동하지 않는다. [Sheet 계약](../../LVRS/docs/native/Sheet.md)에 현재\n범위와 전환 신호·일반 반응형·플랫폼의 남은 차이를 명시한다.\n"
+      "end_line": 31,
+      "raw": "[페이지와 모델 수명](NativeRouteModels.md)은 스코프의 네이티브 PageRouter와\nViewModelRegistry를 연결한다. LVUI는 반응형 표시와 C++ 명령 참조를 생성하며 경로·권한·\n정리를 C++ 컨트롤러가 소유한다. 생성 팩터리와 설치 소비자 빌드, 최종 실행 증거를 구분한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 36,
-      "end_line": 36,
+      "start_line": 32,
+      "end_line": 32,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 37,
-      "end_line": 41,
-      "raw": "`onClick`·`onSubmit`은 인자 없는 C++ 메서드 참조이고, `onToggled`는 `bool`,\n`onEdited`는 `std::string`, `onMoved`는 `double`, `onCurrentIndexChanged`는 `int`,\n`onColorEdited`는 `ii::gui::WidgetColor` 값을 전달한다.\n호출 문법을 메서드 참조 대신 쓰거나 알려지지 않은 입력을 주면 컴파일 진단을 반환한다.\n가져온 C++ 객체는 View의 스코프에 한 번 생성하며 Core가 작업을 정리한 뒤 해제한다.\n"
+      "start_line": 33,
+      "end_line": 39,
+      "raw": "`Sheet`는 `presentation: .automatic/.mobile/.desktop`, `detent: .fit/.medium/.large`,\n제목·설명·표시 플래그·크기/여백·안전 영역·닫기 정책·RGBA 색상·motion과 밀리초 단위의\n정수 animationDuration을 받는다. 본문은 네이티브 생성 시 한 번 실행하는\n`SheetContentFactory`이며 닫힌 뒤에도 같은 C++ 객체를 유지한다. 여러 본문 View의 ID도\n마운트 전체에서 유일해야 한다. 자식들은 부모 스코프 backend를 빌린다. Modal의 열림\n단위 본문과 수명을 혼동하지 않는다. [Sheet 계약](../../LVRS/docs/native/Sheet.md)에 현재\n범위와 전환 신호·일반 반응형·플랫폼의 남은 차이를 명시한다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 42,
-      "end_line": 42,
+      "start_line": 40,
+      "end_line": 40,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 43,
+      "start_line": 41,
       "end_line": 45,
-      "raw": "LVRS 프레임워크를 선택한 창은 `accent: .green`과 같은 악센트 선택을 지원한다.\nblue·purple·rose·red·orange·yellow·green·gray·brown·cyan·teal·white를 제공하며\n상태 색상과 2% 창 혼합이 같은 테마에서 계산된다.\n"
+      "raw": "`onClick`·`onSubmit`은 인자 없는 C++ 메서드 참조이고, `onToggled`는 `bool`,\n`onEdited`는 `std::string`, `onMoved`는 `double`, `onCurrentIndexChanged`는 `int`,\n`onColorEdited`는 `ii::gui::WidgetColor` 값을 전달한다.\n호출 문법을 메서드 참조 대신 쓰거나 알려지지 않은 입력을 주면 컴파일 진단을 반환한다.\n가져온 C++ 객체는 View의 스코프에 한 번 생성하며 Core가 작업을 정리한 뒤 해제한다.\n"
     },
     {
       "id": "b000016",
@@ -140,159 +140,159 @@
       "id": "b000017",
       "kind": "paragraph",
       "start_line": 47,
-      "end_line": 52,
-      "raw": "이 레거시 경로의 아이콘 버튼은 `iconName`, `iconSize`, `iconMode`를 지원한다.\n기본 경로의 아이콘 버튼과 드롭다운은 [LVUI 독립 아이콘](NativeIcons.md)을 사용한다.\n이 문서의 탭과 탭 묶음은 `FRAMEWORK LVRS` 경로를 설명한다. 기본 경로는 독립\n단일 탭과 직접 자식 탭 묶음을 제공하며 지원 범위는 [현재 현황](NativeTabs.md)을 따른다.\n`Tab`의 `iconName`은 필수이며 누락·공백 값은 소스 위치가 있는 AOT 오류이다.\n유효하지 않은 자산 이름이나 미지원 SVG 기능은 마운트 시 오류를 반환한다.\n"
+      "end_line": 49,
+      "raw": "LVRS 프레임워크를 선택한 창은 `accent: .green`과 같은 악센트 선택을 지원한다.\nblue·purple·rose·red·orange·yellow·green·gray·brown·cyan·teal·white를 제공하며\n상태 색상과 2% 창 혼합이 같은 테마에서 계산된다.\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 53,
-      "end_line": 53,
+      "start_line": 50,
+      "end_line": 50,
       "raw": "\n"
     },
     {
       "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 56,
+      "raw": "이 레거시 경로의 아이콘 버튼은 `iconName`, `iconSize`, `iconMode`를 지원한다.\n기본 경로의 아이콘 버튼과 드롭다운은 [LVUI 독립 아이콘](NativeIcons.md)을 사용한다.\n이 문서의 탭과 탭 묶음은 `FRAMEWORK LVRS` 경로를 설명한다. 기본 경로는 독립\n단일 탭과 직접 자식 탭 묶음을 제공하며 지원 범위는 [현재 현황](NativeTabs.md)을 따른다.\n`Tab`의 `iconName`은 필수이며 누락·공백 값은 소스 위치가 있는 AOT 오류이다.\n유효하지 않은 자산 이름이나 미지원 SVG 기능은 마운트 시 오류를 반환한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
       "kind": "fenced_code",
-      "start_line": 54,
-      "end_line": 59,
+      "start_line": 58,
+      "end_line": 63,
       "raw": "```lvui\nTabBar(id: \"tabs\", currentIndex: 0, onCurrentIndexChanged: vm.selected) {\n    Tab(text: \"Overview\", iconName: \"nodesfolder\")\n    Tab(text: \"Details\", iconName: \"generaladd\", badge: \"3\", tabStyle: .surface)\n}\n```\n",
       "language": "lvui",
       "code": "TabBar(id: \"tabs\", currentIndex: 0, onCurrentIndexChanged: vm.selected) {\n    Tab(text: \"Overview\", iconName: \"nodesfolder\")\n    Tab(text: \"Details\", iconName: \"generaladd\", badge: \"3\", tabStyle: .surface)\n}\n",
       "closed": true
     },
     {
-      "id": "b000020",
-      "kind": "blank",
-      "start_line": 60,
-      "end_line": 60,
-      "raw": "\n"
-    },
-    {
-      "id": "b000021",
-      "kind": "paragraph",
-      "start_line": 61,
-      "end_line": 64,
-      "raw": "TabBar는 정적 자식 Tab의 동일 너비 배치, 현재 인덱스, 자동 단일 선택과 비활성 탭\n건너뛰기를 구현한다. 좌우·Home·End 키는 포커스만 이동하고 클릭·Enter가 선택한다.\n스크롤 너비 정책과 동적 모델 바인딩은 아직 지원하지 않는다. 드롭다운 버튼의 콜백은\n앱 메서드에 연결되며 메뉴를 자동 생성하지 않는다. 원본 LVRS도 메뉴 열기를 콜백에 연결한다.\n"
-    },
-    {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 65,
-      "end_line": 65,
+      "start_line": 64,
+      "end_line": 64,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 66,
-      "end_line": 71,
-      "raw": "`ComboBox`는 `text`, `width`, `enabled`, `tone: .primary/.borderless`,\n`arrow: .upDown/.up/.down`과 `onClick`·`onPressed`·`onReleased`·`onCanceled`를 받는다.\n메뉴와 목록을 소유하지 않는 클릭 필드이다. `Stepper`도 같은 화살표와 이벤트를 받으며\n추가로 `cornerRadius`, `onStepped: vm.step`을 지원한다. 방향 콜백은 `int`의 `+1/-1`이고,\n기본 18×18 크기의 위·아래 절반, 방향키 또는 가상 접근성 행동이 결정한다.\n숫자 갱신·반복 타이머를 암묵적으로 추가하지 않는다.\n"
+      "start_line": 65,
+      "end_line": 68,
+      "raw": "TabBar는 정적 자식 Tab의 동일 너비 배치, 현재 인덱스, 자동 단일 선택과 비활성 탭\n건너뛰기를 구현한다. 좌우·Home·End 키는 포커스만 이동하고 클릭·Enter가 선택한다.\n스크롤 너비 정책과 동적 모델 바인딩은 아직 지원하지 않는다. 드롭다운 버튼의 콜백은\n앱 메서드에 연결되며 메뉴를 자동 생성하지 않는다. 원본 LVRS도 메뉴 열기를 콜백에 연결한다.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 69,
+      "end_line": 69,
       "raw": "\n"
     },
     {
       "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 70,
+      "end_line": 75,
+      "raw": "`ComboBox`는 `text`, `width`, `enabled`, `tone: .primary/.borderless`,\n`arrow: .upDown/.up/.down`과 `onClick`·`onPressed`·`onReleased`·`onCanceled`를 받는다.\n메뉴와 목록을 소유하지 않는 클릭 필드이다. `Stepper`도 같은 화살표와 이벤트를 받으며\n추가로 `cornerRadius`, `onStepped: vm.step`을 지원한다. 방향 콜백은 `int`의 `+1/-1`이고,\n기본 18×18 크기의 위·아래 절반, 방향키 또는 가상 접근성 행동이 결정한다.\n숫자 갱신·반복 타이머를 암묵적으로 추가하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
       "kind": "fenced_code",
-      "start_line": 73,
-      "end_line": 85,
+      "start_line": 77,
+      "end_line": 89,
       "raw": "```lvui\nHStack {\n    ComboBox(text: \"Choice\", onClick: vm.openMenu)\n    Stepper(arrow: .upDown, onStepped: vm.step)\n    LabelSegmentedControl(shapeStyle: .cylinder) {\n        LabelButton(text: \"One\", onClick: vm.one)\n        LabelButton(text: \"Two\", onClick: vm.two)\n    }\n    IconSegmentedControl {\n        IconButton(iconName: \"nodesfolder\", onClick: vm.folder)\n    }\n}\n```\n",
       "language": "lvui",
       "code": "HStack {\n    ComboBox(text: \"Choice\", onClick: vm.openMenu)\n    Stepper(arrow: .upDown, onStepped: vm.step)\n    LabelSegmentedControl(shapeStyle: .cylinder) {\n        LabelButton(text: \"One\", onClick: vm.one)\n        LabelButton(text: \"Two\", onClick: vm.two)\n    }\n    IconSegmentedControl {\n        IconButton(iconName: \"nodesfolder\", onClick: vm.folder)\n    }\n}\n",
       "closed": true
     },
     {
-      "id": "b000026",
-      "kind": "blank",
-      "start_line": 86,
-      "end_line": 86,
-      "raw": "\n"
-    },
-    {
-      "id": "b000027",
-      "kind": "paragraph",
-      "start_line": 87,
-      "end_line": 91,
-      "raw": "세그먼트 행은 `horizontalPadding`, `verticalPadding`, `spacing`, `borderWidth`,\n`cornerRadius`, `shapeStyle: .roundRect/.cylinder`, `forceBorderlessTone`을 받는다.\nlabel 행 기본 수직 여백은 3.5, icon 행은 4이며 자식 버튼의 콜백은 독립적이다.\n`currentIndex`와 같은 선택 모델 입력은 오류이다. C++의 불투명 배경·테두리 색상은\n현재 AOT 입력에 노출하지 않으며, 동적 자식·반응형 스타일·모션·method registry는 남아 있다.\n"
-    },
-    {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 92,
-      "end_line": 92,
+      "start_line": 90,
+      "end_line": 90,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 93,
-      "end_line": 94,
-      "raw": "일반 반응형 필드 바인딩, SVG 필터·전체 재질·모션, 다른 예약어의 코드 생성과 각 OS\n입력 어댑터는 계속 구현해야 한다. 이전 AOT 검증 기록과 현재 자체 렌더링 검증을 구분한다.\n"
+      "start_line": 91,
+      "end_line": 95,
+      "raw": "세그먼트 행은 `horizontalPadding`, `verticalPadding`, `spacing`, `borderWidth`,\n`cornerRadius`, `shapeStyle: .roundRect/.cylinder`, `forceBorderlessTone`을 받는다.\nlabel 행 기본 수직 여백은 3.5, icon 행은 4이며 자식 버튼의 콜백은 독립적이다.\n`currentIndex`와 같은 선택 모델 입력은 오류이다. C++의 불투명 배경·테두리 색상은\n현재 AOT 입력에 노출하지 않으며, 동적 자식·반응형 스타일·모션·method registry는 남아 있다.\n"
     },
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 95,
-      "end_line": 95,
+      "start_line": 96,
+      "end_line": 96,
       "raw": "\n"
     },
     {
       "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 97,
+      "end_line": 98,
+      "raw": "일반 반응형 필드 바인딩, SVG 필터·전체 재질·모션, 다른 예약어의 코드 생성과 각 OS\n입력 어댑터는 계속 구현해야 한다. 이전 AOT 검증 기록과 현재 자체 렌더링 검증을 구분한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
       "kind": "heading",
-      "start_line": 96,
-      "end_line": 96,
+      "start_line": 100,
+      "end_line": 100,
       "raw": "## 메뉴와 컨텍스트 메뉴\n",
       "level": 2,
       "title": "메뉴와 컨텍스트 메뉴"
     },
     {
-      "id": "b000032",
-      "kind": "blank",
-      "start_line": 97,
-      "end_line": 97,
-      "raw": "\n"
-    },
-    {
-      "id": "b000033",
-      "kind": "paragraph",
-      "start_line": 98,
-      "end_line": 101,
-      "raw": "메뉴는 일반 배치 공간을 차지하지 않는 자체 렌더링 팝업이다. 메뉴·항목·구분선의 일반형과\n압축형 여섯 타입을 지원하며, C++에서 `open_at`, `open_for`, `close_popup`으로 제어한다.\n일반형은 24 px 행·상하 4 px, 압축형은 18 px 행·상하 8 px 여백이며, 압축 레이블은\n내장 Inter Regular 12 px를 사용한다. 일반 레이블과 단축키는 Pretendard이다.\n"
-    },
-    {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 102,
-      "end_line": 102,
+      "start_line": 101,
+      "end_line": 101,
       "raw": "\n"
     },
     {
       "id": "b000035",
-      "kind": "fenced_code",
-      "start_line": 103,
-      "end_line": 114,
-      "raw": "```lvui\nVStack(id: \"content\") {\n    InputField(id: \"field\", placeholder: \"Right click\")\n    ContextMenu(targetId: \"field\", onItemTriggered: vm.selected) {\n        ContextMenuItem(label: \"Open\", shortcut: \"⌘O\", hasChildItems: false, onClick: vm.open)\n        ContextMenuDivider()\n        ContextMenuItem(label: \"Unavailable\", state: .inactive, hasChildItems: false)\n    }\n    Menu(id: \"quick\", items: [\"First\", \"Second\"], showIconSlot: false,\n         onItemTriggered: vm.selected)\n}\n```\n",
-      "language": "lvui",
-      "code": "VStack(id: \"content\") {\n    InputField(id: \"field\", placeholder: \"Right click\")\n    ContextMenu(targetId: \"field\", onItemTriggered: vm.selected) {\n        ContextMenuItem(label: \"Open\", shortcut: \"⌘O\", hasChildItems: false, onClick: vm.open)\n        ContextMenuDivider()\n        ContextMenuItem(label: \"Unavailable\", state: .inactive, hasChildItems: false)\n    }\n    Menu(id: \"quick\", items: [\"First\", \"Second\"], showIconSlot: false,\n         onItemTriggered: vm.selected)\n}\n",
-      "closed": true
+      "kind": "paragraph",
+      "start_line": 102,
+      "end_line": 105,
+      "raw": "메뉴는 일반 배치 공간을 차지하지 않는 자체 렌더링 팝업이다. 메뉴·항목·구분선의 일반형과\n압축형 여섯 타입을 지원하며, C++에서 `open_at`, `open_for`, `close_popup`으로 제어한다.\n일반형은 24 px 행·상하 4 px, 압축형은 18 px 행·상하 8 px 여백이며, 압축 레이블은\n내장 Inter Regular 12 px를 사용한다. 일반 레이블과 단축키는 Pretendard이다.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 115,
-      "end_line": 115,
+      "start_line": 106,
+      "end_line": 106,
       "raw": "\n"
     },
     {
       "id": "b000037",
-      "kind": "paragraph",
-      "start_line": 116,
+      "kind": "fenced_code",
+      "start_line": 107,
       "end_line": 118,
-      "raw": "`targetId`는 같은 View 안의 위젯 ID이며 앞·뒤 선언을 모두 참조할 수 있다. 컴파일 단계에서\n확인한 C++ 위젯 핸들을 `set_context_menu`로 연결한다. 오른쪽 마우스 요청과 접근성의\nShow Menu 동작으로 해당 팝업을 연다. 알려지지 않은 대상 ID는 AOT 오류이다.\n"
+      "raw": "```lvui\nVStack(id: \"content\") {\n    InputField(id: \"field\", placeholder: \"Right click\")\n    ContextMenu(targetId: \"field\", onItemTriggered: vm.selected) {\n        ContextMenuItem(label: \"Open\", shortcut: \"⌘O\", hasChildItems: false, onClick: vm.open)\n        ContextMenuDivider()\n        ContextMenuItem(label: \"Unavailable\", state: .inactive, hasChildItems: false)\n    }\n    Menu(id: \"quick\", items: [\"First\", \"Second\"], showIconSlot: false,\n         onItemTriggered: vm.selected)\n}\n```\n",
+      "language": "lvui",
+      "code": "VStack(id: \"content\") {\n    InputField(id: \"field\", placeholder: \"Right click\")\n    ContextMenu(targetId: \"field\", onItemTriggered: vm.selected) {\n        ContextMenuItem(label: \"Open\", shortcut: \"⌘O\", hasChildItems: false, onClick: vm.open)\n        ContextMenuDivider()\n        ContextMenuItem(label: \"Unavailable\", state: .inactive, hasChildItems: false)\n    }\n    Menu(id: \"quick\", items: [\"First\", \"Second\"], showIconSlot: false,\n         onItemTriggered: vm.selected)\n}\n",
+      "closed": true
     },
     {
       "id": "b000038",
@@ -305,50 +305,50 @@
       "id": "b000039",
       "kind": "paragraph",
       "start_line": 120,
-      "end_line": 123,
-      "raw": "`items`는 현재 정적 문자열 리스트만 지원한다. 각 문자열을 실제 C++ 메뉴 항목 생성 코드로\n펼치며 런타임 목록 해석기를 넣지 않는다. 문자열 목록과 `{}` 자식 뷰는 함께 지정할 수 없다.\n복합 항목은 명시적 MenuItem 자식으로 작성하며 MenuItem 안에는 소유한 Menu·ContextMenu를\n둘 수 있다. 소유 팝업의 열기는 앱의 C++ 콜백이 담당하고 닫기는 소유 계층에 전파된다.\n"
+      "end_line": 122,
+      "raw": "`targetId`는 같은 View 안의 위젯 ID이며 앞·뒤 선언을 모두 참조할 수 있다. 컴파일 단계에서\n확인한 C++ 위젯 핸들을 `set_context_menu`로 연결한다. 오른쪽 마우스 요청과 접근성의\nShow Menu 동작으로 해당 팝업을 연다. 알려지지 않은 대상 ID는 AOT 오류이다.\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 124,
-      "end_line": 124,
+      "start_line": 123,
+      "end_line": 123,
       "raw": "\n"
     },
     {
       "id": "b000041",
       "kind": "paragraph",
-      "start_line": 125,
-      "end_line": 132,
-      "raw": "메뉴는 `compactItems`, `itemWidth`, `itemSpacing`, 네 방향 padding, `edgeMargin`,\n`cornerRadius`, `menuOpacity`, `selectedIndex`, `autoCloseOnTrigger`,\n`dismissOnGlobalPress`, `dismissOnGlobalContextRequest`, `showIconSlot`,\n`onItemTriggered`·`onOpened`·`onClosed`를 지원한다. 항목은 `label`, `key` 또는\n`shortcut`, `keyPlaceholder`, `iconName`, `enabled`, `compact`,\n`state: .default/.selected/.inactive`, `selectionDirection: .auto/.right/.left/.up/.down`,\n아이콘·단축키·화살표 표시, `expanded`, 크기와 `onClick`, `keepOpen` 또는\n`closeOnTrigger`를 받는다. 구분선은 축·두께·여백·길이를 받는다.\n"
+      "start_line": 124,
+      "end_line": 127,
+      "raw": "`items`는 현재 정적 문자열 리스트만 지원한다. 각 문자열을 실제 C++ 메뉴 항목 생성 코드로\n펼치며 런타임 목록 해석기를 넣지 않는다. 문자열 목록과 `{}` 자식 뷰는 함께 지정할 수 없다.\n복합 항목은 명시적 MenuItem 자식으로 작성하며 MenuItem 안에는 소유한 Menu·ContextMenu를\n둘 수 있다. 소유 팝업의 열기는 앱의 C++ 콜백이 담당하고 닫기는 소유 계층에 전파된다.\n"
     },
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 133,
-      "end_line": 133,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 134,
-      "end_line": 138,
-      "raw": "항목 액션, 구분선 위치를 포함하는 `int` 메뉴 인덱스 콜백, 자동 닫기 순서로 실행한다.\n자식 표시가 있는 항목은 기본적으로 열린 상태를 유지한다. 다른 C++ 이벤트와 같이\n콜백이 트리를 제거하면 후속 디스패치를 중단하고, 팝업을 다시 연 경우 이전 활성화의\n자동 닫기를 적용하지 않는다. 위·아래·Home·End·Tab 이동, 비활성 항목 건너뛰기,\n스크롤·화면 경계 배치·입력 포착·바깥 클릭·Escape 닫기와 포커스 복귀는 iiGUI가 맡는다.\n"
+      "start_line": 129,
+      "end_line": 136,
+      "raw": "메뉴는 `compactItems`, `itemWidth`, `itemSpacing`, 네 방향 padding, `edgeMargin`,\n`cornerRadius`, `menuOpacity`, `selectedIndex`, `autoCloseOnTrigger`,\n`dismissOnGlobalPress`, `dismissOnGlobalContextRequest`, `showIconSlot`,\n`onItemTriggered`·`onOpened`·`onClosed`를 지원한다. 항목은 `label`, `key` 또는\n`shortcut`, `keyPlaceholder`, `iconName`, `enabled`, `compact`,\n`state: .default/.selected/.inactive`, `selectionDirection: .auto/.right/.left/.up/.down`,\n아이콘·단축키·화살표 표시, `expanded`, 크기와 `onClick`, `keepOpen` 또는\n`closeOnTrigger`를 받는다. 구분선은 축·두께·여백·길이를 받는다.\n"
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 139,
-      "end_line": 139,
+      "start_line": 137,
+      "end_line": 137,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "paragraph",
-      "start_line": 140,
+      "start_line": 138,
       "end_line": 142,
-      "raw": "원본 재질의 불투명 바탕과 12% 코팅을 제공하지만 64 px 배경 흐림·방사형 악센트·그레인·\n열림 스프링 모션은 아직 구현하지 않았다. 동적 객체 모델, 이름·payload를 가진 복수 이벤트,\n전체 상속 속성·메서드와 일반 반응형 바인딩도 남아 있다. 이 타입들도 부분 이식 상태이다.\n"
+      "raw": "항목 액션, 구분선 위치를 포함하는 `int` 메뉴 인덱스 콜백, 자동 닫기 순서로 실행한다.\n자식 표시가 있는 항목은 기본적으로 열린 상태를 유지한다. 다른 C++ 이벤트와 같이\n콜백이 트리를 제거하면 후속 디스패치를 중단하고, 팝업을 다시 연 경우 이전 활성화의\n자동 닫기를 적용하지 않는다. 위·아래·Home·End·Tab 이동, 비활성 항목 건너뛰기,\n스크롤·화면 경계 배치·입력 포착·바깥 클릭·Escape 닫기와 포커스 복귀는 iiGUI가 맡는다.\n"
     },
     {
       "id": "b000046",
@@ -359,26 +359,26 @@
     },
     {
       "id": "b000047",
-      "kind": "heading",
+      "kind": "paragraph",
       "start_line": 144,
-      "end_line": 144,
-      "raw": "## 색상 모델과 여섯 네이티브 표면\n",
-      "level": 2,
-      "title": "색상 모델과 여섯 네이티브 표면"
+      "end_line": 146,
+      "raw": "원본 재질의 불투명 바탕과 12% 코팅을 제공하지만 64 px 배경 흐림·방사형 악센트·그레인·\n열림 스프링 모션은 아직 구현하지 않았다. 동적 객체 모델, 이름·payload를 가진 복수 이벤트,\n전체 상속 속성·메서드와 일반 반응형 바인딩도 남아 있다. 이 타입들도 부분 이식 상태이다.\n"
     },
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 145,
-      "end_line": 145,
+      "start_line": 147,
+      "end_line": 147,
       "raw": "\n"
     },
     {
       "id": "b000049",
-      "kind": "paragraph",
-      "start_line": 146,
+      "kind": "heading",
+      "start_line": 148,
       "end_line": 148,
-      "raw": "`ColorPickerSurface`와 원본 인라인 타입 `ColorField`를 AOT로 생성한다. `model`에는 가져온\nC++ 백엔드의 공개 `std::shared_ptr<lvrs::ColorPickerModel>` 멤버를 지정한다. 같은 멤버를 사용한\n표면들은 동일한 C++ 모델을 공유하며 Core 변경 쿼리로 현재 색상과 선택점을 갱신한다.\n"
+      "raw": "## 색상 모델과 여섯 네이티브 표면\n",
+      "level": 2,
+      "title": "색상 모델과 여섯 네이티브 표면"
     },
     {
       "id": "b000050",
@@ -389,157 +389,157 @@
     },
     {
       "id": "b000051",
-      "kind": "fenced_code",
+      "kind": "paragraph",
       "start_line": 150,
-      "end_line": 159,
+      "end_line": 152,
+      "raw": "`ColorPickerSurface`와 원본 인라인 타입 `ColorField`를 AOT로 생성한다. `model`에는 가져온\nC++ 백엔드의 공개 `std::shared_ptr<lvrs::ColorPickerModel>` 멤버를 지정한다. 같은 멤버를 사용한\n표면들은 동일한 C++ 모델을 공유하며 Core 변경 쿼리로 현재 색상과 선택점을 갱신한다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "fenced_code",
+      "start_line": 154,
+      "end_line": 163,
       "raw": "```text\nimport vm ColorBackend\nApplicationWindow {\n    HStack {\n        ColorPickerSurface(model: vm.model, field: .Wheel)\n        ColorField(model: vm.model, field: .SaturationBrightness)\n        ColorPickerSurface(model: vm.model, field: .HueRail, width: 18)\n    }\n}\n```\n",
       "language": "text",
       "code": "import vm ColorBackend\nApplicationWindow {\n    HStack {\n        ColorPickerSurface(model: vm.model, field: .Wheel)\n        ColorField(model: vm.model, field: .SaturationBrightness)\n        ColorPickerSurface(model: vm.model, field: .HueRail, width: 18)\n    }\n}\n",
       "closed": true
     },
     {
-      "id": "b000052",
-      "kind": "blank",
-      "start_line": 160,
-      "end_line": 160,
-      "raw": "\n"
-    },
-    {
-      "id": "b000053",
-      "kind": "paragraph",
-      "start_line": 161,
-      "end_line": 165,
-      "raw": "지원 입력은 `id`, `model`, `field`, `width`, `height`, `enabled`, `accessibilityName`,\n`onColorEdited`이다. 콜백은 `ii::gui::WidgetColor`를 받는다. `field`는 `.Wheel`,\n`.HueSaturation`, `.SaturationBrightness`, `.Spectrum`, `.HueRail`, `.BrightnessRail`이다.\n표면은 자식을 받지 않으며 크기는 12..1024 논리 단위이다. 모델의 public 접근성과 정확한 C++\n타입은 생성 코드를 컴파일할 때 검사한다. 메서드 호출이나 임의 표현식을 모델로 지정하지 않는다.\n"
-    },
-    {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 166,
-      "end_line": 166,
+      "start_line": 164,
+      "end_line": 164,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 167,
-      "end_line": 170,
-      "raw": "변경은 동일한 모델의 명시적 API를 통해 전달된다. 임의 C++ 대입을 자동으로 관찰하거나 모델\n멤버의 포인터 재대입을 자동 연결하는 기능은 아직 없다. 명시적 `set_color_model`로 연결을\n교체할 수 있다. 이것은 일반 반응형 언어 계약의 완료 선언이 아니다. 여섯 표면 예제는\nLVRS의 `examples/NativeColorGallery`이다.\n"
+      "start_line": 165,
+      "end_line": 169,
+      "raw": "지원 입력은 `id`, `model`, `field`, `width`, `height`, `enabled`, `accessibilityName`,\n`onColorEdited`이다. 콜백은 `ii::gui::WidgetColor`를 받는다. `field`는 `.Wheel`,\n`.HueSaturation`, `.SaturationBrightness`, `.Spectrum`, `.HueRail`, `.BrightnessRail`이다.\n표면은 자식을 받지 않으며 크기는 12..1024 논리 단위이다. 모델의 public 접근성과 정확한 C++\n타입은 생성 코드를 컴파일할 때 검사한다. 메서드 호출이나 임의 표현식을 모델로 지정하지 않는다.\n"
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 171,
-      "end_line": 171,
+      "start_line": 170,
+      "end_line": 170,
       "raw": "\n"
     },
     {
       "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 171,
+      "end_line": 174,
+      "raw": "변경은 동일한 모델의 명시적 API를 통해 전달된다. 임의 C++ 대입을 자동으로 관찰하거나 모델\n멤버의 포인터 재대입을 자동 연결하는 기능은 아직 없다. 명시적 `set_color_model`로 연결을\n교체할 수 있다. 이것은 일반 반응형 언어 계약의 완료 선언이 아니다. 여섯 표면 예제는\nLVRS의 `examples/NativeColorGallery`이다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
       "kind": "heading",
-      "start_line": 172,
-      "end_line": 172,
+      "start_line": 176,
+      "end_line": 176,
       "raw": "## 합성 ColorPicker\n",
       "level": 2,
       "title": "합성 ColorPicker"
     },
     {
-      "id": "b000058",
-      "kind": "blank",
-      "start_line": 173,
-      "end_line": 173,
-      "raw": "\n"
-    },
-    {
-      "id": "b000059",
-      "kind": "paragraph",
-      "start_line": 174,
-      "end_line": 179,
-      "raw": "`ColorPicker(type: .Wheel, model: vm.model)`는 채널·숫자 입력·색상 도메인·비교 견본·\nHEX·알파·최근 색상·액션을 함께 만드는 네이티브 C++ 호출을 생성한다. 모델은 선택 사항이며\n생략하면 선택기마다 독립 모델을 소유하고 원본 기본색 `#874AFF`로 시작한다.\n`.Wheel`, `.HueSaturation`, `.SaturationBrightness`, `.Grayscale`, `.RGB`, `.CMYK`를 지원한다.\n`width`, `padding`, `enabled`, `showRecentColors`, `showActions`, `applyText`, `cancelText`와\n정적 HEX 문자열 목록 `recentColors`를 지정할 수 있다. 최근 색상은 처음 10개만 사용한다.\n"
-    },
-    {
       "id": "b000060",
       "kind": "blank",
-      "start_line": 180,
-      "end_line": 180,
+      "start_line": 177,
+      "end_line": 177,
       "raw": "\n"
     },
     {
       "id": "b000061",
       "kind": "paragraph",
-      "start_line": 181,
-      "end_line": 184,
-      "raw": "`onColorEdited`, `onAccepted`는 `ii::gui::WidgetColor`를 받는 공개 C++ 메서드 참조이며\n`onCanceled`, `onEyedropperRequested`는 인자 없는 메서드 참조이다. 입력은 Enter/포커스 손실에\n확정하며 수정하지 않은 반올림 표시를 모델에 다시 쓰지 않는다. 적용·취소는 뷰를 닫지 않고\n소유자 콜백으로 전달한다. 스포이트도 소유자가 문서 샘플링을 시작하기 위한 요청이다.\n"
+      "start_line": 178,
+      "end_line": 183,
+      "raw": "`ColorPicker(type: .Wheel, model: vm.model)`는 채널·숫자 입력·색상 도메인·비교 견본·\nHEX·알파·최근 색상·액션을 함께 만드는 네이티브 C++ 호출을 생성한다. 모델은 선택 사항이며\n생략하면 선택기마다 독립 모델을 소유하고 원본 기본색 `#874AFF`로 시작한다.\n`.Wheel`, `.HueSaturation`, `.SaturationBrightness`, `.Grayscale`, `.RGB`, `.CMYK`를 지원한다.\n`width`, `padding`, `enabled`, `showRecentColors`, `showActions`, `applyText`, `cancelText`와\n정적 HEX 문자열 목록 `recentColors`를 지정할 수 있다. 최근 색상은 처음 10개만 사용한다.\n"
     },
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 185,
-      "end_line": 185,
+      "start_line": 184,
+      "end_line": 184,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 186,
-      "end_line": 189,
-      "raw": "옵션은 생성 시 상수이며 일반 반응형 재연결은 아직 없다. C++의 `lvrs::ColorPicker` 핸들은\n타입·폭·숨김·활성·최근 색상을 같은 마운트에서 바꿀 수 있다. 합성 모델 포인터의 변경은\n재마운트한다. 원본 전체 시각·상속 계약의 완료를 뜻하지 않는다. 전용 설치 예제는\n`examples/NativePickerGallery`이며 상세 계약은 LVRS의 `docs/native/ColorPicker.md`이다.\n"
+      "start_line": 185,
+      "end_line": 188,
+      "raw": "`onColorEdited`, `onAccepted`는 `ii::gui::WidgetColor`를 받는 공개 C++ 메서드 참조이며\n`onCanceled`, `onEyedropperRequested`는 인자 없는 메서드 참조이다. 입력은 Enter/포커스 손실에\n확정하며 수정하지 않은 반올림 표시를 모델에 다시 쓰지 않는다. 적용·취소는 뷰를 닫지 않고\n소유자 콜백으로 전달한다. 스포이트도 소유자가 문서 샘플링을 시작하기 위한 요청이다.\n"
     },
     {
       "id": "b000064",
       "kind": "blank",
-      "start_line": 190,
-      "end_line": 190,
+      "start_line": 189,
+      "end_line": 189,
       "raw": "\n"
     },
     {
       "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 190,
+      "end_line": 193,
+      "raw": "옵션은 생성 시 상수이며 일반 반응형 재연결은 아직 없다. C++의 `lvrs::ColorPicker` 핸들은\n타입·폭·숨김·활성·최근 색상을 같은 마운트에서 바꿀 수 있다. 합성 모델 포인터의 변경은\n재마운트한다. 원본 전체 시각·상속 계약의 완료를 뜻하지 않는다. 전용 설치 예제는\n`examples/NativePickerGallery`이며 상세 계약은 LVRS의 `docs/native/ColorPicker.md`이다.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 194,
+      "end_line": 194,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
       "kind": "heading",
-      "start_line": 191,
-      "end_line": 191,
+      "start_line": 195,
+      "end_line": 195,
       "raw": "## 일반 콘텐츠 Popover\n",
       "level": 2,
       "title": "일반 콘텐츠 Popover"
     },
     {
-      "id": "b000066",
-      "kind": "blank",
-      "start_line": 192,
-      "end_line": 192,
-      "raw": "\n"
-    },
-    {
-      "id": "b000067",
-      "kind": "paragraph",
-      "start_line": 193,
-      "end_line": 204,
-      "raw": "원본 Modal의 동적 콘텐츠 수명을 위한 iiGUI C++ 팩토리 경로도 추가했다. 현재는 빈\n`Popover`를 AOT로 만든 뒤 C++에서 `set_popup_content`를 연결한다. 콘텐츠 위젯은 매번\n열 때 만들고 닫으면 소유권을 해제하지만 바깥 LVUI 백엔드는 유지한다. 현재 콘텐츠의\n조회는 `popup_content(local_id)`이며 이전 활성화 핸들은 재사용할 수 없다.\n이제 `Modal { ... }`의 자식을 별도의 `ModalContentFactory`로 AOT 생성하며 전용 Modal\n조합도 제공한다. 기본 헤더·아이콘·최대 세 액션과 가운데 배치는 LVRS가 구성한다.\n`open: true`는 마운트 후 최초 개방한다. 자식 ID와 context menu 대상은 콘텐츠 내부 범위에서\n해석하며 바깥 백엔드는 기존 스코프를 빌린다. 부모 백엔드의 재생성은 없다. 호출식 대신 메서드\n참조를 쓰는 규칙도 같다. 초기 개방을 요구하는 중첩 생성 함수와 범위 간 target 참조는 진단한다.\n전체 지원 입력과 남은 차이는 LVRS의 `docs/native/Modal.md`에 기록한다.\n예제는 LVRS의 `examples/NativeActivationGallery`, 상세 계약은\n`docs/native/ActivationContent.md`이다.\n"
-    },
-    {
       "id": "b000068",
       "kind": "blank",
-      "start_line": 205,
-      "end_line": 205,
+      "start_line": 196,
+      "end_line": 196,
       "raw": "\n"
     },
     {
       "id": "b000069",
       "kind": "paragraph",
-      "start_line": 206,
-      "end_line": 213,
-      "raw": "`ColorPickerButton`도 `FRAMEWORK LVRS`에서 자체 버튼 호출로 생성한다. `currentColor`의\n6/8자리 HEX 또는 공개 공유 `model` 멤버 중 하나를 받으며, 생략하면 기본 보라색이다.\n`buttonSize: .Small/.Medium/.Large` 또는 22/28/36, `showHueRing`, `enabled`,\n`accessibilityName`, `onClick`·`onPressed`·`onReleased`·`onCanceled`를 지원한다.\n이벤트는 메서드 참조이고 모델·초기색의 동시 지정, 호출식과 미지원 크기는 진단한다.\n생성 옵션은 상수이며, 공유 모델의 색상 변경은 Core 쿼리를 통해 명시적으로 연결된다.\n팝오버를 자동 소유하지 않는다. 예제와 미완료 계약은 LVRS의\n`docs/native/ColorPickerButton.md`에 있다.\n"
+      "start_line": 197,
+      "end_line": 208,
+      "raw": "원본 Modal의 동적 콘텐츠 수명을 위한 iiGUI C++ 팩토리 경로도 추가했다. 현재는 빈\n`Popover`를 AOT로 만든 뒤 C++에서 `set_popup_content`를 연결한다. 콘텐츠 위젯은 매번\n열 때 만들고 닫으면 소유권을 해제하지만 바깥 LVUI 백엔드는 유지한다. 현재 콘텐츠의\n조회는 `popup_content(local_id)`이며 이전 활성화 핸들은 재사용할 수 없다.\n이제 `Modal { ... }`의 자식을 별도의 `ModalContentFactory`로 AOT 생성하며 전용 Modal\n조합도 제공한다. 기본 헤더·아이콘·최대 세 액션과 가운데 배치는 LVRS가 구성한다.\n`open: true`는 마운트 후 최초 개방한다. 자식 ID와 context menu 대상은 콘텐츠 내부 범위에서\n해석하며 바깥 백엔드는 기존 스코프를 빌린다. 부모 백엔드의 재생성은 없다. 호출식 대신 메서드\n참조를 쓰는 규칙도 같다. 초기 개방을 요구하는 중첩 생성 함수와 범위 간 target 참조는 진단한다.\n전체 지원 입력과 남은 차이는 LVRS의 `docs/native/Modal.md`에 기록한다.\n예제는 LVRS의 `examples/NativeActivationGallery`, 상세 계약은\n`docs/native/ActivationContent.md`이다.\n"
     },
     {
       "id": "b000070",
       "kind": "blank",
-      "start_line": 214,
-      "end_line": 214,
+      "start_line": 209,
+      "end_line": 209,
       "raw": "\n"
     },
     {
       "id": "b000071",
       "kind": "paragraph",
-      "start_line": 215,
+      "start_line": 210,
       "end_line": 217,
-      "raw": "`Popover`는 한 일반 콘텐츠 View를 받는 레이아웃 외부 오버레이이다. 복수 콘텐츠는 하나의\n스택으로 묶으며 별도로 소유한 Menu·ContextMenu·Popover도 둘 수 있다. 닫힌 상태에서도\n콘텐츠와 스코프를 유지하고 열 때마다 같은 C++ 객체를 사용한다.\n"
+      "raw": "`ColorPickerButton`도 `FRAMEWORK LVRS`에서 자체 버튼 호출로 생성한다. `currentColor`의\n6/8자리 HEX 또는 공개 공유 `model` 멤버 중 하나를 받으며, 생략하면 기본 보라색이다.\n`buttonSize: .Small/.Medium/.Large` 또는 22/28/36, `showHueRing`, `enabled`,\n`accessibilityName`, `onClick`·`onPressed`·`onReleased`·`onCanceled`를 지원한다.\n이벤트는 메서드 참조이고 모델·초기색의 동시 지정, 호출식과 미지원 크기는 진단한다.\n생성 옵션은 상수이며, 공유 모델의 색상 변경은 Core 쿼리를 통해 명시적으로 연결된다.\n팝오버를 자동 소유하지 않는다. 예제와 미완료 계약은 LVRS의\n`docs/native/ColorPickerButton.md`에 있다.\n"
     },
     {
       "id": "b000072",
@@ -550,233 +550,247 @@
     },
     {
       "id": "b000073",
-      "kind": "fenced_code",
+      "kind": "paragraph",
       "start_line": 219,
-      "end_line": 224,
+      "end_line": 221,
+      "raw": "`Popover`는 한 일반 콘텐츠 View를 받는 레이아웃 외부 오버레이이다. 복수 콘텐츠는 하나의\n스택으로 묶으며 별도로 소유한 Menu·ContextMenu·Popover도 둘 수 있다. 닫힌 상태에서도\n콘텐츠와 스코프를 유지하고 열 때마다 같은 C++ 객체를 사용한다.\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 222,
+      "end_line": 222,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "fenced_code",
+      "start_line": 223,
+      "end_line": 228,
       "raw": "```lvui\nPopover(id: \"editor\", padding: 12, margins: 8, closeOnEscape: true,\n        closeOnPressOutside: true, onClosed: vm.closed) {\n    ColorPicker(model: vm.model, onAccepted: vm.accepted, onCanceled: vm.canceled)\n}\n```\n",
       "language": "lvui",
       "code": "Popover(id: \"editor\", padding: 12, margins: 8, closeOnEscape: true,\n        closeOnPressOutside: true, onClosed: vm.closed) {\n    ColorPicker(model: vm.model, onAccepted: vm.accepted, onCanceled: vm.canceled)\n}\n",
       "closed": true
     },
     {
-      "id": "b000074",
-      "kind": "blank",
-      "start_line": 225,
-      "end_line": 225,
-      "raw": "\n"
-    },
-    {
-      "id": "b000075",
-      "kind": "paragraph",
-      "start_line": 226,
-      "end_line": 233,
-      "raw": "`width`, `height`, `padding`, `margins`, `cornerRadius`, `surfaceColor`, `surfaceOpacity`,\n`modal`, `dim`, `focus`, `clip`, `closeOnEscape`, `closeOnPressOutside`, `accessibilityName`,\n`onOpened`, `onClosed`를 생성 시 받는다. `surfaceColor`는 6자리 RGB HEX이며 코팅 알파는\n`surfaceOpacity`이다. 두 이벤트는 인자 없는 메서드 참조이다. 현재 초기 열림·좌표·동적 바인딩\n입력은 지원하지 않으며 마운트 후 C++ 위젯 핸들의 `open_for`·`open_at`·`close_popup`을 쓴다.\n자식 Escape 처리, 포커스 복귀, 외부 누름의 모달/비모달 전달은 iiGUI가 담당하고 모델의\n확정·복원은 소유자 콜백이 결정한다. OS 팝오버를 만들지 않는다. 원본 재질·모션·상속 계약은\n부분 구현이며 상세 계약과 실행 예제는 LVRS의 `docs/native/Popover.md`에 있다.\n"
-    },
-    {
       "id": "b000076",
       "kind": "blank",
-      "start_line": 234,
-      "end_line": 234,
+      "start_line": 229,
+      "end_line": 229,
       "raw": "\n"
     },
     {
       "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 230,
+      "end_line": 237,
+      "raw": "`width`, `height`, `padding`, `margins`, `cornerRadius`, `surfaceColor`, `surfaceOpacity`,\n`modal`, `dim`, `focus`, `clip`, `closeOnEscape`, `closeOnPressOutside`, `accessibilityName`,\n`onOpened`, `onClosed`를 생성 시 받는다. `surfaceColor`는 6자리 RGB HEX이며 코팅 알파는\n`surfaceOpacity`이다. 두 이벤트는 인자 없는 메서드 참조이다. 현재 초기 열림·좌표·동적 바인딩\n입력은 지원하지 않으며 마운트 후 C++ 위젯 핸들의 `open_for`·`open_at`·`close_popup`을 쓴다.\n자식 Escape 처리, 포커스 복귀, 외부 누름의 모달/비모달 전달은 iiGUI가 담당하고 모델의\n확정·복원은 소유자 콜백이 결정한다. OS 팝오버를 만들지 않는다. 원본 재질·모션·상속 계약은\n부분 구현이며 상세 계약과 실행 예제는 LVRS의 `docs/native/Popover.md`에 있다.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 238,
+      "end_line": 238,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
       "kind": "heading",
-      "start_line": 235,
-      "end_line": 235,
+      "start_line": 239,
+      "end_line": 239,
       "raw": "## Alert와 AlertButton\n",
       "level": 2,
       "title": "Alert와 AlertButton"
     },
     {
-      "id": "b000078",
-      "kind": "blank",
-      "start_line": 236,
-      "end_line": 236,
-      "raw": "\n"
-    },
-    {
-      "id": "b000079",
-      "kind": "paragraph",
-      "start_line": 237,
-      "end_line": 240,
-      "raw": "Alert은 원본의 자동/2/3개 액션과 1·2개 가로 배치/3개 세로 배치를 C++로 조합한다.\n`description`은 `message`, `button1Text/2Text/3Text`는 `primaryText/secondaryText/tertiaryText`,\n`imageSource`는 `appIconSource`의 별칭이다. 원래 이름과 별칭을 함께 지정하면 진단한다.\n`buttonCount`는 정수이며 2·3 외에는 텍스트 유무에 따른 자동 선택이다.\n"
-    },
-    {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 241,
-      "end_line": 241,
+      "start_line": 240,
+      "end_line": 240,
       "raw": "\n"
     },
     {
       "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 241,
+      "end_line": 244,
+      "raw": "Alert은 원본의 자동/2/3개 액션과 1·2개 가로 배치/3개 세로 배치를 C++로 조합한다.\n`description`은 `message`, `button1Text/2Text/3Text`는 `primaryText/secondaryText/tertiaryText`,\n`imageSource`는 `appIconSource`의 별칭이다. 원래 이름과 별칭을 함께 지정하면 진단한다.\n`buttonCount`는 정수이며 2·3 외에는 텍스트 유무에 따른 자동 선택이다.\n"
+    },
+    {
+      "id": "b000082",
+      "kind": "blank",
+      "start_line": 245,
+      "end_line": 245,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
       "kind": "fenced_code",
-      "start_line": 242,
-      "end_line": 252,
+      "start_line": 246,
+      "end_line": 256,
       "raw": "```lvui\nimport vm AlertBackend\nApplicationWindow {\n    AlertButton(text: \"Run\", method: vm.run, onClick: vm.afterRun)\n    Alert(id: \"confirmation\", open: true, title: \"Native Alert\",\n          description: \"Choose an action.\", buttonCount: 3,\n          primaryText: \"Apply\", secondaryText: \"Discard\", tertiaryText: \"Later\",\n          imageSource: \"alert-file-text.svg\", button1Method: vm.apply,\n          button2Method: vm.discard, onPrimaryClicked: vm.afterApply)\n}\n```\n",
       "language": "lvui",
       "code": "import vm AlertBackend\nApplicationWindow {\n    AlertButton(text: \"Run\", method: vm.run, onClick: vm.afterRun)\n    Alert(id: \"confirmation\", open: true, title: \"Native Alert\",\n          description: \"Choose an action.\", buttonCount: 3,\n          primaryText: \"Apply\", secondaryText: \"Discard\", tertiaryText: \"Later\",\n          imageSource: \"alert-file-text.svg\", button1Method: vm.apply,\n          button2Method: vm.discard, onPrimaryClicked: vm.afterApply)\n}\n",
       "closed": true
     },
     {
-      "id": "b000082",
-      "kind": "blank",
-      "start_line": 253,
-      "end_line": 253,
-      "raw": "\n"
-    },
-    {
-      "id": "b000083",
-      "kind": "paragraph",
-      "start_line": 254,
-      "end_line": 258,
-      "raw": "`method`·`button1Method/2Method/3Method`는 지연 메서드 참조이다. 생성한 C++의 `requires`로\n`const lvrs::ButtonEvent&` 인자를 받는 호출을 먼저 선택하고, 없으면 인자 없는 호출을 선택한다.\n이벤트에는 실제 소스 Widget과 `clicked` trigger가 있다. 메서드 뒤 클릭 통지를 실행하며\n소유 View가 제거되면 이전 세대의 후속 통지는 실행하지 않는다. `vm.method()`는 오류이다.\n부모 backend는 View 활성화 때 한 번 생성되고 클릭·재개방·그리기에서 재사용한다.\n"
-    },
-    {
       "id": "b000084",
       "kind": "blank",
-      "start_line": 259,
-      "end_line": 259,
+      "start_line": 257,
+      "end_line": 257,
       "raw": "\n"
     },
     {
       "id": "b000085",
       "kind": "paragraph",
-      "start_line": 260,
-      "end_line": 265,
-      "raw": "AlertButton은 `dialogStyle`, 다섯 톤, enabled, 선택적 height/horizontalPadding/cornerRadius,\ntextColor/primaryColor와 누름·해제·취소 콜백을 지원한다. Alert의 `open: true`는 마운트와\nbackend 구성 뒤 최초 개방한다. 닫힌 Alert은 정적 위젯을 유지하며 콘텐츠를 새로 생성하지 않는다.\n`minWidth/maxWidth/preferredWidth/sidePadding/cardCornerRadius/shapeStyle`, 액션별 enabled,\nsecondaryDestructive, 아이콘 크기·프레임·색상, backdrop/card 색상과 glass 설정을 전달한다.\n색상 리터럴은 기존 6/8자리 RGB/RGBA HEX 입력이다. 임의 자식 View는 받지 않는다.\n"
+      "start_line": 258,
+      "end_line": 262,
+      "raw": "`method`·`button1Method/2Method/3Method`는 지연 메서드 참조이다. 생성한 C++의 `requires`로\n`const lvrs::ButtonEvent&` 인자를 받는 호출을 먼저 선택하고, 없으면 인자 없는 호출을 선택한다.\n이벤트에는 실제 소스 Widget과 `clicked` trigger가 있다. 메서드 뒤 클릭 통지를 실행하며\n소유 View가 제거되면 이전 세대의 후속 통지는 실행하지 않는다. `vm.method()`는 오류이다.\n부모 backend는 View 활성화 때 한 번 생성되고 클릭·재개방·그리기에서 재사용한다.\n"
     },
     {
       "id": "b000086",
       "kind": "blank",
-      "start_line": 266,
-      "end_line": 266,
+      "start_line": 263,
+      "end_line": 263,
       "raw": "\n"
     },
     {
       "id": "b000087",
       "kind": "paragraph",
-      "start_line": 267,
-      "end_line": 274,
-      "raw": "이미지는 두 원본 Alert SVG 이름·기존 QRC 리터럴 또는 C++ 스코프의 불변 RasterImage 멤버이다.\n빈 문자열은 원본 대체 사각형 표시이며 알려지지 않은 URL·파일은 컴파일 진단한다.\n그림자와 420ms OutBack/150ms InCubic 카드 모션도 실제 Metal/Core 프레임으로 동작한다.\n`shadowEnabled/shadowColor/shadowBlurRadius/shadowOffsetX/shadowOffsetY`와\n`motionEnabled`를 컴파일하며, `motion: vm.motion`은 `std::shared_ptr<lvrs::Motion>`\n멤버를 빌린다. 실행 중 speed·enabled·reduced_motion을 바꾸어도 같은 객체를 사용한다.\n현재 효과와 합성의 실제 지원은 Metal 전용이다. 일반 반응형 재바인딩·다른 재질 백엔드와\n전체 상속 계약은 [LVRS Alert 문서](../../LVRS/docs/native/Alert.md)에 남은 작업으로 기록한다.\n"
+      "start_line": 264,
+      "end_line": 269,
+      "raw": "AlertButton은 `dialogStyle`, 다섯 톤, enabled, 선택적 height/horizontalPadding/cornerRadius,\ntextColor/primaryColor와 누름·해제·취소 콜백을 지원한다. Alert의 `open: true`는 마운트와\nbackend 구성 뒤 최초 개방한다. 닫힌 Alert은 정적 위젯을 유지하며 콘텐츠를 새로 생성하지 않는다.\n`minWidth/maxWidth/preferredWidth/sidePadding/cardCornerRadius/shapeStyle`, 액션별 enabled,\nsecondaryDestructive, 아이콘 크기·프레임·색상, backdrop/card 색상과 glass 설정을 전달한다.\n색상 리터럴은 기존 6/8자리 RGB/RGBA HEX 입력이다. 임의 자식 View는 받지 않는다.\n"
     },
     {
       "id": "b000088",
       "kind": "blank",
-      "start_line": 275,
-      "end_line": 276,
-      "raw": "\n\n"
+      "start_line": 270,
+      "end_line": 270,
+      "raw": "\n"
     },
     {
       "id": "b000089",
+      "kind": "paragraph",
+      "start_line": 271,
+      "end_line": 278,
+      "raw": "이미지는 두 원본 Alert SVG 이름·기존 QRC 리터럴 또는 C++ 스코프의 불변 RasterImage 멤버이다.\n빈 문자열은 원본 대체 사각형 표시이며 알려지지 않은 URL·파일은 컴파일 진단한다.\n그림자와 420ms OutBack/150ms InCubic 카드 모션도 실제 Metal/Core 프레임으로 동작한다.\n`shadowEnabled/shadowColor/shadowBlurRadius/shadowOffsetX/shadowOffsetY`와\n`motionEnabled`를 컴파일하며, `motion: vm.motion`은 `std::shared_ptr<lvrs::Motion>`\n멤버를 빌린다. 실행 중 speed·enabled·reduced_motion을 바꾸어도 같은 객체를 사용한다.\n현재 효과와 합성의 실제 지원은 Metal 전용이다. 일반 반응형 재바인딩·다른 재질 백엔드와\n전체 상속 계약은 [LVRS Alert 문서](../../LVRS/docs/native/Alert.md)에 남은 작업으로 기록한다.\n"
+    },
+    {
+      "id": "b000090",
+      "kind": "blank",
+      "start_line": 279,
+      "end_line": 280,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000091",
       "kind": "heading",
-      "start_line": 277,
-      "end_line": 277,
+      "start_line": 281,
+      "end_line": 281,
       "raw": "## Modal의 정적 외곽과 프레임 전환\n",
       "level": 2,
       "title": "Modal의 정적 외곽과 프레임 전환"
     },
     {
-      "id": "b000090",
-      "kind": "blank",
-      "start_line": 278,
-      "end_line": 278,
-      "raw": "\n"
-    },
-    {
-      "id": "b000091",
-      "kind": "paragraph",
-      "start_line": 279,
-      "end_line": 284,
-      "raw": "Modal의 제목·아이콘·액션은 마운트 시 한 번 생성한다. AOT 자식 팩토리는 본문만\n정적 외곽의 앵커에 넣으며 닫는 즉시 해제한다. 외곽은 같은 ID를 유지하며 420ms\nOutBack·150ms InCubic으로 전환한다. 퇴장 중 다시 열면 현재 진행 값에서 새 본문을\n생성한다. `motionEnabled`와 `motion: vm.motion`을 네이티브 설정으로 생성하며\n인자 호출이나 알 수 없는 스코프 참조는 컴파일 진단이다. `frameColor`의 RGBA alpha도\n전달한다. [Modal 계약](../../LVRS/docs/native/Modal.md)에 실제 수명·검증 범위를 명시한다.\n"
-    },
-    {
       "id": "b000092",
       "kind": "blank",
-      "start_line": 285,
-      "end_line": 285,
+      "start_line": 282,
+      "end_line": 282,
       "raw": "\n"
     },
     {
       "id": "b000093",
+      "kind": "paragraph",
+      "start_line": 283,
+      "end_line": 288,
+      "raw": "Modal의 제목·아이콘·액션은 마운트 시 한 번 생성한다. AOT 자식 팩토리는 본문만\n정적 외곽의 앵커에 넣으며 닫는 즉시 해제한다. 외곽은 같은 ID를 유지하며 420ms\nOutBack·150ms InCubic으로 전환한다. 퇴장 중 다시 열면 현재 진행 값에서 새 본문을\n생성한다. `motionEnabled`와 `motion: vm.motion`을 네이티브 설정으로 생성하며\n인자 호출이나 알 수 없는 스코프 참조는 컴파일 진단이다. `frameColor`의 RGBA alpha도\n전달한다. [Modal 계약](../../LVRS/docs/native/Modal.md)에 실제 수명·검증 범위를 명시한다.\n"
+    },
+    {
+      "id": "b000094",
+      "kind": "blank",
+      "start_line": 289,
+      "end_line": 289,
+      "raw": "\n"
+    },
+    {
+      "id": "b000095",
       "kind": "heading",
-      "start_line": 286,
-      "end_line": 286,
+      "start_line": 290,
+      "end_line": 290,
       "raw": "## 표의 셀·행·헤더\n",
       "level": 2,
       "title": "표의 셀·행·헤더"
     },
     {
-      "id": "b000094",
-      "kind": "blank",
-      "start_line": 287,
-      "end_line": 287,
-      "raw": "\n"
-    },
-    {
-      "id": "b000095",
-      "kind": "paragraph",
-      "start_line": 288,
-      "end_line": 295,
-      "raw": "세 시각 타입은 정적 셀/열 데이터, 기하, 편집·submit·검증 거절과 헤더 활성화를 생성한다.\n`onInputEdited/onInputSubmitted`는 String, `onInputRejected`는 두 String,\n`onCellInputEdited/onCellInputSubmitted`는 열 인덱스와 String,\n`onColumnClicked`는 열 인덱스와 `const lvrs::TableHeaderColumn&`를 전달한다.\n`valueValidator`는 scope backend의 public `TableValidator` 값 참조이다.\n이 standalone 구성 요소만으로 전체 Table 데이터 모델을 자동 생성하지 않는다.\n아래의 `Table`은 C++ 모델에 연결하며 임의 role/delegate의 전체 이식은 남아 있다.\n[네이티브 표 계약](../../LVRS/docs/native/Tables.md)에 지원 범위와 예제를 기록한다.\n"
-    },
-    {
       "id": "b000096",
       "kind": "blank",
-      "start_line": 296,
-      "end_line": 296,
+      "start_line": 291,
+      "end_line": 291,
       "raw": "\n"
     },
     {
       "id": "b000097",
+      "kind": "paragraph",
+      "start_line": 292,
+      "end_line": 299,
+      "raw": "세 시각 타입은 정적 셀/열 데이터, 기하, 편집·submit·검증 거절과 헤더 활성화를 생성한다.\n`onInputEdited/onInputSubmitted`는 String, `onInputRejected`는 두 String,\n`onCellInputEdited/onCellInputSubmitted`는 열 인덱스와 String,\n`onColumnClicked`는 열 인덱스와 `const lvrs::TableHeaderColumn&`를 전달한다.\n`valueValidator`는 scope backend의 public `TableValidator` 값 참조이다.\n이 standalone 구성 요소만으로 전체 Table 데이터 모델을 자동 생성하지 않는다.\n아래의 `Table`은 C++ 모델에 연결하며 임의 role/delegate의 전체 이식은 남아 있다.\n[네이티브 표 계약](../../LVRS/docs/native/Tables.md)에 지원 범위와 예제를 기록한다.\n"
+    },
+    {
+      "id": "b000098",
+      "kind": "blank",
+      "start_line": 300,
+      "end_line": 300,
+      "raw": "\n"
+    },
+    {
+      "id": "b000099",
       "kind": "heading",
-      "start_line": 297,
-      "end_line": 297,
+      "start_line": 301,
+      "end_line": 301,
       "raw": "## 모델에 연결된 Table\n",
       "level": 2,
       "title": "모델에 연결된 Table"
     },
     {
-      "id": "b000098",
-      "kind": "blank",
-      "start_line": 298,
-      "end_line": 298,
-      "raw": "\n"
-    },
-    {
-      "id": "b000099",
-      "kind": "paragraph",
-      "start_line": 299,
-      "end_line": 305,
-      "raw": "`Table(model: vm.model, width: 660, height: 300)`은 public C++\n`shared_ptr<lvrs::TableModel>` 멤버를 scope에서 빌려 같은 네이티브 Table 생성기로 전달한다.\n선택 모드, 표시 크기/색, 수직 viewport, 정렬과 타입 편집 콜백을 AOT C++로 생성한다.\n행/열/값은 C++ 모델 API로 관리한다. 임의 rows/role/delegate 배열과 모델 자동 재바인딩,\n전체 상속 API는 아직 미지원이다. `NativeDataTableGallery`와 새 검사 코드는 빌드 단계이며\n실행 검증은 최종 일괄 단계까지 유보한다. 자세한 범위는 LVRS의\n`docs/native/TableView.md`에 기록한다.\n"
-    },
-    {
       "id": "b000100",
       "kind": "blank",
-      "start_line": 306,
-      "end_line": 306,
+      "start_line": 302,
+      "end_line": 302,
       "raw": "\n"
     },
     {
       "id": "b000101",
       "kind": "paragraph",
-      "start_line": 307,
-      "end_line": 313,
-      "raw": "`Table`은 `resizeHandlesVisible`, `columnResizeHandleWidth/rowResizeHandleHeight`,\n`resizeHandleColor/resizeHandleHoverColor`, `structureControlsVisible`,\n`addRowControlsVisible/addColumnControlsVisible`, `structureGutterWidth/Height`,\n`deleteContextMenuEnabled`, `selectOnContextClick`, `clipboardEnabled`를 AOT 옵션으로 받는다.\n크기 조절·삽입 영역·삭제 메뉴와 범위 붙여넣기는 같은 C++ 컨트롤러를 사용한다.\n`onRangeValuesChanged`는 `lvrs::TableRange`, `onColumnResized/onRowResized`는 인덱스와\ndouble 치수를 전달한다. 이 추가 검사도 최종 일괄 실행 단계까지 유보한다.\n"
+      "start_line": 303,
+      "end_line": 309,
+      "raw": "`Table(model: vm.model, width: 660, height: 300)`은 public C++\n`shared_ptr<lvrs::TableModel>` 멤버를 scope에서 빌려 같은 네이티브 Table 생성기로 전달한다.\n선택 모드, 표시 크기/색, 수직 viewport, 정렬과 타입 편집 콜백을 AOT C++로 생성한다.\n행/열/값은 C++ 모델 API로 관리한다. 임의 rows/role/delegate 배열과 모델 자동 재바인딩,\n전체 상속 API는 아직 미지원이다. `NativeDataTableGallery`와 새 검사 코드는 빌드 단계이며\n실행 검증은 최종 일괄 단계까지 유보한다. 자세한 범위는 LVRS의\n`docs/native/TableView.md`에 기록한다.\n"
     },
     {
       "id": "b000102",
       "kind": "blank",
-      "start_line": 314,
-      "end_line": 314,
+      "start_line": 310,
+      "end_line": 310,
       "raw": "\n"
     },
     {
       "id": "b000103",
       "kind": "paragraph",
-      "start_line": 315,
-      "end_line": 321,
+      "start_line": 311,
+      "end_line": 317,
+      "raw": "`Table`은 `resizeHandlesVisible`, `columnResizeHandleWidth/rowResizeHandleHeight`,\n`resizeHandleColor/resizeHandleHoverColor`, `structureControlsVisible`,\n`addRowControlsVisible/addColumnControlsVisible`, `structureGutterWidth/Height`,\n`deleteContextMenuEnabled`, `selectOnContextClick`, `clipboardEnabled`를 AOT 옵션으로 받는다.\n크기 조절·삽입 영역·삭제 메뉴와 범위 붙여넣기는 같은 C++ 컨트롤러를 사용한다.\n`onRangeValuesChanged`는 `lvrs::TableRange`, `onColumnResized/onRowResized`는 인덱스와\ndouble 치수를 전달한다. 이 추가 검사도 최종 일괄 실행 단계까지 유보한다.\n"
+    },
+    {
+      "id": "b000104",
+      "kind": "blank",
+      "start_line": 318,
+      "end_line": 318,
+      "raw": "\n"
+    },
+    {
+      "id": "b000105",
+      "kind": "paragraph",
+      "start_line": 319,
+      "end_line": 325,
       "raw": "`Table`의 보관형 viewport는 모델의 전체 폭과 높이를 두 축의 논리 범위로 사용한다.\n`fitColumnsToViewport: false`는 명시적인 모델 열 폭을 그대로 사용한다. 가로 휠과\nShift+세로 휠, 키보드 셀 드러내기와 화면 밖 열 편집은 같은 C++ Table 경로를 사용한다.\n헤더·resize·삽입·우클릭도 같은 논리 X 좌표로 동작한다. AOT는 가로 스크롤을 위한\n소스 평가기나 행/셀마다의 위젯 생성기를 추가하지 않는다. 네이티브 Table의 명시적인\n`set_scroll_position`, `set_horizontal_scroll_offset`, `reveal_cell`은 C++ API이다.\n새 예제·입력·픽셀·설치 소비자 실행 검증은 최종 일괄 단계까지 유보한다.\n"
     }
   ],
@@ -790,194 +804,194 @@
       "start_line": 1
     },
     {
-      "block_id": "b000031",
+      "block_id": "b000033",
       "parent_id": "b000001",
       "level": 2,
       "title": "메뉴와 컨텍스트 메뉴",
       "anchor": "메뉴와-컨텍스트-메뉴",
-      "start_line": 96
+      "start_line": 100
     },
     {
-      "block_id": "b000047",
+      "block_id": "b000049",
       "parent_id": "b000001",
       "level": 2,
       "title": "색상 모델과 여섯 네이티브 표면",
       "anchor": "색상-모델과-여섯-네이티브-표면",
-      "start_line": 144
+      "start_line": 148
     },
     {
-      "block_id": "b000057",
+      "block_id": "b000059",
       "parent_id": "b000001",
       "level": 2,
       "title": "합성 ColorPicker",
       "anchor": "합성-colorpicker",
-      "start_line": 172
+      "start_line": 176
     },
     {
-      "block_id": "b000065",
+      "block_id": "b000067",
       "parent_id": "b000001",
       "level": 2,
       "title": "일반 콘텐츠 Popover",
       "anchor": "일반-콘텐츠-popover",
-      "start_line": 191
+      "start_line": 195
     },
     {
-      "block_id": "b000077",
+      "block_id": "b000079",
       "parent_id": "b000001",
       "level": 2,
       "title": "Alert와 AlertButton",
       "anchor": "alert와-alertbutton",
-      "start_line": 235
+      "start_line": 239
     },
     {
-      "block_id": "b000089",
+      "block_id": "b000091",
       "parent_id": "b000001",
       "level": 2,
       "title": "Modal의 정적 외곽과 프레임 전환",
       "anchor": "modal의-정적-외곽과-프레임-전환",
-      "start_line": 277
+      "start_line": 281
     },
     {
-      "block_id": "b000093",
+      "block_id": "b000095",
       "parent_id": "b000001",
       "level": 2,
       "title": "표의 셀·행·헤더",
       "anchor": "표의-셀행헤더",
-      "start_line": 286
+      "start_line": 290
     },
     {
-      "block_id": "b000097",
+      "block_id": "b000099",
       "parent_id": "b000001",
       "level": 2,
       "title": "모델에 연결된 Table",
       "anchor": "모델에-연결된-table",
-      "start_line": 297
+      "start_line": 301
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000003",
-        "line": 6,
+        "block_id": "b000005",
+        "line": 10,
         "text": "LVUI 컴파일러 자체는 LVRS·iiGUI 런타임에 의존하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000005",
-        "line": 8,
+        "block_id": "b000007",
+        "line": 12,
         "text": "이전 문서의 Cocoa 컨트롤 래핑 방식은 현재 구현을 설명하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000007",
-        "line": 23,
+        "block_id": "b000009",
+        "line": 27,
         "text": "현재 지원은 기본 동작의 부분 이식이며 기존 LVRS 전체의 동등성 달성을 의미하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000011",
-        "line": 33,
+        "block_id": "b000013",
+        "line": 37,
         "text": "마운트 전체에서 유일해야 한다. 자식들은 부모 스코프 backend를 빌린다. Modal의 열림",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000011",
-        "line": 34,
+        "block_id": "b000013",
+        "line": 38,
         "text": "단위 본문과 수명을 혼동하지 않는다. [Sheet 계약](../../LVRS/docs/native/Sheet.md)에 현재",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000017",
-        "line": 51,
+        "block_id": "b000019",
+        "line": 55,
         "text": "`Tab`의 `iconName`은 필수이며 누락·공백 값은 소스 위치가 있는 AOT 오류이다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000021",
-        "line": 63,
+        "block_id": "b000023",
+        "line": 67,
         "text": "스크롤 너비 정책과 동적 모델 바인딩은 아직 지원하지 않는다. 드롭다운 버튼의 콜백은",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000021",
-        "line": 64,
+        "block_id": "b000023",
+        "line": 68,
         "text": "앱 메서드에 연결되며 메뉴를 자동 생성하지 않는다. 원본 LVRS도 메뉴 열기를 콜백에 연결한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000023",
-        "line": 71,
+        "block_id": "b000025",
+        "line": 75,
         "text": "숫자 갱신·반복 타이머를 암묵적으로 추가하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000029",
-        "line": 94,
+        "block_id": "b000031",
+        "line": 98,
         "text": "입력 어댑터는 계속 구현해야 한다. 이전 AOT 검증 기록과 현재 자체 렌더링 검증을 구분한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000043",
-        "line": 137,
+        "block_id": "b000045",
+        "line": 141,
         "text": "자동 닫기를 적용하지 않는다. 위·아래·Home·End·Tab 이동, 비활성 항목 건너뛰기,",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000053",
-        "line": 165,
+        "block_id": "b000055",
+        "line": 169,
         "text": "타입은 생성 코드를 컴파일할 때 검사한다. 메서드 호출이나 임의 표현식을 모델로 지정하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000063",
-        "line": 188,
+        "block_id": "b000065",
+        "line": 192,
         "text": "재마운트한다. 원본 전체 시각·상속 계약의 완료를 뜻하지 않는다. 전용 설치 예제는",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000069",
-        "line": 212,
+        "block_id": "b000071",
+        "line": 216,
         "text": "팝오버를 자동 소유하지 않는다. 예제와 미완료 계약은 LVRS의",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000083",
-        "line": 257,
+        "block_id": "b000085",
+        "line": 261,
         "text": "소유 View가 제거되면 이전 세대의 후속 통지는 실행하지 않는다. `vm.method()`는 오류이다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000085",
-        "line": 262,
+        "block_id": "b000087",
+        "line": 266,
         "text": "backend 구성 뒤 최초 개방한다. 닫힌 Alert은 정적 위젯을 유지하며 콘텐츠를 새로 생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000095",
-        "line": 293,
+        "block_id": "b000097",
+        "line": 297,
         "text": "이 standalone 구성 요소만으로 전체 Table 데이터 모델을 자동 생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000103",
-        "line": 319,
+        "block_id": "b000105",
+        "line": 323,
         "text": "소스 평가기나 행/셀마다의 위젯 생성기를 추가하지 않는다. 네이티브 Table의 명시적인",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -986,60 +1000,74 @@
     "commands": [],
     "links": [
       {
-        "block_id": "b000007",
-        "label": "ProgressBar",
-        "target": "NativeProgress.md",
+        "block_id": "b000003",
+        "label": "독립 구현 현황",
+        "target": "LVUIIndependence.md",
         "kind": "relative",
-        "line": 21
+        "line": 5
+      },
+      {
+        "block_id": "b000003",
+        "label": "이전 우선순위",
+        "target": "NativeMigrationRoadmap.md",
+        "kind": "relative",
+        "line": 5
       },
       {
         "block_id": "b000009",
-        "label": "페이지와 모델 수명",
-        "target": "NativeRouteModels.md",
+        "label": "ProgressBar",
+        "target": "NativeProgress.md",
         "kind": "relative",
         "line": 25
       },
       {
         "block_id": "b000011",
+        "label": "페이지와 모델 수명",
+        "target": "NativeRouteModels.md",
+        "kind": "relative",
+        "line": 29
+      },
+      {
+        "block_id": "b000013",
         "label": "Sheet 계약",
         "target": "../../LVRS/docs/native/Sheet.md",
         "kind": "relative",
-        "line": 34
+        "line": 38
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000019",
         "label": "LVUI 독립 아이콘",
         "target": "NativeIcons.md",
         "kind": "relative",
-        "line": 48
+        "line": 52
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000019",
         "label": "현재 현황",
         "target": "NativeTabs.md",
         "kind": "relative",
-        "line": 50
+        "line": 54
       },
       {
-        "block_id": "b000087",
+        "block_id": "b000089",
         "label": "LVRS Alert 문서",
         "target": "../../LVRS/docs/native/Alert.md",
         "kind": "relative",
-        "line": 274
+        "line": 278
       },
       {
-        "block_id": "b000091",
+        "block_id": "b000093",
         "label": "Modal 계약",
         "target": "../../LVRS/docs/native/Modal.md",
         "kind": "relative",
-        "line": 284
+        "line": 288
       },
       {
-        "block_id": "b000095",
+        "block_id": "b000097",
         "label": "네이티브 표 계약",
         "target": "../../LVRS/docs/native/Tables.md",
         "kind": "relative",
-        "line": 295
+        "line": 299
       }
     ],
     "tables": []

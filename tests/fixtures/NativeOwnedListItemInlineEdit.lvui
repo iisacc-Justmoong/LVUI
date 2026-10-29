@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemInlineEditModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: .InlineEdit, label: "Name", inputText1: vm.text,
+                 inputReadOnly1: vm.read_only, onInputTextChanged: vm.changed,
+                 onInputSubmitted: vm.submitted, onEdited: vm.edited)
+    }
+}

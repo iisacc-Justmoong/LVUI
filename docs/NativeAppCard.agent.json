@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/NativeAppCard.md",
-    "sha256": "ee6d095e946ad12bf39a9d114c2fe975da4afc3b5e6c539f0899eac10da2649d",
-    "bytes": 2274,
+    "sha256": "79d43286a5b2cdc59bd8da0d815826ea2b67abe17531333e62459b54d4d76fd8",
+    "bytes": 2237,
     "line_count": 28,
     "encoding": "utf-8",
     "language": "ko"
@@ -85,7 +85,7 @@
       "kind": "paragraph",
       "start_line": 21,
       "end_line": 28,
-      "raw": "기본 선언형 `AppCard`는 이 구현을 직접 생성하며 자식 View를 본문 슬롯에 배치한다.\n`title`, `subtitle`, `enabled`, `width`, `height`, `padding`, `spacing`,\n`cornerRadius`, `shapeStyle`, `backgroundColor`, `titleColor`, `subtitleColor`와\n공통 `visible`·`opacity`·`flex`를 받는다. 관찰 가능한 C++ 멤버는 함께 계산된\n후보 설정으로 갱신하며 잘못된 값은 기존 본문을 유지하고 바인딩 오류로 보고한다.\n형태는 `.roundRect`/`.shapeRoundRect`, `.cylinder`/`.shapeCylinder` 또는\n`lvui::AppCardShape` 값이다. `FRAMEWORK LVRS`는 아직 레거시 구현을 사용한다.\n전체 플랫폼의 시각·접근성 검증과 레거시 경로 제거는 진행 중이다.\n"
+      "raw": "기본 선언형 `AppCard`는 이 구현을 직접 생성하며 자식 View를 본문 슬롯에 배치한다.\n`title`, `subtitle`, `enabled`, `width`, `height`, `padding`, `spacing`,\n`cornerRadius`, `shapeStyle`, `backgroundColor`, `titleColor`, `subtitleColor`와\n공통 `visible`·`opacity`·`flex`를 받는다. 관찰 가능한 C++ 멤버는 함께 계산된\n후보 설정으로 갱신하며 잘못된 값은 기존 본문을 유지하고 바인딩 오류로 보고한다.\n형태는 `.roundRect`/`.shapeRoundRect`, `.cylinder`/`.shapeCylinder` 또는\n`lvui::AppCardShape` 값이다. `FRAMEWORK LVRS` 생성 경로는 제거되었다.\n전체 플랫폼의 시각·접근성 검증은 진행 중이다.\n"
     }
   ],
   "outline": [

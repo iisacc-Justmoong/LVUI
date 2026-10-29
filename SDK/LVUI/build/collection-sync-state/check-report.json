@@ -1,0 +1,15 @@
+{
+  "projects": 1,
+  "would_change": 2,
+  "actual_writes": 0,
+  "changes": [
+    {
+      "project": "SDK/LVUI",
+      "paths": [
+        "SDK/LVUI/docs/CollectionNavigation.agent.json",
+        "SDK/LVUI/docs/agent-index.json"
+      ]
+    }
+  ],
+  "failures": []
+}

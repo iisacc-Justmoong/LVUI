@@ -1,12 +1,17 @@
 # LVUI
 
-LVUI owns its components and inherits the visual language and design parameters
-of legacy LVRS. LVRS is not the intended implementation or runtime dependency.
+LVUI is a declarative UI language whose `.lvui` files generate native C++ and
+draw operating-system-adapted widgets through iiGUI. LVUI owns its components
+and inherits the visual language and design parameters of legacy LVRS.
+The migration may copy and refactor LVRS's existing iiGUI-based native source
+and assets into LVUI; the resulting build, public interfaces, links and runtime
+must not depend on LVRS or Qt/QML. See the [native migration roadmap](docs/NativeMigrationRoadmap.md).
 The independent [icon catalog](docs/NativeIcons.md) embeds LVUI-authored
 SVG designs and accepts a replaceable application source; remaining icon assets
 and platform appearance verification are still in progress.
-The existing `FRAMEWORK LVRS` generator is a legacy dependency that has **not yet
-been fully replaced**. The default native path now owns its ProgressBar geometry,
+The former `FRAMEWORK LVRS` generator has been removed; explicitly selecting it
+is rejected. Component migration and independent package verification remain in
+progress. The native path now owns its ProgressBar geometry,
 paint recipe, reactive visual configuration and frame-driven motion. The
 [motion model](docs/NativeMotion.md) is standard C++ and accepts host frame times.
 The default [Image path](docs/NativeImage.md) owns validation, fitting, cropping
@@ -39,7 +44,9 @@ content and drag policy through a generic host boundary.
 The independent [hierarchy model](docs/OwnedHierarchyModel.md) separates view
 selection and expansion from document edits. Its [virtual list](docs/NativeOwnedHierarchyList.md)
 retains visible rows, supports keyboard navigation, and sends revision-checked
-drag moves to a replaceable editor. Its [list toolbar](docs/NativeOwnedListToolbar.md)
+drag moves to a replaceable editor. A standalone [hierarchy item](docs/NativeOwnedHierarchyItem.md)
+can display an application-provided, reactive count View. List-generated row delegates
+remain in progress. Its [list toolbar](docs/NativeOwnedListToolbar.md)
 owns its three icon slots and reactive behavior. The [hierarchy panel layout](docs/NativeHierarchyPanel.md)
 owns toolbar, list, and footer placement, composition, and declarative generation.
 The separate [flat list model](docs/OwnedListModel.md) provides replaceable data
@@ -130,8 +137,10 @@ for typed view inputs, mutable state, static snapshots, channels, and reactive d
 updates dynamic stack spacing, insets, dimensions, alignment and flex atomically
 without replacing retained widgets or their local input state.
 [Native Window properties](docs/NativeWindow.md) bind titles, geometry, minimums,
-appearance and LVRS accents to the owning native activation, preserve user resizing
+background colors and fonts to the owning native activation, preserve user resizing
 and editing state, and commit settings only after candidate construction succeeds.
+LVUI-owned Window accents also update the host and basic button palettes; other
+components do not yet inherit that accent automatically.
 [Readonly C++ members](docs/ReadonlyMembers.md) preserve native observation through
 const objects, shared selections and standard references, retain temporary owners
 during evaluation, and support noncomparable native record values.
@@ -153,9 +162,8 @@ The [style example](example/StyleTokens/README.md) compiles both syntaxes into
 native C++23 without linking LVRS.
 
 The default [AppCard](docs/NativeAppCard.md) and [AppHeader](docs/NativeAppHeader.md)
-use LVUI-owned styling, layout and retained child composition. Their legacy
-[generation](docs/AppSurfaces.md) remains available through FRAMEWORK LVRS during
-the transition.
+use LVUI-owned styling, layout and retained child composition. Their former legacy
+[generation](docs/AppSurfaces.md) is preserved as historical documentation.
 
 [Native Link generation](docs/NativeLinks.md) uses LVUI-owned appearance, state and
 navigation interfaces with child composition, typed targets, href/to aliases and
@@ -195,15 +203,15 @@ placement and style inputs; remaining inputs and platform verification are still
 being migrated.
 
 
-The legacy `FRAMEWORK LVRS` / `--framework LVRS` generator still emits LVRS
-components and is being replaced. The default path creates LVUI-owned components
-on an application-supplied iiGUI host. See the [independence status](docs/LVUIIndependence.md)
-for implemented controls and the remaining migration work.
+The former `FRAMEWORK LVRS` / `--framework LVRS` generator has been removed;
+explicit legacy selection produces a diagnostic. The native path creates
+LVUI-owned components on an application-supplied iiGUI host. See the
+[independence status](docs/LVUIIndependence.md) for coverage and remaining work.
 
 [Embedded page construction](docs/EmbeddedPages.md) adds a generated `build`
-entry point for existing native builders. LVRS `PageRouter(router: vm.router)`
-mounts a scoped C++ controller whose compiled page factories use that entry point;
-it creates no additional window or source interpreter. Execution is deferred.
+entry point for existing native builders. The independent LVUI `PageRouter` can
+mount application-owned page factories; no additional window or source interpreter
+is required.
 
 The independent `Modal { ... }` compiles its child View into a per-open native
 C++ content factory. It borrows the outer backend, isolates child IDs, and
@@ -266,8 +274,8 @@ and [LVUI-owned reserved-word registry](docs/KeywordRegistry.md).
 Build, parser and installed-consumer evidence is recorded in [verification](docs/Verification.md).
 
 The language owns its checked-in keyword registry. Legacy source observations are
-historical evidence and do not determine current vocabulary. The remaining
-legacy framework generator is tracked separately in the independence status.
+historical evidence and do not determine current vocabulary. Features still to be
+ported to LVUI are tracked in the independence status.
 
 ## Current 0.1 parser and rendering integration
 
@@ -333,7 +341,7 @@ describe this implementation, not full HTML/CSS or Svelte compatibility.
 
 ## Source header layout
 
-Public headers and implementations live together in `src/LVUI/`.
+Public headers and implementations live together in responsibility directories below `src/`.
 There is no separate authored `include/` tree. Existing public `#include` names
 and exported CMake targets are unchanged; installation still places only public
 headers in the package include directory. Generated export headers belong to
@@ -343,19 +351,21 @@ Validate this layout from the SDK workspace with
 `python3 -B tests/test_source_header_layout.py`. Reconfigure, build, run CTest,
 and verify a staged installed consumer after changing source/header paths.
 
-The standalone `TableCellItem`, `TableRow`, and `TableHeader` components still
-need independent LVUI implementations. The default `Table` uses the independent
-model and host described in [its contract](docs/NativeOwnedTable.md).
+The standalone `TableCellItem`, `TableRow`, and `TableHeader` components use
+LVUI-owned models and native composition; their remaining limitations are described
+in their respective contracts. The default `Table` uses the independent model and
+host described in [its contract](docs/NativeOwnedTable.md).
 
 Default toolbar keywords generate LVUI-owned native objects and scoped bindings;
-the [toolbar AOT history](docs/Toolbars.md) separately describes the remaining legacy path.
+the [toolbar AOT history](docs/Toolbars.md) describes the former legacy path.
 
-See [native Card and Avatar AOT](docs/NativeMedia.md) for typed images, retained preview factories and explicit unsupported-loader diagnostics.
+See the [native Card contract](docs/NativeOwnedCard.md) and [image contract](docs/NativeImage.md)
+for typed images, retained preview factories and explicit unsupported-loader diagnostics.
 
 The default [native material AOT](docs/NativeMaterials.md) uses LVUI-owned material
 models, radial gradients, validated SVG outlines, reactive styles, and motion on
-generic iiGUI host services. Platform GPU parity remains incomplete; the optional legacy
-`FRAMEWORK LVRS` material path still depends on LVRS.
+generic iiGUI host services. Platform GPU parity remains incomplete; the former
+LVRS material generation path is no longer available.
 
 See [native CodeEditor AOT](docs/NativeCodeEditor.md) for a retained PlainText/NoWrap
 editor, scoped document models, typed edit callbacks and Core property bindings.
@@ -372,7 +382,7 @@ The [Dreamscapes readiness contract](docs/NativeReadiness.md) separates proven
 native authoring capabilities, final execution, installed-package verification,
 and the later product migration.
 
-The independent [list item](docs/NativeOwnedListItem.md) shares its row layout and drawing with the owned list view and provides toggle, checkbox, action, stepper, and selector compositions; other compound variants are still being implemented.
+The independent [list item](docs/NativeOwnedListItem.md) shares its row layout and drawing with the owned list view and provides toggle, checkbox, action, stepper, selector, and inline-edit compositions; other compound variants are still being implemented.
 
 The independent [card model and native host](docs/NativeOwnedCard.md) expose replaceable image inputs and actions through C++ and declarative views; custom components and detailed visual parity remain in progress.
 
@@ -381,6 +391,8 @@ An independent [table header](docs/NativeOwnedTableHeader.md) reuses the LVUI ta
 The independent [table cell](docs/NativeOwnedTableCellItem.md) provides replaceable validation and conflict-aware editing through C++ and declarative views.
 
 An independent [table row](docs/NativeOwnedTableRow.md) composes retained keyed cells through C++ and declarative views.
+
+Sources and adjacent headers are grouped by responsibility under `src/`, while installed `<LVUI/...>` include paths remain stable. See [source layout](docs/SourceLayout.md).
 
 <!-- workspace-docs:readme:start -->
 ## Documentation entry points

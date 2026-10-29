@@ -23,7 +23,7 @@ def main():
     }
     result={}
     with tempfile.TemporaryDirectory(prefix='native-method-types-',dir=args.build) as temporary:
-        root=Path(temporary);includes=[root,source/'src',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui/'build/install/include']
+        root=Path(temporary);includes=[root,source/'src',args.build/'lvui-generated-icons',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui/'build/install/include']
         for name,(members,expression,expected) in cases.items():
             (root/'Fixture.h').write_text('#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <string>\n#include <memory>\n'+members+'\n')
             (root/'View.lvui').write_text('import vm Backend\nWindow { Label(text: '+expression+') }\n')

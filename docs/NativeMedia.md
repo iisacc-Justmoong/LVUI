@@ -1,5 +1,9 @@
 # Card·Avatar AOT
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 기본 `Avatar`는 LVUI의 독립 C++ 모델과 이미지 어댑터로 생성한다. `Card`는 아직
 `FRAMEWORK LVRS`의 레거시 경로에 있다. AppCard는 별개이다.
 Card의 type(.File/.FilePreview/.Folder/.Project/.Device/.Model/.Member/.Link),

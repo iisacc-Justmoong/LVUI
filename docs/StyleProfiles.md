@@ -23,7 +23,7 @@ let edge: Color = composite(.material.surface.dense.edge, .window)
 
 ```cmake
 set(theme "${CMAKE_CURRENT_SOURCE_DIR}/App/views/Theme.lvui")
-lvui_generate(NAME Main SOURCE App/views/Main.lvui FRAMEWORK LVRS
+lvui_generate(NAME Main SOURCE App/views/Main.lvui
     STYLE_FILE "${theme}" OUTPUT_VARIABLE main_header)
 lvui_generate_styles(NAME AppStyle SOURCE "${theme}" NAMESPACE app.style
     OUTPUT_VARIABLE style_header)
@@ -48,7 +48,7 @@ C++ Metric은 정수인 경우 정수 상수, 소수인 경우 네이티브 `Rec
 ## 도구와 공개 API
 
 ```sh
-lvui-compile --style-file Theme.lvui --framework LVRS Main.lvui
+lvui-compile --style-file Theme.lvui Main.lvui
 lvui-compile --emit-styles --namespace app.style Theme.lvui
 ```
 

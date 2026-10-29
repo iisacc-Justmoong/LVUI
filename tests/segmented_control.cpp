@@ -25,6 +25,4 @@ Window {
     if(!nested)throw std::runtime_error(nested.error().message);
     if(nested->find("scope->parent->segmented_style_")==nested->npos)
         throw std::runtime_error("Segmented child style did not cross nested activations");
-    auto legacy=lvui::compile_native("Window { LabelSegmentedControl() }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.label_segmented_control(")==legacy->npos)throw std::runtime_error("Legacy segmented path was altered");
 }

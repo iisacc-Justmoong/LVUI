@@ -1,0 +1,3 @@
+Window(accent: .purple) {
+    PushButton(id: "primary", text: "Static")
+}

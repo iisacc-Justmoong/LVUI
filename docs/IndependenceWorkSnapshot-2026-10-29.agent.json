@@ -1,0 +1,720 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:577275f781e40a5e9ca03a330de4d54023659d02e672430c2168692d5e7f3f4b",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/IndependenceWorkSnapshot-2026-10-29.md",
+    "sha256": "537c211c9d6ae089380da63056b8a8ea79479f72601a2c3e943def74abd54f8c",
+    "bytes": 10688,
+    "line_count": 123,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립화 작업 기록 — 2026-10-29",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립화 작업 기록 — 2026-10-29\n",
+      "level": 1,
+      "title": "LVUI 독립화 작업 기록 — 2026-10-29"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "이 문서는 2026년 10월 29일 사용자가 작업 중단을 요청한 시점의 구현과 검증을\n기록한다. **LVUI의 Qt·QML·LVRS로부터의 완전한 독립은 아직 완료되지 않았다.**\n기본 생성 경로에는 LVUI 자체 구현을 다수 연결했지만, 명시적인 `FRAMEWORK LVRS`\n생성 경로가 남아 있다. 이 기록은 구현 완료나 제품 출하를 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "quote",
+      "start_line": 8,
+      "end_line": 12,
+      "raw": "> 이후 같은 날 사용자는 LVUI를 `.lvui` 선언으로 iiGUI를 통해 운영체제별 위젯을\n> 그리는 언어로 정의하고, LVRS의 기존 iiGUI 기반 네이티브 구현을 복제·리팩터링하는\n> 이전 방식을 명확히 했다. 현재 우선순위는\n> [네이티브 이전 우선순위](NativeMigrationRoadmap.md)를 따른다. 아래 구현·검증\n> 기록은 중단 당시의 스냅샷이며 새 이전 작업이나 새 검증 결과를 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "## 목표와 구현 경계\n",
+      "level": 2,
+      "title": "목표와 구현 경계"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 22,
+      "raw": "LVUI는 LVRS의 시각 언어, 스타일과 디자인 파라미터를 계승하는 독립 모듈이다.\n컴포넌트의 모델, 상태, 동작, 배치와 그리기는 LVUI가 C++23으로 소유하고,\niiGUI는 범용 위젯 표면·입력·텍스트·팝업과 플랫폼 호스트를 제공한다. 앱은\niiSDKCore의 관찰 및 실행 경계와 필요한 데이터 공급자·편집기 인터페이스를\n조합한다. 색상 값에는 iiColorManager를 사용하며, 색상 표면 어댑터는 선택적으로\n빌드한다. 기본 빌드가 레거시 LVRS 체크아웃이나 Figma 접속을 요구하지 않도록\n예약어·스타일 스냅샷과 필요한 아이콘 자산을 LVUI에 보유한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 27,
+      "raw": "`LVUI::LVUI`는 파서와 네이티브 코드 생성기를, `LVUI::Native`는 생성 코드와\n호스트 연결을 제공한다. `LVUI::Runtime`과 `LVUI::Color`는 선택적 구성 요소다.\n앱이 사용하는 API와 교체 가능한 인터페이스는 LVUI 소스의 모델·어댑터에 있다.\n개별 계약과 남은 범위는 [독립 구현 현황](LVUIIndependence.md)을 기준으로 확인한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "heading",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "## 지금까지 작성한 주요 기능\n",
+      "level": 2,
+      "title": "지금까지 작성한 주요 기능"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "list",
+      "start_line": 31,
+      "end_line": 66,
+      "raw": "- **기본 컨트롤과 화면**: 진행 표시기, 버튼·도움말·드롭다운, 구분선, 메뉴와\n  항목·직접 중첩 하위 메뉴, 팝오버, 모달, 경고창, 시트, 스위치·체크·라디오,\n  슬라이더, 입력 필드, 스테퍼, 콤보 상자, 탭, 세그먼트, 툴팁, 이미지와 아바타,\n  재질 표면, 링크·페이지 라우터, 앱 카드·헤더 및 이벤트 표면의 기본 경로를\n  LVUI 모델과 어댑터로 작성했다. 각 기능의 미구현 입력과 플랫폼 제한은 각각의\n  문서에 남겨 두었다.\n- **색상**: 편집·확정·취소와 외부 변경에 따른 세션 만료를 다루는 색상 선택 모델,\n  교체 가능한 색상 계산 경계, 표면·채널·값 필드·액션을 조합한 피커와 선택적\n  iiColorManager 어댑터를 작성했다. [색상 피커](NativeColorPicker.md),\n  [색상 선택 모델](ColorSelection.md).\n- **목록과 계층**: 데이터 읽기·편집 인터페이스와 선택 상태를 분리하고, 고정 높이\n  가상 행, 키 기반 상태 유지, 도구 모음·푸터, 계층 확장·선택과 드래그 이동을\n  구현했다. 기본 목록·계층 패널은 자체 컴포넌트를 조합한다.\n  [일반 목록](NativeOwnedListView.md), [계층 목록](NativeOwnedHierarchyList.md),\n  [계층 패널](NativeHierarchyPanel.md).\n- **목록 항목**: 기본·설명·탐색·토글·체크·액션·액션 그룹·스테퍼·선택·인라인\n  편집 유형을 직접 작성하고 C++ API 및 기본 선언형 생성에 연결했다. 수량은\n  경계·증분 모델이 관리하고, 선택기는 비활성 항목·메뉴와 긴 목록 스크롤을\n  처리한다. 인라인 입력은 한글 등 조합 입력, 반응형 값 반영, 제출과 행 제거 시\n  수명을 처리한다. 상세 복합·리소스·미디어·작업·폼 유형과 사용자 지정 자식은\n  남아 있다. [목록 항목](NativeOwnedListItem.md),\n  [수량](ListItemQuantity.md), [선택기](NativeOwnedListItemSelector.md).\n- **표**: 교체 가능한 데이터 소스와 원자적 편집 경계, 선택·탐색, 양방향 가상\n  표시, 셀 편집·검증, 범위 클립보드, 행 정렬과 구조 변경·크기 조절을 작성했다.\n  머리글, 셀과 행도 LVUI 소유 모델과 호스트로 제공한다. 병합 셀과 일부 구조\n  편집 UI 등은 남아 있다. [표](NativeOwnedTable.md),\n  [머리글](NativeOwnedTableHeader.md), [셀](NativeOwnedTableCellItem.md),\n  [행](NativeOwnedTableRow.md).\n- **코드 편집기와 카드**: 코드 문서의 공유 불변 조각, 커서·선택, 입력 조합과\n  가상 줄 표시를 분리하고 자체 편집 화면에 연결했다. 일반 카드는 여러 유형과\n  크기·진행 상태·아이콘·이미지 입력을 자체 모델로 다룬다. 고급 편집 기능과\n  카드의 사용자 컴포넌트·세부 표현은 아직 남아 있다.\n  [코드 편집기](NativeCodeEditor.md), [카드](NativeOwnedCard.md).\n- **메뉴 표시 범위**: 긴 메뉴의 내용이 화면에 맞춰 잘리고 스크롤되도록 바꿨다.\n  포커스가 화면 밖 항목으로 이동하면 해당 항목을 표시 범위에 넣는다.\n  [메뉴 계약](NativeMenu.md).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "**기본 컨트롤과 화면**: 진행 표시기, 버튼·도움말·드롭다운, 구분선, 메뉴와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**색상**: 편집·확정·취소와 외부 변경에 따른 세션 만료를 다루는 색상 선택 모델,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**목록과 계층**: 데이터 읽기·편집 인터페이스와 선택 상태를 분리하고, 고정 높이",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**목록 항목**: 기본·설명·탐색·토글·체크·액션·액션 그룹·스테퍼·선택·인라인",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**표**: 교체 가능한 데이터 소스와 원자적 편집 경계, 선택·탐색, 양방향 가상",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**코드 편집기와 카드**: 코드 문서의 공유 불변 조각, 커서·선택, 입력 조합과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**메뉴 표시 범위**: 긴 메뉴의 내용이 화면에 맞춰 잘리고 스크롤되도록 바꿨다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 68,
+      "end_line": 71,
+      "raw": "기본 선언형 컴파일러의 변경은 [Compiler.cpp](../src/Compiler/Compiler.cpp), 목록\n복합 구현은 [NativeListItemComposite.h](../src/Collections/NativeListItemComposite.h),\n메뉴는 [NativeMenu.h](../src/Overlays/NativeMenu.h)에 있다. 기능별 모델과 헤더는\n책임별 `src/` 하위 디렉터리에 소스와 함께 배치되어 있다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "## 확인된 검증과 범위\n",
+      "level": 2,
+      "title": "확인된 검증과 범위"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "table",
+      "start_line": 75,
+      "end_line": 83,
+      "raw": "| 대상 | 중단 시점에 확인된 결과 | 범위 |\n| --- | --- | --- |\n| 최신 소스 전체 빌드 | `cmake --build build --parallel 2` 성공 | macOS 호스트 빌드. [빌드 기록](../build/lvui-inline-complete-build-20261029.log) |\n| 최신 목록·메뉴 집중 검사 | 28/28 통과 | 목록 항목·스테퍼·선택·인라인 입력, 메뉴와 하위 메뉴의 코드 생성 및 창 없는 위젯 트리 검사. [검사 기록](../build/lvui-list-item-inline-cache-test-20261029.log) |\n| 이전 전체 회귀 검사 | 532/532 통과 | 표 머리글 단계의 이전 소스 상태. 최신 인라인 입력 변경의 전체 회귀 결과가 아니다. [검사 기록](../build/lvui-table-header-regression-20261029.log) |\n| 이후 표 행 단계 전체 회귀 | 539/540 통과, `LVUI.Opacity.values` 시간 초과 | 해당 검사는 별도로 재실행해 1/1 통과했다. 당시 전체 회귀가 한 번에 모두 통과한 것은 아니다. [전체 기록](../build/lvui-table-row-regression-20261029.log), [재검사](../build/lvui-opacity-timeout-retry-20261029.log) |\n| 최신 전체 회귀 | 완료되지 않음 | 액션 단계 검사 중 공유 저장장치 부하로 56개 통과 후 이전 상태의 검사를 중단했다. 최신 소스에 대한 전체 회귀는 실행하지 않았다. [중단 기록](../build/lvui-list-item-actions-regression-20261029.log) |\n| iOS 대상 문법 | 스테퍼·선택기·인라인 편집 구현 단계에서 iOS 15 arm64 C++ 문법 검사 통과 | 기기 링크, 앱 실행, 렌더링이나 접근성 검증이 아니다. 이후 소규모 캐시·수명 변경은 iOS 대상으로 재검사하지 않았다. |\n| 문서 쌍 | 사람용 문서와 에이전트용 JSON 검증 성공 | 이 기록을 포함해 150개 문서와 151개 에이전트 문서를 검증했다. |\n",
+      "columns": [
+        "대상",
+        "중단 시점에 확인된 결과",
+        "범위"
+      ],
+      "rows": [
+        [
+          "최신 소스 전체 빌드",
+          "`cmake --build build --parallel 2` 성공",
+          "macOS 호스트 빌드. [빌드 기록](../build/lvui-inline-complete-build-20261029.log)"
+        ],
+        [
+          "최신 목록·메뉴 집중 검사",
+          "28/28 통과",
+          "목록 항목·스테퍼·선택·인라인 입력, 메뉴와 하위 메뉴의 코드 생성 및 창 없는 위젯 트리 검사. [검사 기록](../build/lvui-list-item-inline-cache-test-20261029.log)"
+        ],
+        [
+          "이전 전체 회귀 검사",
+          "532/532 통과",
+          "표 머리글 단계의 이전 소스 상태. 최신 인라인 입력 변경의 전체 회귀 결과가 아니다. [검사 기록](../build/lvui-table-header-regression-20261029.log)"
+        ],
+        [
+          "이후 표 행 단계 전체 회귀",
+          "539/540 통과, `LVUI.Opacity.values` 시간 초과",
+          "해당 검사는 별도로 재실행해 1/1 통과했다. 당시 전체 회귀가 한 번에 모두 통과한 것은 아니다. [전체 기록](../build/lvui-table-row-regression-20261029.log), [재검사](../build/lvui-opacity-timeout-retry-20261029.log)"
+        ],
+        [
+          "최신 전체 회귀",
+          "완료되지 않음",
+          "액션 단계 검사 중 공유 저장장치 부하로 56개 통과 후 이전 상태의 검사를 중단했다. 최신 소스에 대한 전체 회귀는 실행하지 않았다. [중단 기록](../build/lvui-list-item-actions-regression-20261029.log)"
+        ],
+        [
+          "iOS 대상 문법",
+          "스테퍼·선택기·인라인 편집 구현 단계에서 iOS 15 arm64 C++ 문법 검사 통과",
+          "기기 링크, 앱 실행, 렌더링이나 접근성 검증이 아니다. 이후 소규모 캐시·수명 변경은 iOS 대상으로 재검사하지 않았다."
+        ],
+        [
+          "문서 쌍",
+          "사람용 문서와 에이전트용 JSON 검증 성공",
+          "이 기록을 포함해 150개 문서와 151개 에이전트 문서를 검증했다."
+        ]
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 85,
+      "end_line": 87,
+      "raw": "헤드리스 검사는 실제 운영체제 창, GPU 표시, 입력기, 스크린 리더 또는 기기에서의\n사용을 증명하지 않는다. Windows·Linux와 iOS의 실제 실행 및 시각·접근성 검증도\n완료되지 않았다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "## 설치 패키지와 독립 소비자\n",
+      "level": 2,
+      "title": "설치 패키지와 독립 소비자"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 91,
+      "end_line": 96,
+      "raw": "액션 그룹까지의 이전 스냅샷은 별도 스테이징 패키지\n`build/lvui-owned-package-20261029-list-actions`로 설치하고,\n`build/lvui-independent-consumer-20261029-list-actions`에서 LVRS·Qt5·Qt6 검색을\n비활성화한 소비자 프로젝트를 빌드하고 링크했다. 그 스냅샷의 생성 헤더와 연결된\n동적 라이브러리에서 `LVRS`, `lvrs::`, Qt, QML 참조를 찾지 못했다. 소비자 실행\n파일을 실행하거나 사용자 설치 위치에 배포한 것은 아니다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 98,
+      "end_line": 104,
+      "raw": "최신 스테퍼·선택·인라인 편집을 포함한 패키지는\n`build/lvui-owned-package-20261029-inline`에 별도 스테이징했다. 소비자 구성은\n처음에 Vulkan 검색 경로가 없어 실패했고, 워크스페이스의 Vulkan 경로를 지정한 뒤\n성공했다. 생성 코드가 만들어진 뒤 소비자 C++ 빌드를 진행하던 중 사용자의 중단\n요청으로 멈췄다. 따라서 **최신 소비자의 컴파일·링크 성공과 최종 바이너리의\n의존성 검사는 확인되지 않았다.** [구성 기록](../build/lvui-owned-package-20261029-inline/consumer-configure-retry.log),\n[중단된 빌드 기록](../build/lvui-owned-package-20261029-inline/consumer-build.log).\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 106,
+      "end_line": 106,
+      "raw": "## 남아 있는 의존성과 작업\n",
+      "level": 2,
+      "title": "남아 있는 의존성과 작업"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 107,
+      "end_line": 107,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "list",
+      "start_line": 108,
+      "end_line": 116,
+      "raw": "1. `FRAMEWORK LVRS` / `--framework LVRS`는 여전히 `LVRS/Widgets.h`와 `lvrs::`\n   타입을 생성한다. 선택적인 레거시 소스 조사 도구와 검증도 남아 있다. 이 경로를\n   독립 구현으로 대체하고 제거해야 비로소 요청한 모듈 분리를 주장할 수 있다.\n2. 상세 복합 목록 항목과 카드 슬롯·시각 세부 사항, 표 병합, 계층의 추가 편집 UI,\n   코드 편집기의 고급 기능, 동적 메뉴 자식 등은 완성되지 않았다. 자세한 누락\n   항목은 [독립 구현 현황](LVUIIndependence.md)과 기능별 문서를 따른다.\n3. 현재 소스에 대한 전체 회귀, 최신 독립 소비자의 링크와 의존성 확인, 운영체제별\n   실제 표시·입력·접근성 검증이 남아 있다. 앱 실행이나 기기 검증을 한 것으로\n   간주하지 않는다.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "`FRAMEWORK LVRS` / `--framework LVRS`는 여전히 `LVRS/Widgets.h`와 `lvrs::`",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "상세 복합 목록 항목과 카드 슬롯·시각 세부 사항, 표 병합, 계층의 추가 편집 UI,",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "현재 소스에 대한 전체 회귀, 최신 독립 소비자의 링크와 의존성 확인, 운영체제별",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 118,
+      "end_line": 123,
+      "raw": "이 기록 시점의 LVUI 작업 디렉터리에는 추적된 변경과 미추적 파일이 남아 있다.\n`build/`의 스테이징 패키지와 검사 기록도 보존한다. 다른 작업의 데이터나 기존\n빌드 증거를 삭제·초기화하지 않았으며, 사용자 요청에 따라 현재 목표 작업을 중단했다.\n검증 중에는 스타일 예제와 색상 어댑터를 켜고 별도 iiGUI 호스트 경로를 지정했다.\n중단하면서 `build/` 구성의 스타일 예제와 색상 어댑터를 다시 끄고 임시 iiGUI 경로를\n제거했으며, 기존 런타임 설정은 유지했다. 위 검사 기록은 검증 당시의 구성에 해당한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립화 작업 기록 — 2026-10-29",
+      "anchor": "lvui-독립화-작업-기록--2026-10-29",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "목표와 구현 경계",
+      "anchor": "목표와-구현-경계",
+      "start_line": 14
+    },
+    {
+      "block_id": "b000013",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "지금까지 작성한 주요 기능",
+      "anchor": "지금까지-작성한-주요-기능",
+      "start_line": 29
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "확인된 검증과 범위",
+      "anchor": "확인된-검증과-범위",
+      "start_line": 73
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "설치 패키지와 독립 소비자",
+      "anchor": "설치-패키지와-독립-소비자",
+      "start_line": 89
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "남아 있는 의존성과 작업",
+      "anchor": "남아-있는-의존성과-작업",
+      "start_line": 106
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "생성 경로가 남아 있다. 이 기록은 구현 완료나 제품 출하를 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 12,
+        "text": "> 기록은 중단 당시의 스냅샷이며 새 이전 작업이나 새 검증 결과를 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "quote"
+      },
+      {
+        "block_id": "b000023",
+        "line": 86,
+        "text": "사용을 증명하지 않는다. Windows·Linux와 iOS의 실제 실행 및 시각·접근성 검증도",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 116,
+        "text": "간주하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "네이티브 이전 우선순위",
+        "target": "NativeMigrationRoadmap.md",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000011",
+        "label": "독립 구현 현황",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000015",
+        "label": "색상 피커",
+        "target": "NativeColorPicker.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000015",
+        "label": "색상 선택 모델",
+        "target": "ColorSelection.md",
+        "kind": "relative",
+        "line": 40
+      },
+      {
+        "block_id": "b000015",
+        "label": "일반 목록",
+        "target": "NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 44
+      },
+      {
+        "block_id": "b000015",
+        "label": "계층 목록",
+        "target": "NativeOwnedHierarchyList.md",
+        "kind": "relative",
+        "line": 44
+      },
+      {
+        "block_id": "b000015",
+        "label": "계층 패널",
+        "target": "NativeHierarchyPanel.md",
+        "kind": "relative",
+        "line": 45
+      },
+      {
+        "block_id": "b000015",
+        "label": "목록 항목",
+        "target": "NativeOwnedListItem.md",
+        "kind": "relative",
+        "line": 51
+      },
+      {
+        "block_id": "b000015",
+        "label": "수량",
+        "target": "ListItemQuantity.md",
+        "kind": "relative",
+        "line": 52
+      },
+      {
+        "block_id": "b000015",
+        "label": "선택기",
+        "target": "NativeOwnedListItemSelector.md",
+        "kind": "relative",
+        "line": 52
+      },
+      {
+        "block_id": "b000015",
+        "label": "표",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 56
+      },
+      {
+        "block_id": "b000015",
+        "label": "머리글",
+        "target": "NativeOwnedTableHeader.md",
+        "kind": "relative",
+        "line": 57
+      },
+      {
+        "block_id": "b000015",
+        "label": "셀",
+        "target": "NativeOwnedTableCellItem.md",
+        "kind": "relative",
+        "line": 57
+      },
+      {
+        "block_id": "b000015",
+        "label": "행",
+        "target": "NativeOwnedTableRow.md",
+        "kind": "relative",
+        "line": 58
+      },
+      {
+        "block_id": "b000015",
+        "label": "코드 편집기",
+        "target": "NativeCodeEditor.md",
+        "kind": "relative",
+        "line": 63
+      },
+      {
+        "block_id": "b000015",
+        "label": "카드",
+        "target": "NativeOwnedCard.md",
+        "kind": "relative",
+        "line": 63
+      },
+      {
+        "block_id": "b000015",
+        "label": "메뉴 계약",
+        "target": "NativeMenu.md",
+        "kind": "relative",
+        "line": 66
+      },
+      {
+        "block_id": "b000017",
+        "label": "Compiler.cpp",
+        "target": "../src/Compiler/Compiler.cpp",
+        "kind": "relative",
+        "line": 68
+      },
+      {
+        "block_id": "b000017",
+        "label": "NativeListItemComposite.h",
+        "target": "../src/Collections/NativeListItemComposite.h",
+        "kind": "relative",
+        "line": 69
+      },
+      {
+        "block_id": "b000017",
+        "label": "NativeMenu.h",
+        "target": "../src/Overlays/NativeMenu.h",
+        "kind": "relative",
+        "line": 70
+      },
+      {
+        "block_id": "b000021",
+        "label": "빌드 기록",
+        "target": "../build/lvui-inline-complete-build-20261029.log",
+        "kind": "relative",
+        "line": 77
+      },
+      {
+        "block_id": "b000021",
+        "label": "검사 기록",
+        "target": "../build/lvui-list-item-inline-cache-test-20261029.log",
+        "kind": "relative",
+        "line": 78
+      },
+      {
+        "block_id": "b000021",
+        "label": "검사 기록",
+        "target": "../build/lvui-table-header-regression-20261029.log",
+        "kind": "relative",
+        "line": 79
+      },
+      {
+        "block_id": "b000021",
+        "label": "전체 기록",
+        "target": "../build/lvui-table-row-regression-20261029.log",
+        "kind": "relative",
+        "line": 80
+      },
+      {
+        "block_id": "b000021",
+        "label": "재검사",
+        "target": "../build/lvui-opacity-timeout-retry-20261029.log",
+        "kind": "relative",
+        "line": 80
+      },
+      {
+        "block_id": "b000021",
+        "label": "중단 기록",
+        "target": "../build/lvui-list-item-actions-regression-20261029.log",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000029",
+        "label": "구성 기록",
+        "target": "../build/lvui-owned-package-20261029-inline/consumer-configure-retry.log",
+        "kind": "relative",
+        "line": 103
+      },
+      {
+        "block_id": "b000029",
+        "label": "중단된 빌드 기록",
+        "target": "../build/lvui-owned-package-20261029-inline/consumer-build.log",
+        "kind": "relative",
+        "line": 104
+      },
+      {
+        "block_id": "b000033",
+        "label": "독립 구현 현황",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 113
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000021",
+        "columns": [
+          "대상",
+          "중단 시점에 확인된 결과",
+          "범위"
+        ],
+        "rows": [
+          [
+            "최신 소스 전체 빌드",
+            "`cmake --build build --parallel 2` 성공",
+            "macOS 호스트 빌드. [빌드 기록](../build/lvui-inline-complete-build-20261029.log)"
+          ],
+          [
+            "최신 목록·메뉴 집중 검사",
+            "28/28 통과",
+            "목록 항목·스테퍼·선택·인라인 입력, 메뉴와 하위 메뉴의 코드 생성 및 창 없는 위젯 트리 검사. [검사 기록](../build/lvui-list-item-inline-cache-test-20261029.log)"
+          ],
+          [
+            "이전 전체 회귀 검사",
+            "532/532 통과",
+            "표 머리글 단계의 이전 소스 상태. 최신 인라인 입력 변경의 전체 회귀 결과가 아니다. [검사 기록](../build/lvui-table-header-regression-20261029.log)"
+          ],
+          [
+            "이후 표 행 단계 전체 회귀",
+            "539/540 통과, `LVUI.Opacity.values` 시간 초과",
+            "해당 검사는 별도로 재실행해 1/1 통과했다. 당시 전체 회귀가 한 번에 모두 통과한 것은 아니다. [전체 기록](../build/lvui-table-row-regression-20261029.log), [재검사](../build/lvui-opacity-timeout-retry-20261029.log)"
+          ],
+          [
+            "최신 전체 회귀",
+            "완료되지 않음",
+            "액션 단계 검사 중 공유 저장장치 부하로 56개 통과 후 이전 상태의 검사를 중단했다. 최신 소스에 대한 전체 회귀는 실행하지 않았다. [중단 기록](../build/lvui-list-item-actions-regression-20261029.log)"
+          ],
+          [
+            "iOS 대상 문법",
+            "스테퍼·선택기·인라인 편집 구현 단계에서 iOS 15 arm64 C++ 문법 검사 통과",
+            "기기 링크, 앱 실행, 렌더링이나 접근성 검증이 아니다. 이후 소규모 캐시·수명 변경은 iOS 대상으로 재검사하지 않았다."
+          ],
+          [
+            "문서 쌍",
+            "사람용 문서와 에이전트용 JSON 검증 성공",
+            "이 기록을 포함해 150개 문서와 151개 에이전트 문서를 검증했다."
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,13 @@
+import vm NativeWindowAccentModel
+let AccentChild(label: String): View = PushButton(id: "nested", text: label, onClick: vm.clicked)
+Window(accent: vm.accent, width: vm.width, backgroundColor: "#151515") {
+    VStack {
+        PushButton(id: "primary", text: "Save", onClick: vm.clicked)
+        AccentChild(label: vm.label)
+        PushButton(id: "custom", text: "Custom", width: vm.customWidth, primaryColor: vm.customColor,
+                   hoverColor: "#336699", borderColor: "#ffffff", borderWidth: 1,
+                   fontSize: 14, lineHeight: 18, onClick: vm.clicked)
+        HierarchyItem(id: "hierarchy", label: "Layers", count: 2, countWidth: 60,
+                      countView: PushButton(id: "badge", text: "2", width: 40, height: 20, onClick: vm.clicked))
+    }
+}

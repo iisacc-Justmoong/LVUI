@@ -14,7 +14,7 @@ int main() {
         auto item = lvui::compile_native(source);
         if (!item || item->find("NativeListItem::create") == item->npos) throw std::runtime_error("List item was not generated");
     }
-    for (auto source : {"Window { ListItem(type: .InlineEdit) }", "Window { ListItem(type: .unknown) }",
+    for (auto source : {"Window { ListItem(type: .DetailActions) }", "Window { ListItem(type: .unknown) }",
                         "Window { ListItem(width: -1) }", "Window { ListItem(icon: 1, iconName: \"home\") }",
                         "Window { ListItem(label: \"A\", text: \"B\") }", "Window { ListItem { Label(text: \"bad\") } }"})
         if (lvui::compile_native(source)) throw std::runtime_error("Invalid independent list item input was accepted");

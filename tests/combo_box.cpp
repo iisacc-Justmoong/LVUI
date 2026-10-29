@@ -11,6 +11,4 @@ int main(){
     for(auto source:{"Window { ComboBox(arrow: .Sideways) }","Window { ComboBox(tone: .destructive) }",
                      "Window { ComboBox(width: 18) }","Window { ComboBox(enabled: 1) }","Window { ComboBox { Label() } }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid ComboBox input was accepted");
-    auto legacy=lvui::compile_native("Window { ComboBox(arrow: .up) }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.combo_box(")==legacy->npos)throw std::runtime_error("Explicit legacy ComboBox path was altered");
 }

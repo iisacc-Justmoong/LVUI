@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/StyleProfiles.md",
-    "sha256": "66b819b9c8631c4ee6527d3e233684b4c7d9fbccf004f20c9ab6e15ff220562d",
-    "bytes": 4667,
+    "sha256": "b3b502bd805ccb83196bcea5b9783ffb435d1eabc719f62a38e80679ab9904d7",
+    "bytes": 4635,
     "line_count": 61,
     "encoding": "utf-8",
     "language": "ko"
@@ -121,9 +121,9 @@
       "kind": "fenced_code",
       "start_line": 24,
       "end_line": 33,
-      "raw": "```cmake\nset(theme \"${CMAKE_CURRENT_SOURCE_DIR}/App/views/Theme.lvui\")\nlvui_generate(NAME Main SOURCE App/views/Main.lvui FRAMEWORK LVRS\n    STYLE_FILE \"${theme}\" OUTPUT_VARIABLE main_header)\nlvui_generate_styles(NAME AppStyle SOURCE \"${theme}\" NAMESPACE app.style\n    OUTPUT_VARIABLE style_header)\nadd_custom_target(AppStyleHeader DEPENDS \"${style_header}\")\nadd_dependencies(MyApp AppStyleHeader)\ntarget_include_directories(MyApp PRIVATE \"${CMAKE_CURRENT_BINARY_DIR}\")\n```\n",
+      "raw": "```cmake\nset(theme \"${CMAKE_CURRENT_SOURCE_DIR}/App/views/Theme.lvui\")\nlvui_generate(NAME Main SOURCE App/views/Main.lvui\n    STYLE_FILE \"${theme}\" OUTPUT_VARIABLE main_header)\nlvui_generate_styles(NAME AppStyle SOURCE \"${theme}\" NAMESPACE app.style\n    OUTPUT_VARIABLE style_header)\nadd_custom_target(AppStyleHeader DEPENDS \"${style_header}\")\nadd_dependencies(MyApp AppStyleHeader)\ntarget_include_directories(MyApp PRIVATE \"${CMAKE_CURRENT_BINARY_DIR}\")\n```\n",
       "language": "cmake",
-      "code": "set(theme \"${CMAKE_CURRENT_SOURCE_DIR}/App/views/Theme.lvui\")\nlvui_generate(NAME Main SOURCE App/views/Main.lvui FRAMEWORK LVRS\n    STYLE_FILE \"${theme}\" OUTPUT_VARIABLE main_header)\nlvui_generate_styles(NAME AppStyle SOURCE \"${theme}\" NAMESPACE app.style\n    OUTPUT_VARIABLE style_header)\nadd_custom_target(AppStyleHeader DEPENDS \"${style_header}\")\nadd_dependencies(MyApp AppStyleHeader)\ntarget_include_directories(MyApp PRIVATE \"${CMAKE_CURRENT_BINARY_DIR}\")\n",
+      "code": "set(theme \"${CMAKE_CURRENT_SOURCE_DIR}/App/views/Theme.lvui\")\nlvui_generate(NAME Main SOURCE App/views/Main.lvui\n    STYLE_FILE \"${theme}\" OUTPUT_VARIABLE main_header)\nlvui_generate_styles(NAME AppStyle SOURCE \"${theme}\" NAMESPACE app.style\n    OUTPUT_VARIABLE style_header)\nadd_custom_target(AppStyleHeader DEPENDS \"${style_header}\")\nadd_dependencies(MyApp AppStyleHeader)\ntarget_include_directories(MyApp PRIVATE \"${CMAKE_CURRENT_BINARY_DIR}\")\n",
       "closed": true
     },
     {
@@ -213,9 +213,9 @@
       "kind": "fenced_code",
       "start_line": 50,
       "end_line": 53,
-      "raw": "```sh\nlvui-compile --style-file Theme.lvui --framework LVRS Main.lvui\nlvui-compile --emit-styles --namespace app.style Theme.lvui\n```\n",
+      "raw": "```sh\nlvui-compile --style-file Theme.lvui Main.lvui\nlvui-compile --emit-styles --namespace app.style Theme.lvui\n```\n",
       "language": "sh",
-      "code": "lvui-compile --style-file Theme.lvui --framework LVRS Main.lvui\nlvui-compile --emit-styles --namespace app.style Theme.lvui\n",
+      "code": "lvui-compile --style-file Theme.lvui Main.lvui\nlvui-compile --emit-styles --namespace app.style Theme.lvui\n",
       "closed": true
     },
     {
@@ -346,7 +346,7 @@
       {
         "block_id": "b000025",
         "language": "sh",
-        "code": "lvui-compile --style-file Theme.lvui --framework LVRS Main.lvui\nlvui-compile --emit-styles --namespace app.style Theme.lvui\n"
+        "code": "lvui-compile --style-file Theme.lvui Main.lvui\nlvui-compile --emit-styles --namespace app.style Theme.lvui\n"
       }
     ],
     "links": [],

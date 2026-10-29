@@ -13,9 +13,9 @@ Window {
 }
 ```
 
-현재 독립 선언은 `.Mini`, `.Detail`, `.Navigation`, `.Toggle`, `.Checkable`, `.Action`, `.ActionGroup`, `.Stepper`, `.Select`와 같은 소문자 표기를 지원한다.
+현재 독립 선언은 `.Mini`, `.Detail`, `.Navigation`, `.Toggle`, `.Checkable`, `.Action`, `.ActionGroup`, `.Stepper`, `.Select`, `.InlineEdit`와 같은 소문자 표기를 지원한다.
 기본 폭과 높이는 각각 170×20, 194×44, 탐색·토글·체크의 280×44와
-액션·스테퍼·선택 유형의 400×44이며 명시적인 `width`와 `height`로
+액션·스테퍼·선택·인라인 편집 유형의 400×44이며 명시적인 `width`와 `height`로
 바꿀 수 있다. 이름이나 직접 제공한 래스터, 교체 가능한 아이콘 공급자로 아이콘을
 선택하고, 선택·비활성·호버·누름·포커스 색상과 간격을 조정할 수 있다. 아이콘은
 기본적으로 비어 있다. 높이가 32 이상인 경우 설명을 별도 줄에 표시한다.
@@ -58,9 +58,19 @@ C++의 `.action`과 `.action_group` 유형은 LVUI `ListFooter` 슬롯으로 기
 `edited("selectorIndex", value)`를 전달하며 편집 값은 `std::int64_t`다. 빈 목록은
 기본 문구를 표시하고, 비활성 항목은 선택하지 않는다.
 
-인라인 편집 및 리소스·미디어·작업·폼 유형과 사용자 지정 자식
+`.inline_edit` 유형은 LVUI 입력 필드와 기본 액션을 함께 표시한다. 입력의 초기값은
+`Value`이며 `inputText1`, `inputPlaceholder1`, `inputWidth`, `inputHeight`,
+`inputEnabled1`, `inputReadOnly1`, `showInput1`로 바꿀 수 있다. `onInputTextChanged`와
+`onEdited`는 확정된 문자열을 전달하며 `onInputSubmitted`는 제출 시 현재 문자열을
+받는다. 한글 등 조합 입력은 확정 전에는 편집 이벤트를 보내지 않고, 다른 속성을
+갱신해도 진행 중인 조합을 유지하며 조합이 끝나기 전의 제출은 무시한다. 행이
+콜백 중 제거되면 이후 편집 이벤트는 전달하지 않는다. 숨긴 선택기는 필요할 때까지
+내부 메뉴를 만들지 않는다. 기본 액션은 기존 `primaryAction`과
+`onActionTriggered`를 사용한다.
+
+상세 복합 및 리소스·미디어·작업·폼 유형과 사용자 지정 자식
 콘텐츠는 아직 독립 구현이 필요하다. 지원하지 않는 선언은 명시적으로 오류를 반환한다. 실제 플랫폼 렌더링,
 접근성 기술 및 기기 검증도 별도로 필요하다.
 
-`LVUI.OwnedListItem.Model`, `Host`, `CompositeHost`, `ActionsHost`, `ActionsCodegen`, `ActionsGenerated`, `StepperHost`, `StepperCodegen`, `StepperGenerated`, `SelectorHost`, `SelectHost`, `SelectCodegen`, `SelectGenerated`, `CompositeCodegen`, `CompositeGenerated`, `Codegen`, `Generated`는 배치 경계, 상태,
+`LVUI.OwnedListItem.Model`, `Host`, `CompositeHost`, `ActionsHost`, `ActionsCodegen`, `ActionsGenerated`, `StepperHost`, `StepperCodegen`, `StepperGenerated`, `SelectorHost`, `SelectHost`, `SelectCodegen`, `SelectGenerated`, `InlineEditHost`, `InlineEditCodegen`, `InlineEditGenerated`, `CompositeCodegen`, `CompositeGenerated`, `Codegen`, `Generated`는 배치 경계, 상태,
 유효성, 독립 생성 코드, 갱신과 수명을 창을 열지 않는 위젯 트리에서 확인한다.

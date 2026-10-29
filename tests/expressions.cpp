@@ -104,7 +104,7 @@ void limits() {
     }
 }
 void aot() {
-    auto result = lvui::compile_native("@Static let gap: Metric = .space4 + 2\nlet heading: String = true ? \"Dense \" + \"tools\" : \"Other\"\nWindow(width: 640 + 80) { VStack(spacing: gap) { Label(text: heading)\nPushButton(text: \"Run\", enabled: 3 * 4 >= 12) } }", {.framework = "LVRS"});
+    auto result = lvui::compile_native("@Static let gap: Metric = .space4 + 2\nlet heading: String = true ? \"Dense \" + \"tools\" : \"Other\"\nWindow(width: 640 + 80) { VStack(spacing: gap) { Label(text: heading)\nPushButton(text: \"Run\", enabled: 3 * 4 >= 12) } }", {.framework = "iiGUI"});
     if (!result) throw std::runtime_error(result.error().message);
     check(result->find("Dense tools") != result->npos && result->find(".size = {720, 420}") != result->npos,
           "Native AOT did not emit folded construction values");
@@ -122,8 +122,8 @@ void aot() {
     auto members = lvui::compile_native("import vm Backend\nlet details: String = vm.document.title\nWindow { Label(text: details) }");
     check(members && members->find("lvui::native::named_member(") != members->npos && members->find("object.document") != members->npos &&
           members->find("object.title") != members->npos, "Typed C++ member paths were not generated");
-    auto alias = lvui::compile_native("import vm Backend\nlet model = vm.document\nWindow { CodeEditor(model: model) }", {.framework="LVRS"});
-    check(alias && alias->find("value.model = lvui::native::initial((*scope->inferred_model))") != alias->npos,
+    auto alias = lvui::compile_native("import vm Backend\nlet model = vm.document\nWindow { CodeEditor(model: model) }", {.framework="iiGUI"});
+    check(alias && alias->find(".source = lvui::native::widget_value<ii::gui::WidgetColor>(lvui::native::initial((*scope->inferred_model)))") != alias->npos,
           "An opaque native model input rejected a scoped value alias");
 }
 }

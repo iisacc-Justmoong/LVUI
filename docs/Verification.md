@@ -19,7 +19,7 @@ LVRS 커밋 `13b657b21a8ca9babe40ac790bb547c3f7758eea`의 `src/` 소스 213개 �
 기본 언어 예약어 6개까지 포함한 전체 예약어는 116개이다.
 
 조사 결과와 LF 개행으로 정규화한 SHA-256은 `catalog/lvrs-components.json`,
-실제 C++ 테이블은 `src/LVUI/Keywords.def`, 사람이 읽는 목록은 [ReservedWords.md](ReservedWords.md)에 있다.
+실제 C++ 테이블은 `src/Language/Keywords.def`, 사람이 읽는 목록은 [ReservedWords.md](ReservedWords.md)에 있다.
 LVRS 소스와 작업 트리는 수정하지 않았다.
 
 ## 빌드·테스트

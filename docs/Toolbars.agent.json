@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Toolbars.md",
-    "sha256": "3fb933ac306657bd19ff7b607f31579d391061bfc5b320d63f0ed33b80cf65a6",
-    "bytes": 2080,
-    "line_count": 27,
+    "sha256": "4dc5a45478480a7303abfdf0c3370260a6cc062182ef086c0d8730087bd418ef",
+    "bytes": 2381,
+    "line_count": 31,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -40,65 +40,79 @@
     },
     {
       "id": "b000003",
-      "kind": "paragraph",
+      "kind": "quote",
       "start_line": 3,
-      "end_line": 7,
-      "raw": "기본 생성 경로는 LVUI가 소유한 [목록 도구 모음](NativeOwnedListToolbar.md),\n[목록 푸터](NativeOwnedListFooter.md), [도구 버튼](NativeOwnedToolbarButton.md),\n[계층 도구 모음](NativeOwnedHierarchyToolbar.md)을 사용한다. 각 문서는 현재 지원하는\n입력과 남은 기능을 설명한다. 아래는 아직 제거하지 않은 `FRAMEWORK LVRS` 호환\n경로의 역사적 계약이며 LVUI의 독립 구현을 뜻하지 않는다.\n"
+      "end_line": 5,
+      "raw": "> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은\n> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은\n> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 8,
-      "end_line": 8,
+      "start_line": 6,
+      "end_line": 6,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 9,
-      "end_line": 12,
-      "raw": "FRAMEWORK LVRS에서 ListToolbar·ListFooter·HierarchyToolbar·ToolbarButton을 실제\nC++ create 호출로 생성한다. 일반·Observable C++ 멤버와 지연 메서드 참조를 사용한다.\nHierarchyToolbar의 직접 ToolbarButton 자식은 같은 WidgetBuilder의 기본 manual 슬롯에\n구성하고 자동 등록한 뒤 정규화한다. 모델이 비어 있어도 수동 자식의 백엔드는 재생성하지 않는다.\n"
+      "start_line": 7,
+      "end_line": 11,
+      "raw": "기본 생성 경로는 LVUI가 소유한 [목록 도구 모음](NativeOwnedListToolbar.md),\n[목록 푸터](NativeOwnedListFooter.md), [도구 버튼](NativeOwnedToolbarButton.md),\n[계층 도구 모음](NativeOwnedHierarchyToolbar.md)을 사용한다. 각 문서는 현재 지원하는\n입력과 남은 기능을 설명한다. 아래는 아직 제거하지 않은 `FRAMEWORK LVRS` 호환\n경로의 역사적 계약이며 LVUI의 독립 구현을 뜻하지 않는다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 13,
-      "end_line": 13,
+      "start_line": 12,
+      "end_line": 12,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 14,
-      "end_line": 19,
-      "raw": "ListFooter의 button1/2/3은 ListFooterSlot, HierarchyToolbar의 buttonItems는\nvector<HierarchyToolbarEntry>, activeButtonId는 ToolbarId인 C++ 멤버이다. 반응형 구성은 Observable<HierarchyToolbarItems>와\nObservable<shared_ptr<const ListFooterSlot>>처럼 불변 구성의 공유 포인터를 교체한다.\nplain vector/slot과 함께 typed toolbar_items/footer_slot으로 변환한다. Core Observable\n갱신은 같은 BindingScope로 전달하며 종료하면 구독도 종료한다. buttonId 상수는 문자열\n또는 정수이고 임의 사전/JS 표현식이나 호출식을 실행하지 않는다.\n"
+      "start_line": 13,
+      "end_line": 16,
+      "raw": "FRAMEWORK LVRS에서 ListToolbar·ListFooter·HierarchyToolbar·ToolbarButton을 실제\nC++ create 호출로 생성한다. 일반·Observable C++ 멤버와 지연 메서드 참조를 사용한다.\nHierarchyToolbar의 직접 ToolbarButton 자식은 같은 WidgetBuilder의 기본 manual 슬롯에\n구성하고 자동 등록한 뒤 정규화한다. 모델이 비어 있어도 수동 자식의 백엔드는 재생성하지 않는다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 20,
-      "end_line": 20,
+      "start_line": 17,
+      "end_line": 17,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 21,
-      "end_line": 24,
-      "raw": "ListToolbar onIconClicked는 (size_t,string), ListFooter onButtonClicked는\n(size_t,const ListFooterSlot&), 계층 onActiveChanged는 const ToolbarSelection&,\nonButtonTriggered는 const ToolbarTrigger&, onButtonEventTriggered는\n(const ToolbarEvent&,const ToolbarTrigger&)를 받는 메서드 참조이다.\n"
+      "start_line": 18,
+      "end_line": 23,
+      "raw": "ListFooter의 button1/2/3은 ListFooterSlot, HierarchyToolbar의 buttonItems는\nvector<HierarchyToolbarEntry>, activeButtonId는 ToolbarId인 C++ 멤버이다. 반응형 구성은 Observable<HierarchyToolbarItems>와\nObservable<shared_ptr<const ListFooterSlot>>처럼 불변 구성의 공유 포인터를 교체한다.\nplain vector/slot과 함께 typed toolbar_items/footer_slot으로 변환한다. Core Observable\n갱신은 같은 BindingScope로 전달하며 종료하면 구독도 종료한다. buttonId 상수는 문자열\n또는 정수이고 임의 사전/JS 표현식이나 호출식을 실행하지 않는다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 25,
-      "end_line": 25,
+      "start_line": 24,
+      "end_line": 24,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 26,
-      "end_line": 27,
+      "start_line": 25,
+      "end_line": 28,
+      "raw": "ListToolbar onIconClicked는 (size_t,string), ListFooter onButtonClicked는\n(size_t,const ListFooterSlot&), 계층 onActiveChanged는 const ToolbarSelection&,\nonButtonTriggered는 const ToolbarTrigger&, onButtonEventTriggered는\n(const ToolbarEvent&,const ToolbarTrigger&)를 받는 메서드 참조이다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 31,
       "raw": "지원하지 않는 입력·자식·잘못된 상수는 진단한다. 실제 앱·생성 검사·self-test의 실행은\n전체 작업 최종 일괄 단계까지 보류한다. 빌드와 실행 결과를 구분한다.\n"
     }
   ],
@@ -115,22 +129,22 @@
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000003",
-        "line": 7,
+        "block_id": "b000005",
+        "line": 11,
         "text": "경로의 역사적 계약이며 LVUI의 독립 구현을 뜻하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000005",
-        "line": 12,
+        "block_id": "b000007",
+        "line": 16,
         "text": "구성하고 자동 등록한 뒤 정규화한다. 모델이 비어 있어도 수동 자식의 백엔드는 재생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000007",
-        "line": 19,
+        "block_id": "b000009",
+        "line": 23,
         "text": "또는 정수이고 임의 사전/JS 표현식이나 호출식을 실행하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -140,31 +154,45 @@
     "links": [
       {
         "block_id": "b000003",
+        "label": "독립 구현 현황",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000003",
+        "label": "이전 우선순위",
+        "target": "NativeMigrationRoadmap.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000005",
         "label": "목록 도구 모음",
         "target": "NativeOwnedListToolbar.md",
         "kind": "relative",
-        "line": 3
+        "line": 7
       },
       {
-        "block_id": "b000003",
+        "block_id": "b000005",
         "label": "목록 푸터",
         "target": "NativeOwnedListFooter.md",
         "kind": "relative",
-        "line": 4
+        "line": 8
       },
       {
-        "block_id": "b000003",
+        "block_id": "b000005",
         "label": "도구 버튼",
         "target": "NativeOwnedToolbarButton.md",
         "kind": "relative",
-        "line": 4
+        "line": 8
       },
       {
-        "block_id": "b000003",
+        "block_id": "b000005",
         "label": "계층 도구 모음",
         "target": "NativeOwnedHierarchyToolbar.md",
         "kind": "relative",
-        "line": 5
+        "line": 9
       }
     ],
     "tables": []

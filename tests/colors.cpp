@@ -9,8 +9,8 @@ void inputs(){
     check(code.find(".color = ii::gui::WidgetColor{")!=code.npos,"Typed Color default did not generate native color");
     auto nested=compile("import vm Backend\nlet Inner(ink: Color): View = Label(color: ink)\nlet Outer(ink: Color): View = Inner(ink: ink)\nWindow { Outer(ink: vm.color) }");
     check(nested.find("set_label_color")!=nested.npos,"Forwarded reactive Color lost its native setter");
-    const auto link=lvui::compile_native("import vm Backend\nWindow { Link(linkColor: vm.ink) }",{.framework="LVRS"});
-    check(link&&link->find(".link_color = lvui::native::color<ii::gui::WidgetColor>(")!=link->npos,"A Link Color input bypassed native color normalization");
+    const auto link=lvui::compile_native("import vm Backend\nWindow { Link(linkColor: vm.ink) }",{.framework="iiGUI"});
+    check(link&&link->find(".palette.link = lvui::native::link_color(lvui::native::color<ii::gui::WidgetColor>(")!=link->npos,"A Link Color input bypassed native color normalization");
 }
 void state(){
     auto code=compile("var ink: Color = .primary\nlet copy: Color = ink\n@Static let initial: Color = copy\nWindow { VStack { Label(color: copy)\nLabel(color: initial) } }");

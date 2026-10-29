@@ -1,0 +1,15 @@
+import vm InventoryBackend
+
+ApplicationWindow(title: "LVUI · Inventory", width: 720, height: 500,
+                  minimumWidth: 600, minimumHeight: 360) {
+    VStack(id: "content", spacing: 12, padding: 24) {
+        Label(text: "Inventory", style: .title)
+        Label(text: "Select a cell and press Enter to edit. Click a heading to sort.", style: .description)
+        Table(id: "inventory", model: vm.controller, editor: vm.editor,
+              orderEditor: vm.order, modelRevision: vm.revision,
+              editable: true, sortingEnabled: true, clipboardEnabled: true,
+              width: 560, height: 260, onCellInputSubmitted: vm.submitted,
+              onRowsSorted: vm.sorted, onRangeValuesChanged: vm.pasted)
+        Label(text: "The example keeps changes in memory until the window closes.", style: .caption)
+    }
+}

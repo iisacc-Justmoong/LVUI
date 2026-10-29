@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeProgress.md",
-    "sha256": "19c12a4e6c0d4f3a81337f78ba75b0f195f5b995f2b68d6086307231edddfdbb",
-    "bytes": 7187,
-    "line_count": 99,
+    "sha256": "58e19413d7886e0b7be194d7f4a08769e7642e2d3482ef94eb0f38a4b817db18",
+    "bytes": 7488,
+    "line_count": 103,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -40,112 +40,112 @@
     },
     {
       "id": "b000003",
-      "kind": "heading",
+      "kind": "quote",
       "start_line": 3,
-      "end_line": 3,
+      "end_line": 5,
+      "raw": "> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은\n> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은\n> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
       "raw": "## LVUI 독립 구현\n",
       "level": 2,
       "title": "LVUI 독립 구현"
     },
     {
-      "id": "b000004",
-      "kind": "blank",
-      "start_line": 4,
-      "end_line": 4,
-      "raw": "\n"
-    },
-    {
-      "id": "b000005",
-      "kind": "paragraph",
-      "start_line": 5,
-      "end_line": 9,
-      "raw": "기본 네이티브 생성 경로의 `ProgressBar`는 `LVUI/ProgressBar.h`의 독립 상태와\n도형 계산을 사용한다. 앱에 생성하는 호스트 접착 코드가 사각형 세 개를 그리며,\n상태 변경은 기존 위젯을 유지하고 다시 그리기를 요청한다. 기본 크기는 100×6이고\n시작값과 현재값의 정규화 구간을 채운다. 직접 C++ API는 역방향 범위, 유효하지 않은\n값의 원자적 거부, 0 크기, 작은 크기의 반경과 테두리를 처리한다.\n"
-    },
-    {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 10,
-      "end_line": 10,
+      "start_line": 8,
+      "end_line": 8,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 11,
-      "end_line": 16,
-      "raw": "독립 경로는 `minimumValue`, `maximumValue` 또는 `endValue`, `startValue`,\n`currentValue`, `width`, `height`, `largeHeight`, `regularHeight`, `size`,\n`shapeStyle`, `cornerRadius`, `trackColor`, `fillColor`, `displayedStart`,\n`displayedProgress`를 지원한다. 각각 상수 또는 C++ 반응형 값으로 지정할 수 있다.\n정방향·역방향 범위를 처리하며, 두 maximum 이름을 동시에 지정하면 진단한다.\n표시 시작과 길이는 화면에 맞게 0–1 범위로 제한한다.\n"
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "기본 네이티브 생성 경로의 `ProgressBar`는 `LVUI/ProgressBar.h`의 독립 상태와\n도형 계산을 사용한다. 앱에 생성하는 호스트 접착 코드가 사각형 세 개를 그리며,\n상태 변경은 기존 위젯을 유지하고 다시 그리기를 요청한다. 기본 크기는 100×6이고\n시작값과 현재값의 정규화 구간을 채운다. 직접 C++ API는 역방향 범위, 유효하지 않은\n값의 원자적 거부, 0 크기, 작은 크기의 반경과 테두리를 처리한다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 17,
-      "end_line": 17,
+      "start_line": 14,
+      "end_line": 14,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 18,
-      "end_line": 25,
-      "raw": "독립 경로의 `stateModel`은 LVUI의 `ProgressState` 스냅샷 또는\n`ProgressStateSource` 인터페이스를 사용한다. 앱이 `ii::core::Observable`로 스냅샷을\n제공하면 상태 변경과 반응형 키 변경을 함께 관찰한다. 네 개의 `...StateKey`는 기본\n키를 바꾸며 앞뒤 공백을 제거한다. 비어 있는 키는 기본 키로, 존재하지 않는 값이나\n비어 있는 선택적 스냅샷은 직접 입력값으로 대체한다. 소스 값이 유한하지 않거나\n허용 범위를 벗어나면 전체 후보를 거부한다. 레거시 LVRS 상태 모델은 이 인터페이스와\n별개이다. 객체 포인터를 공급하는 앱은 내부 변경을 관찰 가능한 스냅샷 변경으로\n전달해야 하며, 포인터 내부의 일반 C++ 변경은 자동 감지되지 않는다.\n"
+      "start_line": 15,
+      "end_line": 20,
+      "raw": "독립 경로는 `minimumValue`, `maximumValue` 또는 `endValue`, `startValue`,\n`currentValue`, `width`, `height`, `largeHeight`, `regularHeight`, `size`,\n`shapeStyle`, `cornerRadius`, `trackColor`, `fillColor`, `displayedStart`,\n`displayedProgress`를 지원한다. 각각 상수 또는 C++ 반응형 값으로 지정할 수 있다.\n정방향·역방향 범위를 처리하며, 두 maximum 이름을 동시에 지정하면 진단한다.\n표시 시작과 길이는 화면에 맞게 0–1 범위로 제한한다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 26,
-      "end_line": 26,
+      "start_line": 21,
+      "end_line": 21,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 27,
-      "end_line": 32,
-      "raw": "동적 값은 하나의 LVUI 구성 후보로 계산·검증한 뒤 기존 위젯에 반영한다. 잘못된\n색상이나 크기는 이전 상태를 유지하며, 정상 값으로 복구할 수 있다. 기본 독립 경로는\n`motionEnabled`와 LVUI `Motion` 값을 받아 보간하며, 프레임 시각은 호스트에서\n주입한다. 프레임 소스가 없는 상태에서 애니메이션을 시작하면 목표에 정착하고 오류를\n보고한다. 자세한 정책과 직접 C++ API는 [네이티브 모션](NativeMotion.md)을 따른다.\n아래 레거시 경로의 전체 동작 대체 여부는 [독립 구현 현황](LVUIIndependence.md)에서 관리한다.\n"
+      "start_line": 22,
+      "end_line": 29,
+      "raw": "독립 경로의 `stateModel`은 LVUI의 `ProgressState` 스냅샷 또는\n`ProgressStateSource` 인터페이스를 사용한다. 앱이 `ii::core::Observable`로 스냅샷을\n제공하면 상태 변경과 반응형 키 변경을 함께 관찰한다. 네 개의 `...StateKey`는 기본\n키를 바꾸며 앞뒤 공백을 제거한다. 비어 있는 키는 기본 키로, 존재하지 않는 값이나\n비어 있는 선택적 스냅샷은 직접 입력값으로 대체한다. 소스 값이 유한하지 않거나\n허용 범위를 벗어나면 전체 후보를 거부한다. 레거시 LVRS 상태 모델은 이 인터페이스와\n별개이다. 객체 포인터를 공급하는 앱은 내부 변경을 관찰 가능한 스냅샷 변경으로\n전달해야 하며, 포인터 내부의 일반 C++ 변경은 자동 감지되지 않는다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 33,
-      "end_line": 33,
+      "start_line": 30,
+      "end_line": 30,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 34,
-      "end_line": 44,
-      "raw": "독립 모델 검사는 정방향·역방향·경계값·잘못된 입력과 작은 크기의 도형을 확인한다.\n범용 호스트의 의미 정보 접점에 `progress` 역할, `Progress` 이름, 0–1로 정규화한\n현재 목표값을 전달한다. 역방향 및 동일한 범위도 같은 정규화 규칙을 사용한다.\n애니메이션 중 접근성 값은 화면의 중간 프레임이 아니라 모델의 현재 목표값이다.\n이 경로는 `set_accessibility_semantics`를 제공하는 iiGUI 호스트가 필요하다.\n생성된 C++는 LVRS 헤더 경로 없이 컴파일한다. 창을 만들지 않는 호스트 검사는 초기\ntrack·fill 그리기, 여러 반응형 입력의 일괄 변경, 잘못된 후보의 거부·복구,\n상태 스냅샷과 키의 일괄 변경, 누락 값 대체, 위젯의 동일성 및 종료 시 수명 정리를 확인한다.\n이는 실제 OS 창이나 GPU 렌더링 검증은 아니다.\n검사에 사용한 iiGUI content host는 최상위 자식을 표시 영역 전체로 배치하므로,\n명시한 폭을 자연 크기로 검사할 때는 진행 표시기를 스택의 자식으로 배치한다.\n"
+      "start_line": 31,
+      "end_line": 36,
+      "raw": "동적 값은 하나의 LVUI 구성 후보로 계산·검증한 뒤 기존 위젯에 반영한다. 잘못된\n색상이나 크기는 이전 상태를 유지하며, 정상 값으로 복구할 수 있다. 기본 독립 경로는\n`motionEnabled`와 LVUI `Motion` 값을 받아 보간하며, 프레임 시각은 호스트에서\n주입한다. 프레임 소스가 없는 상태에서 애니메이션을 시작하면 목표에 정착하고 오류를\n보고한다. 자세한 정책과 직접 C++ API는 [네이티브 모션](NativeMotion.md)을 따른다.\n아래 레거시 경로의 전체 동작 대체 여부는 [독립 구현 현황](LVUIIndependence.md)에서 관리한다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 45,
-      "end_line": 45,
+      "start_line": 37,
+      "end_line": 37,
       "raw": "\n"
     },
     {
       "id": "b000015",
-      "kind": "heading",
-      "start_line": 46,
-      "end_line": 46,
-      "raw": "## 기존 LVRS 생성 경로\n",
-      "level": 2,
-      "title": "기존 LVRS 생성 경로"
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 48,
+      "raw": "독립 모델 검사는 정방향·역방향·경계값·잘못된 입력과 작은 크기의 도형을 확인한다.\n범용 호스트의 의미 정보 접점에 `progress` 역할, `Progress` 이름, 0–1로 정규화한\n현재 목표값을 전달한다. 역방향 및 동일한 범위도 같은 정규화 규칙을 사용한다.\n애니메이션 중 접근성 값은 화면의 중간 프레임이 아니라 모델의 현재 목표값이다.\n이 경로는 `set_accessibility_semantics`를 제공하는 iiGUI 호스트가 필요하다.\n생성된 C++는 LVRS 헤더 경로 없이 컴파일한다. 창을 만들지 않는 호스트 검사는 초기\ntrack·fill 그리기, 여러 반응형 입력의 일괄 변경, 잘못된 후보의 거부·복구,\n상태 스냅샷과 키의 일괄 변경, 누락 값 대체, 위젯의 동일성 및 종료 시 수명 정리를 확인한다.\n이는 실제 OS 창이나 GPU 렌더링 검증은 아니다.\n검사에 사용한 iiGUI content host는 최상위 자식을 표시 영역 전체로 배치하므로,\n명시한 폭을 자연 크기로 검사할 때는 진행 표시기를 스택의 자식으로 배치한다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 47,
-      "end_line": 47,
+      "start_line": 49,
+      "end_line": 49,
       "raw": "\n"
     },
     {
       "id": "b000017",
-      "kind": "paragraph",
-      "start_line": 48,
+      "kind": "heading",
+      "start_line": 50,
       "end_line": 50,
-      "raw": "`FRAMEWORK LVRS`의 `ProgressBar`는 LVRS의 유지되는 C++ `ProgressBar`와\n`ProgressModel`을 생성한다. 기본 iiGUI 프레임워크의 간단한 progress API와 구분한다.\n계산·상태 제공자 관측·그리기·모션은 네이티브 SDK가 수행하며 QML이나 런타임 문자열 해석을 사용하지 않는다.\n"
+      "raw": "## 기존 LVRS 생성 경로\n",
+      "level": 2,
+      "title": "기존 LVRS 생성 경로"
     },
     {
       "id": "b000018",
@@ -156,27 +156,27 @@
     },
     {
       "id": "b000019",
-      "kind": "fenced_code",
+      "kind": "paragraph",
       "start_line": 52,
-      "end_line": 55,
-      "raw": "```lvui\nimport state lvrs.StateModel\nWindow { ProgressBar(stateModel: state, size: .regular, shapeStyle: .shapeCylinder) }\n```\n",
-      "language": "lvui",
-      "code": "import state lvrs.StateModel\nWindow { ProgressBar(stateModel: state, size: .regular, shapeStyle: .shapeCylinder) }\n",
-      "closed": true
+      "end_line": 54,
+      "raw": "`FRAMEWORK LVRS`의 `ProgressBar`는 LVRS의 유지되는 C++ `ProgressBar`와\n`ProgressModel`을 생성한다. 기본 iiGUI 프레임워크의 간단한 progress API와 구분한다.\n계산·상태 제공자 관측·그리기·모션은 네이티브 SDK가 수행하며 QML이나 런타임 문자열 해석을 사용하지 않는다.\n"
     },
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 56,
-      "end_line": 56,
+      "start_line": 55,
+      "end_line": 55,
       "raw": "\n"
     },
     {
       "id": "b000021",
-      "kind": "paragraph",
-      "start_line": 57,
+      "kind": "fenced_code",
+      "start_line": 56,
       "end_line": 59,
-      "raw": "직접 scoped import는 객체를 복사하지 않고 활성화의 수명을 차용한다. 사용자 C++ 백엔드의\nshared/weak StateSource, 변경 가능한 제공자 선택, 타입 지정 View 입력 전달도 지원한다.\n제공자의 내부 revision 변경은 LVRS 모델 관측 경로로 처리한다.\n"
+      "raw": "```lvui\nimport state lvrs.StateModel\nWindow { ProgressBar(stateModel: state, size: .regular, shapeStyle: .shapeCylinder) }\n```\n",
+      "language": "lvui",
+      "code": "import state lvrs.StateModel\nWindow { ProgressBar(stateModel: state, size: .regular, shapeStyle: .shapeCylinder) }\n",
+      "closed": true
     },
     {
       "id": "b000022",
@@ -187,25 +187,39 @@
     },
     {
       "id": "b000023",
-      "kind": "heading",
+      "kind": "paragraph",
       "start_line": 61,
-      "end_line": 61,
+      "end_line": 63,
+      "raw": "직접 scoped import는 객체를 복사하지 않고 활성화의 수명을 차용한다. 사용자 C++ 백엔드의\nshared/weak StateSource, 변경 가능한 제공자 선택, 타입 지정 View 입력 전달도 지원한다.\n제공자의 내부 revision 변경은 LVRS 모델 관측 경로로 처리한다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 65,
+      "end_line": 65,
       "raw": "## 입력\n",
       "level": 2,
       "title": "입력"
     },
     {
-      "id": "b000024",
+      "id": "b000026",
       "kind": "blank",
-      "start_line": 62,
-      "end_line": 62,
+      "start_line": 66,
+      "end_line": 66,
       "raw": "\n"
     },
     {
-      "id": "b000025",
+      "id": "b000027",
       "kind": "table",
-      "start_line": 63,
-      "end_line": 70,
+      "start_line": 67,
+      "end_line": 74,
       "raw": "| 영역 | 입력 |\n|---|---|\n| 직접 값 | minimumValue, maximumValue 또는 endValue, startValue, currentValue |\n| 상태 제공자 | stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey |\n| 크기·모양 | size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius |\n| 색상 | trackColor, fillColor |\n| 모션 | motionEnabled, motion |\n| 표시값 직접 제어 | displayedStart, displayedProgress |\n",
       "columns": [
         "영역",
@@ -239,89 +253,89 @@
       ]
     },
     {
-      "id": "b000026",
-      "kind": "blank",
-      "start_line": 71,
-      "end_line": 71,
-      "raw": "\n"
-    },
-    {
-      "id": "b000027",
-      "kind": "paragraph",
-      "start_line": 72,
-      "end_line": 76,
-      "raw": "`size`는 `.large`/`.regular` 또는 정수 0/1이며 `shapeStyle`은\n`.shapeRoundRect`/`.shapeCylinder` 또는 정수 0/1이다. C++ 제공자는 대응하는 native enum\n또는 정수를 반환한다. `motion`은 공유 native Motion이다. maximumValue와 endValue를\n동시에 지정하면 소스 위치가 포함된 진단이다. 읽기 전용 progress 같은 계산값을 입력으로\n허용하지 않는다.\n"
-    },
-    {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 77,
-      "end_line": 77,
+      "start_line": 75,
+      "end_line": 75,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 78,
-      "end_line": 81,
-      "raw": "모든 입력은 상수 또는 C++ 반응형 식을 받는다. 동적인 여러 입력은 하나의 native 옵션\n후보로 계산하여 한 번에 적용한다. 따라서 minimum·maximum·상태 키·제공자가 함께\n바뀌어도 중간 구성이 모델 수신자에게 노출되지 않는다. 값과 스타일 변경은 같은 위젯·모델을\n유지한다. 실패한 후보의 오류와 모델 반영 이후의 수신자·프레임 접수 오류는 구분한다.\n"
+      "start_line": 76,
+      "end_line": 80,
+      "raw": "`size`는 `.large`/`.regular` 또는 정수 0/1이며 `shapeStyle`은\n`.shapeRoundRect`/`.shapeCylinder` 또는 정수 0/1이다. C++ 제공자는 대응하는 native enum\n또는 정수를 반환한다. `motion`은 공유 native Motion이다. maximumValue와 endValue를\n동시에 지정하면 소스 위치가 포함된 진단이다. 읽기 전용 progress 같은 계산값을 입력으로\n허용하지 않는다.\n"
     },
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 82,
-      "end_line": 82,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 83,
-      "end_line": 86,
-      "raw": "스코프 수명, 기본 크기·색상·OutBack 모션과 남은 원본 계약은\n[LVRS ProgressBar](../../LVRS/docs/native/ProgressBar.md)를 따른다.\n위젯 ID로 읽기 전용 상태를 참조하는 일반 언어 계약과 전체 Item 상속 API를 완료했다고\n간주하지 않는다.\n"
+      "start_line": 82,
+      "end_line": 85,
+      "raw": "모든 입력은 상수 또는 C++ 반응형 식을 받는다. 동적인 여러 입력은 하나의 native 옵션\n후보로 계산하여 한 번에 적용한다. 따라서 minimum·maximum·상태 키·제공자가 함께\n바뀌어도 중간 구성이 모델 수신자에게 노출되지 않는다. 값과 스타일 변경은 같은 위젯·모델을\n유지한다. 실패한 후보의 오류와 모델 반영 이후의 수신자·프레임 접수 오류는 구분한다.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 87,
-      "end_line": 87,
+      "start_line": 86,
+      "end_line": 86,
       "raw": "\n"
     },
     {
       "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 87,
+      "end_line": 90,
+      "raw": "스코프 수명, 기본 크기·색상·OutBack 모션과 남은 원본 계약은\n[LVRS ProgressBar](../../LVRS/docs/native/ProgressBar.md)를 따른다.\n위젯 ID로 읽기 전용 상태를 참조하는 일반 언어 계약과 전체 Item 상속 API를 완료했다고\n간주하지 않는다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
       "kind": "heading",
-      "start_line": 88,
-      "end_line": 88,
+      "start_line": 92,
+      "end_line": 92,
       "raw": "## 검증\n",
       "level": 2,
       "title": "검증"
     },
     {
-      "id": "b000034",
-      "kind": "blank",
-      "start_line": 89,
-      "end_line": 89,
-      "raw": "\n"
-    },
-    {
-      "id": "b000035",
-      "kind": "paragraph",
-      "start_line": 90,
-      "end_line": 93,
-      "raw": "`tests/progress.cpp`는 기본 경로·원본 입력·반응형 생성·scoped import·진단을 검사한다.\n`NativeProgress`, `NativeProgressScoped`, `NativeProgressForwarded`는 실제 생성 C++의\n컴파일·링크 대상이다. LVRS 실행 검사는 전체 목표의 최종 일괄 단계에 수행한다.\nDreamscapes는 관측 기준으로 유지하며 제품 소스를 변환하거나 설치하지 않는다.\n"
-    },
-    {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 94,
-      "end_line": 94,
+      "start_line": 93,
+      "end_line": 93,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 95,
-      "end_line": 99,
+      "start_line": 94,
+      "end_line": 97,
+      "raw": "`tests/progress.cpp`는 기본 경로·원본 입력·반응형 생성·scoped import·진단을 검사한다.\n`NativeProgress`, `NativeProgressScoped`, `NativeProgressForwarded`는 실제 생성 C++의\n컴파일·링크 대상이다. LVRS 실행 검사는 전체 목표의 최종 일괄 단계에 수행한다.\nDreamscapes는 관측 기준으로 유지하며 제품 소스를 변환하거나 설치하지 않는다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 99,
+      "end_line": 103,
       "raw": "2026-10-26에는 일반·ASan/UBSan 구성에서 LVUI 컴파일러 검사 34개씩을 통과했다.\n기존 호출을 기대한 회귀 검사 한 개는 새 네이티브 컨트롤 호출을 검증하도록 갱신한 뒤\n다시 통과했다. LVRS 팩터리 62개를 각 구성에서 생성·컴파일했고 생성 코드는 동일하다.\n이 기능을 포함한 재배치 소비자의 컴파일·링크 및 아직 실행하지 않은 LVRS 검사 38개의\n등록은 `SDK/LVRS/build/lvui-completion/progress-bar/verification-20261026.json`에 기록한다.\n"
     }
   ],
@@ -335,64 +349,64 @@
       "start_line": 1
     },
     {
-      "block_id": "b000003",
+      "block_id": "b000005",
       "parent_id": "b000001",
       "level": 2,
       "title": "LVUI 독립 구현",
       "anchor": "lvui-독립-구현",
-      "start_line": 3
+      "start_line": 7
     },
     {
-      "block_id": "b000015",
+      "block_id": "b000017",
       "parent_id": "b000001",
       "level": 2,
       "title": "기존 LVRS 생성 경로",
       "anchor": "기존-lvrs-생성-경로",
-      "start_line": 46
+      "start_line": 50
     },
     {
-      "block_id": "b000023",
+      "block_id": "b000025",
       "parent_id": "b000001",
       "level": 2,
       "title": "입력",
       "anchor": "입력",
-      "start_line": 61
+      "start_line": 65
     },
     {
-      "block_id": "b000033",
+      "block_id": "b000035",
       "parent_id": "b000001",
       "level": 2,
       "title": "검증",
       "anchor": "검증",
-      "start_line": 88
+      "start_line": 92
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000017",
-        "line": 50,
+        "block_id": "b000019",
+        "line": 54,
         "text": "계산·상태 제공자 관측·그리기·모션은 네이티브 SDK가 수행하며 QML이나 런타임 문자열 해석을 사용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000027",
-        "line": 76,
+        "block_id": "b000029",
+        "line": 80,
         "text": "허용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000031",
-        "line": 86,
+        "block_id": "b000033",
+        "line": 90,
         "text": "간주하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000035",
-        "line": 93,
+        "block_id": "b000037",
+        "line": 97,
         "text": "Dreamscapes는 관측 기준으로 유지하며 제품 소스를 변환하거나 설치하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -401,30 +415,44 @@
     "commands": [],
     "links": [
       {
-        "block_id": "b000011",
-        "label": "네이티브 모션",
-        "target": "NativeMotion.md",
-        "kind": "relative",
-        "line": 31
-      },
-      {
-        "block_id": "b000011",
+        "block_id": "b000003",
         "label": "독립 구현 현황",
         "target": "LVUIIndependence.md",
         "kind": "relative",
-        "line": 32
+        "line": 5
       },
       {
-        "block_id": "b000031",
+        "block_id": "b000003",
+        "label": "이전 우선순위",
+        "target": "NativeMigrationRoadmap.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000013",
+        "label": "네이티브 모션",
+        "target": "NativeMotion.md",
+        "kind": "relative",
+        "line": 35
+      },
+      {
+        "block_id": "b000013",
+        "label": "독립 구현 현황",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 36
+      },
+      {
+        "block_id": "b000033",
         "label": "LVRS ProgressBar",
         "target": "../../LVRS/docs/native/ProgressBar.md",
         "kind": "relative",
-        "line": 84
+        "line": 88
       }
     ],
     "tables": [
       {
-        "block_id": "b000025",
+        "block_id": "b000027",
         "columns": [
           "영역",
           "입력"

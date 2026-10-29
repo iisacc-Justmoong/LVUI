@@ -1,5 +1,7 @@
 # LVUI documentation
 
+- [Getting started: native applications, state, lists and tables](GettingStarted.md)
+- [LVRS native implementation migration roadmap](NativeMigrationRoadmap.md)
 - [LVUI-owned components and LVRS independence status](LVUIIndependence.md)
 - [LVUI-owned native motion and frame injection](NativeMotion.md)
 - [LVUI-owned image layout and host adapter](NativeImage.md)
@@ -165,8 +167,9 @@ optional `LVUI::Runtime` target also uses the existing Core Runtime.
 Parsing alone does not activate C++ objects or execute a UI. The separate
 `compile_native`/`lvui-compile` path generates C++23 for the documented native
 subset. LVUI is replacing legacy components with its own C++ models and paint
-recipes on application-supplied iiGUI host primitives. The optional legacy
-`FRAMEWORK LVRS` path still requires LVRS and has not yet been replaced. The
+recipes on application-supplied iiGUI host primitives. The legacy
+`FRAMEWORK LVRS` generation path has been removed; missing component features
+remain in the migration roadmap. The
 generated activation owns imported C++ backends, reactive
 bindings, typed reusable views, function inputs, conditional content and keyed
 or virtual collections. Runtime property reads, calls and updates execute as
@@ -243,7 +246,9 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/FactoryCaptures.md`](FactoryCaptures.md) | [JSON](FactoryCaptures.agent.json) |
 | [`docs/FunctionValues.md`](FunctionValues.md) | [JSON](FunctionValues.agent.json) |
 | [`docs/FunctionVariables.md`](FunctionVariables.md) | [JSON](FunctionVariables.agent.json) |
+| [`docs/GettingStarted.md`](GettingStarted.md) | [JSON](GettingStarted.agent.json) |
 | [`docs/HierarchyDrag.md`](HierarchyDrag.md) | [JSON](HierarchyDrag.agent.json) |
+| [`docs/IndependenceWorkSnapshot-2026-10-29.md`](IndependenceWorkSnapshot-2026-10-29.md) | [JSON](IndependenceWorkSnapshot-2026-10-29.agent.json) |
 | [`docs/InferredValues.md`](InferredValues.md) | [JSON](InferredValues.agent.json) |
 | [`docs/InvocationLifecycle.md`](InvocationLifecycle.md) | [JSON](InvocationLifecycle.agent.json) |
 | [`docs/KeywordRegistry.md`](KeywordRegistry.md) | [JSON](KeywordRegistry.agent.json) |
@@ -292,6 +297,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativeMaterials.md`](NativeMaterials.md) | [JSON](NativeMaterials.agent.json) |
 | [`docs/NativeMedia.md`](NativeMedia.md) | [JSON](NativeMedia.agent.json) |
 | [`docs/NativeMenu.md`](NativeMenu.md) | [JSON](NativeMenu.agent.json) |
+| [`docs/NativeMigrationRoadmap.md`](NativeMigrationRoadmap.md) | [JSON](NativeMigrationRoadmap.agent.json) |
 | [`docs/NativeModal.md`](NativeModal.md) | [JSON](NativeModal.agent.json) |
 | [`docs/NativeModelSources.md`](NativeModelSources.md) | [JSON](NativeModelSources.agent.json) |
 | [`docs/NativeMotion.md`](NativeMotion.md) | [JSON](NativeMotion.agent.json) |
@@ -345,6 +351,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/ReturnedCallbacks.md`](ReturnedCallbacks.md) | [JSON](ReturnedCallbacks.agent.json) |
 | [`docs/RuntimeContracts.md`](RuntimeContracts.md) | [JSON](RuntimeContracts.agent.json) |
 | [`docs/ScalarInputs.md`](ScalarInputs.md) | [JSON](ScalarInputs.agent.json) |
+| [`docs/SourceLayout.md`](SourceLayout.md) | [JSON](SourceLayout.agent.json) |
 | [`docs/StyleProfiles.md`](StyleProfiles.md) | [JSON](StyleProfiles.agent.json) |
 | [`docs/StyleTokenMembers.md`](StyleTokenMembers.md) | [JSON](StyleTokenMembers.agent.json) |
 | [`docs/StyleTokens.md`](StyleTokens.md) | [JSON](StyleTokens.agent.json) |

@@ -12,6 +12,4 @@ int main(){
     for(auto source:{"Window { Stepper(arrow: .Sideways) }","Window { Stepper(tone: .Wrong) }",
                      "Window { Stepper(width: 0) }","Window { Stepper(enabled: 1) }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid Stepper input was accepted");
-    auto legacy=lvui::compile_native("Window { Stepper(arrow: .up) }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.stepper(")==legacy->npos)throw std::runtime_error("Explicit legacy Stepper path was altered");
 }

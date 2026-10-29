@@ -35,9 +35,9 @@ void slots() {
     auto code = compile("let Box(content: View): View = VStack { import vm Private\ncontent()\ncontent() }\nWindow { import vm Caller\nlet body: View = Label(text: vm.title)\nBox(content: body) }");
     check(code.find("scope->parent->backend_0.title") != code.npos,
           "A named View slot lost its caller environment");
-    auto typed = compile("let Box(content: View): View = TabBar { content() }\nWindow { Box(content: Tab(iconName: \"generaladd\", text: \"One\")) }", "LVRS");
-    check(typed.find("controls.tab(") != typed.npos, "An inline named View slot lost its concrete child type");
-    check(!lvui::compile_native("let Box(content: View): View = TabBar { content() }\nWindow { Box(content: Label()) }", {.framework="LVRS"}),
+    auto typed = compile("let Box(content: View): View = TabBar { content() }\nWindow { Box(content: Tab(iconName: \"generaladd\", text: \"One\")) }", "iiGUI");
+    check(typed.find("lvui::native::NativeTab::create(") != typed.npos, "An inline named View slot lost its concrete child type");
+    check(!lvui::compile_native("let Box(content: View): View = TabBar { content() }\nWindow { Box(content: Label()) }", {.framework="iiGUI"}),
           "A named View slot bypassed the receiving widget's child type");
 }
 void defaults() {
@@ -68,7 +68,7 @@ void callbacks() {
           "The front end lost a callback's declared argument or result types");
     check(bool(lvui::parse_view("let Entry(edit: (\nString,\nBool,\n)\n->\nVoid): View = Label()\nWindow { Label() }")),
           "A multiline callback signature was rejected");
-    check(!compile("import class Domain.Event\nimport vm Backend\nlet Action(run: (Event) -> Void): View = AlertButton(method: run)\nWindow { Action(run: vm.accept) }","LVRS").empty(),
+    check(!compile("import class Domain.Event\nimport vm Backend\nlet Action(run: (Event) -> Void): View = AlertButton(method: run)\nWindow { Action(run: vm.accept) }","iiGUI").empty(),
           "An imported C++ event type was rejected");
     const auto shared=compile("import vm Backend\nlet Leaf(run: () -> Void): View = PushButton(run)\nlet Pair(run: () -> Void, again: () -> Void = run): View = VStack { Leaf(run: run)\nLeaf(run: again) }\nWindow { Pair(run: vm.make()) }");
     const auto factory=shared.find("make_callback_value<void()>");

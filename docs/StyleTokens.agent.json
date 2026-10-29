@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/StyleTokens.md",
-    "sha256": "392a364880be5f91cc31866666d115acc65a261541fcfb8e9de7094fe496a02e",
-    "bytes": 14382,
+    "sha256": "d0bf7dd2260bdd092eaf4b88328b927ca926e2e5da820018c6b99f2404e38f29",
+    "bytes": 14387,
     "line_count": 178,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,7 +57,7 @@
       "kind": "paragraph",
       "start_line": 5,
       "end_line": 8,
-      "raw": "이 스냅샷은 LVUI가 소유하는 시각값이다. 기본 코드 생성 경로는 값으로 `WidgetAppearance`를\n구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS` 경로는\n여전히 레거시 구현을 참조하므로 전체 분리 완료를 의미하지 않는다. 현재 상태는\n[독립 구현 현황](LVUIIndependence.md)을 따른다.\n"
+      "raw": "이 스냅샷은 LVUI가 소유하는 시각값이다. 기본 코드 생성 경로는 값으로 `WidgetAppearance`를\n구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS`\n생성 경로는 제거되었다. 기능 이식과 독립 패키지의 현재 검증 상태는\n[독립 구현 현황](LVUIIndependence.md)을 따른다.\n"
     },
     {
       "id": "b000006",
@@ -101,7 +101,7 @@
       "kind": "paragraph",
       "start_line": 14,
       "end_line": 14,
-      "raw": "2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 LVUI가 소유하는 `catalog/lvui-style-tokens.json`에 저장했다. 기존 시각 언어의 출처와 호환 식별자는 데이터에 보존한다. `tools/update_style_tokens.py`가 이를 검증하여 `src/LVUI/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.\n"
+      "raw": "2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 LVUI가 소유하는 `catalog/lvui-style-tokens.json`에 저장했다. 기존 시각 언어의 출처와 호환 식별자는 데이터에 보존한다. `tools/update_style_tokens.py`가 이를 검증하여 `src/Style/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.\n"
     },
     {
       "id": "b000012",
@@ -335,7 +335,7 @@
       "kind": "paragraph",
       "start_line": 53,
       "end_line": 53,
-      "raw": "이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 원본에 존재하는 accent는 해당 상태 토큰을 사용하며 원본에 없는 기존 accent는 LVRS의 기존 규칙을 유지한다. 창 배경은 Panel/window를 사용한다.\n"
+      "raw": "이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 창 배경은 Panel/window를 사용한다. 창의 `accent`는 LVUI 자체 색상 선택 타입으로 기본 호스트와 기본 버튼에 적용하며, 상세 범위는 [Window 계약](NativeWindow.md)을 따른다.\n"
     },
     {
       "id": "b000028",
@@ -958,14 +958,7 @@
       {
         "block_id": "b000005",
         "line": 6,
-        "text": "구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS` 경로는",
-        "basis": "lexical_match",
-        "context": "paragraph"
-      },
-      {
-        "block_id": "b000005",
-        "line": 7,
-        "text": "여전히 레거시 구현을 참조하므로 전체 분리 완료를 의미하지 않는다. 현재 상태는",
+        "text": "구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS`",
         "basis": "lexical_match",
         "context": "paragraph"
       },
@@ -1073,6 +1066,13 @@
         "target": "StyleTokenMembers.md",
         "kind": "relative",
         "line": 10
+      },
+      {
+        "block_id": "b000027",
+        "label": "Window 계약",
+        "target": "NativeWindow.md",
+        "kind": "relative",
+        "line": 53
       },
       {
         "block_id": "b000091",

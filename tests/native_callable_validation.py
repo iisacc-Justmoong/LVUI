@@ -62,7 +62,7 @@ def main():
             probe.write_text('#include "View.generated.h"\nauto factory = &lvui_generated::CallbackContract::build;\n')
             if name=="variable_wrong_replacement":
                 probe.write_text(probe.read_text()+'void rejected(lvui_generated::CallbackContract& view) { (void)view.set_action_native([] { return [](std::int64_t) { return 7; }; }); }\n')
-            includes = [root, source_root / "src", (args.core / "../../../include").resolve(),(args.color / "../../../include").resolve(),
+            includes = [root, source_root / "src", args.build / "lvui-generated-icons", (args.core / "../../../include").resolve(),(args.color / "../../../include").resolve(),
                         args.gui / "src", args.gui / "build/install/include"]
             msvc = Path(args.cxx).name.lower() in ("cl", "cl.exe")
             compile_command = ([args.cxx, "/std:c++latest", "/Zs", "/utf-8"] if msvc else

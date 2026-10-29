@@ -11,7 +11,7 @@ python3 -B tools/update_keywords.py --check
 python3 -B tests/test_lvui_keywords.py
 ```
 
-생성기는 스키마·이름·분류·정렬·중복을 검증한 뒤 `src/LVUI/Keywords.def`를 만든다.
+생성기는 스키마·이름·분류·정렬·중복을 검증한 뒤 `src/Language/Keywords.def`를 만든다.
 공개 `Keyword::source_file`과 `source_line`은 LVUI 목록의 실제 항목 위치이다.
 예약된 이름은 파서의 어휘 계약을 의미한다. 이름이 등록된 사실만으로 해당
 컴포넌트의 속성, 동작, 접근성 또는 플랫폼 구현이 완성된 것은 아니다.

@@ -13,6 +13,4 @@ int main(){
                      "Window { InputField(fontSize: 0) }","Window { InputField(enabled: 1) }",
                      "Window { InputField(backgroundColor: \"invalid\") }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid input field option was accepted");
-    auto legacy=lvui::compile_native("Window { InputField(text: \"Legacy\") }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.input_field(")==legacy->npos)throw std::runtime_error("Explicit legacy input path was altered");
 }

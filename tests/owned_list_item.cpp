@@ -51,6 +51,8 @@ int main() {
             "Stepper row lost its inherited dimensions");
     value.variant = ListItemVariant::select; require(item.set_configuration(value) && item.intrinsic_size().width == 400 && item.intrinsic_size().height == 44,
             "Selectable row lost its inherited dimensions");
+    value.variant = ListItemVariant::inline_edit; require(item.set_configuration(value) && item.intrinsic_size().width == 400 && item.intrinsic_size().height == 44,
+            "Inline edit row lost its inherited dimensions");
     value.variant = ListItemVariant::detail; value.width = 0; value.height = 0;
     require(item.set_configuration(value) && item.intrinsic_size().width == 194 && item.intrinsic_size().height == 44,
             "Detail row lost its inherited dimensions");

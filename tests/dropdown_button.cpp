@@ -17,6 +17,4 @@ int main(){
     auto custom=lvui::compile_native("import vm Model\nWindow { IconMenuButton(iconName: vm.name, iconSource: vm.source, iconRevision: vm.revision) }");
     if(!custom||custom->find("value.icon_name = ")==custom->npos||custom->find("value.icon_source = ")==custom->npos||
        custom->find("value.icon_revision = ")==custom->npos)throw std::runtime_error("Dropdown named icon inputs were lost");
-    auto legacy=lvui::compile_native("Window { DropdownButton(text: \"Open\") }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.dropdown_button(")==legacy->npos)throw std::runtime_error("Legacy Dropdown path was altered");
 }

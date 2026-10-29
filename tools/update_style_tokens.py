@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 SNAPSHOT=ROOT/'catalog/lvui-style-tokens.json'
-OUTPUT=ROOT/'src/LVUI/StyleTokens.generated.inc'
+OUTPUT=ROOT/'src/Style/StyleTokens.generated.inc'
 TYPES={'FLOAT':'number','COLOR':'color','STRING':'string','BOOLEAN':'boolean'}
 
 def member_name(text):

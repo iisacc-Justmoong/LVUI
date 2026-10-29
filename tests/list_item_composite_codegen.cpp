@@ -16,6 +16,6 @@ int main(){
             throw std::runtime_error("Compound list item was not generated");
     }
     for(auto source:{"Window { ListItem(type: .Toggle, checked: 1) }","Window { ListItem(type: .Checkable, slotSpacing: -1) }",
-                     "Window { ListItem(type: .InlineEdit) }"})
+                     "Window { ListItem(type: .DetailActions) }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid compound list item input was accepted");
 }

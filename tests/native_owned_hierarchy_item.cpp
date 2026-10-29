@@ -89,5 +89,17 @@ int main() {
     }));
     good(item->chevron().activate());
     require(after_retirement == 0 && !item->row().snapshot(), "Retired hierarchy row received a stale activation callback");
+
+    good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
+        auto value=lvui::native::NativeHierarchyItem::create(builder,{},"stable",input);
+        if(!value)return std::unexpected(value.error());item=*value;return {};
+    }));
+    auto stable=item->root();
+    auto rejected_count=host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
+        auto value=lvui::native::NativeHierarchyItem::create(builder,{},"candidate",input,{},
+            [](WidgetBuilder&) -> ii::core::Result<void> {return ii::core::fail(ii::core::ErrorCode::failed,"Count View rejected");});
+        if(!value)return std::unexpected(value.error());return {};
+    });
+    require(!rejected_count&&stable.snapshot(),"A failed custom count factory replaced the previous hierarchy row");
     tree->close();
 }

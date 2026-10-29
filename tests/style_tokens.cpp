@@ -220,10 +220,10 @@ ApplicationWindow(fontFamily: token("Theme Typography/Font/fontBody")) {
       ColorPickerButton(currentColor: token("--lvrs-color-picker-current-color"))
       ColorPicker(recentColors: [token("--lvrs-theme-colors-action-primary"), "#123456"])
     } })",
-                          {.framework = "LVRS"});
-    check(colors.find(".surface_color = ii::gui::WidgetColor{") != colors.npos &&
-              colors.find(".current_color = ii::gui::WidgetColor{") != colors.npos &&
-              colors.find("std::vector<ii::gui::WidgetColor>{ii::gui::WidgetColor{") != colors.npos,
+                          {.framework = "iiGUI"});
+    check(colors.find(".surface_color = lvui::native::popover_color(ii::gui::WidgetColor{") != colors.npos &&
+              colors.find(".configuration.current_color = lvui::StyleColor{") != colors.npos &&
+              colors.find(".configuration.recent_colors = {lvui::StyleColor{") != colors.npos,
           "Specialized color inputs rejected typed tokens");
     check(compile(source) == code, "Compilations shared mutable token overrides");
 }
@@ -324,8 +324,8 @@ Window { VStack(spacing: gap) { Label(color: ink) } })");
           "Metric changed the native numeric binding contract");
     auto columns =
         compile("Window { TableHeader(columns: [\"A\",\"B\"], columnWidths: [Metric.size44,.size56]) }",
-                {.framework = "LVRS"});
-    check(columns.find(".column_widths = {44, 56}") != columns.npos, "Numeric list lost Metric context");
+                {.framework = "iiGUI"});
+    check(columns.find("table_header_widths(value.configuration.columns, std::vector<double>{44, 56})") != columns.npos, "Numeric list lost Metric context");
     auto html = compile(
         R"LVUI(<ApplicationWindow style="background:Color.window"><div style="padding:Metric.space24;gap:.space8"><span color={Color.text.body} style="font-size:Metric.textBody;font-weight:.weightMedium">Typed</span></div></ApplicationWindow>)LVUI");
     check(html.find(".spacing = 8") != html.npos && html.find(".font_size = 13") != html.npos,

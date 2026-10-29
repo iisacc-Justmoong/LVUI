@@ -1,0 +1,11 @@
+// A static window: layout, typography and compile-time style values.
+ApplicationWindow(title: "Hello LVUI", width: 640, height: 400,
+                  minimumWidth: 480, minimumHeight: 300,
+                  backgroundColor: Color.window) {
+    VStack(id: "content", spacing: Metric.space12, padding: .space24) {
+        Label(id: "title", text: "Hello, LVUI", style: .title)
+        Label(text: "A native interface built from a .lvui file.", style: .body)
+        Label(text: "The layout is compiled to C++ before the app runs.", style: .description)
+        ProgressBar(id: "progress", currentValue: 65, motionEnabled: false)
+    }
+}

@@ -1,5 +1,9 @@
 # AppHeader와 AppCard 코드 생성
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 기본 `AppCard`와 `AppHeader`는 각각 [카드](NativeAppCard.md)와
 [헤더](NativeAppHeader.md)의 LVUI 독립 구현으로 생성한다. 이 문서의 나머지는
 전환 중인 `FRAMEWORK LVRS` 경로의 기존 계약을 설명한다.

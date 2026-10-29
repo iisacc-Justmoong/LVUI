@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedHierarchyItem.md",
-    "sha256": "eb82344e61d36554ec116f860825d764ea9d357974eeaa45495aca02fac26dcf",
-    "bytes": 2984,
-    "line_count": 42,
+    "sha256": "6dcbfa9f9f4165b5cf93a48d135cc9617a0325ae34c7b41e1bb5374dc7592193",
+    "bytes": 4583,
+    "line_count": 69,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -84,39 +84,98 @@
       "id": "b000009",
       "kind": "paragraph",
       "start_line": 23,
-      "end_line": 29,
-      "raw": "선언형 입력은 `text`/`label`, `itemKey`, `itemId`, `count`, `indentLevel`,\n`enabled`, `activatable`/`selectable`, `selected`, `expanded`, `showChevron`,\n`hasChildItems`, `dragPreviewActive`, 아이콘·치수·패딩·색상과 두 콜백을 받는다.\n`width`/`itemWidth`와 `height`/`rowHeight`는 각각 별칭이다. 지원하는 값은 반응형으로\n갱신한다. 드래그 미리보기는 시각 상태만 의미한다. 컨트롤러 연결, 드래그 제스처,\n사용자 `countView`와 계층 목록의 행 대리자는 아직 지원하지 않으며 관련 선언은\n오류로 진단한다. 실제 운영체제 보조 기술과 플랫폼별 렌더링 검증도 남아 있다.\n"
+      "end_line": 27,
+      "raw": "선언형 입력은 `text`/`label`, `itemKey`, `itemId`, `count`, `indentLevel`,\n`enabled`, `activatable`/`selectable`, `selected`, `expanded`, `showChevron`,\n`hasChildItems`, `dragPreviewActive`, 아이콘·치수·패딩·색상과 두 콜백을 받는다.\n`width`/`itemWidth`와 `height`/`rowHeight`는 각각 별칭이다. 지원하는 값은 반응형으로\n갱신한다. 드래그 미리보기는 시각 상태만 의미한다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 30,
-      "end_line": 30,
+      "start_line": 28,
+      "end_line": 28,
       "raw": "\n"
     },
     {
       "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 35,
+      "raw": "`countView`에는 기본 숫자를 대신할 단일 View를 전달할 수 있다. 인라인 View,\n재사용 View 호출과 `View` 입력을 통한 전달을 지원한다. View의 반응형 값과\n콜백은 원래 스코프를 사용한다. `count`가 0 이상이고 `countWidth`가 양수일 때\n표시하고, 그 밖에는 콘텐츠를 보존한 채 숨긴다. 영역의 크기 변경은 기존 View를\n유지하며, 콘텐츠는 개수 영역 안으로 잘린다. 행을 비활성화하면 개수 View도 함께\n비활성화된다. View를 사용해도 행의 접근성 설명에는\n숫자 개수를 제공한다. `countView`를 생략하면 기존 숫자를 그린다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
       "kind": "fenced_code",
-      "start_line": 31,
-      "end_line": 38,
+      "start_line": 37,
+      "end_line": 44,
+      "raw": "```lvui\nimport vm LayerBackend\nlet Badge(text: String): View = Label(text: text)\nWindow {\n    HierarchyItem(label: \"Layers\", count: vm.count, countWidth: 40,\n                  countView: Badge(text: vm.badge), onClick: vm.activate)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm LayerBackend\nlet Badge(text: String): View = Label(text: text)\nWindow {\n    HierarchyItem(label: \"Layers\", count: vm.count, countWidth: 40,\n                  countView: Badge(text: vm.badge), onClick: vm.activate)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 50,
+      "raw": "개수 View에 암묵적인 행 객체를 주입하지 않는다. 필요한 데이터는 위 예제처럼\n명시적으로 전달해야 한다. `[View]` 시퀀스나 필수 매개변수가 충족되지 않은 View는\n소스 오류로 진단한다. `HierarchyItem`의 컨트롤러 주입과 드래그 제스처, 계층 목록이\n생성하는 행의 사용자 대리자와 개수 View는 아직 지원하지 않는다. 실제 운영체제\n보조 기술과 플랫폼별 렌더링 검증도 남아 있다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 54,
+      "raw": "C++ 앱은 `NativeHierarchyItem::create`의 마지막 `ii::gui::WidgetFactory` 인자로\n같은 개수 영역을 제공할 수 있다. 팩터리는 구성 실패를 반환할 수 있으며, 기존\n콘텐츠를 교체하는 호스트는 후보 구성이 성공한 뒤에만 새 행을 게시한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 56,
+      "end_line": 63,
       "raw": "```text\nimport vm LayerBackend\nWindow {\n    HierarchyItem(itemKey: \"camera\", label: vm.label, count: vm.count,\n                  expanded: vm.expanded, hasChildItems: true,\n                  onClick: vm.activate, onExpansionChanged: vm.setExpanded)\n}\n```\n",
       "language": "text",
       "code": "import vm LayerBackend\nWindow {\n    HierarchyItem(itemKey: \"camera\", label: vm.label, count: vm.count,\n                  expanded: vm.expanded, hasChildItems: true,\n                  onClick: vm.activate, onExpansionChanged: vm.setExpanded)\n}\n",
       "closed": true
     },
     {
-      "id": "b000012",
+      "id": "b000020",
       "kind": "blank",
-      "start_line": 39,
-      "end_line": 39,
+      "start_line": 64,
+      "end_line": 64,
       "raw": "\n"
     },
     {
-      "id": "b000013",
+      "id": "b000021",
       "kind": "paragraph",
-      "start_line": 40,
-      "end_line": 42,
-      "raw": "헤드리스 검사는 포인터·키보드·접근성 이름, 반응형 옵션과 잘못된 후보의 보존,\n콜백 중 자기 제거를 다룬다. 생성 실패와 수명 경계는 앱이 소유한 트리 밖의\n부수효과까지 되돌리지 않는다.\n"
+      "start_line": 65,
+      "end_line": 69,
+      "raw": "헤드리스 검사는 포인터·키보드·접근성 이름, 반응형 옵션과 잘못된 후보의 보존,\n콜백 중 자기 제거를 다룬다. `LVUI.OwnedHierarchyItem.CountViewGenerated`는\n전달된 View의 반응형 내용, 표시·숨김, 크기·정체성·수명을 검사한다. 생성 실패와\n수명 경계는 앱이 소유한 트리 밖의\n부수효과까지 되돌리지 않는다.\n"
     }
   ],
   "outline": [
@@ -142,6 +201,27 @@
         "block_id": "b000005",
         "line": 14,
         "text": "아이콘을 함께 지정하고 별도의 `IconSource`는 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 46,
+        "text": "개수 View에 암묵적인 행 객체를 주입하지 않는다. 필요한 데이터는 위 예제처럼",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 47,
+        "text": "명시적으로 전달해야 한다. `[View]` 시퀀스나 필수 매개변수가 충족되지 않은 View는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 49,
+        "text": "생성하는 행의 사용자 대리자와 개수 View는 아직 지원하지 않는다. 실제 운영체제",
         "basis": "lexical_match",
         "context": "paragraph"
       }

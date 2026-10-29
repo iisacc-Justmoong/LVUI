@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeMaterials.md",
-    "sha256": "cb002870c5619fcf360eab8c99e1e087435c6093bc03764c5e92f6a93421ca62",
-    "bytes": 4208,
-    "line_count": 62,
+    "sha256": "540d8aa31a84e1438254d6d31442b682621aaec6936dccd9e25d231aac67aaa1",
+    "bytes": 4008,
+    "line_count": 60,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -175,8 +175,8 @@
       "id": "b000021",
       "kind": "paragraph",
       "start_line": 59,
-      "end_line": 62,
-      "raw": "전환 전 `FRAMEWORK LVRS`는 계속 기존 LVRS 팩터리와 옵션을 생성한다. 이 선택 경로는\n아직 LVRS에 의존하고 `outlinePath`와 기존 `MotionPreferences` 타입을 받는다.\n기본 독립 경로와 레거시 경로의 지원 범위를 혼동하지 않는다. LVRS 경로 자체를\n제거하는 작업은 다른 컴포넌트의 독립 이식과 함께 남아 있다.\n"
+      "end_line": 60,
+      "raw": "이전 `FRAMEWORK LVRS` 경로는 LVRS 팩터리와 옵션을 생성했다. 해당 경로는\n제거되었으며, 당시 지원한 입력과 LVUI 경로의 현재 지원 범위를 구분한다.\n"
     }
   ],
   "outline": [
@@ -218,13 +218,6 @@
         "block_id": "b000017",
         "line": 53,
         "text": "아직 독립 경로는 임의의 `backdropSource`·`backdropBackground` 및 창별 강조색 자동 상속을 지원하지 않는다.",
-        "basis": "lexical_match",
-        "context": "paragraph"
-      },
-      {
-        "block_id": "b000021",
-        "line": 61,
-        "text": "기본 독립 경로와 레거시 경로의 지원 범위를 혼동하지 않는다. LVRS 경로 자체를",
         "basis": "lexical_match",
         "context": "paragraph"
       }

@@ -23,10 +23,28 @@ Window(title: state.title, width: state.width, minimumWidth: state.minimumWidth,
 | width, height, minimumWidth, minimumHeight | Bool을 제외한 숫자, 유한한 1–32767 논리 단위 |
 | backgroundColor | 기존 Color 값·iiColorManager 공유 값과 동일한 색상 계약 |
 | fontFamily | 비어 있지 않은 UTF-8 String, NUL 없음, 최대 4096바이트 |
-| accent | LVRS에서 12개 선택자, 해당 `lvrs::Accent` 또는 네이티브 속성이 제공한 정확한 이름의 String |
+| accent | `blue`, `purple`, `rose`, `red`, `orange`, `yellow`, `green`, `gray`, `brown`, `cyan`, `teal`, `white` |
 
-네이티브 C++ 속성의 최종 타입도 생성 팩터리를 컴파일할 때 검사한다. 다른 enum이나 정수를
-accent로 암묵 변환하지 않으며, title·fontFamily에 숫자를 문자열로 바꾸어 넣지 않는다.
+네이티브 C++ 속성의 최종 타입도 생성 팩터리를 컴파일할 때 검사한다. title·fontFamily에
+숫자를 문자열로 바꾸어 넣지 않는다. `accent`는 정적 선언에서 `.purple` 또는
+`"purple"`처럼 지정한다. C++ 백엔드의 반응형 입력은 `lvui::WindowAccent` 또는
+같은 이름의 문자열을 받는다. 알 수 없는 이름, 범위를 벗어난 enum과 다른 숫자·enum
+타입은 거부한다. C++의 공개 타입은 `<LVUI/WindowAccent.h>`에 있다.
+
+```lvui
+import vm EditorBackend
+Window(accent: vm.accent) {
+    PushButton(text: "Save", width: 120, onClick: vm.save)
+}
+```
+
+창 소유 접점이 활성화되면 강조색이 기본 호스트 팔레트와 LVUI의 `AbstractButton`,
+`PushButton`, `LabelButton`, `IconButton` 기본 팔레트에 반영된다. 재사용 View 안의
+버튼도 같은 값을 사용한다. 버튼에서 명시한 `primaryColor`, `hoverColor`,
+`pressedColor` 또는 `normalPressedColor`는 창 기본값보다 우선한다.
+나머지 독립 위젯에 강조색을 일괄 상속하는 기능은 아직 지원하지 않는다.
+`backgroundColor`는 별도 입력이며 강조색 변경으로 덮지 않는다. 카탈로그가 보유한
+색상과 스타일 프로필 재정의를 사용하고, gray·white는 LVUI에 보관한 기본값을 사용한다.
 
 생성 타입의 정적 `options()`와 `appearance()`는 Host를 만들기 위한 초기값이다. 아직
 활성화하지 않은 백엔드를 이 메서드에서 생성하거나 호출하지 않는다. 반응형 입력은
@@ -39,9 +57,9 @@ accent로 암묵 변환하지 않으며, title·fontFamily에 숫자를 문자�
 동적 입력은 각각 별도의 네이티브 파생값으로 계산한다. 크기나 색상만 바뀔 때 제목을
 계산하는 백엔드 메서드를 다시 실행하지 않는다. 동적 Window는 이 값들을 한 효과로
 `ii::gui::WindowProperties`로 계산한다.
-기존 `WidgetAppearance`를 복제한 뒤 명시한 동적 색상·폰트·accent를 적용한다. 스타일
-프로필의 색상 토큰은 동적 accent 선택에도 반영한다. 이 값은 소스·AST·호스트 포인터를
-보유하지 않는다.
+기존 `WidgetAppearance`를 복제한 뒤 명시한 동적 색상·폰트·강조색을 적용한다.
+창 적용이 성공한 후에만 버튼의 강조색을 발행하므로 거절된 창 설정이 버튼 팔레트만
+앞서 바꾸지 않는다. 이 값은 소스·AST·호스트 포인터를 보유하지 않는다.
 
 iiGUI의 `WindowPropertiesTarget`은 루트 위젯 상태를 가리키는 약한 실행 영역 전용
 접점이다. 갱신은 기존 위젯·입력 내용·포커스·백엔드를 교체하지 않는다. 기본 테마는
@@ -88,23 +106,25 @@ ConfigureNotify가 소유한다. iPadOS의 기본 scene 크기는 OS가 소유�
 
 검사 항목은 다음과 같다. 실행 통과 여부는 현재 빌드 로그와 검증 기록을 기준으로 한다.
 
-- `LVUI.Window.*`: 동적 입력·LVRS accent 생성·상수 출력·소스 진단이다.
+- `LVUI.Window.*`: 동적 입력·강조색·상수 출력·소스 진단이다.
+- `LVUI.Window.AccentGenerated`: 생성 C++의 창·버튼 색상, 중첩 View, 명시 스타일 우선,
+  잘못된 입력과 창 적용 거부 후 복구를 창 없는 위젯 트리에서 검사한다.
 - `LVUI.NativeWindowValidation`: 실제 생성 C++에서 유효 타입과 부적합 타입을 검사한다.
 - `iiGUI.native_window.*`: 창 없는 실제 위젯 상태와 동일한 루트 구성 경로로 준비·승인,
   변경 필드, 편집 보존, 잘못된 값·네이티브 거부 후 복구, 실행 영역, 종료, 내부 뷰 차단,
   Static 스냅샷·루트 인자 전달을 검사한다.
 - `iiGUI.layout_package`: 설치 후 경로를 바꾸어 Window 공개 헤더·API와 AOT 팩터리를
   컴파일·링크하며, 열리지 않은 Host와 종료된 접점의 호출 거부를 실행한다.
-- LVRS용 Window 5개 팩터리는 컴파일 검사이다. LVRS 앱·테스트 실행은 전체 작업의
-  최종 일괄 단계에 남긴다.
 
-창 없는 값·위젯·패키지 검사를 실제 OS 창 조작·GPU 그리기·모든 LVRS 컴포넌트의
+창 없는 값·위젯·패키지 검사를 실제 OS 창 조작·GPU 그리기·모든 LVUI 컴포넌트의
 스타일 상속·모든 플랫폼의 실행 완료로 확대하지 않는다. 일반 값·인터페이스, 가변 View와
 깊은 Static 수명, 상속·모션·앵커·입력·IME·접근성과 전체 원본 등가도 계속 완료 조건이다.
 
 ## 2026-10-26 검증 기록
 
-현재 macOS arm64 작업 트리에서 다음 결과를 확인했다. 일반 구성의 최종 전체 검사와
+당시 macOS arm64 작업 트리에서 다음 결과를 확인했다. 아래 LVRS 팩터리 항목은
+현재 삭제된 레거시 경로의 과거 결과이며 LVUI 독립 경로의 기능 증거가 아니다.
+일반 구성의 최종 전체 검사와
 메모리 검사 구성은 독립 실행이며, 두 구성의 건수를 서로 다른 기능 수로 합산하지 않는다.
 
 | 검사 | 확인 결과 |

@@ -3,6 +3,7 @@ project(LVUI VERSION 0.1.0 LANGUAGES CXX)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CTest)
+include(cmake/SourceHeaders.cmake)
 find_package(Python3 3.9 REQUIRED COMPONENTS Interpreter)
 file(GLOB LVUI_BUILTIN_ICON_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/resources/icons/*.svg")
 set(LVUI_BUILTIN_ICON_HEADER "${CMAKE_CURRENT_BINARY_DIR}/lvui-generated-icons/LVUI/BuiltinIconAssets.h")
@@ -22,23 +23,23 @@ add_custom_target(LVUIBuiltinHueRing DEPENDS "${LVUI_BUILTIN_HUE_RING_HEADER}")
 find_package(iiSDKCore 0.18.1 CONFIG REQUIRED COMPONENTS Contracts Observation)
 include(cmake/LVUICoreObservation.cmake)
 find_package(iiColorManager 0.1.1 CONFIG REQUIRED COMPONENTS Values)
-add_library(LVUI STATIC src/LVUI/Parser.cpp src/LVUI/Language.cpp src/LVUI/NativeMarkup.cpp src/LVUI/Compiler.cpp src/LVUI/ConstantExpression.cpp src/LVUI/StyleTokens.cpp)
+add_library(LVUI STATIC src/Compiler/Parser.cpp src/Language/Language.cpp src/Compiler/NativeMarkup.cpp src/Compiler/Compiler.cpp src/Language/ConstantExpression.cpp src/Style/StyleTokens.cpp)
 add_library(LVUI::LVUI ALIAS LVUI)
 target_compile_features(LVUI PUBLIC cxx_std_23)
 target_link_libraries(LVUI PUBLIC iiSDKCore::Contracts)
 target_include_directories(LVUI PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/lvui-generated-icons>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 add_dependencies(LVUI LVUIBuiltinIconAssets LVUIBuiltinHueRing)
 set_target_properties(LVUI PROPERTIES CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
-add_library(LVUINative STATIC src/LVUI/NativeBindings.cpp)
+add_library(LVUINative STATIC src/Runtime/NativeBindings.cpp)
 add_library(LVUI::Native ALIAS LVUINative)
 set_target_properties(LVUINative PROPERTIES EXPORT_NAME Native CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
 target_compile_features(LVUINative PUBLIC cxx_std_23)
 target_link_libraries(LVUINative PUBLIC iiSDKCore::Observation iiColorManager::Values)
 target_include_directories(LVUINative PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/lvui-generated-icons>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 add_dependencies(LVUINative LVUIBuiltinIconAssets LVUIBuiltinHueRing)
@@ -48,24 +49,24 @@ target_link_libraries(LVUI PUBLIC LVUI::Native)
 option(LVUI_BUILD_COLOR_ADAPTER "Build the optional iiColorManager surface adapter" OFF)
 if(LVUI_BUILD_COLOR_ADAPTER)
     find_package(iiColorManager 0.1.1 CONFIG REQUIRED COMPONENTS iiColorManager)
-    add_library(LVUIColor STATIC src/LVUI/ColorSelectionSurface.cpp)
+    add_library(LVUIColor STATIC src/Color/ColorSelectionSurface.cpp)
     add_library(LVUI::Color ALIAS LVUIColor)
     set_target_properties(LVUIColor PROPERTIES EXPORT_NAME Color CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
     target_compile_features(LVUIColor PUBLIC cxx_std_23)
     target_link_libraries(LVUIColor PUBLIC LVUI::Native PRIVATE iiColorManager::iiColorManager)
-    target_include_directories(LVUIColor PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    target_include_directories(LVUIColor PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     install(TARGETS LVUIColor EXPORT LVUIColorTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT LVUIColorTargets NAMESPACE LVUI:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LVUI)
 endif()
 option(LVUI_BUILD_RUNTIME "Build the optional activation work runtime" OFF)
 if(LVUI_BUILD_RUNTIME)
     find_package(iiSDKCore 0.20 CONFIG REQUIRED COMPONENTS Runtime)
-    add_library(LVUIRuntime STATIC src/LVUI/NativeWork.cpp)
+    add_library(LVUIRuntime STATIC src/Runtime/NativeWork.cpp)
     add_library(LVUI::Runtime ALIAS LVUIRuntime)
     set_target_properties(LVUIRuntime PROPERTIES EXPORT_NAME Runtime CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
     target_compile_features(LVUIRuntime PUBLIC cxx_std_23)
     target_link_libraries(LVUIRuntime PUBLIC LVUI::Native iiSDKCore::Runtime)
-    target_include_directories(LVUIRuntime PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    target_include_directories(LVUIRuntime PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src> $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include> $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
     install(TARGETS LVUIRuntime EXPORT LVUIRuntimeTargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     install(EXPORT LVUIRuntimeTargets NAMESPACE LVUI:: DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/LVUI)
 endif()
@@ -98,183 +99,188 @@ option(LVUI_BUILD_STYLE_EXAMPLE "Build the LVUI style example with an applicatio
 if(LVUI_BUILD_STYLE_EXAMPLE)
     add_subdirectory(example/StyleTokens)
 endif()
+option(LVUI_BUILD_TUTORIAL_EXAMPLES "Build the LVUI getting-started applications" OFF)
+if(LVUI_BUILD_TUTORIAL_EXAMPLES)
+    add_subdirectory(example/GettingStarted)
+endif()
 set(_package "${CMAKE_INSTALL_LIBDIR}/cmake/LVUI")
 install(TARGETS LVUI LVUINative EXPORT LVUITargets ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(TARGETS lvui-check RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(TARGETS lvui-compile EXPORT LVUITargets RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES
-    src/LVUI/Document.h
-    src/LVUI/Card.h
-    src/LVUI/NativeCard.h
-    src/LVUI/Hierarchy.h
-    src/LVUI/List.h
-    src/LVUI/ListItem.h
-    src/LVUI/ListItemQuantity.h
-    src/LVUI/ListItemSelector.h
-    src/LVUI/NativeListItemSelector.h
-    src/LVUI/NativeVisual.h
-    src/LVUI/NativeListItemDrawing.h
-    src/LVUI/NativeListItem.h
-    src/LVUI/NativeListItemComposite.h
-    src/LVUI/ListViewport.h
-    src/LVUI/PanelRegions.h
-    src/LVUI/ListPanel.h
-    src/LVUI/NativeListView.h
-    src/LVUI/NativeListPanel.h
-    src/LVUI/HierarchyPanel.h
-    src/LVUI/NativeHierarchyPanel.h
-    src/LVUI/HierarchyDrag.h
-    src/LVUI/HierarchyItem.h
-    src/LVUI/HierarchyItemProjection.h
-    src/LVUI/HierarchyViewport.h
-    src/LVUI/ListToolbar.h
-    src/LVUI/Table.h
-    src/LVUI/TableRowView.h
-    src/LVUI/NativeTableRow.h
-    src/LVUI/TableCellItem.h
-    src/LVUI/NativeTableCellItem.h
-    src/LVUI/TableHeader.h
-    src/LVUI/NativeTableHeader.h
-    src/LVUI/TableClipboard.h
-    src/LVUI/TableEditing.h
-    src/LVUI/TableSorting.h
-    src/LVUI/TableStructure.h
-    src/LVUI/CodeDocument.h
-    src/LVUI/CodeViewport.h
-    src/LVUI/CodeComposition.h
-    src/LVUI/CodeEditorController.h
-    src/LVUI/CodeEditorSession.h
-    src/LVUI/NativeCodeEditor.h
-    src/LVUI/ToolbarButton.h
-    src/LVUI/NativeToolbarButton.h
-    src/LVUI/ListFooter.h
-    src/LVUI/NativeListFooter.h
-    src/LVUI/HierarchyToolbar.h
-    src/LVUI/HierarchyToolbarLayout.h
-    src/LVUI/NativeHierarchyToolbar.h
-    src/LVUI/TableAppearance.h
-    src/LVUI/TableViewport.h
-    src/LVUI/NativeTable.h
-    src/LVUI/NativeListToolbar.h
-    src/LVUI/NativeHierarchyItem.h
-    src/LVUI/NativeHierarchyList.h
-    src/LVUI/Language.h
-    src/LVUI/Compiler.h
-    src/LVUI/ConstantExpression.h
-    src/LVUI/NativeBindings.h
-    src/LVUI/NativeComponentInputs.h
-    src/LVUI/NativeObjectInputs.h
-    src/LVUI/NativeBackendFactories.h
-    src/LVUI/NativeActivation.h
-    src/LVUI/NativeWork.h
-    src/LVUI/NativeValues.h
-    src/LVUI/NativeMethods.h
-    src/LVUI/NativeInferredValues.h
-    src/LVUI/NativeColors.h
-    src/LVUI/NativeWidgetColors.h
-    src/LVUI/NativeWidgetLayout.h
-    src/LVUI/NativeLayoutValues.h
-    src/LVUI/NativeWindowValues.h
-    src/LVUI/NativeFunctionVariable.h
-    src/LVUI/NativeCollection.h
-    src/LVUI/NativeCollectionNavigation.h
-    src/LVUI/NativeCollectionWidgets.h
-    src/LVUI/NativeVirtualCollection.h
-    src/LVUI/NativeLineIndex.h
-    src/LVUI/NativeMeasuredCollection.h
-    src/LVUI/Motion.h
-    src/LVUI/Image.h
-    src/LVUI/IconCatalog.h
-    src/LVUI/NativeIconCache.h
-    src/LVUI/Tab.h
-    src/LVUI/NativeTab.h
-    src/LVUI/NativeTabBar.h
-    src/LVUI/Menu.h
-    src/LVUI/MenuItem.h
-    src/LVUI/NativeMenuItem.h
-    src/LVUI/NativeMenu.h
-    src/LVUI/Popover.h
-    src/LVUI/NativePopover.h
-    src/LVUI/Modal.h
-    src/LVUI/NativeModal.h
-    src/LVUI/AlertButton.h
-    src/LVUI/NativeAlertButton.h
-    src/LVUI/Alert.h
-    src/LVUI/NativeAlert.h
-    src/LVUI/Sheet.h
-    src/LVUI/NativeSheet.h
-    src/LVUI/ColorPickerButton.h
-    src/LVUI/ColorPicker.h
-    src/LVUI/ColorPickerLayout.h
-    src/LVUI/ColorSource.h
-    src/LVUI/ColorSelection.h
-    src/LVUI/ColorSurface.h
-    src/LVUI/ColorChannels.h
-    src/LVUI/ColorChannelSurface.h
-    src/LVUI/NativeColorChannel.h
-    src/LVUI/ColorSelectionSurface.h
-    src/LVUI/ColorPickerSession.h
-    src/LVUI/NativeColorPickerValues.h
-    src/LVUI/NativeColorPicker.h
-    src/LVUI/NativeColorSurface.h
-    src/LVUI/NativeColorPickerButton.h
-    src/LVUI/Button.h
-    src/LVUI/NativeButton.h
-    src/LVUI/HelpButton.h
-    src/LVUI/DropdownButton.h
-    src/LVUI/NativeDropdownButton.h
-    src/LVUI/Divider.h
-    src/LVUI/NativeDivider.h
-    src/LVUI/ToggleSwitch.h
-    src/LVUI/NativeToggleSwitch.h
-    src/LVUI/CheckBox.h
-    src/LVUI/NativeCheckBox.h
-    src/LVUI/RadioButton.h
-    src/LVUI/RadioGroup.h
-    src/LVUI/NativeRadioButton.h
-    src/LVUI/Material.h
-    src/LVUI/NativeMaterial.h
-    src/LVUI/Navigation.h
-    src/LVUI/NavigationHistory.h
-    src/LVUI/PageRouter.h
-    src/LVUI/NativePageRouter.h
-    src/LVUI/AppCard.h
-    src/LVUI/NativeAppCard.h
-    src/LVUI/AppHeader.h
-    src/LVUI/NativeAppHeader.h
-    src/LVUI/EventListener.h
-    src/LVUI/NativeEventListener.h
-    src/LVUI/Avatar.h
-    src/LVUI/NativeAvatar.h
-    src/LVUI/Tooltip.h
-    src/LVUI/TooltipOutline.h
-    src/LVUI/TooltipController.h
-    src/LVUI/NativeTooltipPresentation.h
-    src/LVUI/NativeTooltipScheduler.h
-    src/LVUI/NativeTooltipTarget.h
-    src/LVUI/NativeTooltip.h
-    src/LVUI/Slider.h
-    src/LVUI/NativeSlider.h
-    src/LVUI/Stepper.h
-    src/LVUI/NativeStepper.h
-    src/LVUI/ComboBox.h
-    src/LVUI/NativeComboBox.h
-    src/LVUI/SegmentedControl.h
-    src/LVUI/NativeSegmentedControl.h
-    src/LVUI/NativeStylePort.h
-    src/LVUI/Route.h
-    src/LVUI/Link.h
-    src/LVUI/NativeLink.h
-    src/LVUI/NativeImage.h
-    src/LVUI/NativeDocument.h
-    src/LVUI/Text.h
-    src/LVUI/TextInput.h
-    src/LVUI/InputField.h
-    src/LVUI/NativeTextBoundary.h
-    src/LVUI/NativeTextLayout.h
-    src/LVUI/NativeInputField.h
-    src/LVUI/ProgressBar.h
-    src/LVUI/StyleTokens.h
+    src/Compiler/Document.h
+    src/Controls/Card.h
+    src/Controls/NativeCard.h
+    src/Collections/Hierarchy.h
+    src/Collections/List.h
+    src/Collections/ListItem.h
+    src/Collections/ListItemQuantity.h
+    src/Collections/ListItemSelector.h
+    src/Collections/NativeListItemSelector.h
+    src/Runtime/NativeVisual.h
+    src/Collections/NativeListItemDrawing.h
+    src/Collections/NativeListItem.h
+    src/Collections/NativeListItemComposite.h
+    src/Collections/ListViewport.h
+    src/Layout/PanelRegions.h
+    src/Collections/ListPanel.h
+    src/Collections/NativeListView.h
+    src/Collections/NativeListPanel.h
+    src/Collections/HierarchyPanel.h
+    src/Collections/NativeHierarchyPanel.h
+    src/Collections/HierarchyDrag.h
+    src/Collections/HierarchyItem.h
+    src/Collections/HierarchyItemProjection.h
+    src/Collections/HierarchyViewport.h
+    src/Collections/ListToolbar.h
+    src/Collections/Table.h
+    src/Collections/TableRowView.h
+    src/Collections/NativeTableRow.h
+    src/Collections/TableCellItem.h
+    src/Collections/NativeTableCellItem.h
+    src/Collections/TableHeader.h
+    src/Collections/NativeTableHeader.h
+    src/Collections/TableClipboard.h
+    src/Collections/TableEditing.h
+    src/Collections/TableSorting.h
+    src/Collections/TableStructure.h
+    src/Editing/CodeDocument.h
+    src/Editing/CodeViewport.h
+    src/Editing/CodeComposition.h
+    src/Editing/CodeEditorController.h
+    src/Editing/CodeEditorSession.h
+    src/Editing/NativeCodeEditor.h
+    src/Controls/ToolbarButton.h
+    src/Controls/NativeToolbarButton.h
+    src/Collections/ListFooter.h
+    src/Collections/NativeListFooter.h
+    src/Collections/HierarchyToolbar.h
+    src/Collections/HierarchyToolbarLayout.h
+    src/Collections/NativeHierarchyToolbar.h
+    src/Collections/TableAppearance.h
+    src/Collections/TableViewport.h
+    src/Collections/NativeTable.h
+    src/Collections/NativeListToolbar.h
+    src/Collections/NativeHierarchyItem.h
+    src/Collections/NativeHierarchyList.h
+    src/Language/Language.h
+    src/Compiler/Compiler.h
+    src/Language/ConstantExpression.h
+    src/Runtime/NativeBindings.h
+    src/Runtime/NativeComponentInputs.h
+    src/Runtime/NativeObjectInputs.h
+    src/Runtime/NativeBackendFactories.h
+    src/Runtime/NativeActivation.h
+    src/Runtime/NativeWork.h
+    src/Runtime/NativeValues.h
+    src/Runtime/NativeMethods.h
+    src/Runtime/NativeInferredValues.h
+    src/Style/NativeColors.h
+    src/Style/NativeWidgetColors.h
+    src/Layout/NativeWidgetLayout.h
+    src/Layout/NativeLayoutValues.h
+    src/Runtime/NativeWindowValues.h
+    src/Style/WindowAccent.h
+    src/Runtime/NativeFunctionVariable.h
+    src/Collections/NativeCollection.h
+    src/Collections/NativeCollectionNavigation.h
+    src/Collections/NativeCollectionWidgets.h
+    src/Collections/NativeVirtualCollection.h
+    src/Editing/NativeLineIndex.h
+    src/Collections/NativeMeasuredCollection.h
+    src/Style/Motion.h
+    src/Media/Image.h
+    src/Media/IconCatalog.h
+    src/Media/NativeIconCache.h
+    src/Controls/Tab.h
+    src/Controls/NativeTab.h
+    src/Controls/NativeTabBar.h
+    src/Overlays/Menu.h
+    src/Overlays/MenuItem.h
+    src/Overlays/NativeMenuItem.h
+    src/Overlays/NativeMenu.h
+    src/Overlays/Popover.h
+    src/Overlays/NativePopover.h
+    src/Overlays/Modal.h
+    src/Overlays/NativeModal.h
+    src/Overlays/AlertButton.h
+    src/Overlays/NativeAlertButton.h
+    src/Overlays/Alert.h
+    src/Overlays/NativeAlert.h
+    src/Overlays/Sheet.h
+    src/Overlays/NativeSheet.h
+    src/Color/ColorPickerButton.h
+    src/Color/ColorPicker.h
+    src/Color/ColorPickerLayout.h
+    src/Color/ColorSource.h
+    src/Color/ColorSelection.h
+    src/Color/ColorSurface.h
+    src/Color/ColorChannels.h
+    src/Color/ColorChannelSurface.h
+    src/Color/NativeColorChannel.h
+    src/Color/ColorSelectionSurface.h
+    src/Color/ColorPickerSession.h
+    src/Color/NativeColorPickerValues.h
+    src/Color/NativeColorPicker.h
+    src/Color/NativeColorSurface.h
+    src/Color/NativeColorPickerButton.h
+    src/Controls/Button.h
+    src/Controls/NativeButton.h
+    src/Controls/HelpButton.h
+    src/Controls/DropdownButton.h
+    src/Controls/NativeDropdownButton.h
+    src/Controls/Divider.h
+    src/Controls/NativeDivider.h
+    src/Controls/ToggleSwitch.h
+    src/Controls/NativeToggleSwitch.h
+    src/Controls/CheckBox.h
+    src/Controls/NativeCheckBox.h
+    src/Controls/RadioButton.h
+    src/Controls/RadioGroup.h
+    src/Controls/NativeRadioButton.h
+    src/Style/Material.h
+    src/Style/NativeMaterial.h
+    src/Navigation/Navigation.h
+    src/Navigation/NavigationHistory.h
+    src/Navigation/PageRouter.h
+    src/Navigation/NativePageRouter.h
+    src/Controls/AppCard.h
+    src/Controls/NativeAppCard.h
+    src/Controls/AppHeader.h
+    src/Controls/NativeAppHeader.h
+    src/Controls/EventListener.h
+    src/Runtime/NativeEventListener.h
+    src/Controls/Avatar.h
+    src/Controls/NativeAvatar.h
+    src/Overlays/Tooltip.h
+    src/Overlays/TooltipOutline.h
+    src/Overlays/TooltipController.h
+    src/Overlays/NativeTooltipPresentation.h
+    src/Overlays/NativeTooltipScheduler.h
+    src/Overlays/NativeTooltipTarget.h
+    src/Overlays/NativeTooltip.h
+    src/Controls/Slider.h
+    src/Controls/NativeSlider.h
+    src/Controls/Stepper.h
+    src/Controls/NativeStepper.h
+    src/Controls/ComboBox.h
+    src/Controls/NativeComboBox.h
+    src/Controls/SegmentedControl.h
+    src/Controls/NativeSegmentedControl.h
+    src/Controls/NativeStylePort.h
+    src/Navigation/Route.h
+    src/Controls/Link.h
+    src/Controls/NativeLink.h
+    src/Media/NativeImage.h
+    src/Editing/NativeDocument.h
+    src/Controls/Text.h
+    src/Editing/TextInput.h
+    src/Editing/InputField.h
+    src/Editing/NativeTextBoundary.h
+    src/Editing/NativeTextLayout.h
+    src/Editing/NativeInputField.h
+    src/Controls/ProgressBar.h
+    src/Style/StyleTokens.h
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/LVUI)
 install(FILES "${LVUI_BUILTIN_ICON_HEADER}" "${LVUI_BUILTIN_HUE_RING_HEADER}" DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/LVUI)
 install(DIRECTORY resources/icons DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI/resources)
@@ -292,7 +298,7 @@ install(DIRECTORY docs DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI PATTERN .DS_Sto
 install(FILES catalog/lvui-keywords.json catalog/lvui-style-tokens.json
     DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI/catalog)
 if(BUILD_TESTING)
-    option(LVUI_TEST_LEGACY_LVRS "Enable historical tests that read the separate LVRS checkout" OFF)
+    add_test(NAME LVUI.source_layout COMMAND ${CMAKE_COMMAND} -DSOURCE_ROOT=${CMAKE_CURRENT_SOURCE_DIR} -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/source_layout.cmake)
     add_executable(LVUIOwnedIconCatalogTests tests/owned_icon_catalog.cpp)
     target_link_libraries(LVUIOwnedIconCatalogTests PRIVATE LVUI::LVUI)
     add_test(NAME LVUI.OwnedIcons.Catalog COMMAND LVUIOwnedIconCatalogTests)
@@ -325,6 +331,9 @@ if(BUILD_TESTING)
     add_executable(LVUIOwnedListItemSelectCompileTests tests/list_item_select_codegen.cpp)
     target_link_libraries(LVUIOwnedListItemSelectCompileTests PRIVATE LVUI::LVUI)
     add_test(NAME LVUI.OwnedListItem.SelectCodegen COMMAND LVUIOwnedListItemSelectCompileTests)
+    add_executable(LVUIOwnedListItemInlineEditCompileTests tests/list_item_inline_edit_codegen.cpp)
+    target_link_libraries(LVUIOwnedListItemInlineEditCompileTests PRIVATE LVUI::LVUI)
+    add_test(NAME LVUI.OwnedListItem.InlineEditCodegen COMMAND LVUIOwnedListItemInlineEditCompileTests)
     add_executable(LVUIOwnedListItemCompositeCompileTests tests/list_item_composite_codegen.cpp)
     target_link_libraries(LVUIOwnedListItemCompositeCompileTests PRIVATE LVUI::LVUI)
     add_test(NAME LVUI.OwnedListItem.CompositeCodegen COMMAND LVUIOwnedListItemCompositeCompileTests)
@@ -527,11 +536,11 @@ if(BUILD_TESTING)
     add_test(NAME LVUI.OwnedMenuItem.Codegen COMMAND LVUIMenuItemCompileTests)
     add_executable(LVUIMotionTests tests/motion.cpp)
     target_compile_features(LVUIMotionTests PRIVATE cxx_std_23)
-    target_include_directories(LVUIMotionTests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+    target_include_directories(LVUIMotionTests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_BINARY_DIR}/include")
     add_test(NAME LVUI.Motion.Model COMMAND LVUIMotionTests)
     add_executable(LVUIOwnedProgressTests tests/progress_bar_owned.cpp)
     target_compile_features(LVUIOwnedProgressTests PRIVATE cxx_std_23)
-    target_include_directories(LVUIOwnedProgressTests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+    target_include_directories(LVUIOwnedProgressTests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_BINARY_DIR}/include")
     add_test(NAME LVUI.OwnedProgress.Model COMMAND LVUIOwnedProgressTests)
     add_executable(LVUIOwnedProgressCodegenTests tests/progress_bar_codegen.cpp)
     target_link_libraries(LVUIOwnedProgressCodegenTests PRIVATE LVUI::LVUI)
@@ -541,22 +550,11 @@ if(BUILD_TESTING)
     foreach(_case text numeric keys binding containers dynamic_keys temporary nested_binding named named_temporary named_cpp named_binding owned_reads)
         add_test(NAME LVUI.NativeCoreValues.${_case} COMMAND LVUINativeCoreValueTests ${_case})
     endforeach()
-    add_executable(LVUIProgressTests tests/progress.cpp)
-    add_executable(LVUIHierarchyTests tests/hierarchy.cpp)
     add_executable(LVUIOpacityTests tests/opacity.cpp)
     target_link_libraries(LVUIOpacityTests PRIVATE LVUI::LVUI)
     foreach(_case values reactive shared fixed components framework delegate diagnostics)
         add_test(NAME LVUI.Opacity.${_case} COMMAND LVUIOpacityTests ${_case})
         set_tests_properties(LVUI.Opacity.${_case} PROPERTIES TIMEOUT 15)
-    endforeach()
-    target_link_libraries(LVUIHierarchyTests PRIVATE LVUI::LVUI)
-    foreach(_case item list reactive controller diagnostics framework slots slot_context slot_forwarding slot_diagnostics delegate delegate_context delegate_forwarding delegate_diagnostics)
-        add_test(NAME LVUI.Hierarchy.${_case} COMMAND LVUIHierarchyTests ${_case})
-        set_tests_properties(LVUI.Hierarchy.${_case} PROPERTIES TIMEOUT 15)
-    endforeach()
-    target_link_libraries(LVUIProgressTests PRIVATE LVUI::LVUI)
-    foreach(_case defaults inputs reactive scoped diagnostics)
-        add_test(NAME LVUI.Progress.${_case} COMMAND LVUIProgressTests ${_case})
     endforeach()
     add_executable(LVUINativeInferredValueTests tests/native_inferred_values.cpp)
     target_link_libraries(LVUINativeInferredValueTests PRIVATE LVUI::Native)
@@ -853,7 +851,7 @@ if(BUILD_TESTING)
         set_tests_properties(LVUI.ViewValues.${_case} PROPERTIES TIMEOUT 15)
     endforeach()
     set(LVUI_IIGUI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../iiGUI" CACHE PATH "Optional iiGUI public headers for generated C++ compilation")
-    if(EXISTS "${LVUI_IIGUI_SOURCE_DIR}/src/iiGUI/NativeWidgets.h" AND
+    if(EXISTS "${LVUI_IIGUI_SOURCE_DIR}/src/Widgets/NativeWidgets.h" AND
        EXISTS "${LVUI_IIGUI_SOURCE_DIR}/build/install/include/iiGUI/Export.h")
         lvui_generate(NAME NativeOwnedProgress SOURCE tests/fixtures/NativeOwnedProgress.lvui
             INCLUDES NativeFixture.h OUTPUT_VARIABLE _owned_progress_generated)
@@ -867,7 +865,7 @@ if(BUILD_TESTING)
             INCLUDES NativeOwnedProgressFixture.h OUTPUT_VARIABLE _owned_progress_motion)
         add_library(LVUIOwnedProgressCompile OBJECT tests/native_owned_progress_compile.cpp "${_owned_progress_generated}" "${_owned_progress_advanced}" "${_owned_progress_source}" "${_owned_progress_scoped}" "${_owned_progress_motion}")
         target_include_directories(LVUIOwnedProgressCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedProgressCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedImage SOURCE tests/fixtures/NativeOwnedImage.lvui
             INCLUDES NativeOwnedImageFixture.h OUTPUT_VARIABLE _owned_image_generated)
@@ -877,31 +875,31 @@ if(BUILD_TESTING)
             OUTPUT_VARIABLE _owned_image_static)
         add_library(LVUIOwnedImageCompile OBJECT tests/native_owned_image_compile.cpp "${_owned_image_generated}" "${_owned_image_advanced}" "${_owned_image_static}")
         target_include_directories(LVUIOwnedImageCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedImageCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedButton SOURCE tests/fixtures/NativeOwnedButton.lvui
             INCLUDES NativeOwnedButtonFixture.h OUTPUT_VARIABLE _owned_button_generated)
         add_library(LVUIOwnedButtonCompile OBJECT tests/native_owned_button_compile.cpp "${_owned_button_generated}")
         target_include_directories(LVUIOwnedButtonCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedButtonCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedDivider SOURCE tests/fixtures/NativeOwnedDivider.lvui
             INCLUDES NativeOwnedDividerFixture.h OUTPUT_VARIABLE _owned_divider_generated)
         add_library(LVUIOwnedDividerCompile OBJECT tests/native_owned_divider_compile.cpp "${_owned_divider_generated}")
         target_include_directories(LVUIOwnedDividerCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedDividerCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedToggleSwitch SOURCE tests/fixtures/NativeOwnedToggleSwitch.lvui
             INCLUDES NativeOwnedToggleSwitchFixture.h OUTPUT_VARIABLE _owned_toggle_generated)
         add_library(LVUIOwnedToggleSwitchCompile OBJECT tests/native_owned_toggle_switch_compile.cpp "${_owned_toggle_generated}")
         target_include_directories(LVUIOwnedToggleSwitchCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedToggleSwitchCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedCheckBox SOURCE tests/fixtures/NativeOwnedCheckBox.lvui
             INCLUDES NativeOwnedCheckBoxFixture.h OUTPUT_VARIABLE _owned_checkbox_generated)
         add_library(LVUIOwnedCheckBoxCompile OBJECT tests/native_owned_check_box_compile.cpp "${_owned_checkbox_generated}")
         target_include_directories(LVUIOwnedCheckBoxCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedCheckBoxCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedRadioButton SOURCE tests/fixtures/NativeOwnedRadioButton.lvui
             INCLUDES NativeOwnedRadioButtonFixture.h OUTPUT_VARIABLE _owned_radio_generated)
@@ -909,13 +907,13 @@ if(BUILD_TESTING)
             INCLUDES NativeOwnedRadioButtonFixture.h OUTPUT_VARIABLE _owned_radio_rows_generated)
         add_library(LVUIOwnedRadioButtonCompile OBJECT tests/native_owned_radio_button_compile.cpp "${_owned_radio_generated}" "${_owned_radio_rows_generated}")
         target_include_directories(LVUIOwnedRadioButtonCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedRadioButtonCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedMaterial SOURCE tests/fixtures/NativeOwnedMaterial.lvui
             INCLUDES NativeOwnedMaterialFixture.h OUTPUT_VARIABLE _owned_material_generated)
         add_library(LVUIOwnedMaterialCompile OBJECT tests/native_owned_material_compile.cpp "${_owned_material_generated}")
         target_include_directories(LVUIOwnedMaterialCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedMaterialCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedLink SOURCE tests/fixtures/NativeOwnedLink.lvui
             INCLUDES NativeOwnedLinkFixture.h OUTPUT_VARIABLE _owned_link_generated)
@@ -923,43 +921,43 @@ if(BUILD_TESTING)
             INCLUDES NativeOwnedLinkMethodsFixture.h OUTPUT_VARIABLE _owned_link_methods_generated)
         add_library(LVUIOwnedLinkCompile OBJECT tests/native_owned_link_compile.cpp "${_owned_link_generated}" "${_owned_link_methods_generated}")
         target_include_directories(LVUIOwnedLinkCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" tests/fixtures
-            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedLinkCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedPageRouter SOURCE tests/fixtures/NativeOwnedPageRouter.lvui
             INCLUDES NativeOwnedPageRouterFixture.h OUTPUT_VARIABLE _owned_page_router_generated)
         add_library(LVUIOwnedPageRouterCompile OBJECT tests/native_owned_page_router_compile.cpp "${_owned_page_router_generated}")
         target_include_directories(LVUIOwnedPageRouterCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" tests/fixtures
-            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedPageRouterCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedAppCard SOURCE tests/fixtures/NativeOwnedAppCard.lvui
             INCLUDES NativeOwnedAppCardFixture.h OUTPUT_VARIABLE _owned_app_card_generated)
         add_library(LVUIOwnedAppCardCompile OBJECT tests/native_owned_app_card_compile.cpp "${_owned_app_card_generated}")
         target_include_directories(LVUIOwnedAppCardCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" tests/fixtures
-            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedAppCardCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedAppHeader SOURCE tests/fixtures/NativeOwnedAppHeader.lvui
             INCLUDES NativeOwnedAppHeaderFixture.h OUTPUT_VARIABLE _owned_app_header_generated)
         add_library(LVUIOwnedAppHeaderCompile OBJECT tests/native_owned_app_header_compile.cpp "${_owned_app_header_generated}")
         target_include_directories(LVUIOwnedAppHeaderCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" tests/fixtures
-            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedAppHeaderCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedEventListener SOURCE tests/fixtures/NativeOwnedEventListener.lvui
             INCLUDES NativeOwnedEventListenerFixture.h OUTPUT_VARIABLE _owned_event_listener_generated)
         add_library(LVUIOwnedEventListenerCompile OBJECT tests/native_owned_event_listener_compile.cpp "${_owned_event_listener_generated}")
         target_include_directories(LVUIOwnedEventListenerCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" tests/fixtures
-            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedEventListenerCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeOwnedAvatar SOURCE tests/fixtures/NativeOwnedAvatar.lvui
             INCLUDES NativeOwnedAvatarFixture.h OUTPUT_VARIABLE _owned_avatar_generated)
         add_library(LVUIOwnedAvatarCompile OBJECT tests/native_owned_avatar_compile.cpp "${_owned_avatar_generated}")
         target_include_directories(LVUIOwnedAvatarCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" tests/fixtures
-            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUIOwnedAvatarCompile PRIVATE LVUI::Native)
         lvui_generate(NAME NativeReactive SOURCE tests/fixtures/NativeReactive.lvui
             INCLUDES NativeFixture.h OUTPUT_VARIABLE _native_generated)
         add_executable(LVUINativeGeneratedTests tests/native_generated.cpp "${_native_generated}")
         target_include_directories(LVUINativeGeneratedTests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUINativeGeneratedTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeGenerated COMMAND LVUINativeGeneratedTests)
         set_tests_properties(LVUI.NativeGenerated PROPERTIES TIMEOUT 15)
@@ -971,7 +969,7 @@ if(BUILD_TESTING)
             OUTPUT_VARIABLE _native_local_only)
         add_executable(LVUINativeNestedTests tests/native_nested.cpp "${_native_nested}" "${_native_root}" "${_native_local_only}")
         target_include_directories(LVUINativeNestedTests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUINativeNestedTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeNested COMMAND LVUINativeNestedTests)
         set_tests_properties(LVUI.NativeNested PROPERTIES TIMEOUT 15)
@@ -981,7 +979,7 @@ if(BUILD_TESTING)
             INCLUDES NativeFixture.h OUTPUT_VARIABLE _native_conditional)
         add_executable(LVUINativeViewValueTests tests/native_view_values.cpp "${_native_view_values}" "${_native_conditional}")
         target_include_directories(LVUINativeViewValueTests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUINativeViewValueTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeViewValues COMMAND LVUINativeViewValueTests)
         set_tests_properties(LVUI.NativeViewValues PROPERTIES TIMEOUT 15)
@@ -991,7 +989,7 @@ if(BUILD_TESTING)
             INCLUDES NativeFixture.h OUTPUT_VARIABLE _native_component_retirement)
         add_executable(LVUINativeComponentTests tests/native_components.cpp "${_native_components}" "${_native_component_retirement}")
         target_include_directories(LVUINativeComponentTests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUINativeComponentTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeComponents COMMAND LVUINativeComponentTests)
         set_tests_properties(LVUI.NativeComponents PROPERTIES TIMEOUT 15)
@@ -999,7 +997,7 @@ if(BUILD_TESTING)
             INCLUDES NativeScalarInputFixture.h OUTPUT_VARIABLE _native_scalar_inputs)
         add_executable(LVUINativeScalarInputTests tests/native_scalar_inputs.cpp "${_native_scalar_inputs}")
         target_include_directories(LVUINativeScalarInputTests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUINativeScalarInputTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeScalarInputs COMMAND LVUINativeScalarInputTests)
         set_tests_properties(LVUI.NativeScalarInputs PROPERTIES TIMEOUT 15)
@@ -1007,231 +1005,10 @@ if(BUILD_TESTING)
             INCLUDES NativeRepetitionFixture.h OUTPUT_VARIABLE _native_lists)
         add_executable(LVUINativeListTests tests/native_lists.cpp "${_native_lists}")
         target_include_directories(LVUINativeListTests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/include" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
         target_link_libraries(LVUINativeListTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeLists COMMAND LVUINativeListTests)
         set_tests_properties(LVUI.NativeLists PROPERTIES TIMEOUT 15)
-        set(LVUI_LVRS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../LVRS" CACHE PATH "Optional LVRS headers for compile-only repetition coverage")
-        if(LVUI_TEST_LEGACY_LVRS AND EXISTS "${LVUI_LVRS_SOURCE_DIR}/src/LVRS/Widgets.h")
-            lvui_generate(NAME LVRSRepetition SOURCE tests/fixtures/NativeRepetition.lvui FRAMEWORK LVRS
-                INCLUDES NativeRepetitionFixture.h OUTPUT_VARIABLE _lvrs_repetition)
-            lvui_generate(NAME LVRSSharedRepetition SOURCE tests/fixtures/NativeSharedRepetition.lvui FRAMEWORK LVRS
-                INCLUDES NativeRepetitionFixture.h OUTPUT_VARIABLE _lvrs_shared_repetition)
-            lvui_generate(NAME LVRSVirtualRepetition SOURCE tests/fixtures/NativeVirtualRepetition.lvui FRAMEWORK LVRS
-                INCLUDES NativeRepetitionFixture.h OUTPUT_VARIABLE _lvrs_virtual_repetition)
-            lvui_generate(NAME LVRSMeasuredRepetition SOURCE tests/fixtures/NativeMeasuredRepetition.lvui FRAMEWORK LVRS
-                INCLUDES NativeRepetitionFixture.h OUTPUT_VARIABLE _lvrs_measured_repetition)
-            lvui_generate(NAME LVRSNavigatedRepetition SOURCE tests/fixtures/NativeNavigatedRepetition.lvui FRAMEWORK LVRS
-                INCLUDES NativeRepetitionFixture.h OUTPUT_VARIABLE _lvrs_navigated_repetition)
-            lvui_generate(NAME LVRSReturnedCallbacks SOURCE tests/fixtures/NativeReturnedCallbacks.lvui FRAMEWORK LVRS
-                INCLUDES NativeReturnedFixture.h OUTPUT_VARIABLE _lvrs_returned_callbacks)
-            lvui_generate(NAME LVRSBackendConstruction SOURCE tests/fixtures/NativeBackendConstruction.lvui FRAMEWORK LVRS
-                INCLUDES NativeConstructionFixture.h OUTPUT_VARIABLE _lvrs_backend_construction)
-            lvui_generate(NAME LVRSCallableInputs SOURCE tests/fixtures/NativeCallableInputs.lvui FRAMEWORK LVRS
-                INCLUDES NativeCallableFixture.h OUTPUT_VARIABLE _lvrs_callable_inputs)
-            lvui_generate(NAME LVRSCallableEvents SOURCE tests/fixtures/NativeCallableEvents.lvui FRAMEWORK LVRS
-                INCLUDES NativeCallableEventFixture.h OUTPUT_VARIABLE _lvrs_callable_events)
-            lvui_generate(NAME LVRSSharedCallable SOURCE tests/fixtures/NativeSharedCallable.lvui FRAMEWORK LVRS
-                INCLUDES NativeSharedCallableFixture.h OUTPUT_VARIABLE _lvrs_shared_callable)
-            lvui_generate(NAME LVRSIndependentCallable SOURCE tests/fixtures/NativeIndependentCallable.lvui FRAMEWORK LVRS
-                INCLUDES NativeSharedCallableFixture.h OUTPUT_VARIABLE _lvrs_independent_callable)
-            lvui_generate(NAME LVRSRootSharedCallable SOURCE tests/fixtures/NativeRootSharedCallable.lvui FRAMEWORK LVRS
-                INCLUDES NativeSharedCallableFixture.h OUTPUT_VARIABLE _lvrs_root_shared_callable)
-            lvui_generate(NAME LVRSReferenceCallable SOURCE tests/fixtures/NativeReferenceCallable.lvui FRAMEWORK LVRS
-                INCLUDES NativeSharedCallableFixture.h OUTPUT_VARIABLE _lvrs_reference_callable)
-            lvui_generate(NAME LVRSFunctionValues SOURCE tests/fixtures/NativeFunctionValues.lvui FRAMEWORK LVRS
-                INCLUDES NativeFunctionFixture.h OUTPUT_VARIABLE _lvrs_function_values)
-            lvui_generate(NAME LVRSFunctionValidators SOURCE tests/fixtures/NativeFunctionValidators.lvui FRAMEWORK LVRS
-                INCLUDES NativeFunctionValidatorFixture.h OUTPUT_VARIABLE _lvrs_function_validators)
-            lvui_generate(NAME LVRSFunctionVariables SOURCE tests/fixtures/NativeFunctionVariables.lvui FRAMEWORK LVRS
-                INCLUDES NativeFunctionVariableFixture.h OUTPUT_VARIABLE _lvrs_function_variables)
-            add_library(LVUILVRSRepetitionCompile OBJECT tests/lvrs_repetition_compile.cpp tests/lvrs_callable_compile.cpp "${_lvrs_repetition}" "${_lvrs_shared_repetition}" "${_lvrs_virtual_repetition}" "${_lvrs_measured_repetition}" "${_lvrs_navigated_repetition}" "${_lvrs_returned_callbacks}" "${_lvrs_backend_construction}" "${_lvrs_callable_inputs}" "${_lvrs_callable_events}")
-            target_sources(LVUILVRSRepetitionCompile PRIVATE "${_lvrs_shared_callable}" "${_lvrs_independent_callable}" "${_lvrs_root_shared_callable}" "${_lvrs_reference_callable}")
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_function_compile.cpp "${_lvrs_function_values}" "${_lvrs_function_validators}")
-            target_sources(LVUILVRSRepetitionCompile PRIVATE "${_lvrs_function_variables}")
-            set(_lvrs_view_sequences)
-            foreach(_sequence ViewSequences ViewSequenceRows ViewSequenceRoot ViewSequenceOverride)
-                lvui_generate(NAME LVRS${_sequence} SOURCE tests/fixtures/Native${_sequence}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeViewSequenceFixture.h OUTPUT_VARIABLE _lvrs_view_sequence)
-                list(APPEND _lvrs_view_sequences "${_lvrs_view_sequence}")
-            endforeach()
-            lvui_generate(NAME LVRSViewSequenceControls SOURCE tests/fixtures/LVRSViewSequenceControls.lvui FRAMEWORK LVRS
-                OUTPUT_VARIABLE _lvrs_sequence_controls)
-            list(APPEND _lvrs_view_sequences "${_lvrs_sequence_controls}")
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_view_sequences_compile.cpp ${_lvrs_view_sequences})
-            lvui_generate(NAME LVRSNativeColors SOURCE tests/fixtures/LVRSNativeColors.lvui FRAMEWORK LVRS
-                INCLUDES NativeColorFixture.h OUTPUT_VARIABLE _lvrs_native_colors)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_colors_compile.cpp "${_lvrs_native_colors}")
-            set(_lvrs_scalar_inputs)
-            foreach(_scalar ScalarInputs ScalarForward ScalarTypes ScalarConditional ScalarRoot ScalarFunctionDefault)
-                lvui_generate(NAME LVRS${_scalar} SOURCE tests/fixtures/Native${_scalar}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeScalarInputFixture.h OUTPUT_VARIABLE _lvrs_scalar_input)
-                list(APPEND _lvrs_scalar_inputs "${_lvrs_scalar_input}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_scalar_inputs_compile.cpp ${_lvrs_scalar_inputs})
-            set(_lvrs_layouts)
-            foreach(_layout Layout LayoutAlignment LayoutConditional LayoutMeasured)
-                lvui_generate(NAME LVRS${_layout} SOURCE tests/fixtures/Native${_layout}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeLayoutFixture.h OUTPUT_VARIABLE _lvrs_layout)
-                list(APPEND _lvrs_layouts "${_lvrs_layout}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_layout_compile.cpp ${_lvrs_layouts})
-            lvui_generate(NAME LVRSLayoutControls SOURCE tests/fixtures/LVRSLayoutControls.lvui FRAMEWORK LVRS
-                INCLUDES NativeLayoutFixture.h OUTPUT_VARIABLE _lvrs_layout_controls)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE "${_lvrs_layout_controls}")
-            set(_lvrs_windows)
-            foreach(_window Window WindowRoot WindowStatic)
-                lvui_generate(NAME LVRS${_window} SOURCE tests/fixtures/Native${_window}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeWindowFixture.h OUTPUT_VARIABLE _lvrs_window)
-                list(APPEND _lvrs_windows "${_lvrs_window}")
-            endforeach()
-            foreach(_window WindowAccent WindowAccentName)
-                lvui_generate(NAME LVRS${_window} SOURCE tests/fixtures/LVRS${_window}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeWindowAccentFixture.h OUTPUT_VARIABLE _lvrs_window)
-                list(APPEND _lvrs_windows "${_lvrs_window}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_window_compile.cpp ${_lvrs_windows})
-            set(_lvrs_readonly_views)
-            foreach(_readonly Readonly ReadonlyPostfix)
-                lvui_generate(NAME LVRS${_readonly} SOURCE tests/fixtures/Native${_readonly}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeReadonlyFixture.h OUTPUT_VARIABLE _lvrs_readonly)
-                list(APPEND _lvrs_readonly_views "${_lvrs_readonly}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_readonly_compile.cpp ${_lvrs_readonly_views})
-            set(_lvrs_object_inputs)
-            foreach(_object ObjectInputs ObjectHandles ObjectRoot ObjectRows)
-                lvui_generate(NAME LVRS${_object} SOURCE tests/fixtures/Native${_object}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeObjectInputFixture.h OUTPUT_VARIABLE _lvrs_object_input)
-                list(APPEND _lvrs_object_inputs "${_lvrs_object_input}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_object_inputs_compile.cpp ${_lvrs_object_inputs})
-            set(_lvrs_method_queries)
-            foreach(_method MethodQueries MethodPostfix)
-                lvui_generate(NAME LVRS${_method} SOURCE tests/fixtures/Native${_method}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeMethodQueryFixture.h OUTPUT_VARIABLE _lvrs_method_query)
-                list(APPEND _lvrs_method_queries "${_lvrs_method_query}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_method_queries_compile.cpp ${_lvrs_method_queries})
-            set(_lvrs_object_methods)
-            foreach(_method ObjectMethodReferences ObjectMethodPostfix)
-                lvui_generate(NAME LVRS${_method} SOURCE tests/fixtures/Native${_method}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeObjectMethodReferenceFixture.h OUTPUT_VARIABLE _lvrs_object_method)
-                list(APPEND _lvrs_object_methods "${_lvrs_object_method}")
-            endforeach()
-            lvui_generate(NAME LVRSObjectMethodButtons SOURCE tests/fixtures/LVRSObjectMethodReferences.lvui FRAMEWORK LVRS
-                INCLUDES NativeObjectMethodReferenceFixture.h OUTPUT_VARIABLE _lvrs_object_buttons)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_object_method_references_compile.cpp ${_lvrs_object_methods} "${_lvrs_object_buttons}")
-            set(_lvrs_callable_fields)
-            foreach(_view CallableFields CallableFieldPostfix)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeCallableFieldFixture.h OUTPUT_VARIABLE _lvrs_callable_field)
-                list(APPEND _lvrs_callable_fields "${_lvrs_callable_field}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_callable_fields_compile.cpp ${_lvrs_callable_fields})
-            set(_lvrs_factory_captures)
-            foreach(_view FactoryCaptures FactoryCapturePostfix)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeFactoryCaptureFixture.h OUTPUT_VARIABLE _lvrs_factory_capture)
-                list(APPEND _lvrs_factory_captures "${_lvrs_factory_capture}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_factory_captures_compile.cpp ${_lvrs_factory_captures})
-            lvui_generate(NAME LVRSInferredValues SOURCE tests/fixtures/NativeInferredValues.lvui FRAMEWORK LVRS
-                INCLUDES NativeFactoryCaptureFixture.h OUTPUT_VARIABLE _lvrs_inferred_values)
-            lvui_generate(NAME LVRSInferredFields SOURCE tests/fixtures/NativeInferredFields.lvui FRAMEWORK LVRS
-                INCLUDES NativeInferredFieldsFixture.h OUTPUT_VARIABLE _lvrs_inferred_fields)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_inferred_values_compile.cpp
-                "${_lvrs_inferred_values}" "${_lvrs_inferred_fields}")
-            lvui_generate(NAME LVRSPresentation SOURCE tests/fixtures/NativePresentation.lvui FRAMEWORK LVRS
-                INCLUDES NativePresentationFixture.h OUTPUT_VARIABLE _lvrs_presentation)
-            lvui_generate(NAME LVRSScopedPresentation SOURCE tests/fixtures/NativeScopedPresentation.lvui FRAMEWORK LVRS
-                INCLUDES NativePresentationFixture.h OUTPUT_VARIABLE _lvrs_scoped_presentation)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_presentation_compile.cpp
-                "${_lvrs_presentation}" "${_lvrs_scoped_presentation}")
-            set(_lvrs_progress_views)
-            foreach(_view Progress ProgressScoped ProgressForwarded)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeProgressFixture.h OUTPUT_VARIABLE _lvrs_progress)
-                list(APPEND _lvrs_progress_views "${_lvrs_progress}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_progress_compile.cpp ${_lvrs_progress_views})
-            set(_lvrs_history_views)
-            foreach(_view History HistoryScoped)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeHistoryFixture.h OUTPUT_VARIABLE _lvrs_history)
-                list(APPEND _lvrs_history_views "${_lvrs_history}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_history_compile.cpp ${_lvrs_history_views})
-            set(_lvrs_registry_views)
-            foreach(_view Registry RegistryScoped)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeRegistryFixture.h OUTPUT_VARIABLE _lvrs_registry)
-                list(APPEND _lvrs_registry_views "${_lvrs_registry}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_registry_compile.cpp ${_lvrs_registry_views})
-            lvui_generate(NAME LVRSRouteRegistry SOURCE tests/fixtures/NativeRouteRegistry.lvui FRAMEWORK LVRS
-                INCLUDES NativeRouteRegistryFixture.h OUTPUT_VARIABLE _lvrs_route_registry)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_route_registry_compile.cpp "${_lvrs_route_registry}")
-            set(_lvrs_hierarchy_views)
-            foreach(_view HierarchyList HierarchyItem HierarchyCount HierarchyDelegate)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeHierarchyFixture.h OUTPUT_VARIABLE _lvrs_hierarchy)
-                list(APPEND _lvrs_hierarchy_views "${_lvrs_hierarchy}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_hierarchy_compile.cpp ${_lvrs_hierarchy_views})
-            lvui_generate(NAME LVRSOpacity SOURCE tests/fixtures/NativeOpacity.lvui FRAMEWORK LVRS
-                INCLUDES NativeOpacityFixture.h OUTPUT_VARIABLE _lvrs_opacity)
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_opacity_compile.cpp "${_lvrs_opacity}")
-            set(_lvrs_platform_views)
-            foreach(_view Platform PlatformSelection)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativePlatformFixture.h OUTPUT_VARIABLE _lvrs_platform)
-                list(APPEND _lvrs_platform_views "${_lvrs_platform}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_platform_compile.cpp ${_lvrs_platform_views})
-            set(_lvrs_model_source_views)
-            foreach(_view ModelSource ModelSourceSelection)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeModelSourceFixture.h OUTPUT_VARIABLE _lvrs_model_source)
-                list(APPEND _lvrs_model_source_views "${_lvrs_model_source}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_model_source_compile.cpp ${_lvrs_model_source_views})
-            set(_lvrs_font_views)
-            foreach(_view Font FontSelection)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeFontFixture.h OUTPUT_VARIABLE _lvrs_font)
-                list(APPEND _lvrs_font_views "${_lvrs_font}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_font_compile.cpp ${_lvrs_font_views})
-            set(_lvrs_svg_views)
-            foreach(_view Svg SvgSelection)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeSvgFixture.h OUTPUT_VARIABLE _lvrs_svg)
-                list(APPEND _lvrs_svg_views "${_lvrs_svg}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_svg_compile.cpp ${_lvrs_svg_views})
-            set(_lvrs_render_views)
-            foreach(_view Render RenderSelection)
-                lvui_generate(NAME LVRS${_view} SOURCE tests/fixtures/Native${_view}.lvui FRAMEWORK LVRS
-                    INCLUDES NativeRenderFixture.h OUTPUT_VARIABLE _lvrs_render)
-                list(APPEND _lvrs_render_views "${_lvrs_render}")
-            endforeach()
-            target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_render_compile.cpp ${_lvrs_render_views})
-            if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../iiSDKCore/tests/fixtures/observable_module/Model.h")
-                lvui_generate(NAME LVRSSharedMethod SOURCE tests/fixtures/NativeSharedMethod.lvui FRAMEWORK LVRS
-                    INCLUDES NativeSharedMethodFixture.h OUTPUT_VARIABLE _lvrs_shared_method)
-                target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_shared_method_compile.cpp "${_lvrs_shared_method}")
-                target_include_directories(LVUILVRSRepetitionCompile PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../iiSDKCore/tests")
-            endif()
-            if(LVUI_BUILD_RUNTIME)
-                lvui_generate(NAME LVRSActivationWork SOURCE tests/fixtures/NativeWork.lvui FRAMEWORK LVRS
-                    INCLUDES NativeWorkFixture.h OUTPUT_VARIABLE _lvrs_activation_work)
-                target_sources(LVUILVRSRepetitionCompile PRIVATE tests/lvrs_work_compile.cpp "${_lvrs_activation_work}")
-            endif()
-            target_include_directories(LVUILVRSRepetitionCompile PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
-                tests/fixtures "${LVUI_LVRS_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_SOURCE_DIR}/build/install/include")
-            target_link_libraries(LVUILVRSRepetitionCompile PRIVATE LVUI::Native)
-            set_target_properties(LVUILVRSRepetitionCompile PROPERTIES CXX_EXTENSIONS OFF)
-        endif()
     endif()
     add_executable(LVUINativeBackendFactoryTests tests/native_backend_factories.cpp)
     target_link_libraries(LVUINativeBackendFactoryTests PRIVATE LVUI::Native)
@@ -1281,16 +1058,18 @@ if(BUILD_TESTING)
         add_test(NAME LVUI.StyleTokens.${_case} COMMAND LVUIStyleTokenTests ${_case})
         set_tests_properties(LVUI.StyleTokens.${_case} PROPERTIES TIMEOUT 15)
     endforeach()
+    add_executable(LVUIIndependenceTests tests/independent_backend.cpp)
+    target_link_libraries(LVUIIndependenceTests PRIVATE LVUI::LVUI)
+    add_test(NAME LVUI.IndependentBackend COMMAND LVUIIndependenceTests)
+    set_tests_properties(LVUI.IndependentBackend PROPERTIES TIMEOUT 15)
     add_executable(LVUICompilerTests tests/compiler.cpp)
     target_link_libraries(LVUICompilerTests PRIVATE LVUI::LVUI)
-    add_test(NAME LVUI.AOT.lvrs_code_editor COMMAND LVUICompilerTests lvrs_code_editor)
-    add_test(NAME LVUI.AOT.lvrs_tooltip COMMAND LVUICompilerTests lvrs_tooltip)
-    foreach(_case generation validation actions escaping native_widget embedded_build lvrs_router lvrs_link lvrs_app_surfaces lvrs_materials lvrs_media lvrs_toolbars lvrs_controls lvrs_compound lvrs_menus lvrs_color_fields lvrs_color_picker lvrs_popover lvrs_color_button lvrs_modal lvrs_alerts lvrs_sheet lvrs_tables lvrs_table_view markup lvrs_lists editor_styles)
+    foreach(_case generation validation actions escaping native_widget embedded_build markup)
         add_test(NAME LVUI.AOT.${_case} COMMAND LVUICompilerTests ${_case})
         set_tests_properties(LVUI.AOT.${_case} PROPERTIES TIMEOUT 10)
     endforeach()
     find_package(Python3 3.9 REQUIRED COMPONENTS Interpreter)
-    if(EXISTS "${LVUI_IIGUI_SOURCE_DIR}/src/iiGUI/NativeWidgets.h" AND
+    if(EXISTS "${LVUI_IIGUI_SOURCE_DIR}/src/Widgets/NativeWidgets.h" AND
        EXISTS "${LVUI_IIGUI_SOURCE_DIR}/build/install/include/iiGUI/Export.h")
         add_test(NAME LVUI.NativeCallableValidation COMMAND "${Python3_EXECUTABLE}" -B
             "${CMAKE_CURRENT_SOURCE_DIR}/tests/native_callable_validation.py"
@@ -1302,14 +1081,6 @@ if(BUILD_TESTING)
             --build "${CMAKE_CURRENT_BINARY_DIR}" --compiler "$<TARGET_FILE:lvui-compile>"
             --cxx "${CMAKE_CXX_COMPILER}" --core "${iiSDKCore_DIR}" --color "${iiColorManager_DIR}" --gui "${LVUI_IIGUI_SOURCE_DIR}")
         set_tests_properties(LVUI.NativeLayoutValidation PROPERTIES TIMEOUT 120)
-        if(LVUI_TEST_LEGACY_LVRS)
-            add_test(NAME LVUI.NativeWindowValidation COMMAND "${Python3_EXECUTABLE}" -B
-                "${CMAKE_CURRENT_SOURCE_DIR}/tests/native_window_validation.py"
-                --build "${CMAKE_CURRENT_BINARY_DIR}" --compiler "$<TARGET_FILE:lvui-compile>"
-                --cxx "${CMAKE_CXX_COMPILER}" --core "${iiSDKCore_DIR}" --color "${iiColorManager_DIR}"
-                --gui "${LVUI_IIGUI_SOURCE_DIR}" --lvrs "${LVUI_LVRS_SOURCE_DIR}")
-            set_tests_properties(LVUI.NativeWindowValidation PROPERTIES TIMEOUT 120)
-        endif()
         add_test(NAME LVUI.NativeReadonlyValidation COMMAND "${Python3_EXECUTABLE}" -B
             "${CMAKE_CURRENT_SOURCE_DIR}/tests/native_readonly_validation.py"
             --build "${CMAKE_CURRENT_BINARY_DIR}" --compiler "$<TARGET_FILE:lvui-compile>"
@@ -1345,6 +1116,11 @@ if(BUILD_TESTING)
             --build "${CMAKE_CURRENT_BINARY_DIR}" --compiler "$<TARGET_FILE:lvui-compile>"
             --cxx "${CMAKE_CXX_COMPILER}" --core "${iiSDKCore_DIR}" --color "${iiColorManager_DIR}" --gui "${LVUI_IIGUI_SOURCE_DIR}")
         set_tests_properties(LVUI.NativeInferredValueValidation PROPERTIES TIMEOUT 180)
+        add_test(NAME LVUI.NativeWindowValidation COMMAND "${Python3_EXECUTABLE}" -B
+            "${CMAKE_CURRENT_SOURCE_DIR}/tests/native_window_validation.py"
+            --build "${CMAKE_CURRENT_BINARY_DIR}" --compiler "$<TARGET_FILE:lvui-compile>"
+            --cxx "${CMAKE_CXX_COMPILER}" --core "${iiSDKCore_DIR}" --color "${iiColorManager_DIR}" --gui "${LVUI_IIGUI_SOURCE_DIR}")
+        set_tests_properties(LVUI.NativeWindowValidation PROPERTIES TIMEOUT 180)
 
 
     endif()
@@ -1355,31 +1131,6 @@ if(BUILD_TESTING)
     # Its cold compiler/package time is separate from UI or runtime latency.
     # Allow the complete package build under sanitizers and cold OS executable assessment.
     set_tests_properties(LVUI.NativeInstalled PROPERTIES TIMEOUT 360)
-    if(LVUI_TEST_LEGACY_LVRS)
-        add_test(NAME LVUI.QmlObservation COMMAND "${Python3_EXECUTABLE}" -B
-            "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_qml_observation.py")
-        set_tests_properties(LVUI.QmlObservation PROPERTIES TIMEOUT 30)
-    endif()
-    if(LVUI_TEST_LEGACY_LVRS AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../LVRS/tools/native_platform_contract.py")
-        add_test(NAME LVUI.PlatformContract COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_platform_contract.py")
-        set_tests_properties(LVUI.PlatformContract PROPERTIES TIMEOUT 30)
-        add_test(NAME LVUI.ModelSourceContract COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_model_source_contract.py")
-        set_tests_properties(LVUI.ModelSourceContract PROPERTIES TIMEOUT 30)
-        add_test(NAME LVUI.FontContract COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_font_contract.py")
-        set_tests_properties(LVUI.FontContract PROPERTIES TIMEOUT 30)
-        add_test(NAME LVUI.SvgContract COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_svg_contract.py")
-        set_tests_properties(LVUI.SvgContract PROPERTIES TIMEOUT 30)
-        add_test(NAME LVUI.RenderContract COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_render_contract.py")
-        set_tests_properties(LVUI.RenderContract PROPERTIES TIMEOUT 30)
-    endif()
-    set(LVUI_DREAMSCAPES_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../Product/Dreamscapes/src/App"
-        CACHE PATH "Optional read-only Dreamscapes QML corpus for completion audit")
-    if(LVUI_TEST_LEGACY_LVRS AND EXISTS "${LVUI_DREAMSCAPES_SOURCE_DIR}/Main.qml")
-        add_test(NAME LVUI.DreamscapesObservation COMMAND "${Python3_EXECUTABLE}" -B
-            "${CMAKE_CURRENT_SOURCE_DIR}/tools/observe_qml.py" --check
-            --source "${LVUI_DREAMSCAPES_SOURCE_DIR}")
-        set_tests_properties(LVUI.DreamscapesObservation PROPERTIES TIMEOUT 60)
-    endif()
     add_test(NAME LVUI.StyleTokens.Snapshot COMMAND "${Python3_EXECUTABLE}" -B
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/update_style_tokens.py" --check)
     add_test(NAME LVUI.StyleTokens.Generator COMMAND "${Python3_EXECUTABLE}" -B
@@ -1394,15 +1145,6 @@ if(BUILD_TESTING)
         "${CMAKE_CURRENT_SOURCE_DIR}/tools/update_keywords.py" --check)
     add_test(NAME LVUI.KeywordInventoryTests COMMAND "${Python3_EXECUTABLE}" -B
         "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_lvui_keywords.py")
-    if(LVUI_TEST_LEGACY_LVRS)
-        add_test(NAME LVUI.LegacyKeywordAuditTests COMMAND "${Python3_EXECUTABLE}" -B
-            "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_keyword_inventory.py")
-    endif()
-    set(LVUI_LVRS_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../LVRS" CACHE PATH "Optional LVRS source for keyword drift verification")
-    if(LVUI_TEST_LEGACY_LVRS AND EXISTS "${LVUI_LVRS_SOURCE_DIR}/src/qml/CMakeLists.txt")
-        add_test(NAME LVUI.LVRSInventory COMMAND "${Python3_EXECUTABLE}"
-            "${CMAKE_CURRENT_SOURCE_DIR}/tools/update_lvrs_keywords.py" --lvrs-root "${LVUI_LVRS_SOURCE_DIR}" --check)
-    endif()
     add_test(NAME LVUI.ComponentExample COMMAND lvui-check "${CMAKE_CURRENT_SOURCE_DIR}/docs/examples/ReservedComponents.lvui")
     add_test(NAME LVUI.CounterSyntax COMMAND lvui-check "${CMAKE_CURRENT_SOURCE_DIR}/docs/examples/Counter.lvui")
     add_executable(LVUILanguageTests tests/language.cpp)

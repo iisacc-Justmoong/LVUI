@@ -30,14 +30,14 @@ void composition(){
     check(!compile("import vm Backend\nlet entries = [[Label(text: \"Nested\")], if(vm.ready) { Label(text: \"Conditional\") }]\nWindow { VStack { entries() } }").empty(),"An inline conditional View could not be used in a nested sequence");
 }
 void typing(){
-    const auto tabs=compile("let entries: [View] = [Tab(iconName: \"generaladd\", text: \"One\"), Tab(iconName: \"generaladd\", text: \"Two\")]\nlet Bar(content: [View]): View = TabBar { content() }\nWindow { Bar(content: entries) }","LVRS");
-    check(tabs.find("controls.tab(")!=tabs.npos,"Typed Tab children could not pass through a sequence");
+    const auto tabs=compile("let entries: [View] = [Tab(iconName: \"generaladd\", text: \"One\"), Tab(iconName: \"generaladd\", text: \"Two\")]\nlet Bar(content: [View]): View = TabBar { content() }\nWindow { Bar(content: entries) }","iiGUI");
+    check(tabs.find("lvui::native::NativeTab::create(")!=tabs.npos,"Typed Tab children could not pass through a sequence");
     for(const auto source:{
         "let entries: [View] = [Label()]\nWindow { TabBar { entries() } }",
         "let entries: [View] = [Label(), Label()]\nWindow { Modal { entries() } }",
         "let entries: [View] = [Label()]\nWindow { PushButton { entries() } }",
         "let entries: [View] = [Label()]\nWindow { Menu { entries() } }"})
-        check(!lvui::compile_native(source,{.framework="LVRS"}),"A View sequence bypassed its receiving component contract");
+        check(!lvui::compile_native(source,{.framework="iiGUI"}),"A View sequence bypassed its receiving component contract");
     check(!lvui::compile_native("let entries: [View] = [Label(), Label()]\nWindow { entries() }"),"A sequence bypassed the single window root contract");
 }
 void capture(){
@@ -66,10 +66,10 @@ void diagnostics(){
         "let entries: [View] = [Label(), Label()]\nimport vm Backend\nWindow { VStack { if(vm.ready) { entries() } } }"}){
         auto result=lvui::compile_native(source);check(!result&&result.error().line>0,"An invalid sequence was accepted or lacked a source position");
     }
-    auto empty=lvui::compile_native("let Empty(count: Int): [View] = []\nWindow { Modal { Empty(count: \"bad\") } }",{.framework="LVRS"});
+    auto empty=lvui::compile_native("let Empty(count: Int): [View] = []\nWindow { Modal { Empty(count: \"bad\") } }",{.framework="iiGUI"});
     check(!empty&&empty.error().message.find("scalar type")!=std::string::npos,
           "An empty popup sequence skipped its parameter type validation");
-    check(!compile("let Empty(count: Int): [View] = []\nWindow { Modal { Empty(count: 1) } }","LVRS").empty(),
+    check(!compile("let Empty(count: Int): [View] = []\nWindow { Modal { Empty(count: 1) } }","iiGUI").empty(),
           "A valid empty popup sequence was rejected");
 }
 void limits(){

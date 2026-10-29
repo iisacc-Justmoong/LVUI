@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/NativeImage.md",
-    "sha256": "30b9a28d7d7f9a252f0a50b2359ef3f030753041b10e6b9ec272dba813fbbc50",
-    "bytes": 3150,
+    "sha256": "87365a4706d4540c7f2d7bfe7899ee78daba4c37804b2bedb3b82f725b80f470",
+    "bytes": 3139,
     "line_count": 46,
     "encoding": "utf-8",
     "language": "ko"
@@ -116,7 +116,7 @@
       "kind": "paragraph",
       "start_line": 42,
       "end_line": 46,
-      "raw": "이미지 역할과 이름은 호스트의 범용 접근성 의미 정보로 전달하므로 해당 접점을\n제공하는 iiGUI 버전이 필요하다. 컴파일 검사와 창을 열지 않는 호스트 검사는 픽셀\n핸들, 도형, 갱신과 수명을 확인한다. 실제 OS 창, GPU 표시 및 스크린 리더 실행을\n증명하지는 않는다. 기존 `FRAMEWORK LVRS` 경로와 다른 컴포넌트는 여전히 전환\n대상이며 전체 독립 범위는 [독립 구현 현황](LVUIIndependence.md)을 따른다.\n"
+      "raw": "이미지 역할과 이름은 호스트의 범용 접근성 의미 정보로 전달하므로 해당 접점을\n제공하는 iiGUI 버전이 필요하다. 컴파일 검사와 창을 열지 않는 호스트 검사는 픽셀\n핸들, 도형, 갱신과 수명을 확인한다. 실제 OS 창, GPU 표시 및 스크린 리더 실행을\n증명하지는 않는다. 기존 `FRAMEWORK LVRS` 생성 경로는 제거되었으며 다른\n컴포넌트의 이전 범위는 [독립 구현 현황](LVUIIndependence.md)을 따른다.\n"
     }
   ],
   "outline": [

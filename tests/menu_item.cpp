@@ -12,6 +12,4 @@ int main(){
                      "Window { MenuItem(key: \"A\", shortcut: \"B\") }","Window { MenuItem(iconSize: 0) }",
                      "Window { MenuItem(keepOpen: true) }","Window { MenuItem { Label() } }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid or unsupported MenuItem input was accepted");
-    auto legacy=lvui::compile_native("Window { MenuItem(label: \"Open\") }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.menu_item(")==legacy->npos)throw std::runtime_error("Legacy MenuItem generation was altered");
 }

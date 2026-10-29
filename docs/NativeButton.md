@@ -27,6 +27,18 @@ Window {
 기존 버튼을 유지한다. 아이콘 모드에서는 유효한 원본이 필요하다. 파일·URL 로딩은
 이 경로에서 제공하지 않는다.
 
+추가로 `width`, `iconSpacing`, `fontSize`, `lineHeight`, `textOffsetY`,
+`borderColor`, `borderWidth`를 지정할 수 있다. `fontSize`만 지정하면 줄 높이도
+그 크기를 사용한다. `borderColor`만 지정하면 기본 선 두께를 사용하며,
+`borderWidth`만 지정하는 선언은 오류다.
+
+`primaryColor`, `hoverColor`, `pressedColor`는 primary 톤에 적용한다.
+`normalColor`, `normalHoverColor`, `normalPressedColor`는 default 톤에 적용하고,
+`dangerColor`, `disabledBackgroundColor`, `textColor`, `disabledTextColor`는 각각의
+상태 색상을 정한다. borderless 톤의 텍스트는 `primaryColor`를 사용한다.
+명시된 색상은 [창 강조색](NativeWindow.md)보다 우선하며, 반응형 입력을 허용한다.
+잘못된 후보는 이전 상태를 유지한다.
+
 primary·default·borderless·destructive·disabled 색상과 기본 치수는 LVUI의
 스타일 토큰 스냅샷으로 생성한다. 눌림은 호버보다 우선하며 disabled tone은
 사용자 요청 enabled 값과 별도로 입력을 막는다. 반응형 값은 하나의 후보로

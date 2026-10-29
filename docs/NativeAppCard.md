@@ -24,5 +24,5 @@
 공통 `visible`·`opacity`·`flex`를 받는다. 관찰 가능한 C++ 멤버는 함께 계산된
 후보 설정으로 갱신하며 잘못된 값은 기존 본문을 유지하고 바인딩 오류로 보고한다.
 형태는 `.roundRect`/`.shapeRoundRect`, `.cylinder`/`.shapeCylinder` 또는
-`lvui::AppCardShape` 값이다. `FRAMEWORK LVRS`는 아직 레거시 구현을 사용한다.
-전체 플랫폼의 시각·접근성 검증과 레거시 경로 제거는 진행 중이다.
+`lvui::AppCardShape` 값이다. `FRAMEWORK LVRS` 생성 경로는 제거되었다.
+전체 플랫폼의 시각·접근성 검증은 진행 중이다.

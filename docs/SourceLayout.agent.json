@@ -1,0 +1,107 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:d390cee333aafaef4eefc8f8b3a083e75f7a8fb13b7a8760b0006982b0c96fac",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/SourceLayout.md",
+    "sha256": "642d16589ddcdec0e7ac12ac6d8216605802fa9a7f15b22d214ebd38a49875e7",
+    "bytes": 892,
+    "line_count": 7,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "소스 구조",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 소스 구조\n",
+      "level": 1,
+      "title": "소스 구조"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "`src/` 아래에서 컴파일러와 선언 언어, 스타일, 편집, 색상, 컬렉션, 오버레이, 탐색, 미디어, 레이아웃, 런타임과 일반 컨트롤의 책임을 나눈다. 구현이 있는 공개 헤더와 소스는 같은 디렉터리에 두며, `Keywords.def`와 스타일 토큰 생성 파일은 사용하는 구현 옆에 둔다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "빌드 중 생성 연결 헤더와 설치된 실제 헤더는 기존 `<LVUI/...>` 공개 경로를 유지한다. `LVUI.source_layout`은 책임별 파일 위치와 중복 디렉터리 재발을 검사한다. 이 변경은 LVUI의 Qt·LVRS 독립성이나 특정 운영체제의 실행 검증 범위를 확대하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "설치 패키지는 `LVUI_AOT_FRAMEWORKS`에 지원하는 `iiGUI`를 노출한다. 소비자는 이 값으로 과거 LVRS 전용 생성 테스트의 실행 가능 여부를 판별할 수 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "소스 구조",
+      "anchor": "소스-구조",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 5,
+        "text": "빌드 중 생성 연결 헤더와 설치된 실제 헤더는 기존 `<LVUI/...>` 공개 경로를 유지한다. `LVUI.source_layout`은 책임별 파일 위치와 중복 디렉터리 재발을 검사한다. 이 변경은 LVUI의 Qt·LVRS 독립성이나 특정 운영체제의 실행 검증 범위를 확대하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

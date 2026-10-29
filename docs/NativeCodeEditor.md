@@ -43,7 +43,7 @@ Window {
 편집 이벤트에서 발생한 외관 변경과 새로운 소스 리비전은 현재 이벤트 전달이 끝난 뒤
 적용한다. 같은 이벤트 안에서 문서나 선택을 위젯을 통해 다시 편집하는 요청은 거절한다.
 
-아래는 아직 남아 있는 별도의 레거시 AOT 생성 경로다.
+아래는 제거된 레거시 AOT 생성 경로의 역사적 기록이다.
 
 `FRAMEWORK LVRS`의 CodeEditor 예약어는 `lvrs::CodeEditor::create`를 직접 호출하는 C++23을 생성한다. 런타임 파서나 스크립트 실행기를 추가하지 않는다. `model`은 scoped backend의 `shared_ptr<TextDocumentModel>`, `text`는 초기 문자열이다. 두 입력은 함께 사용할 수 없다. `height`와 `editorHeight`도 같은 높이를 지정하므로 함께 사용하지 않는다.
 

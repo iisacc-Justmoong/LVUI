@@ -54,6 +54,12 @@ lvui_generate(NAME NativeOwnedTab SOURCE ../fixtures/NativeOwnedTab.lvui
     INCLUDES NativeOwnedTabFixture.h OUTPUT_VARIABLE generated_tab)
 lvui_generate(NAME NativeOwnedTabBar SOURCE ../fixtures/NativeOwnedTabBar.lvui
     INCLUDES NativeOwnedTabBarFixture.h OUTPUT_VARIABLE generated_tab_bar)
+lvui_generate(NAME NativeOwnedTabBarSlots SOURCE ../fixtures/NativeOwnedTabBarSlots.lvui
+    INCLUDES NativeOwnedTabBarSlotsFixture.h OUTPUT_VARIABLE generated_tab_bar_slots)
+lvui_generate(NAME NativeWindowAccent SOURCE ../fixtures/NativeWindowAccent.lvui
+    INCLUDES NativeWindowAccentFixture.h OUTPUT_VARIABLE generated_window_accent)
+lvui_generate(NAME NativeHierarchyCountView SOURCE ../fixtures/NativeHierarchyCountView.lvui
+    INCLUDES NativeHierarchyCountViewFixture.h OUTPUT_VARIABLE generated_hierarchy_count_view)
 lvui_generate(NAME NativeOwnedMenuItem SOURCE ../fixtures/NativeOwnedMenuItem.lvui
     INCLUDES NativeOwnedMenuItemFixture.h OUTPUT_VARIABLE generated_menu_item)
 lvui_generate(NAME NativeOwnedMenu SOURCE ../fixtures/NativeOwnedMenu.lvui
@@ -96,6 +102,8 @@ lvui_generate(NAME NativeOwnedListItemStepper SOURCE ../fixtures/NativeOwnedList
     INCLUDES NativeOwnedListItemStepperFixture.h OUTPUT_VARIABLE generated_list_item_stepper)
 lvui_generate(NAME NativeOwnedListItemSelect SOURCE ../fixtures/NativeOwnedListItemSelect.lvui
     INCLUDES NativeOwnedListItemSelectFixture.h OUTPUT_VARIABLE generated_list_item_select)
+lvui_generate(NAME NativeOwnedListItemInlineEdit SOURCE ../fixtures/NativeOwnedListItemInlineEdit.lvui
+    INCLUDES NativeOwnedListItemInlineEditFixture.h OUTPUT_VARIABLE generated_list_item_inline_edit)
 lvui_generate(NAME NativeOwnedCard SOURCE ../fixtures/NativeOwnedCard.lvui
     INCLUDES NativeOwnedCardFixture.h OUTPUT_VARIABLE generated_card)
 lvui_generate(NAME NativeOwnedTableHeader SOURCE ../fixtures/NativeOwnedTableHeader.lvui
@@ -113,6 +121,7 @@ lvui_generate(NAME NativeOwnedColorButton SOURCE ../fixtures/NativeOwnedColorBut
 add_executable(toggle_consumer main.cpp "${generated}" "${generated_checkbox}" "${generated_radio}" "${generated_material}" "${generated_link}" "${generated_link_methods}" "${generated_page_router}" "${generated_app_card}" "${generated_app_header}" "${generated_event_listener}" "${generated_avatar}" "${generated_tooltip}" "${generated_tooltip_inline}" "${generated_slider}" "${generated_input_field}" "${generated_stepper}" "${generated_combo_box}" "${generated_segmented_control}" "${generated_help_button}" "${generated_dropdown_button}")
 target_compile_features(toggle_consumer PRIVATE cxx_std_23)
 target_sources(toggle_consumer PRIVATE "${generated_named_icons}" "${generated_tab}" "${generated_tab_bar}" "${generated_menu_item}" "${generated_menu}" "${generated_submenu}" "${generated_popover}" "${generated_modal}" "${generated_alert_button}" "${generated_alert}" "${generated_sheet}" "${generated_hierarchy_item}" "${generated_hierarchy_list}" "${generated_list_toolbar}" "${generated_toolbar_button}" "${generated_list_footer}" "${generated_hierarchy_toolbar}" "${generated_table}" "${generated_color_button}")
+target_sources(toggle_consumer PRIVATE "${generated_tab_bar_slots}")
 target_sources(toggle_consumer PRIVATE "${generated_code_editor}")
 target_sources(toggle_consumer PRIVATE "${generated_hierarchy_panel}")
 target_sources(toggle_consumer PRIVATE "${generated_list_panel}")
@@ -121,12 +130,29 @@ target_sources(toggle_consumer PRIVATE "${generated_list_item_composite}")
 target_sources(toggle_consumer PRIVATE "${generated_list_item_actions}")
 target_sources(toggle_consumer PRIVATE "${generated_list_item_stepper}")
 target_sources(toggle_consumer PRIVATE "${generated_list_item_select}")
+target_sources(toggle_consumer PRIVATE "${generated_list_item_inline_edit}")
 target_sources(toggle_consumer PRIVATE "${generated_card}")
 target_sources(toggle_consumer PRIVATE "${generated_table_header}")
 target_sources(toggle_consumer PRIVATE "${generated_table_cell_item}")
 target_sources(toggle_consumer PRIVATE "${generated_table_row}")
 target_include_directories(toggle_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
 target_link_libraries(toggle_consumer PRIVATE LVUI::Native iiGUI::iiGUI)
+
+# A small independently linkable consumer also exercises the generated View
+# sequence and scoped TabBar registration without compiling the entire catalog
+# in a single translation unit.
+add_executable(tabbar_consumer tabbar.cpp "${generated_tab_bar_slots}")
+target_compile_features(tabbar_consumer PRIVATE cxx_std_23)
+target_include_directories(tabbar_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
+target_link_libraries(tabbar_consumer PRIVATE LVUI::Native iiGUI::iiGUI)
+add_executable(window_accent_consumer window_accent.cpp "${generated_window_accent}")
+target_compile_features(window_accent_consumer PRIVATE cxx_std_23)
+target_include_directories(window_accent_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
+target_link_libraries(window_accent_consumer PRIVATE LVUI::Native iiGUI::iiGUI)
+add_executable(hierarchy_count_consumer hierarchy_count.cpp "${generated_hierarchy_count_view}")
+target_compile_features(hierarchy_count_consumer PRIVATE cxx_std_23)
+target_include_directories(hierarchy_count_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
+target_link_libraries(hierarchy_count_consumer PRIVATE LVUI::Native iiGUI::iiGUI)
 if(LVUI_CONSUMER_TEST_COLOR)
     lvui_generate(NAME NativeOwnedColorSurface SOURCE ../fixtures/NativeOwnedColorSurface.lvui
         INCLUDES NativeOwnedColorSurfaceFixture.h OUTPUT_VARIABLE generated_color_surface)
@@ -134,4 +160,10 @@ if(LVUI_CONSUMER_TEST_COLOR)
         INCLUDES NativeOwnedColorPickerFixture.h OUTPUT_VARIABLE generated_color_picker)
     target_sources(toggle_consumer PRIVATE color.cpp "${generated_color_surface}" "${generated_color_picker}")
     target_link_libraries(toggle_consumer PRIVATE LVUI::Color)
+
+    add_executable(color_consumer color.cpp tabbar.cpp "${generated_tab_bar_slots}"
+        "${generated_color_surface}" "${generated_color_picker}")
+    target_compile_features(color_consumer PRIVATE cxx_std_23)
+    target_include_directories(color_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
+    target_link_libraries(color_consumer PRIVATE LVUI::Native LVUI::Color iiGUI::iiGUI)
 endif()

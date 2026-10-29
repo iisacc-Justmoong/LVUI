@@ -25,7 +25,7 @@ def main():
     result={}
     with tempfile.TemporaryDirectory(prefix='object-input-types-',dir=args.build) as temporary:
         root=Path(temporary)
-        includes=[root,source_root/'src',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui/'build/install/include']
+        includes=[root,source_root/'src',args.build/'lvui-generated-icons',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui/'build/install/include']
         for name,(members,member,expected) in cases.items():
             (root/'Fixture.h').write_text('#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <string>\n#include <memory>\n#include <functional>\n'+members+'\n')
             (root/'View.lvui').write_text('import class Node\nimport vm Backend\nlet Details(item: Node): View = Label(text: '+member+')\nWindow { Details(item: vm.selected) }\n')

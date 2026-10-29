@@ -3,15 +3,15 @@
 LVUI는 [LVRS 원본 Figma](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVRS)의 변수를 기본 스타일 카탈로그로 제공한다. 원본 변수 이름, Figma ID/key, 컬렉션, 모드, 타입, 설명, scope, 게시 숨김 여부, CSS 이름과 별칭을 보존한다. 빌드나 앱 실행 중 Figma 접속은 필요하지 않다.
 
 이 스냅샷은 LVUI가 소유하는 시각값이다. 기본 코드 생성 경로는 값으로 `WidgetAppearance`를
-구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS` 경로는
-여전히 레거시 구현을 참조하므로 전체 분리 완료를 의미하지 않는다. 현재 상태는
+구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS`
+생성 경로는 제거되었다. 기능 이식과 독립 패키지의 현재 검증 상태는
 [독립 구현 현황](LVUIIndependence.md)을 따른다.
 
 색상과 수치는 [Color·Metric 값 타입](StyleTypes.md)으로 선택한다. `Color.primary`, `Metric.space8` 또는 문맥상의 `.primary`, `.space8`을 사용할 수 있다. [전체 멤버 목록](StyleTokenMembers.md)은 원본 스냅샷에서 자동 생성한다. 아래 `token()`·`var()` 형식도 같은 값을 참조하는 호환 API이다.
 
 ## 원본과 범위
 
-2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 LVUI가 소유하는 `catalog/lvui-style-tokens.json`에 저장했다. 기존 시각 언어의 출처와 호환 식별자는 데이터에 보존한다. `tools/update_style_tokens.py`가 이를 검증하여 `src/LVUI/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.
+2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 LVUI가 소유하는 `catalog/lvui-style-tokens.json`에 저장했다. 기존 시각 언어의 출처와 호환 식별자는 데이터에 보존한다. `tools/update_style_tokens.py`가 이를 검증하여 `src/Style/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.
 
 | 컬렉션 | 변수 수 | 기본 모드 |
 |---|---:|---|
@@ -50,7 +50,7 @@ AOT Label의 기본 역할은 기존 description을 유지한다. 크기·줄 �
 | description | 12 / 12 | 600 | descriptionColor |
 | caption / disabled | 11 / 11 | 400 | captionColor / disabledColor |
 
-이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 원본에 존재하는 accent는 해당 상태 토큰을 사용하며 원본에 없는 기존 accent는 LVRS의 기존 규칙을 유지한다. 창 배경은 Panel/window를 사용한다.
+이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 창 배경은 Panel/window를 사용한다. 창의 `accent`는 LVUI 자체 색상 선택 타입으로 기본 호스트와 기본 버튼에 적용하며, 상세 범위는 [Window 계약](NativeWindow.md)을 따른다.
 
 현재 네이티브 글꼴이 지원하는 굵기는 400/500/600/700이다. 다른 굵기는 코드 생성이나 초기 파서 단계에서 진단을 반환한다.
 

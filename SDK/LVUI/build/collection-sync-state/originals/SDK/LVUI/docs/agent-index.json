@@ -1,0 +1,615 @@
+{
+  "format": "iisacc.agent-document-index",
+  "schema_version": 1,
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "documentation_root": "docs",
+  "agent_schema": "docs/agent-document.schema.json",
+  "documents": [
+    {
+      "document_id": "urn:iisacc:document:30e0169e461e2fc2c6eb09f56fe91aacb59a019f33700a616d983418c9ea0c5c",
+      "source": "AGENT.md",
+      "agent_json": "docs/entrypoints/AGENT.agent.json",
+      "source_sha256": "5676a17142bd70c9182a132335abfac039fce01be11c78f874586d13ddc98c27",
+      "role": "instructions"
+    },
+    {
+      "document_id": "urn:iisacc:document:0be6ffa237351db14a633b032591540b1fc7ad614caabd7c6068e32a924d98d7",
+      "source": "README.md",
+      "agent_json": "docs/entrypoints/README.agent.json",
+      "source_sha256": "c7730e3259a24dac1c14a0cadf807c13bb7be6d050314ce0dc1e238b6738c3ec",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:b6a8428ed6a20f0778f400072097fd911c27b62bcaec7e5c40be468eb4beae79",
+      "source": "docs/ActivationWork.md",
+      "agent_json": "docs/ActivationWork.agent.json",
+      "source_sha256": "cc9f0f7d6475f7cca2189fc36fb332ac4b7554b7916d5464780ae7142e97f608",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:e3da5fea1cc1ede6c56b85b89fe2b5f134bf82b8037a6c769eaeecd16c2663d6",
+      "source": "docs/AppSurfaces.md",
+      "agent_json": "docs/AppSurfaces.agent.json",
+      "source_sha256": "e7222ce1fe29c299f3d36808300583f460041d714b5f3359ecda94fb81efb586",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:86fa2989e8b35b0c90ec16fd8731fc953aa222f9835efa767847a5f2b93b324e",
+      "source": "docs/BackendConstruction.md",
+      "agent_json": "docs/BackendConstruction.agent.json",
+      "source_sha256": "05454ee61d4b7bb3f96c0e8ec7aa5f6c73fd121b343aea6a0df045a1c578699e",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:3c23ccdd61f1f7d6e82bd61fe04e6bb7ee11ef2fd859779fd8297abcf7c7e09f",
+      "source": "docs/CallableFields.md",
+      "agent_json": "docs/CallableFields.agent.json",
+      "source_sha256": "0d583338dfa5c98228de5b6e2919433deafd5d724366eacbe5c878682a9ceed0",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:23d38a0e8643f162eb1f038fa7b78a7f7c116263110b4669d251df780f9f1d90",
+      "source": "docs/CallableInputs.md",
+      "agent_json": "docs/CallableInputs.agent.json",
+      "source_sha256": "589f8353fdcda21c2649fa3cbc96d9effb9d5d93330c1b7c39c4200b1882ee28",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:c32000e39b91577b33789a5eb2915b2322cde0fe5cc57252ee56a347b7928c29",
+      "source": "docs/CallbackValues.md",
+      "agent_json": "docs/CallbackValues.agent.json",
+      "source_sha256": "323239ef40d0de8fd33b1b6fbd2a6aa8f44e2a1948ff7d172c18990de198f791",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:7084a2188eb8a982df0199c0f4a41a77988069b12a92feed99ebb77a2de3ca2d",
+      "source": "docs/CollectionNavigation.md",
+      "agent_json": "docs/CollectionNavigation.agent.json",
+      "source_sha256": "c7e1bcedbc5a1f85ab15208522ac45fc8bb7a8136fa607a09902bb878df37aae",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:e2d412aee19fd8c21810fa11eec3b05cbe4313e38134d41eb91492cca4c23a48",
+      "source": "docs/CompilationModel.md",
+      "agent_json": "docs/CompilationModel.agent.json",
+      "source_sha256": "737e1f034565ce2101b7f8a090405c2a66cc655cb41f7f6f39781dfced92944d",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:11a3d6c40686ce4db6869772399191e1c81c5bb273417085c7b73e97020f0195",
+      "source": "docs/Completion.md",
+      "agent_json": "docs/Completion.agent.json",
+      "source_sha256": "e2615deb23da95c51502abfdceaca293a57683aceba4434a2a48df173e7b23df",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:de20ee4e8c3714aa366309f583ae9899642568b9538d75ebee633faf1bcca4ec",
+      "source": "docs/ComponentLanguage.md",
+      "agent_json": "docs/ComponentLanguage.agent.json",
+      "source_sha256": "7f332ed0a75d9783b897694973fc562606b7d873e613be8471f14bf397551274",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:4c2d6ee1f1bc54f370b74eec92444b8cdacefd964eec0b7252c7da19e59855ec",
+      "source": "docs/Components.md",
+      "agent_json": "docs/Components.agent.json",
+      "source_sha256": "6fa37750bfb752b251cf2c0177e92a3b173bf7b4164a898feb01b6f7f46c1e7a",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:550b94df09345da0be3685c95b713339fdc30245851706e4d883c2c3fd3e56ec",
+      "source": "docs/ConditionalViews.md",
+      "agent_json": "docs/ConditionalViews.agent.json",
+      "source_sha256": "68057395812e8b4246bd0905c94400158704c12bc435e625b8f92cbc623450dc",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:8ba75fdc5e6dbd7186a70e5d3e39cf27238ac247d9325fe5d861426099a989b8",
+      "source": "docs/CoreWidgetVerification.md",
+      "agent_json": "docs/CoreWidgetVerification.agent.json",
+      "source_sha256": "6734697a0e27df9b99824735d47f45540f3f7882d4159fc9dd948cdd96e3d33f",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:1af99650d92c9f3585da839530a46a9e688d7e24f3b13cfb9d946c0bd9a0b162",
+      "source": "docs/CounterExample.md",
+      "agent_json": "docs/CounterExample.agent.json",
+      "source_sha256": "1c6c207ea6a50ecf179ac650f2c723dca13400429a9b57be22dd89b5b0c9015e",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:e10c4b6ff9e5c4a8366a9ca86cddb77348ab62b7aa174e9f5a38dcc8a0e439bf",
+      "source": "docs/DeclarationAnnotations.md",
+      "agent_json": "docs/DeclarationAnnotations.agent.json",
+      "source_sha256": "19a5fad3222c6a307e34262364a35f7c4d9eed2061a6e99ecd0961c9422ebaf8",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:0bbb97d00e8e7bd6fd8e4e15a22fe8539da2bb06691446ea5f6e0ae04b799b0e",
+      "source": "docs/DeclarativeSyntax.md",
+      "agent_json": "docs/DeclarativeSyntax.agent.json",
+      "source_sha256": "a1ea9f514674379df8548ab9b80217b009bbc414c875ffb704156f10c9fa1afb",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:62797892f54bab42aac561bf6047c955885e8315869fbff0a39aac219f7555d3",
+      "source": "docs/EditorAppearance.md",
+      "agent_json": "docs/EditorAppearance.agent.json",
+      "source_sha256": "2e229a5f551b668399362a37fa27932ea9bfd3b5a0e11c7718b77bb9049d7d8f",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:6a757cf7b244fb224ab692d71f4031a833b3cc5c98a55d45a0a3976235a7a745",
+      "source": "docs/EmbeddedPages.md",
+      "agent_json": "docs/EmbeddedPages.agent.json",
+      "source_sha256": "3a0957b8df78a7bf5c0f89e5d90912f0b72ab188deb17f1f50907c7a38d1ddf3",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:197711fbe18ece755faa16f85fe36d633339aba5fa8c5b57479d057902d327a6",
+      "source": "docs/Expressions.md",
+      "agent_json": "docs/Expressions.agent.json",
+      "source_sha256": "23d3947224bb974ac095b3e66acbac7874cd793fcadb155709a4cff8daf542d4",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:244e6d1e416e681fb753a7ae85361f349b266e4956b2ff7c60eb650c47b8f11b",
+      "source": "docs/FactoryCaptures.md",
+      "agent_json": "docs/FactoryCaptures.agent.json",
+      "source_sha256": "0ca249088410c1abafe94ede4147816a753c5661343283f9caa42d4a4ee5b51c",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:2add477fa06a4a7959c4fcd3832ff10eeba99156a7cf0f70c04c0dab7aa91c80",
+      "source": "docs/FunctionValues.md",
+      "agent_json": "docs/FunctionValues.agent.json",
+      "source_sha256": "52695c1cfa85f485145f2cd99365364da441f6c7832db998c3ae4ab0497fb835",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:de25edaa5942d8c3331b39b96130e40ac9eb11a6978001b2be9f9f1decad99ff",
+      "source": "docs/FunctionVariables.md",
+      "agent_json": "docs/FunctionVariables.agent.json",
+      "source_sha256": "0c8e05c34189870bc6467389dcf3f30b68aa28be6974cc054457e57046931bdb",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:01949fa403fe8b524778d682db7b45ee16ed1fe786d9d437746377351bbec2f4",
+      "source": "docs/InferredValues.md",
+      "agent_json": "docs/InferredValues.agent.json",
+      "source_sha256": "38b0c5ff3e0b523b3c0012157b24d0b35d87a2ea0db9fd3edce2eae23c8ace7f",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:7033345a20652333a5c5f8963ce97979b3427b3d29b25dbf5e161781c4e9b26e",
+      "source": "docs/InvocationLifecycle.md",
+      "agent_json": "docs/InvocationLifecycle.agent.json",
+      "source_sha256": "2642e08dd0e7a4544fd63d5792b73dff0c4baa03c28244d543df5d7e6b1712fc",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:b4bc2e4e3182b726612ac821dcc333317d75cdf52f161d53faf0a555a33f5f0a",
+      "source": "docs/LVRSNative.md",
+      "agent_json": "docs/LVRSNative.agent.json",
+      "source_sha256": "1562626f12b59445427e3692471b1d7194901e853e691eb33eceec74a94d6bb1",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:86b945f5a2d6c57c0196054537a25f3451c70ce6ff98b2bafe6fd009dc624ce3",
+      "source": "docs/Language.md",
+      "agent_json": "docs/Language.agent.json",
+      "source_sha256": "57b4568ba1dde22b4b0bd17747dab46000971110c2beae3ffaa07c278b8d5446",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:d3668ecbd458ac930eb46ce378de0603d98974309be961d34146be8ed0c79fb7",
+      "source": "docs/LocalScopes.md",
+      "agent_json": "docs/LocalScopes.agent.json",
+      "source_sha256": "61b420bb079dd8cd1b6c089300cb76d183c8f7688af9df5dd27225c4e059453c",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:bde93beed12f5f5548d690accfab91b207bc5d4d496479fc2a8a284cfdcab516",
+      "source": "docs/MeasuredCollections.md",
+      "agent_json": "docs/MeasuredCollections.agent.json",
+      "source_sha256": "f383f04b2bef81301350af7f267954c9d8366839b2f8e6738f9f4123234aee9b",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:e16c2e20333aab59194601c34ba02bed416051014f8be6e119da661e7a5be555",
+      "source": "docs/MethodQueries.md",
+      "agent_json": "docs/MethodQueries.agent.json",
+      "source_sha256": "a2583c2f3badb40d75e529babd6aa4d59ec60059cf29589ca14862a96ff34771",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:a2b28bf293597959f6f5bc531c96be766d88c610c9ffb1ddc6fab88048855c4e",
+      "source": "docs/MethodReferences.md",
+      "agent_json": "docs/MethodReferences.agent.json",
+      "source_sha256": "37e58b2da8f119d783a7cef7ce6f1c44c6730807023b61ffc68f95264879d417",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:caab44a8bf62d55545a55822cba54f55a5e587627c2a14040333febb8c275ba7",
+      "source": "docs/NativeAOT.md",
+      "agent_json": "docs/NativeAOT.agent.json",
+      "source_sha256": "e22ac85161e47b6f72149f274aaf7f1d0647c0da33e3f125861a21abc60151ee",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:5edf12ebc4aa57e2caf6eb7415dad090c5e6d7b60ee6720fdd5e3031fe081d75",
+      "source": "docs/NativeAOTVerification.md",
+      "agent_json": "docs/NativeAOTVerification.agent.json",
+      "source_sha256": "cfd976516d6e53d0ca599606cf486d4a567f567fb035e98a453bb89a2e59f51b",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:2cfa7118658f3d834ea16a5aa165723e51c7d3ad78be87bd0bae863623671651",
+      "source": "docs/NativeBindings.md",
+      "agent_json": "docs/NativeBindings.agent.json",
+      "source_sha256": "1870582d7d05d3416a8b6caf37ef48a21e11c93f0c6d31ba2ef3ede43ad1fea8",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:bbceee3b882591916061d45c1da5babaee38c80e5d17baa9d37e47185abf0a63",
+      "source": "docs/NativeCodeEditor.md",
+      "agent_json": "docs/NativeCodeEditor.agent.json",
+      "source_sha256": "cbfdbc3983378cd13f1646fd8a779752eee28456cbcfefd700edb5023a0767b2",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:ff2047a366ae477162a639f2abd367ada52696a3b93d48e4dc764996e36be834",
+      "source": "docs/NativeColors.md",
+      "agent_json": "docs/NativeColors.agent.json",
+      "source_sha256": "46ecf666b6d9c2ceeda0f7d78fd4cc44cc66ea1b9ffa5cd325c73758fa9355fb",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:3f7d700742ce8987b4eeb99948f02868b73c8f74f9d73374a697933e3154be3c",
+      "source": "docs/NativeCoreValues.md",
+      "agent_json": "docs/NativeCoreValues.agent.json",
+      "source_sha256": "b42e0fde6afd4537e1d950a33ba993a53ea07255ef398c4953890c04a18a2114",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:fa575d0622dd37335146438b4bec68e9668a1a7dab405ee30712bc7c9e36e719",
+      "source": "docs/NativeFonts.md",
+      "agent_json": "docs/NativeFonts.agent.json",
+      "source_sha256": "3ac67f3113fb2da54ebae89d01f458a559631da79da18421826d3b27630fd705",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:11bb1264ac9927138fb245e83c8b59a65213616e27f27e1d9e95e1cb485a3cfc",
+      "source": "docs/NativeHierarchy.md",
+      "agent_json": "docs/NativeHierarchy.agent.json",
+      "source_sha256": "e06ea5b9bfbf030b38259e684cd2a9a3f265e2f0a3fc760cff2b6d45d6889929",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:697afd70f65dbe8e80fd03df4c3eec7d87ca0cb5299c715eae97c64dd241e3a2",
+      "source": "docs/NativeHistory.md",
+      "agent_json": "docs/NativeHistory.agent.json",
+      "source_sha256": "ae86999863fd88039c6eeaab12482e8a6ef472392f0972fb15de3aff5396ea14",
+      "role": "history"
+    },
+    {
+      "document_id": "urn:iisacc:document:65a0fa064028131dc62b781f2c80a60846d3e6100e1af88993eafd45a0e69af1",
+      "source": "docs/NativeImages.md",
+      "agent_json": "docs/NativeImages.agent.json",
+      "source_sha256": "eec8a2a480075ec7619dc7f4c748aa62a410dc3a2c2153cb1c7577af29cb126a",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:e11fc37e83bd0f2bf5f934d5ecf4614458fbc8e40915b297e0c12e740cccfdeb",
+      "source": "docs/NativeLayout.md",
+      "agent_json": "docs/NativeLayout.agent.json",
+      "source_sha256": "1d3fd705cecf8ab9b8eb3702862e64ba2b06ee3c5efca23525c5eef9e3f6c02f",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:adf004d4839aacac92a694bf2f47e7ad210f4607039e33da2fb68ef833db1b44",
+      "source": "docs/NativeLinks.md",
+      "agent_json": "docs/NativeLinks.agent.json",
+      "source_sha256": "22a3f39ce9f3f19c7a07d9b60cac0bec0f847e68cf03d532e6e52ddf7bea0f73",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:476197125fef3c7a4ac01bb8d6085127207c7e37043175ea4de476cdf8f41737",
+      "source": "docs/NativeMarkup.md",
+      "agent_json": "docs/NativeMarkup.agent.json",
+      "source_sha256": "62b1e434f770d7fa933f0cb781400dd8721d2158e3311be8f3eac7356945e1b9",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:ba422e0653cb32006231b4746d43da5003088dd114a77e4c8bb60f41203ae3e9",
+      "source": "docs/NativeMaterials.md",
+      "agent_json": "docs/NativeMaterials.agent.json",
+      "source_sha256": "a0f7734d0c49ae37273623f59a3cd349e5893dc2f6753a530b8395076d212442",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:8842101c93c3073eb67e1fc65056139f32b5ae76a5a217aecb3f9d05b859bee2",
+      "source": "docs/NativeMedia.md",
+      "agent_json": "docs/NativeMedia.agent.json",
+      "source_sha256": "15fa6289369d240c65b67bcf1f6e09f8c4cc446efdff0a6216316095cfb8089c",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:ed0ca4325183e2d6d5f5d52cf0b60810d862d7a773bc441b6a997ad8e4606026",
+      "source": "docs/NativeModelSources.md",
+      "agent_json": "docs/NativeModelSources.agent.json",
+      "source_sha256": "a68da79e10e949dfcaecd6defdb2e5c248d116c3860795bd44476e95fe8c931d",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:a8921db5d23f716947ab0458a5560b7e24035449361bce8d3322f820696a96b7",
+      "source": "docs/NativeOpacity.md",
+      "agent_json": "docs/NativeOpacity.agent.json",
+      "source_sha256": "e39d5851f536a56a65ca9a8cbf3454d84a6fd461fe731947454ac6476df84ac7",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:d26f6e250b6d22abf73149b879301177d6b1ee25ad0850b46308277714570d48",
+      "source": "docs/NativePlatform.md",
+      "agent_json": "docs/NativePlatform.agent.json",
+      "source_sha256": "30e4f76831457c62bc75a87ace2aa1c67d8a68ba6c3a0bf25a641d30dd83607b",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:599e55599c01f7b09833e23936e2a16e35c32e554d7c6510245dcdf959c03e4d",
+      "source": "docs/NativeProgress.md",
+      "agent_json": "docs/NativeProgress.agent.json",
+      "source_sha256": "5f7c1c89d6bc3b790f352427d7530c2e3844b0dd0579657f45d16c1b8be52589",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:0a7bcc31c6adf808e17bf28e3210073532b090f0d67086b9cd9d0477a4ae83a8",
+      "source": "docs/NativeReadiness.md",
+      "agent_json": "docs/NativeReadiness.agent.json",
+      "source_sha256": "8322441f06d57af23f61306ef5b3781efb6da26ff4b37ac9431d5538e9a2f312",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:9b06b81f13ba80927ffb2fc716ff8114930925d20f478822d26fbee3db95703e",
+      "source": "docs/NativeReadinessVerification.md",
+      "agent_json": "docs/NativeReadinessVerification.agent.json",
+      "source_sha256": "52511ce51e1ebdc6c7efff0e720ead0b47117107e9c96e439b6229a87eb3ed7b",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:8b79051c89352b93980c1e09d4a16e743ad1f185b785ce3ed10533cfdbfc1665",
+      "source": "docs/NativeRendering.md",
+      "agent_json": "docs/NativeRendering.agent.json",
+      "source_sha256": "2568854e9024c4edd03141c6243929911086199f8fb9c55ce7a46223c41bc8d0",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:5afe2c59a762a401bc0cfebf2a84fd0d3f3731da833e50b50974c891fa6a2b73",
+      "source": "docs/NativeRouteModels.md",
+      "agent_json": "docs/NativeRouteModels.agent.json",
+      "source_sha256": "bb99c3b3ca26f2f48b22bf7d189a69d9f14baca06c466496ec6b904f7e215353",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:22ade8aab9951e683fd9686a5f95e1e1b0a98bd93a02d58537c10cd142c1cf25",
+      "source": "docs/NativeTooltip.md",
+      "agent_json": "docs/NativeTooltip.agent.json",
+      "source_sha256": "9e876e3f681c99a632f405ea0988d860a7e5012755a9d0015eedc61318dd56ca",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:1bee9209aa6da2b6fed757736761e6417c1a5e3e3768427d858bd4d53c505d2c",
+      "source": "docs/NativeViews.md",
+      "agent_json": "docs/NativeViews.agent.json",
+      "source_sha256": "cce366a24ae5489ed87c7a4729cba0af53551fbb79adae73ef172bf1a0056d55",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:b4b900a16b7cd801ef3ee93d13ceeac6b1d9db5e3731b37fad14828b7fddeaeb",
+      "source": "docs/NativeWidgetRuntime.md",
+      "agent_json": "docs/NativeWidgetRuntime.agent.json",
+      "source_sha256": "a0d6f752177fbcd0ea32a61fbc87391e4d3c0f81856f4b62b667e9610cffdb81",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:37e1e768690a5d059e5175f361e9544dc66bdd4e5d059f6d6fa36cd4e89dd617",
+      "source": "docs/NativeWindow.md",
+      "agent_json": "docs/NativeWindow.agent.json",
+      "source_sha256": "97173cf637211da7f04ce56b276a99fde7972c3f7379af70bab7684289716d4b",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:026fbc510574f85c4733da2aacecd05b0f27cd34cc0f53f70191eb3dda1ff909",
+      "source": "docs/ObjectInputs.md",
+      "agent_json": "docs/ObjectInputs.agent.json",
+      "source_sha256": "3c5f53aa69f1cff90f3d426dbf97427b6a68db342b63def46cef76d9a172baef",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:cee9047263ed64aa158df5d278c9af3ed6c1e7d771c9b74a930c31c3b665ea29",
+      "source": "docs/ObjectMethodReferences.md",
+      "agent_json": "docs/ObjectMethodReferences.agent.json",
+      "source_sha256": "01403fd8c68267fe7c6f7ac26da14a5226864e5616600d878e444885b3ff7fd4",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:3778551219dd5b5ba2e84ae9eac5a1f6656755783cf6df50a12357e1da07e5af",
+      "source": "docs/README.md",
+      "agent_json": "docs/README.agent.json",
+      "source_sha256": "f9ac5a3d115847fcee0edf614673296271544100011f3444f28b427853a42a4f",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:93b9bc5006b289de136ad5704841a13d8cd2539bccafcca9330d939a618d527c",
+      "source": "docs/ReactiveState.md",
+      "agent_json": "docs/ReactiveState.agent.json",
+      "source_sha256": "aa84fbc293f6bd6b9f5d80b8240b5efa332cacb11eb8ab1eb88ae4910e9b3f6b",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:65ce5e6a16ea41b489c223fe5d8f8a4c0b0964003a57b82a04959be8ee9c70af",
+      "source": "docs/ReadonlyMembers.md",
+      "agent_json": "docs/ReadonlyMembers.agent.json",
+      "source_sha256": "7b55bf3b819182a3d1d7fc96b765f8771f4e40e0994a0131ccb74f8c00afe5cd",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:7cfbd7d11a02875243b67c80e33bf639ab5e4d3d3e143268eef5ba63886fe683",
+      "source": "docs/Repetition.md",
+      "agent_json": "docs/Repetition.agent.json",
+      "source_sha256": "a90be22e61af795db32523b3042cbcac45ea2943fdf2a1997d5378585fbd1604",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:dbd2dba953cad78628d25f22b215facff4bbf7522a13c1412c5aab0dc3dbb151",
+      "source": "docs/ReservedWords.md",
+      "agent_json": "docs/ReservedWords.agent.json",
+      "source_sha256": "d9de12d271f0f7a363c17f457cdc834409db384c9cd08b20555f06c5642aa8c1",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:9038dd3c2c9bfa5e34e1dcd609f7d4da0f4e55c3be1379177e23e5bd4c95d08c",
+      "source": "docs/ReturnedCallbacks.md",
+      "agent_json": "docs/ReturnedCallbacks.agent.json",
+      "source_sha256": "d34eba09085a080945d16811206939c6d1d60e1a7aa1bf76b670868027b1807b",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:ae652ed12ae79e695e5a291b0d6d7bfe00a38254ac5616a0c8951fe38ea1f3e8",
+      "source": "docs/RuntimeContracts.md",
+      "agent_json": "docs/RuntimeContracts.agent.json",
+      "source_sha256": "97894f6c24cd94bdafe22eabebb8e36c2e0323987b31c4be258ca1f65873cd35",
+      "role": "reference"
+    },
+    {
+      "document_id": "urn:iisacc:document:e89eedc8a0277e80698523f199b27f5be00d3768bb95f05b2df98c1455c23a65",
+      "source": "docs/ScalarInputs.md",
+      "agent_json": "docs/ScalarInputs.agent.json",
+      "source_sha256": "2b814687630775c81515ea226120db6431e101ea2faaff8f15dad8e21c3bf469",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:2a3e7ccf02512f9921c5ced2a6e77f1bf31ffa66ca37d2558a19d3b06476da53",
+      "source": "docs/StyleProfiles.md",
+      "agent_json": "docs/StyleProfiles.agent.json",
+      "source_sha256": "66b819b9c8631c4ee6527d3e233684b4c7d9fbccf004f20c9ab6e15ff220562d",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:18e86857fdfa82cd3ff40fb74358fc64abd950df43bc0d8ef46b32219dcb6488",
+      "source": "docs/StyleTokenMembers.md",
+      "agent_json": "docs/StyleTokenMembers.agent.json",
+      "source_sha256": "22e68abb815398ec843ffa4e24acea3c784290ea55d5722be167347db90e62dc",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:ad34f07b926ba42bc66b51ee11bef2b24b918b4d48e220e0a2639a93e3a7047b",
+      "source": "docs/StyleTokens.md",
+      "agent_json": "docs/StyleTokens.agent.json",
+      "source_sha256": "95d7400a2046161f097cb89bceb1e89a4cf49f0d8bd3a63915e61c5691e96b79",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:72dc0978dd111e630559deab07e7c2a4cc4426150d1dfc57a7ed5e69d7dfd2d0",
+      "source": "docs/StyleTypes.md",
+      "agent_json": "docs/StyleTypes.agent.json",
+      "source_sha256": "0889c489415ad1e6c5bae711c8e43d6bf790f15673d059bd5b2393a5474f6f62",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:e82c9b3059d2a4711f4822603e62512a6c18f355c939f0f019f7fd8eb72bfd3f",
+      "source": "docs/Toolbars.md",
+      "agent_json": "docs/Toolbars.agent.json",
+      "source_sha256": "02d384fb0904211a3cac4eacae5c35a41112de1b40975ca232ea6f62584d51f8",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:72b8bf5039c95611d3ced72ea2e5c348e8355001872631aac2ad6892cbc86ec6",
+      "source": "docs/TypeImports.md",
+      "agent_json": "docs/TypeImports.agent.json",
+      "source_sha256": "245814082ce7585f7974bb1c492f1c6c315a01d00ac60c502a0a7552d5562fc9",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:36139702511108fbb2c47246ae5fc7378dd755dc63f05d203cd45bcc27677fe1",
+      "source": "docs/VariableDeclarations.md",
+      "agent_json": "docs/VariableDeclarations.agent.json",
+      "source_sha256": "dd66b41155b8b1319e6800c9537ec6274f554c3552d5ef1bdc32f40eeab3a31e",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:b8b8e37e5592ef51ab204c7a966ede1ccbfe0698d916b59adec44ba1ac57b5f7",
+      "source": "docs/Verification.md",
+      "agent_json": "docs/Verification.agent.json",
+      "source_sha256": "371fb224a37661f02c266f87df1e73a9a77f44a9844b173fd4765817a9ae7a56",
+      "role": "evidence"
+    },
+    {
+      "document_id": "urn:iisacc:document:f0001062ed0e32355856f6f3372c0f0935887f26073fc787ad32383a6c09cb28",
+      "source": "docs/ViewModelQueries.md",
+      "agent_json": "docs/ViewModelQueries.agent.json",
+      "source_sha256": "464b61b6ba19ddbd497ebd7f5120ce466c154e5ab37f4154a355ff99f691c01d",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:98aa583396b8805ea65007ad51dd65f2258abade4522f85f614edf363ce05b48",
+      "source": "docs/ViewSequences.md",
+      "agent_json": "docs/ViewSequences.agent.json",
+      "source_sha256": "2c4e1741d16a49c62bdeae5f633c38263974c29d3c09ecbfac2aa185108b2906",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:375fd66e3588acc82b9fe41926c189afbbc92b28e15ea7675af77402c0dba1d6",
+      "source": "docs/ViewValues.md",
+      "agent_json": "docs/ViewValues.agent.json",
+      "source_sha256": "c793c77565dfd5f6994d7a94ef62c728af27049f46f307ca73f80efdc7b3c533",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:fa51bb9926687a38420f180f530ff9491610bb013646f7bff3dc415c8bfb920c",
+      "source": "docs/WindowsValidation.md",
+      "agent_json": "docs/WindowsValidation.agent.json",
+      "source_sha256": "8328c500c25bb0bd0be357f609ba07fbfe66ed9b4962696bcc3a8957da9d03aa",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:16f0f860a5b7edc8b7078f145cb54f4dfe411ebb2320373f13e47d0df58e4ae6",
+      "source": "docs/documentation-structure.md",
+      "agent_json": "docs/documentation-structure.agent.json",
+      "source_sha256": "2a02520fec91bfad891bcec1a21eec85a615e5116f4e5b25e7de7991cf1ff733",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:afe0f54dd577352e0101728216c0a5589279517d08c0eb904df8fc8dfe172483",
+      "source": "example/README.md",
+      "agent_json": "docs/mirrors/example/README.agent.json",
+      "source_sha256": "0f61b5a399e48916290d3916d79d4b3dac4f8f9a373b1562ad5675e5fea282cc",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:92acf3a41184e3927981dede5ffa86d42fa369eb0d2a9471174ce6619dcaf70f",
+      "source": "example/StyleTokens/README.md",
+      "agent_json": "docs/mirrors/example/StyleTokens/README.agent.json",
+      "source_sha256": "d1458656fd977f5f1d8d05f6662a3095261cdc5e2f66529cf09b76f122318186",
+      "role": "overview"
+    }
+  ],
+  "layout": {
+    "human_entry": "README.md",
+    "agent_entry": "AGENT.md",
+    "human_format": "markdown",
+    "agent_format": "structured_json",
+    "source_authority": "markdown"
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

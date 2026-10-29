@@ -1,0 +1,11 @@
+import vm NativeHierarchyCountViewModel
+let Badge(text: String): View = Label(id: "badge", text: text)
+let Row(content: View): View = HierarchyItem(id: "custom", label: "Layers", count: vm.count,
+                                             countWidth: vm.countWidth, countView: content, enabled: vm.enabled, onClick: vm.clicked)
+Window {
+    VStack(alignment: .leading) {
+        Label(id: "badge", text: "Outside")
+        Row(content: Badge(text: vm.badge))
+        HierarchyItem(id: "standard", label: "Default", count: 3)
+    }
+}

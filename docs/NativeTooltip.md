@@ -1,5 +1,9 @@
 # Tooltip의 네이티브 생성
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 기본 Tooltip은 [LVUI 독립 구현](NativeTooltipModel.md)으로 생성된다. 이 문서의 나머지는 전환 중인 명시적 `FRAMEWORK LVRS` 경로만 설명한다. 이 경로의 Tooltip은 lvrs::Tooltip::create를 호출하는 C++23 View로 생성되며 런타임에서 LVUI 원문을 해석하지 않는다. targetId는 같은 구성 스코프의 위젯 ID이며 앞/뒤 선언 모두 연결한다. target은 scoped backend의 typed iiGUI Widget 멤버이다. 두 입력은 함께 사용할 수 없다.
 
 {}의 콘텐츠는 TooltipContentFactory로 한 번 구성하여 닫혀 있을 때도 유지한다. 자식은 활성 뷰의 C++ backend를 공유한다. targetId는 해당 콘텐츠 팩토리의 구성 스코프를 넘어서 찾지 않으며, 다른 도메인의 대상을 연결하려는 요청은 네이티브 API에서 거절한다.

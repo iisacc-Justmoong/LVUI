@@ -10,7 +10,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "catalog/lvrs-components.json"
-DEFINITIONS = ROOT / "src/LVUI/Keywords.def"
+DEFINITIONS = ROOT / "src/Language/Keywords.def"
 DOCUMENT = ROOT / "docs/ReservedWords.md"
 VIEW_BASES = {
     "Item", "Rectangle", "FocusScope", "Canvas", "Row", "Column", "ColumnLayout",
@@ -23,7 +23,7 @@ MODIFIER_BASES = {"Scale", "Behavior"}
 CORE = {"View": "type", "Color": "type", "Metric": "type", "import": "declaration", "let": "declaration",
         "var": "declaration", "true": "literal", "false": "literal"}
 NATIVE_VIEWS = {"Image": "src/LVRS/Image.h"}
-NATIVE_GUI_VIEWS = {"NativeView": "src/iiGUI/NativeView.h"}
+NATIVE_GUI_VIEWS = {"NativeView": "src/Widgets/NativeView.h"}
 
 
 def uncomment(text):
@@ -186,7 +186,7 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--snapshot-only', action='store_true')
     args = parser.parse_args()
-    active_registry = (DEFINITIONS.resolve() == (ROOT / 'src/LVUI/Keywords.def').resolve() and
+    active_registry = (DEFINITIONS.resolve() == (ROOT / 'src/Language/Keywords.def').resolve() and
                        DOCUMENT.resolve() == (ROOT / 'docs/ReservedWords.md').resolve())
     if active_registry and not args.check:
         raise SystemExit('The LVRS audit is historical and cannot update LVUI keywords; use tools/update_keywords.py')

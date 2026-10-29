@@ -1,5 +1,9 @@
 # 네이티브 계층 뷰
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 `FRAMEWORK LVRS`의 `HierarchyItem`과 `HierarchyList`는 LVRS의 같은 이름인
 자체 C++ 위젯을 생성한다. 기존 단순 ListModel 기반 `Hierarchy` 별칭과 구분한다.
 실행 중 LVUI/QML 원문을 해석하지 않는다.

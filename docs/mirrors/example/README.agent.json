@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "example/README.md",
-    "sha256": "0f61b5a399e48916290d3916d79d4b3dac4f8f9a373b1562ad5675e5fea282cc",
-    "bytes": 274,
-    "line_count": 3,
+    "sha256": "0b952bc0e115c3c61fe33a07a9c51cdae36aebca1f8a0ac4ceab12c6317ded96",
+    "bytes": 396,
+    "line_count": 7,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -42,8 +42,8 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 3,
-      "raw": "The runnable contracts and examples are maintained in [`tests/`](../tests/). Build them in the repository `build/` directory. Use the installed native SDK kit documented in `docs/`; the Congregation integration uses C++23 and contains no Qt runtime.\n"
+      "end_line": 7,
+      "raw": "The [getting-started guide](../docs/GettingStarted.md) covers three native\napplications in [GettingStarted/App](GettingStarted/App): a basic window, a\nreactive reading list, and an editable table. The independent\n[style-token example](StyleTokens/README.md) demonstrates compiled appearances.\nBuild in the repository `build/` directory with a compatible native iiSDK kit.\n"
     }
   ],
   "outline": [
@@ -62,10 +62,24 @@
     "links": [
       {
         "block_id": "b000003",
-        "label": "`tests/`",
-        "target": "../tests/",
+        "label": "getting-started guide",
+        "target": "../docs/GettingStarted.md",
         "kind": "relative",
         "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "GettingStarted/App",
+        "target": "GettingStarted/App",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000003",
+        "label": "style-token example",
+        "target": "StyleTokens/README.md",
+        "kind": "relative",
+        "line": 6
       }
     ],
     "tables": []

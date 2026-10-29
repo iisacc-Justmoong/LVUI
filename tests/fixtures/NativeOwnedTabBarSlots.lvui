@@ -1,0 +1,8 @@
+import vm NativeOwnedTabBarSlotsModel
+let Item(title: String): View = Tab(id: "second", text: title, iconName: "generaladd", onClick: vm.clicked)
+let Group(content: [View]): View = TabBar(id: "tabs", currentIndex: vm.index, onCurrentIndexChanged: vm.changed) {
+    content()
+}
+Window {
+    Group(content: [Tab(id: "first", text: "First", iconName: "home"), Item(title: vm.title)])
+}

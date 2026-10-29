@@ -1,0 +1,31 @@
+import vm ReadingListBackend
+
+// Reusable View inputs are compiled into native bindings at build time.
+let ReadingRow(title: String): View = HStack(spacing: 8) {
+    Label(text: "•")
+    Label(text: title, style: .body)
+}
+
+ApplicationWindow(title: "LVUI · Reading list", width: 680, height: 500,
+                  minimumWidth: 480, minimumHeight: 320) {
+    VStack(id: "content", spacing: 12, padding: 24) {
+        Label(text: "Reading list", style: .title)
+        Label(text: "Add an item or clear the list.", style: .description)
+        HStack(spacing: 8) {
+            InputField(id: "draft", text: vm.draft, placeholder: "New item",
+                       width: 280, onEdited: vm.edited, onSubmit: vm.add)
+            PushButton(id: "add", text: "Add", onClick: vm.add)
+            PushButton(id: "clear", text: "Clear", onClick: vm.clear)
+        }
+        if (vm.hasItems) {
+            VStack(id: "populated", spacing: 8) {
+                Label(text: "Items", style: .header)
+                for (item in vm.items, key: item.id, id: "items", spacing: 4) {
+                    ReadingRow(title: item.title)
+                }
+            }
+        } else {
+            Label(id: "empty", text: "No items yet.", style: .description)
+        }
+    }
+}

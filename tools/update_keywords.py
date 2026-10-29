@@ -7,7 +7,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / 'catalog/lvui-keywords.json'
-OUTPUT = ROOT / 'src/LVUI/Keywords.def'
+OUTPUT = ROOT / 'src/Language/Keywords.def'
 KINDS = {'view', 'modifier', 'type', 'declaration', 'literal'}
 NAME = re.compile(r'[A-Za-z_][A-Za-z0-9_]*\Z')
 CORE = {'View': 'type', 'Color': 'type', 'Metric': 'type', 'import': 'declaration',

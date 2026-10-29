@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
             input_file = argv[i];
         else {
             std::cerr << "Usage: lvui-compile [--name Name] [--include relative/header.h] [--framework "
-                         "iiGUI|LVRS] [--style-mode Collection=Mode] [--style-file Theme.lvui] file.lvui\n"
+                         "iiGUI] [--style-mode Collection=Mode] [--style-file Theme.lvui] file.lvui\n"
                          "       lvui-compile --emit-styles [--namespace App.Style] Theme.lvui\n";
             return 2;
         }

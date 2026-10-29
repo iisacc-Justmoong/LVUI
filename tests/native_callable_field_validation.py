@@ -32,7 +32,7 @@ def main():
     unexpected = []
     with tempfile.TemporaryDirectory(prefix='native-callable-field-types-', dir=args.build) as temporary:
         root = Path(temporary)
-        includes = [root, source / 'src', (args.core / '../../../include').resolve(), (args.color / '../../../include').resolve(), args.gui / 'src', args.gui / 'build/install/include']
+        includes = [root, source / 'src', args.build / 'lvui-generated-icons', (args.core / '../../../include').resolve(), (args.color / '../../../include').resolve(), args.gui / 'src', args.gui / 'build/install/include']
         for name, (members, body, valid) in cases.items():
             (root / 'Fixture.h').write_text('#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <memory>\n#include <functional>\n#include <string>\n#include <cstdint>\n' + members + '\n')
             (root / 'View.lvui').write_text('import vm Backend\n' + body + '\n')

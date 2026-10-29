@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/EmbeddedPages.md",
-    "sha256": "3a0957b8df78a7bf5c0f89e5d90912f0b72ab188deb17f1f50907c7a38d1ddf3",
-    "bytes": 2055,
-    "line_count": 30,
+    "sha256": "a43a047ddc3c670e340e67037bd8d03a65987bf4a638e2030f572d75c60568bb",
+    "bytes": 1894,
+    "line_count": 28,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -88,7 +88,7 @@
       "kind": "paragraph",
       "start_line": 18,
       "end_line": 20,
-      "raw": "LVRS PageRouter는 C++ 백엔드의 `std::shared_ptr<lvrs::PageRouter>`를 LVUI 입력\n`router: vm.router`로 받는다. 다른 경로의 페이지는 각각 빌드 시 생성한 C++의\n`build`를 호출한다. 런타임 소스 파싱, 인터프리터, 추가 OS 위젯 계층은 없다.\n"
+      "raw": "LVUI의 [독립 PageRouter](NativePageRouter.md)는 앱이 소유한 페이지 팩터리를\n연결한다. 팩터리는 빌드 시 생성한 C++의 `build`를 호출할 수 있다. 런타임 소스\n파싱, 인터프리터, 추가 OS 위젯 계층은 없다. 이전 LVRS 타입과 자동 호환되지 않는다.\n"
     },
     {
       "id": "b000010",
@@ -115,8 +115,8 @@
       "id": "b000013",
       "kind": "paragraph",
       "start_line": 27,
-      "end_line": 30,
-      "raw": "`tests/compiler.cpp`에는 생성 진입점·부모 전달·스코프 유지·초기 팝업 거부와\nPageRouter 입력 진단을 추가했다. 실제 생성 코드의 C++ 컴파일은 LVRS의 독립\n페이지 예제와 설치 소비자 빌드에서 확인한다. 모든 테스트와 앱의 실행은 사용자가\n요청한 전체 작업의 최종 일괄 단계까지 보류한다.\n"
+      "end_line": 28,
+      "raw": "생성 진입점·부모 전달·스코프 유지·초기 팝업 거부는 관련 AOT 검사에서 확인한다.\n실제 OS 창과 각 플랫폼의 페이지 표시 검증은 별도로 남아 있다.\n"
     }
   ],
   "outline": [
@@ -140,7 +140,15 @@
       }
     ],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000009",
+        "label": "독립 PageRouter",
+        "target": "NativePageRouter.md",
+        "kind": "relative",
+        "line": 18
+      }
+    ],
     "tables": []
   },
   "provenance": {

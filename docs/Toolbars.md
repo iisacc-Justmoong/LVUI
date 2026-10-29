@@ -1,5 +1,9 @@
 # 목록·계층 도구 막대 AOT
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 기본 생성 경로는 LVUI가 소유한 [목록 도구 모음](NativeOwnedListToolbar.md),
 [목록 푸터](NativeOwnedListFooter.md), [도구 버튼](NativeOwnedToolbarButton.md),
 [계층 도구 모음](NativeOwnedHierarchyToolbar.md)을 사용한다. 각 문서는 현재 지원하는

@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -21,15 +22,32 @@ def main():
     consumer_options=[f'-D{name}={cache[name]}' for name in ('CMAKE_CXX_COMPILER','CMAKE_CXX_FLAGS','CMAKE_EXE_LINKER_FLAGS','CMAKE_OSX_DEPLOYMENT_TARGET') if cache.get(name)]
     evidence = build / "lvui-completion"
     evidence.mkdir(exist_ok=True)
+    # Do not accidentally satisfy a public dependency through the developer's
+    # global SDK search paths. The consumer supplies its dependencies explicitly.
+    environment = os.environ.copy()
+    for name in ("CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "CMAKE_PREFIX_PATH"):
+        environment.pop(name, None)
+    isolated_packages = ["-DCMAKE_DISABLE_FIND_PACKAGE_LVRS=ON",
+                         "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5=ON",
+                         "-DCMAKE_DISABLE_FIND_PACKAGE_Qt6=ON"]
     with tempfile.TemporaryDirectory(prefix="native-consumer-", dir=build) as temporary:
         root = Path(temporary)
         def run(*command):
-            result = subprocess.run(command, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            result = subprocess.run(command, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                    env=environment)
             print(result.stdout, end="", flush=True)
             result.check_returncode()
             return result.stdout
         installed = root / "stage"
-        run(args.cmake, "--install", str(build), "--prefix", str(installed))
+        # Keep the caller's build/install_manifest.txt unchanged during this
+        # isolated consumer test, even when another install has already run.
+        script = (build / "cmake_install.cmake").read_text(encoding="utf-8")
+        original = f'{build.as_posix()}/${{CMAKE_INSTALL_MANIFEST}}'
+        if original not in script:
+            raise RuntimeError("Unable to isolate the generated install manifest")
+        local_script = root / "cmake_install.cmake"
+        local_script.write_text(script.replace(original, f'{root.as_posix()}/${{CMAKE_INSTALL_MANIFEST}}'), encoding="utf-8")
+        run(args.cmake, f"-DCMAKE_INSTALL_PREFIX={installed}", "-P", str(local_script))
         relocated = root / "relocated"
         installed.rename(relocated)
         cli_source = root / "Portable.lvui"
@@ -44,14 +62,14 @@ def main():
         (outdated/'iiSDKCoreConfigVersion.cmake').write_text('set(PACKAGE_VERSION "0.20.0")\nset(PACKAGE_VERSION_COMPATIBLE TRUE)\n')
         outdated_project=root/'outdated-project';outdated_project.mkdir()
         (outdated_project/'CMakeLists.txt').write_text('cmake_minimum_required(VERSION 3.31)\nproject(OutdatedCore LANGUAGES CXX)\nfind_package(LVUI CONFIG REQUIRED COMPONENTS Native)\n')
-        rejected=subprocess.run([args.cmake,'-S',str(outdated_project),'-B',str(outdated_project/'build'),'-G','Ninja',f'-DLVUI_DIR={relocated / "lib/cmake/LVUI"}',f'-DiiSDKCore_DIR={outdated}'],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+        rejected=subprocess.run([args.cmake,'-S',str(outdated_project),'-B',str(outdated_project/'build'),'-G','Ninja',f'-DLVUI_DIR={relocated / "lib/cmake/LVUI"}',f'-DiiSDKCore_DIR={outdated}',*isolated_packages],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,env=environment)
         if not rejected.returncode or 'LVUI_CORE_OBSERVATION_REQUIRED' not in rejected.stdout:raise RuntimeError('An outdated Core package bypassed the native observation capability check: '+rejected.stdout)
         project = root / "project"
         shutil.copytree(Path(__file__).parent / "native_consumer", project)
         target = project / "build"
         run(args.cmake, "-S", str(project), "-B", str(target), "-G", "Ninja",
             "-DCMAKE_BUILD_TYPE=Release", f"-DLVUI_DIR={relocated / 'lib/cmake/LVUI'}",
-            f"-DiiSDKCore_DIR={args.core}", f"-DiiColorManager_DIR={args.color}",*consumer_options)
+            f"-DiiSDKCore_DIR={args.core}", f"-DiiColorManager_DIR={args.color}",*consumer_options,*isolated_packages)
         cache = (target / "CMakeCache.txt").read_text()
         for result in ("LVUI_INVALID_VOID_CALLBACK_ACCEPTED", "LVUI_INVALID_SCALAR_CALLBACK_ACCEPTED",
                        "LVUI_INVALID_TYPED_CALLBACK_RETURN_ACCEPTED", "LVUI_INVALID_TYPED_CALLBACK_ARITY_ACCEPTED",
@@ -68,7 +86,7 @@ def main():
             runtime_target = runtime_project / "build"
             run(args.cmake, "-S", str(runtime_project), "-B", str(runtime_target), "-G", "Ninja",
                 "-DCMAKE_BUILD_TYPE=Release", f"-DLVUI_DIR={relocated / 'lib/cmake/LVUI'}",
-                f"-DiiSDKCore_DIR={args.core}", f"-DiiColorManager_DIR={args.color}",*consumer_options)
+                f"-DiiSDKCore_DIR={args.core}", f"-DiiColorManager_DIR={args.color}",*consumer_options,*isolated_packages)
             run(args.cmake, "--build", str(runtime_target), "-j", "2")
             run("ctest", "--test-dir", str(runtime_target), "--output-on-failure")
             runtime_verified = True

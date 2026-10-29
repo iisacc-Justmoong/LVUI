@@ -1,5 +1,9 @@
 # LVRS 자체 위젯 코드 생성
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 LVRS의 네이티브 구현은 `lvui_generate(... FRAMEWORK LVRS ...)` 또는
 `lvui-compile --framework LVRS`로 선택한다. 생성한 코드는 `LVRS/Widgets.h`와
 `lvrs::Widgets`를 사용하며 최종 앱은 `LVRS::LVRS`에 연결한다.

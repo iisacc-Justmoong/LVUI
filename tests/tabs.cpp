@@ -11,6 +11,4 @@ int main(){
     for(auto source:{"Window { Tab() }","Window { Tab(iconName: \"  \") }","Window { Tab(iconName: \"home\", tabStyle: .invalid) }",
                      "Window { Tab(iconName: \"home\", iconRevision: 1.5) }","Window { Tab(iconName: \"home\") { Label() } }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid Tab input was accepted");
-    auto legacy=lvui::compile_native("Window { Tab(iconName: \"home\") }",{.framework="LVRS"});
-    if(!legacy||legacy->find("controls.tab(")==legacy->npos)throw std::runtime_error("Legacy Tab generation was altered");
 }

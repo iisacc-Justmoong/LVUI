@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeButton.md",
-    "sha256": "03959df4129676b67fa1dfed32b42a3de928feb7eeda2a05bf6b24ff47190e37",
-    "bytes": 3647,
-    "line_count": 52,
+    "sha256": "d5cb6c9afec869c1fd960966e512679e34ce6f860d0e1641019d8ec611ce19af",
+    "bytes": 4465,
+    "line_count": 64,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -87,35 +87,63 @@
       "id": "b000009",
       "kind": "paragraph",
       "start_line": 30,
-      "end_line": 37,
-      "raw": "primary·default·borderless·destructive·disabled 색상과 기본 치수는 LVUI의\n스타일 토큰 스냅샷으로 생성한다. 눌림은 호버보다 우선하며 disabled tone은\n사용자 요청 enabled 값과 별도로 입력을 막는다. 반응형 값은 하나의 후보로\n검증한 뒤 기존 동작 표면에 반영한다. 잘못된 크기·텍스트·색상·enum 또는 누락된\n아이콘은 이전 버튼을 유지하고 정상 후보가 들어오면 복구한다. 텍스트는 현재\n해결된 애플리케이션 글꼴을 사용하며 글꼴이 바뀌어도 버튼을 재생성하지 않는다.\n할당된 너비보다 긴 문구는 사용 가능한 영역에 맞추어 줄임 표시한다. 원문과\n접근성 이름은 줄이지 않는다.\n"
+      "end_line": 33,
+      "raw": "추가로 `width`, `iconSpacing`, `fontSize`, `lineHeight`, `textOffsetY`,\n`borderColor`, `borderWidth`를 지정할 수 있다. `fontSize`만 지정하면 줄 높이도\n그 크기를 사용한다. `borderColor`만 지정하면 기본 선 두께를 사용하며,\n`borderWidth`만 지정하는 선언은 오류다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 38,
-      "end_line": 38,
+      "start_line": 34,
+      "end_line": 34,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 39,
-      "end_line": 46,
-      "raw": "버튼은 비소유 스타일 포트를 통해 부모가 임시 무테 톤을 적용하도록 허용한다.\n이때 원래 반응형 톤을 보존하고 임시 설정을 해제하면 최신 원래 톤을 복원한다.\ndisabled 톤은 임시 스타일로 활성화되지 않는다. 폐기된 버튼은 포트를 통해\n변경할 수 없다. [세그먼트 묶음](NativeSegmentedControl.md)은 이 포트를 조합한다.\n버튼 모델은 필요한 경우 명시적 너비와 텍스트 세로 보정값도 보유한다.\n[도움말 버튼](NativeHelpButton.md)은 이 설정을 원형 기본값에 사용한다.\n앱 측 C++ 조합은 선택적 테두리 색상과 폭을 모델에 지정할 수 있다. 테두리는 버튼\n내부에 그리며 포커스 표시와 독립적이다. 기본값은 테두리 없음이다.\n"
+      "start_line": 35,
+      "end_line": 40,
+      "raw": "`primaryColor`, `hoverColor`, `pressedColor`는 primary 톤에 적용한다.\n`normalColor`, `normalHoverColor`, `normalPressedColor`는 default 톤에 적용하고,\n`dangerColor`, `disabledBackgroundColor`, `textColor`, `disabledTextColor`는 각각의\n상태 색상을 정한다. borderless 톤의 텍스트는 `primaryColor`를 사용한다.\n명시된 색상은 [창 강조색](NativeWindow.md)보다 우선하며, 반응형 입력을 허용한다.\n잘못된 후보는 이전 상태를 유지한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 47,
-      "end_line": 47,
+      "start_line": 41,
+      "end_line": 41,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 48,
-      "end_line": 52,
+      "start_line": 42,
+      "end_line": 49,
+      "raw": "primary·default·borderless·destructive·disabled 색상과 기본 치수는 LVUI의\n스타일 토큰 스냅샷으로 생성한다. 눌림은 호버보다 우선하며 disabled tone은\n사용자 요청 enabled 값과 별도로 입력을 막는다. 반응형 값은 하나의 후보로\n검증한 뒤 기존 동작 표면에 반영한다. 잘못된 크기·텍스트·색상·enum 또는 누락된\n아이콘은 이전 버튼을 유지하고 정상 후보가 들어오면 복구한다. 텍스트는 현재\n해결된 애플리케이션 글꼴을 사용하며 글꼴이 바뀌어도 버튼을 재생성하지 않는다.\n할당된 너비보다 긴 문구는 사용 가능한 영역에 맞추어 줄임 표시한다. 원문과\n접근성 이름은 줄이지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 58,
+      "raw": "버튼은 비소유 스타일 포트를 통해 부모가 임시 무테 톤을 적용하도록 허용한다.\n이때 원래 반응형 톤을 보존하고 임시 설정을 해제하면 최신 원래 톤을 복원한다.\ndisabled 톤은 임시 스타일로 활성화되지 않는다. 폐기된 버튼은 포트를 통해\n변경할 수 없다. [세그먼트 묶음](NativeSegmentedControl.md)은 이 포트를 조합한다.\n버튼 모델은 필요한 경우 명시적 너비와 텍스트 세로 보정값도 보유한다.\n[도움말 버튼](NativeHelpButton.md)은 이 설정을 원형 기본값에 사용한다.\n앱 측 C++ 조합은 선택적 테두리 색상과 폭을 모델에 지정할 수 있다. 테두리는 버튼\n내부에 그리며 포커스 표시와 독립적이다. 기본값은 테두리 없음이다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 64,
       "raw": "이 경로는 앱이 `WidgetPaintState::font_family`를 제공하는 iiGUI 호스트를\n연결해야 한다. 기본 LVUI 모델은 iiGUI와 LVRS를 링크하지 않는다. 현재 범위는\n위 입력과 단일 클릭 콜백이며 전체 이름 자산, 메서드 목록, 원본의 모든 모션·\n상속 API와 실제 플랫폼 접근성 검증은 아직 완료되지 않았다. 호스트 검사는\n창을 열지 않으며 GPU·기기 실행 증거로 취급하지 않는다.\n"
     }
   ],
@@ -139,22 +167,22 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000009",
-        "line": 35,
+        "block_id": "b000013",
+        "line": 47,
         "text": "해결된 애플리케이션 글꼴을 사용하며 글꼴이 바뀌어도 버튼을 재생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000013",
-        "line": 49,
+        "block_id": "b000017",
+        "line": 61,
         "text": "연결해야 한다. 기본 LVUI 모델은 iiGUI와 LVRS를 링크하지 않는다. 현재 범위는",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000013",
-        "line": 52,
+        "block_id": "b000017",
+        "line": 64,
         "text": "창을 열지 않으며 GPU·기기 실행 증거로 취급하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -171,17 +199,24 @@
       },
       {
         "block_id": "b000011",
+        "label": "창 강조색",
+        "target": "NativeWindow.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000015",
         "label": "세그먼트 묶음",
         "target": "NativeSegmentedControl.md",
         "kind": "relative",
-        "line": 42
+        "line": 54
       },
       {
-        "block_id": "b000011",
+        "block_id": "b000015",
         "label": "도움말 버튼",
         "target": "NativeHelpButton.md",
         "kind": "relative",
-        "line": 44
+        "line": 56
       }
     ],
     "tables": []

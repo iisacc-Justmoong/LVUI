@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeLinks.md",
-    "sha256": "3ecb9888fabfdfb413fa103abacfaaf1cab6e140cd1f66ab57f5c31436612af9",
-    "bytes": 5086,
-    "line_count": 75,
+    "sha256": "75d62d0b3f4b62cfafc2ab8fce4124bf3fe1c73b74ecb3b2db4668e7c9d35ead",
+    "bytes": 5041,
+    "line_count": 74,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -219,8 +219,8 @@
       "id": "b000027",
       "kind": "paragraph",
       "start_line": 73,
-      "end_line": 75,
-      "raw": "`FRAMEWORK LVRS`는 전환 전 LVRS `Link`와 탐색 타입을 계속 생성한다. 이 선택 경로는\n아직 LVRS에 의존한다. 모든 컨트롤과 라우터를 이식하고 레거시 생성 경로를 제거하는\n작업은 진행 중이다.\n"
+      "end_line": 74,
+      "raw": "이전 `FRAMEWORK LVRS` 경로는 LVRS `Link`와 탐색 타입을 생성했다. 이 경로는\n제거되었으며, 자체 구현에 없는 기능의 이전과 플랫폼 검증은 계속 진행 중이다.\n"
     }
   ],
   "outline": [

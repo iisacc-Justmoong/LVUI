@@ -2,6 +2,10 @@
 
 # AOT 컴파일과 네이티브 마운트
 
+> 2026-10-29: 이 문서의 `FRAMEWORK LVRS` 생성 경로와 LVRS 팩터리 검사 설명은
+> 제거된 경로에 대한 역사적 기록이다. 현재 지원 범위와 남은 이식은
+> [독립 구현 현황](LVUIIndependence.md)과 [이전 우선순위](NativeMigrationRoadmap.md)를 따른다.
+
 현재 구조와 남은 전환 범위는 [LVUI 독립성](LVUIIndependence.md)에 정리한다.
 LVUI는 자체 컴포넌트, 외형과 디자인 파라미터를 소유한다. `View`는 네이티브 C++
 위젯으로 생성하며, iiSDKCore는 앱 런타임·진입점·최종 바이너리 부착을 담당한다.

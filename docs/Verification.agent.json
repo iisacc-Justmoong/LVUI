@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/Verification.md",
-    "sha256": "371fb224a37661f02c266f87df1e73a9a77f44a9844b173fd4765817a9ae7a56",
-    "bytes": 4802,
+    "sha256": "3de788ae30e668747d0d23fd783a3eba7300783df237b9ac26023e9844cfc7b2",
+    "bytes": 4806,
     "line_count": 70,
     "encoding": "utf-8",
     "language": "ko"
@@ -115,7 +115,7 @@
       "kind": "paragraph",
       "start_line": 21,
       "end_line": 23,
-      "raw": "조사 결과와 LF 개행으로 정규화한 SHA-256은 `catalog/lvrs-components.json`,\n실제 C++ 테이블은 `src/LVUI/Keywords.def`, 사람이 읽는 목록은 [ReservedWords.md](ReservedWords.md)에 있다.\nLVRS 소스와 작업 트리는 수정하지 않았다.\n"
+      "raw": "조사 결과와 LF 개행으로 정규화한 SHA-256은 `catalog/lvrs-components.json`,\n실제 C++ 테이블은 `src/Language/Keywords.def`, 사람이 읽는 목록은 [ReservedWords.md](ReservedWords.md)에 있다.\nLVRS 소스와 작업 트리는 수정하지 않았다.\n"
     },
     {
       "id": "b000014",

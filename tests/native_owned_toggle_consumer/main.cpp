@@ -21,6 +21,7 @@
 #include "NativeOwnedNamedIcons.generated.h"
 #include "NativeOwnedTab.generated.h"
 #include "NativeOwnedTabBar.generated.h"
+#include "NativeOwnedTabBarSlots.generated.h"
 #include "NativeOwnedMenuItem.generated.h"
 #include "NativeOwnedMenu.generated.h"
 #include "NativeOwnedSubmenu.generated.h"
@@ -42,6 +43,7 @@
 #include "NativeOwnedListItemActions.generated.h"
 #include "NativeOwnedListItemStepper.generated.h"
 #include "NativeOwnedListItemSelect.generated.h"
+#include "NativeOwnedListItemInlineEdit.generated.h"
 #include "NativeOwnedCard.generated.h"
 #include "NativeOwnedTableHeader.generated.h"
 #include "NativeOwnedTableCellItem.generated.h"
@@ -94,6 +96,7 @@ auto* volatile dropdown_generated_factory = &lvui_generated::NativeOwnedDropdown
 auto* volatile named_icons_factory = &lvui_generated::NativeOwnedNamedIcons::build;
 auto* volatile tab_factory = &lvui_generated::NativeOwnedTab::build;
 auto* volatile tab_bar_factory = &lvui_generated::NativeOwnedTabBar::build;
+auto* volatile tab_bar_slots_factory = &lvui_generated::NativeOwnedTabBarSlots::build;
 auto* volatile menu_item_factory = &lvui_generated::NativeOwnedMenuItem::build;
 auto* volatile menu_factory = &lvui_generated::NativeOwnedMenu::build;
 auto* volatile submenu_factory = &lvui_generated::NativeOwnedSubmenu::build;
@@ -118,6 +121,7 @@ auto* volatile generated_list_item_composite_factory = &lvui_generated::NativeOw
 auto* volatile generated_list_item_actions_factory = &lvui_generated::NativeOwnedListItemActions::build;
 auto* volatile generated_list_item_stepper_factory = &lvui_generated::NativeOwnedListItemStepper::build;
 auto* volatile generated_list_item_select_factory = &lvui_generated::NativeOwnedListItemSelect::build;
+auto* volatile generated_list_item_inline_edit_factory = &lvui_generated::NativeOwnedListItemInlineEdit::build;
 auto* volatile generated_card_factory = &lvui_generated::NativeOwnedCard::build;
 auto* volatile generated_table_header_factory = &lvui_generated::NativeOwnedTableHeader::build;
 auto* volatile generated_table_cell_item_factory = &lvui_generated::NativeOwnedTableCellItem::build;
