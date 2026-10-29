@@ -1,0 +1,11 @@
+import vm NativeLayoutModel
+let Panel(gap: Metric): View = VStack(id: "panel", spacing: gap, defaultSpacing: vm.defaultGap,
+    padding: vm.padding, leftPadding: vm.left, topPadding: vm.top, rightPadding: vm.right, bottomPadding: vm.bottom,
+    alignment: vm.alignment, alignmentName: vm.alignmentName, width: vm.width, height: vm.height,
+    minimumWidth: vm.minimumWidth, minimumHeight: vm.minimumHeight, flex: vm.flex,
+    intrinsicWidth: vm.intrinsic, measureHiddenChildren: vm.measureHidden) {
+    InputField(id: "draft", text: "Draft", width: 100)
+    HStack(id: "first", width: 40, height: 20) {}
+    HStack(id: "second", width: 60, height: 20, visible: vm.childVisible) {}
+}
+Window { VStack(id: "outer", alignment: .leading) { Panel(gap: vm.measureGap(vm.gap)) } }

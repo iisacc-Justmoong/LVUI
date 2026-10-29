@@ -1,0 +1,609 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:36139702511108fbb2c47246ae5fc7378dd755dc63f05d203cd45bcc27677fe1",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/VariableDeclarations.md",
+    "sha256": "dd66b41155b8b1319e6800c9537ec6274f554c3552d5ef1bdc32f40eeab3a31e",
+    "bytes": 4236,
+    "line_count": 93,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "상수와 변수",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "html",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "<a id=\"constants-and-variables\"></a>\n"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "heading",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "# 상수와 변수\n",
+      "level": 1,
+      "title": "상수와 변수"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 7,
+      "raw": "상태: 2026-10-20에 채택한 언어 설계이다.\n2026-10-22의 `parse_view`는 스칼라·참조·목록·호출 초기값의 선언 구문과 예약어 충돌을 검사한다.\n타입 검사·저장·반응형 실행은 [현재 프런트엔드 범위](ComponentLanguage.md)와 구분한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "html",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "<a id=\"declaration-syntax\"></a>\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "## 선언 구문\n",
+      "level": 2,
+      "title": "선언 구문"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 14,
+      "raw": "`let`은 상수, `var`는 변경 가능한 변수를 선언한다.\n채택한 타입·초기값 지정 선언 형식은 다음과 같다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "fenced_code",
+      "start_line": 16,
+      "end_line": 19,
+      "raw": "```text\nlet name: Type = initializer\nvar name: Type = initializer\n```\n",
+      "language": "text",
+      "code": "let name: Type = initializer\nvar name: Type = initializer\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "이름은 선언 키워드 뒤에 온다. 콜론 뒤에 타입을, 등호 뒤에 초기값을 지정한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "fenced_code",
+      "start_line": 23,
+      "end_line": 26,
+      "raw": "```text\nlet constant: Int = 6\nvar variable: Int = 6\n```\n",
+      "language": "text",
+      "code": "let constant: Int = 6\nvar variable: Int = 6\n",
+      "closed": true
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 29,
+      "raw": "`constant`는 초기화 이후 재대입할 수 없다. 일반 `variable`은 선언한 타입에 따라 재대입할 수 있다.\n`Int`는 채택한 예제의 타입 표기이며, 전체 타입 체계는 추가 명세가 필요하다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "시각적으로 표시되는 모든 요소의 공통 타입으로 `View`를 채택한다.\n뷰는 `{}`를 통해 다른 `View`를 자식 인자로 받을 수 있다.\n예제와 구성 규칙은 [View 타입과 자식 뷰 인자](DeclarativeSyntax.md#view-type-and-child-arguments)를 참조한다.\n`View`의 구체적인 값·참조 표현과 변수 저장 의미는 추가 명세가 필요하다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "html",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "<a id=\"declaration-annotations\"></a>\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "## 선언 어노테이션\n",
+      "level": 2,
+      "title": "선언 어노테이션"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "선언 앞에 `@Observable`과 `@Static`을 붙일 수 있다. 예시는 다음과 같다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "fenced_code",
+      "start_line": 42,
+      "end_line": 45,
+      "raw": "```text\n@Observable var value: Int = 6\n@Static let initialValue: Int = 6\n```\n",
+      "language": "text",
+      "code": "@Observable var value: Int = 6\n@Static let initialValue: Int = 6\n",
+      "closed": true
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 50,
+      "raw": "값은 [기본 반응형 모델](ReactiveState.md)을 따른다. `@Observable`은 관찰을 명시하지만\n관찰 기능을 활성화하기 위한 필수 조건은 아니다. `@Static`은 해당 선언에 설정된 수명 동안\n초기값을 고정한다. 채택한 의미·예제와 남은 적용 대상·조합 규칙은\n[DeclarationAnnotations.md](DeclarationAnnotations.md)에 기술한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "html",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "<a id=\"no-semicolons\"></a>\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "heading",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "## 세미콜론 생략\n",
+      "level": 2,
+      "title": "세미콜론 생략"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 58,
+      "raw": "LVUI는 문장이나 선언을 끝내는 세미콜론을 사용하지 않는다.\n위 예제에는 끝의 `;`이 없으며, 선택적으로 붙이는 종결자도 아니다.\n동일한 규칙을 import와 주변 컴포넌트 구문에도 적용한다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 62,
+      "raw": "줄 경계와 여러 줄 표현식의 전체 규칙은 미정이다.\n채택한 컴포넌트 언어의 이 규칙은 자체 구분자가 이미 구현된\n[LVUI 0.1 인라인 스타일 형식](Language.md)을 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "html",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "<a id=\"state-and-backend-integration\"></a>\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "heading",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "## 상태와 백엔드 연동\n",
+      "level": 2,
+      "title": "상태와 백엔드 연동"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 68,
+      "end_line": 71,
+      "raw": "`let`과 `var`는 선언한 값의 재대입 가능 여부를 지정한다.\n뷰에서 사용하는 일반 LVUI `var`를 포함하여 값은 기본적으로 반응형이다.\n상태 변경을 의존 바인딩에 전달하기 위한 어노테이션은 필요하지 않다.\n`@Static`은 설정된 수명 동안 고정되는 값을 선택한다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 76,
+      "raw": "이 기본 동작은 ViewModel 인스턴스를 생성하거나 선언의 소유자 수명을 더 길게 정하지 않는다.\n구체적인 상태 저장소·정체성·수명 규칙은 추가 명세가 필요하다.\nViewModel도 같은 일반 값 모델을 따르며 [기본 바인딩](ViewModelQueries.md#default-viewmodel-binding)을 제공한다.\n`let`과 C++ constness의 기존 재대입·쓰기 제한은 유지된다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 78,
+      "end_line": 81,
+      "raw": "권장 MVVM 패턴에서는 공유 화면 상태를 ViewModel에 둔다.\n지역 변수가 이 원본 상태를 중복해서 보관하지 않도록 한다.\nViewModel은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 값을 송수신하며,\n가져온 백엔드의 소유권은 계속 [스코프 기반 import](TypeImports.md)를 따른다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "html",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "## 미정 사항\n",
+      "level": 2,
+      "title": "미정 사항"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "list",
+      "start_line": 87,
+      "end_line": 90,
+      "raw": "- 타입 추론, 전체 타입 집합, 초기화 요구사항.\n- 컴포넌트 본문 내 선언 스코프와 평가 시점.\n- 대입 표현식과 여러 줄 표현식 구문.\n- 변경 가능한 C++ 객체·C++ constness와 `let`의 관계를 포함한 참조 값 의미.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "타입 추론, 전체 타입 집합, 초기화 요구사항.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "컴포넌트 본문 내 선언 스코프와 평가 시점.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "대입 표현식과 여러 줄 표현식 구문.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "변경 가능한 C++ 객체·C++ constness와 `let`의 관계를 포함한 참조 값 의미.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 93,
+      "raw": "채택한 규칙은 상수와 변수의 구분, 예시의 타입·초기값 구문,\n접두 어노테이션, 세미콜론 종결자 생략을 확정한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000003",
+      "parent_id": null,
+      "level": 1,
+      "title": "상수와 변수",
+      "anchor": "상수와-변수",
+      "start_line": 3
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "선언 구문",
+      "anchor": "선언-구문",
+      "start_line": 11
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "선언 어노테이션",
+      "anchor": "선언-어노테이션",
+      "start_line": 38
+    },
+    {
+      "block_id": "b000035",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "세미콜론 생략",
+      "anchor": "세미콜론-생략",
+      "start_line": 54
+    },
+    {
+      "block_id": "b000043",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "상태와 백엔드 연동",
+      "anchor": "상태와-백엔드-연동",
+      "start_line": 66
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "미정 사항",
+      "anchor": "미정-사항",
+      "start_line": 85
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000031",
+        "line": 48,
+        "text": "관찰 기능을 활성화하기 위한 필수 조건은 아니다. `@Static`은 해당 선언에 설정된 수명 동안",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000037",
+        "line": 56,
+        "text": "LVUI는 문장이나 선언을 끝내는 세미콜론을 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000047",
+        "line": 73,
+        "text": "이 기본 동작은 ViewModel 인스턴스를 생성하거나 선언의 소유자 수명을 더 길게 정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "현재 프런트엔드 범위",
+        "target": "ComponentLanguage.md",
+        "kind": "relative",
+        "line": 7
+      },
+      {
+        "block_id": "b000021",
+        "label": "View 타입과 자식 뷰 인자",
+        "target": "DeclarativeSyntax.md#view-type-and-child-arguments",
+        "kind": "relative",
+        "line": 33
+      },
+      {
+        "block_id": "b000031",
+        "label": "기본 반응형 모델",
+        "target": "ReactiveState.md",
+        "kind": "relative",
+        "line": 47
+      },
+      {
+        "block_id": "b000031",
+        "label": "DeclarationAnnotations.md",
+        "target": "DeclarationAnnotations.md",
+        "kind": "relative",
+        "line": 50
+      },
+      {
+        "block_id": "b000039",
+        "label": "LVUI 0.1 인라인 스타일 형식",
+        "target": "Language.md",
+        "kind": "relative",
+        "line": 62
+      },
+      {
+        "block_id": "b000047",
+        "label": "기본 바인딩",
+        "target": "ViewModelQueries.md#default-viewmodel-binding",
+        "kind": "relative",
+        "line": 75
+      },
+      {
+        "block_id": "b000049",
+        "label": "Core 객체 쿼리",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 80
+      },
+      {
+        "block_id": "b000049",
+        "label": "스코프 기반 import",
+        "target": "TypeImports.md",
+        "kind": "relative",
+        "line": 81
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

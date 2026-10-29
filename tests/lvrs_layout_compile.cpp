@@ -1,0 +1,10 @@
+#include "LVRSLayout.generated.h"
+#include "LVRSLayoutAlignment.generated.h"
+#include "LVRSLayoutConditional.generated.h"
+#include "LVRSLayoutMeasured.generated.h"
+#include "LVRSLayoutControls.generated.h"
+auto lvrs_layout_factory=&lvui_generated::LVRSLayout::build;
+auto lvrs_layout_alignment_factory=&lvui_generated::LVRSLayoutAlignment::build;
+auto lvrs_layout_conditional_factory=&lvui_generated::LVRSLayoutConditional::build;
+auto lvrs_layout_measured_factory=&lvui_generated::LVRSLayoutMeasured::build;
+auto lvrs_layout_controls_factory=&lvui_generated::LVRSLayoutControls::build;

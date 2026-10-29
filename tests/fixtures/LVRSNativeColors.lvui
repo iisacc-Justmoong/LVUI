@@ -1,0 +1,16 @@
+import vm NativeColorModel
+Window {
+    VStack {
+        Label(id: "anchor", text: "Color", color: vm.ink)
+        AppCard(backgroundColor: vm.ink, titleColor: Color(vm.hex)) { Label(color: vm.ink) }
+        AppHeader(backgroundColor: vm.ink, titleColor: vm.ink)
+        TableCellItem(text: "Color", dividerColor: vm.ink, textColor: vm.ink)
+        ListToolbar(backgroundColor: vm.ink)
+        Link(linkColor: vm.ink, text: "Link")
+        Tooltip(targetId: "anchor", surfaceColor: vm.ink) { Label(text: "Tip") }
+        MaterialSurface(primaryColor: vm.ink)
+        CodeEditor(backgroundColor: vm.ink, textColor: vm.ink, text: "Native")
+        Modal(frameColor: vm.ink) { Label(text: "Modal") }
+        Sheet(surfaceColor: vm.ink) { Label(text: "Sheet") }
+    }
+}

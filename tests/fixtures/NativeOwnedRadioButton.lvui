@@ -1,0 +1,19 @@
+import vm NativeOwnedRadioButtonModel
+Window {
+    VStack {
+        RadioButton(id: "first", text: vm.text, checked: vm.first, enabled: vm.enabled,
+                    group: vm.group, onColor: vm.on_color, motionEnabled: vm.motion_enabled,
+                    accessibilityName: "First choice", onToggled: vm.first_changed)
+        if (vm.show_child) {
+            VStack(id: "nested") {
+                import child NativeOwnedRadioChild
+                RadioButton(id: "second", text: "Second", checked: true, group: vm.group,
+                            motionEnabled: false, onToggled: vm.second_changed)
+                CheckBox(id: "candidate", boxSize: vm.candidate_size)
+            }
+        } else {
+            Label(id: "waiting", text: "Waiting")
+        }
+        RadioButton(id: "other", text: "Other", checked: true, group: "other", motionEnabled: false)
+    }
+}

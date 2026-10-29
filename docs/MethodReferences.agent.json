@@ -1,0 +1,1067 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:a2b28bf293597959f6f5bc531c96be766d88c610c9ffb1ddc6fab88048855c4e",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/MethodReferences.md",
+    "sha256": "37e58b2da8f119d783a7cef7ce6f1c44c6730807023b61ffc68f95264879d417",
+    "bytes": 10076,
+    "line_count": 161,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "메서드 참조·호출과 컴포넌트 콜백",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "html",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "<a id=\"method-references-calls-and-component-callbacks\"></a>\n"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "heading",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "# 메서드 참조·호출과 컴포넌트 콜백\n",
+      "level": 1,
+      "title": "메서드 참조·호출과 컴포넌트 콜백"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 7,
+      "raw": "상태: 2026-10-20에 채택한 LVUI 언어 설계이다. 이 규칙은 AOT로 컴파일되는\n컴포넌트 언어에 속한다. `parse_view`는 참조·호출을 구분한 AST를 생성한다.\n수신 객체 연결과 호출 실행은 [현재 프런트엔드](ComponentLanguage.md)에 포함되지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 16,
+      "raw": "후속 [네이티브 AOT 구현](NativeBindings.md)은 가져온 수신자의 메서드 참조를 C++\n콜백으로 생성하며 명시적인 C++ 호출도 표현식에서 실행한다. [타입 매개변수 구성](Components.md)은\n기존 백엔드를 자식에게 전달하여 같은 메서드를 사용한다. [반환된 C++ callable](ReturnedCallbacks.md)은\n네이티브 바인딩에 연결한다. [이벤트 콜백 매개변수](CallableInputs.md)는 명시적 Void 서명으로\n전달한다. [반환 함수 값](FunctionValues.md)은 읽기 전용 선언·인자·결과 타입·반응형\n함수 버전도 연결한다. [가변 함수 값](FunctionVariables.md)은 버전 선택과 명시적 C++\n교체를 연결한다. 중첩 함수 타입 등 나머지 callable 프로토콜과\n비동기 종료의 전체 계약은 계속 구현·검증 범위로 구분한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "html",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "<a id=\"references-and-calls\"></a>\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "## 참조와 호출\n",
+      "level": 2,
+      "title": "참조와 호출"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "table",
+      "start_line": 22,
+      "end_line": 27,
+      "raw": "| 표현식 | 평가 시 의미 |\n|---|---|\n| `vm.increment` | 기존 `vm` 수신 객체에 연결된 메서드 참조를 만든다. 메서드는 호출하지 않는다. |\n| `vm.increment()` | 지금 메서드를 호출하고 선언된 결과를 얻는다. |\n| `PushButton(vm.increment)` | 연결된 메서드 참조를 컴포넌트의 첫 번째 인자로 전달한다. 해당 callable의 허용 여부는 입력 계약으로 결정한다. |\n| `PushButton(vm.increment())` | 즉시 호출 결과를 컴포넌트의 첫 번째 인자로 사용한다. 결과를 입력 계약에 따라 검사한다. |\n",
+      "columns": [
+        "표현식",
+        "평가 시 의미"
+      ],
+      "rows": [
+        [
+          "`vm.increment`",
+          "기존 `vm` 수신 객체에 연결된 메서드 참조를 만든다. 메서드는 호출하지 않는다."
+        ],
+        [
+          "`vm.increment()`",
+          "지금 메서드를 호출하고 선언된 결과를 얻는다."
+        ],
+        [
+          "`PushButton(vm.increment)`",
+          "연결된 메서드 참조를 컴포넌트의 첫 번째 인자로 전달한다. 해당 callable의 허용 여부는 입력 계약으로 결정한다."
+        ],
+        [
+          "`PushButton(vm.increment())`",
+          "즉시 호출 결과를 컴포넌트의 첫 번째 인자로 사용한다. 결과를 입력 계약에 따라 검사한다."
+        ]
+      ]
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 31,
+      "raw": "메서드 표현식에 괄호를 붙이면 호출을 뜻한다. 참조를 전달하거나 읽거나 다시 평가하는 것만으로\n암묵적인 호출이 발생하지 않는다. 메서드 참조는 수신 객체의 정체성을 유지하며,\n참조를 만드는 과정에서 새 VM을 생성하거나 상태를 복사하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 33,
+      "end_line": 36,
+      "raw": "즉시 호출은 네이티브 애플리케이션 실행 중 표현식을 평가하는 시점에 호출을 시작한다는 뜻이다.\n컴포넌트 이벤트까지 연기하지 않는다. AOT 컴파일 중 표현식을 분석하는 것 자체로\n런타임 VM의 메서드를 실행하지 않는다. 완료 시점은 호출 대상 작업에 선언된\n동기·비동기 및 실행 영역 계약을 따른다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "html",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "<a id=\"component-owned-callback-semantics\"></a>\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "## 컴포넌트가 소유하는 콜백 의미\n",
+      "level": 2,
+      "title": "컴포넌트가 소유하는 콜백 의미"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 44,
+      "raw": "언어는 일반적인 멤버 접근, 호출 가능한 값, 호출 표현식, 인자 전달을 제공한다.\n컴포넌트 인터페이스는 매개변수 타입을 선언하고,\n구현은 전달받은 콜백을 언제 호출할지 결정한다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "현재 버튼 예제의 `PushButton` 인터페이스는 다음 계약을 가정한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "table",
+      "start_line": 48,
+      "end_line": 52,
+      "raw": "| 계약 항목 | 예제의 요구사항 |\n|---|---|\n| 첫 번째 위치 인자 | 인자와 반환값이 없는 콜백이다. |\n| 호출 계기 | 버튼 구현이 허용된 클릭에 대해 해당 콜백을 호출한다. |\n| 생성 시 동작 | 콜백을 전달받는 것만으로는 호출하지 않는다. |\n",
+      "columns": [
+        "계약 항목",
+        "예제의 요구사항"
+      ],
+      "rows": [
+        [
+          "첫 번째 위치 인자",
+          "인자와 반환값이 없는 콜백이다."
+        ],
+        [
+          "호출 계기",
+          "버튼 구현이 허용된 클릭에 대해 해당 콜백을 호출한다."
+        ],
+        [
+          "생성 시 동작",
+          "콜백을 전달받는 것만으로는 호출하지 않는다."
+        ]
+      ]
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 55,
+      "raw": "이는 예제의 인터페이스 의미이며, 콜백 타입 표기나 컴포넌트 정의 문법을 확정한 것은 아니다.\n이미 구현된 iiGUI 컨트롤 API를 설명하는 것도 아니다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 60,
+      "raw": "이 계약에 따라 컴포넌트는 나중에 호출할 `vm.increment`를 저장한다.\n파서는 해당 표현식을 클릭 처리기로 해석하지 않는다.\n다른 컴포넌트도 같은 callable을 받아 자신의 계약에 따라 호출할 수 있다.\n모든 컴포넌트의 첫 번째 인자가 자동으로 이벤트 콜백이 되는 것은 아니다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 62,
+      "end_line": 63,
+      "raw": "예를 들어 사용자 정의 `CustomControl`이 호환되는 콜백을 첫 번째 입력으로 선언하면\n같은 인자 구문을 사용할 수 있다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "fenced_code",
+      "start_line": 65,
+      "end_line": 67,
+      "raw": "```text\nCustomControl(vm.increment)\n```\n",
+      "language": "text",
+      "code": "CustomControl(vm.increment)\n",
+      "closed": true
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 69,
+      "end_line": 70,
+      "raw": "이벤트의 의미는 해당 컴포넌트의 인터페이스와 구현이 정한다.\n언어 문법에 컨트롤별 새 규칙을 추가할 필요는 없다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "html",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "<a id=\"type-checking-and-returned-callables\"></a>\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "## 타입 검사와 반환되는 callable\n",
+      "level": 2,
+      "title": "타입 검사와 반환되는 callable"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 76,
+      "end_line": 79,
+      "raw": "AOT 타입 검사기는 멤버와 수신 객체를 확인하고 호환되는 오버로드를 선택한 뒤,\n전달한 인자를 컴포넌트가 선언한 입력 타입에 따라 검사한다.\ncallable의 인자·결과 계약은 해당 입력과 호환되어야 한다.\n일반적인 C++ 접근 제한과 constness도 계속 적용된다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 80,
+      "end_line": 80,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 81,
+      "end_line": 84,
+      "raw": "`increment()`가 인자와 반환값이 없다고 가정한다.\n메서드 참조는 예제의 콜백 계약을 충족할 수 있지만 호출 결과는 충족할 수 없다.\n따라서 이 가정에서 `PushButton(vm.increment())`는 컴파일 타임 타입 오류이다.\n유효하지 않은 프로그램의 오류를 진단하는 과정에서 메서드를 실행하지 않는다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 90,
+      "raw": "다른 메서드는 호환되는 callable을 반환할 수 있다.\n이 경우 `PushButton(vm.makeHandler())` 같은 표현식은 유효할 수 있다.\n인자를 평가할 때 `makeHandler()`를 평가하고 반환된 callable을 컴포넌트에 전달한다.\n콜백 인자 위치에 있다는 이유만으로 호출 구문을 거부해서는 안 된다.\n호환 여부는 결과 타입으로 결정한다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 96,
+      "raw": "현재 명시적 서명과 네이티브 적응은 [이벤트 입력](CallableInputs.md) 및\n[반환 함수 값](FunctionValues.md)을 따른다. 일반 프로토콜·부분 적용과 언어 수준의\n오버로드 선택 진단은 추가 명세와 구현이 필요하다.\n컴파일러는 컴포넌트 이름·멤버 이름·인자 위치만으로 추측하지 않고,\n해당 컴포넌트 인터페이스를 확보해야 한다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "html",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "<a id=\"aot-execution-and-query-integration\"></a>\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "## AOT 실행과 쿼리 연동\n",
+      "level": 2,
+      "title": "AOT 실행과 쿼리 연동"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 102,
+      "end_line": 104,
+      "raw": "컴파일러는 메서드 참조, 명시적 호출, 컴포넌트 콜백 매개변수를 네이티브 코드로 생성한다.\n이벤트 동작은 컴포넌트의 컴파일된 구현이 소유한다.\n버튼 동작을 인식하기 위한 소스 인터프리터나 런타임 표현식 평가기는 없다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 106,
+      "end_line": 113,
+      "raw": "[객체 메서드 조회](MethodQueries.md)는 중첩 객체·구성 입력·인덱스 수신자의 즉시 호출을\n지원한다. 일반 C++ 메서드 내부의 Core Observable 읽기는 동기 범위에서 수집한다.\n기존 타입 지정 함수 입력의 호출도 같은 내부 읽기를 추적한다.\n[일반 객체의 지연 참조](ObjectMethodReferences.md)는 중첩·선택·구성 입력·후위 식의\n수신자 정체성과 부모·임시 객체 수명을 기존 콜백·함수 값 경로에 연결한다.\n[callable 필드](CallableFields.md)는 같은 C++ 선택 경계에서 함수 필드와 메서드를 구분한다.\n관측 가능한 값은 게시된 함수 버전을, 공유 핸들은 실제 함수 객체를 보존한다. 일반 함수\n객체의 차용과 외부 수명은 C++ 계약을 따른다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 115,
+      "end_line": 117,
+      "raw": "[VM 쿼리 연동](ViewModelQueries.md)에서 메서드 참조를 생성하거나 전달하는 것은\n메서드 호출 쿼리를 발행하지 않는다. 콜백을 호출할 때 해당 쿼리를 시작할 수 있다.\n명시적 호출 표현식은 평가 시 호출을 시작하며, 같은 실행·결과 전달 규칙을 따른다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 119,
+      "end_line": 122,
+      "raw": "[기본 반응형 값 모델](ReactiveState.md)은 메서드 호출과 독립적이다.\n정적 값이 아닌 상태를 읽으면 필요한 실시간 값 바인딩을 설정한다.\n메서드에 접근하면 명령을 실행하는 대신 callable을 얻는다.\n의존성 갱신은 메서드 참조를 암묵적으로 호출하지 않는다.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "html",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "<a id=\"receiver-lifetime\"></a>\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "heading",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "## 수신 객체의 수명\n",
+      "level": 2,
+      "title": "수신 객체의 수명"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 127,
+      "end_line": 127,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 128,
+      "end_line": 131,
+      "raw": "연결된 메서드 참조는 기존의 가져온 수신 객체를 사용한다.\n저장되어 나중에 호출될 수 있는 callable은 수신 객체의\n[스코프 수명](InvocationLifecycle.md)을 따르는 미래 사용 경로이다.\n소유권을 이전하거나 암묵적으로 VM의 수명을 늘리지 않는다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 132,
+      "end_line": 132,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 133,
+      "end_line": 136,
+      "raw": "소유 스코프가 닫히면 콜백 접수와 연결을 종료한다.\n활성 호출과 캡처는 파괴 전에 모두 종료되어야 한다.\n마운트 해제 이후나 늦은 비동기 전달을 포함하여,\n컴포넌트는 사용이 종료된 수신 객체를 통해 콜백을 호출해서는 안 된다.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 137,
+      "end_line": 137,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "html",
+      "start_line": 138,
+      "end_line": 138,
+      "raw": "<a id=\"future-implementation-validation\"></a>\n"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 139,
+      "end_line": 139,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "heading",
+      "start_line": 140,
+      "end_line": 140,
+      "raw": "## 향후 구현 검증\n",
+      "level": 2,
+      "title": "향후 구현 검증"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 141,
+      "end_line": 141,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "list",
+      "start_line": 142,
+      "end_line": 148,
+      "raw": "- 예제 버튼에 메서드 참조를 전달해도 컴포넌트 생성·레이아웃·참조 재평가 중에는 호출하지 않는다.\n- 허용된 버튼 클릭은 기존 VM에서 전달받은 콜백을 호출한다.\n- 유효한 명시적 메서드 호출은 표현식을 평가할 때 시작한다.\n- 예제의 콜백이 필요한 위치에서 반환값 없는 호출 결과는 거부한다.\n- 명시적 호출이 반환한 호환 가능한 callable은 인자로 전달할 수 있다.\n- 사용자 정의 컴포넌트는 같은 일반 구문으로 호환되는 콜백을 받고 자체 호출 계기를 사용한다.\n- 스코프 종료 후 콜백은 사용이 종료된 수신 객체에 접근할 수 없다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "예제 버튼에 메서드 참조를 전달해도 컴포넌트 생성·레이아웃·참조 재평가 중에는 호출하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "허용된 버튼 클릭은 기존 VM에서 전달받은 콜백을 호출한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "유효한 명시적 메서드 호출은 표현식을 평가할 때 시작한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "예제의 콜백이 필요한 위치에서 반환값 없는 호출 결과는 거부한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "명시적 호출이 반환한 호환 가능한 callable은 인자로 전달할 수 있다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "사용자 정의 컴포넌트는 같은 일반 구문으로 호환되는 콜백을 받고 자체 호출 계기를 사용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "스코프 종료 후 콜백은 사용이 종료된 수신 객체에 접근할 수 없다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 149,
+      "end_line": 149,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 150,
+      "end_line": 151,
+      "raw": "위 항목은 컴파일러·컴포넌트의 수용 기준이다. 실제 검사 범위와 통과 기록은 연결된\n기능 문서에 구분하며, 이 목록 자체를 모든 위젯·플랫폼의 실행 통과 결과로 간주하지 않는다.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 152,
+      "end_line": 152,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "html",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000080",
+      "kind": "blank",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "\n"
+    },
+    {
+      "id": "b000081",
+      "kind": "heading",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "## 미정 사항\n",
+      "level": 2,
+      "title": "미정 사항"
+    },
+    {
+      "id": "b000082",
+      "kind": "blank",
+      "start_line": 156,
+      "end_line": 156,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "list",
+      "start_line": 157,
+      "end_line": 161,
+      "raw": "- 전체 컴포넌트 인터페이스 탐색과 프로토콜 제약.\n- 중첩 함수 타입·일반 함수 변환과 고차 함수 프로토콜.\n- 모호한 메서드 참조의 오버로드 선택과 진단.\n- LVUI 함수 본문·클로저·캡처·부분 적용. 네이티브 C++가 반환한 클로저와 타입 지정 인자는 별도 구현을 따른다.\n- 평가 순서, 반응형 문맥의 효과 제한, 콜백 오류.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "전체 컴포넌트 인터페이스 탐색과 프로토콜 제약.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "중첩 함수 타입·일반 함수 변환과 고차 함수 프로토콜.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "모호한 메서드 참조의 오버로드 선택과 진단.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "LVUI 함수 본문·클로저·캡처·부분 적용. 네이티브 C++가 반환한 클로저와 타입 지정 인자는 별도 구현을 따른다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "평가 순서, 반응형 문맥의 효과 제한, 콜백 오류.",
+          "checked": null
+        }
+      ]
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000003",
+      "parent_id": null,
+      "level": 1,
+      "title": "메서드 참조·호출과 컴포넌트 콜백",
+      "anchor": "메서드-참조호출과-컴포넌트-콜백",
+      "start_line": 3
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "참조와 호출",
+      "anchor": "참조와-호출",
+      "start_line": 20
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "컴포넌트가 소유하는 콜백 의미",
+      "anchor": "컴포넌트가-소유하는-콜백-의미",
+      "start_line": 40
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "타입 검사와 반환되는 callable",
+      "anchor": "타입-검사와-반환되는-callable",
+      "start_line": 74
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "AOT 실행과 쿼리 연동",
+      "anchor": "aot-실행과-쿼리-연동",
+      "start_line": 100
+    },
+    {
+      "block_id": "b000065",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "수신 객체의 수명",
+      "anchor": "수신-객체의-수명",
+      "start_line": 126
+    },
+    {
+      "block_id": "b000073",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "향후 구현 검증",
+      "anchor": "향후-구현-검증",
+      "start_line": 140
+    },
+    {
+      "block_id": "b000081",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "미정 사항",
+      "anchor": "미정-사항",
+      "start_line": 155
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000013",
+        "line": 24,
+        "text": "| `vm.increment` | 기존 `vm` 수신 객체에 연결된 메서드 참조를 만든다. 메서드는 호출하지 않는다. |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000015",
+        "line": 30,
+        "text": "암묵적인 호출이 발생하지 않는다. 메서드 참조는 수신 객체의 정체성을 유지하며,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 31,
+        "text": "참조를 만드는 과정에서 새 VM을 생성하거나 상태를 복사하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 34,
+        "text": "컴포넌트 이벤트까지 연기하지 않는다. AOT 컴파일 중 표현식을 분석하는 것 자체로",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 35,
+        "text": "런타임 VM의 메서드를 실행하지 않는다. 완료 시점은 호출 대상 작업에 선언된",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 52,
+        "text": "| 생성 시 동작 | 콜백을 전달받는 것만으로는 호출하지 않는다. |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000031",
+        "line": 58,
+        "text": "파서는 해당 표현식을 클릭 처리기로 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000045",
+        "line": 84,
+        "text": "유효하지 않은 프로그램의 오류를 진단하는 과정에서 메서드를 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000047",
+        "line": 89,
+        "text": "콜백 인자 위치에 있다는 이유만으로 호출 구문을 거부해서는 안 된다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000049",
+        "line": 96,
+        "text": "해당 컴포넌트 인터페이스를 확보해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000059",
+        "line": 116,
+        "text": "메서드 호출 쿼리를 발행하지 않는다. 콜백을 호출할 때 해당 쿼리를 시작할 수 있다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000061",
+        "line": 122,
+        "text": "의존성 갱신은 메서드 참조를 암묵적으로 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000069",
+        "line": 136,
+        "text": "컴포넌트는 사용이 종료된 수신 객체를 통해 콜백을 호출해서는 안 된다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000075",
+        "line": 142,
+        "text": "- 예제 버튼에 메서드 참조를 전달해도 컴포넌트 생성·레이아웃·참조 재평가 중에는 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000077",
+        "line": 151,
+        "text": "기능 문서에 구분하며, 이 목록 자체를 모든 위젯·플랫폼의 실행 통과 결과로 간주하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "현재 프런트엔드",
+        "target": "ComponentLanguage.md",
+        "kind": "relative",
+        "line": 7
+      },
+      {
+        "block_id": "b000007",
+        "label": "네이티브 AOT 구현",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 9
+      },
+      {
+        "block_id": "b000007",
+        "label": "타입 매개변수 구성",
+        "target": "Components.md",
+        "kind": "relative",
+        "line": 10
+      },
+      {
+        "block_id": "b000007",
+        "label": "반환된 C++ callable",
+        "target": "ReturnedCallbacks.md",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000007",
+        "label": "이벤트 콜백 매개변수",
+        "target": "CallableInputs.md",
+        "kind": "relative",
+        "line": 12
+      },
+      {
+        "block_id": "b000007",
+        "label": "반환 함수 값",
+        "target": "FunctionValues.md",
+        "kind": "relative",
+        "line": 13
+      },
+      {
+        "block_id": "b000007",
+        "label": "가변 함수 값",
+        "target": "FunctionVariables.md",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000049",
+        "label": "이벤트 입력",
+        "target": "CallableInputs.md",
+        "kind": "relative",
+        "line": 92
+      },
+      {
+        "block_id": "b000049",
+        "label": "반환 함수 값",
+        "target": "FunctionValues.md",
+        "kind": "relative",
+        "line": 93
+      },
+      {
+        "block_id": "b000057",
+        "label": "객체 메서드 조회",
+        "target": "MethodQueries.md",
+        "kind": "relative",
+        "line": 106
+      },
+      {
+        "block_id": "b000057",
+        "label": "일반 객체의 지연 참조",
+        "target": "ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 109
+      },
+      {
+        "block_id": "b000057",
+        "label": "callable 필드",
+        "target": "CallableFields.md",
+        "kind": "relative",
+        "line": 111
+      },
+      {
+        "block_id": "b000059",
+        "label": "VM 쿼리 연동",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 115
+      },
+      {
+        "block_id": "b000061",
+        "label": "기본 반응형 값 모델",
+        "target": "ReactiveState.md",
+        "kind": "relative",
+        "line": 119
+      },
+      {
+        "block_id": "b000067",
+        "label": "스코프 수명",
+        "target": "InvocationLifecycle.md",
+        "kind": "relative",
+        "line": 130
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000013",
+        "columns": [
+          "표현식",
+          "평가 시 의미"
+        ],
+        "rows": [
+          [
+            "`vm.increment`",
+            "기존 `vm` 수신 객체에 연결된 메서드 참조를 만든다. 메서드는 호출하지 않는다."
+          ],
+          [
+            "`vm.increment()`",
+            "지금 메서드를 호출하고 선언된 결과를 얻는다."
+          ],
+          [
+            "`PushButton(vm.increment)`",
+            "연결된 메서드 참조를 컴포넌트의 첫 번째 인자로 전달한다. 해당 callable의 허용 여부는 입력 계약으로 결정한다."
+          ],
+          [
+            "`PushButton(vm.increment())`",
+            "즉시 호출 결과를 컴포넌트의 첫 번째 인자로 사용한다. 결과를 입력 계약에 따라 검사한다."
+          ]
+        ]
+      },
+      {
+        "block_id": "b000027",
+        "columns": [
+          "계약 항목",
+          "예제의 요구사항"
+        ],
+        "rows": [
+          [
+            "첫 번째 위치 인자",
+            "인자와 반환값이 없는 콜백이다."
+          ],
+          [
+            "호출 계기",
+            "버튼 구현이 허용된 클릭에 대해 해당 콜백을 호출한다."
+          ],
+          [
+            "생성 시 동작",
+            "콜백을 전달받는 것만으로는 호출하지 않는다."
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

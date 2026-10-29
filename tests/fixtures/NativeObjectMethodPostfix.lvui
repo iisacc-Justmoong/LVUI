@@ -1,0 +1,9 @@
+import vm NativeObjectMethodReferenceBackend
+Window { VStack {
+    Label(id: "count", text: vm.temporary_calls)
+    PushButton(id: "parent", onClick: vm.parent.resident.act)
+    PushButton(id: "temporary", onClick: vm.temporary().act)
+    PushButton(id: "owned_parent", onClick: vm.ownedParent().child.act)
+    PushButton(id: "owned_getter", onClick: vm.ownedParent().selected().act)
+    PushButton(id: "indexed_value", onClick: vm.indexed[0].act)
+} }

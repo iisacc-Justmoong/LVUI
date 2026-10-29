@@ -1,0 +1,136 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:62797892f54bab42aac561bf6047c955885e8315869fbff0a39aac219f7555d3",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/EditorAppearance.md",
+    "sha256": "e3872219f825f8ce9c5f512f07d3d547993194e0573cc9b7bfda6db551c39826",
+    "bytes": 1587,
+    "line_count": 13,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 편집기 외형 입력",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 편집기 외형 입력\n",
+      "level": 1,
+      "title": "네이티브 편집기 외형 입력"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "기본 버튼의 height, horizontalPadding, cornerRadius, accessibilityName과 icon은\nLVUI 자체 모델에 상수 또는 반응형 입력으로 전달한다. icon은 앱이 공급하는\n불변 RasterImage이며 파일 경로를 런타임에 평가하지 않는다. 이름 기반 iconName은\n기본 독립 경로에 아직 구현되지 않았으며 레거시 LVRS 경로와 구분한다. 자세한\n계약은 [네이티브 버튼](NativeButton.md)을 따른다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "Slider는 thumbDiameter, trackHeight, rangeInset을 받으며 기본값은 각각 18, 6, 9이다. 기본 Slider는 [LVUI 독립 구현](NativeSlider.md)을 사용한다. Hierarchy/List는 backgroundColor, selectionColor, textColor와 selectionRadius를 받는다. ColorPickerButton.circular은 원형 색상 표시를 선택한다. Hierarchy/List와 ColorPickerButton은 아직 레거시 LVRS 생성 경로에 속한다. 정적 크기·색상·스코프 참조는 AOT 단계에서 검사하고 반응형 슬라이더 설정은 적용 전에 검증한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "Hierarchy/List의 fontSize는 기본 13이며 Vincent 레이어 목록은 11을 사용한다. ColorPickerButton.borderOpacity는 0..1의 정적 값으로 원형 테두리의 불투명도를 지정한다. 기본 1이다. editor_styles 검사는 두 값의 C++ 전달을 함께 확인한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "Slider.height는 네이티브 컨트롤의 실제 배치 높이를 지정한다. 기본 32이며 브러시 팝업은 12를 사용한다. 손잡이와 트랙의 높이를 함께 지정하여 그리기와 배치 영역을 일치시킨다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 편집기 외형 입력",
+      "anchor": "네이티브-편집기-외형-입력",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "불변 RasterImage이며 파일 경로를 런타임에 평가하지 않는다. 이름 기반 iconName은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "네이티브 버튼",
+        "target": "NativeButton.md",
+        "kind": "relative",
+        "line": 7
+      },
+      {
+        "block_id": "b000005",
+        "label": "LVUI 독립 구현",
+        "target": "NativeSlider.md",
+        "kind": "relative",
+        "line": 9
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

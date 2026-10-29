@@ -1,0 +1,472 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:98aa583396b8805ea65007ad51dd65f2258abade4522f85f614edf363ce05b48",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ViewSequences.md",
+    "sha256": "2c4e1741d16a49c62bdeae5f633c38263974c29d3c09ecbfac2aa185108b2906",
+    "bytes": 5855,
+    "line_count": 87,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "순서가 있는 View 구성 슬롯",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 순서가 있는 View 구성 슬롯\n",
+      "level": 1,
+      "title": "순서가 있는 View 구성 슬롯"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "`[View]`는 여러 뷰의 구성을 순서대로 전달하는 타입이다. 선언과 슬롯은 AOT에서 C++\n구성으로 확장하며, 실행 중 소스 해석이나 중간 레이아웃 위젯을 추가하지 않는다.\n아래는 현재 구현의 구성·타입·수명 계약이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 18,
+      "raw": "```lvui\nlet Pair(title: String): [View] = [\n    Label(text: title),\n    PushButton(text: \"Run\")\n]\nlet Panel(content: [View] = []): View = HStack {\n    content()\n}\nWindow {\n    Panel(content: Pair(title: \"Native\"))\n}\n```\n",
+      "language": "lvui",
+      "code": "let Pair(title: String): [View] = [\n    Label(text: title),\n    PushButton(text: \"Run\")\n]\nlet Panel(content: [View] = []): View = HStack {\n    content()\n}\nWindow {\n    Panel(content: Pair(title: \"Native\"))\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "## 구성과 수명\n",
+      "level": 2,
+      "title": "구성과 수명"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 25,
+      "raw": "목록은 순서가 있는 구성 정의이며 위젯 인스턴스를 공유하지 않는다. 빈 목록·중첩 목록·\n목록 별칭을 지원하고, 사용 위치별 ID 영역과 지역 import의 독립 활성화를 유지한다.\n값과 콜백은 원래 정의·호출 환경을 따르며 내부에서 같은 이름을 가려도 수신자가 바뀌지 않는다.\n입력 변경은 각 자식의 기존 네이티브 바인딩을 갱신한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 31,
+      "raw": "`View` 슬롯은 단일 뷰 구성을 받고 `[View]` 슬롯은 목록 구성을 받는다. 목록의 호출은\n자식을 원래 부모에 직접 배치한다. 목록 자체에 루트 속성·자식 블록을 덮어쓰지 않는다.\n매개변수가 있는 목록 생성은 선언된 이름·타입·기본값을 따른다.\n별칭도 원래 타입을 유지하며 `[View]` 목록을 `View`로 재선언하여 타입을 우회하지 않는다.\n`onContent: [View]`처럼 이름이 이벤트와 유사해도 빈 목록을 콜백으로 해석하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 33,
+      "end_line": 36,
+      "raw": "TabBar·Menu 등의 자식 타입 검사와 Window·Modal·조건부 분기·반복 행의 루트 수량은\n목록을 펼친 실제 구성으로 검사한다. 목록을 경유하여 제약을 우회하지 않는다.\n가변 View 교체와 깊은 Static 스냅샷은 기존 [전체 완료 범위](Completion.md)에 남긴다.\n렌더링 시 필요한 목록에는 기존 [키 기반 반복](Repetition.md)을 사용한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 39,
+      "raw": "구성 확장은 유한한 깊이·작업량 한도를 유지한다. 뷰를 하나도 만들지 않는 중첩 목록도\n무한하거나 지수적으로 커지는 코드 생성을 계속하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "## 코드 생성과 검증 경계\n",
+      "level": 2,
+      "title": "코드 생성과 검증 경계"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 48,
+      "raw": "목록 선언은 실행 중 변경 가능한 위젯 배열이나 재해석하는 AST가 아니다. 사용 위치별\nC++ 구성으로 확장하며, 조건부·반복 항목은 기존 네이티브 활성화 호스트를 유지한다.\n구조 검사에서 팩터리를 평가하거나 콜백 저장소를 생성하지 않는다. 실제 확장에서 입력을\n검사하므로 자식이 없는 목록에서도 잘못된 매개변수를 건너뛰지 않는다.\n구성 깊이 64단계·생성 위젯 4,096개·구성 확장 및 개별 구조 검사 작업량 16,384개 한계를\n적용한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 56,
+      "raw": "`tests/view_sequences.cpp`는 구문·별칭·입력 타입·빈 목록·중첩·타입 제한과 진단을\n검사한다. `iiGUI/tests/native_view_sequences.cpp`는 실제 생성 C++를 창 없는 위젯에\n연결하여 순서·지역 상태·반응형 갱신·조건부 퇴역·실행 중 자기 제거·후보 실패 롤백·\n키 기반 행 재사용과 호출 위치의 뷰 팩터리 포획을 실행한다. 파일 리비전도 함께 확인한다.\n설치 후 경로를 옮긴 독립 소비자는 공개 AST·컴파일러에서 `[View]` 입력과 기본값을\n컴파일·링크·실행한다. LVRS TabBar·Menu·Modal을 포함한 생성 팩터리는 중간 단계에서\n컴파일만 하며, LVRS 앱·테스트 실행은 전체 작업의 최종 일괄 검증에 남긴다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 61,
+      "raw": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 서로 겹치는 검사를 합산하여 독립\n기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "table",
+      "start_line": 63,
+      "end_line": 71,
+      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 183/183 통과 |\n| 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer | 106/106 통과 |\n| iiGUI 창 없는 기존 동작·생성 C++ 통합 | 95/95 통과 |\n| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 95/95 통과, NativeBindings 구현은 별도 LVUI 검사 |\n| 설치·재배치 독립 소비자 | Native·공개 파서/컴파일러·선택적 Runtime 3/3 통과 |\n| 생성 C++ 함수 타입 회귀 | 유효 3개 컴파일, 잘못된 11개 거부 |\n| LVRS 생성 C++ | 목록·이름 가림·TabBar·Menu·Modal을 포함한 총 22개 팩터리 컴파일, 실행하지 않음 |\n",
+      "columns": [
+        "범위",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI 전체 Release CTest",
+          "183/183 통과"
+        ],
+        [
+          "관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer",
+          "106/106 통과"
+        ],
+        [
+          "iiGUI 창 없는 기존 동작·생성 C++ 통합",
+          "95/95 통과"
+        ],
+        [
+          "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
+          "95/95 통과, NativeBindings 구현은 별도 LVUI 검사"
+        ],
+        [
+          "설치·재배치 독립 소비자",
+          "Native·공개 파서/컴파일러·선택적 Runtime 3/3 통과"
+        ],
+        [
+          "생성 C++ 함수 타입 회귀",
+          "유효 3개 컴파일, 잘못된 11개 거부"
+        ],
+        [
+          "LVRS 생성 C++",
+          "목록·이름 가림·TabBar·Menu·Modal을 포함한 총 22개 팩터리 컴파일, 실행하지 않음"
+        ]
+      ]
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 77,
+      "raw": "단일 View로 잘못 재선언한 목록 별칭과 이벤트로 오인된 빈 슬롯을 재현한 후 거부·정상\n처리 경로를 추가했다. AOT 도구가 동일한 헤더를 다시 써서 소비 C++를 재컴파일하던\n경우도 일반 뷰·스타일 출력에서 재현하여 수정했다. 동일 출력은 수정 시각을 보존하며,\n뒤이은 LVRS 팩터리 빌드는 `ninja: no work to do.`였다. 이 검사는 제품의 UI 지연 시간\n개선율을 측정한 것이 아니다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 79,
+      "end_line": 82,
+      "raw": "이 단계는 파서·컴파일러·생성 구성 변경이다. 작업·공유 콜백·함수·가변 함수의 이전\nThreadSanitizer 26/26 기록은 변경하지 않은 네이티브 소스·헤더 6개의 해시를 확인하여\n재사용했다. 새 목록 코드의 동시성 검사를 별도로 통과했다고 주장하지 않는다. 해당\n검사에서 빌린 Core Runtime 라이브러리는 ThreadSanitizer 비계측이다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 84,
+      "end_line": 87,
+      "raw": "소스 해시·정상/메모리 검사 빌드의 생성 C++ 비교·실행 파일 경계·Dreamscapes QML\n비변경 및 로그 위치는 `build/lvui-completion/view-sequences-verification-20261026.json`에\n보관한다. 실제 창·GPU·접근성·IME·LVRS 전체 동작·플랫폼별 실행과\n[전체 언어·모듈 완성](Completion.md)은 별도의 완료 검사 대상으로 유지한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "순서가 있는 View 구성 슬롯",
+      "anchor": "순서가-있는-view-구성-슬롯",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "구성과 수명",
+      "anchor": "구성과-수명",
+      "start_line": 20
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "코드 생성과 검증 경계",
+      "anchor": "코드-생성과-검증-경계",
+      "start_line": 41
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 58
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "구성으로 확장하며, 실행 중 소스 해석이나 중간 레이아웃 위젯을 추가하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 22,
+        "text": "목록은 순서가 있는 구성 정의이며 위젯 인스턴스를 공유하지 않는다. 빈 목록·중첩 목록·",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 30,
+        "text": "별칭도 원래 타입을 유지하며 `[View]` 목록을 `View`로 재선언하여 타입을 우회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 31,
+        "text": "`onContent: [View]`처럼 이름이 이벤트와 유사해도 빈 목록을 콜백으로 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 34,
+        "text": "목록을 펼친 실제 구성으로 검사한다. 목록을 경유하여 제약을 우회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 39,
+        "text": "무한하거나 지수적으로 커지는 코드 생성을 계속하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 45,
+        "text": "구조 검사에서 팩터리를 평가하거나 콜백 저장소를 생성하지 않는다. 실제 확장에서 입력을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 61,
+        "text": "기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 81,
+        "text": "재사용했다. 새 목록 코드의 동시성 검사를 별도로 통과했다고 주장하지 않는다. 해당",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000013",
+        "label": "전체 완료 범위",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 35
+      },
+      {
+        "block_id": "b000013",
+        "label": "키 기반 반복",
+        "target": "Repetition.md",
+        "kind": "relative",
+        "line": 36
+      },
+      {
+        "block_id": "b000033",
+        "label": "전체 언어·모듈 완성",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 87
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000027",
+        "columns": [
+          "범위",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI 전체 Release CTest",
+            "183/183 통과"
+          ],
+          [
+            "관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer",
+            "106/106 통과"
+          ],
+          [
+            "iiGUI 창 없는 기존 동작·생성 C++ 통합",
+            "95/95 통과"
+          ],
+          [
+            "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
+            "95/95 통과, NativeBindings 구현은 별도 LVUI 검사"
+          ],
+          [
+            "설치·재배치 독립 소비자",
+            "Native·공개 파서/컴파일러·선택적 Runtime 3/3 통과"
+          ],
+          [
+            "생성 C++ 함수 타입 회귀",
+            "유효 3개 컴파일, 잘못된 11개 거부"
+          ],
+          [
+            "LVRS 생성 C++",
+            "목록·이름 가림·TabBar·Menu·Modal을 포함한 총 22개 팩터리 컴파일, 실행하지 않음"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

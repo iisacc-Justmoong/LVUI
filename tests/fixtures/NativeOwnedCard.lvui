@@ -1,0 +1,9 @@
+import vm NativeOwnedCardModel
+Window {
+    VStack(alignment: .leading) {
+        Card(id: "card", type: vm.kind, title: vm.title, description: vm.description,
+             selected: vm.selected, enabled: vm.enabled, visible: vm.visible, width: vm.width,
+             progress: vm.progress, rows: vm.rows, onClick: vm.clicked, onSelectedChanged: vm.selection,
+             onMenuRequested: vm.menu, onActionTriggered: vm.action)
+    }
+}

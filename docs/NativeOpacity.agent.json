@@ -1,0 +1,152 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:a8921db5d23f716947ab0458a5560b7e24035449361bce8d3322f820696a96b7",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeOpacity.md",
+    "sha256": "e39d5851f536a56a65ca9a8cbf3454d84a6fd461fe731947454ac6476df84ac7",
+    "bytes": 2310,
+    "line_count": 35,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 공통 표시 속성 opacity",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 공통 표시 속성 opacity\n",
+      "level": 1,
+      "title": "네이티브 공통 표시 속성 opacity"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "Dreamscapes의 레이어 행·비활성 도구·타임라인 항목은 `opacity`를 사용한다. 이 관측을\n바탕으로 LVUI의 네이티브 컴포넌트에 공통 입력 `opacity`를 추가한다. Dreamscapes의\nQML이나 파일 상태 모델을 수정하거나 자동 변환하는 기능은 아니다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 15,
+      "raw": "```lvui\nimport vm LayerModel\nWindow {\n    VStack(opacity: vm.visible() ? 1 : 0.5) {\n        Label(text: vm.name)\n        PushButton(text: \"Select\", onClick: vm.select)\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm LayerModel\nWindow {\n    VStack(opacity: vm.visible() ? 1 : 0.5) {\n        Label(text: vm.name)\n        PushButton(text: \"Select\", onClick: vm.select)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 20,
+      "raw": "상수는 빌드 시 범위와 타입을 검사하며, 반응형 값은 iiSDKCore 관측과 기존 NativeBindings를\n통해 C++ `Widget::set_opacity`로 전달한다. 허용 범위는 0부터 1까지이고 기본값은 1이다.\n잘못된 반응형 값은 기존 표시를 유지한 채 binding 실패를 기록하며 이후 정상값으로 복구한다.\n일반 숫자 입력·C++ 조회·공유 구성 입력과 `@Static`의 기존 의미를 유지한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 25,
+      "raw": "`VStack`, `Label`, 버튼·입력·진행 컨트롤 및 LVRS 계층 행을 포함한 네이티브 컴포넌트의\n루트 위젯에 적용한다. 계층 `itemDelegate`와 `countView`도 동일한 표시 트리로 연결한다.\n사용자가 선언한 View에는 필요한 매개변수를 정의하여 전달한다. `Window`의 불투명도는\n위젯 투명도와 운영체제 창 합성이 다르므로 이 입력으로 받지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 30,
+      "raw": "부모와 자식의 투명도는 곱한다. 색상 alpha나 파일의 레이어 opacity를 다시 쓰지 않는다.\n0은 표시만 생략하며 입력·포커스·선택·콘텐츠 수명을 유지한다. 따라서 비활성 정책이\n필요하면 `enabled`를 별도로 지정한다. 투명도 변경을 위해 뷰를 교체하거나 C++ 명령을\n호출하지 않는다. 원본의 전체 상속·모션·플랫폼 계약 완료를 의미하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 35,
+      "raw": "검사는 컴파일러 8개, iiGUI 자체 위젯 9개, 동일한 생성 C++를 사용하는 iiGUI/LVRS 사례\n각 8개로 구성하며, LVRS에는 계층 행과 count 슬롯의 투명도 보존 1개를 추가한다.\nLVRS 실행은 저장소 지침에 따라 전체 작업의 최종 일괄 단계에 모은다.\n창 없는 C++ 그리기 검사는 실제 OS 창·GPU 픽셀 또는 플랫폼 동등성 증거와 구분한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 공통 표시 속성 opacity",
+      "anchor": "네이티브-공통-표시-속성-opacity",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000011",
+        "line": 30,
+        "text": "호출하지 않는다. 원본의 전체 상속·모션·플랫폼 계약 완료를 의미하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

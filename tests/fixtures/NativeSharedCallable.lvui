@@ -1,0 +1,15 @@
+import vm NativeSharedCallableBackend
+let Leaf(run: () -> Void): View = VStack {
+    import vm NativeSharedCallableShadow
+    PushButton(id: "nested", onClick: run)
+}
+let Pair(run: () -> Void, again: () -> Void = run): View = VStack {
+    PushButton(id: "first", onClick: run)
+    PushButton(id: "again", onClick: again)
+    if (vm.child_visible) { Leaf(run: run) }
+}
+Window {
+    VStack {
+        if (vm.visible) { Pair(run: vm.make(vm.amount)) }
+    }
+}

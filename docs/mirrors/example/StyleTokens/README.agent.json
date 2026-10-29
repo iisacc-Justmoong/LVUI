@@ -1,0 +1,144 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:92acf3a41184e3927981dede5ffa86d42fa369eb0d2a9471174ce6619dcaf70f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "example/StyleTokens/README.md",
+    "sha256": "09ca0bedeb2daa8d77522b0fd133ac31a8087f570501d4733849b62d7c14170e",
+    "bytes": 1320,
+    "line_count": 26,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "LVUI style tokens",
+    "role": "overview",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI style tokens\n",
+      "level": 1,
+      "title": "LVUI style tokens"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "This installed-package consumer compiles both component and HTML-shaped `.lvui`\nsources into native C++23 using LVUI-owned style values and ProgressBar geometry.\nThe application supplies iiGUI as the host. It does not find or link LVRS.\nThe final view has no runtime token lookup or LVUI source parser. A separate\ncatalog probe exercises the public LVUI API.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 11,
+      "raw": "The examples use `Color.window`, `Metric.space12`, contextual `.space24` and\ntyped `let`/`var` declarations. The inline view also verifies that a Metric\nObservable updates the same native slider after mounting.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 14,
+      "raw": "Build from the LVUI repository into its existing `build/` directory with a\nQt-free native iiGUI kit available to CMake:\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "fenced_code",
+      "start_line": 16,
+      "end_line": 21,
+      "raw": "```sh\ncmake -S . -B build -DLVUI_BUILD_STYLE_EXAMPLE=ON \\\n  -DCMAKE_PREFIX_PATH=\"/path/to/native-sdk/prefix\"\ncmake --build build --target LVUIStyleTokenConsumer LVUITokenCatalogConsumer\nctest --test-dir build --output-on-failure -R '^LVUI.StyleTokens.(InstalledCatalog|CompiledAppearance)$'\n```\n",
+      "language": "sh",
+      "code": "cmake -S . -B build -DLVUI_BUILD_STYLE_EXAMPLE=ON \\\n  -DCMAKE_PREFIX_PATH=\"/path/to/native-sdk/prefix\"\ncmake --build build --target LVUIStyleTokenConsumer LVUITokenCatalogConsumer\nctest --test-dir build --output-on-failure -R '^LVUI.StyleTokens.(InstalledCatalog|CompiledAppearance)$'\n",
+      "closed": true
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 26,
+      "raw": "`LVUI_STYLE_TOKEN_NATIVE_TESTS=ON` additionally registers two GPU tests for\nMetal and Vulkan on macOS. They create a short-lived window and verify the\nbackground, border and mounted font properties. Leave them disabled unless\nnative execution is requested. See [the token contract](../../docs/StyleTokens.md).\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI style tokens",
+      "anchor": "lvui-style-tokens",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [
+      {
+        "block_id": "b000009",
+        "language": "sh",
+        "code": "cmake -S . -B build -DLVUI_BUILD_STYLE_EXAMPLE=ON \\\n  -DCMAKE_PREFIX_PATH=\"/path/to/native-sdk/prefix\"\ncmake --build build --target LVUIStyleTokenConsumer LVUITokenCatalogConsumer\nctest --test-dir build --output-on-failure -R '^LVUI.StyleTokens.(InstalledCatalog|CompiledAppearance)$'\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "the token contract",
+        "target": "../../docs/StyleTokens.md",
+        "kind": "relative",
+        "line": 26
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

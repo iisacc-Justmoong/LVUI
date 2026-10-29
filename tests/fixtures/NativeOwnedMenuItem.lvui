@@ -1,0 +1,9 @@
+import vm NativeOwnedMenuItemModel
+Window {
+    VStack {
+        MenuItem(id: "item", label: vm.label, shortcut: vm.shortcut, iconName: vm.icon,
+                 state: vm.state, selectionDirection: vm.direction, enabled: vm.enabled,
+                 visible: vm.visible, onClick: vm.clicked, onPressed: vm.pressed, onReleased: vm.released)
+        ContextMenuItem(id: "compact", label: "Compact", iconName: "procedure", hasChildItems: false)
+    }
+}

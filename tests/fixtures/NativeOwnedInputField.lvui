@@ -1,0 +1,8 @@
+import vm NativeOwnedInputFieldModel
+Window {
+    VStack {
+        InputField(id: "field", text: vm.text, placeholder: vm.placeholder, width: vm.width,
+                   enabled: vm.enabled, readOnly: vm.readOnly, password: vm.password,
+                   onEdited: vm.edited, onSubmit: vm.submit)
+    }
+}

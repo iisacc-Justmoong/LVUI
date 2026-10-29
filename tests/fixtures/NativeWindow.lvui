@@ -1,0 +1,9 @@
+import vm NativeWindowModel
+Window(title: vm.caption(vm.title), width: vm.width, height: vm.height,
+    minimumWidth: vm.minimumWidth, minimumHeight: vm.minimumHeight,
+    backgroundColor: vm.color, fontFamily: vm.font) {
+    VStack(id: "root") {
+        InputField(id: "draft", text: "Draft")
+        Label(id: "status", text: vm.other)
+    }
+}

@@ -1,0 +1,128 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:fa575d0622dd37335146438b4bec68e9668a1a7dab405ee30712bc7c9e36e719",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeFonts.md",
+    "sha256": "3ac67f3113fb2da54ebae89d01f458a559631da79da18421826d3b27630fd705",
+    "bytes": 1633,
+    "line_count": 9,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 네이티브 글꼴 정책 연결",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 네이티브 글꼴 정책 연결\n",
+      "level": 1,
+      "title": "LVUI 네이티브 글꼴 정책 연결"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "`import font lvrs.FontPolicy`는 뷰 scope가 소유하는 C++ 정책 인스턴스를 만든다. 실제 가족 목록·등록·애플리케이션 상태는 iiGUI 글꼴 서비스에서 조회한다. 표시 함수와 스타일 검사는 C++로 실행하며 LVUI에는 글꼴 파일 탐색·배열 변환·상태 갱신 스크립트를 두지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "`NativeFont.lvui`는 원본 속성 5개와 텍스트 스타일 조회를 표시하고 Window의 fontFamily를 effectiveFamily에 바인딩한다. `NativeFontSelection.lvui`는 주입된 공급자에 새 가족이 나타나거나 적용을 요청했을 때 기존 뷰를 갱신한다. `@Static` 초기 값은 유지한다. 버튼의 `vm.install`·`vm.enforce`는 지연된 C++ 메서드 참조이다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "Theme의 최초 appearance 구성은 iiSDKCore 관측 수집을 잠시 중단한 상태에서 글꼴 서비스를 부트스트랩한다. 부트스트랩의 내부 수정이 표시 바인딩의 읽기 의존성으로 수집되지 않도록 한다. 이후 가족 조회는 Core 관측으로 연결하고, 위젯의 글꼴 갱신은 노드나 입력 상태를 다시 생성하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "두 예제는 코드 생성·C++ 컴파일과 설치 후 재배치 소비자에 포함한다. 기본 정책·주입된 정책·동적 Window 글꼴·Static 값·입력과 scope 수명을 LVRS 통합 검사로 준비한다. LVRS 실행은 전체 작업의 마지막 일괄 단계에 유보한다. 원본 상속·플랫폼 전체와 실제 glyph 출력의 동등성은 별도 계약이며 이 예제의 컴파일로 완료를 판정하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 네이티브 글꼴 정책 연결",
+      "anchor": "lvui-네이티브-글꼴-정책-연결",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 7,
+        "text": "Theme의 최초 appearance 구성은 iiSDKCore 관측 수집을 잠시 중단한 상태에서 글꼴 서비스를 부트스트랩한다. 부트스트랩의 내부 수정이 표시 바인딩의 읽기 의존성으로 수집되지 않도록 한다. 이후 가족 조회는 Core 관측으로 연결하고, 위젯의 글꼴 갱신은 노드나 입력 상태를 다시 생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 9,
+        "text": "두 예제는 코드 생성·C++ 컴파일과 설치 후 재배치 소비자에 포함한다. 기본 정책·주입된 정책·동적 Window 글꼴·Static 값·입력과 scope 수명을 LVRS 통합 검사로 준비한다. LVRS 실행은 전체 작업의 마지막 일괄 단계에 유보한다. 원본 상속·플랫폼 전체와 실제 glyph 출력의 동등성은 별도 계약이며 이 예제의 컴파일로 완료를 판정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:f50621285aec3777b06bea026c3c9d62356b7ddbc9c6afbed8afdbc9a4117e12",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeOwnedListPanel.md",
+    "sha256": "fcaee17d886f4d5980e60afd0dd7c91d24ff3dfe6a8c41a515333136f3cbb92b",
+    "bytes": 2211,
+    "line_count": 34,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 일반 목록 패널",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 일반 목록 패널\n",
+      "level": 1,
+      "title": "LVUI 독립 일반 목록 패널"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`NativeListPanel`은 [일반 목록 화면](NativeOwnedListView.md), 목록 도구 모음과 푸터를\nLVUI가 소유한 영역 배치로 조합한다. 기본 크기는 170×140이고 도구 모음은 숨김,\n푸터는 표시 상태다. `ListPanelInput`은 각 구성요소의 설정을 받으며 크기가 작을 때\n도구 모음과 푸터를 남은 범위 안에 배치한다. 잘못된 후보 설정은 가능한 범위에서\n이전 화면을 유지한다. 외부 데이터 소스에 이미 게시된 변경은 되돌리지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "기본 LVUI `List` 선언은 이 패널을 직접 생성한다. `controller`로 앱의\n`std::shared_ptr<lvui::ListController>`를 전달하거나, `model`로 `ListSource`를\n전달해 별도 화면 컨트롤러를 만들 수 있다. 둘을 함께 지정할 수 없다. 모두 생략하면\n패널은 빈 `ListMemory`를 소유한다. `model` 포인터 자체는 생성 시 정해지며, 같은\n소스의 데이터 변경은 `modelRevision`으로 알린다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 15,
+      "end_line": 24,
+      "raw": "```lvui\nimport vm CollectionModel\nWindow {\n    List(controller: vm.controller, modelRevision: vm.revision,\n         width: vm.width, height: 140, toolbarVisible: true,\n         toolbarIcon1: \"home\", footerVisible: true,\n         onItemActivated: vm.selectItem, onToolbarIconTriggered: vm.toolAction,\n         onFooterButtonTriggered: vm.footerAction)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm CollectionModel\nWindow {\n    List(controller: vm.controller, modelRevision: vm.revision,\n         width: vm.width, height: 140, toolbarVisible: true,\n         toolbarIcon1: \"home\", footerVisible: true,\n         onItemActivated: vm.selectItem, onToolbarIconTriggered: vm.toolAction,\n         onFooterButtonTriggered: vm.footerAction)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 29,
+      "raw": "모델 리비전, 크기, 행 높이와 색상, 아이콘 공급자, 도구 아이콘, 푸터 슬롯과 표시\n상태는 반응형으로 갱신된다. 항목 활성화는 인덱스와 `ListEntry`, 도구 버튼은 인덱스와\n아이콘 이름, 푸터는 인덱스와 `ListFooterSlot`을 전달한다. 선택과 스크롤은 데이터\n소스를 수정하지 않는다. 지원하지 않는 자식 뷰와 편집 속성은 컴파일 시 진단한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "`LVUI.OwnedList.PanelLayout`, `LVUI.OwnedList.PanelHost`, `LVUI.OwnedList.Codegen`과\n`LVUI.OwnedList.Generated`는 배치, 가상 행 유지, 반응형 설정, 이벤트와 수명을\n헤드리스 환경에서 검사한다. 사용자 행 대리자, 삽입·삭제·이름 변경 UI, 더 다양한 행\n유형, 실제 플랫폼 화면과 접근성 검증은 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 일반 목록 패널",
+      "anchor": "lvui-독립-일반-목록-패널",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000009",
+        "line": 29,
+        "text": "소스를 수정하지 않는다. 지원하지 않는 자식 뷰와 편집 속성은 컴파일 시 진단한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "일반 목록 화면",
+        "target": "NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 3
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:6a00fd8283a09429b6c16b05bbb65c5dc69d5f38e1450085cfc782a854edfc99",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeSlider.md",
+    "sha256": "ee9f6138f51626012690477842c414682ff3cfc749d108147aae54058b2c0898",
+    "bytes": 2308,
+    "line_count": 28,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 슬라이더",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 슬라이더\n",
+      "level": 1,
+      "title": "LVUI 독립 슬라이더"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`LVUI/Slider.h`는 범위·값·단계와 트랙·채움·손잡이의 기하를 소유하는\nC++ 값 모델이다. Qt, QML, LVRS, 위젯 호스트와 렌더러에 의존하지 않는다.\n기본 범위는 0–1, 값은 0.5, 너비는 320, 높이는 32 논리 px이다. 손잡이\n지름은 18, 트랙 높이는 6, 양 끝 삽입 값은 9이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 13,
+      "raw": "값은 범위에 제한하고 단계가 양수면 최소값 기준의 가장 가까운 단계로 맞춘다.\n최소·최대 끝점은 항상 선택할 수 있다. 단계가 0인 연속 슬라이더의 키보드\n증감 단위는 범위의 1/100이다. 범위나 치수가 잘못되면 설정을 거절하고 이전\n상태를 보존한다. 호스트는 포인터의 로컬 좌표를 전달하고 반환된 기하를 그린다.\n설정된 폭과 높이는 손잡이를 담을 수 있어야 하며 트랙은 설정된 높이를 넘지\n않는다. 실제 배치 너비가 양쪽 삽입 값보다 작으면 트랙 길이를 0으로 제한한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 21,
+      "raw": "`NativeSlider`는 앱이 제공한 범용 입력·그리기·접근성 호스트에 이 모델을 연결한다.\nLVUI가 포인터 끌기, 키보드와 접근성 증감, 그리기 및 값 변경 콜백을 처리한다.\n포인터 좌표는 호스트가 전달한 해당 표면의 로컬 좌표를 사용하므로 중첩된 콘텐츠의\n위치와 관계없이 같은 범위로 매핑한다.\n입력 설정의 값이 바뀌지 않은 상태에서 다른 설정을 갱신해도 사용자가 조정한\n현재 값은 보존한다. 유효하지 않은 설정을 거절하고, 소유 스레드가 아니거나\n위젯이 퇴역한 뒤의 갱신도 거절한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 28,
+      "raw": "기본 선언형 `Slider`는 이 모델과 어댑터를 생성한다. 범위·값·단계·치수·활성\n상태·접근성 이름·트랙/채움/손잡이/초점 색상은 정적이거나 반응형 값일 수 있다.\n`onMoved`는 사용자 조작으로 값이 바뀌었을 때 호출되며 프로그램 설정 변경은\n콜백을 발생시키지 않는다. 앱이 제공하는 범용 호스트는 사용자 정의 슬라이더의\n접근성 범위, 증감 입력과 표면 로컬 좌표를 지원해야 한다. 플랫폼 표시와 실제\n스크린 리더 실행 검증은 아직 남아 있다. 명시적 레거시 생성 경로는 별개이다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 슬라이더",
+      "anchor": "lvui-독립-슬라이더",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "C++ 값 모델이다. Qt, QML, LVRS, 위젯 호스트와 렌더러에 의존하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 27,
+        "text": "접근성 범위, 증감 입력과 표면 로컬 좌표를 지원해야 한다. 플랫폼 표시와 실제",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

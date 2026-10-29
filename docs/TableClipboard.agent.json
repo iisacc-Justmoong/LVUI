@@ -1,0 +1,143 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:429508c3e86978a31f4da6d4b25a27565034196a11e80f2f42510b81a0f8127b",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/TableClipboard.md",
+    "sha256": "73a7328ae258f27dccb8e38df6c0639db382c34e0323dd0513828095bd791dd4",
+    "bytes": 2641,
+    "line_count": 31,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "표 범위 클립보드",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 표 범위 클립보드\n",
+      "level": 1,
+      "title": "표 범위 클립보드"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`TableClipboard.h`는 플랫폼 클립보드나 위젯에 의존하지 않는 표 범위 직렬화와\n붙여넣기 준비 기능이다. 탭으로 열을, 줄바꿈으로 행을 구분하며, 필드 안의 탭·줄바꿈과\n따옴표는 큰따옴표로 감싸고 따옴표를 두 번 써서 보존한다. LF, CRLF, CR 줄바꿈을\n읽으며 마지막 행 종료 문자는 새 빈 행으로 취급하지 않는다. 한 열의 마지막 빈 행도\n직렬화와 복원 과정에서 유지한다. 각 필드는 NUL 없는 UTF-8이어야 한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 16,
+      "raw": "`serialize_table_clipboard()`는 불변 스냅샷의 사각 범위를 문자열로 만든다.\n`parse_table_clipboard()`는 모든 행의 열 수가 같은 입력만 허용한다.\n`prepare_table_paste()`는 선택 영역과 입력을 검증하고 관찰한 리비전을 담은 하나의\n`TableEdit`을 반환한다. 한 셀을 선택한 경우 입력의 크기만큼 확장하며, 한 셀을\n복사한 경우 선택한 영역을 그 값으로 채운다. 그 밖에는 입력과 선택 크기가 같아야 한다.\n대상을 잘라내거나 크기를 자동으로 늘리지 않는다. 비활성·읽기 전용 셀, 표 밖의 대상,\n잘못된 UTF-8, 불균일한 행은 전체를 거절한다. 소스는 준비 중 변경되지 않으며 앱의\n`TableEditor`가 리비전과 값의 유효성을 원자적으로 확인해 적용한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 19,
+      "raw": "데이터는 최대 4,096셀과 1 MiB이며 한 필드는 최대 65,536바이트다. 한 셀로 여러\n대상을 채울 때도 확장된 편집의 문자열 합계가 1 MiB를 넘지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 26,
+      "raw": "[독립 표 호스트](NativeOwnedTable.md)는 선택 범위의 복사·잘라내기·붙여넣기와\n`onRangeValuesChanged`를 제공한다. 기본 연결은 iiGUI의 범용 클립보드 서비스를\n사용하며 C++ 앱은 `NativeTableClipboard`의 읽기·쓰기 함수를 교체할 수 있다.\n잘라내기는 쓰기에 성공한 뒤에만 셀을 지우고, 도중에 화면이나 소스가 바뀌면 새\n데이터를 덮어쓰지 않는다. 활성 셀 입력 중에는 입력 필드가 그 자신의 클립보드를\n처리한다. 표의 클립보드는 `clipboardEnabled`로 끌 수 있다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 31,
+      "raw": "`LVUI.OwnedTable.Clipboard`는 TSV 왕복, 빈 행, 유니코드, 잘못된 입력과 크기 제한,\n범위 채우기, 읽기 전용 셀과 오래된 편집을 검사한다. `LVUI.OwnedTable.ClipboardHost`는\n메모리 클립보드를 주입해 복사·잘라내기·붙여넣기, 실패·재진입·화면 제거를 헤드리스\n트리에서 검사한다. 실제 운영체제의 단축키와 클립보드 동작은 별도 검증이 필요하다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "표 범위 클립보드",
+      "anchor": "표-범위-클립보드",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "읽으며 마지막 행 종료 문자는 새 빈 행으로 취급하지 않는다. 한 열의 마지막 빈 행도",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000009",
+        "label": "독립 표 호스트",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 21
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

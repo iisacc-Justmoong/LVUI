@@ -1,0 +1,8 @@
+import vm NativeOwnedAvatarModel
+Window {
+    VStack {
+        Avatar(id: "avatar", size: vm.size, source: vm.image, width: vm.width,
+               height: vm.height, enabled: vm.enabled, backgroundColor: vm.background,
+               accessibilityName: vm.name)
+    }
+}

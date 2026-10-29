@@ -1,0 +1,8 @@
+import history lvrs.ModelUndoStack
+Window { VStack {
+    Label(id: "limit", text: history.limit())
+    Label(id: "undo", text: history.undo_depth())
+    Label(id: "redo", text: history.redo_depth())
+    Label(id: "canUndo", text: history.can_undo())
+    Label(id: "canRedo", text: history.can_redo())
+} }

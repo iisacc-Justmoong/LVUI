@@ -1,0 +1,11 @@
+import vm NativeRouteRegistryBackend
+Window { VStack {
+    Label(id: "name", text: vm.name())
+    Label(id: "writable", text: vm.can_edit())
+    Label(id: "bound", text: vm.bound_views())
+    PageRouter(id: "pages", router: vm.router, width: 400, height: 200)
+    PushButton(id: "edit", text: "Edit", onClick: vm.edit)
+    PushButton(id: "back", text: "Back", onClick: vm.back)
+    PushButton(id: "rename", text: "Rename", enabled: vm.can_edit(), onClick: vm.rename)
+    PushButton(id: "failed", text: "Failed page", onClick: vm.failed_page)
+} }

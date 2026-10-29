@@ -1,0 +1,5 @@
+import vm NativeWindowModel
+let Shell(title: String, width: Metric, color: Color): View = Window(title: title, width: width, backgroundColor: color) {
+    InputField(id: "draft", text: "Draft")
+}
+Shell(title: vm.caption(vm.title), width: vm.width, color: vm.color)

@@ -1,0 +1,13 @@
+import vm NativeLayoutModel
+Window {
+    HStack(spacing: vm.gap, padding: vm.padding, alignment: .top) {
+        AppCard(title: "Card", visible: vm.visible, flex: vm.firstWeight) { Label(text: "Preview") }
+        AppHeader(title: "Header", visible: vm.visible, flex: vm.firstWeight)
+        Link(text: "Open", visible: vm.visible, flex: vm.secondWeight)
+        TableCellItem(text: "Cell", visible: vm.visible, flex: vm.secondWeight)
+        ListToolbar(visible: vm.visible, flex: vm.firstWeight)
+        MaterialSurface(visible: vm.visible, flex: vm.secondWeight) { Label(text: "Material") }
+        CodeEditor(text: "Native", visible: vm.visible, flex: vm.firstWeight)
+        Tooltip(text: "Hint", visible: vm.visible, flex: vm.secondWeight)
+    }
+}

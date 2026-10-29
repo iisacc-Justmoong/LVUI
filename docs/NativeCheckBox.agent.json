@@ -1,0 +1,144 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:f939f4f69f7ac5e406540655af1b473194375bb202d35e403f848ca6b4b18537",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeCheckBox.md",
+    "sha256": "0ca994c8d0eac1e847c03fd68695b4cecb846267640acf5b6a26be77f8a871e0",
+    "bytes": 2581,
+    "line_count": 40,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 체크박스",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 체크박스\n",
+      "level": 1,
+      "title": "LVUI 독립 체크박스"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "기본 `CheckBox`는 `LVUI/CheckBox.h`의 표준 C++ 모델이 선택 상태와 배치, 팔레트,\n체크 표시의 형태를 소유한다. `LVUI/NativeCheckBox.h`는 앱이 공급하는 iiGUI의\n범용 동작 표면·텍스트 측정·이미지 그리기에 연결한다. 체크 표시는 폰트나 LVRS\n자산에 의존하지 않고 LVUI가 두 선분을 샘플링하여 생성한 불변 마스크이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 14,
+      "raw": "```lvui\nimport vm EditorBackend\nWindow {\n    CheckBox(text: \"Remember\", checked: vm.remember,\n             accessibilityName: \"Remember this choice\", onToggled: vm.setRemember)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm EditorBackend\nWindow {\n    CheckBox(text: \"Remember\", checked: vm.remember,\n             accessibilityName: \"Remember this choice\", onToggled: vm.setRemember)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 25,
+      "raw": "`text`, `checked`, `enabled`, `accessibilityName`, `boxSize`, `framePadding`,\n`boxRadius`, `checkMarkStrokeWidth`, `labelGap`과 상태별 색상·테두리 입력은\n상수 또는 반응형 값이다. 색상은 `checkedColor`, `uncheckedColor`,\n`disabledCheckedColor`, `disabledUncheckedColor`, `checkColor`,\n`checkMarkColorDisabled`, `textColor`, `disabledTextColor`이며, 테두리는\n`boxBorderWidthCheckedEnabled`, `boxBorderWidthUncheckedEnabled`,\n`boxBorderWidthCheckedDisabled`, `boxBorderWidthUncheckedDisabled`와 대응하는\n`boxBorderColor...` 값이다. 기본 지표는 17 × 17 표시기, 0.5 프레임 여백,\n3.5 반경, 2 획, 6 레이블 간격 및 13/13 본문 글꼴이다. 크기를 변경하고\n반경·획·테두리 너비를 생략하면 그 값은 표시기 크기에 비례한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 32,
+      "raw": "클릭, Space/Enter와 접근성 활성화는 선택 상태를 한 번 전환하고\n`onToggled(bool)`을 호출한다. 취소하거나 비활성화된 경우 상태를 바꾸지 않는다.\n프로그램의 `checked` 변경은 사용자 콜백을 발생시키지 않고, 다른 반응형 입력\n갱신은 직전 사용자 선택을 되돌리지 않는다. 잘못된 구성은 마지막 정상 값을\n유지한다. 설정 변경은 UI 소유 스레드에서만 허용되며 종료된 뷰는 거부한다.\n`group`은 라디오 선택 전용이므로 비어 있지 않은 값은 진단한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 34,
+      "end_line": 37,
+      "raw": "현재 표시는 근사한 체크 모양이다. Figma의 정확한 곡선 자산, 내부 그림자,\n선택 상태의 색상 보간과 반동 모션, 원형 `shapeStyle`은 아직 구현하지 않았다.\n접근성 역할은 이를 지원하는 iiGUI 호스트에 전달되지만 플랫폼별 스크린 리더의\n실제 동작 검증과는 별개이다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 40,
+      "raw": "`tests/native_owned_toggle_consumer`는 설치 스테이징의 LVUI와 별도로 공급한\niiGUI를 찾아 생성된 체크박스, 스위치와 라디오를 컴파일·링크한다. 창은 열지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 체크박스",
+      "anchor": "lvui-독립-체크박스",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

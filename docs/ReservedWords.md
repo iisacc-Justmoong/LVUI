@@ -1,8 +1,12 @@
 # 예약어와 LVRS 시각 컴포넌트
 
+> 이 문서는 레거시 LVRS/QML 소스 조사 당시의 역사적 기록이다. 현재 언어의 예약어
+> 등록과 갱신은 [LVUI 예약어 목록](KeywordRegistry.md)을 따른다. 아래 명령으로
+> LVUI의 현재 예약어 목록을 갱신하지 않는다.
+
 이 문서는 `tools/update_lvrs_keywords.py`로 소스 조사 결과에서 생성한다.
-조사 기준 LVRS 커밋은 `8360f4dcafe2e4a72605299d5dfeb010bba6e818`이며, `src/`의 334개 파일을 읽고 LF 개행으로 정규화한 SHA-256을 기록했다.
-시각 컴포넌트의 고유 이름 107개와 시각 효과·동작 보조 예약어 3개를 포함한다.
+조사 기준 LVRS 커밋은 `c5131090ca8df583bcf52253c5082bcef1ee3833`이며, `src/`의 378개 파일을 읽고 LF 개행으로 정규화한 SHA-256을 기록했다.
+시각 컴포넌트의 고유 이름 109개와 시각 효과·동작 보조 예약어 3개를 포함한다.
 
 ## 실제 언어 구현
 
@@ -10,6 +14,8 @@
 시각 컴포넌트 이름은 `View` 생성 구문으로 파싱하고, `{}` 안의 자식 뷰를 소유 트리에 보관한다.
 `let`·`var` 이름과 import 바인딩에 예약어를 사용하면 진단한다. 예약은 대소문자를 구분하며 문자열과 주석의 텍스트에는 적용하지 않는다.
 QML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 여러 원본 선언은 조사 파일에 모두 보관한다.
+LVUI의 네이티브 추가 뷰는 `native_views`에 구현 헤더와 선언 위치를 별도로 기록하며 Qt 원본 선언 수와 분리한다.
+iiGUI의 NativeView는 `external_source_files`에 별도 구현 해시를 기록한다. 이 추가 뷰를 기존 LVRS 선언이나 Qt 원본의 완성 수에 합산하지 않는다.
 `InteractionMotion`, `SpringBehavior`, `StateColorBehavior`는 시각 보조 예약어이며 자식 `View` 생성자로 사용하지 않는다.
 이 목록은 컴파일 단계의 어휘·구문 계약이다. 현재 지원 컴포넌트의 C++23 AOT와 iiGUI 자체 위젯 마운트는 [LVRS 네이티브 구현](LVRSNative.md)에 별도로 명시한다. 예약어 등록만으로 모든 속성·상태·동작이 구현되지는 않는다.
 
@@ -63,6 +69,7 @@ QML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 �
 | `IconButton` | View | `src/qml/components/control/buttons/IconButton.qml:4` | 아니오 |
 | `IconMenuButton` | View | `src/qml/components/control/buttons/IconMenuButton.qml:4` | 아니오 |
 | `IconSegmentedControl` | View | `src/qml/components/control/buttons/IconSegmentedControl.qml:4` | 아니오 |
+| `Image` | View | `src/LVRS/Image.h:6` | 아니오 |
 | `InputField` | View | `src/qml/components/control/input/InputField.qml:7` | 아니오 |
 | `InputMethodGuard` | View | `src/qml/components/control/util/InputMethodGuard.qml:4` | 아니오 |
 | `InputSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:227` | 예 |
@@ -90,6 +97,7 @@ QML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 �
 | `MobileTabBar` | View | `src/qml/components/navigation/MobileTabBar.qml:5` | 아니오 |
 | `Modal` | View | `src/qml/components/surfaces/Modal.qml:5` | 아니오 |
 | `MoreSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:118` | 예 |
+| `NativeView` | View | `../iiGUI/src/iiGUI/NativeView.h:20` | 아니오 |
 | `PageRouter` | View | `src/qml/components/navigation/PageRouter.qml:5` | 아니오 |
 | `PanelMaterial` | View | `src/qml/components/surfaces/PanelMaterial.qml:4` | 아니오 |
 | `Popover` | View | `src/qml/components/surfaces/Popover.qml:5` | 아니오 |

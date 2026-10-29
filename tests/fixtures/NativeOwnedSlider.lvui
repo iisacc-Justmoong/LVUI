@@ -1,0 +1,7 @@
+import vm NativeOwnedSliderModel
+Window {
+    VStack {
+        Slider(id: "slider", from: 0, to: vm.maximum, value: vm.value,
+               width: vm.width, stepSize: 1, enabled: vm.enabled, onMoved: vm.moved)
+    }
+}

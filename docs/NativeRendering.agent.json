@@ -1,0 +1,150 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:8b79051c89352b93980c1e09d4a16e743ad1f185b785ce3ed10533cfdbfc1665",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeRendering.md",
+    "sha256": "2568854e9024c4edd03141c6243929911086199f8fb9c55ce7a46223c41bc8d0",
+    "bytes": 1504,
+    "line_count": 19,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "C++ 렌더링 상태를 표시하는 LVUI",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# C++ 렌더링 상태를 표시하는 LVUI\n",
+      "level": 1,
+      "title": "C++ 렌더링 상태를 표시하는 LVUI"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "RenderMonitor의 getter와 명령을 일반 C++ 호출로 연결한다. getter의 Core 관측을 읽으므로\n숨겨진 C++ 통계가 바뀌어도 필요한 표시가 갱신된다. @Static은 활성화 시 값을 고정한다.\n프레임 수·평균·백분위·종료·오류 처리는 C++에 있으며 LVUI에는 계산식을 복제하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 10,
+      "raw": "애플리케이션은 기존 iiSDKCore 수명 안에서 Host의 presentation_source를 가져와 C++\n백엔드 생성자로 전달하거나 RenderMonitor.attachWindow(host)를 호출한다. 원천은 창을\n소유하지 않으며 scoped import 퇴역 시 모니터의 lease만 제거한다. 공유된 다른 모니터나\n파일/생성/저장 상태를 변경하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 12,
+      "end_line": 15,
+      "raw": "NativeRender와 NativeRenderSelection fixture는 기본 import 및 중첩 C++ 백엔드의\n상태·스냅샷·명령을 실제 AOT C++로 생성한다. Frame 이벤트 후 입력·포커스·노드·Static\n값과 파일 revision 유지, 소스 교체·종료·퇴역을 검사 대상으로 둔다. fixture의 프레임은\n결정적 C++ 시험 데이터이며 실제 장치 성능 측정으로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 19,
+      "raw": "모델의 원본 수치와 소유 계약은 [RenderMonitor 문서](../../LVRS/docs/native/RenderMonitor.md),\n원천의 전달·종료와 플랫폼 경계는 [Presentation 문서](../../iiGUI/docs/Presentation.md)를\n참조한다. LVRS 모델·AOT 실행은 전체 작업의 최종 일괄 단계에 수행한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "C++ 렌더링 상태를 표시하는 LVUI",
+      "anchor": "c-렌더링-상태를-표시하는-lvui",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "프레임 수·평균·백분위·종료·오류 처리는 C++에 있으며 LVUI에는 계산식을 복제하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 10,
+        "text": "파일/생성/저장 상태를 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 15,
+        "text": "결정적 C++ 시험 데이터이며 실제 장치 성능 측정으로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000009",
+        "label": "RenderMonitor 문서",
+        "target": "../../LVRS/docs/native/RenderMonitor.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000009",
+        "label": "Presentation 문서",
+        "target": "../../iiGUI/docs/Presentation.md",
+        "kind": "relative",
+        "line": 18
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

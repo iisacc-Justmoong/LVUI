@@ -1,0 +1,9 @@
+#include <LVUI/Compiler.h>
+#include <iostream>
+#include <stdexcept>
+void check(bool value,const char* message){if(!value)throw std::runtime_error(message);}
+std::string compile(std::string_view source){auto result=lvui::compile_native(source);if(!result)throw std::runtime_error(result.error().message);return *result;}
+void receivers(){for(auto source:{"import vm Model\nWindow { PushButton(vm.selected.make()) }","import vm Model\nWindow { PushButton(vm.temporary().make()) }","import vm Model\nWindow { PushButton(vm.rows[0].make()) }"}){auto code=compile(source);check(code.find("Methods::callable(context,")!=code.npos&&code.find("Methods::receiver_")!=code.npos,"A returned callable did not capture its native receiver");}}
+void arguments(){auto code=compile("import vm Model\nWindow { PushButton(vm.capture(vm.argument())) }");check(code.find("Methods::arguments<1>")!=code.npos&&code.find("Methods::argument_value<retained[0]>")!=code.npos,"A native factory argument was not preserved across selection");}
+void typed(){for(auto source:{"import vm Model\nlet render: () -> String = vm.selected.description()\nWindow { Label(text: render()) }","import vm Model\n@Static let run: () -> Void = vm.selected.make()\nWindow { PushButton(run) }","import vm Model\nvar run: () -> Void = vm.selected.make()\nWindow { PushButton(run) }"})check(compile(source).find("Methods::callable(")!=std::string::npos,"A typed factory selection lost native capture ownership");}
+int main(int argc,char** argv){try{const std::string name=argc>1?argv[1]:"receivers";if(name=="receivers")receivers();else if(name=="arguments")arguments();else if(name=="typed")typed();else throw std::runtime_error("Unknown factory capture compiler test");std::cout<<"Factory capture compiler "<<name<<" passed\n";}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

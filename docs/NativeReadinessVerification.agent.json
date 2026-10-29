@@ -1,0 +1,561 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:9b06b81f13ba80927ffb2fc716ff8114930925d20f478822d26fbee3db95703e",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeReadinessVerification.md",
+    "sha256": "52511ce51e1ebdc6c7efff0e720ead0b47117107e9c96e439b6229a87eb3ed7b",
+    "bytes": 7488,
+    "line_count": 100,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 뷰 작성 준비 검증 기록",
+    "role": "evidence",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 뷰 작성 준비 검증 기록\n",
+      "level": 1,
+      "title": "네이티브 뷰 작성 준비 검증 기록"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "2026-10-27의 종료 기준은 LVUI·iiGUI로 Dreamscapes의 뷰를 Qt/QML 없이 새로 작성할 수\n있는 실행 경로와 시스템 SDK 설치이다. 제품 소스의 자동 변환이나 원본 LVRS 전체 API의\n동등성과 구분한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## 실행한 검증\n",
+      "level": 2,
+      "title": "실행한 검증"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "table",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "| 범위 | 일반 구성 | ASan/UBSan 구성 |\n|---|---:|---:|\n| LVUI 전체 회귀 | 331 | 331 |\n| iiGUI 관련 회귀 | 132 | 132 |\n| LVRS 전체 회귀 | 904 | 904 |\n",
+      "columns": [
+        "범위",
+        "일반 구성",
+        "ASan/UBSan 구성"
+      ],
+      "rows": [
+        [
+          "LVUI 전체 회귀",
+          "331",
+          "331"
+        ],
+        [
+          "iiGUI 관련 회귀",
+          "132",
+          "132"
+        ],
+        [
+          "LVRS 전체 회귀",
+          "904",
+          "904"
+        ]
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 18,
+      "raw": "LVUI 전체 회귀 후 자동 대화상자의 embedded build 거부 경로에서 미사용 factories 인자를\n정리한 마지막 변경에는 영향 범위 5개 검사를 두 구성에서 추가 수행했다. 전체 회귀와 이\n후속 검사의 실행 시점을 최종 JSON에 따로 기록한다. 초기 시간 제한 초과와 재실행 기록도\n숨기지 않으며, 해당 두 항목은 최종 분리 검사로 확인한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 24,
+      "raw": "LVRS에는 실제 창 예제 19개와 헤드리스 모델·위젯·AOT·패키지·경계 검사가 포함된다.\nNativeCreationWorkbench는 C++ 작업 큐가 계산한 RGBA 프레임 24개를 같은 NativeView에\n전달한다. 실제 GPU 픽셀의 프레임 간 차이와 투명도, 캔버스 팬·타임라인 탐색·재생,\n결과 선택·입력 보존·창 크기 변경·수명 종료·문서 revision 0을 확인한다. 절차적 렌더링\n검사이며 AI 추론이나 Dreamscapes 제품 실행의 완료를 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "heading",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "## 이번 실행에서 바로잡은 경계\n",
+      "level": 2,
+      "title": "이번 실행에서 바로잡은 경계"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "list",
+      "start_line": 28,
+      "end_line": 33,
+      "raw": "- 글꼴 관측을 뷰 루트 한 곳에 두어 대량 행의 구독 한도 소진을 방지한다.\n- ActionSurface의 사용자 입력과 기본 활성화를 함께 유지하고 캡처한 행이 형제보다 먼저 입력을 받는다.\n- 중첩 세대 루트의 크기 갱신, 후보 소스의 스크롤 위치와 예산 초과 오류 코드를 보존한다.\n- 모델의 정상 접근을 닫은 뒤 마지막 소멸 알림을 별도로 전달한다.\n- 엄격한 C++ 소비자의 미사용 인자 경고를 생성기·헤더·예외 경로에서 처리한다.\n- 갤러리는 C++ Observable을 통해 진행 표시를 갱신하고 닫힌 뒤 프레임 작업을 계속하지 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "글꼴 관측을 뷰 루트 한 곳에 두어 대량 행의 구독 한도 소진을 방지한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "ActionSurface의 사용자 입력과 기본 활성화를 함께 유지하고 캡처한 행이 형제보다 먼저 입력을 받는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "중첩 세대 루트의 크기 갱신, 후보 소스의 스크롤 위치와 예산 초과 오류 코드를 보존한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "모델의 정상 접근을 닫은 뒤 마지막 소멸 알림을 별도로 전달한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "엄격한 C++ 소비자의 미사용 인자 경고를 생성기·헤더·예외 경로에서 처리한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "갤러리는 C++ Observable을 통해 진행 표시를 갱신하고 닫힌 뒤 프레임 작업을 계속하지 않는다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 37,
+      "raw": "위젯 ID 조회·부동소수점·부모 배치·첫 표시 프레임의 캐시·독립 ABI 검사의 조건을 실제\n계약에 맞추었다. 원본 실패 로그와 후속 검사를 보존하며 검증을 제거하거나 전체 실패를\n성공으로 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "## 설치와 독립 소비자의 완료 판정\n",
+      "level": 2,
+      "title": "설치와 독립 소비자의 완료 판정"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 46,
+      "raw": "시스템 SDK 목적지는 `/Users/ymy/.local/SDK/LVUI`, `iiGUI`, `LVRS`와 검증된 의존 패키지이다.\n설치 완료는 로컬 `build/lvui-completion/native-view/verification-20261027.json`의 최종 기록으로\n판정한다. 이 기록은 재배치 소비자의 실제 실행, 기존 파일 백업, 설치 파일·심볼릭 링크의\n해시 대조와 설치본만 사용하는 소비자의 실제 실행을 모두 요구한다. 소비자에서는 개발용\nSDK build 경로가 의존 패키지로 선택되지 않는지와 실행 파일·연결 공용 라이브러리의\nQt/QML 의존성 및 LVUI 소스 해석기 부재를 확인한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "## 적용 범위와 남은 사항\n",
+      "level": 2,
+      "title": "적용 범위와 남은 사항"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 54,
+      "raw": "현재 Mac에서의 작성·실행 준비 근거이다. 원본 대응표는 149개 선언 중 partial 93개,\npending 56개, complete 0개를 유지한다. 상속 API와 다른 OS·GPU의 전체 동등성을 달성한\n것으로 표현하지 않는다. 외부 이미지 코덱 일부는 macOS 27용이므로 구형 macOS 배포 키트\n검증이 별도로 필요하다. 제품 QML 81개는 읽기 전용 관측 자료이며 Dreamscapes 변환·재설치와\n제품별 응답속도 측정은 이 SDK 검증 범위에 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "## 새 설치 소비자의 시간 한도\n",
+      "level": 2,
+      "title": "새 설치 소비자의 시간 한도"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 62,
+      "raw": "오류 검출 구성의 새 패키지 소비자 검사는 설치·archive 인덱싱·25개 AOT 팩토리의 컴파일과\n실행을 포함한다. 기존 240초 한도에서 두 번 시간 초과가 발생하여 원본 기록을 보존했다.\n빌드·설치 검사의 한도를 600초로 조정하고 일반 구성에서 해당 검사를 단독 실행했으며,\n오류 검출 구성에서는 전체 회귀를 다시 수행했다. 단계별 명령·종료 코드·소요 시간은\n`presentation-evidence/installed-consumer-steps.json`에 남긴다. UI 지연 허용치가 아니다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "## 글꼴 초기화의 분리 재검사\n",
+      "level": 2,
+      "title": "글꼴 초기화의 분리 재검사"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 66,
+      "end_line": 67,
+      "raw": "언어 분리 검사 첫 시도에서도 Conditional.syntax가 원래 15초 한도를 초과했다.\n원본 로그를 보존한 뒤 소스·한도를 바꾸지 않은 최종 두 항목 검사를 수행했다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 69,
+      "end_line": 81,
+      "raw": "오류 검출 구성의 글꼴 AOT 기본값 검사가 30초 한도로 종료된 기록도 보존한다.\n같은 바이너리의 단독 CTest는 원래 한도를 유지한 채 0.19초 만에 통과했다.\n정지 시점의 유효한 호출 스택을 확보하지 못했으므로 원인은 확정하지 않으며, 소스나\n이 검사의 시간 한도는 변경하지 않았다. 계층 AOT 목록 초기화도 한 차례 시간 초과 후\n재시도에서 통과한 기록을 보존한다. 라우팅 AOT 작업 흐름과 페이지 메타데이터 등에도\n시작 제한을 초과한 기록이 있다. 원래 30초 제한의 추가 분리 검사에서도 글꼴 및 계층\n초기화가 시간 초과되었다. 원본 로그에서 항목을 모두 추출해 동일 바이너리·인자를\n90초 초기화 한도의 재시도 없는 진단 CTest로 확인한다. 기존 제한 통과로 표시하지 않는다.\n바이너리 해시와 원래 제한·진단 제한, 누락 없는 대상 목록과\n원본 로그 해시, 전체 재실행과 분리 검사 결과를 최종 JSON에 함께 기록한다.\n분리 검사 첫 실행의 글꼴 시간 초과도 보존한다. 직접 진단에서는 동일 글꼴 검사가 약\n37초 뒤 정상 종료했고 조건식 검사는 약 0.02초에 완료되었다. 유효한 정지 스택이 없어\n원인은 미확정이며, 이를 성능 개선이나 지연 해결의 증거로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "## 진행 표시 곡선의 검사 시계\n",
+      "level": 2,
+      "title": "진행 표시 곡선의 검사 시계"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 85,
+      "end_line": 89,
+      "raw": "전체 오류 검출 회귀에서 ProgressBar OutBack 곡선 검사가 한 번 실패한 뒤 재시도에서\n통과했다. 검사는 변경 후의 실제 시계를 시작점으로 가정하고 있었으므로 Core 프레임\n시계를 알려진 시각에 고정하도록 보정했다. 제품 코드는 변경하지 않았으며 비교 허용치는\n0.02에서 1e-6으로 좁혔다. 보정 뒤 두 구성의 관련 13개 검사를 재시도 없이 따로 실행한다.\n전체 회귀와 검사 시계 후속 확인의 시점을 최종 JSON에서 구분한다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "## 공개 API와 에이전트 접점\n",
+      "level": 2,
+      "title": "공개 API와 에이전트 접점"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 93,
+      "end_line": 100,
+      "raw": "LVUI는 `lvui-check <file.lvui>`, `lvui-check --keywords`와 `lvui-compile`을 설치한다.\n에이전트는 소스 검사와 네이티브 C++ 생성을 앱 실행과 분리하여 호출할 수 있다.\niiGUI는 `WidgetMount::find`, `snapshot`, `dispatch_input`과 `Host::snapshot`을 공개한다.\n호스트를 소유한 C++ 어댑터는 이 타입 지정 인터페이스를 통해 뷰를 탐색·관측·조작한다.\nLVRS의 `ViewModelRegistry`는 키·뷰·설명자·읽기·갱신·관측 인터페이스를 제공하며,\n`ItemModel`과 `NativeViewSource`는 앱별 모델·렌더러를 교체하는 공개 계약이다.\n이 경로는 임의 앱에 접근하는 외부 원격 제어 서버를 자동으로 노출하지 않는다.\n설치 소비자 self-test가 같은 공개 입력·조회 경로를 호출한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 뷰 작성 준비 검증 기록",
+      "anchor": "네이티브-뷰-작성-준비-검증-기록",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실행한 검증",
+      "anchor": "실행한-검증",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000013",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "이번 실행에서 바로잡은 경계",
+      "anchor": "이번-실행에서-바로잡은-경계",
+      "start_line": 26
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "설치와 독립 소비자의 완료 판정",
+      "anchor": "설치와-독립-소비자의-완료-판정",
+      "start_line": 39
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "적용 범위와 남은 사항",
+      "anchor": "적용-범위와-남은-사항",
+      "start_line": 48
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "새 설치 소비자의 시간 한도",
+      "anchor": "새-설치-소비자의-시간-한도",
+      "start_line": 56
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "글꼴 초기화의 분리 재검사",
+      "anchor": "글꼴-초기화의-분리-재검사",
+      "start_line": 64
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "진행 표시 곡선의 검사 시계",
+      "anchor": "진행-표시-곡선의-검사-시계",
+      "start_line": 83
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "공개 API와 에이전트 접점",
+      "anchor": "공개-api와-에이전트-접점",
+      "start_line": 91
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000011",
+        "line": 24,
+        "text": "검사이며 AI 추론이나 Dreamscapes 제품 실행의 완료를 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 33,
+        "text": "- 갤러리는 C++ Observable을 통해 진행 표시를 갱신하고 닫힌 뒤 프레임 작업을 계속하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000025",
+        "line": 52,
+        "text": "것으로 표현하지 않는다. 외부 이미지 코덱 일부는 macOS 27용이므로 구형 macOS 배포 키트",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 54,
+        "text": "제품별 응답속도 측정은 이 SDK 검증 범위에 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 76,
+        "text": "90초 초기화 한도의 재시도 없는 진단 CTest로 확인한다. 기존 제한 통과로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 81,
+        "text": "원인은 미확정이며, 이를 성능 개선이나 지연 해결의 증거로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 99,
+        "text": "이 경로는 임의 앱에 접근하는 외부 원격 제어 서버를 자동으로 노출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": [
+      {
+        "block_id": "b000007",
+        "columns": [
+          "범위",
+          "일반 구성",
+          "ASan/UBSan 구성"
+        ],
+        "rows": [
+          [
+            "LVUI 전체 회귀",
+            "331",
+            "331"
+          ],
+          [
+            "iiGUI 관련 회귀",
+            "132",
+            "132"
+          ],
+          [
+            "LVRS 전체 회귀",
+            "904",
+            "904"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

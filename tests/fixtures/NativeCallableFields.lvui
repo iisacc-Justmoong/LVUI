@@ -1,0 +1,21 @@
+import vm NativeCallableFieldBackend
+let render: (Int) -> String = vm.format
+@Static let frozen: (Int) -> String = vm.format
+var manual: (Int) -> String = vm.format
+let Actions(run: () -> Void = vm.run, edit: (String) -> Void = vm.edited): View = VStack {
+    PushButton(id: "typed", onClick: run)
+    InputField(id: "payload", onEdited: edit)
+}
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    Label(id: "description", text: render(4))
+    Label(id: "frozen", text: frozen(4))
+    Label(id: "manual", text: manual(4))
+    PushButton(id: "direct", onClick: vm.run)
+    PushButton(id: "borrowed", onClick: vm.borrowed)
+    PushButton(id: "readable", onClick: vm.readable)
+    PushButton(id: "change_readable", onClick: vm.changeReadable)
+    Label(id: "borrowed_count", text: vm.borrowed.count)
+    Actions()
+    if (vm.visible) { PushButton(id: "conditional", onClick: vm.run) }
+} }

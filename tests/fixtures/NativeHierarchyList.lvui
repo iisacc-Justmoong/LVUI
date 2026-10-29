@@ -1,0 +1,11 @@
+import vm NativeHierarchyBackend
+Window { VStack {
+    Label(id: "active", text: vm.active())
+    HierarchyList(id: "tree", controller: vm.source_controller, height: 120,
+        generatedRowHeight: vm.row_height, generatedIconSize: 0,
+        onActiveChanged: vm.select)
+    PushButton(id: "image", text: "Select image", onClick: vm.image)
+    PushButton(id: "compact", text: "Compact rows", onClick: vm.compact)
+    PushButton(id: "replace", text: "Replace source", onClick: vm.replace)
+    PushButton(id: "restore", text: "Restore source", onClick: vm.restore)
+} }

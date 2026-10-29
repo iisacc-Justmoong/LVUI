@@ -1,0 +1,7 @@
+import vm NativeOwnedImageModel
+Window {
+    VStack {
+        Image(id: "preview", source: vm.current_image(), width: vm.width, height: vm.height,
+              fit: .Contain, accessibilityName: "Preview", allowEmpty: true)
+    }
+}

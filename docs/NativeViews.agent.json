@@ -1,0 +1,216 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:1bee9209aa6da2b6fed757736761e6417c1a5e3e3768427d858bd4d53c505d2c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeViews.md",
+    "sha256": "cce366a24ae5489ed87c7a4729cba0af53551fbb79adae73ef172bf1a0056d55",
+    "bytes": 3010,
+    "line_count": 40,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "C++ 사용자 정의 뷰를 LVUI에 구성",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# C++ 사용자 정의 뷰를 LVUI에 구성\n",
+      "level": 1,
+      "title": "C++ 사용자 정의 뷰를 LVUI에 구성"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "NativeView는 iiGUI NativeViewSource가 만드는 네이티브 위젯 트리를 LVUI 배치 안에 넣는다.\n일반 컨트롤은 LVUI에 선언하고, 캔버스·타임라인·프레임 표시 등 사용자 정의 영역의\n그리기·입력·상태 처리는 C++가 소유한다. Qt 객체, QML 엔진, 실행 중 LVUI 소스 해석은\n사용하지 않는다. iiGUI와 LVRS 프레임워크 양쪽에서 같은 접점을 사용한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 15,
+      "raw": "```lvui\nimport vm WorkspaceViews\nWindow(width: 1280, height: 800) { VStack {\n    Label(text: vm.title())\n    NativeView(id: \"canvas\", source: vm.canvas, width: vm.width, height: 480)\n    NativeView(id: \"timeline\", source: vm.timeline, height: 160)\n} }\n```\n",
+      "language": "lvui",
+      "code": "import vm WorkspaceViews\nWindow(width: 1280, height: 800) { VStack {\n    Label(text: vm.title())\n    NativeView(id: \"canvas\", source: vm.canvas, width: vm.width, height: 480)\n    NativeView(id: \"timeline\", source: vm.timeline, height: 160)\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 20,
+      "raw": "source는 C++ shared_ptr<ii::gui::NativeViewSource> 또는 변환 가능한 파생 객체 핸들이다.\n문자열·런타임 컴포넌트 이름을 해석하지 않는다. source를 생략하면 원천을 기다리는 빈\n호스트를 만든다. width·height·enabled·clip을 함께 선언할 수 있고 visible·opacity·flex의\n공통 규칙도 따른다. 콘텐츠는 C++ 원천이 구성하므로 LVUI 자식 뷰는 직접 넣지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 25,
+      "raw": "일반 source와 옵션은 기존 네이티브 의존 그래프로 갱신한다. getter 안의 Core Observable과\n스코프 revision, @Static의 고정 원천, 조건부·반복 활성화의 수명 규칙을 그대로 사용한다.\n원천의 포인터 정체성이 같으면 내용을 다시 만들지 않는다. 새 원천의 후보가 실패하면\n이전 위젯·입력·포커스를 유지하고 바인딩 오류를 기록한다. 다음 정상 후보로 복구할 수 있다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 30,
+      "raw": "원천은 뷰를 구성하는 제공자이며 영상의 개별 프레임이 아니다. 프레임마다 원천 객체를\n교체하지 않는다. 유지되는 C++ 상태에서 기존 Widget의 set_image/set_drawing, paint/frame\nhandler를 갱신한다. 디코딩이 완료되기 전까지 마지막 정상 프레임을 유지하고, UI 적용은\n기존 소유 루프를 사용한다. 스크롤·호버·플레이헤드 같은 뷰 상태와 파일 상태도 분리한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 35,
+      "raw": "제공자는 빌더를 호출 이후까지 보관하지 않는다. 뷰별 자원은 retain/on_retire로 연결하며\n부모 종료 후 늦은 UI 쓰기를 차단한다. NativeView 핸들은 약한 세대 접점이고 다른 활성화를\n소유하거나 퇴역한 원천을 붙잡지 않는다. 원천이 일으킨 외부 파일·업무 부수 효과는 후보\n교체의 롤백 범위에 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 40,
+      "raw": "실제 iiGUI 접점과 오류·수명 계약은 [NativeView](../../iiGUI/docs/NativeView.md)에 있다.\n원본 감사는 NativeView의 iiGUI 구현 헤더를 별도로 해시하며, 이를 기존 LVRS Qt 선언의\n구현 수에 합산하지 않는다. 생성 C++ 컴파일·실제 입력/그리기·설치 소비자 실행 결과는\n개별 검사 기록으로 구분한다. 키워드 등록만으로 Dreamscapes 변환 준비 완료를 판단하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "C++ 사용자 정의 뷰를 LVUI에 구성",
+      "anchor": "c-사용자-정의-뷰를-lvui에-구성",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "사용하지 않는다. iiGUI와 LVRS 프레임워크 양쪽에서 같은 접점을 사용한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 18,
+        "text": "문자열·런타임 컴포넌트 이름을 해석하지 않는다. source를 생략하면 원천을 기다리는 빈",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 28,
+        "text": "교체하지 않는다. 유지되는 C++ 상태에서 기존 Widget의 set_image/set_drawing, paint/frame",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 32,
+        "text": "제공자는 빌더를 호출 이후까지 보관하지 않는다. 뷰별 자원은 retain/on_retire로 연결하며",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 35,
+        "text": "교체의 롤백 범위에 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 39,
+        "text": "구현 수에 합산하지 않는다. 생성 C++ 컴파일·실제 입력/그리기·설치 소비자 실행 결과는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 40,
+        "text": "개별 검사 기록으로 구분한다. 키워드 등록만으로 Dreamscapes 변환 준비 완료를 판단하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000015",
+        "label": "NativeView",
+        "target": "../../iiGUI/docs/NativeView.md",
+        "kind": "relative",
+        "line": 37
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

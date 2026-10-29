@@ -1,0 +1,7 @@
+import vm NativeSequenceModel
+let empty: [View] = []
+let singleton: [View] = [Label(id: "only", text: "One concrete root")]
+Window {
+    empty()
+    singleton()
+}

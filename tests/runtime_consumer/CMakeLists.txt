@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.31)
+project(LVUIRuntimeConsumer LANGUAGES CXX)
+find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Runtime)
+add_executable(runtime_consumer main.cpp)
+target_link_libraries(runtime_consumer PRIVATE LVUI::Runtime)
+set_target_properties(runtime_consumer PROPERTIES CXX_EXTENSIONS OFF)
+enable_testing()
+add_test(NAME LVUI.RuntimeConsumer COMMAND runtime_consumer)

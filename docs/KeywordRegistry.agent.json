@@ -1,0 +1,130 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:27224b41d50e7d99d8b15f9ab790c1b6253d9ea7dac88ca0f3ac0a8b43c0f2e5",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/KeywordRegistry.md",
+    "sha256": "bec49c1aebc80456a9cde295e37b888e46f5e38a88bff637b73e8814dcf1a757",
+    "bytes": 1123,
+    "line_count": 20,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 예약어 목록",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 예약어 목록\n",
+      "level": 1,
+      "title": "LVUI 예약어 목록"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "LVUI의 예약어는 `catalog/lvui-keywords.json`이 소유한다. 이름·분류·내부 여부를\n정렬된 유일한 항목으로 관리한다. 새 이름을 추가하거나 제거할지는 LVUI의 언어와\n컴포넌트 계약을 기준으로 결정한다. 레거시 LVRS나 QML 소스의 변경은 이 목록을\n자동으로 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 12,
+      "raw": "```sh\npython3 -B tools/update_keywords.py\npython3 -B tools/update_keywords.py --check\npython3 -B tests/test_lvui_keywords.py\n```\n",
+      "language": "sh",
+      "code": "python3 -B tools/update_keywords.py\npython3 -B tools/update_keywords.py --check\npython3 -B tests/test_lvui_keywords.py\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 17,
+      "raw": "생성기는 스키마·이름·분류·정렬·중복을 검증한 뒤 `src/LVUI/Keywords.def`를 만든다.\n공개 `Keyword::source_file`과 `source_line`은 LVUI 목록의 실제 항목 위치이다.\n예약된 이름은 파서의 어휘 계약을 의미한다. 이름이 등록된 사실만으로 해당\n컴포넌트의 속성, 동작, 접근성 또는 플랫폼 구현이 완성된 것은 아니다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 20,
+      "raw": "[기존 소스 조사](ReservedWords.md)는 이 목록을 시작할 때의 역사적 자료이다.\n그 조사 도구는 현재 목록과 문서를 덮어쓰지 않으며 기본 빌드에도 필요하지 않다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 예약어 목록",
+      "anchor": "lvui-예약어-목록",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [
+      {
+        "block_id": "b000005",
+        "language": "sh",
+        "code": "python3 -B tools/update_keywords.py\npython3 -B tools/update_keywords.py --check\npython3 -B tests/test_lvui_keywords.py\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000009",
+        "label": "기존 소스 조사",
+        "target": "ReservedWords.md",
+        "kind": "relative",
+        "line": 19
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

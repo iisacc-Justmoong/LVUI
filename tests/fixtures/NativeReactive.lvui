@@ -1,0 +1,22 @@
+import vm NativeFixture
+import class NativeBlueprint
+let doubled: Int = vm.count * 2
+let message: String = vm.ready ? vm.title + "!" : "Waiting"
+let selected: Double = vm.rows[vm.index]
+let caption: String = vm.caption()
+let nested: String = vm.document.title
+@Static let original: Int = vm.count
+var local: Int = vm.count + 3
+let localDoubled: Int = local * 2
+Window {
+    VStack {
+        Label(text: message)
+        Label(text: doubled)
+        Label(text: original)
+        Label(text: selected)
+        Label(text: caption)
+        Label(text: localDoubled)
+        Label(text: nested)
+        PushButton(vm.increment, text: "Increment", enabled: doubled > 0)
+    }
+}

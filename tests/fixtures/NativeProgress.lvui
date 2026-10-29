@@ -1,0 +1,12 @@
+import vm NativeProgressBackend
+Window { VStack {
+    ProgressBar(id: "state", stateModel: vm.source,
+        minimumValue: vm.minimum, endValue: vm.maximum, startValue: vm.start, currentValue: vm.current,
+        minimumValueStateKey: vm.low_key, maximumValueStateKey: vm.high_key,
+        startValueStateKey: vm.start_key, currentValueStateKey: vm.current_key,
+        size: vm.size, shapeStyle: vm.shape, width: vm.width, height: vm.height,
+        largeHeight: vm.large, regularHeight: vm.regular, cornerRadius: vm.radius,
+        trackColor: vm.track, fillColor: vm.fill, motionEnabled: vm.motion_enabled, motion: vm.motion)
+    ProgressBar(id: "manual", currentValue: vm.current, displayedStart: .1,
+        displayedProgress: vm.displayed, motionEnabled: false)
+} }

@@ -1,0 +1,5 @@
+import vm NativeScalarInputModel
+let Rows(value: String): [View] = [Label(id: "first", text: value), Label(id: "second", text: value)]
+let Body(value: String): View = Window { VStack { Rows(value: value) } }
+let App(value: String): View = Body(value: value)
+App(value: vm.compute(vm.count))

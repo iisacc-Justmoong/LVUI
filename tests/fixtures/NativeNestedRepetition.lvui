@@ -1,0 +1,11 @@
+import vm NativeRepetitionBackend
+Window {
+    for (group in vm.items, key: group.id, id: "groups") {
+        VStack {
+            Label(id: "group", text: group.title)
+            for (child in group.children, key: child.id, id: "children") {
+                Label(id: "child", text: child.title)
+            }
+        }
+    }
+}

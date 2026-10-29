@@ -1,0 +1,6 @@
+import vm NativeLayoutModel
+let Panel(gap: Metric): View = VStack(id: "panel", spacing: gap, padding: vm.padding, width: vm.width, height: vm.height) {
+    InputField(id: "draft", text: "Draft")
+    Label(text: "Retained")
+}
+Window { VStack { if (vm.visible) { Panel(gap: vm.measureGap(vm.gap)) } } }

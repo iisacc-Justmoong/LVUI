@@ -1,0 +1,8 @@
+import vm NativeOwnedCheckBoxModel
+Window {
+    VStack {
+        CheckBox(id: "check", text: vm.text, checked: vm.checked, enabled: vm.enabled,
+                 boxSize: vm.size, checkedColor: vm.color,
+                 accessibilityName: "Remember choice", onToggled: vm.changed)
+    }
+}

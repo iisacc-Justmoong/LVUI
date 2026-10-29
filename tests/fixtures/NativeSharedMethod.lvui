@@ -1,0 +1,5 @@
+import vm NativeSharedMethodBackend
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    Label(id: "summary", text: vm.summary())
+} }

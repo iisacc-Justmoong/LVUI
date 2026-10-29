@@ -1,0 +1,23 @@
+import vm NativeFixture
+Window {
+    VStack {
+        VStack {
+            import local NativeFixture
+            let inherited: Int = vm.count * 3
+            var own: Int = local.count + 1
+            Label(text: inherited)
+            Label(text: own)
+            PushButton(local.increment, text: "Local")
+            VStack {
+                let deep: Int = inherited + local.count
+                Label(text: deep)
+            }
+        }
+        VStack {
+            import vm NativeFixture
+            let isolated: Int = vm.count * 5
+            Label(text: isolated)
+        }
+        Label(text: vm.count)
+    }
+}

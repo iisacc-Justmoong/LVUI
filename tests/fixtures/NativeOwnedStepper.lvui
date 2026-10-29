@@ -1,0 +1,8 @@
+import vm NativeOwnedStepperModel
+Window {
+    VStack {
+        Stepper(id: "stepper", arrow: vm.arrow, tone: vm.tone, enabled: vm.enabled,
+                cornerRadius: vm.radius, onStepped: vm.stepped, onClick: vm.clicked,
+                onPressed: vm.pressed, onReleased: vm.released)
+    }
+}

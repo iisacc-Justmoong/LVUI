@@ -1,0 +1,180 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:29e52c4e6ca1d526012d67b2e64551ed2d869f5b42ab5cc6c3bed995f715a2e7",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeHierarchyPanel.md",
+    "sha256": "b0f837c68d17223e238ae430ba33952f56f7b387e1abe1a55d87ef109972a346",
+    "bytes": 3053,
+    "line_count": 44,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 계층 패널",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 계층 패널\n",
+      "level": 1,
+      "title": "LVUI 계층 패널"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`HierarchyPanel.h`는 LVUI 계층 패널의 배경과 도구 모음·목록·푸터 배치를 소유한다.\n기본 크기는 200×530이고 도구 모음은 26 높이, 푸터는 기본 숨김이다. 크기와 표시\n여부는 `HierarchyPanelConfiguration`으로 바꿀 수 있다. 계산은 Qt, QML, LVRS에\n의존하지 않으며 기존 LVUI 계층 목록과 도구 모음의 상태를 변경하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 11,
+      "raw": "패널이 좁아지면 도구 모음, 푸터 순으로 실제 높이를 제한하고 목록에 남은 높이를\n할당한다. 너비 또는 높이가 0인 영역은 표시하지 않는다. 비유한 값, 잘못된 색상과\n허용 범위 밖의 크기는 거절한다. `LVUI.OwnedHierarchyPanel.Layout`은 기본 배치,\n푸터 표시, 좁은 패널과 유효성 경계를 검사한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 17,
+      "raw": "`NativeHierarchyPanel.h`는 독립 도구 모음, 가상 계층 목록과 푸터를 이 배치에 맞춰\n조합한다. 입력은 각 구성요소의 LVUI 모델과 교체 가능한 편집기를 받으며, 구성요소의\n선택·펼침·드래그·버튼 이벤트를 앱에 전달한다. 크기와 표시 설정을 갱신해도 유지되는\n목록 행은 재사용한다. 잘못된 후보가 실패하면 가능한 범위에서 이전 구성과 배치를\n복구한다. 이미 외부 소스가 수정된 경우 그 외부 변경은 되돌리지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 20,
+      "raw": "`LVUI.OwnedHierarchyPanel.Host`는 실제 창 없이 가상 행, 세 영역의 이벤트, 크기 변경,\n잘못된 후보 복구, 스레드와 수명 경계를 검사한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 25,
+      "raw": "기본 LVUI `Hierarchy` 선언은 이 패널을 직접 생성한다. `controller`와 `editor`는 각각\nLVUI의 계층 화면 상태와 교체 가능한 편집 경계이며 `editable: true`에는 편집기가\n필요하다. `modelRevision`을 바꿔 외부 소스의 변경을 반영한다. 컨트롤러를 생략하면\n패널은 자체 빈 모델을 사용한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "fenced_code",
+      "start_line": 27,
+      "end_line": 36,
+      "raw": "```lvui\nimport vm LayerModel\nWindow {\n    Hierarchy(controller: vm.controller, editor: vm.editor, editable: true,\n              modelRevision: vm.revision, width: vm.width, height: 530,\n              toolbarItems: vm.tools, activeToolbarButtonId: vm.activeTool,\n              footerVisible: true, onItemActivated: vm.selectItem,\n              onToolbarTriggered: vm.activateTool, onFooterClicked: vm.footerAction)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm LayerModel\nWindow {\n    Hierarchy(controller: vm.controller, editor: vm.editor, editable: true,\n              modelRevision: vm.revision, width: vm.width, height: 530,\n              toolbarItems: vm.tools, activeToolbarButtonId: vm.activeTool,\n              footerVisible: true, onItemActivated: vm.selectItem,\n              onToolbarTriggered: vm.activateTool, onFooterClicked: vm.footerAction)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 44,
+      "raw": "크기·행 스타일·아이콘 공급자와 리비전·도구 버튼·푸터 표시 및 슬롯은 반응형으로\n갱신된다. 목록 활성화는 키, 선택적 ID(없으면 -1), 원본 인덱스를 전달한다. 펼침과\n이동은 각각 키와 펼침 값, `HierarchyMovePlan`을 전달한다. 도구 모음 이벤트는\n`HierarchyToolbarSelection`, 푸터 이벤트는 슬롯 인덱스와 `ListFooterSlot`을 전달한다.\n직접 자식, 사용자 행 대리자, 이름별 도구 이벤트 및 실제 플랫폼 화면·접근성 검증은\n아직 제공하지 않는다. `LVUI.OwnedHierarchyPanel.Codegen`과\n`LVUI.OwnedHierarchyPanel.Generated`는 기본 생성 코드와 반응형 조합을 검사한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 계층 패널",
+      "anchor": "lvui-계층-패널",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "의존하지 않으며 기존 LVUI 계층 목록과 도구 모음의 상태를 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 9,
+        "text": "할당한다. 너비 또는 높이가 0인 영역은 표시하지 않는다. 비유한 값, 잘못된 색상과",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 43,
+        "text": "아직 제공하지 않는다. `LVUI.OwnedHierarchyPanel.Codegen`과",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

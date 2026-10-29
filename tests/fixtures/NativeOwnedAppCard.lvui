@@ -1,0 +1,7 @@
+import vm NativeOwnedAppCardModel
+Window {
+    AppCard(id: "card", title: vm.title, subtitle: vm.subtitle, width: vm.width,
+            shapeStyle: vm.shape, backgroundColor: vm.background) {
+        Label(id: "body", text: "Persistent body")
+    }
+}

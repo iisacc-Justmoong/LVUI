@@ -1,5 +1,11 @@
 # 목록·계층 도구 막대 AOT
 
+기본 생성 경로는 LVUI가 소유한 [목록 도구 모음](NativeOwnedListToolbar.md),
+[목록 푸터](NativeOwnedListFooter.md), [도구 버튼](NativeOwnedToolbarButton.md),
+[계층 도구 모음](NativeOwnedHierarchyToolbar.md)을 사용한다. 각 문서는 현재 지원하는
+입력과 남은 기능을 설명한다. 아래는 아직 제거하지 않은 `FRAMEWORK LVRS` 호환
+경로의 역사적 계약이며 LVUI의 독립 구현을 뜻하지 않는다.
+
 FRAMEWORK LVRS에서 ListToolbar·ListFooter·HierarchyToolbar·ToolbarButton을 실제
 C++ create 호출로 생성한다. 일반·Observable C++ 멤버와 지연 메서드 참조를 사용한다.
 HierarchyToolbar의 직접 ToolbarButton 자식은 같은 WidgetBuilder의 기본 manual 슬롯에

@@ -1,0 +1,767 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:cee9047263ed64aa158df5d278c9af3ed6c1e7d771c9b74a930c31c3b665ea29",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ObjectMethodReferences.md",
+    "sha256": "01403fd8c68267fe7c6f7ac26da14a5226864e5616600d878e444885b3ff7fd4",
+    "bytes": 10449,
+    "line_count": 145,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "일반 객체의 네이티브 메서드 참조",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 일반 객체의 네이티브 메서드 참조\n",
+      "level": 1,
+      "title": "일반 객체의 네이티브 메서드 참조"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`객체.method`는 수신 객체를 선택하여 보관하고 실제 호출은 이벤트나 명시적 함수 호출까지\n연기한다. 가져온 백엔드의 직접 메서드 외에 중첩 객체·선택된 공유 객체·구성 입력·별칭·\n괄호·인덱스·C++ 반환 객체를 사용할 수 있다. `.lvui`는 C++23으로 생성하며 문자열 검색,\n소스 인터프리터와 별도 VM을 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 22,
+      "raw": "```lvui\nimport class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet render: () -> String = vm.selected.describe\nlet Action(item: Item, run: () -> Void = item.act): View = PushButton(run)\nWindow { VStack {\n    Label(text: render())\n    PushButton(current.act)\n    PushButton((vm.selected).act)\n    PushButton(vm.items[0].act)\n    PushButton(vm.current().act)\n    Action(item: vm.selected)\n} }\n```\n",
+      "language": "lvui",
+      "code": "import class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet render: () -> String = vm.selected.describe\nlet Action(item: Item, run: () -> Void = item.act): View = PushButton(run)\nWindow { VStack {\n    Label(text: render())\n    PushButton(current.act)\n    PushButton((vm.selected).act)\n    PushButton(vm.items[0].act)\n    PushButton(vm.current().act)\n    Action(item: vm.selected)\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "## 평가와 호출\n",
+      "level": 2,
+      "title": "평가와 호출"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 29,
+      "raw": "참조를 계산할 때 수신 객체만 선택하며 해당 메서드를 실행하지 않는다. `vm.current().act`\n에서는 `current()`로 수신자를 얻지만 `act()`는 호출하지 않는다. 일반 반응형 참조는\n선택의 의존값이 바뀌면 현재 버전을 교체한다. 마운트·레이아웃·의존값 갱신 자체를\n메서드 호출로 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "명시적인 함수 선언·입력은 기존 `(인자 타입) -> 결과 타입` 계약을 따른다. `let` 함수 값은\n의존값에 따라 갱신하고, `@Static let`은 해당 활성화의 처음 선택을 고정한다. `var` 함수\n값은 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 참조가 선택하는 객체를 깊은\n복사로 고정하는 계약은 아니다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 38,
+      "raw": "일반 C++ callable 팩터리인 `vm.selected.makeHandler()`도 기존 반환 콜백 경로를 사용한다.\n팩터리에서 반환한 callable의 소유권은 해당 C++ API의 계약을 따른다. 참조를 만들거나\n반환 callable을 받는 것만으로 최종 동작을 호출하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "## 객체 정체성과 수명\n",
+      "level": 2,
+      "title": "객체 정체성과 수명"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 45,
+      "raw": "`Methods::reference`는 원래 수신 객체의 주소와 const·lvalue·rvalue 범주를 보존한다.\n일반 lvalue와 표준 참조는 복제하지 않는다. 공유 핸들은 선택 당시의 소유자를 보존하고,\n중첩 하위 객체를 차용하면 그 객체에 도달하는 동안 읽은 공유 부모도 해당 함수 버전에서\n보존한다. 실행 중 선택이 교체되어도 이전 수신자와 부모는 호출이 반환할 때까지 유효하다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 49,
+      "raw": "C++ prvalue는 함수 버전이 소유하며 직접 생성하므로 이동·복사 불가능한 임시 객체도\n사용할 수 있다. 순수 임시 객체의 `&&` 한정 메서드와 lvalue 객체의 `&` 한정 메서드를\nC++ 규칙에 따라 선택한다. 포인터·공유 핸들·표준 참조를 역참조한 객체는 lvalue이다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 55,
+      "raw": "`vm.makeParent().child.act`와 `vm.makeParent().selected().act`는 임시 부모를 먼저 소유한\n뒤 하위 필드·getter 결과를 선택한다. 선택 결과가 참조여도 부모는 해당 함수 버전이\n보유한다. 값 컨테이너의 `vm.items[index].act`는 요소를 복사하지 않고 C++ 인덱스 결과의\nconst·참조 범주를 유지하며 범위를 검사한다. 임시 컨테이너도 먼저 소유하고 요소를\n선택한다. 조건식은 선택된 분기의 객체 정체성을 유지한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 59,
+      "raw": "생성 C++는 `receiver_member`·`receiver_index`·`receiver_value`를 조합한다. C++에서 직접\n수신자 팩터리를 작성할 때에도 임시 부모의 하위 참조를 반환한다면 같은 선택 헬퍼를\n사용해야 한다. 이미 파괴된 객체의 참조를 반환하는 임의 C++ API를 사후에 복구하지는 않는다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 65,
+      "raw": "raw 포인터·표준 참조와 lvalue 독점 핸들의 대상은 외부 소유자를 차용한다. 해당 소유자는\n참조를 사용하는 활성화와 호출보다 오래 살아야 한다. 임의 핸들의 복제·언로드·소유권\n프로토콜을 자동으로 추정하지 않는다.\n비소유 C++ 뷰 값도 원래 API가 정한 저장소 수명을 따른다. 뷰 객체를 소유하는 것이\n그 뷰가 가리키는 문자열·버퍼까지 소유하거나 고정한다는 뜻은 아니다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 69,
+      "raw": "호출 접수는 기존 콜백·함수 값의 활성화 경계를 따른다. 소유 뷰가 닫히거나 다른 실행\n스레드에서 호출하면 퇴역한 수신자에 접근하지 않는다. 실행 중 자기 뷰를 제거하면\n접수한 호출의 수신자와 버전을 반환까지 보존하고 그 뒤 해제한다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "## 읽기 수집과 실패\n",
+      "level": 2,
+      "title": "읽기 수집과 실패"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 75,
+      "raw": "수신자를 선택하는 명시적 읽기와 C++ getter 내부의 Core Observable 읽기를 별도\n`ReadContext`로 수집한다. 기존 바인딩에 의존값을 전달하고 선택한 버전에는 필요한\n소유자만 보관한다. 별도 폴링·객체 등록소·작업자 런타임을 추가하지 않는다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 77,
+      "end_line": 82,
+      "raw": "최초 널 수신자나 잘못된 선택은 활성화를 실패시킨다. 이후 실패는 마지막 정상 callable을\n보존하며 실패한 선택을 복구할 수 있는 원본의 구독도 유지한다. 정상 선택이 돌아오면\n기존 위젯·입력·포커스를 유지하며 복구한다. 파일 revision이나 파일 저장은 참조 계산에서\n발행하지 않는다. 기존 import 백엔드의 이벤트 후 합성 publication은 일반 public 필드의\n표시 갱신을 위해 유지하며 문서 revision과 구분한다. 구성 입력이나 외부 차용 객체의 일반\n필드 변경은 기존 명시적 publication·Observable 계약을 따른다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 84,
+      "end_line": 87,
+      "raw": "메서드 존재·접근성·const·인자·결과와 오버로드는 생성 C++가 검사한다. 잘못된 LVUI\n수신자와 예약된 이름은 소스 위치를 포함하여 거부한다. [callable 필드](CallableFields.md)의\n관측 값·공유 핸들·차용 계약도 같은 선택 경계로 연결한다. 나머지 일반 타입·불투명 핸들의\n소유권 프로토콜, 깊은 Static과 가변 View는 별도의 전체 완료 조건이다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "## 검사\n",
+      "level": 2,
+      "title": "검사"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "list",
+      "start_line": 91,
+      "end_line": 98,
+      "raw": "- `tests/object_method_references.cpp`: 중첩·구성 입력·별칭·후위 식·타입 지정 함수·팩터리와 진단.\n- `tests/native_method_references.cpp`: 정체성·private 선택·실패 복구·최초 실패 정리·실행 중 교체·\n  공유 부모·이동 불가능한 임시 객체·Static·퇴역·스레드 경계.\n- `tests/native_method_reference_validation.py`: 실제 생성 팩터리의 C++ 수신자·참조 한정자·서명 검사.\n- iiGUI의 `tests/native_object_method_references.cpp`: 생성 C++ 위젯에서 이벤트·선택·문자열·\n  편집 보존·실패 복구·조건부 재활성화·공유·임시 부모·비복사 요소·조건식 수명 검사.\n- 설치 Native 소비자와 iiGUI 재배치 소비자는 공개 헤더와 생성 팩터리를 검사한다.\n- LVRS 팩터리는 컴파일하며 앱·테스트 실행은 전체 작업의 최종 일괄 단계에 수행한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`tests/object_method_references.cpp`: 중첩·구성 입력·별칭·후위 식·타입 지정 함수·팩터리와 진단.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`tests/native_method_references.cpp`: 정체성·private 선택·실패 복구·최초 실패 정리·실행 중 교체·",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`tests/native_method_reference_validation.py`: 실제 생성 팩터리의 C++ 수신자·참조 한정자·서명 검사.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "iiGUI의 `tests/native_object_method_references.cpp`: 생성 C++ 위젯에서 이벤트·선택·문자열·",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "설치 Native 소비자와 iiGUI 재배치 소비자는 공개 헤더와 생성 팩터리를 검사한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "LVRS 팩터리는 컴파일하며 앱·테스트 실행은 전체 작업의 최종 일괄 단계에 수행한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 102,
+      "end_line": 103,
+      "raw": "macOS arm64의 현재 단계에서 다음을 확인했다. 같은 검사의 반복 구성을 독립 기능 수로\n합산하지 않으며 창 없는 검사와 OS 창·GPU·다른 플랫폼의 실행 증거를 구분한다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 104,
+      "end_line": 104,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "table",
+      "start_line": 105,
+      "end_line": 115,
+      "raw": "| 검사 | 결과 |\n|---|---|\n| LVUI 일반 전체 | 244/244 통과 |\n| LVUI 관련 ASan·UBSan | 174/174와 별도 설치 소비자 검사 통과 |\n| iiGUI 창 없는 회귀·설치 | 일반·ASan·UBSan 각각 186/186 통과 |\n| 새 참조 검사 | 컴파일러 5건·네이티브 9건·위젯 13건 통과 |\n| 생성 C++ 타입 | 각 구성에서 유효 11개 컴파일, 부적합 9개 거부 |\n| 임시 컨테이너 | 비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인 |\n| 설치·재배치 | 공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크 |\n| 생성 C++·LVRS | 위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시 |\n| 제품 관측 | Dreamscapes QML 81개 기준 해시 유지 |\n",
+      "columns": [
+        "검사",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI 일반 전체",
+          "244/244 통과"
+        ],
+        [
+          "LVUI 관련 ASan·UBSan",
+          "174/174와 별도 설치 소비자 검사 통과"
+        ],
+        [
+          "iiGUI 창 없는 회귀·설치",
+          "일반·ASan·UBSan 각각 186/186 통과"
+        ],
+        [
+          "새 참조 검사",
+          "컴파일러 5건·네이티브 9건·위젯 13건 통과"
+        ],
+        [
+          "생성 C++ 타입",
+          "각 구성에서 유효 11개 컴파일, 부적합 9개 거부"
+        ],
+        [
+          "임시 컨테이너",
+          "비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인"
+        ],
+        [
+          "설치·재배치",
+          "공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크"
+        ],
+        [
+          "생성 C++·LVRS",
+          "위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시"
+        ],
+        [
+          "제품 관측",
+          "Dreamscapes QML 81개 기준 해시 유지"
+        ]
+      ]
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 117,
+      "end_line": 119,
+      "raw": "최초 중첩 참조 거부 4건을 재현한 뒤 구현했다. 별도 수명 재현에서 임시 부모가 호출 전에\n파괴되는 문제도 확인했다. 수정 후 부모 생존 수가 0에서 1로 바뀌었고, 생성 위젯의\n부모·하위 필드·getter 검사도 통과했다. 실제 부모 수명 실패와 복구를 독립 검사로 남긴다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 120,
+      "end_line": 120,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 121,
+      "end_line": 122,
+      "raw": "일반 오류 진단에서 기존 `Unknown backend` 정보를 잃었던 한 항목은 수신자 확장과\n함께 기존 정보를 보존하도록 수정했고, 최종 일반 전체 검사 244개를 다시 통과했다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 129,
+      "raw": "현재 기록은 `build/lvui-completion/object-method-reference-verification-20261026.json`에\n각 로그·소스 해시·설치 결과·타입 계약·생성 헤더와 함께 보관한다. 중간 통과와 이후\n임시 부모 실패를 담은 `object-method-reference-phase1-verification-20261026.json`도\n보존한다. [전체 완료 기준](Completion.md)은 유지하며 해당 단계만으로 callable 필드·\n타입 추론·가변 View·깊은 Static·전체 LVRS·플랫폼 계약을 완료 처리하지 않는다.\n후속 [callable 필드](CallableFields.md)의 값 게시·공유 버전·차용 결과는 별도로 기록한다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 130,
+      "end_line": 130,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 131,
+      "end_line": 131,
+      "raw": "## 엄격한 소비자 경고 설정\n",
+      "level": 2,
+      "title": "엄격한 소비자 경고 설정"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 132,
+      "end_line": 132,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 133,
+      "end_line": 136,
+      "raw": "AOT가 만드는 읽기 문맥 인자는 `[[maybe_unused]]`로 표시한다. 수신자가 스코프의\n일반 C++ 객체이면 문맥을 읽지 않을 수 있지만, 반응형 수신자는 같은 인자를 사용한다.\n의존 추적·호출·수명 동작은 유지하며 소비자의 `-Werror=unused-parameter`에서도\n직접 백엔드 메서드와 중첩 객체 메서드를 컴파일한다. 소비자 경고 설정을 완화하지 않는다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 137,
+      "end_line": 137,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 138,
+      "end_line": 139,
+      "raw": "메서드 타입을 판별하는 내부 포인터 인자도 값 호출 대신 타입 증명에만 쓰는 경우를\n명시한다. 인자의 구성·전달이나 원래 메서드의 호출 시점은 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 140,
+      "end_line": 140,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 141,
+      "end_line": 142,
+      "raw": "같은 어댑터가 순수 조회 콜백과 상태 변경 콜백에 공통으로 쓰이므로 스코프·버튼 이벤트\n인자도 선택 경로에서 사용하지 않을 수 있음을 표시한다. 필요할 때의 참조·이벤트 전달은 유지한다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 143,
+      "end_line": 143,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 144,
+      "end_line": 145,
+      "raw": "자동으로 대화상자를 여는 페이지의 embedded build 거부 경로에서는 생성자 팩토리 인자도\n명시적으로 소비한다. 이 경로는 오류를 반환하는 기존 정책을 유지하며 엄격한 예제 빌드로 검사한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "일반 객체의 네이티브 메서드 참조",
+      "anchor": "일반-객체의-네이티브-메서드-참조",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "평가와 호출",
+      "anchor": "평가와-호출",
+      "start_line": 24
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "객체 정체성과 수명",
+      "anchor": "객체-정체성과-수명",
+      "start_line": 40
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "읽기 수집과 실패",
+      "anchor": "읽기-수집과-실패",
+      "start_line": 71
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검사",
+      "anchor": "검사",
+      "start_line": 89
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 100
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "엄격한 소비자 경고 설정",
+      "anchor": "엄격한-소비자-경고-설정",
+      "start_line": 131
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "소스 인터프리터와 별도 VM을 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "참조를 계산할 때 수신 객체만 선택하며 해당 메서드를 실행하지 않는다. `vm.current().act`",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 27,
+        "text": "에서는 `current()`로 수신자를 얻지만 `act()`는 호출하지 않는다. 일반 반응형 참조는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 38,
+        "text": "반환 callable을 받는 것만으로 최종 동작을 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 43,
+        "text": "일반 lvalue와 표준 참조는 복제하지 않는다. 공유 핸들은 선택 당시의 소유자를 보존하고,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 59,
+        "text": "사용해야 한다. 이미 파괴된 객체의 참조를 반환하는 임의 C++ API를 사후에 복구하지는 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 63,
+        "text": "프로토콜을 자동으로 추정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 68,
+        "text": "스레드에서 호출하면 퇴역한 수신자에 접근하지 않는다. 실행 중 자기 뷰를 제거하면",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 75,
+        "text": "소유자만 보관한다. 별도 폴링·객체 등록소·작업자 런타임을 추가하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 80,
+        "text": "발행하지 않는다. 기존 import 백엔드의 이벤트 후 합성 publication은 일반 public 필드의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000051",
+        "line": 128,
+        "text": "타입 추론·가변 View·깊은 Static·전체 LVRS·플랫폼 계약을 완료 처리하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000055",
+        "line": 136,
+        "text": "직접 백엔드 메서드와 중첩 객체 메서드를 컴파일한다. 소비자 경고 설정을 완화하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000035",
+        "label": "callable 필드",
+        "target": "CallableFields.md",
+        "kind": "relative",
+        "line": 85
+      },
+      {
+        "block_id": "b000051",
+        "label": "전체 완료 기준",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 127
+      },
+      {
+        "block_id": "b000051",
+        "label": "callable 필드",
+        "target": "CallableFields.md",
+        "kind": "relative",
+        "line": 129
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000045",
+        "columns": [
+          "검사",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI 일반 전체",
+            "244/244 통과"
+          ],
+          [
+            "LVUI 관련 ASan·UBSan",
+            "174/174와 별도 설치 소비자 검사 통과"
+          ],
+          [
+            "iiGUI 창 없는 회귀·설치",
+            "일반·ASan·UBSan 각각 186/186 통과"
+          ],
+          [
+            "새 참조 검사",
+            "컴파일러 5건·네이티브 9건·위젯 13건 통과"
+          ],
+          [
+            "생성 C++ 타입",
+            "각 구성에서 유효 11개 컴파일, 부적합 9개 거부"
+          ],
+          [
+            "임시 컨테이너",
+            "비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인"
+          ],
+          [
+            "설치·재배치",
+            "공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크"
+          ],
+          [
+            "생성 C++·LVRS",
+            "위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시"
+          ],
+          [
+            "제품 관측",
+            "Dreamscapes QML 81개 기준 해시 유지"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

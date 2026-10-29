@@ -1,15 +1,15 @@
 let edge: Color = composite(.material.surface.dense.edge, .window)
 let panelGap: Metric = .space12
-ApplicationWindow(title: "LVUI · LVRS style tokens", width: 640, height: 420,
+ApplicationWindow(title: "LVUI · style tokens", width: 640, height: 420,
                   backgroundColor: Color.window) {
     VStack(id: "panel", width: 400, height: 250,
            spacing: panelGap, padding: .space24,
            backgroundColor: .window,
            borderColor: edge, borderWidth: .stroke1, cornerRadius: .radius6) {
-        Label(id: "title", text: "LVRS defaults", style: .title)
+        Label(id: "title", text: "LVUI defaults", style: .title)
         Label(id: "body", text: "Figma tokens → native C++23", style: .body)
         Label(text: "208 typed tokens · no source interpreter")
         PushButton(id: "button", text: "Native button")
-        ColorPickerButton(currentColor: .picker.current, buttonSize: Metric.size22)
+        ProgressBar(currentValue: 65)
     }
 }

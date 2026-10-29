@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -21,6 +22,8 @@ NONVISUAL_BASES = {"QtObject", "QObject", "QAbstractListModel"}
 MODIFIER_BASES = {"Scale", "Behavior"}
 CORE = {"View": "type", "Color": "type", "Metric": "type", "import": "declaration", "let": "declaration",
         "var": "declaration", "true": "literal", "false": "literal"}
+NATIVE_VIEWS = {"Image": "src/LVRS/Image.h"}
+NATIVE_GUI_VIEWS = {"NativeView": "src/iiGUI/NativeView.h"}
 
 
 def uncomment(text):
@@ -31,7 +34,7 @@ def uncomment(text):
                   if m[0].startswith(('//', '/*')) else m[0], text)
 
 
-def audit(source):
+def audit(source, gui_source=None):
     revision = subprocess.check_output(["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip()
     files, declarations, texts = [], [], {}
     tracked = subprocess.check_output(["git", "-C", str(source), "ls-files", "-z",
@@ -87,14 +90,33 @@ def audit(source):
         declaration['internal'] = declaration['origin'] == 'qml-inline' or declaration['path'] in internal
         if declaration['origin'] == 'qml' and declaration['path'] not in cmake:
             raise ValueError(f'QML source missing from build registration: {declaration["path"]}')
+    native_views=[]
+    for name,path in NATIVE_VIEWS.items():
+        if path not in texts: continue
+        match=re.search(r'\bclass\s+'+re.escape(name)+r'\s+final\s*\{',texts[path])
+        if not match: raise ValueError('Native view declaration missing: '+name)
+        native_views.append({'name':name,'kind':'view','path':path,'line':texts[path].count('\n',0,match.start())+1,
+                             'internal':False,'origin':'native-cpp'})
+    gui_source=(gui_source or source.parent/'iiGUI').resolve()
+    external=[]
+    for name,relative in NATIVE_GUI_VIEWS.items():
+        path=gui_source/relative
+        if not path.is_file():raise ValueError('Native iiGUI source is required for the keyword audit: '+str(path))
+        normalized=path.read_text(encoding='utf-8').replace('\r\n','\n').replace('\r','\n')
+        text=uncomment(normalized);match=re.search(r'\bclass\s+(?:IIGUI_EXPORT\s+)?'+re.escape(name)+r'\s+final\s*\{',text)
+        if not match:raise ValueError('Native iiGUI view declaration missing: '+name)
+        location=Path(os.path.relpath(path,source)).as_posix()
+        external.append({'module':'iiGUI','path':location,'sha256':hashlib.sha256(normalized.encode('utf-8')).hexdigest()})
+        native_views.append({'name':name,'kind':'view','path':location,'line':text.count('\n',0,match.start())+1,'internal':False,'origin':'native-iigui'})
     return {"schema": 1, "source_repository": "https://github.com/iisacc-Justmoong/LVRS",
-            "source_revision": revision, "files": files, "declarations": declarations}
+            "source_revision": revision, "files": files, "declarations": declarations,"native_views":native_views,
+            'external_source_files':external}
 
 
 def words(snapshot):
     result = {name: {"name": name, "kind": kind, "path": '', "line": 0, "internal": False}
               for name, kind in CORE.items()}
-    for entry in sorted(snapshot['declarations'], key=lambda d: (d['internal'], d['path'], d['line'])):
+    for entry in sorted(snapshot['declarations']+snapshot.get('native_views',[]), key=lambda d: (d['internal'], d['path'], d['line'])):
         if entry['kind'] == 'nonvisual': continue
         name = entry['name']
         if name in CORE: raise ValueError(f'LVRS collides with core keyword: {name}')
@@ -125,6 +147,9 @@ def render(snapshot):
                 '`let`·`var` 이름과 import 바인딩에 예약어를 사용하면 진단한다. '
                 '예약은 대소문자를 구분하며 문자열과 주석의 텍스트에는 적용하지 않는다.\n'
                 'QML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 여러 원본 선언은 조사 파일에 모두 보관한다.\n'
+                'LVUI의 네이티브 추가 뷰는 `native_views`에 구현 헤더와 선언 위치를 별도로 기록하며 Qt 원본 선언 수와 분리한다.\n'
+                'iiGUI의 NativeView는 `external_source_files`에 별도 구현 해시를 기록한다. '
+                '이 추가 뷰를 기존 LVRS 선언이나 Qt 원본의 완성 수에 합산하지 않는다.\n'
                 '`InteractionMotion`, `SpringBehavior`, `StateColorBehavior`는 시각 보조 예약어이며 '
                 '자식 `View` 생성자로 사용하지 않는다.\n'
                 '이 목록은 컴파일 단계의 어휘·구문 계약이다. '
@@ -157,10 +182,20 @@ def render(snapshot):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--lvrs-root', type=Path, default=ROOT.parent / 'LVRS')
+    parser.add_argument('--iigui-root', type=Path, default=ROOT.parent / 'iiGUI')
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--snapshot-only', action='store_true')
     args = parser.parse_args()
-    snapshot = json.loads(CATALOG.read_text(encoding='utf-8')) if args.snapshot_only else audit(args.lvrs_root.resolve())
+    active_registry = (DEFINITIONS.resolve() == (ROOT / 'src/LVUI/Keywords.def').resolve() and
+                       DOCUMENT.resolve() == (ROOT / 'docs/ReservedWords.md').resolve())
+    if active_registry and not args.check:
+        raise SystemExit('The LVRS audit is historical and cannot update LVUI keywords; use tools/update_keywords.py')
+    snapshot = json.loads(CATALOG.read_text(encoding='utf-8')) if args.snapshot_only else audit(args.lvrs_root.resolve(),args.iigui_root.resolve())
+    if active_registry:
+        if snapshot != json.loads(CATALOG.read_text(encoding='utf-8')):
+            raise SystemExit('Historical LVRS inventory differs from the checked-in observation')
+        print('Historical LVRS inventory verified; LVUI keywords are independent')
+        return
     outputs = render(snapshot)
     outputs[CATALOG] = json.dumps(snapshot, ensure_ascii=False, indent=2) + '\n'
     for path, content in outputs.items():

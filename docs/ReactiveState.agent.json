@@ -1,0 +1,741 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:93b9bc5006b289de136ad5704841a13d8cd2539bccafcca9330d939a618d527c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ReactiveState.md",
+    "sha256": "aa84fbc293f6bd6b9f5d80b8240b5efa332cacb11eb8ab1eb88ae4910e9b3f6b",
+    "bytes": 6062,
+    "line_count": 125,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "기본 반응형 값",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "html",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "<a id=\"reactive-values-by-default\"></a>\n"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "heading",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "# 기본 반응형 값\n",
+      "level": 1,
+      "title": "기본 반응형 값"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 9,
+      "raw": "상태: 2026-10-20에 채택한 LVUI 언어 설계이다.\n값은 기본적으로 상태 변경 추적과 바인딩을 사용한다.\n`@Static`은 해당 수명 동안 고정되는 값을 명시적으로 설정한다.\n현재 컴포넌트 AOT는 스칼라 변수·파생 수식과 활성화별 고정 스냅샷을 C++로 생성한다.\n[NativeBindings.md](NativeBindings.md)의 실제 구현 범위와 아래의 채택된 전체 설계를 구분한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "html",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "<a id=\"default-value-semantics\"></a>\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "## 기본 값 의미\n",
+      "level": 2,
+      "title": "기본 값 의미"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 17,
+      "raw": "뷰에서 사용하는 비정적 값은 변경 추적과 바인딩에 자동으로 참여한다.\n레이블에서 `vm.value`를 읽으면 실시간 의존성이 생긴다.\n원본이 바뀌면 레이블은 현재 값을 받으며, 한 번 복사하고 끝나는 입력이 아니다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 21,
+      "raw": "이는 일반 LVUI 변수를 포함한 언어의 공통 값 모델이며 가져온 ViewModel에만 한정되지 않는다.\n기본 동작을 활성화하기 위한 관찰 어노테이션이나 바인딩 래퍼는 필요하지 않다.\n구현별 상태 저장소, 선언 스코프, 의존성 추적은 추가 설계가 필요하다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "반응형 동작과 쓰기 권한은 별개이다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "list",
+      "start_line": 25,
+      "end_line": 28,
+      "raw": "- `var`는 선언한 타입에 따라 재대입을 허용하며 기본 반응형 모델에 참여한다.\n- `let`은 상수 선언을 유지하며 재대입할 수 없다.\n  원본을 추적하더라도 덮어쓰기나 const 멤버 변경 권한이 생기지 않는다.\n- `@Static`은 이후 원본 변경을 따라가지 않고 해당 수명 동안 설정한 값을 고정한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`var`는 선언한 타입에 따라 재대입을 허용하며 기본 반응형 모델에 참여한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`let`은 상수 선언을 유지하며 재대입할 수 없다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`@Static`은 이후 원본 변경을 따라가지 않고 해당 수명 동안 설정한 값을 고정한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 31,
+      "raw": "이 규칙은 지역 변수를 새 ViewModel로 만들거나 가져온 객체의 소유자를 변경하지 않는다.\n정확한 참조 의미와 파생 선언 의미는 타입·선언 설계에 남아 있다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "html",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "<a id=\"counter-with-increment-and-reset\"></a>\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "## 증가·초기화 카운터\n",
+      "level": 2,
+      "title": "증가·초기화 카운터"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "제공된 예제를 [examples/ReactiveCounter.lvui](examples/ReactiveCounter.lvui)에 저장하였다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "fenced_code",
+      "start_line": 39,
+      "end_line": 53,
+      "raw": "```text\nimport vm CounterViewModel\n\nColumn {\n    Label(text: vm.value)\n\n    PushButton(vm.increment) {\n        text: \"+\"\n    }\n\n    PushButton(vm.reset) {\n        text: \"Reset\"\n    }\n}\n```\n",
+      "language": "text",
+      "code": "import vm CounterViewModel\n\nColumn {\n    Label(text: vm.value)\n\n    PushButton(vm.increment) {\n        text: \"+\"\n    }\n\n    PushButton(vm.reset) {\n        text: \"Reset\"\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 58,
+      "raw": "이 설계 예제에서는 C++ VM이 `0`으로 초기화한 읽기 가능한 정수 `value`와\n인자·반환값이 없는 메서드 `increment()`, `reset()`을 제공한다고 가정한다.\n증가는 값을 1 늘리고 초기화는 0으로 설정한다.\n예제 버튼 인터페이스는 첫 번째 입력으로 콜백을 받아 허용된 클릭에 대해 호출한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "예상 상호작용은 다음과 같다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "fenced_code",
+      "start_line": 62,
+      "end_line": 67,
+      "raw": "```text\n초기 표시: 0\n\"+\" 클릭      -> vm.increment() -> 값이 1이 됨 -> 레이블에 1 표시\n\"+\" 클릭      -> vm.increment() -> 값이 2가 됨 -> 레이블에 2 표시\n\"Reset\" 클릭  -> vm.reset()     -> 값이 0이 됨 -> 레이블에 0 표시\n```\n",
+      "language": "text",
+      "code": "초기 표시: 0\n\"+\" 클릭      -> vm.increment() -> 값이 1이 됨 -> 레이블에 1 표시\n\"+\" 클릭      -> vm.increment() -> 값이 2가 됨 -> 레이블에 2 표시\n\"Reset\" 클릭  -> vm.reset()     -> 값이 0이 됨 -> 레이블에 0 표시\n",
+      "closed": true
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 69,
+      "end_line": 72,
+      "raw": "이 과정 내내 `vm.value`는 어노테이션 없이 현재 상태를 따른다.\n메서드 참조는 구분한다. `vm.increment`와 `vm.reset`은 호출 가능한 값으로 전달되며\n버튼이 호출할 때 실행된다. 반응형 의존성 갱신은 이 참조를 암묵적으로 호출하지 않는다.\n[MethodReferences.md](MethodReferences.md)를 참조한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 74,
+      "end_line": 76,
+      "raw": "`Column { ... }`은 제공된 컴포넌트 표기를 기록한 것이다.\n전체 컴포넌트 어휘와 빈 괄호 생략 규칙은 미정이다.\n현재 0.1 파서로 실행할 수 있는 예제가 아닌 설계 예제이다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "html",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "<a id=\"static-values\"></a>\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 80,
+      "end_line": 80,
+      "raw": "## 정적 값\n",
+      "level": 2,
+      "title": "정적 값"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "정적으로 명시한 스칼라는 초기화 시 설정한 원본 값을 보존할 수 있다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "fenced_code",
+      "start_line": 84,
+      "end_line": 86,
+      "raw": "```text\n@Static let initialValue: Int = vm.value\n```\n",
+      "language": "text",
+      "code": "@Static let initialValue: Int = vm.value\n",
+      "closed": true
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 88,
+      "end_line": 91,
+      "raw": "해당 정적 수명 동안 `vm.value`가 이후 바뀌더라도 `initialValue`는 고정된다.\n원래 VM 상태는 계속 자체 계약을 따른다.\n정적 수명의 소유권과 참조·깊은 불변성 의미는\n[DeclarationAnnotations.md](DeclarationAnnotations.md#open-questions)의 미정 사항으로 남아 있다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 93,
+      "end_line": 94,
+      "raw": "`@Observable`은 관찰을 명시하는 표기로 계속 사용할 수 있다.\n비정적 값이 변경을 따라가기 위한 필수 조건은 아니며, 기본 동작 이상의 추가 동작은 정하지 않았다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "html",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "<a id=\"aot-and-core-integration\"></a>\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "## AOT와 Core 연동\n",
+      "level": 2,
+      "title": "AOT와 Core 연동"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 100,
+      "end_line": 102,
+      "raw": "[AOT 컴파일러](CompilationModel.md)는 비정적 뷰 값에 대한 네이티브 의존성 추적과\n갱신 경로를 제공해야 한다. VM 어댑터는 [Core 읽기·쓰기·변경 쿼리](ViewModelQueries.md)를 사용해\n상태를 읽고 변경을 알리며, 소유 UI 실행 영역에서 최신 값을 전달한다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 104,
+      "end_line": 107,
+      "raw": "소스 접근성과 네이티브 변경 알림은 구현의 책임이다.\n기존 Core 쿼리 포트만으로 임의의 C++ 쓰기를 감지하지 않는다.\n생성된 접근 경로와 백엔드 연동은 언어의 기본 동작 구현에 필요한 변경 정보를 제공해야 한다.\n애플리케이션에서 값마다 기능을 선택적으로 활성화해야 한다는 뜻은 아니다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 111,
+      "raw": "바인딩은 같은 원본 객체를 유지하며 해당 스코프의 종료 경계를 따른다.\n의존성 갱신 과정에서 VM을 재생성하거나 매 프레임 모든 속성을 폴링하거나,\n제거된 수신 객체를 갱신해서는 안 된다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 112,
+      "end_line": 112,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "html",
+      "start_line": 113,
+      "end_line": 113,
+      "raw": "<a id=\"future-implementation-validation\"></a>\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "heading",
+      "start_line": 115,
+      "end_line": 115,
+      "raw": "## 향후 구현 검증\n",
+      "level": 2,
+      "title": "향후 구현 검증"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "list",
+      "start_line": 117,
+      "end_line": 122,
+      "raw": "- 제공된 카운터는 관찰 어노테이션 없이 증가·초기화를 통해 `0 -> 1 -> 2 -> 0`을 표시한다.\n- 뷰에서 사용하는 일반 LVUI 변수의 상태 변경이 기본적으로 반영된다.\n- 정적 스칼라는 같은 정적 수명 동안 초기값을 유지한다.\n- `let`과 읽기 전용 멤버의 재대입 제한을 유지한다.\n- 의존성 재평가는 메서드 참조를 호출하지 않는다.\n- 마운트 해제는 의존성을 분리하고 늦은 갱신을 거부한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "제공된 카운터는 관찰 어노테이션 없이 증가·초기화를 통해 `0 -> 1 -> 2 -> 0`을 표시한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "뷰에서 사용하는 일반 LVUI 변수의 상태 변경이 기본적으로 반영된다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "정적 스칼라는 같은 정적 수명 동안 초기값을 유지한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`let`과 읽기 전용 멤버의 재대입 제한을 유지한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "의존성 재평가는 메서드 참조를 호출하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "마운트 해제는 의존성을 분리하고 늦은 갱신을 거부한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 125,
+      "raw": "전체 컴포넌트와 수명에 대한 수용 기준이다. 스칼라·파생값·스냅샷의 실행 검사는\n`LVUI.NativeBindings.*`와 `LVUI.NativeGenerated`에 있으며, 전체 UI 동작의 통과를 뜻하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000003",
+      "parent_id": null,
+      "level": 1,
+      "title": "기본 반응형 값",
+      "anchor": "기본-반응형-값",
+      "start_line": 3
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "기본 값 의미",
+      "anchor": "기본-값-의미",
+      "start_line": 13
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "증가·초기화 카운터",
+      "anchor": "증가초기화-카운터",
+      "start_line": 35
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "정적 값",
+      "anchor": "정적-값",
+      "start_line": 80
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "AOT와 Core 연동",
+      "anchor": "aot와-core-연동",
+      "start_line": 98
+    },
+    {
+      "block_id": "b000063",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "향후 구현 검증",
+      "anchor": "향후-구현-검증",
+      "start_line": 115
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000019",
+        "line": 30,
+        "text": "이 규칙은 지역 변수를 새 ViewModel로 만들거나 가져온 객체의 소유자를 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 71,
+        "text": "버튼이 호출할 때 실행된다. 반응형 의존성 갱신은 이 참조를 암묵적으로 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000049",
+        "line": 94,
+        "text": "비정적 값이 변경을 따라가기 위한 필수 조건은 아니며, 기본 동작 이상의 추가 동작은 정하지 않았다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000055",
+        "line": 101,
+        "text": "갱신 경로를 제공해야 한다. VM 어댑터는 [Core 읽기·쓰기·변경 쿼리](ViewModelQueries.md)를 사용해",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000057",
+        "line": 105,
+        "text": "기존 Core 쿼리 포트만으로 임의의 C++ 쓰기를 감지하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000057",
+        "line": 106,
+        "text": "생성된 접근 경로와 백엔드 연동은 언어의 기본 동작 구현에 필요한 변경 정보를 제공해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000057",
+        "line": 107,
+        "text": "애플리케이션에서 값마다 기능을 선택적으로 활성화해야 한다는 뜻은 아니다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000059",
+        "line": 111,
+        "text": "제거된 수신 객체를 갱신해서는 안 된다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000065",
+        "line": 121,
+        "text": "- 의존성 재평가는 메서드 참조를 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000067",
+        "line": 125,
+        "text": "`LVUI.NativeBindings.*`와 `LVUI.NativeGenerated`에 있으며, 전체 UI 동작의 통과를 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "NativeBindings.md",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 9
+      },
+      {
+        "block_id": "b000025",
+        "label": "examples/ReactiveCounter.lvui",
+        "target": "examples/ReactiveCounter.lvui",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000035",
+        "label": "MethodReferences.md",
+        "target": "MethodReferences.md",
+        "kind": "relative",
+        "line": 72
+      },
+      {
+        "block_id": "b000047",
+        "label": "DeclarationAnnotations.md",
+        "target": "DeclarationAnnotations.md#open-questions",
+        "kind": "relative",
+        "line": 91
+      },
+      {
+        "block_id": "b000055",
+        "label": "AOT 컴파일러",
+        "target": "CompilationModel.md",
+        "kind": "relative",
+        "line": 100
+      },
+      {
+        "block_id": "b000055",
+        "label": "Core 읽기·쓰기·변경 쿼리",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 101
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

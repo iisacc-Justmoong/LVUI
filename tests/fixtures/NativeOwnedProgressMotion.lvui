@@ -1,0 +1,7 @@
+import vm NativeOwnedProgressMotionModel
+Window {
+    VStack {
+        ProgressBar(id: "motion", width: 200, currentValue: vm.current,
+            motionEnabled: vm.enabled, motion: vm.motion)
+    }
+}

@@ -1,0 +1,138 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:363e2c70b0f20c2722987e661dba1e480438a20d28cc74464542baea00bcd3bb",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeDivider.md",
+    "sha256": "81bcbd1331a76b4f513e0a22413e955f49d8ceaa4a0f63a185cf6b9d10990149",
+    "bytes": 2011,
+    "line_count": 34,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 구분선",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 구분선\n",
+      "level": 1,
+      "title": "LVUI 독립 구분선"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "기본 `MenuDivider`와 `ContextMenuDivider`는 `LVUI/Divider.h`의 표준 C++ 모델이\n방향, 자연 크기, 선의 배치와 색상을 결정한다. 앱의 `LVUI/NativeDivider.h`\n어댑터는 범용 비대화형 표면과 그리기 경계에 결과를 전달한다. 이 경로는\nLVRS 구현, Qt 또는 QML 런타임을 필요로 하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 16,
+      "raw": "```lvui\nimport vm EditorBackend\nWindow {\n    VStack {\n        MenuDivider(axis: vm.axis, lineLength: vm.length)\n        ContextMenuDivider()\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm EditorBackend\nWindow {\n    VStack {\n        MenuDivider(axis: vm.axis, lineLength: vm.length)\n        ContextMenuDivider()\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 23,
+      "raw": "`axis`는 `.horizontal`, `.vertical`, 대소문자를 구분하지 않는 문자열 또는\n반응형 `lvui::DividerAxis`·문자열을 받는다. `lineLength`, `thickness`,\n`crossPadding`, `linePadding`, `dividerColor`도 상수 또는 반응형 입력이다.\n기본 일반 선은 220 × 3, 맥락 메뉴 선은 145 × 3이며 후자는 선 양끝에 4의\n여백이 있다. 기본 색상은 LVUI가 보유한 디자인 토큰 스냅샷에서 선택한다.\n색상 입력은 encoded sRGB이며 그리기 경계에서 선형 RGB로 변환한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 29,
+      "raw": "자연 크기의 교차축은 선 두께와 양쪽 교차 여백의 합이다. 실제 할당이 더 작으면\n선의 두께와 끝 여백을 사용 가능한 영역으로 제한한다. 입력 후보 전체를 검증한 뒤\n기존 표면에 반영하며 잘못된 축, 음수·비유한 크기, 과도한 자연 크기나 잘못된\n색상은 이전 상태를 유지한다. 이후 유효한 후보가 들어오면 반응형 바인딩은 복구한다.\n구분선은 활성화 또는 입력 대상을 만들지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "독립 `Menu`와 `ContextMenu`의 직접 자식으로 등록하면 부모의 항목 폭에 맞춰\n그려지며 구분선의 높이와 표시 여부가 메뉴 크기에 반영된다. C++에서 메뉴에 등록한\n구분선의 표시 여부는 표면 핸들 대신 `NativeDivider::set_visible`로 변경해야 메뉴가\n변경을 관찰한다. 호스트 모델 검사는 창이나 GPU를 실행한 결과가 아니다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 구분선",
+      "anchor": "lvui-독립-구분선",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "LVRS 구현, Qt 또는 QML 런타임을 필요로 하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

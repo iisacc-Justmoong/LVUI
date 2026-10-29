@@ -1,0 +1,12 @@
+import vm NativeModelSourceBackend
+@Static let initial = vm.firstLabel()
+Window { VStack {
+    Label(id: "count", text: vm.source.count())
+    Label(id: "label", text: vm.firstLabel())
+    Label(id: "revision", text: vm.source.revision())
+    Label(id: "initial", text: initial)
+    InputField(id: "edit", text: "Working", width: 160)
+    PushButton(id: "append", text: "Append", onClick: vm.append)
+    PushButton(id: "column", text: "Column", onClick: vm.alternateColumn)
+    PushButton(id: "replace", text: "Replace", onClick: vm.replace)
+} }

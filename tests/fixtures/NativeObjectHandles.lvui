@@ -1,0 +1,16 @@
+import class NativeInput.Item
+import vm NativeObjectInputModel
+let Details(item: Item, again: Item = item): View = VStack {
+    Label(id: "title", text: item.title)
+    Label(id: "count", text: item.count)
+    Label(id: "default", text: again.title)
+    VStack { Label(id: "local", text: item.count) }
+    if (vm.visible) { Label(id: "conditional", text: item.title) }
+}
+let Borrowed(item: Item): View = Label(id: "borrowed", text: item.count)
+let Pointer(item: Item): View = Label(id: "pointer", text: item.count)
+Window { VStack {
+    Details(item: vm.selected)
+    Borrowed(item: vm.borrowed)
+    Pointer(item: vm.pointer)
+} }

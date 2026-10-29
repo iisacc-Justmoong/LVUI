@@ -1,0 +1,19 @@
+import class NativeRepeatItem
+import vm NativeRepetitionBackend
+let Caption(backend: NativeRepeatItem, ordinal: Int): View = HStack {
+    Label(id: "caption", text: backend.title)
+    Label(id: "position", text: ordinal)
+}
+Window {
+    for (item in vm.items, key: item.id, index: ordinal, id: "rows", first: vm.first, count: vm.count) {
+        VStack(id: "row") {
+            import state NativeRowActivation
+            let doubled: Int = state.count * 2
+            @Static let initial: String = item.title
+            Caption(backend: item, ordinal: ordinal)
+            Label(id: "counter", text: doubled)
+            Label(id: "initial", text: initial)
+            PushButton(id: "advance", onClick: state.increment)
+        }
+    }
+}

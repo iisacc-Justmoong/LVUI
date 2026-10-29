@@ -1,0 +1,4 @@
+import vm NativeWindowModel
+@Static let title: String = vm.title
+@Static let color: Color = vm.color
+Window(title: title, width: vm.width, backgroundColor: color) { InputField(id: "draft", text: "Draft") }

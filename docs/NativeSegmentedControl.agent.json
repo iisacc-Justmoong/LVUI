@@ -1,0 +1,107 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:c933dcfe8937eef94908c6f4d822eb9a32faf5fd65e102c4ca59f1f2a30f94ec",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeSegmentedControl.md",
+    "sha256": "5a7104f94c71f10703766bbaf65a2ff4a0872d6c9441ac145fc02c0cbe4b7d0f",
+    "bytes": 1902,
+    "line_count": 23,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 세그먼트 묶음",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 세그먼트 묶음\n",
+      "level": 1,
+      "title": "LVUI 독립 세그먼트 묶음"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`SegmentedControlConfiguration`과 `SegmentedControl`은 자식 동작이나 선택값을\n소유하지 않는 시각 묶음의 배치, 배경, 테두리와 둥근 모서리를 정의한다.\n기본 수평 여백은 4, 텍스트 행의 수직 여백은 3.5, 간격과 테두리 두께는 2,\n모서리 반경은 12이다. 원통형은 사용 가능한 크기의 절반으로 모서리를 제한한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 14,
+      "raw": "`NativeSegmentedControl`은 앱이 제공하는 범용 가로 배치와 그리기 표면을 사용한다.\n교체 가능한 자식 스타일 포트에 무테 적용을 전달하며 유효하지 않은 후보는 기존\n설정을 유지한다. 자식 포트가 새 설정을 거부하면 이미 적용한 자식도 복원하고,\n갱신 중 재진입한 최신 설정을 오래된 호출이 덮어쓰지 않는다. 소유 스레드 이외의\n접근과 폐기된 표면의 변경은 거절한다. 버튼의 임시 톤 포트는 원래 입력을 보존하고\n비활성 버튼을 활성화하지 않는다. 폐기된 자식 포트는 명시적으로 정리하거나 등록\n한도에 도달했을 때 정리한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 23,
+      "raw": "기본 `LabelSegmentedControl`과 `IconSegmentedControl`은 이 어댑터로 생성한다.\n직접 자식 버튼의 무테 설정은 반응형으로 바꿀 수 있고, 무테 적용 중에 변경한\n버튼의 원래 톤은 적용 해제 시 복원된다. 중첩 컨테이너와 조건부·반복 활성화에도\n같은 설정이 전달되며, 묶음을 중첩하면 가장 가까운 묶음이 해당 버튼의 톤을\n결정한다. 분기나 반복 항목을 교체해도 새 버튼은 현재 설정을 받는다. 아이콘은\n현재 앱이 공급한다. 모델, 호스트, 선언형 생성과 자식 수명 검사를 창 없이\n수행했다. 레거시 생성 경로는 남아 있으며 실제 OS 창·입력·접근성 장치 실행은\n확인하지 않았다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 세그먼트 묶음",
+      "anchor": "lvui-독립-세그먼트-묶음",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 13,
+        "text": "비활성 버튼을 활성화하지 않는다. 폐기된 자식 포트는 명시적으로 정리하거나 등록",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

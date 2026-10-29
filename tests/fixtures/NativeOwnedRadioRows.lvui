@@ -1,0 +1,12 @@
+import vm NativeOwnedRadioRows
+Window {
+    VStack {
+        RadioButton(id: "head", text: "Head", checked: true, group: "rows", motionEnabled: false)
+        for (item in vm.items, key: item.id, id: "rows") {
+            VStack {
+                RadioButton(id: "option", text: item.title, checked: item.selected, group: "rows", motionEnabled: false)
+                CheckBox(id: "valid", boxSize: item.box_size)
+            }
+        }
+    }
+}

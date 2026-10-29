@@ -1,0 +1,16 @@
+import class Domain.Model
+import document Domain.Model
+let Borrowed(backend: Model, content: View): View = VStack {
+    import local NativeFixture
+    @Static let initial: Int = backend.count
+    Label(id: "count", text: backend.count)
+    Label(id: "initial", text: initial)
+    PushButton(id: "action", onClick: backend.increment)
+    PushButton(id: "retire", onClick: local.retire)
+    content()
+}
+Window {
+    if (document.ready) {
+        Borrowed(backend: document, content: Label(id: "content", text: document.title))
+    }
+}

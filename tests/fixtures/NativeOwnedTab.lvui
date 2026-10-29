@@ -1,0 +1,9 @@
+import vm NativeOwnedTabModel
+Window {
+    VStack {
+        Tab(id: "tab", text: vm.text, iconName: vm.name, badge: vm.badge, enabled: vm.enabled,
+            selected: vm.selected, tabStyle: vm.style, iconSize: vm.size, minimumWidth: vm.width,
+            accessibilityName: vm.accessibility, onClick: vm.clicked)
+        Tab(id: "surface", text: "Second", iconName: "generaladd", tabStyle: .surface)
+    }
+}

@@ -1,0 +1,27 @@
+import class Domain.Model
+import document Domain.Model
+var prefix: String = "Prefix"
+let DefaultBody: View = Label(id: "defaultBody", text: document.title)
+let Inner(backend: Model, title: String, amount: Int = backend.count, content: View = DefaultBody): View = VStack {
+    import document NativeFixture
+    let doubled: Int = amount * 2
+    @Static let frozen: Int = amount
+    Label(id: "title", text: title)
+    Label(id: "count", text: doubled)
+    Label(id: "frozen", text: frozen)
+    Label(id: "backend", text: backend.title)
+    PushButton(id: "action", onClick: backend.increment)
+    content()
+}
+let Outer(backend: Model, content: View): View = VStack {
+    import document NativeFixture
+    Inner(backend: backend, title: backend.title, content: content)
+}
+Window {
+    import document Domain.Model
+    let Body: View = Label(id: "body", text: document.title)
+    VStack {
+        Outer(backend: document, content: Body)
+        Inner(backend: document, title: prefix)
+    }
+}

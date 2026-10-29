@@ -1,0 +1,8 @@
+import monitor lvrs.RenderMonitor
+Window { VStack {
+    Label(id: "active", text: monitor.active())
+    Label(id: "frames", text: monitor.frameCount())
+    Label(id: "capacity", text: monitor.frameSampleCapacity())
+    Label(id: "threshold", text: monitor.droppedFrameThresholdMs())
+    Label(id: "fps", text: monitor.fps())
+} }

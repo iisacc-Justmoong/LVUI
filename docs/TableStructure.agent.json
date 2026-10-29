@@ -1,0 +1,143 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:8814f07d4a5ef96c470eafcbb18dfec5c094ea1f918646499d3f4e4cf4930ee9",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/TableStructure.md",
+    "sha256": "7ae618bb31be8b0448ca2732ee49e65d30c6d9293d64cf741d22c3b8fc879cdc",
+    "bytes": 2710,
+    "line_count": 33,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "표 구조와 크기 편집",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 표 구조와 크기 편집\n",
+      "level": 1,
+      "title": "표 구조와 크기 편집"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`TableStructure.h`는 행·열 삽입과 삭제, 행 높이와 열 너비 변경을 교체 가능한\n`TableStructureEditor` 경계로 제공한다. `TableStructureEdit`은 관찰한 문서 리비전과\n최대 256개 연산을 순서대로 담는다. `prepare_table_structure()`는 불변 스냅샷에\n후보를 만들고 각 단계의 키, 셀 수, 크기와 전체 데이터 제한을 검사한다. 준비 중에는\n원본이 바뀌지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "행 삽입은 현재 열 수와 같은 셀을 제공한다. 열 삽입은 현재 각 행에 추가할 셀을\n제공한다. 삭제·크기 변경은 행이나 열의 키로 대상을 지정한다. 중복·누락 키, 잘못된\n높이·너비, 잘못된 셀 수와 오래된 리비전은 전체 요청을 거절한다. 선택적\n`TableMemoryStructureEditor`는 모든 연산을 검사한 뒤 하나의 스냅샷 교체로 게시한다.\n변화가 없으면 리비전을 발행하지 않는다. 다른 저장소는 같은 인터페이스에 자체 검증과\n원자적 게시를 구현할 수 있다. 메모리 어댑터는 표 전체를 복사하므로 큰 영속 표에는\n앱에 맞는 편집기를 사용하는 편이 적합하다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 24,
+      "raw": "[독립 표 호스트](NativeOwnedTable.md)에 `structureEditor`를 주입하면 C++ 앱은\n`apply_structure()`로 구조 변경을 요청할 수 있다. `columnResizeEnabled`와\n`rowResizeEnabled`를 켜면 헤더의 열 경계와 본문의 행 경계를 끌어 크기를 조절한다.\n드래그 중에는 미리보기만 그리며 놓을 때 한 번 확정한다. Escape, 설정 변경 또는\n포커스 이탈은 미리보기를 취소한다. 드래그 중 외부 문서 변경이 발생하면 오래된\n크기로 덮어쓰지 않는다. 열은 최소 32, 행은 최소 18 논리 단위다. 유연 너비 열을\n조절하면 확정한 고정 너비가 된다. 경계 너비는 `columnResizeHandleWidth`와\n`rowResizeHandleHeight`로 설정할 수 있다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 28,
+      "raw": "실제로 변경한 구조에는 `onStructureChanged`가 요청 전체를, 드래그로 확정한 크기에는\n`onColumnResized` 또는 `onRowResized`가 인덱스와 크기를 전달한다. 삽입·삭제 버튼이나\n메뉴는 아직 제공하지 않으며 앱이 구조 편집 인터페이스를 호출한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 33,
+      "raw": "`LVUI.OwnedTable.Structure`는 혼합 연산의 후보·원자성, 데이터 정렬, 읽기 스냅샷,\n잘못된 요청과 동시 변경을 검사한다. `LVUI.OwnedTable.StructureHost`와 생성 코드\n검사는 크기 미리보기·확정·취소, 외부 변경과 반응형 콜백을 헤드리스 트리에서\n확인한다. 실제 운영체제의 포인터·터치 동작과 보조 기술은 별도 검증이 필요하다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "표 구조와 크기 편집",
+      "anchor": "표-구조와-크기-편집",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 13,
+        "text": "변화가 없으면 리비전을 발행하지 않는다. 다른 저장소는 같은 인터페이스에 자체 검증과",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "독립 표 호스트",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 17
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

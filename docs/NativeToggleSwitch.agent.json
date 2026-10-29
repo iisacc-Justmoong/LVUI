@@ -1,0 +1,159 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:cea6b2251310efaf91db288be123357870b566e7c36cecf69f6a3ed1959a622d",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeToggleSwitch.md",
+    "sha256": "bb582b38b3a34b58c82089b6c5dd7262130e086c022a369f918d0fa3fc36b2dc",
+    "bytes": 3217,
+    "line_count": 46,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 스위치",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 스위치\n",
+      "level": 1,
+      "title": "LVUI 독립 스위치"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "기본 `ToggleSwitch`는 `LVUI/ToggleSwitch.h`에서 상태, 트랙과 손잡이의 배치,\n포인터 드래그 및 프레임 기반 모션을 소유한다. `LVUI/NativeToggleSwitch.h`는\n앱이 공급하는 iiGUI의 범용 동작 표면과 글꼴·그리기·프레임 접점에 이를 연결한다.\nLVUI 모델은 표준 C++이며 Qt, QML 또는 LVRS 구현을 요구하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 14,
+      "raw": "```lvui\nimport vm EditorBackend\nWindow {\n    ToggleSwitch(text: \"Snap\", checked: vm.snapEnabled,\n                 accessibilityName: \"Snap to grid\", onToggled: vm.setSnap)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm EditorBackend\nWindow {\n    ToggleSwitch(text: \"Snap\", checked: vm.snapEnabled,\n                 accessibilityName: \"Snap to grid\", onToggled: vm.setSnap)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 27,
+      "raw": "`text`, `checked`, `enabled`, `accessibilityName`, `rightToLeft`, `motionEnabled`,\n`transitionDuration`, `trackWidth`, `trackHeight`, `trackPadding`,\n`knobSize`, `trackCornerRadius`, `knobCornerRadius`, `labelGap`과 문서화된\n색상 입력은 상수 또는 반응형으로 전달할 수 있다. 색상 입력은 `onColor`,\n`onColorHover`, `onColorPressed`, `offColor`, `offColorHover`, `offColorPressed`,\n`disabledTrackColor`, `knobFillColor`, `disabledKnobColor`, `textColor`,\n`disabledTextColor`이다. `motion`은 앱의 `lvui::Motion`\n값 또는 공유·약한 핸들이며, `transitionDuration`을 함께 지정하면 정수 밀리초로\n지속 시간을 덮어쓴다. 기본값은 38 × 22 트랙, 2의 내부 여백, 18의 손잡이,\n8의 레이블 간격 및 320ms OutBack이다. 스타일 색상은 LVUI 토큰 스냅샷에서\n선택한다. `group`은 스위치가 아닌 라디오 선택의 입력이며 비어 있지 않으면\n진단한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 35,
+      "raw": "누르기·Space/Enter·접근성 활성화는 한 번의 상태 전환으로 처리한다. 드래그 중에는\n손잡이만 이동하고 놓을 때 상태와 `onToggled(bool)`을 한 번 커밋한다. 포커스 상실\n또는 취소는 드래그 전 상태를 유지한다. `rightToLeft`는 손잡이 위치와 드래그 방향을\n반전한다. 프로그램의 `checked` 변경은 사용자 콜백을 발생시키지 않으며, 다른 입력의\n갱신이 직전 사용자 선택을 되돌리지 않는다. 잘못된 후보는 이전 상태를 유지한다.\n호스트 어댑터의 설정 변경은 UI 소유 스레드에서만 허용하며, 다른 스레드 또는 종료된\n뷰에서는 LVUI 상태를 바꾸기 전에 오류를 반환한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 42,
+      "raw": "모션은 실제 표시 위치에서 재목표하며 비활성화나 축소 모션 정책에서는 즉시 정착한다.\n호스트가 프레임을 제공하지 못하면 상태와 표시를 목표에 즉시 정착한다. 선택 상태는\n애니메이션 종료를 기다리지 않고 접근성에 전달한다. 동작 표면의 스위치 역할을 지원하는\niiGUI 호스트가 필요하다. 현재 범위에는 Figma의 그림자, 손잡이 압축·늘어남 및 시스템\n축소 모션 설정 자동 연결이 포함되지 않는다. macOS·iOS 소스 매핑과 헤드리스 검사는\n실제 기기 또는 스크린 리더 검증을 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 46,
+      "raw": "`tests/native_owned_toggle_consumer`는 설치 스테이징의 `LVUI::Native`, AOT 도구와\n별도로 공급한 `iiGUI::iiGUI`를 찾아 생성된 스위치를 컴파일·링크하는 소비자이다.\n검사는 빌드까지만 수행하며 창을 열지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 스위치",
+      "anchor": "lvui-독립-스위치",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "LVUI 모델은 표준 C++이며 Qt, QML 또는 LVRS 구현을 요구하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 42,
+        "text": "실제 기기 또는 스크린 리더 검증을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:28951436262086c370a4ada0ba684968fe47fa7721cba8a80719f96a6a119df7",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/OwnedHierarchyModel.md",
+    "sha256": "e3351dfbda858ce158325c7e5893362cc4dfb0e51977c876b5961164ff4daefd",
+    "bytes": 4271,
+    "line_count": 48,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 계층 데이터와 뷰 상태",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 계층 데이터와 뷰 상태\n",
+      "level": 1,
+      "title": "LVUI 독립 계층 데이터와 뷰 상태"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`LVUI/Hierarchy.h`는 Qt, QML, LVRS와 호스트 위젯 없이 계층 구조의 읽기·편집 경계와\n화면 상태를 정의한다. `HierarchySource`는 불변 `HierarchySnapshot`을 제공하고,\n`HierarchyEditor`는 리비전이 포함된 이동 요청을 받는다. 앱은 읽기 전용 소스와 별도의\n쓰기 구현을 주입할 수 있다. `HierarchyMemory`는 선택적인 메모리 내 구현이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 11,
+      "raw": "스냅샷은 고유한 UTF-8 키와 부모 키를 가진 항목의 preorder 목록이다. 부모는 항목보다\n먼저 나타나고 모든 자손은 연속해야 한다. 최대 65,536개 항목과 64 MiB의 문자열을\n검증하며 잘못된 부모, 중복 키와 잘못된 텍스트를 거절한다. `HierarchyIndex`는 깊이,\n직접 자식 수와 자손의 반열린 범위를 계산한다. 소스 스냅샷은 공유해도 변경되지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 18,
+      "raw": "이동은 키·대상·배치(`before`, `after`, `child`, `root_end`)와 관찰한 리비전을 사용한다.\n`HierarchyIndex::plan()`은 이전/새 부모, 위치와 기준 형제를 계산한다. 자기 자신이나\n자손 안으로 이동하거나 이동 금지된 항목을 옮길 수 없다. 기본 메모리 구현은 한 잠금\n안에서 리비전을 확인하고 전체 하위 트리를 원자적으로 옮긴다. 오래된 요청과 잘못된\n후보는 기존 스냅샷을 보존하고, 실제 변화가 없는 이동은 리비전을 발행하지 않는다.\n기존 스냅샷을 읽는 소비자는 이후 이동과 별개로 원래 데이터를 계속 볼 수 있다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 21,
+      "raw": "[드래그 계획 모델](HierarchyDrag.md)은 불변 스냅샷에서 이동 후보를 만들고\n실제 편집 요청과 화면 상태를 분리하며 독립 계층 목록의 포인터 이동에 사용된다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 26,
+      "raw": "`HierarchyController`는 소유 스레드에서 펼침과 선택을 관리하고 보이는 행을 투영한다.\n접힌 자손의 선택은 유지하며 항목이 소스에서 제거되면 화면 상태에서 정리한다. 이 조작은\n소스 편집 인터페이스를 호출하거나 문서 리비전을 변경하지 않는다. 소스의 새 불변\n스냅샷이 도착하면 인덱스를 갱신하고 살아 있는 키의 화면 상태를 유지한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 34,
+      "raw": "`HierarchyViewportSource`는 보이는 투영을 한 번 복사하고 키 색인을 소유한다.\n이후 스크롤마다 전체 계층을 다시 만들지 않고 보이는 행과 지정한 여유 범위만\n계산한다. 내용이 바뀌어도 키와 행 내부 위치를 기준으로 스크롤을 유지하고, 사용자가\n새로 스크롤한 경우에는 이전 기준점을 적용하지 않는다. 키를 지정해 시작·끝·중앙 또는\n최소 이동으로 행을 보이게 할 수 있다. 투영 리비전과 뷰 리비전을 결과에 함께 전달한다.\n행 높이는 현재 고정이며 [독립 계층 목록](NativeOwnedHierarchyList.md)이 이 계산을\n스크롤 호스트와 연결한다. 가변 행 높이는 별도 작업이다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 40,
+      "raw": "`LVUI.OwnedHierarchy.Model`은 구조 검증, 모든 항목 쌍의 이동, 자손 보존, 오래된\n요청, 편집 불변 스냅샷과 화면 상태의 문서 비변경을 검사한다. 이 문서는 독립 모델의\n현재 범위다. `LVUI.OwnedHierarchy.Viewport`는 제한된 표시 범위, 삽입 후 기준점,\n사용자 이동과 공개 키 찾기, 불변 스냅샷을 검사한다. 계층 목록은 고정 높이 가상\n행을 제공하며 드래그 입력과 플랫폼 접근성 연결은 아직 별도로 구현해야 한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 48,
+      "raw": "`HierarchyItem.h`는 행의 기본 200×20 크기, 8단위 들여쓰기와 좌우 여백, 18단위\n아이콘, 16단위 접기 표시, 카운트 위치 및 상태별 색상을 독립적으로 계산한다. 선택,\n비활성, 드래그, 누름과 호버의 우선순위를 관리하고 자식이 없는 행은 펼치지 않는다.\n폭이 좁아도 음수 크기를 만들지 않으며 잘못된 옵션은 기존 상태를 보존한다. 이는 행의\n순수 모델과 이를 사용하는 [독립 행 위젯과 선언형 경로](NativeOwnedHierarchyItem.md)를\n제공한다. `HierarchyItemProjection.h`는 소스의 보이는 행과 앱이 지정한 시각 설정을\n결합하며 원본 문서나 리비전을 바꾸지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 계층 데이터와 뷰 상태",
+      "anchor": "lvui-독립-계층-데이터와-뷰-상태",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 9,
+        "text": "먼저 나타나고 모든 자손은 연속해야 한다. 최대 65,536개 항목과 64 MiB의 문자열을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 15,
+        "text": "자손 안으로 이동하거나 이동 금지된 항목을 옮길 수 없다. 기본 메모리 구현은 한 잠금",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 17,
+        "text": "후보는 기존 스냅샷을 보존하고, 실제 변화가 없는 이동은 리비전을 발행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 25,
+        "text": "소스 편집 인터페이스를 호출하거나 문서 리비전을 변경하지 않는다. 소스의 새 불변",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 31,
+        "text": "새로 스크롤한 경우에는 이전 기준점을 적용하지 않는다. 키를 지정해 시작·끝·중앙 또는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 40,
+        "text": "행을 제공하며 드래그 입력과 플랫폼 접근성 연결은 아직 별도로 구현해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000009",
+        "label": "드래그 계획 모델",
+        "target": "HierarchyDrag.md",
+        "kind": "relative",
+        "line": 20
+      },
+      {
+        "block_id": "b000013",
+        "label": "독립 계층 목록",
+        "target": "NativeOwnedHierarchyList.md",
+        "kind": "relative",
+        "line": 33
+      },
+      {
+        "block_id": "b000017",
+        "label": "독립 행 위젯과 선언형 경로",
+        "target": "NativeOwnedHierarchyItem.md",
+        "kind": "relative",
+        "line": 46
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

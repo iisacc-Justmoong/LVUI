@@ -1,0 +1,512 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:244e6d1e416e681fb753a7ae85361f349b266e4956b2ff7c60eb650c47b8f11b",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/FactoryCaptures.md",
+    "sha256": "0ca249088410c1abafe94ede4147816a753c5661343283f9caa42d4a4ee5b51c",
+    "bytes": 6740,
+    "line_count": 93,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "C++ 반환 함수의 수신자·인자 보존",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# C++ 반환 함수의 수신자·인자 보존\n",
+      "level": 1,
+      "title": "C++ 반환 함수의 수신자·인자 보존"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "반환 함수의 C++ 객체를 소유하는 것만으로 그 함수가 차용한 수신자까지 보존되지는 않는다.\nLVUI는 반환 함수를 선택하는 동안 선택된 공유 부모와 임시 수신자·인자를 함께 보존하고,\n그 소유권을 현재 함수 버전에 연결한다. 실행 중 소스 해석이나 별도 객체 등록소를 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 16,
+      "raw": "```lvui\nimport vm Model\nlet render: () -> String = vm.selected.makeDescription()\n@Static let original: () -> Void = vm.selected.makeHandler()\nWindow { VStack {\n    PushButton(vm.temporary().makeHandler())\n    PushButton(vm.capture(vm.makeArgument()))\n    Label(text: render())\n} }\n```\n",
+      "language": "lvui",
+      "code": "import vm Model\nlet render: () -> String = vm.selected.makeDescription()\n@Static let original: () -> Void = vm.selected.makeHandler()\nWindow { VStack {\n    PushButton(vm.temporary().makeHandler())\n    PushButton(vm.capture(vm.makeArgument()))\n    Label(text: render())\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 20,
+      "raw": "`makeHandler()`를 평가하여 함수 객체를 받는 시점과 그 함수를 실행하는 시점은 다르다.\n임시 수신자와 인자의 저장소도 첫 실행 전에 파괴되지 않아야 한다. C++ 팩터리가 참조로\n함수를 반환하거나 값으로 반환한 함수가 `this`를 포획한 경우 모두 같은 수신자 보존을 적용한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "## 생성과 C++ 계약\n",
+      "level": 2,
+      "title": "생성과 C++ 계약"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 28,
+      "raw": "`Methods::callable(context, factory)`는 독립적인 읽기 문맥에서 팩터리를 평가하고 읽은\n원본을 바깥 바인딩에 전달한다. 선택된 공유 부모와 중간 임시 객체는 반환한 네이티브 함수\n참조가 보관한다. 값·우측값 반환은 소유 저장소로 만들고, 좌측값·함수 참조는 원래 정체성과\nconstness를 보존하여 차용한다. 소유한 함수 객체는 기존 계약대로 좌측값으로 호출하며,\n이동·복사가 불가능한 값 반환은 C++ 직접 생성으로 소유한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 38,
+      "raw": "생성기는 함수 팩터리의 수신 경로에 기존 `receiver_member`·`receiver_index`를 사용한다.\n`Methods::argument`는 인자의 좌측값·우측값 참조 범주를 유지하고, 값으로 계산한 임시\n인자는 먼저 소유한 뒤 원래 우측값으로 전달한다. 함수 인자를 받는 C++ 오버로드를 임의로\n좌측값 오버로드로 바꾸지 않는다. 생성기는 C++ `requires`로 각 인자의 보존 가능성을\n선택한다. 이동·복사 불가능한 값을 값 매개변수로 받는 경우는 원래 prvalue와 보장된 복사\n생략을 유지하며, 같은 호출의 다른 참조 인자는 계속 보존한다. 선택은 컴파일 시 선형\n검사이며 호출 시 오버로드 탐색이나 인자 해석을 수행하지 않는다.\n값으로 전달되어 C++ 함수 안에서 다시 이동·복사된 인자와\n함수의 지역 변수는 그 함수가 책임진다. 이미 파괴된 참조를 반환하는 C++ API를 복구하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 40,
+      "end_line": 43,
+      "raw": "소스의 일반 반응형 함수는 의존 원본이 바뀌면 새 버전으로 교체한다. 실행 중인 호출은\n이전 함수·수신자·인자 저장소를 반환까지 보존한다. `@Static`과 가변 함수의 초기 선택은\n같은 내부 소유권 수집을 사용하지만 바깥 문맥에 변경 의존을 연결하지 않는다. 차용한\n외부 객체의 내부를 깊은 복사로 고정하는 계약은 아니다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "## 실패와 종료\n",
+      "level": 2,
+      "title": "실패와 종료"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 50,
+      "raw": "실패한 이후 평가에서는 마지막 유효 함수와 그 소유자를 유지하며 복구 가능한 의존값의\n구독을 보존한다. 최초 실패는 후보 활성화에 실패한다. 소유 뷰 종료나 다른 실행 영역의\n새 호출은 기존 콜백·함수 값의 접수 경계를 따른다. 실행 중 자기 뷰를 제거해도 반환까지\n필요한 소유자를 보존하며, 이후 외부 콜백 핸들이 백엔드를 되살리지 않는다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 53,
+      "raw": "검토 상태와 파일 상태는 별개이다. 함수 선택·버전 고정·표시 갱신은 파일 리비전이나 저장을\n발동하지 않는다. 명령 실행 후 합성 백엔드 변경 발행은 기존 public 필드 갱신 계약을 따른다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "## 검증\n",
+      "level": 2,
+      "title": "검증"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 60,
+      "raw": "실제 생성 위젯의 `native_factory_captures` 검사는 임시 수신자와 임시 인자의 조기 파괴를\n함수 호출 없이 수명 카운터로 먼저 재현한다. 이후 수신자 선택·실행 중 교체·재진입·실패 복구·\n고정 선택·문자열 이벤트·인덱스·조건부 재활성화·자기 제거와 편집 상태 보존을 검사한다.\n일반 타입 추론과 전체 LVRS·플랫폼 계약은 [전체 완료 감사](Completion.md)의 별도 조건이다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 65,
+      "raw": "macOS arm64의 현재 소스에서 아래 결과를 확인했다. 검사 범위는 겹치므로 합산하여\n독립 기능 수나 플랫폼 수로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "table",
+      "start_line": 67,
+      "end_line": 77,
+      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI Release 전체 CTest | 269/269 통과 |\n| 관련 언어·네이티브 ASan·UBSan | 199/199 통과 |\n| iiGUI 창 없는 기존 동작·생성 코드 | 일반·ASan·UBSan 각각 209/209 통과 |\n| 새 포획 동작·생성기·위젯 검사 | 네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과 |\n| 실제 생성 C++ 타입 계약 | 두 빌드에서 각각 허용 14개·거부 6개 확인 |\n| Native·컴파일러·선택적 Runtime 설치·재배치 소비자 | 두 빌드에서 3종 및 설치 CLI 직접 실행 통과 |\n| LVRS 생성 팩토리 | 두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지 |\n| iiGUI 생성 헤더 | 두 빌드의 54개가 바이트 단위로 일치 |\n| Dreamscapes QML 관측 기준선 | 81개 파일 변경 0개 |\n",
+      "columns": [
+        "범위",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI Release 전체 CTest",
+          "269/269 통과"
+        ],
+        [
+          "관련 언어·네이티브 ASan·UBSan",
+          "199/199 통과"
+        ],
+        [
+          "iiGUI 창 없는 기존 동작·생성 코드",
+          "일반·ASan·UBSan 각각 209/209 통과"
+        ],
+        [
+          "새 포획 동작·생성기·위젯 검사",
+          "네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과"
+        ],
+        [
+          "실제 생성 C++ 타입 계약",
+          "두 빌드에서 각각 허용 14개·거부 6개 확인"
+        ],
+        [
+          "Native·컴파일러·선택적 Runtime 설치·재배치 소비자",
+          "두 빌드에서 3종 및 설치 CLI 직접 실행 통과"
+        ],
+        [
+          "LVRS 생성 팩토리",
+          "두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지"
+        ],
+        [
+          "iiGUI 생성 헤더",
+          "두 빌드의 54개가 바이트 단위로 일치"
+        ],
+        [
+          "Dreamscapes QML 관측 기준선",
+          "81개 파일 변경 0개"
+        ]
+      ]
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 79,
+      "end_line": 84,
+      "raw": "임시 수신자와 임시 인자가 첫 실행 전에 파괴되는 실패 2개를 수명 카운터로 먼저\n재현했으며 파괴된 함수는 호출하지 않았다. 수정 후 참조·값 반환 함수, 이동 불가 값,\n수신자 교체 중 재진입, Static·가변 초기 선택, 실패 복구와 자기 제거를 실행했다.\n이동 불가 값 매개변수와 참조 매개변수가 같은 호출에 있는 경우도 타입·실행 검사로\n확인했다. 기존 초기화 코드의 문자열 형태를 전제한 검사 한 곳은 새 내부 문맥과\n인자 보존 형태에 맞춰 갱신하고 전체 검사를 다시 통과했다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 89,
+      "raw": "생성 위젯 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.\niiGUI 메모리 검사는 생성 C++와 WidgetState를 계측하며, 차용한 일반 Native 아카이브의\n구현은 LVUI의 별도 메모리 검사로 검증한다. 이 결과는 실제 LVRS 앱·OS 창·GPU·다른\n플랫폼의 실행이나 제품 UI 지연 개선률을 입증하지 않는다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 91,
+      "end_line": 93,
+      "raw": "소스 해시·원시 로그·실패 재현·설치 소비자와 바이너리 의존성은\n`build/lvui-completion/factory-captures-verification-20261026.json`에 기록한다. 언어의\n전체 타입·프로토콜과 LVRS·플랫폼 완료 조건은 이 단계의 결과로 축소하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "C++ 반환 함수의 수신자·인자 보존",
+      "anchor": "c-반환-함수의-수신자인자-보존",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "생성과 C++ 계약",
+      "anchor": "생성과-c-계약",
+      "start_line": 22
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실패와 종료",
+      "anchor": "실패와-종료",
+      "start_line": 45
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증",
+      "anchor": "검증",
+      "start_line": 55
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 62
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "그 소유권을 현재 함수 버전에 연결한다. 실행 중 소스 해석이나 별도 객체 등록소를 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 36,
+        "text": "검사이며 호출 시 오버로드 탐색이나 인자 해석을 수행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 38,
+        "text": "함수의 지역 변수는 그 함수가 책임진다. 이미 파괴된 참조를 반환하는 C++ API를 복구하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 42,
+        "text": "같은 내부 소유권 수집을 사용하지만 바깥 문맥에 변경 의존을 연결하지 않는다. 차용한",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 53,
+        "text": "발동하지 않는다. 명령 실행 후 합성 백엔드 변경 발행은 기존 public 필드 갱신 계약을 따른다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 65,
+        "text": "독립 기능 수나 플랫폼 수로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 86,
+        "text": "생성 위젯 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 89,
+        "text": "플랫폼의 실행이나 제품 UI 지연 개선률을 입증하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000037",
+        "line": 93,
+        "text": "전체 타입·프로토콜과 LVRS·플랫폼 완료 조건은 이 단계의 결과로 축소하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000025",
+        "label": "전체 완료 감사",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 60
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000031",
+        "columns": [
+          "범위",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI Release 전체 CTest",
+            "269/269 통과"
+          ],
+          [
+            "관련 언어·네이티브 ASan·UBSan",
+            "199/199 통과"
+          ],
+          [
+            "iiGUI 창 없는 기존 동작·생성 코드",
+            "일반·ASan·UBSan 각각 209/209 통과"
+          ],
+          [
+            "새 포획 동작·생성기·위젯 검사",
+            "네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과"
+          ],
+          [
+            "실제 생성 C++ 타입 계약",
+            "두 빌드에서 각각 허용 14개·거부 6개 확인"
+          ],
+          [
+            "Native·컴파일러·선택적 Runtime 설치·재배치 소비자",
+            "두 빌드에서 3종 및 설치 CLI 직접 실행 통과"
+          ],
+          [
+            "LVRS 생성 팩토리",
+            "두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지"
+          ],
+          [
+            "iiGUI 생성 헤더",
+            "두 빌드의 54개가 바이트 단위로 일치"
+          ],
+          [
+            "Dreamscapes QML 관측 기준선",
+            "81개 파일 변경 0개"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

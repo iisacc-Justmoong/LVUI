@@ -1,0 +1,10 @@
+import vm NativeOwnedButtonModel
+Window {
+    VStack {
+        PushButton(id: "save", text: vm.text, enabled: vm.enabled, tone: vm.tone,
+                   height: vm.height, horizontalPadding: vm.padding, accessibilityName: vm.name, onClick: vm.save)
+        IconButton(id: "icon", text: "Tool", icon: vm.icon, onClick: vm.tool)
+        LabelButton(id: "secondary", text: "Other", tone: vm.native_tone)
+        AbstractButton(id: "plain", text: "Plain")
+    }
+}

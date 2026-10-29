@@ -1,0 +1,6 @@
+import state lvrs.StateModel
+let Bar: View = ProgressBar(id: "borrowed", stateModel: state, motionEnabled: false)
+Window { VStack {
+    Bar()
+    ProgressBar(id: "direct", stateModel: state, size: .regular, shapeStyle: .shapeCylinder)
+} }

@@ -1,0 +1,6 @@
+import state lvui.ProgressState
+Window {
+    VStack {
+        ProgressBar(id: "scoped", width: 200, motionEnabled: false, stateModel: state)
+    }
+}

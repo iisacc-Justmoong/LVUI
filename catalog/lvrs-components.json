@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source_repository": "https://github.com/iisacc-Justmoong/LVRS",
-  "source_revision": "8360f4dcafe2e4a72605299d5dfeb010bba6e818",
+  "source_revision": "c5131090ca8df583bcf52253c5082bcef1ee3833",
   "files": [
     {
       "path": "src/LVRS/Alert.cpp",
@@ -104,6 +104,46 @@
       "sha256": "f436074e6a3302abb2e46933f84ae17a7d4a1a8720f1f812b3d026e5c1e15178"
     },
     {
+      "path": "src/LVRS/FontPolicy.cpp",
+      "sha256": "f1cd99e1b199fae7e29fffdaf31dfabbb76035257672297f67f9a5eec6e8380a"
+    },
+    {
+      "path": "src/LVRS/FontPolicy.h",
+      "sha256": "d1709f7c0f3e844d483bce1489fc6ceded66ea13a29989406d2ed31d6d34d88b"
+    },
+    {
+      "path": "src/LVRS/HierarchyController.cpp",
+      "sha256": "f7eee54366c67763df1c10fa99644104fed4b7da5325b9a1e7974200225ec478"
+    },
+    {
+      "path": "src/LVRS/HierarchyController.h",
+      "sha256": "9e29efcfc42088636940ddaf52096f46fd1125706851aa9ea83e97fac88a22d8"
+    },
+    {
+      "path": "src/LVRS/HierarchyDelegateContext.cpp",
+      "sha256": "78c6a5ae9db5d01827c165b410a446b56fef1da3a3408491cd845144ab033305"
+    },
+    {
+      "path": "src/LVRS/HierarchyDelegateContext.h",
+      "sha256": "4e5dd12f20ce1ac523e5d9d827ac59ea239265d164f4c4fedc91b9cc36bf7e12"
+    },
+    {
+      "path": "src/LVRS/HierarchyItem.cpp",
+      "sha256": "cd74363edf979dc8b85a0ef8b4d41e3f4a1be6e7a2aa378449eb3117a1f91823"
+    },
+    {
+      "path": "src/LVRS/HierarchyItem.h",
+      "sha256": "82d7086eaf85b940e7cc13be0121eb71db5ad480f9c99f9971b3db076c528585"
+    },
+    {
+      "path": "src/LVRS/HierarchyList.cpp",
+      "sha256": "47ca1dc0907b7150b259da80092eb677b01ad0c4122e85e96d9a37a4d6f26142"
+    },
+    {
+      "path": "src/LVRS/HierarchyList.h",
+      "sha256": "9d6cc456dca326acfe9fcde1c57f68836d0b13981a9127044d747c2b45845dce"
+    },
+    {
       "path": "src/LVRS/HierarchyModel.cpp",
       "sha256": "713b739aaf1bd0fbbd436515306d0fbc16d755aa58d1d0171932dac98e8e99ee"
     },
@@ -113,11 +153,11 @@
     },
     {
       "path": "src/LVRS/HierarchyProjection.cpp",
-      "sha256": "88ebcc0bab46d137d66d56313c1a36d044408266fe7c9121ab1b8eac27394d82"
+      "sha256": "3085814ef3ec0f4e6cdd73fd32396e61264f358d5e5ad0dc6a43923d0d99f813"
     },
     {
       "path": "src/LVRS/HierarchyProjection.h",
-      "sha256": "7b283669e1bb65257298053a0ffed3418bee54ab9e675a48fefeb6f9e99b9951"
+      "sha256": "2b327a02e40381e60f4fa49b0c1bf00682f36697ab81d3363768a7f230c52325"
     },
     {
       "path": "src/LVRS/HierarchyToolbar.cpp",
@@ -142,6 +182,14 @@
     {
       "path": "src/LVRS/Icons.h",
       "sha256": "ecce1e99d3a09d6648613ed8943f826e054a6f689937de6c5241af1916033a9e"
+    },
+    {
+      "path": "src/LVRS/Image.cpp",
+      "sha256": "41e89846fba752f218657c1ff2e6e1676df91fc494e9c8bca669118839704027"
+    },
+    {
+      "path": "src/LVRS/Image.h",
+      "sha256": "8abee92a03499c7cde8c59d0186746d98ed60d322408003dbd4287cdcf1bb8c2"
     },
     {
       "path": "src/LVRS/Link.cpp",
@@ -208,6 +256,38 @@
       "sha256": "da8d2c508dfda0305323ce1b56c8ad8fe546fc4f955acef06d3a117be1c73f9d"
     },
     {
+      "path": "src/LVRS/ModelAdapter.cpp",
+      "sha256": "0d30a8a5c4c1cafa3a46d7dc5665fed42aba902978d4e4aa59e455927529c3b7"
+    },
+    {
+      "path": "src/LVRS/ModelAdapter.h",
+      "sha256": "28c8501b54608635d127b55d2d08dce5019a9f4487d65498570c96cc9d718c8b"
+    },
+    {
+      "path": "src/LVRS/ModelProperties.cpp",
+      "sha256": "abb6d5547bb0af3a6524ba00c0fcdb24bd8ce11919976e62ceb7f11c0063bc4b"
+    },
+    {
+      "path": "src/LVRS/ModelProperties.h",
+      "sha256": "4dc1a72de43cb598aaf35370dd35780176a640713f15f7b7443e76f08564eaba"
+    },
+    {
+      "path": "src/LVRS/ModelSource.cpp",
+      "sha256": "15978ab394ddd3c308d76147ae522de0fbc78c3591026bd3777e88f3b9dea91b"
+    },
+    {
+      "path": "src/LVRS/ModelSource.h",
+      "sha256": "ac5e6f9e2bdea0f6c52dff24949c36ebb4bb98ebc325bcfe0a01111a9799d16d"
+    },
+    {
+      "path": "src/LVRS/ModelUndoStack.cpp",
+      "sha256": "3f2c8ec13ef8255f51561cab6e5253dc381df1fad2a95aa7a7b6e1bf04a2d355"
+    },
+    {
+      "path": "src/LVRS/ModelUndoStack.h",
+      "sha256": "0ca5ce00b6e88a852cb14620bcaead23eb40d9f517b367cdbfe9aa49db299960"
+    },
+    {
       "path": "src/LVRS/Motion.cpp",
       "sha256": "1c7ce9e586c5c7c4d5d56b1e04f53b63a1552ff2dc9c34a4099a1fd7810b68fa"
     },
@@ -217,11 +297,11 @@
     },
     {
       "path": "src/LVRS/NavigationStackModel.cpp",
-      "sha256": "946501482ef83240b99dca2a16df18060a45e31da85c186804069136cb8c2db2"
+      "sha256": "d9fd30ad6e5bfaff4321d5b2639eb9c64e8016373621aa5c07aef20e08374f75"
     },
     {
       "path": "src/LVRS/NavigationStackModel.h",
-      "sha256": "3624a79521c33115c4b3f0d80744b213a03f907b4b280303f8bce3bef03ef2e6"
+      "sha256": "05079e5062817c4523d8e40c7661e3051a097c733bf13b0c777acbedcbe5dee4"
     },
     {
       "path": "src/LVRS/NavigationTarget.cpp",
@@ -249,11 +329,11 @@
     },
     {
       "path": "src/LVRS/PageRouter.cpp",
-      "sha256": "d91d6f6908f72abc94cda23c6a752e2d65df142c6c0cc1e512e16ef8cfeef9a5"
+      "sha256": "ad9c9d669fceebbd02048f26eecff9acde51815a512aeeb25bcf5b9c8569f4db"
     },
     {
       "path": "src/LVRS/PageRouter.h",
-      "sha256": "742a80fe7921c6e0d828e1cbd5333a7431fb687c463ec0021b522b85896d5f2c"
+      "sha256": "f59460088ce7439914c78de3f3f848f8a54eacb6d579b917eb71f6c35e47b649"
     },
     {
       "path": "src/LVRS/PanelMaterial.cpp",
@@ -262,6 +342,46 @@
     {
       "path": "src/LVRS/PanelMaterial.h",
       "sha256": "d6cd29d4b6b666e7d394c5ccce7649de83fef7cc9c82e5323a1f66a1c33517d3"
+    },
+    {
+      "path": "src/LVRS/PlatformInfo.cpp",
+      "sha256": "5b33234767efc1a59324f3a2cb0138362226cbefee115281414402d046e70f35"
+    },
+    {
+      "path": "src/LVRS/PlatformInfo.h",
+      "sha256": "7d970c5b58af69c84f3f5a25267eff2b862a4193a09c854f8bd8c6fdcfdfed90"
+    },
+    {
+      "path": "src/LVRS/PresentationDetail.cpp",
+      "sha256": "0ce9703bfd295e06503ad369c96569531fb26f58ded018e17b848194eac76afe"
+    },
+    {
+      "path": "src/LVRS/PresentationDetail.h",
+      "sha256": "f8098b363bde5e084c1c460702a5286bcef8a32a0d8eae55d1c4db715a1edb1d"
+    },
+    {
+      "path": "src/LVRS/ProgressBar.cpp",
+      "sha256": "bce1c05a6881578f6a4539920f23c6b6ff16e1a2d9154ca914fd2694d6e68eef"
+    },
+    {
+      "path": "src/LVRS/ProgressBar.h",
+      "sha256": "5f90f3308eea41d6df93ff2cfc991c9ae312356a3d5d9ef6d62d4a2949e4ea1f"
+    },
+    {
+      "path": "src/LVRS/ProgressModel.cpp",
+      "sha256": "3bce980b6024c0e043ebcb960b7db56dd7b79840f692d638b4f6e92e18aa0723"
+    },
+    {
+      "path": "src/LVRS/ProgressModel.h",
+      "sha256": "a34735ef98d1d673d2a6e4a9652b0dc673ac1050026547bf17e78920f0329593"
+    },
+    {
+      "path": "src/LVRS/RenderMonitor.cpp",
+      "sha256": "024b57458858216fe47690e453a281089df02376b46b538f49ad6a4fd90e99b3"
+    },
+    {
+      "path": "src/LVRS/RenderMonitor.h",
+      "sha256": "3120a126f7a4f85043ce302c03d4d05018e0a28a29329bd8b8d837eb806b0540"
     },
     {
       "path": "src/LVRS/RouteMatcher.cpp",
@@ -296,12 +416,44 @@
       "sha256": "eff6329ddc54aea507335c9697f90b6e50e83d1dce7e1e064a88beeec6070d79"
     },
     {
+      "path": "src/LVRS/StateModel.cpp",
+      "sha256": "1a1da7dfe8628ef25cf55f76a868d905ca26c5ce8d82846964ab875c0ef5b749"
+    },
+    {
+      "path": "src/LVRS/StateModel.h",
+      "sha256": "9469309e7a524d0d88fb33ef6677588c37dad85b3254ade21c21751139e17170"
+    },
+    {
+      "path": "src/LVRS/StateSource.cpp",
+      "sha256": "b03227688263b636aeb992aa7105e323ad0f6dc534ca1a73c00be5abdac55e78"
+    },
+    {
+      "path": "src/LVRS/StateSource.h",
+      "sha256": "61cc439ea34cc77fb453cd663b9d3cfaf72338b4b6361389a570536568af1b94"
+    },
+    {
       "path": "src/LVRS/SurfaceDetail.cpp",
       "sha256": "ad8f0190da3876e9785ef277de0e3c9fc65c6008f0ea276381d6fb39612bd542"
     },
     {
       "path": "src/LVRS/SurfaceDetail.h",
       "sha256": "7f814e74b3b9cca3cc7925eb47c282328f170d8068ec33af16319b7a94f3b35f"
+    },
+    {
+      "path": "src/LVRS/SvgManager.cpp",
+      "sha256": "a17bd7ac67e76a408cd27476498b2ca6b9f93e9f2e822f568a6593c99ba6f00a"
+    },
+    {
+      "path": "src/LVRS/SvgManager.h",
+      "sha256": "fb256de1cfe827d131a1f16723abcdecbe4abbcfc4bada2599a1bc844705830b"
+    },
+    {
+      "path": "src/LVRS/SvgSource.cpp",
+      "sha256": "e5bb6db38838cb87a3d5bb1e2d5b810b4a3381b4367ebad321d18f68f8a89904"
+    },
+    {
+      "path": "src/LVRS/SvgSource.h",
+      "sha256": "e441cbd2d2854750c7047f6ca1bbb0ba3897add27786ec7bb743abc6703ae284"
     },
     {
       "path": "src/LVRS/Table.cpp",
@@ -417,7 +569,7 @@
     },
     {
       "path": "src/LVRS/Theme.cpp",
-      "sha256": "0147244cf835021edb091a66fa83faca1afc50d4c06835a405c26add725da4f2"
+      "sha256": "66e2a3ff1411bd12e1658429fb031d35c0771610f5f76ee42b9b8c6b07092fa8"
     },
     {
       "path": "src/LVRS/Theme.h",
@@ -464,6 +616,30 @@
       "sha256": "957fb9159be74f60641839db054205691302e96dc2547839d10039b8d615ee61"
     },
     {
+      "path": "src/LVRS/ViewModel.cpp",
+      "sha256": "146a3d91e1d06af390508ef0290cf96b52c1599116b44a7167855805096548aa"
+    },
+    {
+      "path": "src/LVRS/ViewModel.h",
+      "sha256": "a64508c28d549c8f15fa71c12b71d7471bb69ffdf324efb683882d7cd57d0319"
+    },
+    {
+      "path": "src/LVRS/ViewModelDetail.cpp",
+      "sha256": "3ad6f3938d020b1648abfc4ef25dde8cd1074f363933080d0e4a60595b18a406"
+    },
+    {
+      "path": "src/LVRS/ViewModelDetail.h",
+      "sha256": "cc52643ec849e87d8b2b2b5f26adb928c73bf2583c361a7e6ea99de7df6d946e"
+    },
+    {
+      "path": "src/LVRS/ViewModelRegistry.cpp",
+      "sha256": "46f86100c1d9e9a3691c327328fdf6e5ac22442ae06c3b2760b6944795e3cc88"
+    },
+    {
+      "path": "src/LVRS/ViewModelRegistry.h",
+      "sha256": "8731a3c20f7742e0ea7cefbda91e95ea0ee66229ae3329d7432fd03b2e53a863"
+    },
+    {
       "path": "src/LVRS/ViewStateTracker.cpp",
       "sha256": "08b86adfa2bc56b2c9191219b29d1d99934706ee7476d055f144ecb41c6824ad"
     },
@@ -473,11 +649,11 @@
     },
     {
       "path": "src/LVRS/Widgets.cpp",
-      "sha256": "663bac50a4d0a39768a40961d7909e37d65a8f7fb83b7bda9c460786ef2142dc"
+      "sha256": "105522f50e4fbc865ca8281c04fe207db5fdc0acb40b16ed99dfbb53e5b0d5d0"
     },
     {
       "path": "src/LVRS/Widgets.h",
-      "sha256": "b15e0d12419bd843c178826a884f61e18201108cbbcb4e54a69c6e3842ccf6a5"
+      "sha256": "f86baec2e363a83a306f7b67c3c6908a982ba783426c58326484f363dbae2470"
     },
     {
       "path": "src/LVRS/WindowMaterial.cpp",
@@ -2681,6 +2857,31 @@
       "origin": "qml",
       "kind": "view",
       "internal": false
+    }
+  ],
+  "native_views": [
+    {
+      "name": "Image",
+      "kind": "view",
+      "path": "src/LVRS/Image.h",
+      "line": 6,
+      "internal": false,
+      "origin": "native-cpp"
+    },
+    {
+      "name": "NativeView",
+      "kind": "view",
+      "path": "../iiGUI/src/iiGUI/NativeView.h",
+      "line": 20,
+      "internal": false,
+      "origin": "native-iigui"
+    }
+  ],
+  "external_source_files": [
+    {
+      "module": "iiGUI",
+      "path": "../iiGUI/src/iiGUI/NativeView.h",
+      "sha256": "1282fd7a4c7e92ceb9fc191ad61f47c4f19383be2df96c745ec66bca16efb3c7"
     }
   ]
 }

@@ -1,0 +1,4 @@
+import class lvrs.StateModel
+import vm NativeProgressBackend
+let Bar(source: StateModel, width: Metric): View = ProgressBar(stateModel: source, width: width, motionEnabled: false)
+Window { Bar(source: vm.source, width: vm.width) }

@@ -1,0 +1,4 @@
+import class NativeInput.Item
+import vm NativeObjectInputModel
+let Row(item: Item): View = Label(id: "row-title", text: item.title)
+Window { VStack { for (row in vm.rows, key: row.id, id: "rows") { Row(item: row) } } }

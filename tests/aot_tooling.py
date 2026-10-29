@@ -1,5 +1,6 @@
 """AOT command-line/build artifact contract; no Python in generated apps."""
 from pathlib import Path
+import os
 import subprocess
 import sys
 import tempfile
@@ -17,7 +18,8 @@ class AotToolingTests(unittest.TestCase):
         source = 'Window { VStack(width: Metric.inspectorWidth, backgroundColor: .window) {} }'
         view = self.invoke(source, '--style-file', str(profile))
         self.assertEqual(view.returncode, 0, view.stderr)
-        self.assertIn('set_extent({352, 0}', view.stdout)
+        self.assertIn('set_stack_layout(', view.stdout)
+        self.assertIn('.extent = {352, 0}', view.stdout)
         self.assertNotIn('LVUI/', view.stdout)
         output = self.root / 'theme.generated.h'
         result = subprocess.run(['cmake', f'-DLVUI_AOT_COMPILER={compiler}', f'-DLVUI_AOT_SOURCE={profile}',
@@ -29,7 +31,7 @@ class AotToolingTests(unittest.TestCase):
         profile.write_text('let inspectorWidth: Metric = 400\n', encoding='utf-8')
         regenerated = self.invoke(source, '--style-file', str(profile))
         self.assertEqual(regenerated.returncode, 0, regenerated.stderr)
-        self.assertIn('set_extent({400, 0}', regenerated.stdout)
+        self.assertIn('.extent = {400, 0}', regenerated.stdout)
 
     def test_invalid_profile_preserves_previous_artifact(self):
         profile = self.root / 'invalid theme.lvui'
@@ -135,6 +137,34 @@ class AotToolingTests(unittest.TestCase):
                                 capture_output=True, text=True)
         self.assertNotEqual(result.returncode, 0)
         self.assertEqual(output.read_text(), 'previous valid artifact')
+
+    def test_unchanged_build_generation_preserves_artifact_timestamp(self):
+        for styles in (False, True):
+            with self.subTest(styles=styles):
+                initial = 'let gap: Metric = 8' if styles else 'Window { Label(text: "First") }'
+                changed = 'let gap: Metric = 16' if styles else 'Window { Label(text: "Second") }'
+                self.source.write_text(initial, encoding='utf-8')
+                output = self.root / 'stable generated.h'
+                arguments = ['cmake', f'-DLVUI_AOT_COMPILER={compiler}',
+                             f'-DLVUI_AOT_SOURCE={self.source}', f'-DLVUI_AOT_OUTPUT={output}']
+                if styles:
+                    arguments.append('-DLVUI_AOT_EMIT_STYLES=ON')
+                arguments.extend(['-P', str(runner)])
+                result = subprocess.run(arguments, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                previous = output.read_bytes()
+                sentinel = 946684800000000000
+                os.utime(output, ns=(sentinel, sentinel))
+                result = subprocess.run(arguments, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(output.read_bytes(), previous)
+                self.assertEqual(output.stat().st_mtime_ns, sentinel,
+                                 'Identical native output triggered dependent C++ rebuilds')
+                self.source.write_text(changed, encoding='utf-8')
+                result = subprocess.run(arguments, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertNotEqual(output.read_bytes(), previous)
+                self.assertNotEqual(output.stat().st_mtime_ns, sentinel)
 
 
 unittest.main()

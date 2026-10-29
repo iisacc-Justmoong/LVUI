@@ -1,0 +1,10 @@
+import vm NativeScalarInputModel
+let Values(i: Int, f: Float, d: Double, m: Metric, b: Bool, c: Color): View = VStack(backgroundColor: c) {
+    Label(id: "integer", text: i)
+    Label(id: "float", text: f)
+    Label(id: "double", text: d)
+    Label(id: "metric", text: m)
+    Label(id: "boolean", text: b)
+    Label(id: "red", text: c.red)
+}
+Window { Values(i: vm.count, f: vm.amount, d: vm.amount * 2, m: vm.size, b: vm.visible, c: vm.ink) }

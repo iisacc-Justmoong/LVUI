@@ -1,0 +1,9 @@
+import vm NativeRepetitionBackend
+let numbers = [vm.first, 7]
+@Static let initial = [vm.first, 1]
+var words = ["A", "B"]
+Window {
+    for (word in words, key: word, id: "words") {
+        Label(id: "word", text: word)
+    }
+}

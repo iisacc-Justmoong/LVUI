@@ -1,0 +1,99 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:76c193d852e769f6d22d9e573a5bc95cc405dc8a6346bfab50f69c003ddd976a",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeStepper.md",
+    "sha256": "41b0b1d1d78b94a8e9acf5ec9d7f6c08ba1ded0469579db569af60ec67926838",
+    "bytes": 1543,
+    "line_count": 19,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 스테퍼",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 스테퍼\n",
+      "level": 1,
+      "title": "LVUI 독립 스테퍼"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`LVUI/Stepper.h`는 스테퍼의 방향 허용 정책, 크기와 버튼 시각 상태를 소유하는\n표준 C++ 모델이다. 기본 표면은 18×18 논리 px, 모서리는 4이며 기본 방향은 위와\n아래이다. 위쪽 절반은 +1, 아래쪽 절반은 -1을 요청한다. 단일 화살표는 허용된\n방향만 발생시키고 비활성 상태는 요청을 무시한다. 수치 자체는 앱 모델이 소유한다.\n색상과 톤 정책은 같은 LVUI 모듈의 독립 버튼 모델을 조합한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "`NativeStepper`는 앱이 제공하는 범용 입력·그리기 표면에 모델을 연결한다.\n포인터의 위·아래 위치, 방향키와 접근성 증감 요청은 같은 방향 정책을 따른다.\n허용하지 않는 방향은 접근성 행동에서도 제외한다. 눌림, 놓음, 취소, 클릭 및\n증감 콜백을 제공하며, 콜백 중 설정이 바뀌거나 위젯이 폐기되면 이전 요청이\n새 상태에 영향을 주지 않는다. 비활성 상태와 비활성 조상은 입력을 받지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 19,
+      "raw": "기본 선언형 `Stepper`는 LVUI 어댑터를 생성하고 방향, 톤, 크기, 색상, 활성 상태와\n콜백을 연결한다. 반응형 입력은 유효한 설정만 적용한다. 헤드리스 모델·호스트·\n생성 코드 검사를 통과했다. 실제 OS 입력 및 스크린 리더 검증은 수행하지 않았으며,\nWindows와 Linux의 호스트 접근성 구현은 아직 미완성이다. 명시적 LVRS 생성 경로도\n전환이 끝날 때까지 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 스테퍼",
+      "anchor": "lvui-독립-스테퍼",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

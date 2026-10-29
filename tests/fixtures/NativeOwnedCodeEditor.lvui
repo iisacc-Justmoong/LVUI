@@ -1,0 +1,8 @@
+import vm NativeOwnedCodeEditorModel
+Window {
+    VStack(alignment: .leading) {
+        CodeEditor(id: "editor", model: vm.document, editor: vm.document, sourceRevision: vm.revision,
+                   width: vm.width, height: 100, accessibilityName: "Independent code editor",
+                   onDocumentEdited: vm.changed, onSelectionChanged: vm.selected)
+    }
+}

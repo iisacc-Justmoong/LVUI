@@ -1,0 +1,14 @@
+import vm NativeFixture
+let tile: View = VStack(id: "tile") {
+    import vm NativeFixture
+    let value: Int = vm.count * 2
+    @Static let initial: Int = vm.count
+    Label(id: "label", text: value)
+}
+let app = Window {
+    VStack {
+        tile()
+        tile()
+    }
+}
+app()

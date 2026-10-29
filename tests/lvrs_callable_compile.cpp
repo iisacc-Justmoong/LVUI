@@ -1,0 +1,13 @@
+#include "LVRSCallableInputs.generated.h"
+#include "LVRSCallableEvents.generated.h"
+#include "LVRSSharedCallable.generated.h"
+#include "LVRSIndependentCallable.generated.h"
+#include "LVRSRootSharedCallable.generated.h"
+#include "LVRSReferenceCallable.generated.h"
+using View=lvui_generated::LVRSCallableInputs;
+auto lvui_callable_factory=&View::build;
+auto lvui_event_factory=&lvui_generated::LVRSCallableEvents::build;
+auto lvui_shared_callable_factory=&lvui_generated::LVRSSharedCallable::build;
+auto lvui_independent_callable_factory=&lvui_generated::LVRSIndependentCallable::build;
+auto lvui_root_shared_callable_factory=&lvui_generated::LVRSRootSharedCallable::build;
+auto lvui_reference_callable_factory=&lvui_generated::LVRSReferenceCallable::build;

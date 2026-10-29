@@ -1,0 +1,1036 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:bc4c45496c1543b1ff3ed8b6da543a89b092bebb9d2425811dbccadab2df6c1e",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/LVUIIndependence.md",
+    "sha256": "154653ee665fbb39df6720efed0bb134f3c81ded9b0840f51596d3737baa3930",
+    "bytes": 16301,
+    "line_count": 182,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 구현 현황",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 구현 현황\n",
+      "level": 1,
+      "title": "LVUI 독립 구현 현황"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "LVUI는 레거시 LVRS의 시각 언어와 디자인 값만 계승하는 별도 모듈이다. LVRS 코드,\n공개 타입, 링크와 런타임을 LVUI 컴포넌트의 구현으로 사용하지 않는 것이 목표이다.\n기존 Figma 변수 스냅샷의 이름과 식별자는 디자인 자료 및 호환 식별자로 남을 수\n있으나, 원본 저장소나 Figma 접속은 빌드·실행의 필수 조건이 아니다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "## 현재 구현\n",
+      "level": 2,
+      "title": "현재 구현"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "list",
+      "start_line": 10,
+      "end_line": 151,
+      "raw": "- 기본 코드 생성의 창 appearance는 LVUI의 토큰에서 값으로 구성하고\n  `ii::gui::lvrs_appearance()`를 호출하지 않는다.\n- 기본 `ProgressBar`의 상태와 배치 계산은 표준 C++만 사용하는\n  `src/LVUI/ProgressBar.h`에 있다. 생성된 앱 코드가 호스트의 범용 그리기 경계에\n  LVUI의 track·fill·outline을 전달한다. 소스와 헤더를 LVRS에서 복사하지 않았다.\n- 생성 코드는 반응형 범위·크기·모양·색상 및 명시적 표시 구간을 지원한다.\n  기본 색상은 LVUI가 보유한 디자인 스냅샷에서 컴파일 타임에 결정한다. 자세한 지원과 한계는\n  [진행 상태 뷰](NativeProgress.md)에 있다.\n- 진행 표시기는 LVUI 소유 상태 제공자 인터페이스와 반응형 스냅샷을 받아\n  LVRS 모델 없이 값과 키를 갱신할 수 있다. 소스 포인터 내부의 비관측 변경은\n  앱이 관찰 가능한 스냅샷으로 전달해야 한다.\n- 진행 표시기의 모션 상태·보간·재목표는 LVUI의 표준 C++ 모션 모델이 소유하며,\n  앱 호스트의 프레임 시각을 주입한다. 축소 모션 설정도 앱이 전달한다.\n- 진행 표시기는 범용 호스트 의미 정보로 역할과 정규화된 목표값을 전달한다.\n  macOS·iOS 소스의 플랫폼 매핑과 실제 접근성 기기 실행은 별개이다.\n- 기본 `AbstractButton`, `PushButton`, `LabelButton`과\n  `IconButton`은 LVUI의 상태별 색상·치수·텍스트와 아이콘 배치 모델을 사용한다.\n  호스트는 범용 동작 표면, 입력·포커스와 글꼴 측정만 제공한다. 제한된 기본\n  [이름 아이콘과 교체 가능한 공급자](NativeIcons.md)를 사용하며 전체 자산과\n  레거시 전체 버튼 API는 아직 이식 대상이다.\n- `MenuDivider`와 `ContextMenuDivider`는 LVUI의 표준 C++ 모델이 자연 크기와\n  선의 배치를 소유한다. 기본 메뉴의 직접 자식으로도 등록할 수 있다. 상세 계약은\n  [독립 구분선](NativeDivider.md)을 따른다.\n- 기본 `Menu`, `ContextMenu`와 항목은 선택·입력·닫기 정책 및 자체 그리기를\n  [LVUI 메뉴 모델과 어댑터](NativeMenu.md)가 소유한다. 직접 중첩한 하위 메뉴는\n  키보드 탐색과 조상 닫기를 지원한다. 동적 자식, 포인터 전환과 실제 운영체제\n  보조 기술 검증은 아직 남아 있다.\n- 기본 `Popover`는 [LVUI의 값 모델과 앱 호스트 어댑터](NativePopover.md)를 사용한다.\n  플랫폼별 실제 표시와 재질·모션 세부 기능의 검증은 아직 남아 있다.\n- 모달의 [독립 모델과 호스트 어댑터](NativeModal.md)는 스타일 파라미터, 배치,\n  액션 및 열림 단위 본문 수명을 소유한다. 선언형 생성은 제공하며 일부 반응형 수명\n  정책과 플랫폼 검증은 남아 있다.\n- [경고 버튼](NativeAlertButton.md)은 LVUI 모델과 호스트 어댑터를 사용하며\n  선언형 입력·이벤트를 지원한다. 플랫폼 검증은 아직 남아 있다.\n- 합성 [경고창](NativeAlert.md)은 독립 값·배치 모델, 고정 액션 수명, 호스트 어댑터와\n  선언형 생성과 자체 기본 아이콘을 사용한다. 재질 세부 기능과 플랫폼 검증은 남아 있다.\n- [시트](NativeSheet.md)는 데스크톱·모바일 배치와 드래그 정책, 고정 본문·스크롤의\n  호스트 연결과 선언형 생성을 소유한다. 일부 모션 및 플랫폼 검증은 남아 있다.\n- [표 데이터 모델](OwnedTableModel.md)은 교체 가능한 읽기·원자적 셀 편집 경계와\n  문서를 변경하지 않는 선택·탐색과 양축 표시 범위 계산을 제공한다. [독립 표 호스트](NativeOwnedTable.md)는\n  가상 그리기·선택, 셀 입력, 범위 클립보드, 행 정렬, 구조 편집·크기 조절과 기본\n  선언형 생성을 연결한다. 병합과 삽입·삭제 UI 등은 남아 있다.\n- [목록 도구 모음](NativeOwnedListToolbar.md)은 세 슬롯의 아이콘·배치·입력과\n  선언형 생성을 LVUI에서 소유한다. 다른 도구 모음 유형은 별도 작업이다.\n- [도구 버튼](NativeOwnedToolbarButton.md)은 자체 ID, 아이콘·텍스트 배치, 색상과\n  반응형 선언을 독립 구현한다.\n- [목록 푸터](NativeOwnedListFooter.md)는 세 슬롯, 자체 아이콘과 교체 가능한\n  슬롯 명령·반응형 선언을 독립 구현한다.\n- [계층 도구 모음](NativeOwnedHierarchyToolbar.md)은 키 기반 항목·선택·탐색과\n  유지되는 버튼을 독립 구현한다. 직접 자식 등록과 개별 이름 이벤트는 남아 있다.\n- 기본 선언형 [계층 패널](NativeHierarchyPanel.md)은 도구 모음·목록·푸터의\n  독립 배치와 위젯 조합을 소유한다. 직접 자식과 플랫폼 검증은 남아 있다.\n- [코드 문서 모델](CodeDocument.md)은 공유 불변 조각, UTF-16 위치, 교체 가능한\n  읽기·편집 인터페이스, 별도의 커서·선택 제어, 제한된 가상 줄 조회와 확정 전 입력\n  조합 투영과 입력 세션을 소유한다. 기본 선언형 [코드 편집 화면](NativeCodeEditor.md)이\n  이를 직접 사용하며 풍부한 편집 기능과 플랫폼 검증은 남아 있다.\n- [계층 데이터 모델](OwnedHierarchyModel.md)은 교체 가능한 읽기·이동 인터페이스와\n  문서를 변경하지 않는 펼침·선택 투영을 소유한다. [독립 계층 행](NativeOwnedHierarchyItem.md)은\n  자체 그리기·입력과 기본 선언형 생성을 제공한다. [독립 계층 목록](NativeOwnedHierarchyList.md)은\n  고정 높이 가상 행과 자체 선언형 생성, 교체 가능한 편집기에 대한 드래그 이동을 제공한다.\n- [일반 목록 모델](OwnedListModel.md)은 계층 타입과 분리된 읽기·편집 경계와\n  독립 선택 상태를 소유한다. [가상 목록 화면](NativeOwnedListView.md)은 이를 직접\n  사용하고 [기본 목록 패널](NativeOwnedListPanel.md)은 도구 모음·푸터와 조합한다.\n  행 대리자와 편집 UI는 남아 있다.\n- 기본 `ColorPickerButton`은 [LVUI 버튼과 교체 가능한 색상 공급자](NativeColorPickerButton.md)를\n  사용한다. 실제 플랫폼 표시 검증은 별도로 남아 있다.\n- 여러 색상 컨트롤이 공유할 수 있는 [색상 선택 모델](ColorSelection.md)은 편집,\n  확정, 취소와 외부 변경에 따른 이전 편집 만료를 LVUI에서 직접 관리한다.\n- [합성 색상 피커](NativeColorPicker.md)는 교체 가능한 편집·색상 계산 인터페이스와\n  표면·채널·HEX·알파·액션을 조합하고 기본 선언형 경로를 제공한다. 실제 플랫폼\n  표시와 보조 기술 검증은 남아 있다.\n- 여섯 [색상 표면](NativeColorSurface.md)의 교체 가능한 계산 경계, C++ 호스트\n  어댑터와 선언형 생성을 작성했다. [독립 색상 채널](NativeColorChannel.md)은\n  공통 공급자에 막대와 숫자 필드를 연결한다.\n- 기본 `ToggleSwitch`의 선택 상태·드래그·배치·모션은 LVUI가 소유한다. 호스트의\n  범용 동작 표면이 접근성 역할과 입력을 전달한다. 그림자 등 나머지 시각 기능은\n  아직 남아 있다. [스위치 계약](NativeToggleSwitch.md)을 따른다.\n- 기본 `CheckBox`의 선택 상태·배치·색상과 자체 체크 표시를 LVUI가 소유한다.\n  범용 표면은 입력과 접근성을 연결한다. 정확한 곡선·그림자·모션은 아직 남아 있다.\n  [체크박스 계약](NativeCheckBox.md)을 따른다.\n- 기본 `RadioButton`은 LVUI가 그룹 선택, 원형 표시와 점 모션을 소유하며 범용\n  표면으로 입력과 접근성을 연결한다. 중첩 후보가 실제 게시되기 전에는 기존 그룹을\n  변경하지 않는다. 화살표 키 탐색과 색상 보간은 아직 남아 있다.\n  [라디오 계약](NativeRadioButton.md)을 따른다.\n- 기본 `MaterialSurface`, `PanelMaterial`, `WindowMaterial`은 LVUI가 밀도별\n  스타일, 방사 그레디언트, 반응형 옵션과 색상 모션을 계산하고 범용 호스트의\n  배경 효과와 그리기로 제출한다. SVG 경로 윤곽은 검증 후 범용 래스터화 경계에\n  전달한다. 실제 GPU 동등성은 아직 남아 있다.\n  자세한 범위는 [재질 계약](NativeMaterials.md)을 따른다.\n- 기본 `Link`의 시각 상태·콘텐츠 슬롯과 탐색 요청은 LVUI가 소유하고 교체 가능한\n  탐색 인터페이스를 사용한다. 모든 플랫폼 접근성은 아직 남아 있다. 자세한 범위는\n  [링크 계약](NativeLinks.md)을 따른다.\n- 경로 정규화, 패턴 매칭과 제한된 해석 캐시는 LVUI의 값 모델이 소유한다.\n  탐색 이력은 변경 후보와 확정을 분리한 LVUI 모델이 소유한다. 독립 `PageRouter`는\n  앱이 공급한 페이지 팩터리와 범용 호스트를 연결한다.\n  [경로 계약](NativeRoutes.md)에 입력 한계와 캐시 수명을 설명한다.\n  [이력 계약](NativeNavigationHistory.md)은 원자성과 수명 경계를 설명한다.\n  [페이지 라우터](NativePageRouter.md)는 화면 게시와 컨텍스트의 수명을 설명한다.\n- 스타일 예제는 LVUI와 앱이 공급하는 iiGUI 호스트를 각각 소비하며 LVRS를 찾거나\n  링크하지 않는다. 예제의 진행 표시기와 별도로 색상 버튼도 독립 구현을 제공한다.\n- 기본 `AppCard`는 LVUI의 독립 C++ 모델과 범용 호스트 어댑터로 생성한다.\n  반응형 스타일과 제목 갱신은 본문을 유지한다. 모든 플랫폼의 시각 검증은 아직\n  남아 있다. [카드 계약](NativeAppCard.md)을 따른다.\n- 기본 `AppHeader`는 LVUI의 독립 C++ 모델과 범용 호스트 어댑터로 생성한다.\n  메뉴·포커스와 반응형 입력은 액션 슬롯의 수명을 유지한다. 플랫폼별 시각·접근성\n  검증은 아직 남아 있다. [헤더 계약](NativeAppHeader.md)을 따른다.\n- 기본 `EventListener`는 LVUI의 크기 모델과 범용 입력·배치 어댑터로 생성한다.\n  실제 플랫폼 입력 검증은 남아 있다. [이벤트 계약](NativeEventListener.md)을 따른다.\n- 기본 `Avatar`는 LVUI가 크기와 시각 설정을 소유하며 자체 이미지 모델로 원형\n  중앙 자르기를 구성한다. 픽셀 공급은 앱이 담당한다. [미디어 계약](NativeMedia.md)을 따른다.\n- 툴팁의 배치·시간 상태, 교체 가능한 표시·예약 포트와 범용 팝업 어댑터는\n  [독립 모델](NativeTooltipModel.md)로 작성했다. 기본 선언형 생성은 대상 관찰과\n  콘텐츠 구성을 이 모델에 연결한다. 미구현 입력과 플랫폼 검증은 남아 있다.\n- 기본 `Slider`의 범위·상호작용·그리기는 [LVUI 모델](NativeSlider.md)과\n  어댑터가 소유한다. 범용 호스트는 입력·그리기와 접근성 전달을 담당한다.\n- 기본 `InputField`의 텍스트·선택·조합은 [독립 상태 모델](TextInput.md),\n  그리기와 상호작용은 [필드 어댑터](NativeInputField.md)가 소유한다.\n  일부 플랫폼 텍스트 서비스와 실제 입력기 검증은 아직 남아 있다.\n- 기본 `Stepper`의 방향 정책, 시각 상태, 입력과 접근성 연결은\n  [LVUI 모델과 어댑터](NativeStepper.md)가 소유한다. 숫자 값은 앱 모델이 관리한다.\n- 기본 `ComboBox`의 배치·시각 상태와 입력은 [LVUI 클릭 필드](NativeComboBox.md)가\n  소유한다. 메뉴와 선택값은 앱이 관리한다.\n- 기본 세그먼트 묶음의 배경과 자식 스타일은 [LVUI 모델과 포트](NativeSegmentedControl.md)가\n  소유한다. 스타일 연결은 중첩·조건부·반복 자식과 새 활성화에도 전달한다.\n- 기본 `HelpButton`은 [LVUI의 도움말 기본값](NativeHelpButton.md)과 독립 버튼으로\n  생성한다.\n- 기본 드롭다운 버튼 계열은 [LVUI 모델과 어댑터](NativeDropdownButton.md)를\n  사용한다. 이름 기반 아이콘 자산 전체는 아직 전환하지 않았다.\n- 기본 `Tab`과 직접 자식 탭 묶음은 [LVUI 모델과 어댑터](NativeTabs.md)를 사용한다.\n  조건·반복 자식과 실제 운영체제 보조 기술을 통한 접근성 검증은 아직 전환 중이다.\n- 기본 `Image`의 상태 검증, 비율 맞춤·중앙 자르기, 원형·배경·테두리와 그리기\n  지시는 표준 C++ LVUI 모델과 앱에서 조합하는 범용 호스트 어댑터가 소유한다.\n  파일·URL·SVG의 로딩과 불변 픽셀 공급은 앱의 별도 공급자 책임이다. 자세한\n  계약은 [네이티브 이미지](NativeImage.md)를 따른다.\n- 이전 `Document`의 캔버스 레이아웃과 호스트 제출은 LVUI 측\n  [앱 조합 어댑터](NativeDocument.md)가 소유한다. iiGUI 공개 API와 패키지는\n  LVUI 타입을 직접 참조하거나 찾지 않는다.\n- 언어 예약어는 LVUI가 소유한 `catalog/lvui-keywords.json`에서 생성한다.\n  레거시 소스의 변경이 어휘 계약을 자동으로 갱신하지 않는다.\n- 설치 패키지의 카탈로그에는 LVUI가 소유한 예약어와 스타일 값만 포함한다.\n  레거시 컴포넌트 조사 목록과 제품별 QML 관측 자료는 개발 저장소의 기록이며\n  소비자 패키지의 실행·빌드 입력이 아니다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "기본 코드 생성의 창 appearance는 LVUI의 토큰에서 값으로 구성하고",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `ProgressBar`의 상태와 배치 계산은 표준 C++만 사용하는",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "생성 코드는 반응형 범위·크기·모양·색상 및 명시적 표시 구간을 지원한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "진행 표시기는 LVUI 소유 상태 제공자 인터페이스와 반응형 스냅샷을 받아",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "진행 표시기의 모션 상태·보간·재목표는 LVUI의 표준 C++ 모션 모델이 소유하며,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "진행 표시기는 범용 호스트 의미 정보로 역할과 정규화된 목표값을 전달한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `AbstractButton`, `PushButton`, `LabelButton`과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`MenuDivider`와 `ContextMenuDivider`는 LVUI의 표준 C++ 모델이 자연 크기와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Menu`, `ContextMenu`와 항목은 선택·입력·닫기 정책 및 자체 그리기를",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Popover`는 [LVUI의 값 모델과 앱 호스트 어댑터](NativePopover.md)를 사용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "모달의 [독립 모델과 호스트 어댑터](NativeModal.md)는 스타일 파라미터, 배치,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[경고 버튼](NativeAlertButton.md)은 LVUI 모델과 호스트 어댑터를 사용하며",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "합성 [경고창](NativeAlert.md)은 독립 값·배치 모델, 고정 액션 수명, 호스트 어댑터와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[시트](NativeSheet.md)는 데스크톱·모바일 배치와 드래그 정책, 고정 본문·스크롤의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[표 데이터 모델](OwnedTableModel.md)은 교체 가능한 읽기·원자적 셀 편집 경계와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[목록 도구 모음](NativeOwnedListToolbar.md)은 세 슬롯의 아이콘·배치·입력과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[도구 버튼](NativeOwnedToolbarButton.md)은 자체 ID, 아이콘·텍스트 배치, 색상과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[목록 푸터](NativeOwnedListFooter.md)는 세 슬롯, 자체 아이콘과 교체 가능한",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[계층 도구 모음](NativeOwnedHierarchyToolbar.md)은 키 기반 항목·선택·탐색과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 선언형 [계층 패널](NativeHierarchyPanel.md)은 도구 모음·목록·푸터의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[코드 문서 모델](CodeDocument.md)은 공유 불변 조각, UTF-16 위치, 교체 가능한",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[계층 데이터 모델](OwnedHierarchyModel.md)은 교체 가능한 읽기·이동 인터페이스와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[일반 목록 모델](OwnedListModel.md)은 계층 타입과 분리된 읽기·편집 경계와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `ColorPickerButton`은 [LVUI 버튼과 교체 가능한 색상 공급자](NativeColorPickerButton.md)를",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "여러 색상 컨트롤이 공유할 수 있는 [색상 선택 모델](ColorSelection.md)은 편집,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[합성 색상 피커](NativeColorPicker.md)는 교체 가능한 편집·색상 계산 인터페이스와",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "여섯 [색상 표면](NativeColorSurface.md)의 교체 가능한 계산 경계, C++ 호스트",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `ToggleSwitch`의 선택 상태·드래그·배치·모션은 LVUI가 소유한다. 호스트의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `CheckBox`의 선택 상태·배치·색상과 자체 체크 표시를 LVUI가 소유한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `RadioButton`은 LVUI가 그룹 선택, 원형 표시와 점 모션을 소유하며 범용",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `MaterialSurface`, `PanelMaterial`, `WindowMaterial`은 LVUI가 밀도별",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Link`의 시각 상태·콘텐츠 슬롯과 탐색 요청은 LVUI가 소유하고 교체 가능한",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "경로 정규화, 패턴 매칭과 제한된 해석 캐시는 LVUI의 값 모델이 소유한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "스타일 예제는 LVUI와 앱이 공급하는 iiGUI 호스트를 각각 소비하며 LVRS를 찾거나",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `AppCard`는 LVUI의 독립 C++ 모델과 범용 호스트 어댑터로 생성한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `AppHeader`는 LVUI의 독립 C++ 모델과 범용 호스트 어댑터로 생성한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `EventListener`는 LVUI의 크기 모델과 범용 입력·배치 어댑터로 생성한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Avatar`는 LVUI가 크기와 시각 설정을 소유하며 자체 이미지 모델로 원형",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "툴팁의 배치·시간 상태, 교체 가능한 표시·예약 포트와 범용 팝업 어댑터는",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Slider`의 범위·상호작용·그리기는 [LVUI 모델](NativeSlider.md)과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `InputField`의 텍스트·선택·조합은 [독립 상태 모델](TextInput.md),",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Stepper`의 방향 정책, 시각 상태, 입력과 접근성 연결은",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `ComboBox`의 배치·시각 상태와 입력은 [LVUI 클릭 필드](NativeComboBox.md)가",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 세그먼트 묶음의 배경과 자식 스타일은 [LVUI 모델과 포트](NativeSegmentedControl.md)가",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `HelpButton`은 [LVUI의 도움말 기본값](NativeHelpButton.md)과 독립 버튼으로",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 드롭다운 버튼 계열은 [LVUI 모델과 어댑터](NativeDropdownButton.md)를",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Tab`과 직접 자식 탭 묶음은 [LVUI 모델과 어댑터](NativeTabs.md)를 사용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 `Image`의 상태 검증, 비율 맞춤·중앙 자르기, 원형·배경·테두리와 그리기",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "이전 `Document`의 캔버스 레이아웃과 호스트 제출은 LVUI 측",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "언어 예약어는 LVUI가 소유한 `catalog/lvui-keywords.json`에서 생성한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "설치 패키지의 카탈로그에는 LVUI가 소유한 예약어와 스타일 값만 포함한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 152,
+      "end_line": 152,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "## 아직 남은 전환\n",
+      "level": 2,
+      "title": "아직 남은 전환"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 155,
+      "end_line": 162,
+      "raw": "`FRAMEWORK LVRS`는 여전히 `LVRS/Widgets.h`, `lvrs::` 타입과 LVRS 팩터리를 생성한다.\n기본 빌드에서는 인접 LVRS 소스를 읽는 컴파일 및 계약 검사를 활성화하지 않는다.\n이전 검사는 전환 중 근거를 보존하기 위해 `LVUI_TEST_LEGACY_LVRS=ON`으로만 선택할 수\n있다. 레거시 소스 조사 도구는 선택적인 역사적 자료이다. 따라서 지금은 LVUI와\nLVRS의 완전한 분리가 **완료되지 않았다**. 레거시 생성 경로의 모델·이벤트·수명·\n컴포넌트별 디자인 파라미터를 기준으로 LVUI에서 각각 새로 작성한 뒤, 대응 경로와\n소스 트리 의존 검사를 제거해야 한다. 레거시 코드의 네임스페이스만 바꾸거나 전체\n구현을 복사하는 것은 이 요구를 충족하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 164,
+      "end_line": 167,
+      "raw": "개별 교체는 외부 SDK 공개 타입을 LVUI 코어의 필수 API에 추가하지 않고 앱에서\n주입하는 호스트 경계를 통해 연결한다. 각 교체마다 디자인 값, 오류·상태·수명과\n접근성을 명시하고, LVRS 소스와 설치본이 없는 구성 및 생성 코드 소비자를 검증한다.\n미구현 입력을 조용히 무시하거나 이전 회귀 결과를 새 구현의 실행 증거로 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 169,
+      "end_line": 169,
+      "raw": "Windows·Linux의 네이티브 접근성 구현과 실제 스크린 리더 확인은 아직 남아 있다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 170,
+      "end_line": 170,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 171,
+      "end_line": 172,
+      "raw": "현재 실제 플랫폼 그리기를 포함하여 전체 컨트롤의 독립 구현 및 제품 전환은\n확인되지 않았다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 173,
+      "end_line": 173,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "list",
+      "start_line": 174,
+      "end_line": 174,
+      "raw": "- [목록 항목](NativeOwnedListItem.md)의 기본형·설명형·탐색형·토글·체크·액션·스테퍼·선택기는 C++과 선언형 모두 LVUI 자체 구현이다. 나머지 복합 유형은 아직 남아 있다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[목록 항목](NativeOwnedListItem.md)의 기본형·설명형·탐색형·토글·체크·액션·스테퍼·선택기는 C++과 선언형 모두 LVUI 자체 구현이다. 나머지 복합 유형은 아직 남아 있다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "list",
+      "start_line": 176,
+      "end_line": 176,
+      "raw": "- [카드 기반](NativeOwnedCard.md)은 독립 C++ 모델, 호스트와 기본 선언형 경로를 제공한다. 사용자 컴포넌트와 세부 표현은 아직 남아 있다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[카드 기반](NativeOwnedCard.md)은 독립 C++ 모델, 호스트와 기본 선언형 경로를 제공한다. 사용자 컴포넌트와 세부 표현은 아직 남아 있다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 177,
+      "end_line": 177,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "list",
+      "start_line": 178,
+      "end_line": 178,
+      "raw": "- [표 머리글](NativeOwnedTableHeader.md)은 독립 표 모델과 같은 열 배치를 C++과 선언형 경로에서 사용한다. 개별 접근성 요소는 아직 남아 있다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[표 머리글](NativeOwnedTableHeader.md)은 독립 표 모델과 같은 열 배치를 C++과 선언형 경로에서 사용한다. 개별 접근성 요소는 아직 남아 있다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 179,
+      "end_line": 179,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "list",
+      "start_line": 180,
+      "end_line": 180,
+      "raw": "- [표 셀](NativeOwnedTableCellItem.md)은 교체 가능한 검증기와 독립 편집 초안을 C++과 선언형 경로로 제공하며 표 행에서 조합한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[표 셀](NativeOwnedTableCellItem.md)은 교체 가능한 검증기와 독립 편집 초안을 C++과 선언형 경로로 제공하며 표 행에서 조합한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 181,
+      "end_line": 181,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "list",
+      "start_line": 182,
+      "end_line": 182,
+      "raw": "- [표 행](NativeOwnedTableRow.md)은 독립 셀을 키 기준으로 조합하는 C++과 선언형 경로를 제공한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[표 행](NativeOwnedTableRow.md)은 독립 셀을 키 기준으로 조합하는 C++과 선언형 경로를 제공한다.",
+          "checked": null
+        }
+      ]
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 구현 현황",
+      "anchor": "lvui-독립-구현-현황",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "현재 구현",
+      "anchor": "현재-구현",
+      "start_line": 8
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "아직 남은 전환",
+      "anchor": "아직-남은-전환",
+      "start_line": 153
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "있으나, 원본 저장소나 Figma 접속은 빌드·실행의 필수 조건이 아니다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 11,
+        "text": "`ii::gui::lvrs_appearance()`를 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000007",
+        "line": 20,
+        "text": "앱이 관찰 가능한 스냅샷으로 전달해야 한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000007",
+        "line": 92,
+        "text": "변경하지 않는다. 화살표 키 탐색과 색상 보간은 아직 남아 있다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000007",
+        "line": 109,
+        "text": "링크하지 않는다. 예제의 진행 표시기와 별도로 색상 버튼도 독립 구현을 제공한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000007",
+        "line": 148,
+        "text": "레거시 소스의 변경이 어휘 계약을 자동으로 갱신하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 156,
+        "text": "기본 빌드에서는 인접 LVRS 소스를 읽는 컴파일 및 계약 검사를 활성화하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 161,
+        "text": "소스 트리 의존 검사를 제거해야 한다. 레거시 코드의 네임스페이스만 바꾸거나 전체",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 162,
+        "text": "구현을 복사하는 것은 이 요구를 충족하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 164,
+        "text": "개별 교체는 외부 SDK 공개 타입을 LVUI 코어의 필수 API에 추가하지 않고 앱에서",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 167,
+        "text": "미구현 입력을 조용히 무시하거나 이전 회귀 결과를 새 구현의 실행 증거로 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "진행 상태 뷰",
+        "target": "NativeProgress.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000007",
+        "label": "이름 아이콘과 교체 가능한 공급자",
+        "target": "NativeIcons.md",
+        "kind": "relative",
+        "line": 28
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 구분선",
+        "target": "NativeDivider.md",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 메뉴 모델과 어댑터",
+        "target": "NativeMenu.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI의 값 모델과 앱 호스트 어댑터",
+        "target": "NativePopover.md",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 모델과 호스트 어댑터",
+        "target": "NativeModal.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000007",
+        "label": "경고 버튼",
+        "target": "NativeAlertButton.md",
+        "kind": "relative",
+        "line": 42
+      },
+      {
+        "block_id": "b000007",
+        "label": "경고창",
+        "target": "NativeAlert.md",
+        "kind": "relative",
+        "line": 44
+      },
+      {
+        "block_id": "b000007",
+        "label": "시트",
+        "target": "NativeSheet.md",
+        "kind": "relative",
+        "line": 46
+      },
+      {
+        "block_id": "b000007",
+        "label": "표 데이터 모델",
+        "target": "OwnedTableModel.md",
+        "kind": "relative",
+        "line": 48
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 표 호스트",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 49
+      },
+      {
+        "block_id": "b000007",
+        "label": "목록 도구 모음",
+        "target": "NativeOwnedListToolbar.md",
+        "kind": "relative",
+        "line": 52
+      },
+      {
+        "block_id": "b000007",
+        "label": "도구 버튼",
+        "target": "NativeOwnedToolbarButton.md",
+        "kind": "relative",
+        "line": 54
+      },
+      {
+        "block_id": "b000007",
+        "label": "목록 푸터",
+        "target": "NativeOwnedListFooter.md",
+        "kind": "relative",
+        "line": 56
+      },
+      {
+        "block_id": "b000007",
+        "label": "계층 도구 모음",
+        "target": "NativeOwnedHierarchyToolbar.md",
+        "kind": "relative",
+        "line": 58
+      },
+      {
+        "block_id": "b000007",
+        "label": "계층 패널",
+        "target": "NativeHierarchyPanel.md",
+        "kind": "relative",
+        "line": 60
+      },
+      {
+        "block_id": "b000007",
+        "label": "코드 문서 모델",
+        "target": "CodeDocument.md",
+        "kind": "relative",
+        "line": 62
+      },
+      {
+        "block_id": "b000007",
+        "label": "코드 편집 화면",
+        "target": "NativeCodeEditor.md",
+        "kind": "relative",
+        "line": 64
+      },
+      {
+        "block_id": "b000007",
+        "label": "계층 데이터 모델",
+        "target": "OwnedHierarchyModel.md",
+        "kind": "relative",
+        "line": 66
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 계층 행",
+        "target": "NativeOwnedHierarchyItem.md",
+        "kind": "relative",
+        "line": 67
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 계층 목록",
+        "target": "NativeOwnedHierarchyList.md",
+        "kind": "relative",
+        "line": 68
+      },
+      {
+        "block_id": "b000007",
+        "label": "일반 목록 모델",
+        "target": "OwnedListModel.md",
+        "kind": "relative",
+        "line": 70
+      },
+      {
+        "block_id": "b000007",
+        "label": "가상 목록 화면",
+        "target": "NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 71
+      },
+      {
+        "block_id": "b000007",
+        "label": "기본 목록 패널",
+        "target": "NativeOwnedListPanel.md",
+        "kind": "relative",
+        "line": 72
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 버튼과 교체 가능한 색상 공급자",
+        "target": "NativeColorPickerButton.md",
+        "kind": "relative",
+        "line": 74
+      },
+      {
+        "block_id": "b000007",
+        "label": "색상 선택 모델",
+        "target": "ColorSelection.md",
+        "kind": "relative",
+        "line": 76
+      },
+      {
+        "block_id": "b000007",
+        "label": "합성 색상 피커",
+        "target": "NativeColorPicker.md",
+        "kind": "relative",
+        "line": 78
+      },
+      {
+        "block_id": "b000007",
+        "label": "색상 표면",
+        "target": "NativeColorSurface.md",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 색상 채널",
+        "target": "NativeColorChannel.md",
+        "kind": "relative",
+        "line": 82
+      },
+      {
+        "block_id": "b000007",
+        "label": "스위치 계약",
+        "target": "NativeToggleSwitch.md",
+        "kind": "relative",
+        "line": 86
+      },
+      {
+        "block_id": "b000007",
+        "label": "체크박스 계약",
+        "target": "NativeCheckBox.md",
+        "kind": "relative",
+        "line": 89
+      },
+      {
+        "block_id": "b000007",
+        "label": "라디오 계약",
+        "target": "NativeRadioButton.md",
+        "kind": "relative",
+        "line": 93
+      },
+      {
+        "block_id": "b000007",
+        "label": "재질 계약",
+        "target": "NativeMaterials.md",
+        "kind": "relative",
+        "line": 98
+      },
+      {
+        "block_id": "b000007",
+        "label": "링크 계약",
+        "target": "NativeLinks.md",
+        "kind": "relative",
+        "line": 101
+      },
+      {
+        "block_id": "b000007",
+        "label": "경로 계약",
+        "target": "NativeRoutes.md",
+        "kind": "relative",
+        "line": 105
+      },
+      {
+        "block_id": "b000007",
+        "label": "이력 계약",
+        "target": "NativeNavigationHistory.md",
+        "kind": "relative",
+        "line": 106
+      },
+      {
+        "block_id": "b000007",
+        "label": "페이지 라우터",
+        "target": "NativePageRouter.md",
+        "kind": "relative",
+        "line": 107
+      },
+      {
+        "block_id": "b000007",
+        "label": "카드 계약",
+        "target": "NativeAppCard.md",
+        "kind": "relative",
+        "line": 112
+      },
+      {
+        "block_id": "b000007",
+        "label": "헤더 계약",
+        "target": "NativeAppHeader.md",
+        "kind": "relative",
+        "line": 115
+      },
+      {
+        "block_id": "b000007",
+        "label": "이벤트 계약",
+        "target": "NativeEventListener.md",
+        "kind": "relative",
+        "line": 117
+      },
+      {
+        "block_id": "b000007",
+        "label": "미디어 계약",
+        "target": "NativeMedia.md",
+        "kind": "relative",
+        "line": 119
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 모델",
+        "target": "NativeTooltipModel.md",
+        "kind": "relative",
+        "line": 121
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 모델",
+        "target": "NativeSlider.md",
+        "kind": "relative",
+        "line": 123
+      },
+      {
+        "block_id": "b000007",
+        "label": "독립 상태 모델",
+        "target": "TextInput.md",
+        "kind": "relative",
+        "line": 125
+      },
+      {
+        "block_id": "b000007",
+        "label": "필드 어댑터",
+        "target": "NativeInputField.md",
+        "kind": "relative",
+        "line": 126
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 모델과 어댑터",
+        "target": "NativeStepper.md",
+        "kind": "relative",
+        "line": 129
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 클릭 필드",
+        "target": "NativeComboBox.md",
+        "kind": "relative",
+        "line": 130
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 모델과 포트",
+        "target": "NativeSegmentedControl.md",
+        "kind": "relative",
+        "line": 132
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI의 도움말 기본값",
+        "target": "NativeHelpButton.md",
+        "kind": "relative",
+        "line": 134
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 모델과 어댑터",
+        "target": "NativeDropdownButton.md",
+        "kind": "relative",
+        "line": 136
+      },
+      {
+        "block_id": "b000007",
+        "label": "LVUI 모델과 어댑터",
+        "target": "NativeTabs.md",
+        "kind": "relative",
+        "line": 138
+      },
+      {
+        "block_id": "b000007",
+        "label": "네이티브 이미지",
+        "target": "NativeImage.md",
+        "kind": "relative",
+        "line": 143
+      },
+      {
+        "block_id": "b000007",
+        "label": "앱 조합 어댑터",
+        "target": "NativeDocument.md",
+        "kind": "relative",
+        "line": 145
+      },
+      {
+        "block_id": "b000019",
+        "label": "목록 항목",
+        "target": "NativeOwnedListItem.md",
+        "kind": "relative",
+        "line": 174
+      },
+      {
+        "block_id": "b000021",
+        "label": "카드 기반",
+        "target": "NativeOwnedCard.md",
+        "kind": "relative",
+        "line": 176
+      },
+      {
+        "block_id": "b000023",
+        "label": "표 머리글",
+        "target": "NativeOwnedTableHeader.md",
+        "kind": "relative",
+        "line": 178
+      },
+      {
+        "block_id": "b000025",
+        "label": "표 셀",
+        "target": "NativeOwnedTableCellItem.md",
+        "kind": "relative",
+        "line": 180
+      },
+      {
+        "block_id": "b000027",
+        "label": "표 행",
+        "target": "NativeOwnedTableRow.md",
+        "kind": "relative",
+        "line": 182
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

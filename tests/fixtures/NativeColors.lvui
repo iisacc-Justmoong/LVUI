@@ -1,0 +1,26 @@
+import vm NativeColorModel
+var localInk: Color = Color.primary
+let liveInk: Color = vm.ink
+@Static let initialInk: Color = liveInk
+let sampled: (Double) -> Color = vm.sample
+let describe: (Color) -> String = vm.describe
+let Paint(ink: Color, title: String): View = VStack(id: "paint", backgroundColor: ink, borderColor: .window, borderWidth: 1) {
+    import vm NativeColorPrivate
+    @Static let fixed: Color = ink
+    Label(id: "paintLabel", text: title, color: ink)
+    Label(id: "fixedLabel", text: title + " fixed", color: fixed)
+    Label(id: "privateLabel", text: "Private", color: vm.ink)
+}
+Window {
+    VStack {
+        Label(id: "live", text: "Live", color: liveInk)
+        Label(id: "alpha", text: liveInk.alpha)
+        Label(id: "initial", text: "Initial", color: initialInk)
+        Label(id: "local", text: "Local", color: localInk)
+        Label(id: "hex", text: "Hex", color: Color(vm.hex))
+        Label(id: "sample", text: "Sample", color: sampled(vm.amount))
+        Label(id: "description", text: describe(liveInk))
+        Paint(ink: liveInk, title: "Parent")
+        if(vm.ready) { Paint(ink: vm.ink, title: "Conditional") }
+    }
+}

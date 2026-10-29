@@ -1,0 +1,10 @@
+import vm NativeOwnedTooltipModel
+Window {
+    VStack {
+        Tooltip(id: "tip", targetId: "anchor", text: vm.text, delay: 0,
+                timeout: 0, hideDelay: 0, preferredPlacement: .Below,
+                maximumWidth: 300, contentPadding: 10,
+                onOpened: vm.opened, onClosed: vm.closed)
+        PushButton(id: "anchor", text: "Anchor")
+    }
+}

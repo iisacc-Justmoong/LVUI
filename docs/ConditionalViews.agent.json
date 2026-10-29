@@ -1,0 +1,180 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:550b94df09345da0be3685c95b713339fdc30245851706e4d883c2c3fd3e56ec",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ConditionalViews.md",
+    "sha256": "68057395812e8b4246bd0905c94400158704c12bc435e625b8f92cbc623450dc",
+    "bytes": 2300,
+    "line_count": 39,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "조건에 따라 활성화하는 View",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 조건에 따라 활성화하는 View\n",
+      "level": 1,
+      "title": "조건에 따라 활성화하는 View"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "조건부 뷰는 Bool 조건과 각 분기의 단일 루트 View로 구성한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 5,
+      "end_line": 16,
+      "raw": "```lvui\nimport document Backend\nWindow {\n    VStack {\n        if (document.ready) {\n            Label(text: document.title)\n        } else {\n            Label(text: \"Waiting\")\n        }\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import document Backend\nWindow {\n    VStack {\n        if (document.ready) {\n            Label(text: document.title)\n        } else {\n            Label(text: \"Waiting\")\n        }\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 20,
+      "raw": "분기에는 지원하는 LVRS 뷰 또는 선언한 고정 View 값을 사용한다.\n`else`는 생략할 수 있고 `else if`로 연결할 수 있다. 분기에 여러 뷰를 넣으려면 명시적인\n스택으로 묶는다. 루트 창 자체를 조건부로 생성하는 대신 창 안의 콘텐츠를 조건부로 둔다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 25,
+      "raw": "AOT는 네이티브 `content_host`와 두 C++ 구성 함수를 생성한다. 조건의 실제 의존 값이\n바뀔 때만 계산하고, Bool 결과가 그대로이면 기존 세대·지역 import를 유지한다. 분기가\n바뀌면 후보 세대를 구성·검증한 뒤 교체한다. 후보 구성이 실패하면 기존 콘텐츠를 보존한다.\n미선택 분기의 지역 백엔드를 미리 생성하지 않는다. 새로 선택한 지역은 새 활성화를 가진다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 29,
+      "raw": "새 사용을 막고 구독을 분리한 뒤 이전 세대를 퇴역한다. 없어진 분기를 그린다고 전체 파일\n백엔드를 재시작하거나 LVUI 소스를 해석하지 않는다. 가져온 C++ 객체의 자체 작업 수명은\n별도의 Core 계약을 따라야 한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 33,
+      "raw": "분기 호스트의 초기 높이를 더미 숫자로 고정하지 않는다. 선택한 자식의 자연 높이를 사용하며,\n빈 분기는 높이 0이다. 자식이 크기를 바꾸면 부모의 측정을 갱신한다. 독립 콘텐츠 활성화의\n기존 깊이·노드 한계와 잘못된 구성의 오류 계약도 유지한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 39,
+      "raw": "현재 검사는 구문·C++ 생성·생성한 실제 C++의 컴파일·지역 값 실행을 포함한다.\niiGUI의 `native_conditional` 검사는 실제 생성한 구성 함수를 위젯 세대에 연결하여 분기 전환,\n변경 없는 정체성, 자연 높이, 생성 실패 시 기존 콘텐츠 보존, 복구와 지역 객체 파괴를 실행한다.\n이 검사는 창·표면·렌더러를 만들지 않는다. 실제 창에서의 포커스·입력·그리기와 플랫폼별\n표시 검증은 최종 통합 단계까지 별도로 남겨 둔다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "조건에 따라 활성화하는 View",
+      "anchor": "조건에-따라-활성화하는-view",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000009",
+        "line": 25,
+        "text": "미선택 분기의 지역 백엔드를 미리 생성하지 않는다. 새로 선택한 지역은 새 활성화를 가진다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 28,
+        "text": "백엔드를 재시작하거나 LVUI 소스를 해석하지 않는다. 가져온 C++ 객체의 자체 작업 수명은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 31,
+        "text": "분기 호스트의 초기 높이를 더미 숫자로 고정하지 않는다. 선택한 자식의 자연 높이를 사용하며,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

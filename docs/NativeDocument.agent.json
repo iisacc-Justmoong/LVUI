@@ -1,0 +1,131 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:7929ab41cc761804bc13682cc6b54ad23563981b99a9e9c384d58c7b67e05212",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeDocument.md",
+    "sha256": "1f5186683576b090dd60e638456c9d86b236a45444e04000f5879d419f6967c8",
+    "bytes": 1821,
+    "line_count": 27,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "문서 레이아웃과 앱 호스트 경계",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 문서 레이아웃과 앱 호스트 경계\n",
+      "level": 1,
+      "title": "문서 레이아웃과 앱 호스트 경계"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "기존 HTML 형태의 `lvui::Document`는 LVUI 파서가 소유한다. 앱이 iiGUI 표시를\n원하면 `LVUI/NativeDocument.h`를 포함하고 LVUI와 iiGUI를 각각 연결한다.\n문서의 행·열·패딩·텍스트 배치, 초과 검사와 그림 프레임 생성은 LVUI 측에서\n수행한다. iiGUI는 문서 타입을 모르며 네이티브 글꼴의 폭 제한 측정과 범용\n캔버스 제출을 제공한다. 이 어댑터는 LVUI 코어에 호스트 라이브러리를 링크하지\n않고 앱이 조합할 때만 사용한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 10,
+      "end_line": 15,
+      "raw": "```cpp\n#include <LVUI/NativeDocument.h>\nauto document = lvui::parse(\"<view><p>Hello</p></view>\");\nauto layout = lvui::native::layout_document(*document, {640, 420});\n// 앱의 Host가 열린 뒤 host.set_view(*document)를 호출할 수 있다.\n```\n",
+      "language": "cpp",
+      "code": "#include <LVUI/NativeDocument.h>\nauto document = lvui::parse(\"<view><p>Hello</p></view>\");\nauto layout = lvui::native::layout_document(*document, {640, 420});\n// 앱의 Host가 열린 뒤 host.set_view(*document)를 호출할 수 있다.\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 23,
+      "raw": "`layout_document`는 생성된 `CanvasFrame`과 ID가 있는 요소의 논리 경계를 반환한다.\n`Host::set_view`는 특정 라이브러리를 지정하지 않는 확장점이며, 앱에 포함된\nLVUI 어댑터가 `render_view`를 제공한다. 레이아웃을 먼저 검증하므로 유효하지\n않은 후보를 제출할 때 기존 캔버스가 유지된다. 창 크기가 바뀌면 앱이 다시\n제출한다. 텍스트 높이는 지정된 폭의 네이티브 글꼴 측정으로 계산한다.\n이전 iiGUI의 `Host::set_view(lvui::Document, ...)` 이진 심볼에 링크된 앱은\n어댑터 헤더를 포함하고 LVUI를 명시적으로 연결하여 다시 빌드해야 한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 27,
+      "raw": "이 문서 경로는 기존 파싱형 API이다. 컴포넌트 언어의 기본 AOT 위젯 생성과는\n별개이며 전체 컴포넌트의 독립 구현이나 실제 창·GPU 실행을 뜻하지 않는다.\niiGUI만 사용하는 앱은 LVUI 패키지를 찾거나 링크할 필요가 없다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "문서 레이아웃과 앱 호스트 경계",
+      "anchor": "문서-레이아웃과-앱-호스트-경계",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 23,
+        "text": "어댑터 헤더를 포함하고 LVUI를 명시적으로 연결하여 다시 빌드해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "별개이며 전체 컴포넌트의 독립 구현이나 실제 창·GPU 실행을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

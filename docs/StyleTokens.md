@@ -1,12 +1,17 @@
-# LVRS 기본 스타일 토큰
+# LVUI 기본 스타일 토큰
 
 LVUI는 [LVRS 원본 Figma](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVRS)의 변수를 기본 스타일 카탈로그로 제공한다. 원본 변수 이름, Figma ID/key, 컬렉션, 모드, 타입, 설명, scope, 게시 숨김 여부, CSS 이름과 별칭을 보존한다. 빌드나 앱 실행 중 Figma 접속은 필요하지 않다.
+
+이 스냅샷은 LVUI가 소유하는 시각값이다. 기본 코드 생성 경로는 값으로 `WidgetAppearance`를
+구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS` 경로는
+여전히 레거시 구현을 참조하므로 전체 분리 완료를 의미하지 않는다. 현재 상태는
+[독립 구현 현황](LVUIIndependence.md)을 따른다.
 
 색상과 수치는 [Color·Metric 값 타입](StyleTypes.md)으로 선택한다. `Color.primary`, `Metric.space8` 또는 문맥상의 `.primary`, `.space8`을 사용할 수 있다. [전체 멤버 목록](StyleTokenMembers.md)은 원본 스냅샷에서 자동 생성한다. 아래 `token()`·`var()` 형식도 같은 값을 참조하는 호환 API이다.
 
 ## 원본과 범위
 
-2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 `catalog/lvrs-style-tokens.json`에 저장했다. `tools/update_style_tokens.py`가 이를 검증하여 `src/LVUI/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.
+2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 LVUI가 소유하는 `catalog/lvui-style-tokens.json`에 저장했다. 기존 시각 언어의 출처와 호환 식별자는 데이터에 보존한다. `tools/update_style_tokens.py`가 이를 검증하여 `src/LVUI/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.
 
 | 컬렉션 | 변수 수 | 기본 모드 |
 |---|---:|---|
@@ -83,7 +88,9 @@ ApplicationWindow {
 
 `token()`은 빌드 시점에 이름 하나를 받는다. CSS 이름, `컬렉션/변수명`, Figma ID/key로 조회한다. 단독 변수명은 유일할 때만 사용할 수 있다. 장기 사용에는 CSS 이름 또는 ID를 권장한다. Color도 불변 `let`에 보관할 수 있으며 현재 변경 가능한 Color `var`는 지원하지 않는다. 기존 Number/String/Bool의 반응형 상태 기능은 유지한다.
 
-생성 헤더에는 확정된 C++ 숫자·문자열·WidgetColor가 들어간다. LVUI 카탈로그 호출, LVUI 소스, Figma API와 소스 인터프리터는 생성 코드에 포함되지 않는다.
+생성 헤더에는 확정된 스타일 C++ 숫자·문자열·WidgetColor가 들어간다. 실행 중에는
+토큰 카탈로그 조회, Figma API와 소스 인터프리터가 필요하지 않다. 독립 컴포넌트는
+필요한 LVUI 자체 헤더를 생성 코드에서 포함할 수 있다.
 
 ## C++ API와 앱별 설정
 
@@ -97,7 +104,6 @@ auto edge = catalog.color("--lvrs-material-surface-dense-edge");
 auto font = catalog.string("Theme Typography/Font/fontBody");
 
 lvui::NativeCompileOptions options;
-options.framework = "LVRS";
 options.style_tokens.modes["Theme Colors"] = "Dark";
 options.style_tokens.overrides["--lvrs-theme-metrics-space-8"] = 10.0;
 options.style_tokens.overrides["--lvrs-theme-colors-action-primary"] =
@@ -112,7 +118,7 @@ auto result = lvui::compile_native(source, options);
 컬렉션과 모드는 이름 또는 ID로 선택한다. 알 수 없는 이름, 충돌 모드, 타입 불일치, 누락 별칭과 순환은 오류이다. 별칭 깊이는 최대 64개 토큰이다. Number는 유한값, RGBA는 채널별 0..1, String은 유효한 UTF-8·NUL 없음·4096바이트 이하를 요구한다. 글자 크기·길이 등 의미상의 범위는 사용하는 속성에서 추가 검사한다.
 
 ```sh
-build/lvui-compile --framework LVRS \
+build/lvui-compile \
   --style-mode 'Theme Colors=Dark' \
   --style-mode 'Theme Typography=Value' example/StyleTokens/App/TokenWindow.lvui
 ```
@@ -148,7 +154,7 @@ Congregation의 로컬 복사본이 아닌 위 LVRS 원본에서 Figma Plugin AP
 - 변수: id, key, name, variableCollectionId를 옮긴 collectionId, resolvedType을 옮긴 type, valuesByMode, scopes, hiddenFromPublishing, codeSyntax, description.
 - source: provider, fileKey, capturedOn. 최상위 schema는 1이다.
 
-도구의 응답 크기가 제한되면 ID순 변수 목록을 64개 정도로 나누어 읽고 합친다. 모든 컬렉션 count와 전체 합계가 일치해야 한다. `VARIABLE_ALIAS`와 대상 ID를 그대로 저장한다. 원본 변경을 확인한 뒤 스냅샷을 갱신하고 다음 명령을 실행한다.
+도구의 응답 크기가 제한되면 ID순 변수 목록을 64개 정도로 나누어 읽고 합친다. 모든 컬렉션 count와 전체 합계가 일치해야 한다. `VARIABLE_ALIAS`와 대상 ID를 그대로 저장한다. LVUI의 디자인을 변경하기로 결정한 경우에만 값을 갱신한다. 레거시 LVRS의 변경을 자동으로 추종하지 않는다. 갱신 뒤 다음 명령을 실행한다.
 
 ```sh
 python3 -B tools/update_style_tokens.py
@@ -161,7 +167,7 @@ ctest --test-dir build --output-on-failure
 
 `tests/style_tokens.cpp`는 전체 수량·타입·조회, 별칭, 다중 모드 카탈로그, 격리된 값 변경, CSS fallback, 색상 합성, 파서 기본값, AOT 적용과 오류를 검증한다. Python 테스트는 생성기 재현성·잘못된 스냅샷·UTF-8 리터럴을 검사한다. 기존 LVUI 테스트도 함께 실행한다.
 
-[`example/StyleTokens`](../example/StyleTokens/README.md)는 설치 패키지로 카탈로그 소비자와 두 종류의 AOT 뷰를 빌드한다. 선택적 macOS 네이티브 테스트는 Metal/Vulkan에서 생성된 화면을 띄우고 창 배경·합성 보더 픽셀·Pretendard 글자 크기를 검사한다. 스테이징과 소비자 빌드는 모두 저장소 `build/` 아래에 둔다.
+[`example/StyleTokens`](../example/StyleTokens/README.md)는 LVUI와 별도로 공급하는 iiGUI 호스트를 사용하여 카탈로그 소비자와 두 종류의 AOT 뷰를 빌드한다. LVRS는 찾거나 링크하지 않는다. 선택적 macOS 네이티브 테스트는 Metal/Vulkan에서 생성된 화면을 띄우고 창 배경·합성 보더 픽셀·Pretendard 글자 크기를 검사한다. 빌드는 저장소 `build/` 아래에 둔다.
 
 ### 2026-10-25 토큰 초기 구현 검증 기록
 

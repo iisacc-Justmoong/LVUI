@@ -1,0 +1,11 @@
+import svg lvrs.SvgManager
+Window { VStack {
+    Image(id: "preview", source: svg.image("qrc:/qt/qml/LVRS/resources/iconset/projectStructure.svg"), width: 64, height: 64, fit: .Contain)
+    Label(id: "vector", text: svg.vectorFirst())
+    Label(id: "minimum", text: svg.minimumScale())
+    Label(id: "maximum", text: svg.maximumScale())
+    Label(id: "capacity", text: svg.cacheSize())
+    Label(id: "revision", text: svg.revision())
+    Label(id: "error", text: svg.lastError())
+    PushButton(id: "clear", text: "Clear", onClick: svg.clearCache)
+} }

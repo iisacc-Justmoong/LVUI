@@ -1,0 +1,12 @@
+import vm NativeOwnedTooltipModel
+Window {
+    VStack {
+        Tooltip(id: "tip", targetId: "anchor", delay: 5, timeout: 0, hideDelay: 0,
+                surfaceColor: Color.primary, borderColor: Color.primary,
+                primaryColor: Color.primary, surfaceOpacity: 0.5, backdrop: .None,
+                accessibilityName: "Help tooltip") {
+            Label(id: "help-label", text: vm.text)
+        }
+        PushButton(id: "anchor", text: "Anchor")
+    }
+}

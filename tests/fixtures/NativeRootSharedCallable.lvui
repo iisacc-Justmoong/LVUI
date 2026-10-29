@@ -1,0 +1,10 @@
+import vm NativeSharedCallableBackend
+let Content(run: () -> Void): View = if (vm.child_visible) {
+    VStack {
+        PushButton(id: "first", onClick: run)
+        PushButton(id: "again", onClick: run)
+    }
+}
+let Shell(run: () -> Void): View = Window { Content(run: run) }
+let App(run: () -> Void): View = Shell(run: run)
+App(run: vm.make(vm.amount))

@@ -1,0 +1,121 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:14b0230ad963ed5a8f75fa0b21e696940e26edd8482a2aa6ff9e7dce6c3b753e",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeColorChannel.md",
+    "sha256": "1380c617dc90a90b5f135f12e45f1b4ff8ec48113d5399006ae4f6d6258ad9f1",
+    "bytes": 1682,
+    "line_count": 22,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 색상 채널",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 색상 채널\n",
+      "level": 1,
+      "title": "LVUI 독립 색상 채널"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`LVUI/NativeColorChannel.h`는 교체 가능한 `ColorChannelsSource`의 한 채널에 이름,\n색상 막대와 숫자 필드를 연결한다. HSB, RGB, CMYK, 알파 및 회색을 지원하며\n범위와 일곱 색상 정지는 [색상 표면 계약](NativeColorSurface.md)을 따른다.\n위젯은 LVUI가 조합하고 iiGUI는 범용 입력·텍스트·그리기를 제공한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 12,
+      "raw": "`NativeColorChannel::create()`에 공급자, 채널, 폭, 활성 상태와 선택적인 편집\n콜백을 전달한다. `root()`는 레이아웃에 사용하고 `surface()`와 `field()`는 각\n부분의 위젯을 돌려준다. 앱은 공급자 상태가 외부에서 바뀌면 `set_options()`로\n다시 측정한다. 프레임·현재 색상·리비전이 일관되지 않으면 후보를 거절한다.\n설정은 소유 스레드에서만 변경할 수 있고 폐기된 위젯은 갱신할 수 없다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 19,
+      "raw": "막대와 키보드·접근성 증감 입력은 공급자의 현재 리비전으로 값을 편집한다.\n숫자는 실제 변경했을 때만 Enter 또는 포커스 이탈 시 확정하며, 범위 밖의 유한한\n십진수는 범위에 맞춘다. 잘못된 입력은 현재 값으로 되돌리고, 입력 중 외부 색상이\n바뀌면 오래된 숫자는 새 색상을 덮지 않는다. 공급자나 채널을 바꾸거나 컨트롤을\n비활성화하면 보류 숫자는 폐기한다. `failure()`로 콜백 중 보고하지 못한 호스트\n오류를 확인할 수 있다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 22,
+      "raw": "이는 C++에서 조합 가능한 채널이다. 독립 합성 색상 피커와 선언형 채널 생성,\n실제 플랫폼 창·입력기·보조 기술 검증은 아직 별개로 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 색상 채널",
+      "anchor": "lvui-독립-색상-채널",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "색상 표면 계약",
+        "target": "NativeColorSurface.md",
+        "kind": "relative",
+        "line": 5
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

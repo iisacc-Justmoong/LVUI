@@ -1,0 +1,12 @@
+import vm NativeScalarInputModel
+let Pair(value: String): View = VStack {
+    Label(id: "first", text: value)
+    Label(id: "second", text: value)
+    @Static let pinned: String = value
+    Label(id: "pinned", text: pinned)
+}
+Window {
+    VStack {
+        if (vm.visible) { Pair(value: vm.compute(vm.count)) }
+    }
+}

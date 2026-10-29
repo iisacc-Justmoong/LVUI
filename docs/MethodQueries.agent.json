@@ -1,0 +1,829 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e16c2e20333aab59194601c34ba02bed416051014f8be6e119da661e7a5be555",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/MethodQueries.md",
+    "sha256": "a2583c2f3badb40d75e529babd6aa4d59ec60059cf29589ca14862a96ff34771",
+    "bytes": 11948,
+    "line_count": 155,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "객체 메서드의 네이티브 조회",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 객체 메서드의 네이티브 조회\n",
+      "level": 1,
+      "title": "객체 메서드의 네이티브 조회"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "일반 C++ 메서드를 표시식에서 호출할 수 있다. 가져온 백엔드, 중첩 객체, 값 별칭,\n타입 지정 구성 입력, 괄호·인덱스로 선택한 객체를 수신자로 사용한다. 메서드 이름과\n멤버 접근은 생성 C++에 직접 쓰며 런타임 문자열 검색·리플렉션·별도 VM은 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 19,
+      "raw": "```lvui\nimport class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet Details(item: Item): View = Label(text: item.format(vm.amount))\nWindow { VStack {\n    Label(text: vm.format(vm.amount))\n    Label(text: current.format(vm.amount))\n    Label(text: (vm.selected).format(vm.amount))\n    Label(text: vm.items[0].format(vm.amount))\n    Details(item: vm.selected)\n} }\n```\n",
+      "language": "lvui",
+      "code": "import class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet Details(item: Item): View = Label(text: item.format(vm.amount))\nWindow { VStack {\n    Label(text: vm.format(vm.amount))\n    Label(text: current.format(vm.amount))\n    Label(text: (vm.selected).format(vm.amount))\n    Label(text: vm.items[0].format(vm.amount))\n    Details(item: vm.selected)\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "## 읽기 수집과 반응성\n",
+      "level": 2,
+      "title": "읽기 수집과 반응성"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 26,
+      "raw": "범위가 소유하거나 명시적으로 차용한 C++ 백엔드도 다른 메서드의 인자로 전달할 수 있다.\n`vm.describe(peer)`는 `peer` 인스턴스의 좌측값을 넘기며 임시 복사본을 만들지 않는다.\n인자 백엔드의 명시적 publication 의존성도 계산에 포함한다. 실제 C++ 함수의 값/참조\n매개변수가 최종 복사·const·접근 계약을 결정한다. 타입 청사진을 인스턴스 값으로 넘기지는 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 32,
+      "raw": "`NativeMethods.h`의 `Methods::query`와 `evaluate`는 동기 C++ 호출 범위를 연다.\nCore의 `ObservableReadScope`가 메서드 내부 `Observable::get()`의 읽기를 기록하고\n기존 `ReadContext`·Bindings가 해당 원본을 구독한다. private 필드를 공개하지 않아도\n공개 getter 내부의 읽기는 추적한다. 조건에 따라 읽지 않은 원본은 다음 계산에서\n의존 목록에서 제거한다. 별도 폴링·새 작업 스레드·병렬 런타임을 만들지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 34,
+      "end_line": 37,
+      "raw": "명시적인 LVUI 값 읽기와 같은 Core 원본의 메서드 내부 읽기는 동일한 상태 식별자를\n사용한다. 사용자 정의 값 원본의 observe 계약은 기존대로 유지하며, 그 get 내부의\nCore 상태 소유권만 계산 중 보존한다. 다른 바인딩의 재진입 계산은 수집을 잠시 가려\n독립적인 뷰의 getter·setter 읽기가 바깥 메서드의 의존성으로 섞이지 않도록 한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 41,
+      "raw": "기존 타입 지정 함수 입력·선언의 호출도 실제 C++ 함수 내부 읽기를 수집한다. 호출\n인자와 함수 버전의 기존 추적을 유지한다. 수집 자체는 메서드·함수 실행과 다르므로\n지연 참조를 만든다는 이유만으로 명령을 실행하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 47,
+      "raw": "가져온 백엔드의 합성 revision 읽기는 기존 일반 public 값의 publication을 위해\n유지한다. 객체 내부의 임의 일반 대입이나 외부 라이브러리 상태를 자동으로 발견하는\n계약은 아니다. 그런 상태는 Observable·명시적 revision 입력·새 값 발행으로 제공해야 한다.\n조회 어댑터는 파일 revision을 발행하지 않는다. 조회 본문에서 파일 쓰기나 생성 명령을\n실행하지 않도록 C++ 모델이 책임지며 명령은 별도 이벤트·작업 경로에 둔다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "## 타입·수명·실패\n",
+      "level": 2,
+      "title": "타입·수명·실패"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 55,
+      "raw": "실제 C++ 선언이 접근성과 const, 오버로드, 인자·반환 타입을 검사한다. `const` 객체를\n통해 비const 메서드를 호출하거나 private 조상을 통과하는 접근은 생성 C++에서 거부한다.\n결과가 없는 `void` 호출을 Label의 표시값으로 사용하지 않는다.\n수신자의 lvalue·rvalue 범주도 유지하므로 `&`·`&&` 메서드 한정자를 C++ 규칙대로\n선택한다. 임시 반환값을 무조건 좌측값으로 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 61,
+      "raw": "공유 수신자와 읽기 당시 Core 상태·공유 payload를 계산·의존성 검사·결과 적용까지\n보존한다. 조회 중 선택 객체가 재진입으로 바뀌면 이전 수신자가 조기에 파괴되지 않으며\n불안정한 이전 결과를 적용하지 않고 새 원본으로 재계산한다. 초기 조회가 차용 문자열을\n반환하면 임시 읽기 범위를 닫기 전에 소유 문자열로 바꾼다. 일반 참조의 외부 수명과\n무효화는 원래 C++ API 계약을 따른다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 65,
+      "raw": "초기 조회 실패는 후보 구성 실패로 반환한다. 이후 실패는 마지막 정상 표시와 의존성을\n보존하여 다음 정상 publication으로 복구한다. 기존 편집 중인 입력·포커스·위젯을 조회\n갱신에서 재생성하지 않는다. raw 포인터와 표준 참조는 기존 외부 소유자를 차용한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "## 검증과 남은 경계\n",
+      "level": 2,
+      "title": "검증과 남은 경계"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 69,
+      "end_line": 72,
+      "raw": "구성·설치 패키지는 Core의 범위 관측 기능을 C++ 컴파일로 확인한다. 같은 버전 문자열의\n예전 Core 패키지가 발견되어도 기능이 없으면 구성 단계에서 거부하며, 타입 오류가 쌓인\n뒤에야 알게 되는 경로를 피한다. `tests/native_install.py`는 해당 기능이 없는 Core와\n정상 재배치 소비자를 각각 검사한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 74,
+      "end_line": 80,
+      "raw": "[Core 수집 검사](../../iiSDKCore/tests/observable_reads.cpp),\n[컴파일러 검사](../tests/method_queries.cpp),\n[네이티브 조회 검사](../tests/native_methods.cpp),\n[실제 위젯 검사](../../iiGUI/tests/native_method_queries.cpp),\n[C++ 타입 검사](../tests/native_method_validation.py)가 각 경계를 검사한다.\n같은 두 구성을 LVRS 팩터리로 컴파일하며 실제 LVRS 실행은 저장소 지침의 최종 일괄\n단계에 수행한다. 창 없는 검사와 플랫폼·GPU 실행의 증거는 구분한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 82,
+      "end_line": 84,
+      "raw": "즉시 조회와 [일반 객체의 지연 메서드 참조](ObjectMethodReferences.md)는 각각 조회와\n콜백의 실행 경계를 따른다. 임의 callable 필드의 전체 버전·소유권 프로토콜은 남아 있다. 가변 View,\n깊은 Static과 전체 LVRS·플랫폼 계약도 전체 완료 조건으로 유지한다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 90,
+      "raw": "숨김 공유모듈에서 범위 상태가 분리되던 문제를 위해 Core의 `Observation` 실행부를\n명시적으로 연결한다. LVUI::Native는 이 작은 구현을 사용하며 큰 작업자 Runtime은\n계속 선택 사항이다. 앱과 동적 모델 모듈은 같은 Core 관측 실행부를 연결해야 한다.\n해당 의존성은 CMake 공개 타깃과 설치 패키지에 보존한다. 헤더 전용 Contracts만으로\n관측 구현이 있다고 간주하지 않는다. 이전 실패와 당시 검증 수치는 아래 기록에 보존한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "## 2026-10-26 최초 단계 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 최초 단계 검증 기록"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 94,
+      "end_line": 95,
+      "raw": "공유 관측 실행부를 도입하기 전의 macOS arm64 작업 트리 검증이다. 아래의 통과 수는\n정적 연결과 창 없는 경로에 대한 것이며 당시 공유모듈 실패를 포함한 전체 완료 수치가 아니다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "table",
+      "start_line": 97,
+      "end_line": 110,
+      "raw": "| 검사 | 확인 결과 |\n|---|---|\n| Core Observable·범위 수집 | 기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과 |\n| Core 새 패키지 | 일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과 |\n| LVUI 일반 전체 | 229/229 통과 |\n| LVUI 관련 ASan·UBSan | 158/158 통과 |\n| iiGUI 일반 창 없는 회귀·패키지 | 170/170 통과 |\n| iiGUI ASan·UBSan | 170/170 통과 |\n| 신규 조회 검사 | 컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과 |\n| 생성 C++ 타입 계약 | 두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함 |\n| 설치·재배치 | LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부 |\n| 생성 헤더·LVRS | 일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시 |\n| 바이너리·제품 경계 | 조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지 |\n| 공유모듈 회귀 | **실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건 |\n",
+      "columns": [
+        "검사",
+        "확인 결과"
+      ],
+      "rows": [
+        [
+          "Core Observable·범위 수집",
+          "기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과"
+        ],
+        [
+          "Core 새 패키지",
+          "일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과"
+        ],
+        [
+          "LVUI 일반 전체",
+          "229/229 통과"
+        ],
+        [
+          "LVUI 관련 ASan·UBSan",
+          "158/158 통과"
+        ],
+        [
+          "iiGUI 일반 창 없는 회귀·패키지",
+          "170/170 통과"
+        ],
+        [
+          "iiGUI ASan·UBSan",
+          "170/170 통과"
+        ],
+        [
+          "신규 조회 검사",
+          "컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과"
+        ],
+        [
+          "생성 C++ 타입 계약",
+          "두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함"
+        ],
+        [
+          "설치·재배치",
+          "LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부"
+        ],
+        [
+          "생성 헤더·LVRS",
+          "일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시"
+        ],
+        [
+          "바이너리·제품 경계",
+          "조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지"
+        ],
+        [
+          "공유모듈 회귀",
+          "**실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건"
+        ]
+      ]
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 111,
+      "end_line": 111,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 112,
+      "end_line": 116,
+      "raw": "공유모듈 수용 조건은 수집 1건과 변경 통지 1건이며, 실패한 검사를 완화하거나 건너뛰지\n않았다. 해당 fixture도 컴파일·링크했고 Core의 필수 상속 정책 검사를 통과했다. 재현\n결과와 알려진 실패를 `build/lvui-completion/method-query-verification-20261026.json`에\n소스 해시·각 로그·설치 결과와 함께 기록한다. 이 단계의 통과만으로 모든 SDK 경유\n메서드·전체 언어·플랫폼을 완료로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "heading",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "## 공유 관측 실행부의 검증\n",
+      "level": 2,
+      "title": "공유 관측 실행부의 검증"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 119,
+      "end_line": 119,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 120,
+      "end_line": 122,
+      "raw": "후속 구현은 Core의 독립 `Observation` 실행부로 같은 수집 범위를 사용한다. 기존 공유모듈\n회귀의 수집 1건·변경 통지 1건이라는 수용 조건은 그대로 유지한다. 중첩 수집, 예외 복구,\n스레드 분리, 공통 깊이 한도, 원본 제거 후 구독 수명도 독립 공유 라이브러리에서 검사한다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 127,
+      "raw": "LVUI의 `NativeSharedMethod.lvui`를 iiGUI 위젯과 LVRS 팩터리로 각각 생성한다. iiGUI는\n창 없는 실제 위젯에서 표시 갱신·편집 보존·제거를 실행하고, LVRS는 이 단계에서 컴파일만\n수행한다. 같은 Core 설치본을 사용하는 일반·ASan·UBSan 구성과 설치 후 재배치 소비자의\n결과를 아래에 기록한다. 이 단계 검증도 전체 언어와 플랫폼 완료를 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 128,
+      "end_line": 128,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "table",
+      "start_line": 129,
+      "end_line": 139,
+      "raw": "| 검사 | 2026-10-26 후속 확인 결과 |\n|---|---|\n| Core 관측·공유모듈·의존 경계·설치 | 독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행 |\n| 기존 공유모듈 재현 | 반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건 |\n| LVUI 일반 회귀 | 성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인 |\n| LVUI 관련 ASan·UBSan | 158건과 별도 설치·재배치 검사 1건 통과 |\n| iiGUI 창 없는 회귀 | 일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함 |\n| 설치 도구와 소비자 | 두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부 |\n| 생성 C++·LVRS | 일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시 |\n| 바이너리 의존성 | 위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거 |\n| 제품 관측 경계 | Dreamscapes QML 81개 기준 해시 유지 |\n",
+      "columns": [
+        "검사",
+        "2026-10-26 후속 확인 결과"
+      ],
+      "rows": [
+        [
+          "Core 관측·공유모듈·의존 경계·설치",
+          "독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행"
+        ],
+        [
+          "기존 공유모듈 재현",
+          "반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건"
+        ],
+        [
+          "LVUI 일반 회귀",
+          "성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인"
+        ],
+        [
+          "LVUI 관련 ASan·UBSan",
+          "158건과 별도 설치·재배치 검사 1건 통과"
+        ],
+        [
+          "iiGUI 창 없는 회귀",
+          "일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함"
+        ],
+        [
+          "설치 도구와 소비자",
+          "두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부"
+        ],
+        [
+          "생성 C++·LVRS",
+          "일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시"
+        ],
+        [
+          "바이너리 의존성",
+          "위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거"
+        ],
+        [
+          "제품 관측 경계",
+          "Dreamscapes QML 81개 기준 해시 유지"
+        ]
+      ]
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 140,
+      "end_line": 140,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 141,
+      "end_line": 145,
+      "raw": "현재 검증 자료는 `build/lvui-completion/shared-observation-verification-20261026.json`에\n각 로그·소스 해시·생성 헤더·설치 결과와 함께 기록한다. 최초 제한 시간 초과와 위젯 ID\n조회·설치 도구 연결 실패의 로그도 보존한다. 이 결과는 macOS arm64의 창 없는 실행이며\n다른 플랫폼과 OS 창·GPU·LVRS 실제 실행을 대신하지 않는다. 동적 라이브러리의 언로드\n수명도 별도 계약으로 남아 있다.\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 146,
+      "end_line": 146,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 147,
+      "end_line": 149,
+      "raw": "설치 소비자 검사는 임시 위치에서 여러 CMake 구성과 정상·부적합 C++ 소비자를 새로\n빌드한다. 내부 소비자 실행이 통과해도 전체 60초 한도가 초과되던 관측을 보존하고,\n이 빌드 검사의 한도는 180초로 조정한다. UI 반응시간의 수용 조건을 바꾸는 조정은 아니다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 150,
+      "end_line": 150,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 151,
+      "end_line": 155,
+      "raw": "AOT 호스트 도구는 네이티브 바인딩을 실행하지 않고 텍스트를 생성한다. 하위 호환 공개\n타깃의 전이 연결 때문에 사용하지 않는 관측 DLL이 도구에 남으면 설치 후 재배치 시\n라이브러리를 찾지 못할 수 있다. 지원 링커의 미사용 동적 의존성 제거를 도구에 적용한다.\n설치 검사는 C++ 소비자뿐 아니라 재배치한 `lvui-check`와 `lvui-compile`도 직접 실행한다.\n실제 관측을 실행하는 생성 앱의 Observation 의존성은 유지한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "객체 메서드의 네이티브 조회",
+      "anchor": "객체-메서드의-네이티브-조회",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "읽기 수집과 반응성",
+      "anchor": "읽기-수집과-반응성",
+      "start_line": 21
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "타입·수명·실패",
+      "anchor": "타입수명실패",
+      "start_line": 49
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증과 남은 경계",
+      "anchor": "검증과-남은-경계",
+      "start_line": 67
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 최초 단계 검증 기록",
+      "anchor": "2026-10-26-최초-단계-검증-기록",
+      "start_line": 92
+    },
+    {
+      "block_id": "b000045",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "공유 관측 실행부의 검증",
+      "anchor": "공유-관측-실행부의-검증",
+      "start_line": 118
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "멤버 접근은 생성 C++에 직접 쓰며 런타임 문자열 검색·리플렉션·별도 VM은 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 41,
+        "text": "지연 참조를 만든다는 이유만으로 명령을 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 45,
+        "text": "계약은 아니다. 그런 상태는 Observable·명시적 revision 입력·새 값 발행으로 제공해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 46,
+        "text": "조회 어댑터는 파일 revision을 발행하지 않는다. 조회 본문에서 파일 쓰기나 생성 명령을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 53,
+        "text": "결과가 없는 `void` 호출을 Label의 표시값으로 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 65,
+        "text": "갱신에서 재생성하지 않는다. raw 포인터와 표준 참조는 기존 외부 소유자를 차용한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 88,
+        "text": "계속 선택 사항이다. 앱과 동적 모델 모듈은 같은 Core 관측 실행부를 연결해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 90,
+        "text": "관측 구현이 있다고 간주하지 않는다. 이전 실패와 당시 검증 수치는 아래 기록에 보존한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 113,
+        "text": "않았다. 해당 fixture도 컴파일·링크했고 Core의 필수 상속 정책 검사를 통과했다. 재현",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 116,
+        "text": "메서드·전체 언어·플랫폼을 완료로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000049",
+        "line": 127,
+        "text": "결과를 아래에 기록한다. 이 단계 검증도 전체 언어와 플랫폼 완료를 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000053",
+        "line": 144,
+        "text": "다른 플랫폼과 OS 창·GPU·LVRS 실제 실행을 대신하지 않는다. 동적 라이브러리의 언로드",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000031",
+        "label": "Core 수집 검사",
+        "target": "../../iiSDKCore/tests/observable_reads.cpp",
+        "kind": "relative",
+        "line": 74
+      },
+      {
+        "block_id": "b000031",
+        "label": "컴파일러 검사",
+        "target": "../tests/method_queries.cpp",
+        "kind": "relative",
+        "line": 75
+      },
+      {
+        "block_id": "b000031",
+        "label": "네이티브 조회 검사",
+        "target": "../tests/native_methods.cpp",
+        "kind": "relative",
+        "line": 76
+      },
+      {
+        "block_id": "b000031",
+        "label": "실제 위젯 검사",
+        "target": "../../iiGUI/tests/native_method_queries.cpp",
+        "kind": "relative",
+        "line": 77
+      },
+      {
+        "block_id": "b000031",
+        "label": "C++ 타입 검사",
+        "target": "../tests/native_method_validation.py",
+        "kind": "relative",
+        "line": 78
+      },
+      {
+        "block_id": "b000033",
+        "label": "일반 객체의 지연 메서드 참조",
+        "target": "ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 82
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000041",
+        "columns": [
+          "검사",
+          "확인 결과"
+        ],
+        "rows": [
+          [
+            "Core Observable·범위 수집",
+            "기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과"
+          ],
+          [
+            "Core 새 패키지",
+            "일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과"
+          ],
+          [
+            "LVUI 일반 전체",
+            "229/229 통과"
+          ],
+          [
+            "LVUI 관련 ASan·UBSan",
+            "158/158 통과"
+          ],
+          [
+            "iiGUI 일반 창 없는 회귀·패키지",
+            "170/170 통과"
+          ],
+          [
+            "iiGUI ASan·UBSan",
+            "170/170 통과"
+          ],
+          [
+            "신규 조회 검사",
+            "컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과"
+          ],
+          [
+            "생성 C++ 타입 계약",
+            "두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함"
+          ],
+          [
+            "설치·재배치",
+            "LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부"
+          ],
+          [
+            "생성 헤더·LVRS",
+            "일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시"
+          ],
+          [
+            "바이너리·제품 경계",
+            "조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지"
+          ],
+          [
+            "공유모듈 회귀",
+            "**실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000051",
+        "columns": [
+          "검사",
+          "2026-10-26 후속 확인 결과"
+        ],
+        "rows": [
+          [
+            "Core 관측·공유모듈·의존 경계·설치",
+            "독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행"
+          ],
+          [
+            "기존 공유모듈 재현",
+            "반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건"
+          ],
+          [
+            "LVUI 일반 회귀",
+            "성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인"
+          ],
+          [
+            "LVUI 관련 ASan·UBSan",
+            "158건과 별도 설치·재배치 검사 1건 통과"
+          ],
+          [
+            "iiGUI 창 없는 회귀",
+            "일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함"
+          ],
+          [
+            "설치 도구와 소비자",
+            "두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부"
+          ],
+          [
+            "생성 C++·LVRS",
+            "일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시"
+          ],
+          [
+            "바이너리 의존성",
+            "위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거"
+          ],
+          [
+            "제품 관측 경계",
+            "Dreamscapes QML 81개 기준 해시 유지"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

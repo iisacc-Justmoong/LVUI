@@ -1,0 +1,12 @@
+import class NativeLiveItem
+import vm NativeLiveCollectionBackend
+let Cell(backend: NativeLiveItem): View = HStack {
+    Label(id: "title", text: backend.title)
+    Label(id: "hits", text: backend.hits)
+    PushButton(id: "hit", onClick: backend.hit)
+}
+Window {
+    for (item in vm.items, key: item.id, id: "live") {
+        Cell(backend: item)
+    }
+}

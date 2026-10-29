@@ -1,0 +1,12 @@
+import class lvrs.TableValidation
+import vm NativeFunctionValidatorBackend
+let dynamic: (String, String) -> TableValidation = vm.makeValidator()
+@Static let selected: (String, String) -> TableValidation = dynamic
+let Cell(validate: (String, String) -> TableValidation): View = TableCellItem(inputable: true, valueValidator: validate)
+Window {
+    VStack {
+        Cell(validate: vm.validate)
+        Cell(validate: vm.makeValidator())
+        Cell(validate: selected)
+    }
+}

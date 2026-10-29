@@ -1,0 +1,13 @@
+import class NativeInput.Record
+import vm NativeObjectInputModel
+let Details(item: Record, again: Record = item): View = VStack {
+    let title: String = item.title
+    @Static let pinned: String = item.title
+    Label(id: "title", text: title)
+    Label(id: "count", text: item.count)
+    Label(id: "default", text: again.title)
+    Label(id: "pinned", text: pinned)
+    InputField(id: "edit", text: "Ready")
+}
+let Forward(item: Record): View = Details(item: item)
+Window { Forward(item: vm.makeRecord(vm.count)) }

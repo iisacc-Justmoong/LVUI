@@ -1,0 +1,20 @@
+let Tabs: [View] = [
+    Tab(iconName: "generaladd", text: "First"),
+    Tab(iconName: "generaladd", text: "Second")
+]
+let Items: [View] = [
+    MenuItem(label: "First"),
+    MenuDivider(),
+    MenuItem(label: "Second")
+]
+let Bar(content: [View]): View = TabBar { content() }
+let Empty(count: Int): [View] = []
+let Body(title: String): [View] = [Label(text: title)]
+Window {
+    VStack {
+        Bar(content: Tabs)
+        Menu { Items() }
+        Modal { Empty(count: 1) }
+        Modal { Body(title: "One content root") }
+    }
+}

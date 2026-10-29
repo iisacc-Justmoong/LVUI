@@ -1,0 +1,11 @@
+import vm NativeOwnedTableModel
+Window {
+    HStack(spacing: 8, alignment: .top) {
+        Table(id: "table", model: vm.controller, editor: vm.editor, orderEditor: vm.order, structureEditor: vm.structure, editable: vm.editable, clipboardEnabled: vm.clipboard, sortingEnabled: vm.sorting, columnResizeEnabled: true, rowResizeEnabled: true, modelRevision: vm.revision,
+              width: vm.width, height: 100, selectionEnabled: vm.selection,
+              onSelectionChanged: vm.selected, onCellInputEdited: vm.edited,
+              onCellInputSubmitted: vm.submitted, onCellInputRejected: vm.rejected, onRangeValuesChanged: vm.rangeChanged, onRowsSorted: vm.sorted,
+              onStructureChanged: vm.structured, onColumnResized: vm.columnResized, onRowResized: vm.rowResized)
+        Table(id: "empty", width: 120, height: 100)
+    }
+}

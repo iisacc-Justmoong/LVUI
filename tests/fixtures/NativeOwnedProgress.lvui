@@ -1,0 +1,7 @@
+import vm NativeFixture
+Window {
+    VStack {
+        ProgressBar(id: "dynamic", minimumValue: 0, maximumValue: 100, startValue: 20, currentValue: vm.count, motionEnabled: false)
+        ProgressBar(id: "constant", currentValue: 60)
+    }
+}

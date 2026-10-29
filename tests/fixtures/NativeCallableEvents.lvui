@@ -1,0 +1,12 @@
+import class lvrs.ButtonEvent
+import vm NativeCallableEventBackend
+let Typed(action: (ButtonEvent) -> Void): View = AlertButton(method: action)
+let Empty(action: () -> Void): View = AlertButton(method: action)
+Window {
+    VStack {
+        Typed(action: vm.accept)
+        Typed(action: vm.make())
+        Empty(action: vm.zero)
+        Empty(action: vm.makeZero())
+    }
+}

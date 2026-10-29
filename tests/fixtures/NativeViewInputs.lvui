@@ -1,0 +1,25 @@
+import vm NativeFixture
+@Static let frozen: Int = vm.count
+let heading: View = Label(text: "Default") { import vm NativeFixture }
+let action: View = PushButton(vm.increment, text: "Default")
+let captured: View = Label(id: "captured", text: vm.title)
+let content: View = VStack {
+    import vm NativeFixture
+    let doubled: Int = vm.count * 2
+    Label(text: doubled)
+}
+Window {
+    import vm NativeFixture
+    let onlyHere: View = Label(id: "local", text: vm.title)
+    VStack {
+        heading(id: "heading", text: vm.title + "::scope->")
+        action(id: "action", text: "Caller", onClick: vm.increment)
+        content() {
+            Label(id: "supplied", text: vm.title)
+            Label(id: "frozen", text: frozen)
+            captured()
+            onlyHere()
+            PushButton(id: "suppliedAction", onClick: vm.increment)
+        }
+    }
+}

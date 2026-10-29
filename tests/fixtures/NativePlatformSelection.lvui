@@ -1,0 +1,11 @@
+import vm NativePlatformBackend
+@Static let initial = vm.selected.runtimeProfile()
+Window { VStack {
+    Label(id: "target", text: vm.selected.runtimeProfile()["target"])
+    Label(id: "backend", text: vm.selected.graphicsBackend())
+    Label(id: "width", text: vm.selected.runtimeProfile()["adaptiveWideBreakpoint"])
+    Label(id: "initial", text: initial["target"])
+    InputField(id: "edit", text: "Working", width: 160)
+    PushButton(id: "phone", text: "Phone", onClick: vm.selectPhone)
+    PushButton(id: "mac", text: "Mac", onClick: vm.selectMac)
+} }

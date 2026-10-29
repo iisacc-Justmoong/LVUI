@@ -1,0 +1,10 @@
+import vm NativeOwnedHierarchyPanelModel
+Window {
+    VStack(alignment: .leading) {
+        Hierarchy(id: "hierarchy", controller: vm.controller, editor: vm.editor, editable: vm.editable,
+                  modelRevision: vm.revision, width: vm.width, height: 140,
+                  toolbarItems: vm.tools, activeToolbarButtonId: vm.active, footerVisible: vm.footer,
+                  onItemActivated: vm.activated, onExpansionChanged: vm.expanded,
+                  onItemMoved: vm.moved, onToolbarTriggered: vm.tool, onFooterClicked: vm.footerClicked)
+    }
+}

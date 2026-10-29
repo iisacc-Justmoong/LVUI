@@ -1,0 +1,7 @@
+import vm NativeOwnedProgressSourceModel
+Window {
+    VStack {
+        ProgressBar(id: "sourced", width: 200, motionEnabled: false, currentValue: vm.fallback,
+            stateModel: vm.state, startValueStateKey: "begin", currentValueStateKey: vm.key)
+    }
+}

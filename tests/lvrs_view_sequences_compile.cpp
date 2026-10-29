@@ -1,0 +1,10 @@
+#include "LVRSViewSequences.generated.h"
+#include "LVRSViewSequenceRows.generated.h"
+#include "LVRSViewSequenceRoot.generated.h"
+#include "LVRSViewSequenceOverride.generated.h"
+#include "LVRSViewSequenceControls.generated.h"
+auto lvrs_view_sequence_factory=&lvui_generated::LVRSViewSequences::build;
+auto lvrs_view_sequence_rows_factory=&lvui_generated::LVRSViewSequenceRows::build;
+auto lvrs_view_sequence_root_factory=&lvui_generated::LVRSViewSequenceRoot::build;
+auto lvrs_view_sequence_override_factory=&lvui_generated::LVRSViewSequenceOverride::build;
+auto lvrs_view_sequence_controls_factory=&lvui_generated::LVRSViewSequenceControls::build;

@@ -1,0 +1,136 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:fb52c03145e5160ef4a8980d60258e5a520e345d9843424b010cbf38d7dd7c16",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeInputField.md",
+    "sha256": "df106872c98578bf5db5fe6f0b3332966e5b0121495bf6b50088983c60cc7d0f",
+    "bytes": 3145,
+    "line_count": 36,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 입력 필드",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 입력 필드\n",
+      "level": 1,
+      "title": "LVUI 독립 입력 필드"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`InputFieldConfiguration`은 LVUI의 입력 필드 치수, 글꼴, 색상, 접근성 이름과\n읽기 전용·여러 줄·비밀번호 속성을 정의한다. 기본 치수는 206×30 논리 px,\n가로 안쪽 여백은 8, 글꼴 크기는 13이다. 설정과 텍스트의 유효성을 확인한 뒤에만\n후보 상태를 게시한다. 텍스트·선택·조합의 상세 계약은 [텍스트 입력 상태](TextInput.md)에\n설명한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "`NativeInputField`는 앱이 공급하는 범용 위젯 표면과 텍스트 서비스에 이 모델을\n연결한다. 필드가 직접 포인터 선택, 글자·단어 이동, 삭제, IME 조합, 제출, 선택\n표시, 커서와 텍스트 그리기를 담당한다. 단어와 자소 경계, 글자 배치는 교체 가능한\n호스트 기능을 사용하며 Qt, QML, LVRS 위젯은 사용하지 않는다. 복사 출력을 별도\n클립보드 포트로 주입할 수 있고 기본값은 호스트의 범용 클립보드이다. 비밀번호\n필드는 복사와 잘라내기를 거절하고 암호 대신 마스킹된 글자를 그린다. 암호 원문은\n소유자의 명시적 필드 snapshot과 편집 콜백에는 전달되므로 앱이 수명을 관리한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 26,
+      "raw": "조합 텍스트는 표시와 OS 조회에 포함되지만 `edited` 콜백은 확정된 변경에서만\n호출한다. 포커스를 잃으면 진행 중인 조합을 확정하고, 빈 조합 입력은 취소한다.\n네이티브 C++ 콜백의 `focus_changed(bool)`는 화면 갱신을 기다리지 않고 포커스 변경을\n전달한다. 포커스를 잃을 때 진행 중인 조합의 `edited`가 먼저 전달되므로 합성\n컨트롤은 이 콜백에서 숫자와 같은 보류 입력을 확정할 수 있다. 조합 확정 중 필드가\n폐기되면 폐기된 필드의 포커스 콜백은 전달하지 않는다.\n텍스트 범위는 UTF-16 단위이며 다른 설정만 반응형으로 갱신될 때 외부 텍스트 값이\n변하지 않았다면 사용자가 편집한 내용을 보존한다. 재진입한 새 갱신을 이전 갱신이\n덮어쓰지 않도록 버전을 확인한다. 소유 스레드 이외의 접근과 폐기된 위젯 갱신은\n거절한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 36,
+      "raw": "현재 단일 줄은 가로로, 명시적인 여러 줄은 필요에 따라 가로·세로로 스크롤한다.\n자동 줄바꿈, 실행 취소·재실행과 더블 클릭 단어 선택은 아직 구현하지 않았다.\niiGUI Android·웹의 편집용 글자 배치가 준비되지 않아 그 환경에서는 이 필드를\n생성할 수 없다. macOS·iOS·Windows·Linux의 실제 창, 입력기, 접근성 기기 및\n클립보드 실행 검증도 별개로 남아 있다. 기본 선언형 `InputField`는 이 어댑터를\n생성하고 텍스트, 치수, 활성·읽기 전용·비밀번호 상태, 색상과 콜백을 연결한다.\n반응형 옵션은 유효한 후보만 적용한다. 명시적 레거시 생성 경로는 아직 남아 있다.\n`fontFamily`를 생략하면 생성 시점의 창 글꼴을 사용한다. 이후 창 글꼴 변경에\n자동으로 연동되지는 않으며 필요한 경우 반응형 `fontFamily`를 공급한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 입력 필드",
+      "anchor": "lvui-독립-입력-필드",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 12,
+        "text": "호스트 기능을 사용하며 Qt, QML, LVRS 위젯은 사용하지 않는다. 복사 출력을 별도",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 22,
+        "text": "폐기되면 폐기된 필드의 포커스 콜백은 전달하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "텍스트 입력 상태",
+        "target": "TextInput.md",
+        "kind": "relative",
+        "line": 6
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

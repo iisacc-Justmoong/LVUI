@@ -1,0 +1,6 @@
+import class NativeInput.Record
+import vm NativeObjectInputModel
+let Application(item: Record): View = Window(title: item.title) {
+    Label(id: "root-title", text: item.title)
+}
+Application(item: vm.record)

@@ -1,0 +1,99 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:a56c7ef419f3987d25f826aeb267b490aa44a5896b6fd747829c67561be960d8",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeComboBox.md",
+    "sha256": "4ba46e674cd289a7d7a6972ad8b13d8afc57fc7959d5843aeb37f8caa02f572b",
+    "bytes": 1516,
+    "line_count": 19,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 콤보 상자",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 콤보 상자\n",
+      "level": 1,
+      "title": "LVUI 독립 콤보 상자"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "`ComboBoxConfiguration`과 `ComboBox`는 LVUI가 소유하는 클릭 필드의 설정,\n상태 색상, 글자와 방향 표시 배치를 정의한다. 기본 크기는 97×20 논리 px,\n왼쪽 여백은 8, 오른쪽 여백은 1, 방향 표시 크기는 18, 모서리 반경은 5이다.\n텍스트는 남은 공간에서 오른쪽을 생략한다. 방향 표시는 위·아래·양방향을 지원하며\nprimary와 borderless 톤, 활성 상태에 따른 색상을 제공한다. 메뉴, 목록 및 선택값은\n앱이 별도로 소유하고 클릭 콜백을 통해 조합한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 13,
+      "raw": "`NativeComboBox`는 범용 호스트 액션 표면, 글자 측정과 그리기 명령을 사용한다.\n클릭·눌림·놓음·취소 콜백을 연결하고 접근성에는 버튼으로 노출한다. 유효하지\n않은 설정, 다른 스레드의 변경과 폐기된 표면의 변경은 거절한다. 콜백 중 재진입한\n새 설정을 이전 설정이 덮어쓰지 않도록 변경 순서를 확인한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 19,
+      "raw": "기본 선언형 생성은 LVUI 소유 모델과 어댑터를 선택하며 텍스트, 방향, 톤, 크기,\n색상, 활성 상태 및 콜백을 연결한다. 반응형 입력의 후보가 유효하지 않으면 기존\n설정을 유지하고 바인딩 오류를 보고한다. 모델, 호스트 상호작용 및 생성 코드의\n헤드리스 검사를 통과했다. 실제 OS 입력과 접근성 장치 검증은 수행하지 않았으며\n명시적인 레거시 생성 경로는 아직 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 콤보 상자",
+      "anchor": "lvui-독립-콤보-상자",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

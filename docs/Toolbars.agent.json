@@ -1,0 +1,178 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e82c9b3059d2a4711f4822603e62512a6c18f355c939f0f019f7fd8eb72bfd3f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Toolbars.md",
+    "sha256": "3fb933ac306657bd19ff7b607f31579d391061bfc5b320d63f0ed33b80cf65a6",
+    "bytes": 2080,
+    "line_count": 27,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "목록·계층 도구 막대 AOT",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 목록·계층 도구 막대 AOT\n",
+      "level": 1,
+      "title": "목록·계층 도구 막대 AOT"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "기본 생성 경로는 LVUI가 소유한 [목록 도구 모음](NativeOwnedListToolbar.md),\n[목록 푸터](NativeOwnedListFooter.md), [도구 버튼](NativeOwnedToolbarButton.md),\n[계층 도구 모음](NativeOwnedHierarchyToolbar.md)을 사용한다. 각 문서는 현재 지원하는\n입력과 남은 기능을 설명한다. 아래는 아직 제거하지 않은 `FRAMEWORK LVRS` 호환\n경로의 역사적 계약이며 LVUI의 독립 구현을 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 12,
+      "raw": "FRAMEWORK LVRS에서 ListToolbar·ListFooter·HierarchyToolbar·ToolbarButton을 실제\nC++ create 호출로 생성한다. 일반·Observable C++ 멤버와 지연 메서드 참조를 사용한다.\nHierarchyToolbar의 직접 ToolbarButton 자식은 같은 WidgetBuilder의 기본 manual 슬롯에\n구성하고 자동 등록한 뒤 정규화한다. 모델이 비어 있어도 수동 자식의 백엔드는 재생성하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 19,
+      "raw": "ListFooter의 button1/2/3은 ListFooterSlot, HierarchyToolbar의 buttonItems는\nvector<HierarchyToolbarEntry>, activeButtonId는 ToolbarId인 C++ 멤버이다. 반응형 구성은 Observable<HierarchyToolbarItems>와\nObservable<shared_ptr<const ListFooterSlot>>처럼 불변 구성의 공유 포인터를 교체한다.\nplain vector/slot과 함께 typed toolbar_items/footer_slot으로 변환한다. Core Observable\n갱신은 같은 BindingScope로 전달하며 종료하면 구독도 종료한다. buttonId 상수는 문자열\n또는 정수이고 임의 사전/JS 표현식이나 호출식을 실행하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 24,
+      "raw": "ListToolbar onIconClicked는 (size_t,string), ListFooter onButtonClicked는\n(size_t,const ListFooterSlot&), 계층 onActiveChanged는 const ToolbarSelection&,\nonButtonTriggered는 const ToolbarTrigger&, onButtonEventTriggered는\n(const ToolbarEvent&,const ToolbarTrigger&)를 받는 메서드 참조이다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 27,
+      "raw": "지원하지 않는 입력·자식·잘못된 상수는 진단한다. 실제 앱·생성 검사·self-test의 실행은\n전체 작업 최종 일괄 단계까지 보류한다. 빌드와 실행 결과를 구분한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "목록·계층 도구 막대 AOT",
+      "anchor": "목록계층-도구-막대-aot",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 7,
+        "text": "경로의 역사적 계약이며 LVUI의 독립 구현을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 12,
+        "text": "구성하고 자동 등록한 뒤 정규화한다. 모델이 비어 있어도 수동 자식의 백엔드는 재생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 19,
+        "text": "또는 정수이고 임의 사전/JS 표현식이나 호출식을 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "목록 도구 모음",
+        "target": "NativeOwnedListToolbar.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "목록 푸터",
+        "target": "NativeOwnedListFooter.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000003",
+        "label": "도구 버튼",
+        "target": "NativeOwnedToolbarButton.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000003",
+        "label": "계층 도구 모음",
+        "target": "NativeOwnedHierarchyToolbar.md",
+        "kind": "relative",
+        "line": 5
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

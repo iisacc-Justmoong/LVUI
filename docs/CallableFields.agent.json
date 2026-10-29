@@ -1,0 +1,543 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:3c23ccdd61f1f7d6e82bd61fe04e6bb7ee11ef2fd859779fd8297abcf7c7e09f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/CallableFields.md",
+    "sha256": "0d583338dfa5c98228de5b6e2919433deafd5d724366eacbe5c878682a9ceed0",
+    "bytes": 7083,
+    "line_count": 104,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 callable 필드",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 callable 필드\n",
+      "level": 1,
+      "title": "네이티브 callable 필드"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "공개 C++ 멤버가 메서드인지 호출 가능한 필드인지는 생성된 C++의 타입 검사로 결정한다.\n`.lvui`에서 헤더를 반사하거나 필드 이름을 등록하지 않는다. 메서드 참조와 필드 선택은\n그 연산을 실행하지 않으며, 이벤트나 명시적인 함수 호출에서만 실행한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 16,
+      "raw": "```cpp\nstruct Model {\n    ii::core::Observable<std::function<std::string(std::int64_t)>> format{\n        [](std::int64_t value) { return std::to_string(value); }\n    };\n    ii::core::Observable<std::shared_ptr<MoveOnlyHandler>> run{\n        std::make_shared<MoveOnlyHandler>()\n    };\n};\n```\n",
+      "language": "cpp",
+      "code": "struct Model {\n    ii::core::Observable<std::function<std::string(std::int64_t)>> format{\n        [](std::int64_t value) { return std::to_string(value); }\n    };\n    ii::core::Observable<std::shared_ptr<MoveOnlyHandler>> run{\n        std::make_shared<MoveOnlyHandler>()\n    };\n};\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 18,
+      "end_line": 27,
+      "raw": "```lvui\nimport vm Model\nlet render: (Int) -> String = vm.format\n@Static let original: (Int) -> String = render\nlet Actions(run: () -> Void = vm.run): View = PushButton(run)\nWindow { VStack {\n    Label(text: render(4))\n    Actions()\n} }\n```\n",
+      "language": "lvui",
+      "code": "import vm Model\nlet render: (Int) -> String = vm.format\n@Static let original: (Int) -> String = render\nlet Actions(run: () -> Void = vm.run): View = PushButton(run)\nWindow { VStack {\n    Label(text: render(4))\n    Actions()\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "## 선택과 소유권\n",
+      "level": 2,
+      "title": "선택과 소유권"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "list",
+      "start_line": 31,
+      "end_line": 44,
+      "raw": "- `Observable<T>` 등 관측 가능한 값 원본은 네이티브 `ReadContext`에 등록한다. 게시된\n  복사 가능한 함수 값은 선택 시 소유 버전으로 복사하고, 같은 함수 입력의 소비자들은\n  그 버전을 공유한다. 원본의 가변 저장 셀 주소를 실행 중인 함수로 사용하지 않는다.\n- `shared_ptr<Handler>`는 핸들의 선택 버전을 보유하고 실제 함수 객체를 복사하지 않는다.\n  이동·복사 불가능한 함수 객체도 공유 버전으로 사용할 수 있다. 빈 핸들은 선택 실패이다.\n- 일반 C++ 함수 객체 필드는 좌측값·우측값과 constness를 유지하여 차용한다. 원본 객체의\n  정체성과 가변 상태를 보존하며 임의의 복사 정책을 만들어 넣지 않는다. 명시적인\n  `reference_wrapper`, 원시 객체 포인터와 좌측값 `unique_ptr` 역시 C++ 차용 수명을 따른다.\n- 함수 포인터 필드는 선택한 포인터 값을 보존한다. 이후 슬롯에 다른 주소를 써도 기존\n  선택의 대상이 바뀌지 않는다. null 함수 포인터는 선택 실패이다.\n- 임시 부모·공유 부모·중간 객체의 소유권은 기존 [객체 메서드 참조](ObjectMethodReferences.md)의\n  경계를 따른다. 임시 부모의 함수 필드도 부모보다 오래 살아 있는 참조가 되지 않는다.\n  공개 C++ 접근자 선택기가 함수 객체를 값으로 계산하면 그 결과를 먼저 소유한다.\n  이동·복사 불가능한 결과도 직접 생성하며 원래 우측값 호출 한정자를 유지한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`Observable<T>` 등 관측 가능한 값 원본은 네이티브 `ReadContext`에 등록한다. 게시된",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`shared_ptr<Handler>`는 핸들의 선택 버전을 보유하고 실제 함수 객체를 복사하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "일반 C++ 함수 객체 필드는 좌측값·우측값과 constness를 유지하여 차용한다. 원본 객체의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "함수 포인터 필드는 선택한 포인터 값을 보존한다. 이후 슬롯에 다른 주소를 써도 기존",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "임시 부모·공유 부모·중간 객체의 소유권은 기존 [객체 메서드 참조](ObjectMethodReferences.md)의",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 52,
+      "raw": "일반 차용 필드의 외부 교체·파괴는 원래 C++ API의 책임이다. 실행 중 교체와 버전 고정이\n필요한 함수는 `Observable<copyable callable>` 또는 `Observable<shared_ptr<Handler>>`로\n게시한다. `@Static`은 선택된 버전·핸들 또는 차용 정체성을 고정하며 차용 대상 내부를 깊게\n복사하는 기능은 아니다. 관측 가능한 함수 필드에는 별도의 합성 백엔드 리비전 의존을\n추가하지 않는다. 일반 필드는 생성 스코프의 명시적 변경 발행 계약을 사용한다.\n`get()`·`revision()`만 제공하고 `observe()`가 없는 원본도 백엔드의 명시적 변경 발행을\n사용한다. 값을 읽을 수 있다는 사실을 변경 통지를 제공한다는 뜻으로 해석하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "## 함수 값과 실패\n",
+      "level": 2,
+      "title": "함수 값과 실패"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 58,
+      "raw": "타입 지정 `let`, `@Static let`, `var`, 구성 매개변수·기본값·전달과 이벤트에 같은 선택을\n적용한다. 선언한 인자·반환 타입, 접근 권한·const 접근은 실제 생성 C++로 검사한다.\n읽기 전용 호출은 파일 리비전을 발행하지 않는다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 63,
+      "raw": "빈 함수나 null 공유 핸들의 최초 선택은 활성화에 실패하며 부분 바인딩을 남기지 않는다.\n이후 게시가 실패하면 이전 유효 버전을 보존하고 바인딩 오류로 기록한다. 복구 게시에는\n같은 함수 입력·위젯으로 회복한다. 실행 중 교체·재진입·자기 제거는 접수한 버전을 반환까지\n보존한다. 뷰 종료와 다른 실행 영역의 새 호출은 기존 접수 경계에서 거부한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "## 검증 범위\n",
+      "level": 2,
+      "title": "검증 범위"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 71,
+      "raw": "`tests/native_callable_fields.cpp`는 버전 공유·고정, 빈 값 복구, 부분 활성화 정리, 이동 불가\n함수의 공유 핸들, 실행 중 교체와 재진입, 차용 정체성·const 접근, 함수 포인터 선택,\n자기 제거와 실행 영역, 임시 접근자 결과의 소유권과 비관측 원본의 발행 경계를 검사한다. 실제 생성 C++의 허용·거부 타입 계약은\n`tests/native_callable_field_validation.py`로 별도 확인한다. 일반 타입 추론·중첩 함수 타입과 전체 LVRS·플랫폼\n완료는 이 필드 연결만으로 입증하지 않는다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 75,
+      "end_line": 76,
+      "raw": "macOS arm64의 현재 소스에서 아래 결과를 확인했다. 검사 범위는 서로 겹치므로 합산하여\n독립 기능 수나 플랫폼 수로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "table",
+      "start_line": 78,
+      "end_line": 89,
+      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI Release 전체 CTest | 255/255 통과 |\n| 관련 언어·네이티브 ASan·UBSan | 185/185 통과 |\n| iiGUI 창 없는 기존 동작·생성 C++ | 일반·ASan·UBSan 각각 197/197 통과 |\n| 새 네이티브 callable 필드 동작 | 두 빌드에서 각각 10/10 통과 |\n| 새 생성 위젯의 callable 필드 동작 | 두 빌드에서 각각 11/11 통과 |\n| 실제 생성 C++ 타입 계약 | 두 빌드에서 각각 허용 11개·거부 5개 확인 |\n| Native·컴파일러·선택적 Runtime 설치·재배치 소비자 | 두 빌드에서 3종 및 설치 CLI 직접 실행 통과 |\n| LVRS 생성 팩토리 | 두 빌드에서 53개 컴파일, 실행은 최종 일괄 단계로 유지 |\n| iiGUI 생성 헤더 | 두 빌드의 52개가 바이트 단위로 일치 |\n| Dreamscapes QML 관측 기준선 | 81개 파일 변경 0개 |\n",
+      "columns": [
+        "범위",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI Release 전체 CTest",
+          "255/255 통과"
+        ],
+        [
+          "관련 언어·네이티브 ASan·UBSan",
+          "185/185 통과"
+        ],
+        [
+          "iiGUI 창 없는 기존 동작·생성 C++",
+          "일반·ASan·UBSan 각각 197/197 통과"
+        ],
+        [
+          "새 네이티브 callable 필드 동작",
+          "두 빌드에서 각각 10/10 통과"
+        ],
+        [
+          "새 생성 위젯의 callable 필드 동작",
+          "두 빌드에서 각각 11/11 통과"
+        ],
+        [
+          "실제 생성 C++ 타입 계약",
+          "두 빌드에서 각각 허용 11개·거부 5개 확인"
+        ],
+        [
+          "Native·컴파일러·선택적 Runtime 설치·재배치 소비자",
+          "두 빌드에서 3종 및 설치 CLI 직접 실행 통과"
+        ],
+        [
+          "LVRS 생성 팩토리",
+          "두 빌드에서 53개 컴파일, 실행은 최종 일괄 단계로 유지"
+        ],
+        [
+          "iiGUI 생성 헤더",
+          "두 빌드의 52개가 바이트 단위로 일치"
+        ],
+        [
+          "Dreamscapes QML 관측 기준선",
+          "81개 파일 변경 0개"
+        ]
+      ]
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 91,
+      "end_line": 95,
+      "raw": "수정 전 유효해야 하는 필드 연결 7개가 C++ 컴파일에서 거부되는 것을 확인했다. 임시\n접근자 결과의 조기 파괴는 파괴된 함수를 호출하지 않고 수명 카운터로 재현했다.\n`get()`·`revision()`만 있는 원본의 발행 누락도 네이티브와 실제 생성 위젯에서 각각\n재현한 뒤 자체 관측 원본과 구분하여 수정했다. 일반 메서드 연결의 생성 형태 변경에 맞춰\n기존 문자열 검사와 내부 함수 슬롯에 의존한 검사 대상을 갱신하고 전체 회귀를 다시 수행했다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 97,
+      "end_line": 99,
+      "raw": "iiGUI 메모리 검사는 생성 C++와 WidgetState를 계측한다. 이 구성에서 차용한 일반\nNative 아카이브의 구현은 LVUI의 별도 메모리 검사로 검증했다. 실제 LVRS 앱·OS 창·GPU·\n다른 플랫폼의 실행과 제품의 UI 지연 개선률은 이 결과에 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 104,
+      "raw": "원시 로그·소스 해시·실패 재현·설치 소비자·바이너리 의존성은\n`build/lvui-completion/callable-fields-verification-20261026.json`에 기록한다. 중간 통과\n기록은 `callable-fields-phase1-verification-20261026.json`으로 보존한다. 전체 언어·LVRS\n완료 조건은 [전체 완료 감사](Completion.md)를 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 callable 필드",
+      "anchor": "네이티브-callable-필드",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "선택과 소유권",
+      "anchor": "선택과-소유권",
+      "start_line": 29
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "함수 값과 실패",
+      "anchor": "함수-값과-실패",
+      "start_line": 54
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증 범위",
+      "anchor": "검증-범위",
+      "start_line": 65
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 73
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "`.lvui`에서 헤더를 반사하거나 필드 이름을 등록하지 않는다. 메서드 참조와 필드 선택은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 33,
+        "text": "그 버전을 공유한다. 원본의 가변 저장 셀 주소를 실행 중인 함수로 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 34,
+        "text": "- `shared_ptr<Handler>`는 핸들의 선택 버전을 보유하고 실제 함수 객체를 복사하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000013",
+        "line": 50,
+        "text": "추가하지 않는다. 일반 필드는 생성 스코프의 명시적 변경 발행 계약을 사용한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 52,
+        "text": "사용한다. 값을 읽을 수 있다는 사실을 변경 통지를 제공한다는 뜻으로 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 58,
+        "text": "읽기 전용 호출은 파일 리비전을 발행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 71,
+        "text": "완료는 이 필드 연결만으로 입증하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 76,
+        "text": "독립 기능 수나 플랫폼 수로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 99,
+        "text": "다른 플랫폼의 실행과 제품의 UI 지연 개선률은 이 결과에 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "객체 메서드 참조",
+        "target": "ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 41
+      },
+      {
+        "block_id": "b000035",
+        "label": "전체 완료 감사",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 104
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000029",
+        "columns": [
+          "범위",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI Release 전체 CTest",
+            "255/255 통과"
+          ],
+          [
+            "관련 언어·네이티브 ASan·UBSan",
+            "185/185 통과"
+          ],
+          [
+            "iiGUI 창 없는 기존 동작·생성 C++",
+            "일반·ASan·UBSan 각각 197/197 통과"
+          ],
+          [
+            "새 네이티브 callable 필드 동작",
+            "두 빌드에서 각각 10/10 통과"
+          ],
+          [
+            "새 생성 위젯의 callable 필드 동작",
+            "두 빌드에서 각각 11/11 통과"
+          ],
+          [
+            "실제 생성 C++ 타입 계약",
+            "두 빌드에서 각각 허용 11개·거부 5개 확인"
+          ],
+          [
+            "Native·컴파일러·선택적 Runtime 설치·재배치 소비자",
+            "두 빌드에서 3종 및 설치 CLI 직접 실행 통과"
+          ],
+          [
+            "LVRS 생성 팩토리",
+            "두 빌드에서 53개 컴파일, 실행은 최종 일괄 단계로 유지"
+          ],
+          [
+            "iiGUI 생성 헤더",
+            "두 빌드의 52개가 바이트 단위로 일치"
+          ],
+          [
+            "Dreamscapes QML 관측 기준선",
+            "81개 파일 변경 0개"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

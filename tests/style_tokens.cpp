@@ -369,7 +369,7 @@ void profile() {
     options.style_tokens = *p;
     auto code =
         compile("Window { VStack(width: Metric.inspectorWidth, backgroundColor: .window) {} }", options);
-    check(code.find("set_extent({352, 0}") != code.npos, "App Metric was not compiled");
+    check(code.find("set_stack_layout(") != code.npos && code.find(".extent = {352, 0}") != code.npos, "App Metric was not compiled");
     auto header = compile_style_header(*p, "Example.Theme");
     check(header && header->find("namespace Example::Theme") != header->npos &&
               header->find("inspectorWidth = 352") != header->npos &&

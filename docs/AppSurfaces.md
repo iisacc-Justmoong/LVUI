@@ -1,5 +1,9 @@
 # AppHeader와 AppCard 코드 생성
 
+기본 `AppCard`와 `AppHeader`는 각각 [카드](NativeAppCard.md)와
+[헤더](NativeAppHeader.md)의 LVUI 독립 구현으로 생성한다. 이 문서의 나머지는
+전환 중인 `FRAMEWORK LVRS` 경로의 기존 계약을 설명한다.
+
 FRAMEWORK LVRS에서 두 예약어를 실제 AppHeader/AppCard::create C++ 호출로 생성한다.
 자식은 같은 빌더에 구성하며 iiGUI의 기본 콘텐츠 슬롯으로 액션 행 또는 카드 본문에
 붙인다. 기존 백엔드를 재사용하고 새 OS 컨트롤·소스 해석기를 만들지 않는다.

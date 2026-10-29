@@ -1,0 +1,509 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:01949fa403fe8b524778d682db7b45ee16ed1fe786d9d437746377351bbec2f4",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/InferredValues.md",
+    "sha256": "38b0c5ff3e0b523b3c0012157b24d0b35d87a2ea0db9fd3edce2eae23c8ace7f",
+    "bytes": 5942,
+    "line_count": 95,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "C++ 타입으로 추론하는 네이티브 값",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# C++ 타입으로 추론하는 네이티브 값\n",
+      "level": 1,
+      "title": "C++ 타입으로 추론하는 네이티브 값"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "LVUI의 일반 선언은 C++ 초기화 식의 실제 타입으로 값과 함수를 구분한다.\n헤더 텍스트를 검색하거나 실행 중 타입 이름을 해석하지 않는다. 생성된 C++의\n템플릿 인스턴스화와 실제 호출 가능성이 최종 검사이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 19,
+      "raw": "```lvui\nimport vm Backend\nlet count = vm.count\nlet action = vm.run\nlet render = vm.makeFormatter()\nlet alias = render\n@Static let frozen = alias\nvar manual = alias\nWindow { VStack {\n    PushButton(onClick: action)\n    Label(text: render(2))\n} }\n```\n",
+      "language": "lvui",
+      "code": "import vm Backend\nlet count = vm.count\nlet action = vm.run\nlet render = vm.makeFormatter()\nlet alias = render\n@Static let frozen = alias\nvar manual = alias\nWindow { VStack {\n    PushButton(onClick: action)\n    Label(text: render(2))\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "## 저장소와 호출 규칙\n",
+      "level": 2,
+      "title": "저장소와 호출 규칙"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "list",
+      "start_line": 23,
+      "end_line": 34,
+      "raw": "- 일반 `let`은 기존 Bindings 그래프에서 C++ 의존 읽기를 추적한다. 함수의 선택 버전이\n  바뀌면 함수 별칭과 호출 결과를 사용하는 뷰도 갱신한다.\n- `@Static let`은 초기 값 또는 함수의 초기 선택 버전을 고정한다. 함수 실행 결과나\n  함수 내부 상태를 복제하지 않는다. 선택된 수신자의 수명·실행 영역 검사는 유지한다.\n- `var`는 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 원래 원천이 바뀌어도\n  자동으로 다른 버전을 선택하지 않는다. 함수의 네이티브 팩터리 교체도 지원한다.\n- 함수 참조를 선언하거나 버튼에 연결할 때 작업을 실행하지 않는다. `render(2)`는\n  해당 식을 평가할 때 실행한다. 함수 호출 중 관측 값의 읽기도 Core에 수집한다.\n- 일반 스칼라·구조체·목록은 기존 값 의미를 유지한다. 임시 객체와 인자를 차용하는\n  함수는 [FactoryCaptures.md](FactoryCaptures.md)의 소유권 규칙을 적용한다.\n- Void 작업은 원래 백엔드의 변경 발행 경계를 사용한다. 함수 별칭이 이를 중복 발행하지\n  않는다. 뷰에서 함수 버전을 선택하는 것 자체는 파일 저장이나 생성 요청이 아니다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "일반 `let`은 기존 Bindings 그래프에서 C++ 의존 읽기를 추적한다. 함수의 선택 버전이",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`@Static let`은 초기 값 또는 함수의 초기 선택 버전을 고정한다. 함수 실행 결과나",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`var`는 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 원래 원천이 바뀌어도",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "함수 참조를 선언하거나 버튼에 연결할 때 작업을 실행하지 않는다. `render(2)`는",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "일반 스칼라·구조체·목록은 기존 값 의미를 유지한다. 임시 객체와 인자를 차용하는",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Void 작업은 원래 백엔드의 변경 발행 경계를 사용한다. 함수 별칭이 이를 중복 발행하지",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 39,
+      "raw": "`NativeInferredValues.h`는 값 저장소와 함수 저장소를 컴파일 시 선택한다. C++ 함수는\n기존 `CallbackValue`·`FunctionVariable`·스코프 입장 검사에 연결한다. 독립적인 실행기나\n두 번째 반응형 그래프를 추가하지 않는다. 함수 버전 관측과 선택은 소유 스레드에서만\n가능하며, 소유자 종료 후 새 호출과 관측은 기존 종료 규칙을 따른다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 43,
+      "raw": "위 예제의 활성화된 View 객체에서는 다음처럼 가변 함수만 C++에서 교체할 수 있다.\n이때 입력 프롬프트나 다른 위젯을 다시 만들지 않는다. 반환되는 `Result<void>`로\n종료된 뷰·실행 영역 오류와 팩터리 실패를 확인한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "fenced_code",
+      "start_line": 45,
+      "end_line": 49,
+      "raw": "```cpp\nauto replaced = view.set_manual_native([] {\n    return [](std::int64_t value) { return std::to_string(value); };\n});\n```\n",
+      "language": "cpp",
+      "code": "auto replaced = view.set_manual_native([] {\n    return [](std::int64_t value) { return std::to_string(value); };\n});\n",
+      "closed": true
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "## 추론 범위와 명시적 타입\n",
+      "level": 2,
+      "title": "추론 범위와 명시적 타입"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 55,
+      "raw": "비모호한 C++ 멤버 함수, 함수 포인터, `std::function`, 단일 호출 연산자가 있는 함수\n객체와 그 공유·고유 핸들, 관측 가능한 함수 필드가 추론 대상이다. 함수 결과와 인자는\n기존 LVUI 정규화에 따라 문자열은 `std::string`, 정수는 `Int`로 연결한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 60,
+      "raw": "오버로드 집합이나 범용 호출 연산자는 하나의 서명이 결정되지 않을 수 있다. 이 경우\n`let render: (Int) -> String = vm.render`처럼 명시적 서명을 사용한다. 임의의 C++ 함수\n타입을 모두 자동 추론한다고 주장하지 않는다. 잘못된 인자 수, Void의 표시 값 사용,\n일반 값의 함수 호출은 생성 C++의 검사에서 거부한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "## 회귀 검사\n",
+      "level": 2,
+      "title": "회귀 검사"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 68,
+      "raw": "`native_inferred_values.cpp`는 값·메서드·이동 전용 반환 함수와 별칭의 저장소 규칙을\n검사한다. `native_inferred_value_validation.py`는 실제 생성한 C++의 허용·거부 계약을\n검사한다. iiGUI의 `native_inferred_values.cpp`는 생성된 위젯의 클릭·표시·별칭·교체,\n입력 보존·실패 복구와 종료 수명을 창 없이 검사한다. OS 창·GPU·LVRS 원본 전체 동작의\n검증과 이 검사 결과를 구분한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 72,
+      "end_line": 75,
+      "raw": "일반 LVUI 전체 276개 검사를 수행했다. 최초 실행은 275개 통과, 이전 arity 오류 문구를\n요구하던 음성 검사 1개 실패였다. 실제 잘못된 호출은 C++ 제약에서 거부되고 있었다.\n새 제약 진단을 검사하도록 갱신한 뒤 관련 7개를 재검사하여 모두 통과했다. 전체 실행과\n재검사 로그를 별도로 보존하며 한 번의 전체 실행이 모두 성공했다고 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "table",
+      "start_line": 77,
+      "end_line": 84,
+      "raw": "| 범위 | 결과 |\n|---|---|\n| 관련 ASan·UBSan 검사 | 206개 통과 |\n| 메모리 검사 SDK의 재배치 설치 소비자 | 1개 통과, 내부 네이티브·컴파일러·런타임 소비자와 CLI 검사 포함 |\n| iiGUI 창 없는 일반·메모리 검사 | 각 220개 통과 |\n| 추론 타입 계약 | 각 구성에서 유효한 14개 컴파일, 잘못된 5개 거부 |\n| LVRS 생성 뷰 팩터리 | 각 구성에서 57개 컴파일, 실제 실행은 수행하지 않음 |\n| Dreamscapes QML | 81개 파일 변경 없음 |\n",
+      "columns": [
+        "범위",
+        "결과"
+      ],
+      "rows": [
+        [
+          "관련 ASan·UBSan 검사",
+          "206개 통과"
+        ],
+        [
+          "메모리 검사 SDK의 재배치 설치 소비자",
+          "1개 통과, 내부 네이티브·컴파일러·런타임 소비자와 CLI 검사 포함"
+        ],
+        [
+          "iiGUI 창 없는 일반·메모리 검사",
+          "각 220개 통과"
+        ],
+        [
+          "추론 타입 계약",
+          "각 구성에서 유효한 14개 컴파일, 잘못된 5개 거부"
+        ],
+        [
+          "LVRS 생성 뷰 팩터리",
+          "각 구성에서 57개 컴파일, 실제 실행은 수행하지 않음"
+        ],
+        [
+          "Dreamscapes QML",
+          "81개 파일 변경 없음"
+        ]
+      ]
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 89,
+      "raw": "새 기능의 직접 검사는 네이티브 값 6개와 실제 생성 위젯 11개이다. 결과 파일은 소스\n저장소의 `build/lvui-completion/inferred-values-verification-20261026.json`에 기록한다.\n실제 창·GPU·다른 플랫폼·전체 LVRS 동등성이나 Dreamscapes의 체감 속도 개선을\n이 결과만으로 주장하지 않는다. LVUI 전체 완성 작업은 계속 진행 중이다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 91,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 95,
+      "raw": "Core Value 객체·문자열 키 맵의 점 표기 속성도 자동 타입 판정에 포함한다. 이 데이터 조회는\n메서드 포인터를 요구하지 않는다. 일반 파생 값은 원천 변경을 따르고, @Static과 가변\n저장 값은 각 저장 규칙을 유지한다. C++ 객체의 실제 메서드·callable 필드·멤버 참조 판정은\n기존 수명 경계를 공유하며, 존재하지 않는 데이터 키는 원천 삽입 없이 오류로 보고한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "C++ 타입으로 추론하는 네이티브 값",
+      "anchor": "c-타입으로-추론하는-네이티브-값",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "저장소와 호출 규칙",
+      "anchor": "저장소와-호출-규칙",
+      "start_line": 21
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "추론 범위와 명시적 타입",
+      "anchor": "추론-범위와-명시적-타입",
+      "start_line": 51
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "회귀 검사",
+      "anchor": "회귀-검사",
+      "start_line": 62
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 70
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "헤더 텍스트를 검색하거나 실행 중 타입 이름을 해석하지 않는다. 생성된 C++의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "함수 내부 상태를 복제하지 않는다. 선택된 수신자의 수명·실행 영역 검사는 유지한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000009",
+        "line": 28,
+        "text": "자동으로 다른 버전을 선택하지 않는다. 함수의 네이티브 팩터리 교체도 지원한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000009",
+        "line": 29,
+        "text": "- 함수 참조를 선언하거나 버튼에 연결할 때 작업을 실행하지 않는다. `render(2)`는",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 38,
+        "text": "두 번째 반응형 그래프를 추가하지 않는다. 함수 버전 관측과 선택은 소유 스레드에서만",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 59,
+        "text": "타입을 모두 자동 추론한다고 주장하지 않는다. 잘못된 인자 수, Void의 표시 값 사용,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 75,
+        "text": "재검사 로그를 별도로 보존하며 한 번의 전체 실행이 모두 성공했다고 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 89,
+        "text": "이 결과만으로 주장하지 않는다. LVUI 전체 완성 작업은 계속 진행 중이다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 93,
+        "text": "메서드 포인터를 요구하지 않는다. 일반 파생 값은 원천 변경을 따르고, @Static과 가변",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000009",
+        "label": "FactoryCaptures.md",
+        "target": "FactoryCaptures.md",
+        "kind": "relative",
+        "line": 32
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000031",
+        "columns": [
+          "범위",
+          "결과"
+        ],
+        "rows": [
+          [
+            "관련 ASan·UBSan 검사",
+            "206개 통과"
+          ],
+          [
+            "메모리 검사 SDK의 재배치 설치 소비자",
+            "1개 통과, 내부 네이티브·컴파일러·런타임 소비자와 CLI 검사 포함"
+          ],
+          [
+            "iiGUI 창 없는 일반·메모리 검사",
+            "각 220개 통과"
+          ],
+          [
+            "추론 타입 계약",
+            "각 구성에서 유효한 14개 컴파일, 잘못된 5개 거부"
+          ],
+          [
+            "LVRS 생성 뷰 팩터리",
+            "각 구성에서 57개 컴파일, 실제 실행은 수행하지 않음"
+          ],
+          [
+            "Dreamscapes QML",
+            "81개 파일 변경 없음"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the offline LVRS Figma snapshot and generate the native token catalog."""
+"""Validate LVUI's offline design snapshot and generate its native token catalog."""
 import argparse
 import json
 import math
@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-SNAPSHOT=ROOT/'catalog/lvrs-style-tokens.json'
+SNAPSHOT=ROOT/'catalog/lvui-style-tokens.json'
 OUTPUT=ROOT/'src/LVUI/StyleTokens.generated.inc'
 TYPES={'FLOAT':'number','COLOR':'color','STRING':'string','BOOLEAN':'boolean'}
 

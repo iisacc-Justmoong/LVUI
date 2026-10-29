@@ -1,0 +1,3 @@
+Window {
+    Image(id: "placeholder", width: 48, height: 32, fit: .Cover, circular: true, allowEmpty: true)
+}

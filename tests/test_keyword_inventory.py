@@ -30,6 +30,7 @@ class InventoryTests(unittest.TestCase):
         self.write('src/qml/CMakeLists.txt', 'set(FILES src/qml/Fixture.qml src/qml/Service.qml)\n')
         self.write('src/backend/paint.h', 'class LVRS_EXPORT Paint : public QQuickPaintedItem {\n'
                    'QML_NAMED_ELEMENT(Paint)\n};\n')
+        self.write('iigui/src/iiGUI/NativeView.h', 'class IIGUI_EXPORT NativeView final {};\n')
 
     def tearDown(self):
         self.temp.cleanup()
@@ -46,7 +47,7 @@ class InventoryTests(unittest.TestCase):
             if 'rev-parse' in command: return 'fixture-revision\n'
             return ('\0'.join(files) + '\0').encode()
         with patch.object(inventory.subprocess, 'check_output', side_effect=git):
-            return inventory.audit(self.root)
+            return inventory.audit(self.root,self.root/'iigui')
 
     def test_inline_native_and_nonvisual_classification(self):
         snapshot = self.audit()
@@ -56,6 +57,30 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual(declarations['Paint']['kind'], 'view')
         self.assertEqual(declarations['Service']['kind'], 'nonvisual')
         self.assertNotIn('FakeVisual', declarations)
+
+    def test_native_view_retains_implementation_evidence(self):
+        self.write('src/LVRS/Image.h','// native control\nclass Image final {};\n')
+        snapshot=self.audit();word=next(w for w in inventory.words(snapshot) if w['name']=='Image')
+        self.assertEqual((word['path'],word['line'],word['origin']),('src/LVRS/Image.h',2,'native-cpp'))
+        self.assertFalse(any(d['name']=='Image' for d in snapshot['declarations']))
+
+    def test_native_view_requires_its_named_class(self):
+        self.write('src/LVRS/Image.h','class Different final {};\n')
+        with self.assertRaisesRegex(ValueError,'Native view declaration missing: Image'):self.audit()
+
+    def test_iigui_view_has_separate_source_evidence(self):
+        before=self.audit()
+        word=next(w for w in inventory.words(before) if w['name']=='NativeView')
+        self.assertEqual((word['origin'],word['path'],word['line']),('native-iigui','iigui/src/iiGUI/NativeView.h',1))
+        self.write('iigui/src/iiGUI/NativeView.h','class IIGUI_EXPORT NativeView final { int changed; };\n')
+        after=self.audit()
+        self.assertEqual(before['files'],after['files'])
+        self.assertNotEqual(before['external_source_files'],after['external_source_files'])
+        self.assertEqual(inventory.words(before),inventory.words(after))
+
+    def test_iigui_view_cannot_be_reserved_without_its_declaration(self):
+        self.write('iigui/src/iiGUI/NativeView.h','class Other final {};\n')
+        with self.assertRaisesRegex(ValueError,'Native iiGUI view declaration missing: NativeView'):self.audit()
 
     def test_unknown_base_fails_instead_of_silently_omitting(self):
         self.write('src/qml/Fixture.qml', 'UnresolvedNativeType {}\n')

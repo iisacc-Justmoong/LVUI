@@ -1,0 +1,184 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:697afd70f65dbe8e80fd03df4c3eec7d87ca0cb5299c715eae97c64dd241e3a2",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeHistory.md",
+    "sha256": "ae86999863fd88039c6eeaab12482e8a6ef472392f0972fb15de3aff5396ea14",
+    "bytes": 2032,
+    "line_count": 38,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "C++ 이력 모델을 표시하는 뷰",
+    "role": "history",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# C++ 이력 모델을 표시하는 뷰\n",
+      "level": 1,
+      "title": "C++ 이력 모델을 표시하는 뷰"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "이력 저장·중복 판단·한도·undo/redo는 LVRS의 네이티브 `ModelUndoStack`이 수행한다.\nLVUI는 C++ 메서드를 이벤트에 연결하고 모델의 Core 관측 결과를 화면에 바인딩한다.\nQML 배열이나 화면 언어의 이력 조작 메서드를 만들지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 15,
+      "raw": "```lvui\nimport vm NativeHistoryBackend\nWindow { VStack {\n    Label(text: vm.history.undo_depth())\n    Label(text: vm.history.redo_depth())\n    PushButton(text: \"Undo\", enabled: vm.history.can_undo(), onClick: vm.undo)\n    PushButton(text: \"Redo\", enabled: vm.history.can_redo(), onClick: vm.redo)\n} }\n```\n",
+      "language": "lvui",
+      "code": "import vm NativeHistoryBackend\nWindow { VStack {\n    Label(text: vm.history.undo_depth())\n    Label(text: vm.history.redo_depth())\n    PushButton(text: \"Undo\", enabled: vm.history.can_undo(), onClick: vm.undo)\n    PushButton(text: \"Redo\", enabled: vm.history.can_redo(), onClick: vm.redo)\n} }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 19,
+      "raw": "C++ 컨트롤러는 원본 데이터를 언제 기억하고 적용할지 결정한다. 이력 모델의 상태 조회와\n화면 재배치는 파일 저장이나 생성 작업의 실행을 암묵적으로 호출하지 않는다.\n모델을 직접 가져온 읽기 전용 표시도 지원한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "fenced_code",
+      "start_line": 21,
+      "end_line": 24,
+      "raw": "```lvui\nimport history lvrs.ModelUndoStack\nWindow { Label(text: history.undo_depth()) }\n```\n",
+      "language": "lvui",
+      "code": "import history lvrs.ModelUndoStack\nWindow { Label(text: history.undo_depth()) }\n",
+      "closed": true
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 28,
+      "raw": "모델의 getter 내부 Core 관측은 기존 NativeMethods 경로가 수집하므로 별도 QML\nrevision 전달이나 문자열 속성 조회가 필요하지 않다. 한도 변경으로 실제 이력이 잘리면\n깊이와 버튼 가능 여부도 갱신하도록 모델이 stack 변경을 발행한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 33,
+      "raw": "이동된 데이터와 수신자 오류를 함께 처리하는 `SnapshotTransfer` 및 값·수명 계약은\n[LVRS ModelUndoStack](../../LVRS/docs/native/ModelUndoStack.md)을 따른다.\n두 fixture의 실제 생성 코드를 일반·메모리 검사 구성의 컴파일 대상으로 유지한다.\nLVRS의 모델·버튼·생성 뷰 실행 검사는 최종 일괄 단계에 남긴다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 38,
+      "raw": "2026-10-27의 두 구성 컴파일·링크, 팩터리 64개의 동일 생성 코드, 재배치 소비자와\nLVRS 검사 55개의 등록 상태는\n`SDK/LVRS/build/lvui-completion/snapshot-history/verification-20261027.json`에 기록한다.\n실행하지 않은 LVRS 검사를 통과로 보고하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "C++ 이력 모델을 표시하는 뷰",
+      "anchor": "c-이력-모델을-표시하는-뷰",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 18,
+        "text": "화면 재배치는 파일 저장이나 생성 작업의 실행을 암묵적으로 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 38,
+        "text": "실행하지 않은 LVRS 검사를 통과로 보고하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000013",
+        "label": "LVRS ModelUndoStack",
+        "target": "../../LVRS/docs/native/ModelUndoStack.md",
+        "kind": "relative",
+        "line": 31
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

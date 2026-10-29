@@ -1,0 +1,15 @@
+import vm NativeOwnedMenuModel
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", accessibilityName: "Actions", selectedIndex: vm.index,
+                    itemWidth: vm.width, menuOpacity: vm.opacity, dismissOnGlobalPress: false, dismissOnGlobalContextRequest: true,
+                    onItemTriggered: vm.triggered, onOpened: vm.opened, onClosed: vm.closed) {
+            ContextMenuItem(id: "first", label: vm.label, hasChildItems: false, keepOpen: vm.keepOpen, onClick: vm.clicked)
+            ContextMenuDivider(id: "divider", visible: vm.dividerVisible, thickness: vm.thickness)
+            ContextMenuItem(id: "second", label: "Second", hasChildItems: false, enabled: vm.secondEnabled)
+        }
+        Label(id: "other", text: "Other")
+        Menu(id: "list", targetId: "other", items: ["Copy", "Paste"], showIconSlot: false, onItemTriggered: vm.triggered)
+    }
+}

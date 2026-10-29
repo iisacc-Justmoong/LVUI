@@ -1,6 +1,7 @@
 # Card·Avatar AOT
 
-FRAMEWORK LVRS에서 Card와 Avatar를 C++23 네이티브 래퍼로 생성한다. AppCard는 별개이다.
+기본 `Avatar`는 LVUI의 독립 C++ 모델과 이미지 어댑터로 생성한다. `Card`는 아직
+`FRAMEWORK LVRS`의 레거시 경로에 있다. AppCard는 별개이다.
 Card의 type(.File/.FilePreview/.Folder/.Project/.Device/.Model/.Member/.Link),
 size(.Small/.Medium/.Large), detail(.Brief/.Detailed), displayState(.Automatic/
 .DefaultState/.HoverState/.SelectedState)를 typed enum으로 생성한다. Avatar.size도 같은
@@ -26,13 +27,20 @@ previewComponent/iconComponent는 WidgetFactory 또는 불변 CardComponent를 �
 반응형 팩토리는 Observable<CardComponent>를 사용한다. previewComponent와 중괄호 프리뷰
 자식은 동시에 지정할 수 없다. 커스텀 아이콘/프리뷰는 네이티브 세대 수명에 속한다.
 
-필드별 바인딩은 기존 래퍼의 set_options/set_*_content로 갱신한다. 선택 콜백은 bool,
+Avatar는 원형으로 중앙 자르며 Small·Medium·Large 자연 크기는 각각 24·40·64 논리 px이다.
+폭이나 높이를 0으로 두면 해당 축의 자연 크기를 사용한다. 준비된 픽셀, 크기, 색상,
+사용 가능 여부와 접근성 이름은 반응형으로 바꿀 수 있다. 잘못된 값은 마지막 유효
+설정을 유지한다. 빈 이미지는 배경만 그린다. 로딩과 디코딩은 앱이 제공한다.
+입력 모델과 생성 코드는 Qt·QML·LVRS 타입이나 라이브러리에 의존하지 않는다.
+소유 스레드의 접근성 알림이 설정을 다시 변경하면 나중 설정과 사용 가능 상태를 유지한다.
+
+레거시 Card의 필드별 바인딩은 기존 래퍼의 set_options/set_*_content로 갱신한다. 선택 콜백은 bool,
 메뉴·액션·클릭 콜백은 인자 없이 실행한다. scope 백엔드는 한 번 생성되어 유지된다.
 기타 visible/flex는 공통 위젯 계약을 따른다. 알 수 없는 입력, 잘못된 enum·수치·별칭,
 즉시 호출 형태의 콜백, Avatar 자식은 생성 오류이다. generated C++에 LVUI 파서/VM은 없다.
 
-tests/compiler.cpp의 lvrs_media와 NativeMediaGallery가 생성·컴파일 계약을 다룬다.
-앱·검사·self-test 실행은 전체 목표의 마지막 일괄 단계까지 보류한다. 원본 전체 상속 API,
+독립 Avatar의 모델·생성 코드·호스트 검사와 레거시 Card의 컴파일 계약은 별도로 다룬다.
+원본 전체 상속 API,
 URL 비동기 로딩·캐시, 모션·글로벌 Theme·일부 clip/말줄임과 플랫폼 검증은 남아 있다.
 
 선행 점 뒤의 enum 경로에서는 시각 컴포넌트 예약어도 값으로 사용할 수 있다.

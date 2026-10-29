@@ -1,0 +1,159 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:97edbbb27800d680e37eb0b3575c4bed23c98545135f9eb078811d0ea7c6c679",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeOwnedCard.md",
+    "sha256": "2f18b6c96c77a57004fe6533fd3927bc25215e61436730139d572028c631afaa",
+    "bytes": 2719,
+    "line_count": 39,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 카드",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 카드\n",
+      "level": 1,
+      "title": "LVUI 독립 카드"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "`Card`는 LVUI가 소유한 카드 데이터, 상태와 배치 모델이고 `NativeCard`는 이를 범용\niiGUI 입력·그리기 표면에 연결한다. 기존 라이브러리의 위젯이나 QML을 사용하지 않는다.\n앱은 `CardInput`에 값과 선택적인 래스터 아이콘·미리보기 이미지를 전달하거나 아이콘\n이름과 교체 가능한 `IconSource`를 지정한다. `NativeCard::create()`가 반환하는 카드의\n`surface()`, `menu()`, `action()`은 각각 별도 입력 표면이다. 기본 선언형 경로도\n같은 자체 구현을 사용한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 10,
+      "end_line": 17,
+      "raw": "```text\nimport vm ProjectCardModel\nWindow {\n    Card(type: .Project, title: vm.title, rows: vm.rows, progress: vm.progress,\n         selected: vm.selected, onSelectedChanged: vm.selection,\n         onClick: vm.open, onMenuRequested: vm.menu, onActionTriggered: vm.action)\n}\n```\n",
+      "language": "text",
+      "code": "import vm ProjectCardModel\nWindow {\n    Card(type: .Project, title: vm.title, rows: vm.rows, progress: vm.progress,\n         selected: vm.selected, onSelectedChanged: vm.selection,\n         onClick: vm.open, onMenuRequested: vm.menu, onActionTriggered: vm.action)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 21,
+      "raw": "선언의 `rows`는 `std::vector<lvui::CardRow>`를 전달하고 `previewSource`와 `icon`은\n네이티브 래스터를 받는다. `iconName`과 `iconSource`는 교체 가능한 아이콘 공급자를\n사용한다. 텍스트, 상태, 크기, 색상과 이미지가 바뀌면 기존 카드를 갱신한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 28,
+      "raw": "파일, 파일 미리보기, 폴더, 프로젝트, 장치, 모델, 멤버, 링크 유형을 모델에서 표현한다.\n파일 카드는 크기에 따라 140×160, 210×240 또는 360×280이며 미리보기는 480×320,\n다른 유형은 기본 폭 256과 최소 높이 280을 사용한다. `width`와 `height`는 이 크기를\n재정의한다. 미리보기 이미지는 가운데를 기준으로 영역에 맞추고, 프로젝트와 장치는\n진행 표시를 사용한다. 행은 최대 128개, 전체 텍스트는 2 MiB로 제한한다. 표시와\n접근성 텍스트는 UTF-8 경계에서 각각 최대 8,192바이트로 제한하며 원본 값은 유지한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 34,
+      "raw": "일반 활성화는 선택 가능한 경우 선택 상태를 전환하고 `selected_changed` 다음에\n`clicked`를 호출한다. 첫 콜백에서 카드가 제거되거나 다시 설정되면 오래된 클릭은\n전달하지 않는다. 메뉴와 액션은 별도 콜백으로 전달하며 메인 클릭을 발생시키지 않는다.\n입력은 생성한 스레드에서만 허용하고 잘못된 설정이나 아이콘은 마지막 정상 상태를\n유지한다. 외부 상태의 변경은 되돌리지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 39,
+      "raw": "사용자 지정 미리보기·아이콘 컴포넌트, 모든 카드 세부 표현과 실제 운영체제의\n렌더링·접근성 검증은 아직 필요하다. `LVUI.OwnedCard.Model`, `Host`, `Codegen`,\n`Generated`는 유효성, 좁은 영역의 배치, 상태와 콜백, 오류 복구와 수명을 창을 열지\n않는 환경에서 검사한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 카드",
+      "anchor": "lvui-독립-카드",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "iiGUI 입력·그리기 표면에 연결한다. 기존 라이브러리의 위젯이나 QML을 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 32,
+        "text": "전달하지 않는다. 메뉴와 액션은 별도 콜백으로 전달하며 메인 클릭을 발생시키지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

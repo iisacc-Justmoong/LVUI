@@ -1,0 +1,4797 @@
+{
+  "schema": 1,
+  "source": {
+    "provider": "Figma",
+    "fileKey": "0GkItQYSNIR0lZ3iJhfJzc",
+    "capturedOn": "2026-10-25"
+  },
+  "collections": [
+    {
+      "id": "VariableCollectionId:44:457",
+      "key": "e733d08a827dc9c26bb1c7bed7980b92b5d39360",
+      "name": "Theme Colors",
+      "modes": [
+        {
+          "name": "Dark",
+          "modeId": "44:0"
+        }
+      ],
+      "defaultModeId": "44:0",
+      "hiddenFromPublishing": false,
+      "count": 115
+    },
+    {
+      "id": "VariableCollectionId:675:2",
+      "key": "9cd5802d755fa39ea66a43ad15fdc5b7474b9ea2",
+      "name": "Material",
+      "modes": [
+        {
+          "name": "Dark",
+          "modeId": "675:0"
+        }
+      ],
+      "defaultModeId": "675:0",
+      "hiddenFromPublishing": false,
+      "count": 20
+    },
+    {
+      "id": "VariableCollectionId:890:2",
+      "key": "9f662baa63336bf55ef60e2475d63fb0e69b3abb",
+      "name": "ColorPicker",
+      "modes": [
+        {
+          "name": "Dark",
+          "modeId": "890:0"
+        }
+      ],
+      "defaultModeId": "890:0",
+      "hiddenFromPublishing": false,
+      "count": 5
+    },
+    {
+      "id": "VariableCollectionId:1305:73",
+      "key": "60347aa776373f05f27fc19ee1fc3941d2a80669",
+      "name": "Theme Typography",
+      "modes": [
+        {
+          "name": "Value",
+          "modeId": "1305:1"
+        }
+      ],
+      "defaultModeId": "1305:1",
+      "hiddenFromPublishing": false,
+      "count": 20
+    },
+    {
+      "id": "VariableCollectionId:1571:103",
+      "key": "2e31a9cbc707a24232a1b10a3a1736d0cdd3d6db",
+      "name": "Theme Metrics",
+      "modes": [
+        {
+          "name": "Dark",
+          "modeId": "1571:0"
+        }
+      ],
+      "defaultModeId": "1571:0",
+      "hiddenFromPublishing": false,
+      "count": 48
+    }
+  ],
+  "variables": [
+    {
+      "id": "VariableID:1305:100",
+      "key": "fb99a414ddada8a097254f6cace4f9116d1e6924",
+      "name": "Weight/SemiBold",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 600
+      },
+      "scopes": [
+        "FONT_WEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-weight-semi-bold)"
+      },
+      "description": "LVRS Theme.qml: Theme.textHeaderWeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:102",
+      "key": "f7d349f58e07058a2969ca0bfaf37a8238f7ef90",
+      "name": "Subheader/textSubheader",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 15
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-subheader-text-subheader)"
+      },
+      "description": "LVRS Theme.qml: Theme.textSubheader; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:103",
+      "key": "04294457189fa35c5c6d560f523ef793044d59c5",
+      "name": "Subheader/textSubheaderLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 15
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-subheader-text-subheader-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textSubheaderLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:107",
+      "key": "3601512b2f6877698d9782aa97a079e856eaaae1",
+      "name": "Body/textBody",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 13
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-body-text-body)"
+      },
+      "description": "LVRS Theme.qml: Theme.textBody; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:108",
+      "key": "6c813f8eb270e94faea2f5c5c016ccc9a161f1e9",
+      "name": "Body/textBodyLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 13
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-body-text-body-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textBodyLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:110",
+      "key": "3fae98dafa74224e6668b8dca1f3a3a8672ef8a8",
+      "name": "Weight/Medium",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 500
+      },
+      "scopes": [
+        "FONT_WEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-weight-medium)"
+      },
+      "description": "LVRS Theme.qml: Theme.textBodyWeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:112",
+      "key": "a7360ca245320a26cba81588c0f3cfbd242bbbdb",
+      "name": "Description/textDescription",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 12
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-description-text-description)"
+      },
+      "description": "LVRS Theme.qml: Theme.textDescription; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:113",
+      "key": "2e421ff0a0c82afd553e699bebc6a77570c1e3d1",
+      "name": "Description/textDescriptionLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 12
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-description-text-description-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textDescriptionLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:117",
+      "key": "3dd4a258e287332ffa0f0b67af76bfdef9d05616",
+      "name": "Caption/textCaption",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 11
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-caption-text-caption)"
+      },
+      "description": "LVRS Theme.qml: Theme.textCaption; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:118",
+      "key": "6df280e9ef67d7c6fef17eea934b2fa49ef3eda7",
+      "name": "Caption/textCaptionLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 11
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-caption-text-caption-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textCaptionLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:120",
+      "key": "4198dba28c446e6b84993c23a2b5764b68509f3d",
+      "name": "Weight/Regular",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 400
+      },
+      "scopes": [
+        "FONT_WEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-weight-regular)"
+      },
+      "description": "LVRS Theme.qml: Theme.textCaptionWeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:74",
+      "key": "c42a12d23101d708d67e8690d8cbb0860f29dbea",
+      "name": "Panel/window",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.0784313753247261,
+          "g": 0.0784313753247261,
+          "b": 0.0784313753247261,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-window)"
+      },
+      "description": "LVRS Theme.qml: Theme.window; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:75",
+      "key": "1416e3c60f52e7a7adb42c71cb466bae2982cb97",
+      "name": "Text/textTokenBase",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-text-text-token-base)"
+      },
+      "description": "LVRS Theme.qml: Theme.textTokenBase; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:76",
+      "key": "9bf6944fcdc4291ecad89a0fc591cdea4864fbeb",
+      "name": "Accent/Blue/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.08120492845773697,
+          "g": 0.5099760293960571,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-default)"
+      },
+      "description": "LVRS Blue Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:77",
+      "key": "f88edf58c393252c69e5d52e829810b141e2fafe",
+      "name": "Accent/Red/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.2760854959487915,
+          "b": 0.2760854959487915,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-default)"
+      },
+      "description": "LVRS Red Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:78",
+      "key": "d70b830ad734d230a10eca8e82b986dd5f315cb3",
+      "name": "Accent/Green/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.9058823585510254,
+          "b": 0.12156862765550613,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-default)"
+      },
+      "description": "LVRS Green Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:79",
+      "key": "2f64260fdbc0389df5a8db04b929e5df46a7c080",
+      "name": "Accent/Yellow/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.8303598165512085,
+          "b": 0.15179912745952606,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-default)"
+      },
+      "description": "LVRS Yellow Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:80",
+      "key": "c1a15a210227a8448600eb0b3b3a7e24844c682d",
+      "name": "Accent/Purple/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.5275065302848816,
+          "g": 0.291259765625,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-default)"
+      },
+      "description": "LVRS Purple Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:81",
+      "key": "3aee7cef9e63a65e21a3b0fb074063b000bef8cd",
+      "name": "Accent/Rose/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.975510835647583,
+          "g": 0.26653972268104553,
+          "b": 0.4437825083732605,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-default)"
+      },
+      "description": "LVRS Rose Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:82",
+      "key": "011d90e6ee1e12bf5eb03425b6411a9ccd5d8903",
+      "name": "Accent/Orange/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.47672274708747864,
+          "b": 0.15144230425357819,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-default)"
+      },
+      "description": "LVRS Orange Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:83",
+      "key": "3e7387849ac7d8f9a45931e0a619c7e6b2a40f73",
+      "name": "Accent/Brown/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2616060674190521,
+          "g": 0.13824503123760223,
+          "b": 0.09279626607894897,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-default)"
+      },
+      "description": "LVRS Brown Default. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1305:84",
+      "key": "7650b8cb4dc1354310c25b3c83de55e35a2ebd79",
+      "name": "Accent/Cyan/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.12926307320594788,
+          "g": 0.8258525729179382,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-default)"
+      },
+      "description": "LVRS Cyan Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:85",
+      "key": "a31dfa7eb38f57a6b52390585e728ceb0caa4d1e",
+      "name": "Accent/Teal/Default",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.7790151238441467,
+          "b": 0.8655723929405212,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-default)"
+      },
+      "description": "LVRS Teal Default. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1305:86",
+      "key": "559a02d8add0b835dbfe10a272c126cc571e11d9",
+      "name": "Font/fontBody",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "STRING",
+      "valuesByMode": {
+        "1305:1": "Pretendard"
+      },
+      "scopes": [
+        "FONT_FAMILY"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-font-font-body)"
+      },
+      "description": "LVRS Theme.qml: Theme.fontBody; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:87",
+      "key": "6c9ad81d9265111421839ac48203cebe33ae8eb9",
+      "name": "Title/textTitle",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 26
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-title-text-title)"
+      },
+      "description": "LVRS Theme.qml: Theme.textTitle; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:88",
+      "key": "7cda4b405c5d1154d7570af91cf910c23cc1f34c",
+      "name": "Title/textTitleLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 26
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-title-text-title-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textTitleLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:90",
+      "key": "bccce942de594299ce9a1821a17c6e01ca28d646",
+      "name": "Weight/Bold",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 700
+      },
+      "scopes": [
+        "FONT_WEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-weight-bold)"
+      },
+      "description": "LVRS Theme.qml: Theme.textTitleWeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:91",
+      "key": "4c92d44dd7a8f570a08b3edffc45a305d8f8ac9b",
+      "name": "Tracking/Normal",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 0
+      },
+      "scopes": [
+        "LETTER_SPACING"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-tracking-normal)"
+      },
+      "description": "LVRS Theme.qml: Theme.textTitleLetterSpacing; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:92",
+      "key": "506928e88113f5e5d1cffe7e0ce8e03af49b6b0f",
+      "name": "Subtitle/textSubtitle",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 22
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-subtitle-text-subtitle)"
+      },
+      "description": "LVRS Theme.qml: Theme.textSubtitle; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:93",
+      "key": "d5f2d84097f3ed113f1a6d8bac4480663eab3b69",
+      "name": "Subtitle/textSubtitleLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 22
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-subtitle-text-subtitle-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textSubtitleLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:97",
+      "key": "9912bae9cce637b6e7f9f586a804702a3305647f",
+      "name": "Header/textHeader",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 17
+      },
+      "scopes": [
+        "FONT_SIZE"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-header-text-header)"
+      },
+      "description": "LVRS Theme.qml: Theme.textHeader; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1305:98",
+      "key": "c1fae1e804dc30ec68f6beb9f4e152b41d037849",
+      "name": "Header/textHeaderLineHeight",
+      "collectionId": "VariableCollectionId:1305:73",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1305:1": 17
+      },
+      "scopes": [
+        "LINE_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-typography-header-text-header-line-height)"
+      },
+      "description": "LVRS Theme.qml: Theme.textHeaderLineHeight; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:1325:9",
+      "key": "9d11657e6790f7e7da09decb4a92df83c8067510",
+      "name": "Neutral/Gray",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.5490196347236633,
+          "g": 0.5490196347236633,
+          "b": 0.5490196347236633,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-neutral-gray)"
+      },
+      "description": "Fixed accent palette gray, sampled from the user-provided sRGB reference. #8C8C8C."
+    },
+    {
+      "id": "VariableID:1571:100",
+      "key": "25d0dfebbf9fc916c64e2b10995f714453ca875a",
+      "name": "Alert/textSecondary",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.7137255072593689,
+          "g": 0.7333333492279053,
+          "b": 0.7607843279838562,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-text-secondary)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:101",
+      "key": "b3c5fa2513989ca8da260906d37f3c6ca82dea18",
+      "name": "Alert/actionBorder",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.3490196168422699,
+          "g": 0.3803921639919281,
+          "b": 0.40784314274787903,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-action-border)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:102",
+      "key": "2472fd38d2b2ef03e31b4157629d4e6c9aadb770",
+      "name": "Overlay/Scrim",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.47999998927116394
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-overlay-scrim)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:104",
+      "key": "817b817ce6b2f0feee9b87bceb6412f29a0af025",
+      "name": "Space/0",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 0
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-0)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:105",
+      "key": "fb29c420bd425957aa708f2dd53b9ed2e200167a",
+      "name": "Space/12",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 12
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-12)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:106",
+      "key": "aac7c0b65cca72f9f7fbff95f64880c7739878f1",
+      "name": "Space/14",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 14
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-14)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:107",
+      "key": "f220de849c6fd6aa41183ac556b8dc0f65203043",
+      "name": "Space/16",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 16
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-16)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:108",
+      "key": "86925efcbe8164b833bc1ff07980446f2c4ee530",
+      "name": "Space/24",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 24
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-24)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:109",
+      "key": "e000bc8a09eab0d6b50dae00ff21a5da8abcd0d0",
+      "name": "Space/28",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 28
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-28)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:110",
+      "key": "926bc619f5db7afc5d61bbcada41123f9331b861",
+      "name": "Space/32",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 32
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-32)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:111",
+      "key": "21380898c478920be314565eb5c5376b051d107f",
+      "name": "Space/36",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 36
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-36)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:112",
+      "key": "73e325e7a0ca019c320d0e556d95e5ba061193e3",
+      "name": "Space/42",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 42
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-42)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:113",
+      "key": "f9241985d69b0e48e089208394cb80fdd4e6e114",
+      "name": "Space/46",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 46
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-46)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:114",
+      "key": "91de87915f3c02323e02be52487e2e4854160bfa",
+      "name": "Radius/36",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 36
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-36)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:115",
+      "key": "d2d2425e6a5ec882680f27cc36c6737a7af30b2e",
+      "name": "Radius/16",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 16
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-16)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:116",
+      "key": "d96a98ecf29a166889a5f6fb5f31196e2ca8911e",
+      "name": "Radius/28",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 28
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-28)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:117",
+      "key": "06dd88fec652435545632ccd93952a29963630b2",
+      "name": "Stroke/1",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 1
+      },
+      "scopes": [
+        "STROKE_FLOAT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-stroke-1)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:118",
+      "key": "e7b332eaa289f5aae7dfeb4c37c9ac26e71167c8",
+      "name": "Size/500",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 500
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-500)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:119",
+      "key": "d50d5485c4cd985fbe5798b964fd18a15b3ab2a6",
+      "name": "Size/56",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 56
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-56)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:120",
+      "key": "5ea47175321c7c6f2555e386fdbe08bde61d3187",
+      "name": "Size/44",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 44
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-44)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:121",
+      "key": "b90c487a0dce6e9897113986cf913b221dd1f4dd",
+      "name": "Space/4",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 4
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-4)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:122",
+      "key": "f610fb9774eae70c3a41351d0425a3e6d35ab758",
+      "name": "Space/18",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 18
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-18)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:123",
+      "key": "1683d7ac5b337e260c86fceeff8820ae780023e2",
+      "name": "Space/8",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 8
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-8)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:124",
+      "key": "c196ef9ff75e8a34464ebc1664241534364f8151",
+      "name": "Radius/6",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 6
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-6)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:125",
+      "key": "a827efd6ca61ddeb6a16ca4c161ba38da1e21309",
+      "name": "Size/280",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 280
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-280)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:126",
+      "key": "3cae8abb4c2f6daa82ebe0905d556a394d0952af",
+      "name": "Size/72",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 72
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-72)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:127",
+      "key": "5c209aeba910c653465d1a99b96f22daccdac25a",
+      "name": "Size/400",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 400
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-400)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:128",
+      "key": "91366cd3c5e4ada249607920f785eefe76592df4",
+      "name": "Size/140",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 140
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-140)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:129",
+      "key": "ea84df1d8dee6f05d218ea8176d84f2b04266410",
+      "name": "Size/48",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 48
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-48)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:130",
+      "key": "f1f9f32bc234fc9fb7e55d2dba8ee09ba7436945",
+      "name": "Space/2",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 2
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-2)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:131",
+      "key": "7135e6f4341a476d8aaa85fcf5c9fdc623308d29",
+      "name": "Space/6",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 6
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-6)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:132",
+      "key": "4e9bde79c030a76d393dcad52a1a1158c0a3f7e7",
+      "name": "Space/10",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 10
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-10)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:133",
+      "key": "245ba9e98cb56309a3d309bba3c39f2af716db40",
+      "name": "Radius/12",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 12
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-12)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:134",
+      "key": "7b1d4755be17892f87675747bad2eb1d0527c603",
+      "name": "Size/256",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 256
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-256)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:135",
+      "key": "52c4a45f114cac5f16d5c22b23b39a77eda4d336",
+      "name": "Stroke/2",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 2
+      },
+      "scopes": [
+        "STROKE_FLOAT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-stroke-2)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:14",
+      "key": "314b1db8c6aaea6d33170f53fa046babedae9cc0",
+      "name": "Neutral/Transparent",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-neutral-transparent)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:143",
+      "key": "be7e69fb1162320602a543620b9bcaad4cb23533",
+      "name": "Space/20",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 20
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-20)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:144",
+      "key": "9d966558527fb54d607b19de6bbd9fb6cf2473f9",
+      "name": "Space/40",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 40
+      },
+      "scopes": [
+        "GAP"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-space-40)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:147",
+      "key": "02251244528edc7306d863cd893710081d1032b3",
+      "name": "Radius/999",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 999
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-999)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:148",
+      "key": "0a4dc582d7b94a9daf300ece4f9a3d0e5ec09a21",
+      "name": "Opacity/32",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 32
+      },
+      "scopes": [
+        "OPACITY"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-opacity-32)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:149",
+      "key": "4300e20cf6015bbdeb3c6a8b11111058dc82a89c",
+      "name": "Size/22",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 22
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-22)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:15",
+      "key": "a9a30f8dfbff0dc026d00a9cf10f80f3a1c6b551",
+      "name": "Accent/Blue/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.07250440120697021,
+          "g": 0.45533573627471924,
+          "b": 0.8928571343421936,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-hover)"
+      },
+      "description": "LVRS Blue Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:150",
+      "key": "8b1c3a7cc610028fdf7bc97f92acd0c6a7e5009d",
+      "name": "Size/24",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 24
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-24)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:151",
+      "key": "5a8e802539ab75ba1df10dae04dad53c74ea5bd9",
+      "name": "Size/32",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 32
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-32)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:153",
+      "key": "6773cb744bcf8605706d2e097064654be80da109",
+      "name": "Radius/4",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 4
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-4)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:154",
+      "key": "6ae009756827a4f6e08a773767651c729dc3b2c5",
+      "name": "Radius/24",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 24
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-24)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:157",
+      "key": "a0d77fc22a28d58146cfed8678201d9fd99b1842",
+      "name": "Blur/64",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 64
+      },
+      "scopes": [
+        "EFFECT_FLOAT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-blur-64)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:158",
+      "key": "058d3973238710432f95f0aefdc8caa4b74d5e93",
+      "name": "Blur/16",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 16
+      },
+      "scopes": [
+        "EFFECT_FLOAT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-blur-16)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:159",
+      "key": "379941549aaca4741e9244a6ee1e32ac0ed81f36",
+      "name": "Opacity/40",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 40
+      },
+      "scopes": [
+        "OPACITY"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-opacity-40)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:16",
+      "key": "9501aad7951b1e4e317eefecb56046e127581f4d",
+      "name": "Accent/Blue/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.0676707774400711,
+          "g": 0.4249800145626068,
+          "b": 0.8333333134651184,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-pressed)"
+      },
+      "description": "LVRS Blue Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:160",
+      "key": "dcbed5f45cf67b29d29c9358b73fa1634a80ff57",
+      "name": "Opacity/11",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 11
+      },
+      "scopes": [
+        "OPACITY"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-opacity-11)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:161",
+      "key": "2ad4a5fe96667e3a8aa1d1a0c94984bbc3c35676",
+      "name": "Radius/8",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 8
+      },
+      "scopes": [
+        "CORNER_RADIUS"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-radius-8)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:163",
+      "key": "0717b9d49aea359fab5e97746424fdc09fa133ec",
+      "name": "Size/2",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 2
+      },
+      "scopes": [
+        "WIDTH_HEIGHT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-size-2)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:168",
+      "key": "f275449504583eb5ba0dbff82b2e0eed2db2dc0e",
+      "name": "Stroke/1_5",
+      "collectionId": "VariableCollectionId:1571:103",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "1571:0": 1.5
+      },
+      "scopes": [
+        "STROKE_FLOAT"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-metrics-stroke-1-5)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:17",
+      "key": "5947f1eba5df70f6f4a481867b08ce1965712f77",
+      "name": "Accent/Blue/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.12618358433246613,
+          "g": 0.23337635397911072,
+          "b": 0.35588234663009644,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-selected)"
+      },
+      "description": "LVRS Blue Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:18",
+      "key": "e4a8f7a2701d8990a08be83814e57398d88ec00c",
+      "name": "Accent/Blue/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.08120492845773697,
+          "g": 0.5099760293960571,
+          "b": 1,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-disabled)"
+      },
+      "description": "LVRS Blue Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:19",
+      "key": "46e9cb83c51fc50234405e48d330371cb6eb7847",
+      "name": "Accent/Blue/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.13158102333545685,
+          "g": 0.2001844048500061,
+          "b": 0.2785882353782654,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-subtle)"
+      },
+      "description": "LVRS Blue Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:20",
+      "key": "820575852a1d741d105c498fab360815f0045dc9",
+      "name": "Accent/Blue/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.11958671361207962,
+          "g": 0.27394431829452515,
+          "b": 0.4503529369831085,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-outline)"
+      },
+      "description": "LVRS Blue Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:21",
+      "key": "c166ce5afb808e1d5ca67038292eb695c3e5b070",
+      "name": "Accent/Blue/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.08120492845773697,
+          "g": 0.5099760293960571,
+          "b": 1,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-overlay)"
+      },
+      "description": "LVRS Blue Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:22",
+      "key": "5407cae561510918dceb6fe9c225a1f427bf6926",
+      "name": "Accent/Blue/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.3529411852359772,
+          "g": 0.6666666865348816,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-blue-text)"
+      },
+      "description": "LVRS Blue Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:23",
+      "key": "cbc7c8e20817cd80172480d9aad19c1730894496",
+      "name": "Accent/Red/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8928571343421936,
+          "g": 0.24650490283966064,
+          "b": 0.24650490283966064,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-hover)"
+      },
+      "description": "LVRS Red Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:24",
+      "key": "23884b198eab5fac51e36e5bc8a6ca69afdd97dd",
+      "name": "Accent/Red/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8333333134651184,
+          "g": 0.23007124662399292,
+          "b": 0.23007124662399292,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-pressed)"
+      },
+      "description": "LVRS Red Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:25",
+      "key": "96733f8edf7123af88c7f90186f7ab4378e84527",
+      "name": "Accent/Red/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.35588234663009644,
+          "g": 0.1749037355184555,
+          "b": 0.1749037355184555,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-selected)"
+      },
+      "description": "LVRS Red Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:26",
+      "key": "3797185ada4991cb32af30dd7fc1159acc140ca6",
+      "name": "Accent/Red/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.2760854959487915,
+          "b": 0.2760854959487915,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-disabled)"
+      },
+      "description": "LVRS Red Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:27",
+      "key": "a6836f8623e3c5ac667b5ba27abaf277320ebd71",
+      "name": "Accent/Red/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2785882353782654,
+          "g": 0.16276192665100098,
+          "b": 0.16276192665100098,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-subtle)"
+      },
+      "description": "LVRS Red Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:28",
+      "key": "e019cb50b914563ef8585b3aafaf40953f50e9a3",
+      "name": "Accent/Red/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.4503529369831085,
+          "g": 0.18974372744560242,
+          "b": 0.18974372744560242,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-outline)"
+      },
+      "description": "LVRS Red Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:29",
+      "key": "6994669f53cff0afb11659f347fb5a96c8a9c078",
+      "name": "Accent/Red/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.2760854959487915,
+          "b": 0.2760854959487915,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-overlay)"
+      },
+      "description": "LVRS Red Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:30",
+      "key": "e682ab7f0c5b5e6d17f4d218fd76e5cf73c569c1",
+      "name": "Accent/Red/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.49325984716415405,
+          "b": 0.49325984716415405,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-red-text)"
+      },
+      "description": "LVRS Red Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:31",
+      "key": "db572fb8cf61fc65d3a61a6378151d5c634c99dc",
+      "name": "Accent/Green/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.8088235259056091,
+          "b": 0.10854341834783554,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-hover)"
+      },
+      "description": "LVRS Green Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:32",
+      "key": "69181e760005a3560a67fea505dcfc6f0f8a6d2c",
+      "name": "Accent/Green/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.7549019455909729,
+          "b": 0.10130719095468521,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-pressed)"
+      },
+      "description": "LVRS Green Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:33",
+      "key": "f01b0aaa97b224471e56c8c9e5935ee37a806efe",
+      "name": "Accent/Green/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.10588236153125763,
+          "g": 0.3323529362678528,
+          "b": 0.136274516582489,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-selected)"
+      },
+      "description": "LVRS Green Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:34",
+      "key": "58ebebdd8956554d0c95d71fe22b04d801e45338",
+      "name": "Accent/Green/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.9058823585510254,
+          "b": 0.12156862765550613,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-disabled)"
+      },
+      "description": "LVRS Green Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:35",
+      "key": "38b47a6b473082b857c1911d4e3ca0e70d5a0c31",
+      "name": "Accent/Green/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.11858823895454407,
+          "g": 0.2635294198989868,
+          "b": 0.1380392163991928,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-subtle)"
+      },
+      "description": "LVRS Green Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:36",
+      "key": "b75a91df9a483dc720129a7c82fce8c73bdbee1d",
+      "name": "Accent/Green/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.09035294502973557,
+          "g": 0.41647058725357056,
+          "b": 0.13411764800548553,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-outline)"
+      },
+      "description": "LVRS Green Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:37",
+      "key": "7b9dbcf200e73208bc52cb5b491346e1b7ef08f1",
+      "name": "Accent/Green/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.9058823585510254,
+          "b": 0.12156862765550613,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-overlay)"
+      },
+      "description": "LVRS Green Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:38",
+      "key": "76eede22cdd383aeff8452032c0f4245c5e1e340",
+      "name": "Accent/Green/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.30000001192092896,
+          "g": 0.9341176748275757,
+          "b": 0.38509804010391235,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-green-text)"
+      },
+      "description": "LVRS Green Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:39",
+      "key": "20a5cab11f08d12539ba2556dbb369b2e1f485d1",
+      "name": "Accent/Yellow/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8928571343421936,
+          "g": 0.7413926720619202,
+          "b": 0.13553494215011597,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-hover)"
+      },
+      "description": "LVRS Yellow Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:40",
+      "key": "71f7aadce0ad7c6121bd692fe6cbaed767c2e89d",
+      "name": "Accent/Yellow/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8333333134651184,
+          "g": 0.6919665336608887,
+          "b": 0.1264992654323578,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-pressed)"
+      },
+      "description": "LVRS Yellow Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:41",
+      "key": "d347d32f4d0fa4f21d1ab6f4313e16a356bf8f4f",
+      "name": "Accent/Yellow/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.35588234663009644,
+          "g": 0.31347230076789856,
+          "b": 0.14383214712142944,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-selected)"
+      },
+      "description": "LVRS Yellow Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:42",
+      "key": "2e472fc905f2b29e8816b55770bd1096f36cd85d",
+      "name": "Accent/Yellow/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.8303598165512085,
+          "b": 0.15179912745952606,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-disabled)"
+      },
+      "description": "LVRS Yellow Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:43",
+      "key": "1c6da7e55e24a184bcd744edc14d96dceb411850",
+      "name": "Accent/Yellow/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2785882353782654,
+          "g": 0.25144580006599426,
+          "b": 0.14287610352039337,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-subtle)"
+      },
+      "description": "LVRS Yellow Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:44",
+      "key": "296eeea9af5e028cf9a306ada3fd1debd83885ab",
+      "name": "Accent/Yellow/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.4503529369831085,
+          "g": 0.3892824649810791,
+          "b": 0.1450006365776062,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-outline)"
+      },
+      "description": "LVRS Yellow Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:45",
+      "key": "3fe7aa57af753aea0068961834bf2af332aaf8d6",
+      "name": "Accent/Yellow/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.8303598165512085,
+          "b": 0.15179912745952606,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-overlay)"
+      },
+      "description": "LVRS Yellow Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:46",
+      "key": "613aad8455c41d832374caa859e53405f149ce17",
+      "name": "Accent/Yellow/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.881251871585846,
+          "b": 0.4062593877315521,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-yellow-text)"
+      },
+      "description": "LVRS Yellow Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:47",
+      "key": "4f12e2534cdc7ef40e30b4d1498890075b93f3a7",
+      "name": "Accent/Purple/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.4709879755973816,
+          "g": 0.2600533664226532,
+          "b": 0.8928571343421936,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-hover)"
+      },
+      "description": "LVRS Purple Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:48",
+      "key": "13dca553767b08c2004efba583f75212840d6834",
+      "name": "Accent/Purple/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.4395887851715088,
+          "g": 0.2427164763212204,
+          "b": 0.8333333134651184,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-pressed)"
+      },
+      "description": "LVRS Purple Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:49",
+      "key": "195bce8f0fb0eef655a85e8cf44fb3ab030fc722",
+      "name": "Accent/Purple/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.23775899410247803,
+          "g": 0.17869730293750763,
+          "b": 0.35588234663009644,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-selected)"
+      },
+      "description": "LVRS Purple Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:50",
+      "key": "0494fe36fdd4360a7a18a72231fd208d356e461f",
+      "name": "Accent/Purple/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.5275065302848816,
+          "g": 0.291259765625,
+          "b": 1,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-disabled)"
+      },
+      "description": "LVRS Purple Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:51",
+      "key": "826e9d3f4497246abe81806eb6d6c3acb194529e",
+      "name": "Accent/Purple/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.20298928022384644,
+          "g": 0.16518980264663696,
+          "b": 0.2785882353782654,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-subtle)"
+      },
+      "description": "LVRS Purple Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:52",
+      "key": "f9f118982550585e2730e79141c6756f893d50f7",
+      "name": "Accent/Purple/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2802552878856659,
+          "g": 0.19520646333694458,
+          "b": 0.4503529369831085,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-outline)"
+      },
+      "description": "LVRS Purple Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:53",
+      "key": "e18f3c4495ce2424d5b0073c9ee8a18dff9e75ad",
+      "name": "Accent/Purple/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.5275065302848816,
+          "g": 0.291259765625,
+          "b": 1,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-overlay)"
+      },
+      "description": "LVRS Purple Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:54",
+      "key": "920002a58bb084b3169b2dd065772b562efff07a",
+      "name": "Accent/Purple/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.6692545413970947,
+          "g": 0.5038818120956421,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-purple-text)"
+      },
+      "description": "LVRS Purple Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:55",
+      "key": "432a5cb14c238765f39ac6a0146a335d91bc3f62",
+      "name": "Accent/Rose/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8709918260574341,
+          "g": 0.2379819005727768,
+          "b": 0.396234393119812,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-hover)"
+      },
+      "description": "LVRS Rose Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:56",
+      "key": "04ecfa85faa0586d8b85fb26c1cbe3b342f82ac5",
+      "name": "Accent/Rose/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8129256963729858,
+          "g": 0.22211644053459167,
+          "b": 0.3698187470436096,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-pressed)"
+      },
+      "description": "LVRS Rose Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:57",
+      "key": "92a36695c9dc897eb81644db4f016b0fe05c80b9",
+      "name": "Accent/Rose/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.3497600555419922,
+          "g": 0.17251728475093842,
+          "b": 0.21682798862457275,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-selected)"
+      },
+      "description": "LVRS Rose Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:58",
+      "key": "86ba4fb011aea103b2bd4ab7b1aa7c8cd8c71e24",
+      "name": "Accent/Rose/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.975510835647583,
+          "g": 0.26653972268104553,
+          "b": 0.4437825083732605,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-disabled)"
+      },
+      "description": "LVRS Rose Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:59",
+      "key": "250d92d11e0f01746e4d1265205e36c352cf5ca3",
+      "name": "Accent/Rose/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.27466997504234314,
+          "g": 0.16123460233211517,
+          "b": 0.18959344923496246,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-subtle)"
+      },
+      "description": "LVRS Rose Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:60",
+      "key": "d03e240d97941d3ede1daf458219234198348650",
+      "name": "Accent/Rose/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.4415368437767029,
+          "g": 0.18630725145339966,
+          "b": 0.25011464953422546,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-outline)"
+      },
+      "description": "LVRS Rose Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:61",
+      "key": "6dfa567df2358671575b10b692838d8b4fc85823",
+      "name": "Accent/Rose/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.975510835647583,
+          "g": 0.26653972268104553,
+          "b": 0.4437825083732605,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-overlay)"
+      },
+      "description": "LVRS Rose Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:62",
+      "key": "390bef080182e76c346be4b21f2c105ab0f2273f",
+      "name": "Accent/Rose/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.9828575849533081,
+          "g": 0.4865778088569641,
+          "b": 0.6106477379798889,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-rose-text)"
+      },
+      "description": "LVRS Rose Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:63",
+      "key": "3e64800bd286e2bea5af4c5e258a3f1059b8ed96",
+      "name": "Accent/Orange/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8928571343421936,
+          "g": 0.4256453216075897,
+          "b": 0.1352163404226303,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-hover)"
+      },
+      "description": "LVRS Orange Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:64",
+      "key": "40304b8c0d6bb24d7e2482297b0f2df81063c8e4",
+      "name": "Accent/Orange/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.8333333134651184,
+          "g": 0.39726895093917847,
+          "b": 0.12620192766189575,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-pressed)"
+      },
+      "description": "LVRS Orange Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:65",
+      "key": "49c0addba07713b4f8997628befcb5f3f0d7c9a6",
+      "name": "Accent/Orange/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.35588234663009644,
+          "g": 0.2250630408525467,
+          "b": 0.14374293386936188,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-selected)"
+      },
+      "description": "LVRS Orange Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:66",
+      "key": "c9b2b280d603f10d1646da9587a164edbb44fc21",
+      "name": "Accent/Orange/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.47672274708747864,
+          "b": 0.15144230425357819,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-disabled)"
+      },
+      "description": "LVRS Orange Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:67",
+      "key": "82acee9eccefdc781a78ab0c15f0852deb6ef420",
+      "name": "Accent/Orange/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2785882353782654,
+          "g": 0.19486388564109802,
+          "b": 0.14281900227069855,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-subtle)"
+      },
+      "description": "LVRS Orange Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:68",
+      "key": "a225692a63f05bd216b700b3256d5b7d85e9dcb6",
+      "name": "Accent/Orange/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.4503529369831085,
+          "g": 0.26197314262390137,
+          "b": 0.14487217366695404,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-outline)"
+      },
+      "description": "LVRS Orange Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:69",
+      "key": "a1a3ab3b543f29b9059ab41d20cda84039d0271c",
+      "name": "Accent/Orange/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.47672274708747864,
+          "b": 0.15144230425357819,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-overlay)"
+      },
+      "description": "LVRS Orange Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:70",
+      "key": "a853388dbb845b3e6b52d44a1f9d1f30753a3867",
+      "name": "Accent/Orange/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 0.6337059140205383,
+          "b": 0.40600961446762085,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-orange-text)"
+      },
+      "description": "LVRS Orange Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:71",
+      "key": "4fb69bfe54940f630dd95a70e2916b726073bf16",
+      "name": "Accent/Brown/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.23357684910297394,
+          "g": 0.12343306094408035,
+          "b": 0.08285380899906158,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-hover)"
+      },
+      "description": "LVRS Brown Hover. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:72",
+      "key": "7a17bdc252ae107972bc9fa353e2135c63111c1a",
+      "name": "Accent/Brown/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.21800506114959717,
+          "g": 0.11520419269800186,
+          "b": 0.07733022421598434,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-pressed)"
+      },
+      "description": "LVRS Brown Pressed. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:73",
+      "key": "bb2ebbc392b40c3fb775fe9dae999e95d3fb85d9",
+      "name": "Accent/Brown/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.17128387093544006,
+          "g": 0.1404436230659485,
+          "b": 0.12908142805099487,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-selected)"
+      },
+      "description": "LVRS Brown Selected. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:74",
+      "key": "078ada3a0fb195e3390788b68fbb583cffaa6f2f",
+      "name": "Accent/Brown/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2616060674190521,
+          "g": 0.13824503123760223,
+          "b": 0.09279626607894897,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-disabled)"
+      },
+      "description": "LVRS Brown Disabled. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:75",
+      "key": "7a7d87068c6c9b1f34c83c7c611b961f6d6d15c1",
+      "name": "Accent/Brown/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.1604452133178711,
+          "g": 0.14070744812488556,
+          "b": 0.13343563675880432,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-subtle)"
+      },
+      "description": "LVRS Brown Subtle. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:76",
+      "key": "ffbf9621374ca17d64b25858e1478b1176d1811b",
+      "name": "Accent/Brown/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.18453112244606018,
+          "g": 0.14012116193771362,
+          "b": 0.12375959753990173,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-outline)"
+      },
+      "description": "LVRS Brown Outline. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:77",
+      "key": "55b881a9cc51d1a08f80aeab4ee0494edc90f52d",
+      "name": "Accent/Brown/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.2616060674190521,
+          "g": 0.13824503123760223,
+          "b": 0.09279626607894897,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-overlay)"
+      },
+      "description": "LVRS Brown Overlay. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:78",
+      "key": "21a8a8ebed290a14f703830f863fdbf56c333e67",
+      "name": "Accent/Brown/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.595413088798523,
+          "g": 0.5278200507164001,
+          "b": 0.5029174089431763,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-brown-text)"
+      },
+      "description": "LVRS Brown Text. Release reuses Hover; Focus reuses Text for visible contrast."
+    },
+    {
+      "id": "VariableID:1571:79",
+      "key": "c165d57bab0cc314ab4f85334fed7c313a153bea",
+      "name": "Accent/Cyan/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.11541345715522766,
+          "g": 0.7373683452606201,
+          "b": 0.8928571343421936,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-hover)"
+      },
+      "description": "LVRS Cyan Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:80",
+      "key": "77bcf6fdc37039987a8c19cd39e643b735d340a2",
+      "name": "Accent/Cyan/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.10771922767162323,
+          "g": 0.6882104873657227,
+          "b": 0.8333333134651184,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-pressed)"
+      },
+      "description": "LVRS Cyan Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:81",
+      "key": "63edc7eff794716ecf85aaaaaf11e8792b8f3476",
+      "name": "Accent/Cyan/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.138198122382164,
+          "g": 0.3123455047607422,
+          "b": 0.35588234663009644,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-selected)"
+      },
+      "description": "LVRS Cyan Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:82",
+      "key": "038752b48fdb3df8091a06966d85475fa9ed0397",
+      "name": "Accent/Cyan/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.12926307320594788,
+          "g": 0.8258525729179382,
+          "b": 1,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-disabled)"
+      },
+      "description": "LVRS Cyan Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:83",
+      "key": "a465386e165a0e6da9af3ac0d4c4ee9f791c8a50",
+      "name": "Accent/Cyan/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.1392703354358673,
+          "g": 0.2507246434688568,
+          "b": 0.2785882353782654,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-subtle)"
+      },
+      "description": "LVRS Cyan Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:84",
+      "key": "fcda0333ad81081eea0a1f98b93963f41166ac70",
+      "name": "Accent/Cyan/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.13688765466213226,
+          "g": 0.38765987753868103,
+          "b": 0.4503529369831085,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-outline)"
+      },
+      "description": "LVRS Cyan Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:85",
+      "key": "e7dc53e90d73ee55e5e786e3d5c9770750bd2ace",
+      "name": "Accent/Cyan/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.12926307320594788,
+          "g": 0.8258525729179382,
+          "b": 1,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-overlay)"
+      },
+      "description": "LVRS Cyan Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:86",
+      "key": "72509f94ed704236a444b7e14f61c0d2509017f9",
+      "name": "Accent/Cyan/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.39048415422439575,
+          "g": 0.8780968189239502,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-cyan-text)"
+      },
+      "description": "LVRS Cyan Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:87",
+      "key": "2103502d3d5354181d646b93cf9c679c63751351",
+      "name": "Accent/Teal/Hover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.6955491900444031,
+          "b": 0.7728325128555298,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-hover)"
+      },
+      "description": "LVRS Teal Hover. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:88",
+      "key": "4d63e166e422ed4612a955f9011352957613dde2",
+      "name": "Accent/Teal/Pressed",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.6491792798042297,
+          "b": 0.7213103175163269,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-pressed)"
+      },
+      "description": "LVRS Teal Pressed. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:89",
+      "key": "928af5700ae90c3aecc7d289ff2a900239f40f8c",
+      "name": "Accent/Teal/Selected",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.10588236153125763,
+          "g": 0.3006361424922943,
+          "b": 0.32227545976638794,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-selected)"
+      },
+      "description": "LVRS Teal Selected. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:90",
+      "key": "50006dd6a5c077a91eacf66871f996a988b44e2a",
+      "name": "Accent/Teal/Disabled",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.7790151238441467,
+          "b": 0.8655723929405212,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-disabled)"
+      },
+      "description": "LVRS Teal Disabled. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:91",
+      "key": "f6a1669b2eccf6dfd1b13a5f1d59a2d4c39d5987",
+      "name": "Accent/Teal/Subtle",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.11858823895454407,
+          "g": 0.2432306557893753,
+          "b": 0.2570798099040985,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-subtle)"
+      },
+      "description": "LVRS Teal Subtle. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:92",
+      "key": "2c1058b5a911b2e5a022709efc30eb3c923f1184",
+      "name": "Accent/Teal/Outline",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.09035294502973557,
+          "g": 0.37079837918281555,
+          "b": 0.40195900201797485,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-outline)"
+      },
+      "description": "LVRS Teal Outline. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:93",
+      "key": "b5511a5670cd0dd78027b6767a845e150e794931",
+      "name": "Accent/Teal/Overlay",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0,
+          "g": 0.7790151238441467,
+          "b": 0.8655723929405212,
+          "a": 0.250980406999588
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-overlay)"
+      },
+      "description": "LVRS Teal Overlay. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:94",
+      "key": "ccffcbcaab0893fc065cc02f8ccca9fc963df536",
+      "name": "Accent/Teal/Text",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.30000001192092896,
+          "g": 0.8453105688095093,
+          "b": 0.9059006571769714,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-accent-teal-text)"
+      },
+      "description": "LVRS Teal Text. Release reuses Hover; Focus reuses Default."
+    },
+    {
+      "id": "VariableID:1571:95",
+      "key": "0c01e98b5da63f791cb3d05d46acc9c17629e343",
+      "name": "Alert/canvas",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.054901961237192154,
+          "g": 0.05882352963089943,
+          "b": 0.062745101749897,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-canvas)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:96",
+      "key": "9ed072ddf7cb2b87d8489e355b46f869b9989700",
+      "name": "Alert/surface",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.11372549086809158,
+          "g": 0.12156862765550613,
+          "b": 0.12941177189350128,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-surface)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:97",
+      "key": "2c73f32c18c912a50bb4d418f880552db7f248f2",
+      "name": "Alert/border",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.27450981736183167,
+          "g": 0.29411765933036804,
+          "b": 0.3137255012989044,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-border)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:98",
+      "key": "6cedfaf14c57dd3f54ae73f3764fdbd5b1f70694",
+      "name": "Alert/divider",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.21176470816135406,
+          "g": 0.23137255012989044,
+          "b": 0.24705882370471954,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-divider)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:1571:99",
+      "key": "84a8f592444cbf3b50de57cfa39762a808eaa4d6",
+      "name": "Alert/textPrimary",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.95686274766922,
+          "g": 0.9607843160629272,
+          "b": 0.9686274528503418,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-alert-text-primary)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:215:9618",
+      "key": "1f0635c7724509149a06c3e3b411923801f179ba",
+      "name": "Panel/surfaceSolid",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.11397916078567505,
+          "g": 0.11664287745952606,
+          "b": 0.11664287745952606,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-solid)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceSolid; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9620",
+      "key": "2eb084bb81b3259786916cb50095c6e02ad0beeb",
+      "name": "Panel/surfaceAlt",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.12302529811859131,
+          "g": 0.12528030574321747,
+          "b": 0.12753531336784363,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-alt)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceAlt; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9621",
+      "key": "9d590a15e3819ea67abb2d2da36863bf8f089ca5",
+      "name": "Panel/surfaceInteractive",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.1411764770746231,
+          "g": 0.1411764770746231,
+          "b": 0.1411764770746231,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-interactive)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceInteractive; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9622",
+      "key": "766f39a5a692aed267d1a1c444c8be3d8422c09a",
+      "name": "Panel/surfacePanel",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.13709451258182526,
+          "g": 0.14029954373836517,
+          "b": 0.14190204441547394,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-panel)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfacePanel; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9623",
+      "key": "57e2ed915350311c05a41d586aaf1b6db33028bb",
+      "name": "Panel/surfaceControl",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.14820532500743866,
+          "g": 0.15256911516189575,
+          "b": 0.15256911516189575,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-control)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceControl; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9624",
+      "key": "8fed076f7bd3a63fddaf41cded41e69c115eed50",
+      "name": "Panel/surfaceInput",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.1555851548910141,
+          "g": 0.15707255899906158,
+          "b": 0.15855994820594788,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-input)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceInput; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9625",
+      "key": "fbf7c7876928c427e860d34b8d27e5e11f38d28e",
+      "name": "Panel/surfaceInputHover",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.17537428438663483,
+          "g": 0.1819191724061966,
+          "b": 0.18410080671310425,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-input-hover)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceInputHover; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:215:9626",
+      "key": "bc403375ef0e6802cdde781868975f618fda4031",
+      "name": "Panel/surfaceRaised",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.19355684518814087,
+          "g": 0.1978072077035904,
+          "b": 0.19993239641189575,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-raised)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceRaised; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:458",
+      "key": "b9eb79522b0c49771e72b8d069288f0ad012614c",
+      "name": "Text/titleHeaderColor",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.8999999761581421
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-text-title-header-color)"
+      },
+      "description": "LVRS Theme.qml: Theme.titleHeaderColor; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:459",
+      "key": "f02cb32ddfa0f0adf060ca43bc770308d75a1849",
+      "name": "Text/bodyColor",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.800000011920929
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-text-body-color)"
+      },
+      "description": "LVRS Theme.qml: Theme.bodyColor; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:460",
+      "key": "dca071e689a35fddf5918654f868d8c48294bfce",
+      "name": "Text/descriptionColor",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.6000000238418579
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-text-description-color)"
+      },
+      "description": "LVRS Theme.qml: Theme.descriptionColor; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:461",
+      "key": "b085e9367e2fe7a94374ea62e2bb1f8f423c6145",
+      "name": "Text/captionColor",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.5
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-text-caption-color)"
+      },
+      "description": "LVRS Theme.qml: Theme.captionColor; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:462",
+      "key": "7ef4e9a782a274cc1c70bf71f20c867f33d9f89c",
+      "name": "Text/disabledColor",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.30000001192092896
+        }
+      },
+      "scopes": [
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-text-disabled-color)"
+      },
+      "description": "LVRS Theme.qml: Theme.disabledColor; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:463",
+      "key": "39025608407b8b915ab8ce52aeba504f1d7a403e",
+      "name": "Action/primary",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:1305:76"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-action-primary)"
+      },
+      "description": "LVRS Theme.qml: Theme.primary; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:464",
+      "key": "b5a73da6ca864dd670552f3732886fd91b25adef",
+      "name": "Action/success",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:1305:78"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-action-success)"
+      },
+      "description": "LVRS Theme.qml: Theme.success; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:465",
+      "key": "fed439ecee70e41b0b01c28c26674a9360fce2e1",
+      "name": "Action/warning",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:1305:79"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-action-warning)"
+      },
+      "description": "LVRS Theme.qml: Theme.warning; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:466",
+      "key": "5f114cefd8a0031d43a923740913276ecb31b196",
+      "name": "Action/danger",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:1305:77"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "TEXT_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-action-danger)"
+      },
+      "description": "LVRS Theme.qml: Theme.danger; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:467",
+      "key": "174c7dda90ad853083e8c9e47da8e5c4a68d15d1",
+      "name": "Panel/canvas",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.04892867058515549,
+          "g": 0.04892867058515549,
+          "b": 0.05038686841726303,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-canvas)"
+      },
+      "description": "LVRS Theme.qml: Theme.canvas; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:468",
+      "key": "99ef1897c6482481e266b583f589fcebd235e646",
+      "name": "Panel/surfaceGhost",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.05507083609700203,
+          "g": 0.05517596751451492,
+          "b": 0.05570162087678909,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-surface-ghost)"
+      },
+      "description": "LVRS Theme.qml: Theme.surfaceGhost; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:469",
+      "key": "fc8de92714f0197efd6f359a144757aeca677f3a",
+      "name": "Panel/windowAlt",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.08394163101911545,
+          "g": 0.08394163101911545,
+          "b": 0.08631309866905212,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-window-alt)"
+      },
+      "description": "LVRS Theme.qml: Theme.windowAlt; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:44:470",
+      "key": "d85cd617845f702e5e60f0b0549c9fa9ba490420",
+      "name": "Panel/subSurface",
+      "collectionId": "VariableCollectionId:44:457",
+      "type": "COLOR",
+      "valuesByMode": {
+        "44:0": {
+          "r": 0.09516431391239166,
+          "g": 0.09655113518238068,
+          "b": 0.09793794900178909,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-theme-colors-panel-sub-surface)"
+      },
+      "description": "LVRS Theme.qml: Theme.subSurface; canonical theme token. No color-level palette."
+    },
+    {
+      "id": "VariableID:675:3",
+      "key": "5968a86e1193b7cda3563ef0e8e832d740c6b720",
+      "name": "Glass/Fill",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.11372549086809158,
+          "g": 0.12156862765550613,
+          "b": 0.12941177189350128,
+          "a": 0.7200000286102295
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-glass-fill)"
+      },
+      "description": "Alert overlay glass. Figma material specification."
+    },
+    {
+      "id": "VariableID:675:4",
+      "key": "9d4d914d28be2cdbd822debec4d90c4f7a97115f",
+      "name": "Glass/Edge",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.20000000298023224
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-glass-edge)"
+      },
+      "description": "Alert overlay glass. Figma material specification."
+    },
+    {
+      "id": "VariableID:675:5",
+      "key": "760cf7c2f0072914a6f9d2c82998a8815ea2f95d",
+      "name": "Glass/Foreground",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.8392156958580017,
+          "g": 0.8509804010391235,
+          "b": 0.8745098114013672,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "TEXT_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-glass-foreground)"
+      },
+      "description": "Alert overlay glass. Figma material specification."
+    },
+    {
+      "id": "VariableID:712:10",
+      "key": "4e0fe0b5a120b30b7f6878baac9e53bdc6c20edf",
+      "name": "TextField/Fill",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.1555851548910141,
+          "g": 0.15707255899906158,
+          "b": 0.15855994820594788,
+          "a": 0.6399999856948853
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-text-field-fill)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:712:12",
+      "key": "a971d5b2e3f98a2e99a20b953db39a4f4e7a2f49",
+      "name": "TextField/Disabled",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.1555851548910141,
+          "g": 0.15707255899906158,
+          "b": 0.15855994820594788,
+          "a": 0.36000001430511475
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-text-field-disabled)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:712:14",
+      "key": "a1492244fa4a478bd1da1294ded68f82a22890f9",
+      "name": "TextField/Inline",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.1555851548910141,
+          "g": 0.15707255899906158,
+          "b": 0.15855994820594788,
+          "a": 0.1599999964237213
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-text-field-inline)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:712:16",
+      "key": "0dc55fc29ab4d180f109b443e978a9cf2e9c28b1",
+      "name": "TextField/Reflection",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.017999999225139618
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-text-field-reflection)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:890:3",
+      "key": "8059ffdb5997e9aef796ff6e22d6196d8c502e87",
+      "name": "Current color",
+      "collectionId": "VariableCollectionId:890:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "890:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:1305:80"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-color-picker-current-color)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:890:4",
+      "key": "48194caed66827a82f836567feee833ce19d0d99",
+      "name": "Hue color",
+      "collectionId": "VariableCollectionId:890:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "890:0": {
+          "r": 0.1882352977991104,
+          "g": 0,
+          "b": 1,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-color-picker-hue-color)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:890:5",
+      "key": "f4854cc6ec8387cf8a374d722242bf5c260defa7",
+      "name": "Previous color",
+      "collectionId": "VariableCollectionId:890:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "890:0": {
+          "type": "VARIABLE_ALIAS",
+          "id": "VariableID:44:463"
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-color-picker-previous-color)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:890:6",
+      "key": "b77450ae47836dbc02409c2eaac7defb1a73242b",
+      "name": "Hex",
+      "collectionId": "VariableCollectionId:890:2",
+      "type": "STRING",
+      "valuesByMode": {
+        "890:0": "7A5AF8"
+      },
+      "scopes": [],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-color-picker-hex)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:890:7",
+      "key": "6db8bc3afe8347e4350ff933ddeab02da7c60b82",
+      "name": "Opacity",
+      "collectionId": "VariableCollectionId:890:2",
+      "type": "STRING",
+      "valuesByMode": {
+        "890:0": "100"
+      },
+      "scopes": [],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-color-picker-opacity)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:941:26",
+      "key": "514f18d40665efaa068563197ea44073929cce47",
+      "name": "Surface/Dense/Fill",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.0784313753247261,
+          "g": 0.0784313753247261,
+          "b": 0.0784313753247261,
+          "a": 0.75
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-surface-dense-fill)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:941:27",
+      "key": "0c1b5c64c904e3d7722f930ad5dd1b26a67be97f",
+      "name": "Surface/Glass/Fill",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.0784313753247261,
+          "g": 0.0784313753247261,
+          "b": 0.0784313753247261,
+          "a": 0.25
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-surface-glass-fill)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:941:28",
+      "key": "5dcdfda9ee407dd628b38be0e9ac20ba8849db2f",
+      "name": "Surface/Dense/Edge",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.11999999731779099
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-surface-dense-edge)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:941:29",
+      "key": "f771a2de72de230bb99da3bb415414ad3aff2202",
+      "name": "Surface/Glass/Edge",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.2199999988079071
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL",
+        "STROKE_COLOR"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-surface-glass-edge)"
+      },
+      "description": ""
+    },
+    {
+      "id": "VariableID:954:3",
+      "key": "a4bdffd7340dfe733c98fd393628b4642fb2a7c5",
+      "name": "Backdrop/Base",
+      "collectionId": "VariableCollectionId:675:2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "675:0": {
+          "r": 0.04313725605607033,
+          "g": 0.07058823853731155,
+          "b": 0.125490203499794,
+          "a": 1
+        }
+      },
+      "scopes": [
+        "FRAME_FILL",
+        "SHAPE_FILL"
+      ],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {
+        "WEB": "var(--lvrs-material-backdrop-base)"
+      },
+      "description": ""
+    }
+  ]
+}

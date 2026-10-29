@@ -1,0 +1,11 @@
+# 네이티브 모델 조회를 뷰에 연결하기
+
+LVUI는 모델을 해석하는 스크립트 런타임을 두지 않는다. `import source lvrs.ModelSource`와 `import adapter lvrs.ModelAdapter`는 활성 뷰의 scope에 C++ 인스턴스를 한 번 생성한다. 일반 getter 읽기는 iiSDKCore 관측 의존성을 수집하고 변경된 표시를 갱신한다. `@Static` 선언은 첫 값의 사본을 유지한다.
+
+`tests/fixtures/NativeModelSource.lvui`는 빈 소스와 adapter를 직접 import한다. `NativeModelSourceSelection.lvui`는 C++ backend가 가진 소스의 행 수·첫 역할 값·revision을 읽는다. Append·Column·Replace 버튼은 C++ 메서드 참조이며 자료 삽입·열 선택·모델 교체는 네이티브 메서드에서 실행한다. LVUI 본문에는 행 변환 루프나 파일 갱신 로직이 없다.
+
+자료 표현은 `Value` 배열, 빌린 `ItemModel`, 빌린 `ModelSequence`이다. 원본의 속성 객체는 기존 `ModelProperties` 읽기 인터페이스를 사용한다. provider를 강하게 소유하는 책임은 backend에 있으며 소스는 구독과 조회만 담당한다. 뷰 scope가 폐기되면 backend와 바인딩 구독도 폐기된다.
+
+두 예제는 C++ 코드 생성·컴파일 대상과 LVRS 설치 후 재배치 소비자에 포함된다. 원본 자료 변경 통지를 기존 widget에 반영하고 입력·포커스·content generation을 보존하는 계약을 LVRS 통합 테스트로 준비한다. LVRS 실행은 전체 작업의 마지막 검증 단계에 유보한다. 자세한 자료·이벤트·변환 계약은 LVRS 모듈의 `docs/native/ModelSources.md`에 있다.
+
+이 추가는 Dreamscapes 변환·실행·설치의 증거가 아니며, 기존 QML을 계속 관측 대상으로 유지한다.

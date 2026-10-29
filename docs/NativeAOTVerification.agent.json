@@ -1,0 +1,432 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5edf12ebc4aa57e2caf6eb7415dad090c5e6d7b60ee6720fdd5e3031fe081d75",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeAOTVerification.md",
+    "sha256": "cfd976516d6e53d0ca599606cf486d4a567f567fb035e98a453bb89a2e59f51b",
+    "bytes": 5259,
+    "line_count": 79,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "AOT·Cocoa Hello World 검증",
+    "role": "evidence",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# AOT·Cocoa Hello World 검증\n",
+      "level": 1,
+      "title": "AOT·Cocoa Hello World 검증"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 3,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "quote",
+      "start_line": 4,
+      "end_line": 5,
+      "raw": "> 이 문서는 초기 AppKit 컨트롤 구현의 검증 기록이다. 현재 구현은\n> [LVRS 자체 위젯](LVRSNative.md)과 iiGUI GPU 렌더러를 사용하며 OS 컨트롤을 생성하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 8,
+      "raw": "검증일은 2026-10-22이며 macOS arm64, AppleClang 21, C++23 환경이다.\nLVUI는 Debug, iiGUI와 Hello World는 Release 구성이다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "## 빌드와 회귀 검사\n",
+      "level": 2,
+      "title": "빌드와 회귀 검사"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 12,
+      "end_line": 14,
+      "raw": "`LVUI/build`에서 코드 생성기·라이브러리·테스트를 빌드하고,\n`iiGUI/build`에서 AppKit 백엔드와 생성한 Hello World를 빌드했다.\nQt5·Qt6 패키지 탐색을 비활성화한 구성이다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "list",
+      "start_line": 16,
+      "end_line": 27,
+      "raw": "- LVUI 코드 생성 검사: 직접 위젯 호출, 결정적인 출력, 입력 타입·지원 범위,\n  소스 행·열, 백엔드 메서드 참조, UTF-8·문자열 escape·숫자 정규화를 검사한다.\n- 명령행·빌드 도구 검사: 공백 경로, 실패 시 빈 출력, 잘못된 인자·include,\n  1 MiB 한계, 실패한 생성이 기존 산출물을 보존하는지 검사한다.\n- LVUI CTest 20개 통과: 기존 파서·전체 예약어·소스 조사와 AOT 검사 5개 그룹을 포함한다.\n- iiGUI CTest 35개 통과: 새 위젯 검사 6개와 Hello World 실행을 포함하며,\n  기존 호스트·Core I/O·작업·프레임·Metal·Vulkan·캔버스 경로도 통과했다.\n- `tests/widgets.mm`는 실제 AppKit 객체에 `isKindOfClass`를 적용하고\n  Auto Layout 모호성·너비 변경·작업자 접근 거부·실패 복구·정체성 교체를 검사한다.\n  반복 클릭·비활성 버튼·스코프 소멸·자기 해제·예외 후 종료도 검사한다.\n- 별도의 Debug ASan·UBSan 빌드에서 새 위젯 검사 6개와 Hello World 실행, 총 7개가 통과했다.\n  위젯과 Metal 캔버스 사이의 성공·실패 교체도 검사한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "LVUI 코드 생성 검사: 직접 위젯 호출, 결정적인 출력, 입력 타입·지원 범위,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "명령행·빌드 도구 검사: 공백 경로, 실패 시 빈 출력, 잘못된 인자·include,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "LVUI CTest 20개 통과: 기존 파서·전체 예약어·소스 조사와 AOT 검사 5개 그룹을 포함한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "iiGUI CTest 35개 통과: 새 위젯 검사 6개와 Hello World 실행을 포함하며,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`tests/widgets.mm`는 실제 AppKit 객체에 `isKindOfClass`를 적용하고",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "별도의 Debug ASan·UBSan 빌드에서 새 위젯 검사 6개와 Hello World 실행, 총 7개가 통과했다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "heading",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "## 실제 Hello World\n",
+      "level": 2,
+      "title": "실제 Hello World"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "`iiGUI/examples/HelloWorld/HelloWorld.lvui`를 빌드 호스트의 `lvui-compile`로 생성하고,\n출력 `HelloWorld.generated.h`를 C++23으로 컴파일하여 `HelloWorld.app`을 만들었다.\n소스에 실제 위젯 트리와 두 개의 C++ 메서드 참조가 있다.\n네이티브 실행 파일은 Mach-O arm64이며 마운트된 Cocoa 위젯은 9개이다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 40,
+      "raw": "실행 시 실제 클래스는 `NSStackView` 2개, `NSTextField` 5개, `NSButton` 2개이다.\n초기 콘텐츠 720×420에서 820×460으로 변경하고 루트 너비도 820으로 반영됨을 검사했다.\n250 ms Core 타이머, 작업자 계산 결과 42의 UI 반영, 두 번의 네이티브 버튼 동작,\n네이티브 닫기 동작을 거쳐 `main`으로 정상 반환했다.\n가져온 백엔드 생성·소멸 횟수는 각각 1이며 오래된 핸들 접근은 거부된다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 42,
+      "end_line": 44,
+      "raw": "```text\nHELLO_WORLD_AOT_OK native=Cocoa timer=true background=42 resize=true actions=2 closed=true scopes=1/1\n```\n",
+      "language": "text",
+      "code": "HELLO_WORLD_AOT_OK native=Cocoa timer=true background=42 resize=true actions=2 closed=true scopes=1/1\n",
+      "closed": true
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "## 설치 소비자와 실행 의존성\n",
+      "level": 2,
+      "title": "설치 소비자와 실행 의존성"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 48,
+      "end_line": 54,
+      "raw": "재현 절차는 iiGUI의 `tests/aot_package.cmake`와 `docs/NativeWidgets.md`에 있다.\n설치된 Core와 이번 LVUI·iiGUI 패키지를 스테이징하여 위치를 이동한 후,\n설치된 예제를 복사한 별도 프로젝트를 exported target만으로 빌드한다.\n소비자의 소스와 `lvui-compile`을 잠시 사용할 수 없는 경로로 이동하여 실행하고 복원한다.\n검증 결과·링크 의존성·심볼·JUnit 로그는 소비자 검증 디렉터리에 남긴다.\n`iiGUI/build/aot-consumer`에서 실제로 수행했고 설치 소비자 CTest 1개가 통과했다.\n소스·도구가 없는 실행과 파서 심볼·Qt 링크 부재도 검사했다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "증거 파일은 다음과 같다. 모두 각 저장소의 `build/` 아래에 있다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "list",
+      "start_line": 58,
+      "end_line": 63,
+      "raw": "- `LVUI/build/aot-tests.xml`: 최종 LVUI 20개 검사.\n- `LVUI/build/aot-documentation-qa.json`: Markdown 19개·상대 링크 130개·링크된 앵커 17개의 검사.\n- `iiGUI/build/aot-regression-tests.xml`: 최종 iiGUI 35개 검사.\n- `iiGUI/build/aot-sanitizer/build/aot-sanitizer-tests.xml`: ASan·UBSan 7개 검사.\n- `iiGUI/build/aot-consumer/verification.json`: 패키지 재배치·독립 실행·의존성 검사 결과.\n- `iiGUI/build/aot-consumer/build.log`, `runtime.log`, `tests.xml`, `dependencies.txt`, `symbols.txt`.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`LVUI/build/aot-tests.xml`: 최종 LVUI 20개 검사.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`LVUI/build/aot-documentation-qa.json`: Markdown 19개·상대 링크 130개·링크된 앵커 17개의 검사.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI/build/aot-regression-tests.xml`: 최종 iiGUI 35개 검사.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI/build/aot-sanitizer/build/aot-sanitizer-tests.xml`: ASan·UBSan 7개 검사.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI/build/aot-consumer/verification.json`: 패키지 재배치·독립 실행·의존성 검사 결과.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI/build/aot-consumer/build.log`, `runtime.log`, `tests.xml`, `dependencies.txt`, `symbols.txt`.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 65,
+      "end_line": 68,
+      "raw": "일반 `~/.local` SDK 설치본은 교체하지 않는다. 이는 설치 패키지 소비 검증이며\nCore·MoltenVK까지 내장한 독립 배포 번들의 패키징 검증은 아니다.\nHello World는 GPU 캔버스를 할당하지 않으며 기존 패키지가 링크하는 MoltenVK는 외부 네이티브 키트이다.\n실행 파일에서 Qt 의존성과 LVUI 파서·컴파일러 심볼이 없어야 한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "## 구현 범위\n",
+      "level": 2,
+      "title": "구현 범위"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 72,
+      "end_line": 79,
+      "raw": "이 문서의 초기 단계 기록은 당시 macOS AOT 생성·마운트·실행을 다룬다.\n현재 LVRS 경로는 iiGUI 자체 C++ 위젯을 단일 Cocoa/GPU 표면에 그리며\nNSButton·NSTextField 같은 OS 컨트롤을 래핑하지 않는다. 후속 Alert의 실제 그림자와\n프레임 모션·공유 모션 설정·설치 소비자 결과는\n[현재 LVRS 검증 기록](../../LVRS/docs/native/Verification.md)과\n[AOT 지원 계약](LVRSNative.md)을 기준으로 한다.\n모든 예약 컴포넌트의 위젯 구현, Windows·Linux 네이티브 위젯 마운트,\n일반 반응형 바인딩과 LVUI GPU·셰이더 코드 자동 생성을 검증한 것은 아니다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "AOT·Cocoa Hello World 검증",
+      "anchor": "aotcocoa-hello-world-검증",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "빌드와 회귀 검사",
+      "anchor": "빌드와-회귀-검사",
+      "start_line": 10
+    },
+    {
+      "block_id": "b000013",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실제 Hello World",
+      "anchor": "실제-hello-world",
+      "start_line": 29
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "설치 소비자와 실행 의존성",
+      "anchor": "설치-소비자와-실행-의존성",
+      "start_line": 46
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "구현 범위",
+      "anchor": "구현-범위",
+      "start_line": 70
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "> [LVRS 자체 위젯](LVRSNative.md)과 iiGUI GPU 렌더러를 사용하며 OS 컨트롤을 생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "quote"
+      },
+      {
+        "block_id": "b000029",
+        "line": 65,
+        "text": "일반 `~/.local` SDK 설치본은 교체하지 않는다. 이는 설치 패키지 소비 검증이며",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 74,
+        "text": "NSButton·NSTextField 같은 OS 컨트롤을 래핑하지 않는다. 후속 Alert의 실제 그림자와",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "LVRS 자체 위젯",
+        "target": "LVRSNative.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000033",
+        "label": "현재 LVRS 검증 기록",
+        "target": "../../LVRS/docs/native/Verification.md",
+        "kind": "relative",
+        "line": 76
+      },
+      {
+        "block_id": "b000033",
+        "label": "AOT 지원 계약",
+        "target": "LVRSNative.md",
+        "kind": "relative",
+        "line": 77
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

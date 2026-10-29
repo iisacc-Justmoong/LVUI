@@ -1,0 +1,17 @@
+import vm NativeOwnedModalModel
+Window {
+    VStack {
+        Label(id: "editor", text: "Outer")
+        Modal(id: "dialog", title: vm.title, description: vm.description, preferredWidth: vm.width,
+              buttonCount: 2, primaryText: "Save", secondaryText: "Cancel", secondaryEnabled: vm.cancelEnabled,
+              motionEnabled: false, onPrimaryClicked: vm.saved, onOpened: vm.opened,
+              onClosed: vm.closed, onCanceled: vm.canceled) {
+            VStack {
+                InputField(id: "editor", text: vm.text, onEdited: vm.edited)
+                Modal(id: "nested", title: "Nested", showIcon: false, motionEnabled: false) {
+                    Label(id: "nestedLabel", text: "Nested body")
+                }
+            }
+        }
+    }
+}

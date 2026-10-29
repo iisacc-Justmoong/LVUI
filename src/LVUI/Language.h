@@ -1,6 +1,7 @@
 #pragma once
 #include <LVUI/Document.h>
 #include <span>
+#include <memory>
 
 namespace lvui {
 enum class KeywordKind { view, modifier, type, declaration, literal };
@@ -11,7 +12,7 @@ struct Keyword final {
     std::size_t source_line;
     bool internal;
 };
-// Sorted, process-lifetime descriptors generated from the audited LVRS snapshot.
+// Sorted, process-lifetime descriptors generated from LVUI's own registry.
 [[nodiscard]] std::span<const Keyword> keywords() noexcept;
 [[nodiscard]] const Keyword* find_keyword(std::string_view) noexcept;
 [[nodiscard]] bool is_reserved_identifier(std::string_view) noexcept;
@@ -19,7 +20,10 @@ struct Keyword final {
 enum class TokenKind {
     identifier, keyword, string, number, left_paren, right_paren,
     left_brace, right_brace, left_bracket, right_bracket, colon, comma,
-    dot, equal, minus, newline, end
+    dot, equal, minus, newline, end,
+    plus, star, slash, percent, bang, equal_equal, bang_equal,
+    less, less_equal, greater, greater_equal, logical_and, logical_or,
+    question, annotation, arrow
 };
 struct Token final {
     TokenKind kind;
@@ -40,30 +44,70 @@ enum class ValueKind {
     list,
     color,
     metric,
-    style_member
+    style_member,
+    unary,
+    binary,
+    conditional,
+    index,
+    member,
+    invocation,
+    view,
+    internal_argument // Compiler-owned capture; never emitted by a source parser.
 };
+struct SourcePosition final { std::size_t offset = 0, line = 1, column = 1; };
+struct View;
 struct Value final {
     ValueKind kind;
     std::string text;
     std::vector<Value> elements; // Positional call inputs or list elements.
+    SourcePosition position{};
+    std::shared_ptr<const View> view{};
 };
 [[nodiscard]] Value style_token_literal(const StyleTokenValue&);
-struct SourcePosition final { std::size_t offset = 0, line = 1, column = 1; };
 struct Input final { std::string name; Value value; SourcePosition position; }; // Empty name means positional.
+enum class BindingAnnotation { none, observable, static_value };
+struct CallableSignature final {
+    std::vector<std::string> arguments;
+    std::string result;
+};
+struct ComponentParameter final {
+    std::string name, type;
+    std::optional<Value> default_value;
+    SourcePosition position;
+    std::optional<CallableSignature> callable{};
+};
 struct Binding final {
     std::string name, type;
     Value initializer;
     bool mutable_value = false;
     SourcePosition position;
+    BindingAnnotation annotation = BindingAnnotation::none;
+    std::optional<std::vector<ComponentParameter>> parameters{};
+    std::optional<CallableSignature> callable{};
 };
-struct BackendImport final { std::string name, type; SourcePosition position; };
+struct BackendImport final {
+    std::string name, type;
+    SourcePosition position;
+    bool type_only = false;
+};
+struct Repetition final {
+    std::string item,index;
+    Value source,key;
+    std::vector<Input> options;
+    SourcePosition position;
+};
 struct View final {
-    const Keyword* component = nullptr; // Always KeywordKind::view; static lifetime.
+    const Keyword* component = nullptr; // Builtin keyword, or null for a lexically declared View.
     std::vector<Input> inputs;
     std::vector<View> children; // Arguments passed through {}.
     std::vector<Binding> bindings;
     std::vector<BackendImport> imports;
     SourcePosition position;
+    std::string custom_component{};
+    std::optional<Value> condition{}; // One selected child branch; optional second child is else.
+    std::size_t lexical_context = 0; // Compiler-owned call-site context for a supplied View slot.
+    std::optional<Repetition> repetition{};
+    bool fragment = false; // Compiler-owned transparent [View] composition.
 };
 class ViewDocument;
 using ViewParseResult = std::expected<ViewDocument, Diagnostic>;

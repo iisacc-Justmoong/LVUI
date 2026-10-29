@@ -1,0 +1,7 @@
+import vm NativeOwnedAppHeaderModel
+Window {
+    AppHeader(id: "header", title: vm.title, subtitle: vm.subtitle, compact: vm.compact,
+              menuVisible: vm.menu_visible, onMenuClicked: vm.menu) {
+        Label(id: "action", text: "Action")
+    }
+}

@@ -1,0 +1,7 @@
+import vm NativeMethodQueryModel
+Window { VStack {
+    Label(id: "grouped", text: (vm.selected).format(vm.amount))
+    Label(id: "indexed", text: vm.rows[0].format(vm.amount))
+    Label(id: "result", text: vm.selected.record().count)
+    Label(id: "rvalue", text: vm.selected.record().describe())
+} }

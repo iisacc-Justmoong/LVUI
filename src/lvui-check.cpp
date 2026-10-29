@@ -30,6 +30,6 @@ int main(int argc, char** argv) {
         return 1;
     }
     std::cout << "LVUI component syntax valid: " << count(result->root()) << " Views; root "
-              << result->root().component->spelling << '\n';
+              << (result->root().condition ? "if" : result->root().repetition ? "for" : result->root().component ? result->root().component->spelling : result->root().custom_component) << '\n';
     return 0;
 }

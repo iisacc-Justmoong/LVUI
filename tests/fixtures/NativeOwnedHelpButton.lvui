@@ -1,0 +1,7 @@
+import vm NativeOwnedHelpButtonModel
+Window {
+    VStack {
+        HelpButton(id: "help", onClick: vm.open)
+        HelpButton(id: "custom", text: vm.text, width: vm.width, enabled: vm.enabled, onClick: vm.open)
+    }
+}

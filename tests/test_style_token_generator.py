@@ -13,7 +13,7 @@ spec.loader.exec_module(generator)
 
 class StyleTokenGeneratorTests(unittest.TestCase):
     def setUp(self):
-        self.data = json.loads((ROOT / "catalog/lvrs-style-tokens.json").read_text(encoding="utf-8"))
+        self.data = json.loads((ROOT / "catalog/lvui-style-tokens.json").read_text(encoding="utf-8"))
 
     def test_complete_frozen_catalog(self):
         self.assertEqual(self.data["source"]["fileKey"], "0GkItQYSNIR0lZ3iJhfJzc")

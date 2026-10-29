@@ -1,0 +1,167 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:a0a8338b6ed880b9e8e87d169fd2e96f116a244511340a2d54519de8ab7e6e12",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeOwnedHierarchyItem.md",
+    "sha256": "eb82344e61d36554ec116f860825d764ea9d357974eeaa45495aca02fac26dcf",
+    "bytes": 2984,
+    "line_count": 42,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 계층 행",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 계층 행\n",
+      "level": 1,
+      "title": "LVUI 독립 계층 행"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "기본 `HierarchyItem`은 LVUI의 행 모델과 `NativeHierarchyItem`을 사용한다. 앱의\n교체 가능한 아이콘 공급자와 범용 호스트의 입력·텍스트·그리기를 이용하며 Qt,\nQML 또는 LVRS 위젯을 생성하지 않는다. [계층 소스의 보이는 행](OwnedHierarchyModel.md)은\n`hierarchy_item_configuration()`으로 독립 행 설정에 변환할 수 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 14,
+      "raw": "행은 기본 200×20, 깊이당 8단위 들여쓰기, 18단위 아이콘, 16단위 접기 표시와\n선택적 개수를 사용한다. 기본·호버·누름·선택·비활성·드래그 미리보기 색상과\n치수를 변경할 수 있으며, 좁은 배치에서도 콘텐츠의 크기는 음수가 되지 않는다.\n기본 아이콘이나 앱의 `IconSource`를 사용하고 공급자가 바뀌면 관측 가능한\n`iconRevision`을 갱신한다. 잘못된 후보는 이전 행을 유지한다.\nC++ 호스트는 이미 준비한 불변 래스터 아이콘을 직접 공급할 수도 있다. 이때 이름과\n아이콘을 함께 지정하고 별도의 `IconSource`는 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 21,
+      "raw": "행을 누르면 `onClick`만 전달한다. 자식이 있는 행의 접기 표시를 누르거나 키보드\n왼쪽·오른쪽을 사용하면 펼침을 변경하고 `onExpansionChanged(bool)`를 전달한다.\n접기 표시 활성화 뒤에는 행 활성화도 요청한다. 콜백 중 행이 제거되거나 다른 설정이\n게시되면 오래된 후속 콜백은 보내지 않는다. 동일한 값을 반응형으로 다시 전달하는\n경우에는 후속 활성화를 유지한다. 비활성 행과 자식이 없는 행은 펼치지 않는다.\n이름과 개수 설명은 접근성 정보로 제공하고 접기 표시는 별도의 동작을 제공한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 29,
+      "raw": "선언형 입력은 `text`/`label`, `itemKey`, `itemId`, `count`, `indentLevel`,\n`enabled`, `activatable`/`selectable`, `selected`, `expanded`, `showChevron`,\n`hasChildItems`, `dragPreviewActive`, 아이콘·치수·패딩·색상과 두 콜백을 받는다.\n`width`/`itemWidth`와 `height`/`rowHeight`는 각각 별칭이다. 지원하는 값은 반응형으로\n갱신한다. 드래그 미리보기는 시각 상태만 의미한다. 컨트롤러 연결, 드래그 제스처,\n사용자 `countView`와 계층 목록의 행 대리자는 아직 지원하지 않으며 관련 선언은\n오류로 진단한다. 실제 운영체제 보조 기술과 플랫폼별 렌더링 검증도 남아 있다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "fenced_code",
+      "start_line": 31,
+      "end_line": 38,
+      "raw": "```text\nimport vm LayerBackend\nWindow {\n    HierarchyItem(itemKey: \"camera\", label: vm.label, count: vm.count,\n                  expanded: vm.expanded, hasChildItems: true,\n                  onClick: vm.activate, onExpansionChanged: vm.setExpanded)\n}\n```\n",
+      "language": "text",
+      "code": "import vm LayerBackend\nWindow {\n    HierarchyItem(itemKey: \"camera\", label: vm.label, count: vm.count,\n                  expanded: vm.expanded, hasChildItems: true,\n                  onClick: vm.activate, onExpansionChanged: vm.setExpanded)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 40,
+      "end_line": 42,
+      "raw": "헤드리스 검사는 포인터·키보드·접근성 이름, 반응형 옵션과 잘못된 후보의 보존,\n콜백 중 자기 제거를 다룬다. 생성 실패와 수명 경계는 앱이 소유한 트리 밖의\n부수효과까지 되돌리지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 계층 행",
+      "anchor": "lvui-독립-계층-행",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "QML 또는 LVRS 위젯을 생성하지 않는다. [계층 소스의 보이는 행](OwnedHierarchyModel.md)은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 14,
+        "text": "아이콘을 함께 지정하고 별도의 `IconSource`는 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "계층 소스의 보이는 행",
+        "target": "OwnedHierarchyModel.md",
+        "kind": "relative",
+        "line": 5
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

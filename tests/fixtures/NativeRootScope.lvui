@@ -1,0 +1,14 @@
+import vm NativeFixture
+var count: Int = 3
+let moduleValue: Int = count * 2
+Window {
+    import class Domain.Model
+    import vm Model
+    var count: Int = vm.count + 2
+    let windowValue: Int = count * 3
+    VStack {
+        Label(text: moduleValue)
+        Label(text: windowValue)
+        Label(text: vm.title)
+    }
+}

@@ -1,0 +1,8 @@
+import vm NativeOwnedTableCellItemModel
+Window {
+    VStack(alignment: .leading) {
+        TableCellItem(id: "cell", text: vm.text, valueType: "int", inputable: true,
+                      enabled: vm.enabled, visible: vm.visible, width: vm.width,
+                      onInputEdited: vm.edited, onInputSubmitted: vm.submitted, onInputRejected: vm.rejected)
+    }
+}

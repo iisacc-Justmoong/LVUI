@@ -1,0 +1,6 @@
+import vm NativeSharedCallableBackend
+let Pair(run: () -> Void): View = VStack {
+    PushButton(id: "first", onClick: run)
+    PushButton(id: "again", onClick: run)
+}
+Window { Pair(run: vm.borrow()) }

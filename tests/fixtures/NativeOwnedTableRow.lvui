@@ -1,0 +1,8 @@
+import vm NativeOwnedTableRowModel
+Window {
+    VStack(alignment: .leading) {
+        TableRow(id: "row", cells: vm.cells, cellWidth: 100, inputable: true,
+                 enabled: vm.enabled, visible: vm.visible, width: vm.width,
+                 onCellInputEdited: vm.edited, onCellInputSubmitted: vm.submitted)
+    }
+}

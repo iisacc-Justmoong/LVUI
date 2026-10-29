@@ -1,0 +1,8 @@
+import vm NativeOwnedToolbarButtonModel
+Window {
+    VStack(alignment: .leading) {
+        ToolbarButton(id: "tool", buttonId: vm.identity, iconName: vm.icon, text: vm.text,
+                      visible: vm.visible, enabled: vm.enabled, width: vm.width,
+                      onClick: vm.clicked, onTriggered: vm.triggered)
+    }
+}

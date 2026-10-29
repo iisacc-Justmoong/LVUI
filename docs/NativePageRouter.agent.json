@@ -1,0 +1,202 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:d05579127b7fb994c6e8f8abbde6b1332cdd772f5756ae00cc52004ca10de98b",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativePageRouter.md",
+    "sha256": "6578bb982d4ee3dbb294892ee40db108494fed603e63f807d9d70e0cd023ecd4",
+    "bytes": 3824,
+    "line_count": 51,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 페이지 라우터",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 페이지 라우터\n",
+      "level": 1,
+      "title": "LVUI 페이지 라우터"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "기본 C++ AOT의 `PageRouter`는 LVUI의 경로 해석, 이력과 페이지 게시 계약을 연결한다.\nQt·QML·LVRS 타입이나 팩터리를 사용하지 않는다. 경로의 문법과 제한은\n[경로 계약](NativeRoutes.md), 후보·이력의 제한은 [탐색 이력](NativeNavigationHistory.md)을\n따른다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 11,
+      "raw": "앱은 `lvui::PageRouter::create`에 순서가 있는 `PageRoute` 목록과 선택적인 대체\n페이지를 제공하고 생성된 범위에서 라우터의 수명을 소유한다. `router` 입력은 해당\n화면 세대 동안 유지되는 C++ 멤버이며 교체하려면 화면 세대를 다시 생성한다. `width`와\n`height`의 기본값은 640과 400이고 1–8192 범위의 관찰 가능한 값도 지원한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 13,
+      "end_line": 21,
+      "raw": "```lvui\nimport vm Backend\nWindow {\n    VStack {\n        Link(text: \"Reports\", href: \"/reports/42\")\n        PageRouter(router: vm.router, width: vm.width, height: vm.height)\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm Backend\nWindow {\n    VStack {\n        Link(text: \"Reports\", href: \"/reports/42\")\n        PageRouter(router: vm.router, width: vm.width, height: vm.height)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 30,
+      "raw": "게시된 `PageRouter`는 같은 생성 범위의 `NavigationContext`에 자신을 등록하므로\n명시적 대상이 없는 `Link`가 이를 사용할 수 있다. 링크의 명시적 대상은 이 기본값보다\n우선한다. 여러 라우터가 같은 범위를 공유하면 마지막으로 게시된 라우터가 기본 대상이다.\n페이지는 `NativeNavigationPage::build`를 구현하거나 `FunctionalNavigationPage`에\n팩터리를 제공한다. 팩터리는 `WidgetBuilder`, 현재 `NavigationEntry` 및 하위 링크에\n전달할 수 있는 컨텍스트를 받고 루트 View 하나를 만들어야 한다. 앱이 소유한 객체를\n팩터리에서 참조한다면 그 객체의 수명은 앱이 보장한다. 화면이 게시된 뒤 앱은 예를\n들어 `router->set_root(\"/\")`로 첫 화면을 연다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 36,
+      "raw": "경로의 첫 일치 항목을 사용하고 경로 캡처에 명시적 객체 매개변수를 합치며 같은 이름은\n명시적 값이 우선한다. 일치 항목이 없으면 대체 페이지를 사용하고, 대체 페이지도 없으면\nfalse를 반환한다. 직접 지정한 페이지는 경로보다 우선하고 타입 있는 매개변수를 보존한다.\n`navigate`는 push 또는 replace를 사용하며 `back`과 `pop_to_root`는 이전 항목을 다시\n구성한다. 루트에서 뒤로 가기는 화면을 재생성하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 44,
+      "raw": "페이지 후보를 완성하고 호스트가 검증한 뒤 이력을 확정하고 화면을 게시한다. 후보 생성\n또는 확정이 실패하면 이전 화면과 이력이 유지된다. 이력 확정 후 호스트나 사용자 콜백이\n실패하면 이미 확정된 이력은 되돌리지 않으며 오류를 호출자에게 전달한다. 호스트가\n교체될 때는 기존 현재 페이지를 새 후보에 먼저 준비하고, 새 호스트의 게시가 성공해야\n탐색 대상이 새 호스트로 바뀐다. 취소된 후보는 기존 호스트를 건드리지 않는다. 폐기된\n호스트는 자신이 게시한 컨텍스트 연결만 해제하고 라우터의 소유권을 놓는다. 퇴역 뒤 늦게\n도착한 게시 콜백은 호스트를 다시 연결하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 51,
+      "raw": "호스트 비의존 `NavigationPresenter`는 페이지를 준비한 뒤 전달된 동기 확정 함수를 한 번\n호출해야 한다. 확정 전 오류는 변경을 남기지 않으며, 확정 함수를 저장해 나중에 사용하거나\n다른 스레드에서 호출할 수 없다. 라우터는 생성한 스레드에서만 사용하고 탐색 또는 교체 중\n재진입을 거부한다. 페이지 생성과 외부 콜백의 임의 부수 효과를 되돌리는 기능은 없다.\n현재 생성 경로는 LVUI 페이지 팩터리를 사용하며 레거시 LVRS 페이지 타입과 자동 호환되지\n않는다. 실제 기기·창·GPU·접근성 검증은 호스트 상태 검사와 구분한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 페이지 라우터",
+      "anchor": "lvui-페이지-라우터",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "Qt·QML·LVRS 타입이나 팩터리를 사용하지 않는다. 경로의 문법과 제한은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 36,
+        "text": "구성한다. 루트에서 뒤로 가기는 화면을 재생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 44,
+        "text": "도착한 게시 콜백은 호스트를 다시 연결하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 47,
+        "text": "호출해야 한다. 확정 전 오류는 변경을 남기지 않으며, 확정 함수를 저장해 나중에 사용하거나",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "경로 계약",
+        "target": "NativeRoutes.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000003",
+        "label": "탐색 이력",
+        "target": "NativeNavigationHistory.md",
+        "kind": "relative",
+        "line": 5
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

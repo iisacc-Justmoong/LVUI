@@ -1,0 +1,10 @@
+#include "LVRSWindow.generated.h"
+#include "LVRSWindowRoot.generated.h"
+#include "LVRSWindowStatic.generated.h"
+#include "LVRSWindowAccent.generated.h"
+#include "LVRSWindowAccentName.generated.h"
+auto lvrs_window=&lvui_generated::LVRSWindow::build;
+auto lvrs_window_root=&lvui_generated::LVRSWindowRoot::build;
+auto lvrs_window_static=&lvui_generated::LVRSWindowStatic::build;
+auto lvrs_window_accent=&lvui_generated::LVRSWindowAccent::build;
+auto lvrs_window_accent_name=&lvui_generated::LVRSWindowAccentName::build;

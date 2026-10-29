@@ -1,0 +1,17 @@
+import vm NativeFactoryCaptureBackend
+let render: () -> String = vm.selected.description()
+@Static let pinned: () -> Void = vm.selected.make()
+var manual: () -> Void = vm.selected.make()
+let Actions(run: () -> Void = vm.selected.make()): View = PushButton(id: "typed", onClick: run)
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    Label(id: "description", text: render())
+    PushButton(id: "direct", onClick: vm.selected.make())
+    PushButton(id: "value", onClick: vm.selected.value())
+    PushButton(id: "indexed", onClick: vm.rows[0].make())
+    InputField(id: "payload", onEdited: vm.selected.text())
+    PushButton(id: "pinned", onClick: pinned)
+    PushButton(id: "manual", onClick: manual)
+    Actions()
+    if (vm.visible) { PushButton(id: "conditional", onClick: vm.selected.make()) }
+} }

@@ -1,0 +1,8 @@
+import vm NativeOwnedComboBoxModel
+Window {
+    VStack {
+        ComboBox(id: "combo", text: vm.text, arrow: vm.arrow, tone: vm.tone,
+                 enabled: vm.enabled, width: vm.width, onClick: vm.clicked,
+                 onPressed: vm.pressed, onReleased: vm.released)
+    }
+}

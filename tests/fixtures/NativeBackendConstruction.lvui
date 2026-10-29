@@ -1,0 +1,23 @@
+import class NativeConstructedBackend
+import vm NativeConstructedBackend
+let derived = vm.value * 2
+import second NativeConstructedBackend
+let next = second.value + 1
+import later NativeConstructedLater
+let Panel(backend: NativeConstructedBackend): View = VStack {
+    Label(id: "borrowed", text: backend.value)
+    PushButton(id: "increment", onClick: backend.increment)
+}
+Window {
+    VStack {
+        Label(id: "total", text: derived + next)
+        Panel(backend: vm)
+        if (vm.visible) {
+            VStack {
+                import local NativeConstructedBackend
+                Label(id: "local", text: local.value)
+                PushButton(id: "localAction", onClick: local.increment)
+            }
+        }
+    }
+}

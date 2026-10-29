@@ -2,14 +2,17 @@
 
 # AOT 컴파일과 네이티브 마운트
 
-현재 앱 소유 구조와 렌더링 경계는 [LVRSNative.md](LVRSNative.md)를 따른다.
-`View`는 네이티브 C++ 위젯 클래스, LVRS는 외형, iiSDKCore는 앱 런타임·진입점·최종 바이너리 부착,
-iiGUI는 자체 C++ 위젯·레이아웃·입력·그리기와 OS 호스트 어댑터를 담당한다.
+현재 구조와 남은 전환 범위는 [LVUI 독립성](LVUIIndependence.md)에 정리한다.
+LVUI는 자체 컴포넌트, 외형과 디자인 파라미터를 소유한다. `View`는 네이티브 C++
+위젯으로 생성하며, iiSDKCore는 앱 런타임·진입점·최종 바이너리 부착을 담당한다.
+iiGUI는 범용 C++ 위젯·레이아웃·입력·그리기와 OS 호스트 어댑터를 제공한다.
+LVRS는 계승한 시각 언어의 레거시 출처이며 LVUI의 구현 경계가 아니다.
 
 상태: 2026-10-20에 채택하고 2026-10-22에 네이티브 위젯·가속 경로를 명확히 한 LVUI 아키텍처이다.
 LVUI는 AOT로 컴파일되는 네이티브 언어이다.
 2026-10-22에 일부 컴포넌트의 C++23 AOT 생성과 iiGUI Cocoa 마운트를 구현했다.
-실제 지원 입력·빌드 API·남은 범위는 [LVRSNative.md](LVRSNative.md)에 구분한다.
+현재 지원 입력·빌드 API와 남은 범위는 [LVUI 독립성](LVUIIndependence.md)에 구분한다.
+기존 `FRAMEWORK LVRS` 생성 경로는 아직 제거되지 않은 레거시 호환 경로이다.
 이 문서의 전체 언어·반응형·다른 OS·가속 생성 요구사항을 모두 구현한 것은 아니다.
 
 <a id="selected-execution-model"></a>
@@ -159,13 +162,13 @@ Core는 LVUI 소스 구문과 애플리케이션 ViewModel로부터 독립성을
 
 기존 iiGUI 캔버스 연동은 이미 파싱한 `lvui::Document`를 받는다.
 
-- `SDK/iiGUI/src/iiGUI/LVUI.h`는 `layout_view`를 선언한다.
-- `SDK/iiGUI/src/iiGUI/Host.h`는 `Host::set_view`와 `Host::set_canvas`를 선언한다.
-- `SDK/iiGUI/src/iiGUI/LVUI.cpp`는 문서의 레이아웃을 계산하고 `set_canvas`를 통해 프레임을 제출한다.
+- `LVUI/NativeDocument.h`는 문서의 레이아웃과 앱 측 호스트 연결을 소유한다.
+- `iiGUI/Host.h`는 특정 상위 타입에 의존하지 않는 `set_view` 확장점과 `set_canvas`를 제공한다.
+- 앱이 LVUI 어댑터와 iiGUI를 함께 사용하면 LVUI가 계산한 프레임을 호스트에 제출한다.
 
 실제 AOT 경로는 이와 별개이다. 생성한 C++가 `Host::mount_widgets`에서
 `WidgetBuilder`의 직접 생성 함수를 호출한다. iiGUI가 C++ 위젯의 배치·입력·그리기를 담당하며
-AppKit 컨트롤과 Auto Layout을 사용하지 않는다. [지원 목록](LVRSNative.md)에 창·레이아웃·버튼·
+AppKit 컨트롤과 Auto Layout을 사용하지 않는다. [지원 목록](LVUIIndependence.md)에 창·레이아웃·버튼·
 입력·범위 컨트롤·아이콘·탭과 타입을 가진 콜백을 명시한다. 앱에는 LVUI 소스·AST·컴파일러 호출이 필요 없다.
 반응형 필드 접근·나머지 예약 컴포넌트·다른 OS 입력 어댑터·추가 GPU 코드 생성은 미완성이다.
 

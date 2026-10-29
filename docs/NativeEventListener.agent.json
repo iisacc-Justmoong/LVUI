@@ -1,0 +1,128 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e4d31258fe5dd6097900e25ea323ef576921bbf285da586010d63b281f5d74cc",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeEventListener.md",
+    "sha256": "14c1bfdd7aca30b3ddb5857eb428997dff8cdf94cbefc76eed758616b9ac2f13",
+    "bytes": 2102,
+    "line_count": 26,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 이벤트 리스너",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 이벤트 리스너\n",
+      "level": 1,
+      "title": "LVUI 이벤트 리스너"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`EventListener`는 고정 폭·높이를 검증하는 LVUI C++ 모델이다. 기본 크기는\n640×480이며 각 축은 1–8192 논리 px이다. `NativeEventListener`는 앱이 공급하는\n범용 iiGUI 입력·배치 호스트에 이 모델을 연결한다. Qt·QML·LVRS 타입이나 팩터리를\n호출하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 12,
+      "raw": "앱은 `EventListenerCallbacks`의 입력 및 크기 변경 함수를 지정한다. 입력 함수는\n타입 있는 `WidgetInput`을 받고 처리 여부 또는 오류를 반환한다. 호스트가 보낸 좌표는\n리스너의 로컬 좌표이다. 입력의 종류·숫자·문자열을 검증하고 같은 리스너의 중첩\n디스패치는 `busy`로 거절한다. 콜백 예외는 원인을 보존한 오류로 전달한다. 앱이 직접\n`dispatch`를 호출할 수도 있다. 크기 변경 콜백은 호스트의 배치 결과 `Rect`를 받는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 19,
+      "raw": "새 세대가 게시되기 전의 크기와 입력은 앱에 전달하지 않는다. 게시 후 최초 배치가\n통지되며, 퇴역하면 콜백을 해제하고 늦은 게시·입력 요청은 무시하거나 거절한다.\n`set_options`는 유효한 크기만 갱신하고 `set_callbacks`는 콜백을 교체한다. 이 API는\n소유 스레드에서 사용하며 다른 스레드의 변경·입력 요청은 거절한다. 배치 콜백이\n설정이나 콜백을 다시 변경하면 나중 변경이 유지된다. 외부 콜백의 부수 효과를 되돌리는\n기능은 없다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 26,
+      "raw": "기본 선언형 `EventListener`는 이 구현을 생성하며 `width`, `height`, `onInput`,\n`onResized`와 공통 가시성·불투명도·flex를 지원한다. 크기는 관찰 가능한 C++ 값으로\n갱신할 수 있다. `onInput`은 C++ `WidgetInput`을 받아 `ii::core::Result<bool>` 또는\n그에 변환 가능한 값을 돌려주는 콜백이고, `onResized`는 `ii::gui::Rect`를 받는\n콜백이다. 입력 결과를 보존하는 반환 콜백은 현재 팩터리 결과와 활성 범위를 사용한다.\n실제 플랫폼 입력·접근성과 레거시 경로 제거는 아직 검증·전환 중이다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 이벤트 리스너",
+      "anchor": "lvui-이벤트-리스너",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 14,
+        "text": "새 세대가 게시되기 전의 크기와 입력은 앱에 전달하지 않는다. 게시 후 최초 배치가",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

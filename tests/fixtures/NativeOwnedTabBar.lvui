@@ -1,0 +1,11 @@
+import vm NativeOwnedTabBarModel
+Window {
+    VStack {
+        TabBar(id: "tabs", accessibilityName: "Sections", currentIndex: vm.index, autoSelect: vm.automatic,
+               spacing: vm.spacing, minimumTabWidth: vm.minimum, onCurrentIndexChanged: vm.changed) {
+            Tab(id: "first", text: "First", iconName: "home", onClick: vm.clicked)
+            Tab(id: "disabled", text: "Disabled", iconName: "nodesfolder", enabled: vm.middleEnabled)
+            Tab(id: "last", text: "Last", iconName: "generaladd", visible: vm.lastVisible, onClick: vm.clicked)
+        }
+    }
+}

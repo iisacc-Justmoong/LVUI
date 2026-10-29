@@ -1,0 +1,1221 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:7cfbd7d11a02875243b67c80e33bf639ab5e4d3d3e143268eef5ba63886fe683",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Repetition.md",
+    "sha256": "a90be22e61af795db32523b3042cbcac45ea2943fdf2a1997d5378585fbd1604",
+    "bytes": 17117,
+    "line_count": 241,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "안정적인 키를 갖는 네이티브 반복 구성",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 안정적인 키를 갖는 네이티브 반복 구성\n",
+      "level": 1,
+      "title": "안정적인 키를 갖는 네이티브 반복 구성"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 4,
+      "raw": "`for`는 C++ 컬렉션이나 비어 있지 않은 동종 목록으로부터 반복 뷰를 만든다. 키를 명시해야\n하며 위치가 바뀌어도 키가 같은 행은 같은 위젯·지역 백엔드·입력 상태를 유지한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 6,
+      "end_line": 16,
+      "raw": "```lvui\nimport vm Backend\nWindow {\n    for (item in vm.items, key: item.id, index: ordinal, id: \"results\") {\n        VStack {\n            Label(text: item.title)\n            Label(text: ordinal)\n        }\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm Backend\nWindow {\n    for (item in vm.items, key: item.id, index: ordinal, id: \"results\") {\n        VStack {\n            Label(text: item.title)\n            Label(text: ordinal)\n        }\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 20,
+      "raw": "이는 빌드 시 C++23 행 구성 함수와 `lvui::native::KeyedRows<T>`로 생성한다. 런타임에서\nLVUI 소스·AST·표현식 문자열을 순회하거나 해석하지 않는다. `LVUI::Native`의 컬렉션 상태는\niiSDKCore 계약에만 의존하며, 생성한 UI가 iiGUI의 키 기반 콘텐츠 API를 연결한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 23,
+      "raw": "일반 목록 값도 선언할 수 있다. `let` 목록은 원본 의존성을 따르는 읽기 전용 C++ 값,\n`var` 목록은 Core Observable 저장소, `@Static let` 목록은 활성화 당시 스냅샷을 사용한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "fenced_code",
+      "start_line": 25,
+      "end_line": 30,
+      "raw": "```lvui\nlet labels = [\"A\", \"B\", \"C\"]\nlet liveValues = [vm.first, vm.second]\n@Static let initialValues = [vm.first, vm.second]\nvar choices = [\"One\", \"Two\"]\n```\n",
+      "language": "lvui",
+      "code": "let labels = [\"A\", \"B\", \"C\"]\nlet liveValues = [vm.first, vm.second]\n@Static let initialValues = [vm.first, vm.second]\nvar choices = [\"One\", \"Two\"]\n",
+      "closed": true
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 38,
+      "raw": "원소 타입은 C++로 추론한다. 문자열은 소유 문자열로 보관하며, 같은 C++ 정수 타입의\n목록은 64비트 값을 유지한다. 서로 다른 숫자 타입은 기존 숫자 연산처럼 유한한 `double`\n값으로 통합한다. 호환되지 않는 원소는 C++ 타입 검사에서 거부한다. 원소 타입을 결정할\n정보가 없는 `[]` 선언과 아직 정의하지 않은 명시적 배열 타입 표기는 거부한다. 비어 있는\n상태가 필요한 모델에는 원소 타입을 가진 C++ 컬렉션을 사용한다.\n목록을 다른 이름의 값으로 연결해도 알려진 목록 타입을 유지하여 스칼라로 잘못 선언한\n입력은 LVUI 소스 위치에서 거부한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "## 키·행·지역 상태\n",
+      "level": 2,
+      "title": "키·행·지역 상태"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "list",
+      "start_line": 42,
+      "end_line": 56,
+      "raw": "- `key`는 고유하고 비어 있지 않은 UTF-8 문자열 또는 정확히 표현 가능한 정수이다.\n  키당 최대 1,024바이트이며 NUL을 허용하지 않는다. 모델 전체에서 키를 검사하므로\n  현재 표시 범위 밖에 있는 중복도 오류이다. 인덱스가 바뀌어도 유지되는 식별자를 사용한다.\n  키를 계산하는 C++ 식은 원본 컬렉션의 구조를 변경하지 않는 계약을 따른다.\n  C++ 정수 키는 원래 타입에서 직접 문자열화하여 64비트 식별자를 보존한다. 실수 키에만\n  유한하고 정확한 정수 범위 검사를 적용한다.\n- `index`는 선택적인 지역 이름이다. 현재 표시 범위 안의 순서가 아니라 전체 모델에서의\n  0 기반 위치를 제공한다. 행 데이터와 위치는 하나의 Core Observable 값으로 발행한다.\n- 같은 키의 값이 바뀌면 기존 행의 의존 값만 다시 계산한다. 지역 import·`var`·`@Static`\n  선언을 초기화하지 않는다. 변경 없는 값은 추가 알림을 내보내지 않는다.\n- 키가 사라지면 해당 행의 위젯 세대와 지역 객체를 퇴역한다. 같은 키를 나중에 다시\n  추가하면 새 활성화와 스냅샷을 생성한다. 선택·검토 상태처럼 행보다 오래 유지할 상태는\n  상위 C++ 모델이 키를 기준으로 소유한다.\n- 각 반복 안에서 같은 명시적 자식 ID를 사용할 수 있다. iiGUI가 키별 독립 세대를\n  제공하며 같은 자식 ID·키를 다른 중첩 목록에서 사용해도 충돌하지 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`key`는 고유하고 비어 있지 않은 UTF-8 문자열 또는 정확히 표현 가능한 정수이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`index`는 선택적인 지역 이름이다. 현재 표시 범위 안의 순서가 아니라 전체 모델에서의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "같은 키의 값이 바뀌면 기존 행의 의존 값만 다시 계산한다. 지역 import·`var`·`@Static`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "키가 사라지면 해당 행의 위젯 세대와 지역 객체를 퇴역한다. 같은 키를 나중에 다시",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "각 반복 안에서 같은 명시적 자식 ID를 사용할 수 있다. iiGUI가 키별 독립 세대를",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 61,
+      "raw": "기존 [타입 매개변수 구성](Components.md)에 행을 전달할 수도 있다. C++ 범위가 정하는\n실제 행 타입은 생성 C++에서 선언한 청사진과 대조하고 constness를 유지한다. 값 객체의\n읽기 전용 행과 `shared_ptr`로 명시적으로 공유하는 변경 가능한 객체를 구분한다. 행 타입은\nCore Observable의 복사·동등성·예외 없는 이동 대입 계약을 만족해야 한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "## 표시 범위와 레이아웃\n",
+      "level": 2,
+      "title": "표시 범위와 레이아웃"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "fenced_code",
+      "start_line": 65,
+      "end_line": 71,
+      "raw": "```lvui\nfor (item in vm.items, key: item.id, index: ordinal,\n     first: vm.firstVisible, count: vm.visibleCount,\n     spacing: 4, horizontal: false) {\n    Label(text: item.title)\n}\n```\n",
+      "language": "lvui",
+      "code": "for (item in vm.items, key: item.id, index: ordinal,\n     first: vm.firstVisible, count: vm.visibleCount,\n     spacing: 4, horizontal: false) {\n    Label(text: item.title)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 76,
+      "raw": "`first`와 `count`는 0 이상의 정수이며 기본값은 처음부터 전체 범위이다. 끝을 넘는 시작\n위치는 빈 범위, 남은 항목보다 큰 수량은 남은 범위로 제한한다. 표시 범위만 행 데이터와\n위젯을 생성하고, 겹치는 키는 기존 활성화를 유지한다. 범위 밖으로 나간 행은 숨김 상태로\n보관하지 않고 제거한다. 단순 `visible: false`와 이 활성화 제거를 동일하게 취급하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 78,
+      "end_line": 82,
+      "raw": "이 수동 모드의 표시 범위는 C++ 뷰모델이 제공한다. `first`·`count`만으로 스크롤 위치와\n논리 길이를 계산하지 않는다. 고정 크기 목록·그리드의 자동 모드는 다음 절의\n`itemHeight` 계약을 사용한다. [가변 행 측정](MeasuredCollections.md)과\n[키보드 탐색·선택](CollectionNavigation.md)은 자동 모드에 연결한다. 목록의 나머지 전체\n계약은 [구성 완료 기준](Completion.md)에 계속 남아 있다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 84,
+      "end_line": 86,
+      "raw": "반복은 독립적인 선형 콘텐츠 컨테이너이다. `horizontal` 기본값은 `false`, 내부 `spacing`\n기본값은 0이다. 주변 스택의 자식 목록을 암묵적으로 평탄화하거나 간격을 복제하지 않는다.\n필요한 방향·간격은 반복 입력으로 지정한다. 기본 LVRS 컨트롤의 크기·스타일은 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 88,
+      "end_line": 90,
+      "raw": "본문은 루트 View 하나를 가지며 여러 자식과 지역 선언은 `VStack` 같은 본문 View에 둔다.\n중첩 반복과 조건부 구성은 같은 스코프 계약을 따른다. `TabBar`·메뉴 같은 타입 제한 자식\n입력에 일반 콘텐츠 호스트를 삽입하여 제약을 우회하지 않는다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "## 자동 네이티브 가상화\n",
+      "level": 2,
+      "title": "자동 네이티브 가상화"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 94,
+      "end_line": 95,
+      "raw": "고정 행 높이를 `itemHeight`로 제공하면 네이티브 스크롤이 표시 범위를 결정한다.\n`itemWidth`를 함께 지정하면 뷰포트 너비와 간격에 맞추어 열 수를 정하는 그리드가 된다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "fenced_code",
+      "start_line": 97,
+      "end_line": 106,
+      "raw": "```lvui\nWindow {\n    VStack {\n        for (item in vm.results, key: item.id, id: \"results\",\n             itemHeight: 180, itemWidth: 150, spacing: 8, overscan: 1) {\n            ResultCard(backend: item)\n        }\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "Window {\n    VStack {\n        for (item in vm.results, key: item.id, id: \"results\",\n             itemHeight: 180, itemWidth: 150, spacing: 8, overscan: 1) {\n            ResultCard(backend: item)\n        }\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 107,
+      "end_line": 107,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 108,
+      "end_line": 110,
+      "raw": "표시 범위를 QML이나 제품 백엔드에서 매번 계산하지 않는다. AOT 출력은 iiGUI의\n`ScrollView`, 키별 콘텐츠와 C++ `VirtualViewport`·`VirtualCollectionSource<T>`·\n`virtual_collection_frame`을 연결한다. `LVUI::Native`에는 iiGUI 의존성을 추가하지 않는다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 111,
+      "end_line": 111,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "table",
+      "start_line": 112,
+      "end_line": 120,
+      "raw": "| 입력 | 의미 |\n|---|---|\n| `itemHeight` | 양수인 고정 행·셀 높이, 자동 모드 선택 |\n| `itemWidth` | 자동 열 계산의 기준 너비; 생략하면 세로 목록 |\n| `columns` | 0이면 자동, 양수이면 명시한 열 수 |\n| `overscan` | 표시 영역 전후에 유지할 추가 행 수, 기본 1 |\n| `horizontal` | 가로 목록; 양수 `itemWidth`가 필요하며 다중 열과 함께 쓰지 않음 |\n| `width`, `height` | 스크롤 뷰의 명시 크기, 0이면 주변 레이아웃 사용 |\n| `flex` | 주변 선형 스택의 가용 공간 비율; 높이가 0이면 기본 1, 양수이면 기본 0 |\n",
+      "columns": [
+        "입력",
+        "의미"
+      ],
+      "rows": [
+        [
+          "`itemHeight`",
+          "양수인 고정 행·셀 높이, 자동 모드 선택"
+        ],
+        [
+          "`itemWidth`",
+          "자동 열 계산의 기준 너비; 생략하면 세로 목록"
+        ],
+        [
+          "`columns`",
+          "0이면 자동, 양수이면 명시한 열 수"
+        ],
+        [
+          "`overscan`",
+          "표시 영역 전후에 유지할 추가 행 수, 기본 1"
+        ],
+        [
+          "`horizontal`",
+          "가로 목록; 양수 `itemWidth`가 필요하며 다중 열과 함께 쓰지 않음"
+        ],
+        [
+          "`width`, `height`",
+          "스크롤 뷰의 명시 크기, 0이면 주변 레이아웃 사용"
+        ],
+        [
+          "`flex`",
+          "주변 선형 스택의 가용 공간 비율; 높이가 0이면 기본 1, 양수이면 기본 0"
+        ]
+      ]
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 121,
+      "end_line": 121,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 122,
+      "end_line": 130,
+      "raw": "이 입력도 일반 반응형 값이다. `width`·`height`·`flex` 변경과 모델 변경은 뷰포트 상태와\n독립적인 네이티브 바인딩으로 전달한다. 창의 루트 자체는 네이티브 루트 레이아웃 계약에\n따라 전체 영역을 사용한다. 명시한 크기의 하위 목록은 예시처럼 레이아웃 안에 둔다.\n자동 모드는 `first`·`count`를 동시에 받지 않는다. `measureHeight: true`를 추가하면\n[네이티브 자연 높이 측정](MeasuredCollections.md)을 사용한다. 이 경우 `itemHeight`는\n미측정 행의 추정값이며 공유 객체 모델의 변경 통지는 해당 문서의 계약을 따른다.\nLVUI 입력에서 `itemHeight`는 0.000001~32,767, `itemWidth`·`spacing`은 0~32,767,\n`width`·`height`는 0~8,192, `flex`는 0~4,096이다. `columns`·`overscan`은 0~65,536의\n정수이다. 큰 여유 영역을 지정해도 아래의 실제 활성 노드 한계를 우회하지 않는다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 131,
+      "end_line": 131,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 132,
+      "end_line": 135,
+      "raw": "모델 또는 키 의존성이 발행될 때 전체 키의 유효성·중복·한계를 검사하고, 소유한 C++\n값 스냅샷과 키 색인을 한 번 만든다. 스크롤 중에는 이 스냅샷을 재사용하여 표시·여유\n범위의 값만 프레임으로 복사한다. 가시 행의 위젯과 지역 백엔드만 생성한다. 모델 전체의\n값 스냅샷은 보유하므로 이를 전체 데이터의 메모리 사용이 없다는 의미로 해석하지 않는다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 136,
+      "end_line": 136,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 137,
+      "end_line": 141,
+      "raw": "현재 표시 영역의 첫 항목 키와 행 내부 픽셀 위치를 기준점으로 보관한다. 앞에 결과가\n삽입되거나 창 너비가 바뀌어 열 수가 변경되어도 해당 항목을 같은 높이에 유지한다.\n기준 키가 사라지면 이전 인덱스를 유효 범위로 제한한다. 사용자 스크롤은 별도의 이동\n세대로 구분하므로 이전 기준점이 사용자 이동을 되돌리지 않는다. 그리드 행의 첫 열이\n아닌 기준 항목도 열 수 변경 후 계속 기준으로 유지한다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 142,
+      "end_line": 142,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 143,
+      "end_line": 147,
+      "raw": "논리 스크롤 범위와 보유한 자식의 실제 크기를 분리한다. 긴 목록 전체를 거대한 위젯으로\n만들지 않으며, 셀 좌표는 현재 뷰포트에 상대적이다. 같은 키가 유지되는 픽셀 이동에서는\n행 세대와 래퍼를 재생성하지 않고 위치만 갱신한다. 가시 영역 밖 행은 종료한다. 따라서\n행의 지역 상태는 화면 밖 퇴역 후 재진입까지 영속하지 않으며, 그러한 선택·평가 상태는\n제품의 네이티브 모델이 안정적인 결과 ID에 따라 보관해야 한다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 148,
+      "end_line": 148,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 149,
+      "end_line": 154,
+      "raw": "`id: \"results\"`는 키별 콘텐츠 호스트, `\"results/viewport\"`는 해당 스크롤 뷰이다. 이 파생\nID도 중복 검사한다. 첫 배치 전에는 행을 추측하여 만들지 않는다. 창·측정 결과가 들어온\n뒤 실제 범위를 활성화한다. 새 행 생성이나 모델 키 검증이 실패하면 기존 행을 보존하고\n바인딩 오류로 남기며, 다음 유효한 모델 변경 또는 뷰포트 이동에서 다시 적용할 수 있다.\n행 활성화 도중 더 새로운 크기나 스크롤 입력을 받으면 이전 프레임의 기준점 발행을\n거부하고 새 입력을 반영한 계산을 수행한다. 이전 계산으로 사용자 이동을 덮어쓰지 않는다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 156,
+      "end_line": 156,
+      "raw": "## 실패·종료·한계\n",
+      "level": 2,
+      "title": "실패·종료·한계"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 157,
+      "end_line": 157,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 158,
+      "end_line": 160,
+      "raw": "신규 행은 후보 콘텐츠에서 먼저 생성한다. 하나라도 실패하면 기존 순서·행·입력 상태와\n데이터를 보존하며 실패한 후보만 퇴역한다. 검증이 끝나면 유지할 행의 소유 관계를 옮기고\n이전 래퍼·제거된 행을 정리한다. 다시 그리기·같은 키·같은 순서는 생성을 일으키지 않는다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 161,
+      "end_line": 161,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 162,
+      "end_line": 164,
+      "raw": "행 상태의 구조 반영이 성공한 뒤 데이터·인덱스를 발행한다. C++ 관찰자가 발행 중 실패한\n경우는 바인딩 오류로 보고하며 이미 수행한 임의의 관찰자 동작을 되돌린다고 보장하지 않는다.\n생성 실패의 구조 롤백과 사용자 C++ 콜백의 부작용 롤백을 구분한다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 165,
+      "end_line": 165,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 166,
+      "end_line": 168,
+      "raw": "활성화가 닫히면 새 구성을 거부하고 연결·지역 객체를 퇴역한다. 늦은 팩토리와 콜백은\n약한 소유자·바인딩 접수 경계를 확인한다. UI 입력 상태를 바꾸는 작업은 파일 상태나\n문서 저장·편집 이력의 변경으로 변환하지 않는다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 169,
+      "end_line": 169,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 170,
+      "end_line": 173,
+      "raw": "컬렉션은 최대 65,536개 항목과 합계 16 MiB 키를 허용한다. 실제 iiGUI 위젯은 기존의\n활성 도메인 4,096개 노드와 콘텐츠 활성화 깊이 8단계 한계를 유지한다. 표시 범위는 이\n실제 활성 자원 한계 안에서 정한다. 반복 교체 시 이전 래퍼가 노드 수에 누적되지 않으며,\n임시 후보 허용량에서 재사용하는 행을 중복 계산하지 않는다.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 174,
+      "end_line": 174,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "heading",
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "## 검증\n",
+      "level": 2,
+      "title": "검증"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 176,
+      "end_line": 176,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "list",
+      "start_line": 177,
+      "end_line": 187,
+      "raw": "- `LVUI.Repetition.*`: 구문·어휘 스코프·네이티브 생성·범위·오류 및 CLI 표시.\n- `LVUI.NativeCollection.*`: 키와 행 정체성, 데이터·위치의 일관된 발행, 실패 보존,\n  1,000개 모델의 범위 제한, 종료·실행 영역과 잘못된 입력.\n- `LVUI.NativeVirtualCollection.*`: 세로·가로·그리드의 실제 범위와 논리 길이,\n  기준점·열 수 변경·사용자 이동, 색인 재사용·불변 스냅샷과 스레드·종료 계약.\n- `iiGUI.keyed_content.*`: 실제 위젯의 편집·포커스·키보드 라우팅·ID 보존, 실패 복구,\n  반복 교체의 자원 회수와 4,096개 노드 경계.\n- `iiGUI.native_repetition.*`: 실제 생성 C++의 행별 지역 객체·스냅샷, 재정렬·반응형\n  데이터·표시 범위·실패 복구·중첩 목록·일반 목록 선언과 전체 소유자 해제.\n- `iiGUI.native_virtual_repetition.*`: 생성 C++의 자동 표시 범위·픽셀 위치 갱신,\n  결과 삽입·반응형 크기·기준점 보존·실패 복구·전체 소유자 해제와 파일 리비전 비변경.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`LVUI.Repetition.*`: 구문·어휘 스코프·네이티브 생성·범위·오류 및 CLI 표시.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`LVUI.NativeCollection.*`: 키와 행 정체성, 데이터·위치의 일관된 발행, 실패 보존,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`LVUI.NativeVirtualCollection.*`: 세로·가로·그리드의 실제 범위와 논리 길이,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI.keyed_content.*`: 실제 위젯의 편집·포커스·키보드 라우팅·ID 보존, 실패 복구,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI.native_repetition.*`: 실제 생성 C++의 행별 지역 객체·스냅샷, 재정렬·반응형",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI.native_virtual_repetition.*`: 생성 C++의 자동 표시 범위·픽셀 위치 갱신,",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 188,
+      "end_line": 188,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 189,
+      "end_line": 190,
+      "raw": "위의 iiGUI 검사는 창·렌더러를 열지 않는다. 실제 창·GPU·플랫폼 입력과 전체 LVRS 앱·\n테스트 실행은 최종 일괄 검증과 구분한다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 191,
+      "end_line": 191,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 192,
+      "end_line": 194,
+      "raw": "`LVUILVRSRepetitionCompile`은 `FRAMEWORK LVRS`로 생성한 값 행·공유 백엔드 행·가상 그리드의\n실제 팩토리를 현재 LVRS 공개 헤더에 대조하여 컴파일하는 오브젝트 대상이다. 실행 파일을\n만들거나 LVRS 앱·테스트를 실행하지 않으며, 최종 LVRS 런타임 검증을 대신하지 않는다.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 195,
+      "end_line": 195,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "heading",
+      "start_line": 196,
+      "end_line": 196,
+      "raw": "### 2026-10-26 키 기반 수동 범위 단계의 검증 기록\n",
+      "level": 3,
+      "title": "2026-10-26 키 기반 수동 범위 단계의 검증 기록"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 197,
+      "end_line": 197,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 198,
+      "end_line": 199,
+      "raw": "macOS arm64의 현재 작업 트리에서 다음 검사를 마쳤다. 각 범위는 서로 겹치므로 합산하지\n않으며 실제 창·다른 플랫폼의 성능이나 기능 통과로 확대하지 않는다.\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 200,
+      "end_line": 200,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "table",
+      "start_line": 201,
+      "end_line": 210,
+      "raw": "| 검사 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 114/114 통과 |\n| LVUI 관련 AddressSanitizer·UndefinedBehaviorSanitizer | 43/43 통과 |\n| iiGUI 창 없는 통합 검사 | 15/15 통과 |\n| iiGUI 구현·생성 C++의 AddressSanitizer·UndefinedBehaviorSanitizer | 동일 15/15 통과 |\n| 설치·경로 이동 독립 소비자 | 2/2 통과, 네이티브 컬렉션과 반복 컴파일 포함 |\n| 실제 LVRS 반복 팩토리 | 일반·공유 백엔드 행의 C++ 오브젝트 컴파일 통과, 실행하지 않음 |\n| 검사 실행 파일 경계 | Qt 동적 의존성 없음, 생성 위젯 검사에 선언형 파서·컴파일러 심볼 없음 |\n| Dreamscapes 관측 보존 | 이 작업 구간의 QML 81개 파일 해시 변경 0 |\n",
+      "columns": [
+        "검사",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI 전체 Release CTest",
+          "114/114 통과"
+        ],
+        [
+          "LVUI 관련 AddressSanitizer·UndefinedBehaviorSanitizer",
+          "43/43 통과"
+        ],
+        [
+          "iiGUI 창 없는 통합 검사",
+          "15/15 통과"
+        ],
+        [
+          "iiGUI 구현·생성 C++의 AddressSanitizer·UndefinedBehaviorSanitizer",
+          "동일 15/15 통과"
+        ],
+        [
+          "설치·경로 이동 독립 소비자",
+          "2/2 통과, 네이티브 컬렉션과 반복 컴파일 포함"
+        ],
+        [
+          "실제 LVRS 반복 팩토리",
+          "일반·공유 백엔드 행의 C++ 오브젝트 컴파일 통과, 실행하지 않음"
+        ],
+        [
+          "검사 실행 파일 경계",
+          "Qt 동적 의존성 없음, 생성 위젯 검사에 선언형 파서·컴파일러 심볼 없음"
+        ],
+        [
+          "Dreamscapes 관측 보존",
+          "이 작업 구간의 QML 81개 파일 해시 변경 0"
+        ]
+      ]
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 211,
+      "end_line": 211,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 212,
+      "end_line": 214,
+      "raw": "이 단계에서는 자동 스크롤·그리드 가상화를 실행 검증하지 않았다. 위 기록은 후속 자동\n가상화 검사의 현재 결과를 대신하지 않는다. 가변 행 크기, 비동기 스코프의 전체 종료,\n나머지 타입·LVRS 입력 계약과 실제 창·플랫폼 실행은 전체 완료 기준에 남아 있다.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 215,
+      "end_line": 215,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "heading",
+      "start_line": 216,
+      "end_line": 216,
+      "raw": "### 2026-10-26 자동 네이티브 가상화의 검증 기록\n",
+      "level": 3,
+      "title": "2026-10-26 자동 네이티브 가상화의 검증 기록"
+    },
+    {
+      "id": "b000080",
+      "kind": "blank",
+      "start_line": 217,
+      "end_line": 217,
+      "raw": "\n"
+    },
+    {
+      "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 218,
+      "end_line": 219,
+      "raw": "고정 크기 목록·그리드의 최종 변경에서 다음 검사를 수행했다. 앞의 수동 범위 단계와\n테스트가 겹치므로 수량을 합산하지 않는다.\n"
+    },
+    {
+      "id": "b000082",
+      "kind": "blank",
+      "start_line": 220,
+      "end_line": 220,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "table",
+      "start_line": 221,
+      "end_line": 230,
+      "raw": "| 검사 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 120/120 통과 |\n| 관련 언어·네이티브 런타임 AddressSanitizer·UndefinedBehaviorSanitizer | 43/43 통과 |\n| iiGUI 창 없는 회귀·생성 C++ 통합 검사 | 26/26 통과 |\n| iiGUI 구현·생성 C++ AddressSanitizer·UndefinedBehaviorSanitizer | 동일 26/26 통과 |\n| 설치·경로 이동 독립 소비자 | 2/2 통과, 자동 가상화 헤더와 컴파일 경로 포함 |\n| LVRS 생성 C++ | 일반·공유 백엔드·가상 그리드 팩토리의 오브젝트 컴파일 통과, 실행하지 않음 |\n| 실행 파일 경계 | 검사한 컴파일러·가상 위젯 실행 파일의 Qt 동적 의존성 없음; 위젯 실행 파일의 LVUI 파서·컴파일러 심볼 없음 |\n| Dreamscapes 관측 보존 | 기준선의 QML 81개 파일 해시 변경 0 |\n",
+      "columns": [
+        "검사",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI 전체 Release CTest",
+          "120/120 통과"
+        ],
+        [
+          "관련 언어·네이티브 런타임 AddressSanitizer·UndefinedBehaviorSanitizer",
+          "43/43 통과"
+        ],
+        [
+          "iiGUI 창 없는 회귀·생성 C++ 통합 검사",
+          "26/26 통과"
+        ],
+        [
+          "iiGUI 구현·생성 C++ AddressSanitizer·UndefinedBehaviorSanitizer",
+          "동일 26/26 통과"
+        ],
+        [
+          "설치·경로 이동 독립 소비자",
+          "2/2 통과, 자동 가상화 헤더와 컴파일 경로 포함"
+        ],
+        [
+          "LVRS 생성 C++",
+          "일반·공유 백엔드·가상 그리드 팩토리의 오브젝트 컴파일 통과, 실행하지 않음"
+        ],
+        [
+          "실행 파일 경계",
+          "검사한 컴파일러·가상 위젯 실행 파일의 Qt 동적 의존성 없음; 위젯 실행 파일의 LVUI 파서·컴파일러 심볼 없음"
+        ],
+        [
+          "Dreamscapes 관측 보존",
+          "기준선의 QML 81개 파일 해시 변경 0"
+        ]
+      ]
+    },
+    {
+      "id": "b000084",
+      "kind": "blank",
+      "start_line": 231,
+      "end_line": 231,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "paragraph",
+      "start_line": 232,
+      "end_line": 236,
+      "raw": "480×170 뷰포트, 80px 셀 높이·10px 간격의 3열 검사에서는 1,000개 모델 중 처음 9개 행만\n활성화했다. 한 줄 이동 후에는 여유 영역을 포함한 12개 행을 유지했다. 같은 키 범위에서\n1px 이동해도 래퍼 세대·행 객체·버튼 상태를 유지했다. 별도 순수 C++ 검사에서는 200회\n뷰포트 계획 동안 초기 색인의 1,000회 외에 모델 키 추출 함수를 다시 호출하지 않았다.\n이는 계산 경로·활성 행 수의 증거이며 실제 앱 프레임 시간이나 처리량 측정이 아니다.\n"
+    },
+    {
+      "id": "b000086",
+      "kind": "blank",
+      "start_line": 237,
+      "end_line": 237,
+      "raw": "\n"
+    },
+    {
+      "id": "b000087",
+      "kind": "paragraph",
+      "start_line": 238,
+      "end_line": 241,
+      "raw": "원시 로그와 범위별 증거는 저장소의\n`build/lvui-completion/virtual-collection-verification-20261026.json`에서 추적한다.\n고정 크기 자동 가상화의 통과를 가변 행 실측·화면 밖 탐색·비동기 퇴역·나머지 LVRS 타입·\n실제 창·다른 플랫폼의 완료로 확대하지 않는다. 전체 완료 기준은 계속 유효하다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "안정적인 키를 갖는 네이티브 반복 구성",
+      "anchor": "안정적인-키를-갖는-네이티브-반복-구성",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "키·행·지역 상태",
+      "anchor": "키행지역-상태",
+      "start_line": 40
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "표시 범위와 레이아웃",
+      "anchor": "표시-범위와-레이아웃",
+      "start_line": 63
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "자동 네이티브 가상화",
+      "anchor": "자동-네이티브-가상화",
+      "start_line": 92
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실패·종료·한계",
+      "anchor": "실패종료한계",
+      "start_line": 156
+    },
+    {
+      "block_id": "b000063",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증",
+      "anchor": "검증",
+      "start_line": 175
+    },
+    {
+      "block_id": "b000071",
+      "parent_id": "b000063",
+      "level": 3,
+      "title": "2026-10-26 키 기반 수동 범위 단계의 검증 기록",
+      "anchor": "2026-10-26-키-기반-수동-범위-단계의-검증-기록",
+      "start_line": 196
+    },
+    {
+      "block_id": "b000079",
+      "parent_id": "b000063",
+      "level": 3,
+      "title": "2026-10-26 자동 네이티브 가상화의 검증 기록",
+      "anchor": "2026-10-26-자동-네이티브-가상화의-검증-기록",
+      "start_line": 216
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 19,
+        "text": "LVUI 소스·AST·표현식 문자열을 순회하거나 해석하지 않는다. `LVUI::Native`의 컬렉션 상태는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 43,
+        "text": "키당 최대 1,024바이트이며 NUL을 허용하지 않는다. 모델 전체에서 키를 검사하므로",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000017",
+        "line": 51,
+        "text": "선언을 초기화하지 않는다. 변경 없는 값은 추가 알림을 내보내지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000017",
+        "line": 56,
+        "text": "제공하며 같은 자식 ID·키를 다른 중첩 목록에서 사용해도 충돌하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000019",
+        "line": 61,
+        "text": "Core Observable의 복사·동등성·예외 없는 이동 대입 계약을 만족해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 76,
+        "text": "보관하지 않고 제거한다. 단순 `visible: false`와 이 활성화 제거를 동일하게 취급하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 79,
+        "text": "논리 길이를 계산하지 않는다. 고정 크기 목록·그리드의 자동 모드는 다음 절의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 85,
+        "text": "기본값은 0이다. 주변 스택의 자식 목록을 암묵적으로 평탄화하거나 간격을 복제하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 90,
+        "text": "입력에 일반 콘텐츠 호스트를 삽입하여 제약을 우회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000039",
+        "line": 108,
+        "text": "표시 범위를 QML이나 제품 백엔드에서 매번 계산하지 않는다. AOT 출력은 iiGUI의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000039",
+        "line": 110,
+        "text": "`virtual_collection_frame`을 연결한다. `LVUI::Native`에는 iiGUI 의존성을 추가하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 130,
+        "text": "정수이다. 큰 여유 영역을 지정해도 아래의 실제 활성 노드 한계를 우회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000045",
+        "line": 135,
+        "text": "값 스냅샷은 보유하므로 이를 전체 데이터의 메모리 사용이 없다는 의미로 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000049",
+        "line": 147,
+        "text": "제품의 네이티브 모델이 안정적인 결과 ID에 따라 보관해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000057",
+        "line": 163,
+        "text": "경우는 바인딩 오류로 보고하며 이미 수행한 임의의 관찰자 동작을 되돌린다고 보장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000059",
+        "line": 168,
+        "text": "문서 저장·편집 이력의 변경으로 변환하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000061",
+        "line": 173,
+        "text": "임시 후보 허용량에서 재사용하는 행을 중복 계산하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000069",
+        "line": 194,
+        "text": "만들거나 LVRS 앱·테스트를 실행하지 않으며, 최종 LVRS 런타임 검증을 대신하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000073",
+        "line": 199,
+        "text": "않으며 실제 창·다른 플랫폼의 성능이나 기능 통과로 확대하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000077",
+        "line": 213,
+        "text": "가상화 검사의 현재 결과를 대신하지 않는다. 가변 행 크기, 비동기 스코프의 전체 종료,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000081",
+        "line": 219,
+        "text": "테스트가 겹치므로 수량을 합산하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000087",
+        "line": 241,
+        "text": "실제 창·다른 플랫폼의 완료로 확대하지 않는다. 전체 완료 기준은 계속 유효하다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000019",
+        "label": "타입 매개변수 구성",
+        "target": "Components.md",
+        "kind": "relative",
+        "line": 58
+      },
+      {
+        "block_id": "b000027",
+        "label": "가변 행 측정",
+        "target": "MeasuredCollections.md",
+        "kind": "relative",
+        "line": 80
+      },
+      {
+        "block_id": "b000027",
+        "label": "키보드 탐색·선택",
+        "target": "CollectionNavigation.md",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000027",
+        "label": "구성 완료 기준",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 82
+      },
+      {
+        "block_id": "b000043",
+        "label": "네이티브 자연 높이 측정",
+        "target": "MeasuredCollections.md",
+        "kind": "relative",
+        "line": 126
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000041",
+        "columns": [
+          "입력",
+          "의미"
+        ],
+        "rows": [
+          [
+            "`itemHeight`",
+            "양수인 고정 행·셀 높이, 자동 모드 선택"
+          ],
+          [
+            "`itemWidth`",
+            "자동 열 계산의 기준 너비; 생략하면 세로 목록"
+          ],
+          [
+            "`columns`",
+            "0이면 자동, 양수이면 명시한 열 수"
+          ],
+          [
+            "`overscan`",
+            "표시 영역 전후에 유지할 추가 행 수, 기본 1"
+          ],
+          [
+            "`horizontal`",
+            "가로 목록; 양수 `itemWidth`가 필요하며 다중 열과 함께 쓰지 않음"
+          ],
+          [
+            "`width`, `height`",
+            "스크롤 뷰의 명시 크기, 0이면 주변 레이아웃 사용"
+          ],
+          [
+            "`flex`",
+            "주변 선형 스택의 가용 공간 비율; 높이가 0이면 기본 1, 양수이면 기본 0"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000075",
+        "columns": [
+          "검사",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI 전체 Release CTest",
+            "114/114 통과"
+          ],
+          [
+            "LVUI 관련 AddressSanitizer·UndefinedBehaviorSanitizer",
+            "43/43 통과"
+          ],
+          [
+            "iiGUI 창 없는 통합 검사",
+            "15/15 통과"
+          ],
+          [
+            "iiGUI 구현·생성 C++의 AddressSanitizer·UndefinedBehaviorSanitizer",
+            "동일 15/15 통과"
+          ],
+          [
+            "설치·경로 이동 독립 소비자",
+            "2/2 통과, 네이티브 컬렉션과 반복 컴파일 포함"
+          ],
+          [
+            "실제 LVRS 반복 팩토리",
+            "일반·공유 백엔드 행의 C++ 오브젝트 컴파일 통과, 실행하지 않음"
+          ],
+          [
+            "검사 실행 파일 경계",
+            "Qt 동적 의존성 없음, 생성 위젯 검사에 선언형 파서·컴파일러 심볼 없음"
+          ],
+          [
+            "Dreamscapes 관측 보존",
+            "이 작업 구간의 QML 81개 파일 해시 변경 0"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000083",
+        "columns": [
+          "검사",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI 전체 Release CTest",
+            "120/120 통과"
+          ],
+          [
+            "관련 언어·네이티브 런타임 AddressSanitizer·UndefinedBehaviorSanitizer",
+            "43/43 통과"
+          ],
+          [
+            "iiGUI 창 없는 회귀·생성 C++ 통합 검사",
+            "26/26 통과"
+          ],
+          [
+            "iiGUI 구현·생성 C++ AddressSanitizer·UndefinedBehaviorSanitizer",
+            "동일 26/26 통과"
+          ],
+          [
+            "설치·경로 이동 독립 소비자",
+            "2/2 통과, 자동 가상화 헤더와 컴파일 경로 포함"
+          ],
+          [
+            "LVRS 생성 C++",
+            "일반·공유 백엔드·가상 그리드 팩토리의 오브젝트 컴파일 통과, 실행하지 않음"
+          ],
+          [
+            "실행 파일 경계",
+            "검사한 컴파일러·가상 위젯 실행 파일의 Qt 동적 의존성 없음; 위젯 실행 파일의 LVUI 파서·컴파일러 심볼 없음"
+          ],
+          [
+            "Dreamscapes 관측 보존",
+            "기준선의 QML 81개 파일 해시 변경 0"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,1612 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:0be6ffa237351db14a633b032591540b1fc7ad614caabd7c6068e32a924d98d7",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "README.md",
+    "sha256": "f0a8f74a8b6a0e768c582b177a4c8abb8d4309d813ceddac6db3b2c13949f126",
+    "bytes": 25547,
+    "line_count": 392,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "LVUI",
+    "role": "overview",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI\n",
+      "level": 1,
+      "title": "LVUI"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 71,
+      "raw": "LVUI owns its components and inherits the visual language and design parameters\nof legacy LVRS. LVRS is not the intended implementation or runtime dependency.\nThe independent [icon catalog](docs/NativeIcons.md) embeds LVUI-authored\nSVG designs and accepts a replaceable application source; remaining icon assets\nand platform appearance verification are still in progress.\nThe existing `FRAMEWORK LVRS` generator is a legacy dependency that has **not yet\nbeen fully replaced**. The default native path now owns its ProgressBar geometry,\npaint recipe, reactive visual configuration and frame-driven motion. The\n[motion model](docs/NativeMotion.md) is standard C++ and accepts host frame times.\nThe default [Image path](docs/NativeImage.md) owns validation, fitting, cropping\nand paint recipes in LVUI while the application supplies immutable pixels and a host.\nThe default [button path](docs/NativeButton.md) owns its tone, state-dependent\npainting and content geometry; the host supplies generic input and text services.\nThe default [divider path](docs/NativeDivider.md) owns line layout and style;\nthe application host supplies only a non-interactive drawing surface.\nThe default [menu path](docs/NativeMenu.md) owns its entries, selection,\nkeyboard navigation, rendering and dismissal policy, including direct items,\ndividers and nested menus; dynamically generated children remain in progress.\nThe default [popover path](docs/NativePopover.md) owns validated design inputs\nand reactive updates while the host supplies generic popup placement and input.\nThe default [color picker button](docs/NativeColorPickerButton.md) owns its\nstate and design and accepts a replaceable LVUI color source.\nThe independent [color selection model](docs/ColorSelection.md) supports shared,\ntransactional editing with stale-session protection.\nThe default [color picker](docs/NativeColorPicker.md) composes LVUI-owned\nsurfaces, channels, values and actions around a replaceable edit session.\nIts native platform presentation and accessibility still need device verification.\nIts [color surface interface](docs/NativeColorSurface.md) also supports replaceable\ncolor calculations, native declarative surfaces, and an optional iiColorManager adapter.\nThe independent [modal](docs/NativeModal.md) owns its layout, actions, and\nper-open content lifetime through a replaceable host boundary.\nThe default [alert button](docs/NativeAlertButton.md) and [alert](docs/NativeAlert.md)\nown their styling, reactive inputs and event lifetime; some visual assets and\nplatform verification remain in progress.\nThe independent [sheet](docs/NativeSheet.md) owns adaptive placement, retained\ncontent and drag policy through a generic host boundary.\nThe independent [hierarchy model](docs/OwnedHierarchyModel.md) separates view\nselection and expansion from document edits. Its [virtual list](docs/NativeOwnedHierarchyList.md)\nretains visible rows, supports keyboard navigation, and sends revision-checked\ndrag moves to a replaceable editor. Its [list toolbar](docs/NativeOwnedListToolbar.md)\nowns its three icon slots and reactive behavior. The [hierarchy panel layout](docs/NativeHierarchyPanel.md)\nowns toolbar, list, and footer placement, composition, and declarative generation.\nThe separate [flat list model](docs/OwnedListModel.md) provides replaceable data\nand edit ports. Its [virtual list view](docs/NativeOwnedListView.md) owns visible rows,\nand the [list panel](docs/NativeOwnedListPanel.md) composes its controls and declarative path.\nThe independent [table](docs/NativeOwnedTable.md)\nprovides virtualized two-axis drawing, selection, revision-checked cell editing,\n[range clipboard operations](docs/TableClipboard.md), replaceable [row sorting](docs/TableSorting.md)\nand [structure edits and resizing](docs/TableStructure.md); merged cells and other\nadvanced table operations remain in progress.\nThe independent [toolbar button](docs/NativeOwnedToolbarButton.md) owns its identity,\nvisuals, icon and label layout, and reactive actions. The [hierarchy toolbar](docs/NativeOwnedHierarchyToolbar.md)\nretains keyed buttons and selection; direct child registration and named events remain open.\nThe independent [list footer](docs/NativeOwnedListFooter.md) composes three LVUI buttons\nwith replaceable slot commands and local icon assets.\nThe independent [code editor](docs/NativeCodeEditor.md) uses immutable shared text chunks,\nvirtualized visible lines, replaceable document ports, and a separate input session;\nricher editing features and platform validation remain in progress.\nThe default [toggle switch](docs/NativeToggleSwitch.md) owns its state, drag,\nlayout and frame-driven motion, using a generic input and accessibility host.\nThe default [check box](docs/NativeCheckBox.md) owns its selection, geometry,\npalette and generated check mark, with input and accessibility supplied by the host.\nThe default [radio button](docs/NativeRadioButton.md) owns its group selection,\nindicator and dot motion, including nested view publication and retirement.\nThe [document adapter](docs/NativeDocument.md) is also assembled by the application;\niiGUI does not import the LVUI package or document type.\nSee the [independence status](docs/LVUIIndependence.md) for the\nactual coverage and remaining work. Historical references below describe the\nprevious implementation and do not establish LVUI independence.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "The latest [native authoring verification record](docs/NativeReadinessVerification.md) distinguishes executed checks, installed-package proof, and platform limits from the historical implementation notes below.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 75,
+      "end_line": 142,
+      "raw": "The [whole-language completion audit](docs/Completion.md) retains the full LVRS,\nlanguage, scoped-runtime and native-module requirements. Dreamscapes QML is a\nread-only observation corpus, not an application conversion. The current\n[expression front end](docs/Expressions.md) adds typed operator ASTs, declaration\nannotations and compiler-only constant folding. [Native bindings](docs/NativeBindings.md)\ncompile reactive scalar formulas, dynamic indices and activation-owned static\nsnapshots into C++23. [Lexical scopes](docs/LocalScopes.md) support declarations and\nimports in Window bodies and nested views, with parent borrowing and independent\nlocal objects. [Reusable View values](docs/ViewValues.md) expand lexical visual\ndefinitions into native C++, with independent local activations and child IDs.\n[Typed reusable components](docs/Components.md) add named scalar parameters,\nborrowed C++ backends, defaults and lexical View slots without runtime ASTs.\n[Shared scalar inputs](docs/ScalarInputs.md) evaluate each dynamic argument once\nper activation or dependency update and share its native result across consumers,\nforwarding views and dependent defaults, including calls to earlier function inputs.\n[Typed C++ inputs](docs/ObjectInputs.md) preserve record values, owning or borrowed\nobject handles and const observation across reusable Views with shared native storage.\n[Native method queries](docs/MethodQueries.md) call nested, indexed and passed C++\nobjects, track private Observable reads through Core's synchronous read scope,\nand preserve receiver lifetime, editing state and failure recovery.\n[Object method references](docs/ObjectMethodReferences.md) defer nested and selected\nreceivers without cloning them, retaining shared parent and temporary lifetimes\nthrough replacement, failure recovery and activation retirement.\n[Callable fields](docs/CallableFields.md) select native function publications,\nshared move-only handlers and borrowed functors through the same typed function\nand activation contracts, with C++ deciding fields versus methods.\n[Returned factory captures](docs/FactoryCaptures.md) retain selected receivers and\ntemporary argument storage with each callable version, while preserving native\nreference categories and mandatory copy elision for value parameters.\n[Ordered View sequences](docs/ViewSequences.md) pass `[View]` slots and compose\nchildren directly in their receiving parent, with per-use state and expanded child contracts.\n[Keyed repetition](docs/Repetition.md) compiles stable row identity, native\nreactive payloads and bounded display ranges into C++ widgets. Fixed-size native\nlist/grid virtualization derives its visible range from the scroll viewport,\nreuses validated model snapshots, and preserves keyed anchors on insertion and resize.\n[Natural-height measurement](docs/MeasuredCollections.md) connects native content\nmetrics, prefix indexing and sparse visible rows without view-side scripts.\n[Native collection navigation](docs/CollectionNavigation.md) keeps keyed focus\nand selection independent of mounted rows and preserves native editing shortcuts.\n[Returned C++ callbacks](docs/ReturnedCallbacks.md) evaluate native factories,\nrefresh their dependencies, and retire move-only handlers with their activation.\n[Typed event callback inputs](docs/CallableInputs.md) forward native method references\nand returned callables through reusable views with explicit argument contracts.\n[Activation-owned callback values](docs/CallbackValues.md) share one current\nmove-only handler across consumers and retire active versions safely.\n[Inferred native values](docs/InferredValues.md) select value or function storage\nfrom C++ types while retaining reactive aliases, fixed versions and native setters.\n[Native function values](docs/FunctionValues.md) return typed results into reactive\nview expressions, support readonly declarations and static factory selection,\nand preserve selected function versions for static aliases without copying handlers.\n[Mutable function values](docs/FunctionVariables.md) select an initial version and\nreplace it through typed native setters while retaining consumer identity.\n[Native colors](docs/NativeColors.md) use iiColorManager's header-only value contract\nfor typed view inputs, mutable state, static snapshots, channels, and reactive drawing.\n[Native layout](docs/NativeLayout.md) folds constant geometry at build time and\nupdates dynamic stack spacing, insets, dimensions, alignment and flex atomically\nwithout replacing retained widgets or their local input state.\n[Native Window properties](docs/NativeWindow.md) bind titles, geometry, minimums,\nappearance and LVRS accents to the owning native activation, preserve user resizing\nand editing state, and commit settings only after candidate construction succeeds.\n[Readonly C++ members](docs/ReadonlyMembers.md) preserve native observation through\nconst objects, shared selections and standard references, retain temporary owners\nduring evaluation, and support noncomparable native record values.\n[Native backend construction](docs/BackendConstruction.md) injects application\nruntimes and services without copying nonmovable backend objects.\n[Activation-owned work](docs/ActivationWork.md) uses the optional `LVUI::Runtime`\nto cancel pending deliveries, retain active receivers, and retire them on the UI domain.\nDynamic composition and the full lifecycle remain incomplete.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 143,
+      "end_line": 143,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 144,
+      "end_line": 153,
+      "raw": "[LVRS default style tokens](docs/StyleTokens.md) preserve all 208 variables from\nthe LVRS Figma source, including types, modes and aliases.\n[Color and Metric value types](docs/StyleTypes.md) provide concise selections such\nas `Color.primary`, `Metric.space8`, and contextual `.primary` / `.space8`.\nNative inline styles use the same members; `var(--lvrs-...)` and `token(\"...\")`\nremain available. Window appearance,\ntypography and shared layout/control defaults resolve at compile time, with\nisolated per-compilation overrides and no runtime Figma or token parser.\nThe [style example](example/StyleTokens/README.md) compiles both syntaxes into\nnative C++23 without linking LVRS.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 155,
+      "end_line": 158,
+      "raw": "The default [AppCard](docs/NativeAppCard.md) and [AppHeader](docs/NativeAppHeader.md)\nuse LVUI-owned styling, layout and retained child composition. Their legacy\n[generation](docs/AppSurfaces.md) remains available through FRAMEWORK LVRS during\nthe transition.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 159,
+      "end_line": 159,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 160,
+      "end_line": 195,
+      "raw": "[Native Link generation](docs/NativeLinks.md) uses LVUI-owned appearance, state and\nnavigation interfaces with child composition, typed targets, href/to aliases and\nCore Observable subscriptions. Applications can supply a navigator or use LVUI's\n[independent PageRouter](docs/NativePageRouter.md) with application-owned page factories.\nPlain C++ members use a generated object revision.\nThe [route matcher and resolver](docs/NativeRoutes.md) provide LVUI-owned path\nnormalization, parameter capture and bounded caching without a legacy runtime.\nThe [navigation history](docs/NativeNavigationHistory.md) prepares and commits\nbounded changes independently of a page host; PageRouter joins it to candidate-first\nnative page publication and shared navigation context.\nThe default [EventListener](docs/NativeEventListener.md) owns its bounds and\ncallback lifecycle while using the host's generic input and layout services.\nThe default [Avatar](docs/NativeMedia.md) uses LVUI-owned sizing and circular\nimage composition with application-supplied pixels.\nThe default [Slider](docs/NativeSlider.md) owns range, geometry, input policy\nand painting while using generic host services for input and accessibility.\nThe default [Stepper](docs/NativeStepper.md) owns its direction and visual policy,\nwith application-owned numeric state and generic host accessibility actions.\nThe default [ComboBox](docs/NativeComboBox.md) owns its appearance and input while\nthe application supplies its menu and selection.\nThe default [segmented controls](docs/NativeSegmentedControl.md) own their layout\nand temporary child styling, including nested, conditional and repeated buttons.\nThe default [HelpButton](docs/NativeHelpButton.md) uses an LVUI-owned circular\nbutton preset with a generic host action surface.\nThe default [dropdown buttons](docs/NativeDropdownButton.md) own their geometry,\nrendering and events; additional named icon assets remain to be migrated.\nThe default [InputField](docs/NativeInputField.md) owns text editing, selection,\nIME composition and drawing with replaceable Unicode and platform services.\nAndroid and Web text shaping, automatic wrapping, and actual device verification\nremain open work.\nThe [Tooltip model](docs/NativeTooltipModel.md) owns placement and timing, with\nan application-side popup adapter and automatic target observation. The C++\nfacade assembles these with the application's event loop. Default declarative\ngeneration supports target IDs, text or inline content, callbacks, and static\nplacement and style inputs; remaining inputs and platform verification are still\nbeing migrated.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 196,
+      "end_line": 197,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 198,
+      "end_line": 201,
+      "raw": "The legacy `FRAMEWORK LVRS` / `--framework LVRS` generator still emits LVRS\ncomponents and is being replaced. The default path creates LVUI-owned components\non an application-supplied iiGUI host. See the [independence status](docs/LVUIIndependence.md)\nfor implemented controls and the remaining migration work.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 202,
+      "end_line": 202,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 203,
+      "end_line": 206,
+      "raw": "[Embedded page construction](docs/EmbeddedPages.md) adds a generated `build`\nentry point for existing native builders. LVRS `PageRouter(router: vm.router)`\nmounts a scoped C++ controller whose compiled page factories use that entry point;\nit creates no additional window or source interpreter. Execution is deferred.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 207,
+      "end_line": 207,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 208,
+      "end_line": 213,
+      "raw": "The independent `Modal { ... }` compiles its child View into a per-open native\nC++ content factory. It borrows the outer backend, isolates child IDs, and\nsupports initial open after mounting; see the [LVUI contract](docs/NativeModal.md).\nThe default `AlertButton` and `Alert` use LVUI's independent models and adapters.\nThe [LVUI Alert contract](docs/NativeAlert.md) defines the currently implemented\nbehavior and limits.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 214,
+      "end_line": 214,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 215,
+      "end_line": 218,
+      "raw": "The native AOT path now emits instantiable C++ widget classes, styled with LVRS\nappearance data. [Core owns the application runtime, entrypoint and final executable attachment](docs/NativeWidgetRuntime.md),\nwhile iiGUI adapts Core's event loop to its own C++ widgets and native OS surfaces. The Hello World uses\nthat path, including Core-owned workers and C++ backend teardown after owned work.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 219,
+      "end_line": 219,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 220,
+      "end_line": 230,
+      "raw": "LVUI is an independent, ahead-of-time (AOT) compiled declarative UI language.\nThe selected language compiles `.lvui` source into target-specific native\nwidget code before execution. Migrated components own their layout, behavior and\ndrawing in LVUI, while iiGUI supplies generic hosting and platform services;\nremaining legacy generation paths are still being replaced. Cocoa/AppKit and\nWin32 provide platform windows, input and presentation.\nThe build also compiles and links the selected Metal, DirectX/Direct3D or\nVulkan graphics acceleration path for the target. The resulting native UI and\ngraphics code are handed to iiGUI for hosting, event delivery, lifecycle and\npresentation within the iiSDK runtime. Native widget instances and GPU devices\nare created at runtime by that compiled code; LVUI source is not interpreted.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 231,
+      "end_line": 231,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 232,
+      "end_line": 250,
+      "raw": "The [AOT compilation and mounting design](docs/CompilationModel.md) specifies\nthis architecture. The [documentation index](docs/README.md) records the\nselected component syntax, C++ imports, declarations and state annotations.\n`View` is the common type for everything displayed visually. A view can accept\nother views as child arguments through `{}`, including nested compositions;\nsee [View and child arguments](docs/DeclarativeSyntax.md#view-type-and-child-arguments).\nValues are reactive and bound by default unless declared `@Static`; views\nfollow state changes without observation annotations. ViewModels follow this\n[general value model](docs/ReactiveState.md).\nComponent interfaces declare callback inputs; method references and explicit\ncalls follow the [callable semantics](docs/MethodReferences.md).\nThe package now implements a C++23 component-language front end alongside the\nearlier HTML-shaped parsing/rendering surface. It recognizes 109 native visual\ncomponent keywords, three visual modifiers and eight core words, and parses\nbrace-delimited child `View` arguments. It now implements [native AOT code generation](docs/NativeAOT.md)\nfor supported LVUI-owned components listed in the independence guide,\nmounted as iiGUI C++ widgets on a Cocoa surface. The native Hello World compiles generated C++23\nwithout a runtime LVUI parser. Remaining components, complete reactive input coverage,\nWindows/Linux widget input adapters and additional GPU code generation remain separate work.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 251,
+      "end_line": 251,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 252,
+      "end_line": 252,
+      "raw": "## Implemented component language\n",
+      "level": 2,
+      "title": "Implemented component language"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 253,
+      "end_line": 253,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "fenced_code",
+      "start_line": 254,
+      "end_line": 259,
+      "raw": "```cpp\n#include <LVUI/Language.h>\nauto source = \"VStack { Label(text: \\\"Hello\\\") }\";\nauto document = lvui::parse_view(source);\n// document->root().children contains a typed Label View.\n```\n",
+      "language": "cpp",
+      "code": "#include <LVUI/Language.h>\nauto source = \"VStack { Label(text: \\\"Hello\\\") }\";\nauto document = lvui::parse_view(source);\n// document->root().children contains a typed Label View.\n",
+      "closed": true
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 260,
+      "end_line": 260,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 261,
+      "end_line": 266,
+      "raw": "`keywords()`, `find_keyword()` and `is_reserved_identifier()` expose the actual\nreserved-word table used by `tokenize()` and `parse_view()`. The native\n`lvui-check` tool validates component files at build time; it does not execute\nthe UI or imported backend objects. See the [implemented grammar and API](docs/ComponentLanguage.md)\nand [LVUI-owned reserved-word registry](docs/KeywordRegistry.md).\nBuild, parser and installed-consumer evidence is recorded in [verification](docs/Verification.md).\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 267,
+      "end_line": 267,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 268,
+      "end_line": 270,
+      "raw": "The language owns its checked-in keyword registry. Legacy source observations are\nhistorical evidence and do not determine current vocabulary. The remaining\nlegacy framework generator is tracked separately in the independence status.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 271,
+      "end_line": 271,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "heading",
+      "start_line": 272,
+      "end_line": 272,
+      "raw": "## Current 0.1 parser and rendering integration\n",
+      "level": 2,
+      "title": "Current 0.1 parser and rendering integration"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 273,
+      "end_line": 273,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 274,
+      "end_line": 276,
+      "raw": "The existing `.lvui` parser accepts familiar HTML-shaped tags and inline\nstyles, similar to the markup portion of a Svelte component. It does not load\nan HTML document in a browser.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 277,
+      "end_line": 277,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "fenced_code",
+      "start_line": 278,
+      "end_line": 290,
+      "raw": "```html\n<main style=\"padding:24px; gap:16px; background:#101827; color:#ffffff\">\n  <h1>Native LVUI</h1>\n  <div style=\"flex-direction:row; gap:12px\">\n    <section style=\"padding:16px; background:#20304a; border-radius:12px\">\n      <p>Parsed, laid out and drawn by iiGUI.</p>\n    </section>\n    <section style=\"padding:16px; background:#274638; border-radius:12px\">\n      <p>One C++23 application, native desktop graphics.</p>\n    </section>\n  </div>\n</main>\n```\n",
+      "language": "html",
+      "code": "<main style=\"padding:24px; gap:16px; background:#101827; color:#ffffff\">\n  <h1>Native LVUI</h1>\n  <div style=\"flex-direction:row; gap:12px\">\n    <section style=\"padding:16px; background:#20304a; border-radius:12px\">\n      <p>Parsed, laid out and drawn by iiGUI.</p>\n    </section>\n    <section style=\"padding:16px; background:#274638; border-radius:12px\">\n      <p>One C++23 application, native desktop graphics.</p>\n    </section>\n  </div>\n</main>\n",
+      "closed": true
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 291,
+      "end_line": 291,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 292,
+      "end_line": 298,
+      "raw": "The `LVUI::LVUI` C++23 package owns syntax, validated styles, source diagnostics,\nimmutable document trees and build-time C++ code generation. Its sole SDK dependency is\niiSDKCore Contracts (UTF-8 validation). It does not depend on iiGUI, a window\nsystem, Qt, a WebView, JavaScript or a browser parser. iiGUI consumes this tree,\nmeasures native fonts, lays out logical boxes and submits native graphics.\nThis dependency goes in one direction:\napplication → iiGUI → LVUI → Core Contracts.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 299,
+      "end_line": 299,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "fenced_code",
+      "start_line": 300,
+      "end_line": 306,
+      "raw": "```cpp\n#include <LVUI/Document.h>\nauto document = lvui::parse(\"<view><p>Hello</p></view>\");\nif (!document) {\n    // document.error(): offset, line, column, message\n}\n```\n",
+      "language": "cpp",
+      "code": "#include <LVUI/Document.h>\nauto document = lvui::parse(\"<view><p>Hello</p></view>\");\nif (!document) {\n    // document.error(): offset, line, column, message\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 307,
+      "end_line": 307,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 308,
+      "end_line": 313,
+      "raw": "The initial 0.1 language surface is deliberately bounded. See the\n[language specification](docs/Language.md) for exact supported syntax and\nlayout semantics. The selected AOT language is documented separately. Event\nhandling, data binding and application state remain outside this first\nparser/rendering implementation; no scripting engine is embedded. Unsupported\ninput fails with a diagnostic instead of being ignored.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 314,
+      "end_line": 314,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "heading",
+      "start_line": 315,
+      "end_line": 315,
+      "raw": "## Build\n",
+      "level": 2,
+      "title": "Build"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 316,
+      "end_line": 316,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "fenced_code",
+      "start_line": 317,
+      "end_line": 326,
+      "raw": "```sh\ncmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n```\n",
+      "language": "sh",
+      "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n",
+      "closed": true
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 327,
+      "end_line": 327,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 328,
+      "end_line": 332,
+      "raw": "CMake 3.31+, C++23 and iiSDKCore 0.18.1+ Contracts are required. Test/source-inventory\nchecks additionally use Python 3; `BUILD_TESTING=OFF` needs no Python. The parser tests\ndo not open windows or require GPU hardware. Installation above is staged under\n`build/`; it does not replace a user's installed SDK. Source and test results\ndescribe this implementation, not full HTML/CSS or Svelte compatibility.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 333,
+      "end_line": 333,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "heading",
+      "start_line": 334,
+      "end_line": 334,
+      "raw": "## Source header layout\n",
+      "level": 2,
+      "title": "Source header layout"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 335,
+      "end_line": 335,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 336,
+      "end_line": 340,
+      "raw": "Public headers and implementations live together in `src/LVUI/`.\nThere is no separate authored `include/` tree. Existing public `#include` names\nand exported CMake targets are unchanged; installation still places only public\nheaders in the package include directory. Generated export headers belong to\n`build/`, not to the authored source tree.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 341,
+      "end_line": 341,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 342,
+      "end_line": 344,
+      "raw": "Validate this layout from the SDK workspace with\n`python3 -B tests/test_source_header_layout.py`. Reconfigure, build, run CTest,\nand verify a staged installed consumer after changing source/header paths.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 345,
+      "end_line": 345,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 346,
+      "end_line": 348,
+      "raw": "The standalone `TableCellItem`, `TableRow`, and `TableHeader` components still\nneed independent LVUI implementations. The default `Table` uses the independent\nmodel and host described in [its contract](docs/NativeOwnedTable.md).\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 349,
+      "end_line": 349,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 350,
+      "end_line": 351,
+      "raw": "Default toolbar keywords generate LVUI-owned native objects and scoped bindings;\nthe [toolbar AOT history](docs/Toolbars.md) separately describes the remaining legacy path.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 352,
+      "end_line": 352,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 353,
+      "end_line": 353,
+      "raw": "See [native Card and Avatar AOT](docs/NativeMedia.md) for typed images, retained preview factories and explicit unsupported-loader diagnostics.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 354,
+      "end_line": 354,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 355,
+      "end_line": 358,
+      "raw": "The default [native material AOT](docs/NativeMaterials.md) uses LVUI-owned material\nmodels, radial gradients, validated SVG outlines, reactive styles, and motion on\ngeneric iiGUI host services. Platform GPU parity remains incomplete; the optional legacy\n`FRAMEWORK LVRS` material path still depends on LVRS.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 359,
+      "end_line": 359,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 360,
+      "end_line": 362,
+      "raw": "See [native CodeEditor AOT](docs/NativeCodeEditor.md) for a retained PlainText/NoWrap\neditor, scoped document models, typed edit callbacks and Core property bindings.\nRichText TextEditor remains a separate migration requirement.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 363,
+      "end_line": 363,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 364,
+      "end_line": 366,
+      "raw": "See [native Tooltip AOT](docs/NativeTooltip.md) for forward target-ID attachment,\nretained custom content, checked millisecond inputs and same-instance bindings.\nApplication and test execution remains deferred to the final whole-goal batch.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 367,
+      "end_line": 367,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "paragraph",
+      "start_line": 368,
+      "end_line": 368,
+      "raw": "[Application style profiles](docs/StyleProfiles.md) share typed Color/Metric values between LVUI views and handwritten native C++ panels through a generated constexpr header. `STYLE_FILE` and `lvui_generate_styles` track the same build input; no runtime LVUI parser is required.\n"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 369,
+      "end_line": 369,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 370,
+      "end_line": 373,
+      "raw": "[NativeView](docs/NativeViews.md) embeds typed C++ visual providers in AOT layouts.\nThe [Dreamscapes readiness contract](docs/NativeReadiness.md) separates proven\nnative authoring capabilities, final execution, installed-package verification,\nand the later product migration.\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 374,
+      "end_line": 374,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "paragraph",
+      "start_line": 375,
+      "end_line": 375,
+      "raw": "The independent [list item](docs/NativeOwnedListItem.md) shares its row layout and drawing with the owned list view and provides toggle, checkbox, action, stepper, and selector compositions; other compound variants are still being implemented.\n"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 376,
+      "end_line": 376,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 377,
+      "end_line": 377,
+      "raw": "The independent [card model and native host](docs/NativeOwnedCard.md) expose replaceable image inputs and actions through C++ and declarative views; custom components and detailed visual parity remain in progress.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 378,
+      "end_line": 378,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "paragraph",
+      "start_line": 379,
+      "end_line": 379,
+      "raw": "An independent [table header](docs/NativeOwnedTableHeader.md) reuses the LVUI table viewport model through C++ and declarative views.\n"
+    },
+    {
+      "id": "b000080",
+      "kind": "blank",
+      "start_line": 380,
+      "end_line": 380,
+      "raw": "\n"
+    },
+    {
+      "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 381,
+      "end_line": 381,
+      "raw": "The independent [table cell](docs/NativeOwnedTableCellItem.md) provides replaceable validation and conflict-aware editing through C++ and declarative views.\n"
+    },
+    {
+      "id": "b000082",
+      "kind": "blank",
+      "start_line": 382,
+      "end_line": 382,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "paragraph",
+      "start_line": 383,
+      "end_line": 383,
+      "raw": "An independent [table row](docs/NativeOwnedTableRow.md) composes retained keyed cells through C++ and declarative views.\n"
+    },
+    {
+      "id": "b000084",
+      "kind": "blank",
+      "start_line": 384,
+      "end_line": 384,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "html",
+      "start_line": 385,
+      "end_line": 385,
+      "raw": "<!-- workspace-docs:readme:start -->\n"
+    },
+    {
+      "id": "b000086",
+      "kind": "heading",
+      "start_line": 386,
+      "end_line": 386,
+      "raw": "## Documentation entry points\n",
+      "level": 2,
+      "title": "Documentation entry points"
+    },
+    {
+      "id": "b000087",
+      "kind": "blank",
+      "start_line": 387,
+      "end_line": 387,
+      "raw": "\n"
+    },
+    {
+      "id": "b000088",
+      "kind": "list",
+      "start_line": 388,
+      "end_line": 391,
+      "raw": "- Human overview: this English `README.md`.\n- Agent instructions: [AGENT.md](AGENT.md).\n- Human documentation: [documentation index](docs/README.md).\n- Structured agent documentation: [agent index](docs/agent-index.json).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Human overview: this English `README.md`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Agent instructions: [AGENT.md](AGENT.md).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Human documentation: [documentation index](docs/README.md).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Structured agent documentation: [agent index](docs/agent-index.json).",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000089",
+      "kind": "html",
+      "start_line": 392,
+      "end_line": 392,
+      "raw": "<!-- workspace-docs:readme:end -->\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI",
+      "anchor": "lvui",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Implemented component language",
+      "anchor": "implemented-component-language",
+      "start_line": 252
+    },
+    {
+      "block_id": "b000035",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Current 0.1 parser and rendering integration",
+      "anchor": "current-01-parser-and-rendering-integration",
+      "start_line": 272
+    },
+    {
+      "block_id": "b000047",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Build",
+      "anchor": "build",
+      "start_line": 315
+    },
+    {
+      "block_id": "b000053",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Source header layout",
+      "anchor": "source-header-layout",
+      "start_line": 334
+    },
+    {
+      "block_id": "b000086",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Documentation entry points",
+      "anchor": "documentation-entry-points",
+      "start_line": 386
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 71,
+        "text": "previous implementation and do not establish LVUI independence.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 269,
+        "text": "historical evidence and do not determine current vocabulary. The remaining",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000051",
+        "line": 328,
+        "text": "CMake 3.31+, C++23 and iiSDKCore 0.18.1+ Contracts are required. Test/source-inventory",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000051",
+        "line": 330,
+        "text": "do not open windows or require GPU hardware. Installation above is staged under",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000071",
+        "line": 368,
+        "text": "[Application style profiles](docs/StyleProfiles.md) share typed Color/Metric values between LVUI views and handwritten native C++ panels through a generated constexpr header. `STYLE_FILE` and `lvui_generate_styles` track the same build input; no runtime LVUI parser is required.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [
+      {
+        "block_id": "b000049",
+        "language": "sh",
+        "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "icon catalog",
+        "target": "docs/NativeIcons.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000003",
+        "label": "motion model",
+        "target": "docs/NativeMotion.md",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000003",
+        "label": "Image path",
+        "target": "docs/NativeImage.md",
+        "kind": "relative",
+        "line": 12
+      },
+      {
+        "block_id": "b000003",
+        "label": "button path",
+        "target": "docs/NativeButton.md",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000003",
+        "label": "divider path",
+        "target": "docs/NativeDivider.md",
+        "kind": "relative",
+        "line": 16
+      },
+      {
+        "block_id": "b000003",
+        "label": "menu path",
+        "target": "docs/NativeMenu.md",
+        "kind": "relative",
+        "line": 18
+      },
+      {
+        "block_id": "b000003",
+        "label": "popover path",
+        "target": "docs/NativePopover.md",
+        "kind": "relative",
+        "line": 21
+      },
+      {
+        "block_id": "b000003",
+        "label": "color picker button",
+        "target": "docs/NativeColorPickerButton.md",
+        "kind": "relative",
+        "line": 23
+      },
+      {
+        "block_id": "b000003",
+        "label": "color selection model",
+        "target": "docs/ColorSelection.md",
+        "kind": "relative",
+        "line": 25
+      },
+      {
+        "block_id": "b000003",
+        "label": "color picker",
+        "target": "docs/NativeColorPicker.md",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000003",
+        "label": "color surface interface",
+        "target": "docs/NativeColorSurface.md",
+        "kind": "relative",
+        "line": 30
+      },
+      {
+        "block_id": "b000003",
+        "label": "modal",
+        "target": "docs/NativeModal.md",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000003",
+        "label": "alert button",
+        "target": "docs/NativeAlertButton.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000003",
+        "label": "alert",
+        "target": "docs/NativeAlert.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000003",
+        "label": "sheet",
+        "target": "docs/NativeSheet.md",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000003",
+        "label": "hierarchy model",
+        "target": "docs/OwnedHierarchyModel.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000003",
+        "label": "virtual list",
+        "target": "docs/NativeOwnedHierarchyList.md",
+        "kind": "relative",
+        "line": 40
+      },
+      {
+        "block_id": "b000003",
+        "label": "list toolbar",
+        "target": "docs/NativeOwnedListToolbar.md",
+        "kind": "relative",
+        "line": 42
+      },
+      {
+        "block_id": "b000003",
+        "label": "hierarchy panel layout",
+        "target": "docs/NativeHierarchyPanel.md",
+        "kind": "relative",
+        "line": 43
+      },
+      {
+        "block_id": "b000003",
+        "label": "flat list model",
+        "target": "docs/OwnedListModel.md",
+        "kind": "relative",
+        "line": 45
+      },
+      {
+        "block_id": "b000003",
+        "label": "virtual list view",
+        "target": "docs/NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 46
+      },
+      {
+        "block_id": "b000003",
+        "label": "list panel",
+        "target": "docs/NativeOwnedListPanel.md",
+        "kind": "relative",
+        "line": 47
+      },
+      {
+        "block_id": "b000003",
+        "label": "table",
+        "target": "docs/NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 48
+      },
+      {
+        "block_id": "b000003",
+        "label": "range clipboard operations",
+        "target": "docs/TableClipboard.md",
+        "kind": "relative",
+        "line": 50
+      },
+      {
+        "block_id": "b000003",
+        "label": "row sorting",
+        "target": "docs/TableSorting.md",
+        "kind": "relative",
+        "line": 50
+      },
+      {
+        "block_id": "b000003",
+        "label": "structure edits and resizing",
+        "target": "docs/TableStructure.md",
+        "kind": "relative",
+        "line": 51
+      },
+      {
+        "block_id": "b000003",
+        "label": "toolbar button",
+        "target": "docs/NativeOwnedToolbarButton.md",
+        "kind": "relative",
+        "line": 53
+      },
+      {
+        "block_id": "b000003",
+        "label": "hierarchy toolbar",
+        "target": "docs/NativeOwnedHierarchyToolbar.md",
+        "kind": "relative",
+        "line": 54
+      },
+      {
+        "block_id": "b000003",
+        "label": "list footer",
+        "target": "docs/NativeOwnedListFooter.md",
+        "kind": "relative",
+        "line": 56
+      },
+      {
+        "block_id": "b000003",
+        "label": "code editor",
+        "target": "docs/NativeCodeEditor.md",
+        "kind": "relative",
+        "line": 58
+      },
+      {
+        "block_id": "b000003",
+        "label": "toggle switch",
+        "target": "docs/NativeToggleSwitch.md",
+        "kind": "relative",
+        "line": 61
+      },
+      {
+        "block_id": "b000003",
+        "label": "check box",
+        "target": "docs/NativeCheckBox.md",
+        "kind": "relative",
+        "line": 63
+      },
+      {
+        "block_id": "b000003",
+        "label": "radio button",
+        "target": "docs/NativeRadioButton.md",
+        "kind": "relative",
+        "line": 65
+      },
+      {
+        "block_id": "b000003",
+        "label": "document adapter",
+        "target": "docs/NativeDocument.md",
+        "kind": "relative",
+        "line": 67
+      },
+      {
+        "block_id": "b000003",
+        "label": "independence status",
+        "target": "docs/LVUIIndependence.md",
+        "kind": "relative",
+        "line": 69
+      },
+      {
+        "block_id": "b000005",
+        "label": "native authoring verification record",
+        "target": "docs/NativeReadinessVerification.md",
+        "kind": "relative",
+        "line": 73
+      },
+      {
+        "block_id": "b000007",
+        "label": "whole-language completion audit",
+        "target": "docs/Completion.md",
+        "kind": "relative",
+        "line": 75
+      },
+      {
+        "block_id": "b000007",
+        "label": "expression front end",
+        "target": "docs/Expressions.md",
+        "kind": "relative",
+        "line": 78
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native bindings",
+        "target": "docs/NativeBindings.md",
+        "kind": "relative",
+        "line": 79
+      },
+      {
+        "block_id": "b000007",
+        "label": "Lexical scopes",
+        "target": "docs/LocalScopes.md",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000007",
+        "label": "Reusable View values",
+        "target": "docs/ViewValues.md",
+        "kind": "relative",
+        "line": 83
+      },
+      {
+        "block_id": "b000007",
+        "label": "Typed reusable components",
+        "target": "docs/Components.md",
+        "kind": "relative",
+        "line": 85
+      },
+      {
+        "block_id": "b000007",
+        "label": "Shared scalar inputs",
+        "target": "docs/ScalarInputs.md",
+        "kind": "relative",
+        "line": 87
+      },
+      {
+        "block_id": "b000007",
+        "label": "Typed C++ inputs",
+        "target": "docs/ObjectInputs.md",
+        "kind": "relative",
+        "line": 90
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native method queries",
+        "target": "docs/MethodQueries.md",
+        "kind": "relative",
+        "line": 92
+      },
+      {
+        "block_id": "b000007",
+        "label": "Object method references",
+        "target": "docs/ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 95
+      },
+      {
+        "block_id": "b000007",
+        "label": "Callable fields",
+        "target": "docs/CallableFields.md",
+        "kind": "relative",
+        "line": 98
+      },
+      {
+        "block_id": "b000007",
+        "label": "Returned factory captures",
+        "target": "docs/FactoryCaptures.md",
+        "kind": "relative",
+        "line": 101
+      },
+      {
+        "block_id": "b000007",
+        "label": "Ordered View sequences",
+        "target": "docs/ViewSequences.md",
+        "kind": "relative",
+        "line": 104
+      },
+      {
+        "block_id": "b000007",
+        "label": "Keyed repetition",
+        "target": "docs/Repetition.md",
+        "kind": "relative",
+        "line": 106
+      },
+      {
+        "block_id": "b000007",
+        "label": "Natural-height measurement",
+        "target": "docs/MeasuredCollections.md",
+        "kind": "relative",
+        "line": 110
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native collection navigation",
+        "target": "docs/CollectionNavigation.md",
+        "kind": "relative",
+        "line": 112
+      },
+      {
+        "block_id": "b000007",
+        "label": "Returned C++ callbacks",
+        "target": "docs/ReturnedCallbacks.md",
+        "kind": "relative",
+        "line": 114
+      },
+      {
+        "block_id": "b000007",
+        "label": "Typed event callback inputs",
+        "target": "docs/CallableInputs.md",
+        "kind": "relative",
+        "line": 116
+      },
+      {
+        "block_id": "b000007",
+        "label": "Activation-owned callback values",
+        "target": "docs/CallbackValues.md",
+        "kind": "relative",
+        "line": 118
+      },
+      {
+        "block_id": "b000007",
+        "label": "Inferred native values",
+        "target": "docs/InferredValues.md",
+        "kind": "relative",
+        "line": 120
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native function values",
+        "target": "docs/FunctionValues.md",
+        "kind": "relative",
+        "line": 122
+      },
+      {
+        "block_id": "b000007",
+        "label": "Mutable function values",
+        "target": "docs/FunctionVariables.md",
+        "kind": "relative",
+        "line": 125
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native colors",
+        "target": "docs/NativeColors.md",
+        "kind": "relative",
+        "line": 127
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native layout",
+        "target": "docs/NativeLayout.md",
+        "kind": "relative",
+        "line": 129
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native Window properties",
+        "target": "docs/NativeWindow.md",
+        "kind": "relative",
+        "line": 132
+      },
+      {
+        "block_id": "b000007",
+        "label": "Readonly C++ members",
+        "target": "docs/ReadonlyMembers.md",
+        "kind": "relative",
+        "line": 135
+      },
+      {
+        "block_id": "b000007",
+        "label": "Native backend construction",
+        "target": "docs/BackendConstruction.md",
+        "kind": "relative",
+        "line": 138
+      },
+      {
+        "block_id": "b000007",
+        "label": "Activation-owned work",
+        "target": "docs/ActivationWork.md",
+        "kind": "relative",
+        "line": 140
+      },
+      {
+        "block_id": "b000009",
+        "label": "LVRS default style tokens",
+        "target": "docs/StyleTokens.md",
+        "kind": "relative",
+        "line": 144
+      },
+      {
+        "block_id": "b000009",
+        "label": "Color and Metric value types",
+        "target": "docs/StyleTypes.md",
+        "kind": "relative",
+        "line": 146
+      },
+      {
+        "block_id": "b000009",
+        "label": "style example",
+        "target": "example/StyleTokens/README.md",
+        "kind": "relative",
+        "line": 152
+      },
+      {
+        "block_id": "b000011",
+        "label": "AppCard",
+        "target": "docs/NativeAppCard.md",
+        "kind": "relative",
+        "line": 155
+      },
+      {
+        "block_id": "b000011",
+        "label": "AppHeader",
+        "target": "docs/NativeAppHeader.md",
+        "kind": "relative",
+        "line": 155
+      },
+      {
+        "block_id": "b000011",
+        "label": "generation",
+        "target": "docs/AppSurfaces.md",
+        "kind": "relative",
+        "line": 157
+      },
+      {
+        "block_id": "b000013",
+        "label": "Native Link generation",
+        "target": "docs/NativeLinks.md",
+        "kind": "relative",
+        "line": 160
+      },
+      {
+        "block_id": "b000013",
+        "label": "independent PageRouter",
+        "target": "docs/NativePageRouter.md",
+        "kind": "relative",
+        "line": 163
+      },
+      {
+        "block_id": "b000013",
+        "label": "route matcher and resolver",
+        "target": "docs/NativeRoutes.md",
+        "kind": "relative",
+        "line": 165
+      },
+      {
+        "block_id": "b000013",
+        "label": "navigation history",
+        "target": "docs/NativeNavigationHistory.md",
+        "kind": "relative",
+        "line": 167
+      },
+      {
+        "block_id": "b000013",
+        "label": "EventListener",
+        "target": "docs/NativeEventListener.md",
+        "kind": "relative",
+        "line": 170
+      },
+      {
+        "block_id": "b000013",
+        "label": "Avatar",
+        "target": "docs/NativeMedia.md",
+        "kind": "relative",
+        "line": 172
+      },
+      {
+        "block_id": "b000013",
+        "label": "Slider",
+        "target": "docs/NativeSlider.md",
+        "kind": "relative",
+        "line": 174
+      },
+      {
+        "block_id": "b000013",
+        "label": "Stepper",
+        "target": "docs/NativeStepper.md",
+        "kind": "relative",
+        "line": 176
+      },
+      {
+        "block_id": "b000013",
+        "label": "ComboBox",
+        "target": "docs/NativeComboBox.md",
+        "kind": "relative",
+        "line": 178
+      },
+      {
+        "block_id": "b000013",
+        "label": "segmented controls",
+        "target": "docs/NativeSegmentedControl.md",
+        "kind": "relative",
+        "line": 180
+      },
+      {
+        "block_id": "b000013",
+        "label": "HelpButton",
+        "target": "docs/NativeHelpButton.md",
+        "kind": "relative",
+        "line": 182
+      },
+      {
+        "block_id": "b000013",
+        "label": "dropdown buttons",
+        "target": "docs/NativeDropdownButton.md",
+        "kind": "relative",
+        "line": 184
+      },
+      {
+        "block_id": "b000013",
+        "label": "InputField",
+        "target": "docs/NativeInputField.md",
+        "kind": "relative",
+        "line": 186
+      },
+      {
+        "block_id": "b000013",
+        "label": "Tooltip model",
+        "target": "docs/NativeTooltipModel.md",
+        "kind": "relative",
+        "line": 190
+      },
+      {
+        "block_id": "b000015",
+        "label": "independence status",
+        "target": "docs/LVUIIndependence.md",
+        "kind": "relative",
+        "line": 200
+      },
+      {
+        "block_id": "b000017",
+        "label": "Embedded page construction",
+        "target": "docs/EmbeddedPages.md",
+        "kind": "relative",
+        "line": 203
+      },
+      {
+        "block_id": "b000019",
+        "label": "LVUI contract",
+        "target": "docs/NativeModal.md",
+        "kind": "relative",
+        "line": 210
+      },
+      {
+        "block_id": "b000019",
+        "label": "LVUI Alert contract",
+        "target": "docs/NativeAlert.md",
+        "kind": "relative",
+        "line": 212
+      },
+      {
+        "block_id": "b000021",
+        "label": "Core owns the application runtime, entrypoint and final executable attachment",
+        "target": "docs/NativeWidgetRuntime.md",
+        "kind": "relative",
+        "line": 216
+      },
+      {
+        "block_id": "b000025",
+        "label": "AOT compilation and mounting design",
+        "target": "docs/CompilationModel.md",
+        "kind": "relative",
+        "line": 232
+      },
+      {
+        "block_id": "b000025",
+        "label": "documentation index",
+        "target": "docs/README.md",
+        "kind": "relative",
+        "line": 233
+      },
+      {
+        "block_id": "b000025",
+        "label": "View and child arguments",
+        "target": "docs/DeclarativeSyntax.md#view-type-and-child-arguments",
+        "kind": "relative",
+        "line": 237
+      },
+      {
+        "block_id": "b000025",
+        "label": "general value model",
+        "target": "docs/ReactiveState.md",
+        "kind": "relative",
+        "line": 240
+      },
+      {
+        "block_id": "b000025",
+        "label": "callable semantics",
+        "target": "docs/MethodReferences.md",
+        "kind": "relative",
+        "line": 242
+      },
+      {
+        "block_id": "b000025",
+        "label": "native AOT code generation",
+        "target": "docs/NativeAOT.md",
+        "kind": "relative",
+        "line": 246
+      },
+      {
+        "block_id": "b000031",
+        "label": "implemented grammar and API",
+        "target": "docs/ComponentLanguage.md",
+        "kind": "relative",
+        "line": 264
+      },
+      {
+        "block_id": "b000031",
+        "label": "LVUI-owned reserved-word registry",
+        "target": "docs/KeywordRegistry.md",
+        "kind": "relative",
+        "line": 265
+      },
+      {
+        "block_id": "b000031",
+        "label": "verification",
+        "target": "docs/Verification.md",
+        "kind": "relative",
+        "line": 266
+      },
+      {
+        "block_id": "b000045",
+        "label": "language specification",
+        "target": "docs/Language.md",
+        "kind": "relative",
+        "line": 309
+      },
+      {
+        "block_id": "b000059",
+        "label": "its contract",
+        "target": "docs/NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 348
+      },
+      {
+        "block_id": "b000061",
+        "label": "toolbar AOT history",
+        "target": "docs/Toolbars.md",
+        "kind": "relative",
+        "line": 351
+      },
+      {
+        "block_id": "b000063",
+        "label": "native Card and Avatar AOT",
+        "target": "docs/NativeMedia.md",
+        "kind": "relative",
+        "line": 353
+      },
+      {
+        "block_id": "b000065",
+        "label": "native material AOT",
+        "target": "docs/NativeMaterials.md",
+        "kind": "relative",
+        "line": 355
+      },
+      {
+        "block_id": "b000067",
+        "label": "native CodeEditor AOT",
+        "target": "docs/NativeCodeEditor.md",
+        "kind": "relative",
+        "line": 360
+      },
+      {
+        "block_id": "b000069",
+        "label": "native Tooltip AOT",
+        "target": "docs/NativeTooltip.md",
+        "kind": "relative",
+        "line": 364
+      },
+      {
+        "block_id": "b000071",
+        "label": "Application style profiles",
+        "target": "docs/StyleProfiles.md",
+        "kind": "relative",
+        "line": 368
+      },
+      {
+        "block_id": "b000073",
+        "label": "NativeView",
+        "target": "docs/NativeViews.md",
+        "kind": "relative",
+        "line": 370
+      },
+      {
+        "block_id": "b000073",
+        "label": "Dreamscapes readiness contract",
+        "target": "docs/NativeReadiness.md",
+        "kind": "relative",
+        "line": 371
+      },
+      {
+        "block_id": "b000075",
+        "label": "list item",
+        "target": "docs/NativeOwnedListItem.md",
+        "kind": "relative",
+        "line": 375
+      },
+      {
+        "block_id": "b000077",
+        "label": "card model and native host",
+        "target": "docs/NativeOwnedCard.md",
+        "kind": "relative",
+        "line": 377
+      },
+      {
+        "block_id": "b000079",
+        "label": "table header",
+        "target": "docs/NativeOwnedTableHeader.md",
+        "kind": "relative",
+        "line": 379
+      },
+      {
+        "block_id": "b000081",
+        "label": "table cell",
+        "target": "docs/NativeOwnedTableCellItem.md",
+        "kind": "relative",
+        "line": 381
+      },
+      {
+        "block_id": "b000083",
+        "label": "table row",
+        "target": "docs/NativeOwnedTableRow.md",
+        "kind": "relative",
+        "line": 383
+      },
+      {
+        "block_id": "b000088",
+        "label": "AGENT.md",
+        "target": "AGENT.md",
+        "kind": "relative",
+        "line": 389
+      },
+      {
+        "block_id": "b000088",
+        "label": "documentation index",
+        "target": "docs/README.md",
+        "kind": "relative",
+        "line": 390
+      },
+      {
+        "block_id": "b000088",
+        "label": "agent index",
+        "target": "docs/agent-index.json",
+        "kind": "relative",
+        "line": 391
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

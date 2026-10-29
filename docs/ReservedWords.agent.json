@@ -1,0 +1,1977 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:dbd2dba953cad78628d25f22b215facff4bbf7522a13c1412c5aab0dc3dbb151",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ReservedWords.md",
+    "sha256": "d9839cd150293ad3f4a64e1999e96e392369618177d168deeadbfed9bf3b9016",
+    "bytes": 16529,
+    "line_count": 198,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "예약어와 LVRS 시각 컴포넌트",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 예약어와 LVRS 시각 컴포넌트\n",
+      "level": 1,
+      "title": "예약어와 LVRS 시각 컴포넌트"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "quote",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "> 이 문서는 레거시 LVRS/QML 소스 조사 당시의 역사적 기록이다. 현재 언어의 예약어\n> 등록과 갱신은 [LVUI 예약어 목록](KeywordRegistry.md)을 따른다. 아래 명령으로\n> LVUI의 현재 예약어 목록을 갱신하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 9,
+      "raw": "이 문서는 `tools/update_lvrs_keywords.py`로 소스 조사 결과에서 생성한다.\n조사 기준 LVRS 커밋은 `c5131090ca8df583bcf52253c5082bcef1ee3833`이며, `src/`의 378개 파일을 읽고 LF 개행으로 정규화한 SHA-256을 기록했다.\n시각 컴포넌트의 고유 이름 109개와 시각 효과·동작 보조 예약어 3개를 포함한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "## 실제 언어 구현\n",
+      "level": 2,
+      "title": "실제 언어 구현"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 20,
+      "raw": "`LVUI/Language.h`의 `keywords`, `find_keyword`, `is_reserved_identifier`, `tokenize`, `parse_view`가 이 목록을 사용한다.\n시각 컴포넌트 이름은 `View` 생성 구문으로 파싱하고, `{}` 안의 자식 뷰를 소유 트리에 보관한다.\n`let`·`var` 이름과 import 바인딩에 예약어를 사용하면 진단한다. 예약은 대소문자를 구분하며 문자열과 주석의 텍스트에는 적용하지 않는다.\nQML 내부 타입과 인라인 컴포넌트도 포함하며, 같은 이름의 여러 원본 선언은 조사 파일에 모두 보관한다.\nLVUI의 네이티브 추가 뷰는 `native_views`에 구현 헤더와 선언 위치를 별도로 기록하며 Qt 원본 선언 수와 분리한다.\niiGUI의 NativeView는 `external_source_files`에 별도 구현 해시를 기록한다. 이 추가 뷰를 기존 LVRS 선언이나 Qt 원본의 완성 수에 합산하지 않는다.\n`InteractionMotion`, `SpringBehavior`, `StateColorBehavior`는 시각 보조 예약어이며 자식 `View` 생성자로 사용하지 않는다.\n이 목록은 컴파일 단계의 어휘·구문 계약이다. 현재 지원 컴포넌트의 C++23 AOT와 iiGUI 자체 위젯 마운트는 [LVRS 네이티브 구현](LVRSNative.md)에 별도로 명시한다. 예약어 등록만으로 모든 속성·상태·동작이 구현되지는 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "## 예약어 목록\n",
+      "level": 2,
+      "title": "예약어 목록"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "table",
+      "start_line": 24,
+      "end_line": 145,
+      "raw": "| 예약어 | 분류 | 원본 | 내부 타입 |\n|---|---|---|---|\n| `AbstractButton` | View | `src/qml/components/control/buttons/AbstractButton.qml:5` | 아니오 |\n| `AbstractInputBar` | View | `src/qml/components/control/input/AbstractInputBar.qml:5` | 아니오 |\n| `ActionSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:99` | 예 |\n| `AdaptiveLayoutHost` | View | `src/qml/ApplicationWindow.qml:566` | 예 |\n| `Alert` | View | `src/qml/components/surfaces/Alert.qml:6` | 아니오 |\n| `AlertButton` | View | `src/qml/components/surfaces/AlertButton.qml:4` | 아니오 |\n| `AppBootstrapWindow` | View | `src/qml/AppBootstrapWindow.qml:4` | 아니오 |\n| `AppCard` | View | `src/qml/components/surfaces/AppCard.qml:6` | 아니오 |\n| `AppHeader` | View | `src/qml/components/layout/AppHeader.qml:6` | 아니오 |\n| `AppShell` | View | `src/qml/AppShell.qml:4` | 아니오 |\n| `ApplicationWindow` | View | `src/qml/ApplicationWindow.qml:8` | 아니오 |\n| `Avatar` | View | `src/qml/components/control/display/Avatar.qml:5` | 아니오 |\n| `BodyText` | View | `src/qml/components/navigation/ListItemComposite.qml:16` | 예 |\n| `CaptionText` | View | `src/qml/components/navigation/ListItemComposite.qml:27` | 예 |\n| `Card` | View | `src/qml/components/surfaces/Card.qml:6` | 아니오 |\n| `CardImageContent` | View | `src/qml/components/surfaces/CardImageContent.qml:5` | 예 |\n| `CardInformationContent` | View | `src/qml/components/surfaces/CardInformationContent.qml:5` | 예 |\n| `ChannelRow` | View | `src/qml/components/control/input/ColorPicker.qml:131` | 예 |\n| `CheckBox` | View | `src/qml/components/control/check/CheckBox.qml:4` | 아니오 |\n| `CodeEditor` | View | `src/qml/components/control/input/CodeEditor.qml:5` | 아니오 |\n| `Color` | 타입 | LVUI 언어 | 아니오 |\n| `ColorField` | View | `src/qml/components/control/input/ColorPicker.qml:225` | 예 |\n| `ColorInput` | View | `src/qml/components/control/input/ColorPicker.qml:71` | 예 |\n| `ColorPicker` | View | `src/qml/components/control/input/ColorPicker.qml:5` | 아니오 |\n| `ColorPickerButton` | View | `src/qml/components/control/buttons/ColorPickerButton.qml:5` | 아니오 |\n| `ColorPickerSurface` | View | `src/backend/graphics/colorpickersurface.h:13` | 아니오 |\n| `ComboBox` | View | `src/qml/components/control/buttons/ComboBox.qml:4` | 아니오 |\n| `ContentText` | View | `src/qml/components/navigation/ListItemComposite.qml:82` | 예 |\n| `ContextMenu` | View | `src/qml/components/navigation/ContextMenu.qml:6` | 아니오 |\n| `ContextMenuDivider` | View | `src/qml/components/navigation/ContextMenuDivider.qml:5` | 아니오 |\n| `ContextMenuItem` | View | `src/qml/components/navigation/ContextMenuItem.qml:5` | 아니오 |\n| `DetailRow` | View | `src/qml/components/surfaces/CardInformationContent.qml:10` | 예 |\n| `DropdownButton` | View | `src/qml/components/control/buttons/DropdownButton.qml:4` | 아니오 |\n| `Endpoint` | View | `src/qml/components/control/input/Slider.qml:103` | 예 |\n| `EventListener` | View | `src/qml/components/control/util/EventListener.qml:5` | 아니오 |\n| `FocusRing` | View | `src/qml/components/control/util/FocusRing.qml:4` | 아니오 |\n| `Glyph` | View | `src/qml/components/navigation/ListItemComposite.qml:41` | 예 |\n| `HStack` | View | `src/qml/components/layout/HStack.qml:5` | 아니오 |\n| `HelpButton` | View | `src/qml/components/control/buttons/HelpButton.qml:5` | 아니오 |\n| `Hierarchy` | View | `src/qml/components/navigation/Hierarchy.qml:5` | 아니오 |\n| `HierarchyItem` | View | `src/qml/components/navigation/HierarchyItem.qml:5` | 아니오 |\n| `HierarchyList` | View | `src/qml/components/navigation/HierarchyList.qml:4` | 아니오 |\n| `HierarchyToolbar` | View | `src/qml/components/navigation/HierarchyToolbar.qml:5` | 아니오 |\n| `IconButton` | View | `src/qml/components/control/buttons/IconButton.qml:4` | 아니오 |\n| `IconMenuButton` | View | `src/qml/components/control/buttons/IconMenuButton.qml:4` | 아니오 |\n| `IconSegmentedControl` | View | `src/qml/components/control/buttons/IconSegmentedControl.qml:4` | 아니오 |\n| `Image` | View | `src/LVRS/Image.h:6` | 아니오 |\n| `InputField` | View | `src/qml/components/control/input/InputField.qml:7` | 아니오 |\n| `InputMethodGuard` | View | `src/qml/components/control/util/InputMethodGuard.qml:4` | 아니오 |\n| `InputSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:227` | 예 |\n| `InteractionMotion` | 시각 보조 | `src/qml/components/control/util/InteractionMotion.qml:4` | 아니오 |\n| `Label` | View | `src/qml/components/control/display/Label.qml:4` | 아니오 |\n| `LabelButton` | View | `src/qml/components/control/buttons/LabelButton.qml:4` | 아니오 |\n| `LabelMenuButton` | View | `src/qml/components/control/buttons/LabelMenuButton.qml:4` | 아니오 |\n| `LabelSegmentedControl` | View | `src/qml/components/control/buttons/LabelSegmentedControl.qml:4` | 아니오 |\n| `Link` | View | `src/qml/components/navigation/Link.qml:4` | 아니오 |\n| `List` | View | `src/qml/components/navigation/List.qml:6` | 아니오 |\n| `ListFooter` | View | `src/qml/components/navigation/ListFooter.qml:6` | 아니오 |\n| `ListItem` | View | `src/qml/components/navigation/ListItem.qml:4` | 아니오 |\n| `ListItemComposite` | View | `src/qml/components/navigation/ListItemComposite.qml:6` | 아니오 |\n| `ListItemSelector` | View | `src/qml/components/navigation/ListItemSelector.qml:5` | 아니오 |\n| `ListToolbar` | View | `src/qml/components/navigation/ListToolbar.qml:6` | 아니오 |\n| `Material` | View | `src/qml/components/control/input/Slider.qml:140` | 예 |\n| `MaterialSurface` | View | `src/qml/components/surfaces/MaterialSurface.qml:7` | 아니오 |\n| `Menu` | View | `src/qml/components/navigation/Menu.qml:5` | 아니오 |\n| `MenuDivider` | View | `src/qml/components/navigation/MenuDivider.qml:4` | 아니오 |\n| `MenuItem` | View | `src/qml/components/navigation/MenuItem.qml:4` | 아니오 |\n| `Metric` | 타입 | LVUI 언어 | 아니오 |\n| `MobileNavigationBar` | View | `src/qml/components/navigation/MobileNavigationBar.qml:6` | 아니오 |\n| `MobileNavigationTab` | View | `src/qml/components/navigation/MobileNavigationTab.qml:6` | 아니오 |\n| `MobileTab` | View | `src/qml/components/navigation/MobileTab.qml:6` | 아니오 |\n| `MobileTabBar` | View | `src/qml/components/navigation/MobileTabBar.qml:5` | 아니오 |\n| `Modal` | View | `src/qml/components/surfaces/Modal.qml:5` | 아니오 |\n| `MoreSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:118` | 예 |\n| `NativeView` | View | `../iiGUI/src/iiGUI/NativeView.h:20` | 아니오 |\n| `PageRouter` | View | `src/qml/components/navigation/PageRouter.qml:5` | 아니오 |\n| `PanelMaterial` | View | `src/qml/components/surfaces/PanelMaterial.qml:4` | 아니오 |\n| `Popover` | View | `src/qml/components/surfaces/Popover.qml:5` | 아니오 |\n| `PreviewSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:292` | 예 |\n| `ProgressBar` | View | `src/qml/components/control/display/ProgressBar.qml:4` | 아니오 |\n| `PushButton` | View | `src/qml/components/control/buttons/PushButton.qml:5` | 아니오 |\n| `QuantityControl` | View | `src/qml/components/navigation/ListItemComposite.qml:189` | 예 |\n| `QuantitySlot` | View | `src/qml/components/navigation/ListItemComposite.qml:257` | 예 |\n| `RadialLayer` | View | `src/qml/components/surfaces/MaterialSurface.qml:95` | 예 |\n| `RadioButton` | View | `src/qml/components/control/check/RadioButton.qml:4` | 아니오 |\n| `SegmentsSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:263` | 예 |\n| `SelectionSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:162` | 예 |\n| `SelectorSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:175` | 예 |\n| `Sheet` | View | `src/qml/components/surfaces/Sheet.qml:5` | 아니오 |\n| `Slider` | View | `src/qml/components/control/input/Slider.qml:6` | 아니오 |\n| `Slot` | View | `src/qml/components/navigation/ListItemComposite.qml:62` | 예 |\n| `Spacer` | View | `src/qml/components/layout/Spacer.qml:4` | 아니오 |\n| `SpringBehavior` | 시각 보조 | `src/qml/components/control/util/SpringBehavior.qml:4` | 아니오 |\n| `StateColorBehavior` | 시각 보조 | `src/qml/components/control/util/StateColorBehavior.qml:4` | 아니오 |\n| `Stepper` | View | `src/qml/components/control/buttons/Stepper.qml:4` | 아니오 |\n| `Swatch` | View | `src/qml/components/control/input/ColorPicker.qml:102` | 예 |\n| `Tab` | View | `src/qml/components/navigation/Tab.qml:6` | 아니오 |\n| `TabBar` | View | `src/qml/components/navigation/TabBar.qml:6` | 아니오 |\n| `Table` | View | `src/qml/components/control/display/Table.qml:5` | 아니오 |\n| `TableCellItem` | View | `src/qml/components/control/display/TableCellItem.qml:4` | 아니오 |\n| `TableHeader` | View | `src/qml/components/control/display/TableHeader.qml:5` | 아니오 |\n| `TableRow` | View | `src/qml/components/control/display/TableRow.qml:5` | 아니오 |\n| `TextEditor` | View | `src/qml/components/control/input/TextEditor.qml:5` | 아니오 |\n| `ToggleSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:150` | 예 |\n| `ToggleSwitch` | View | `src/qml/components/control/check/ToggleSwitch.qml:6` | 아니오 |\n| `ToolbarButton` | View | `src/qml/components/navigation/ToolbarButton.qml:4` | 아니오 |\n| `Tooltip` | View | `src/qml/components/surfaces/Tooltip.qml:5` | 아니오 |\n| `VStack` | View | `src/qml/components/layout/VStack.qml:5` | 아니오 |\n| `View` | 타입 | LVUI 언어 | 아니오 |\n| `WheelScrollGuard` | View | `src/qml/components/control/util/WheelScrollGuard.qml:4` | 아니오 |\n| `Window` | View | `src/qml/Window.qml:5` | 아니오 |\n| `WindowChromeInteraction` | View | `src/qml/WindowChromeInteraction.qml:5` | 아니오 |\n| `WindowMaterial` | View | `src/qml/components/surfaces/WindowMaterial.qml:5` | 아니오 |\n| `WindowNoiseTexture` | View | `src/backend/graphics/windownoisetexture.h:15` | 아니오 |\n| `ZStack` | View | `src/qml/components/layout/ZStack.qml:3` | 아니오 |\n| `false` | 리터럴 | LVUI 언어 | 아니오 |\n| `import` | 선언 | LVUI 언어 | 아니오 |\n| `let` | 선언 | LVUI 언어 | 아니오 |\n| `true` | 리터럴 | LVUI 언어 | 아니오 |\n| `var` | 선언 | LVUI 언어 | 아니오 |\n",
+      "columns": [
+        "예약어",
+        "분류",
+        "원본",
+        "내부 타입"
+      ],
+      "rows": [
+        [
+          "`AbstractButton`",
+          "View",
+          "`src/qml/components/control/buttons/AbstractButton.qml:5`",
+          "아니오"
+        ],
+        [
+          "`AbstractInputBar`",
+          "View",
+          "`src/qml/components/control/input/AbstractInputBar.qml:5`",
+          "아니오"
+        ],
+        [
+          "`ActionSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:99`",
+          "예"
+        ],
+        [
+          "`AdaptiveLayoutHost`",
+          "View",
+          "`src/qml/ApplicationWindow.qml:566`",
+          "예"
+        ],
+        [
+          "`Alert`",
+          "View",
+          "`src/qml/components/surfaces/Alert.qml:6`",
+          "아니오"
+        ],
+        [
+          "`AlertButton`",
+          "View",
+          "`src/qml/components/surfaces/AlertButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`AppBootstrapWindow`",
+          "View",
+          "`src/qml/AppBootstrapWindow.qml:4`",
+          "아니오"
+        ],
+        [
+          "`AppCard`",
+          "View",
+          "`src/qml/components/surfaces/AppCard.qml:6`",
+          "아니오"
+        ],
+        [
+          "`AppHeader`",
+          "View",
+          "`src/qml/components/layout/AppHeader.qml:6`",
+          "아니오"
+        ],
+        [
+          "`AppShell`",
+          "View",
+          "`src/qml/AppShell.qml:4`",
+          "아니오"
+        ],
+        [
+          "`ApplicationWindow`",
+          "View",
+          "`src/qml/ApplicationWindow.qml:8`",
+          "아니오"
+        ],
+        [
+          "`Avatar`",
+          "View",
+          "`src/qml/components/control/display/Avatar.qml:5`",
+          "아니오"
+        ],
+        [
+          "`BodyText`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:16`",
+          "예"
+        ],
+        [
+          "`CaptionText`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:27`",
+          "예"
+        ],
+        [
+          "`Card`",
+          "View",
+          "`src/qml/components/surfaces/Card.qml:6`",
+          "아니오"
+        ],
+        [
+          "`CardImageContent`",
+          "View",
+          "`src/qml/components/surfaces/CardImageContent.qml:5`",
+          "예"
+        ],
+        [
+          "`CardInformationContent`",
+          "View",
+          "`src/qml/components/surfaces/CardInformationContent.qml:5`",
+          "예"
+        ],
+        [
+          "`ChannelRow`",
+          "View",
+          "`src/qml/components/control/input/ColorPicker.qml:131`",
+          "예"
+        ],
+        [
+          "`CheckBox`",
+          "View",
+          "`src/qml/components/control/check/CheckBox.qml:4`",
+          "아니오"
+        ],
+        [
+          "`CodeEditor`",
+          "View",
+          "`src/qml/components/control/input/CodeEditor.qml:5`",
+          "아니오"
+        ],
+        [
+          "`Color`",
+          "타입",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`ColorField`",
+          "View",
+          "`src/qml/components/control/input/ColorPicker.qml:225`",
+          "예"
+        ],
+        [
+          "`ColorInput`",
+          "View",
+          "`src/qml/components/control/input/ColorPicker.qml:71`",
+          "예"
+        ],
+        [
+          "`ColorPicker`",
+          "View",
+          "`src/qml/components/control/input/ColorPicker.qml:5`",
+          "아니오"
+        ],
+        [
+          "`ColorPickerButton`",
+          "View",
+          "`src/qml/components/control/buttons/ColorPickerButton.qml:5`",
+          "아니오"
+        ],
+        [
+          "`ColorPickerSurface`",
+          "View",
+          "`src/backend/graphics/colorpickersurface.h:13`",
+          "아니오"
+        ],
+        [
+          "`ComboBox`",
+          "View",
+          "`src/qml/components/control/buttons/ComboBox.qml:4`",
+          "아니오"
+        ],
+        [
+          "`ContentText`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:82`",
+          "예"
+        ],
+        [
+          "`ContextMenu`",
+          "View",
+          "`src/qml/components/navigation/ContextMenu.qml:6`",
+          "아니오"
+        ],
+        [
+          "`ContextMenuDivider`",
+          "View",
+          "`src/qml/components/navigation/ContextMenuDivider.qml:5`",
+          "아니오"
+        ],
+        [
+          "`ContextMenuItem`",
+          "View",
+          "`src/qml/components/navigation/ContextMenuItem.qml:5`",
+          "아니오"
+        ],
+        [
+          "`DetailRow`",
+          "View",
+          "`src/qml/components/surfaces/CardInformationContent.qml:10`",
+          "예"
+        ],
+        [
+          "`DropdownButton`",
+          "View",
+          "`src/qml/components/control/buttons/DropdownButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Endpoint`",
+          "View",
+          "`src/qml/components/control/input/Slider.qml:103`",
+          "예"
+        ],
+        [
+          "`EventListener`",
+          "View",
+          "`src/qml/components/control/util/EventListener.qml:5`",
+          "아니오"
+        ],
+        [
+          "`FocusRing`",
+          "View",
+          "`src/qml/components/control/util/FocusRing.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Glyph`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:41`",
+          "예"
+        ],
+        [
+          "`HStack`",
+          "View",
+          "`src/qml/components/layout/HStack.qml:5`",
+          "아니오"
+        ],
+        [
+          "`HelpButton`",
+          "View",
+          "`src/qml/components/control/buttons/HelpButton.qml:5`",
+          "아니오"
+        ],
+        [
+          "`Hierarchy`",
+          "View",
+          "`src/qml/components/navigation/Hierarchy.qml:5`",
+          "아니오"
+        ],
+        [
+          "`HierarchyItem`",
+          "View",
+          "`src/qml/components/navigation/HierarchyItem.qml:5`",
+          "아니오"
+        ],
+        [
+          "`HierarchyList`",
+          "View",
+          "`src/qml/components/navigation/HierarchyList.qml:4`",
+          "아니오"
+        ],
+        [
+          "`HierarchyToolbar`",
+          "View",
+          "`src/qml/components/navigation/HierarchyToolbar.qml:5`",
+          "아니오"
+        ],
+        [
+          "`IconButton`",
+          "View",
+          "`src/qml/components/control/buttons/IconButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`IconMenuButton`",
+          "View",
+          "`src/qml/components/control/buttons/IconMenuButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`IconSegmentedControl`",
+          "View",
+          "`src/qml/components/control/buttons/IconSegmentedControl.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Image`",
+          "View",
+          "`src/LVRS/Image.h:6`",
+          "아니오"
+        ],
+        [
+          "`InputField`",
+          "View",
+          "`src/qml/components/control/input/InputField.qml:7`",
+          "아니오"
+        ],
+        [
+          "`InputMethodGuard`",
+          "View",
+          "`src/qml/components/control/util/InputMethodGuard.qml:4`",
+          "아니오"
+        ],
+        [
+          "`InputSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:227`",
+          "예"
+        ],
+        [
+          "`InteractionMotion`",
+          "시각 보조",
+          "`src/qml/components/control/util/InteractionMotion.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Label`",
+          "View",
+          "`src/qml/components/control/display/Label.qml:4`",
+          "아니오"
+        ],
+        [
+          "`LabelButton`",
+          "View",
+          "`src/qml/components/control/buttons/LabelButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`LabelMenuButton`",
+          "View",
+          "`src/qml/components/control/buttons/LabelMenuButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`LabelSegmentedControl`",
+          "View",
+          "`src/qml/components/control/buttons/LabelSegmentedControl.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Link`",
+          "View",
+          "`src/qml/components/navigation/Link.qml:4`",
+          "아니오"
+        ],
+        [
+          "`List`",
+          "View",
+          "`src/qml/components/navigation/List.qml:6`",
+          "아니오"
+        ],
+        [
+          "`ListFooter`",
+          "View",
+          "`src/qml/components/navigation/ListFooter.qml:6`",
+          "아니오"
+        ],
+        [
+          "`ListItem`",
+          "View",
+          "`src/qml/components/navigation/ListItem.qml:4`",
+          "아니오"
+        ],
+        [
+          "`ListItemComposite`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:6`",
+          "아니오"
+        ],
+        [
+          "`ListItemSelector`",
+          "View",
+          "`src/qml/components/navigation/ListItemSelector.qml:5`",
+          "아니오"
+        ],
+        [
+          "`ListToolbar`",
+          "View",
+          "`src/qml/components/navigation/ListToolbar.qml:6`",
+          "아니오"
+        ],
+        [
+          "`Material`",
+          "View",
+          "`src/qml/components/control/input/Slider.qml:140`",
+          "예"
+        ],
+        [
+          "`MaterialSurface`",
+          "View",
+          "`src/qml/components/surfaces/MaterialSurface.qml:7`",
+          "아니오"
+        ],
+        [
+          "`Menu`",
+          "View",
+          "`src/qml/components/navigation/Menu.qml:5`",
+          "아니오"
+        ],
+        [
+          "`MenuDivider`",
+          "View",
+          "`src/qml/components/navigation/MenuDivider.qml:4`",
+          "아니오"
+        ],
+        [
+          "`MenuItem`",
+          "View",
+          "`src/qml/components/navigation/MenuItem.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Metric`",
+          "타입",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`MobileNavigationBar`",
+          "View",
+          "`src/qml/components/navigation/MobileNavigationBar.qml:6`",
+          "아니오"
+        ],
+        [
+          "`MobileNavigationTab`",
+          "View",
+          "`src/qml/components/navigation/MobileNavigationTab.qml:6`",
+          "아니오"
+        ],
+        [
+          "`MobileTab`",
+          "View",
+          "`src/qml/components/navigation/MobileTab.qml:6`",
+          "아니오"
+        ],
+        [
+          "`MobileTabBar`",
+          "View",
+          "`src/qml/components/navigation/MobileTabBar.qml:5`",
+          "아니오"
+        ],
+        [
+          "`Modal`",
+          "View",
+          "`src/qml/components/surfaces/Modal.qml:5`",
+          "아니오"
+        ],
+        [
+          "`MoreSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:118`",
+          "예"
+        ],
+        [
+          "`NativeView`",
+          "View",
+          "`../iiGUI/src/iiGUI/NativeView.h:20`",
+          "아니오"
+        ],
+        [
+          "`PageRouter`",
+          "View",
+          "`src/qml/components/navigation/PageRouter.qml:5`",
+          "아니오"
+        ],
+        [
+          "`PanelMaterial`",
+          "View",
+          "`src/qml/components/surfaces/PanelMaterial.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Popover`",
+          "View",
+          "`src/qml/components/surfaces/Popover.qml:5`",
+          "아니오"
+        ],
+        [
+          "`PreviewSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:292`",
+          "예"
+        ],
+        [
+          "`ProgressBar`",
+          "View",
+          "`src/qml/components/control/display/ProgressBar.qml:4`",
+          "아니오"
+        ],
+        [
+          "`PushButton`",
+          "View",
+          "`src/qml/components/control/buttons/PushButton.qml:5`",
+          "아니오"
+        ],
+        [
+          "`QuantityControl`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:189`",
+          "예"
+        ],
+        [
+          "`QuantitySlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:257`",
+          "예"
+        ],
+        [
+          "`RadialLayer`",
+          "View",
+          "`src/qml/components/surfaces/MaterialSurface.qml:95`",
+          "예"
+        ],
+        [
+          "`RadioButton`",
+          "View",
+          "`src/qml/components/control/check/RadioButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`SegmentsSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:263`",
+          "예"
+        ],
+        [
+          "`SelectionSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:162`",
+          "예"
+        ],
+        [
+          "`SelectorSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:175`",
+          "예"
+        ],
+        [
+          "`Sheet`",
+          "View",
+          "`src/qml/components/surfaces/Sheet.qml:5`",
+          "아니오"
+        ],
+        [
+          "`Slider`",
+          "View",
+          "`src/qml/components/control/input/Slider.qml:6`",
+          "아니오"
+        ],
+        [
+          "`Slot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:62`",
+          "예"
+        ],
+        [
+          "`Spacer`",
+          "View",
+          "`src/qml/components/layout/Spacer.qml:4`",
+          "아니오"
+        ],
+        [
+          "`SpringBehavior`",
+          "시각 보조",
+          "`src/qml/components/control/util/SpringBehavior.qml:4`",
+          "아니오"
+        ],
+        [
+          "`StateColorBehavior`",
+          "시각 보조",
+          "`src/qml/components/control/util/StateColorBehavior.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Stepper`",
+          "View",
+          "`src/qml/components/control/buttons/Stepper.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Swatch`",
+          "View",
+          "`src/qml/components/control/input/ColorPicker.qml:102`",
+          "예"
+        ],
+        [
+          "`Tab`",
+          "View",
+          "`src/qml/components/navigation/Tab.qml:6`",
+          "아니오"
+        ],
+        [
+          "`TabBar`",
+          "View",
+          "`src/qml/components/navigation/TabBar.qml:6`",
+          "아니오"
+        ],
+        [
+          "`Table`",
+          "View",
+          "`src/qml/components/control/display/Table.qml:5`",
+          "아니오"
+        ],
+        [
+          "`TableCellItem`",
+          "View",
+          "`src/qml/components/control/display/TableCellItem.qml:4`",
+          "아니오"
+        ],
+        [
+          "`TableHeader`",
+          "View",
+          "`src/qml/components/control/display/TableHeader.qml:5`",
+          "아니오"
+        ],
+        [
+          "`TableRow`",
+          "View",
+          "`src/qml/components/control/display/TableRow.qml:5`",
+          "아니오"
+        ],
+        [
+          "`TextEditor`",
+          "View",
+          "`src/qml/components/control/input/TextEditor.qml:5`",
+          "아니오"
+        ],
+        [
+          "`ToggleSlot`",
+          "View",
+          "`src/qml/components/navigation/ListItemComposite.qml:150`",
+          "예"
+        ],
+        [
+          "`ToggleSwitch`",
+          "View",
+          "`src/qml/components/control/check/ToggleSwitch.qml:6`",
+          "아니오"
+        ],
+        [
+          "`ToolbarButton`",
+          "View",
+          "`src/qml/components/navigation/ToolbarButton.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Tooltip`",
+          "View",
+          "`src/qml/components/surfaces/Tooltip.qml:5`",
+          "아니오"
+        ],
+        [
+          "`VStack`",
+          "View",
+          "`src/qml/components/layout/VStack.qml:5`",
+          "아니오"
+        ],
+        [
+          "`View`",
+          "타입",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`WheelScrollGuard`",
+          "View",
+          "`src/qml/components/control/util/WheelScrollGuard.qml:4`",
+          "아니오"
+        ],
+        [
+          "`Window`",
+          "View",
+          "`src/qml/Window.qml:5`",
+          "아니오"
+        ],
+        [
+          "`WindowChromeInteraction`",
+          "View",
+          "`src/qml/WindowChromeInteraction.qml:5`",
+          "아니오"
+        ],
+        [
+          "`WindowMaterial`",
+          "View",
+          "`src/qml/components/surfaces/WindowMaterial.qml:5`",
+          "아니오"
+        ],
+        [
+          "`WindowNoiseTexture`",
+          "View",
+          "`src/backend/graphics/windownoisetexture.h:15`",
+          "아니오"
+        ],
+        [
+          "`ZStack`",
+          "View",
+          "`src/qml/components/layout/ZStack.qml:3`",
+          "아니오"
+        ],
+        [
+          "`false`",
+          "리터럴",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`import`",
+          "선언",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`let`",
+          "선언",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`true`",
+          "리터럴",
+          "LVUI 언어",
+          "아니오"
+        ],
+        [
+          "`var`",
+          "선언",
+          "LVUI 언어",
+          "아니오"
+        ]
+      ]
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 146,
+      "end_line": 146,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 147,
+      "end_line": 147,
+      "raw": "## 비시각 객체\n",
+      "level": 2,
+      "title": "비시각 객체"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 148,
+      "end_line": 148,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 149,
+      "end_line": 149,
+      "raw": "다음 이름은 화면 트리의 `View`가 아닌 서비스·모델·상태 객체이므로 시각 컴포넌트 예약어에서 제외한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 150,
+      "end_line": 150,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "list",
+      "start_line": 151,
+      "end_line": 188,
+      "raw": "- `FontPolicy`: `src/backend/fonts/fontpolicy.h:11`, 기반 `QObject`.\n- `ColorPickerModel`: `src/backend/graphics/colorpickermodel.h:13`, 기반 `QObject`.\n- `SvgManager`: `src/backend/graphics/svgmanager.h:20`, 기반 `QObject`.\n- `Backend`: `src/backend/io/backend.h:25`, 기반 `QObject`.\n- `HierarchyModel`: `src/backend/model/hierarchymodel.h:17`, 기반 `QObject`.\n- `ModelSource`: `src/backend/model/modelsource.h:15`, 기반 `QObject`.\n- `ModelUndoStack`: `src/backend/model/modelundostack.h:12`, 기반 `QObject`.\n- `ProgressModel`: `src/backend/model/progressmodel.h:15`, 기반 `QObject`.\n- `TableHeaderModel`: `src/backend/model/tableheadermodel.h:13`, 기반 `QObject`.\n- `TableModel`: `src/backend/model/tablemodel.h:19`, 기반 `QObject`.\n- `ModelAdapter`: `src/backend/navigation/modeladapter.h:14`, 기반 `QObject`.\n- `NavigationStackModel`: `src/backend/navigation/navigationstackmodel.h:14`, 기반 `QObject`.\n- `PageMonitor`: `src/backend/navigation/pagemonitor.h:11`, 기반 `QObject`.\n- `RouteMatcher`: `src/backend/navigation/routematcher.h:11`, 기반 `QObject`.\n- `RouteResolver`: `src/backend/navigation/routeresolver.h:16`, 기반 `QObject`.\n- `ViewStateTracker`: `src/backend/navigation/viewstatetracker.h:15`, 기반 `QObject`.\n- `NativeWindowInteraction`: `src/backend/platform/nativewindowinteraction.h:16`, 기반 `QObject`.\n- `NativeWindowStyle`: `src/backend/platform/nativewindowstyle.h:12`, 기반 `QObject`.\n- `Platform`: `src/backend/platform/platforminfo.h:17`, 기반 `QObject`.\n- `WindowSafeAreaObserver`: `src/backend/platform/windowsafeareaobserver.h:15`, 기반 `QObject`.\n- `Debug`: `src/backend/runtime/debuglogger.h:13`, 기반 `QObject`.\n- `GestureEvents`: `src/backend/runtime/gestureevents.h:18`, 기반 `QObject`.\n- `RenderMonitor`: `src/backend/runtime/renderingmonitor.h:16`, 기반 `QObject`.\n- `RenderQuality`: `src/backend/runtime/renderquality.h:16`, 기반 `QObject`.\n- `RuntimeEvents`: `src/backend/runtime/runtimeevents.h:25`, 기반 `QObject`.\n- `AppState`: `src/backend/state/appstate.h:13`, 기반 `QObject`.\n- `StateModel`: `src/backend/state/statemodel.h:14`, 기반 `ViewModel`.\n- `ViewModel`: `src/backend/state/viewmodel.h:11`, 기반 `QObject`.\n- `ViewModels`: `src/backend/state/viewmodelregistry.h:18`, 기반 `QObject`.\n- `TextDocumentModel`: `src/backend/text/textdocumentmodel.h:17`, 기반 `QAbstractListModel`.\n- `TextMarkup`: `src/backend/text/textmarkup.h:11`, 기반 `QObject`.\n- `Motion`: `src/qml/Motion.qml:4`, 기반 `QtObject`.\n- `Theme`: `src/qml/Theme.qml:5`, 기반 `QtObject`.\n- `ButtonMethodRegistry`: `src/qml/components/control/buttons/ButtonMethodRegistry.qml:3`, 기반 `QtObject`.\n- `InteractionState`: `src/qml/components/control/util/InteractionState.qml:4`, 기반 `QtObject`.\n- `Navigator`: `src/qml/components/navigation/Navigator.qml:4`, 기반 `QtObject`.\n- `PageRouterTransitionDriver`: `src/qml/components/navigation/PageRouterTransitionDriver.qml:4`, 기반 `QtObject`.\n- `PageTransitionController`: `src/qml/components/navigation/PageTransitionController.qml:4`, 기반 `QtObject`.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`FontPolicy`: `src/backend/fonts/fontpolicy.h:11`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ColorPickerModel`: `src/backend/graphics/colorpickermodel.h:13`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`SvgManager`: `src/backend/graphics/svgmanager.h:20`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Backend`: `src/backend/io/backend.h:25`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`HierarchyModel`: `src/backend/model/hierarchymodel.h:17`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ModelSource`: `src/backend/model/modelsource.h:15`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ModelUndoStack`: `src/backend/model/modelundostack.h:12`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ProgressModel`: `src/backend/model/progressmodel.h:15`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`TableHeaderModel`: `src/backend/model/tableheadermodel.h:13`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`TableModel`: `src/backend/model/tablemodel.h:19`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ModelAdapter`: `src/backend/navigation/modeladapter.h:14`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`NavigationStackModel`: `src/backend/navigation/navigationstackmodel.h:14`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`PageMonitor`: `src/backend/navigation/pagemonitor.h:11`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`RouteMatcher`: `src/backend/navigation/routematcher.h:11`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`RouteResolver`: `src/backend/navigation/routeresolver.h:16`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ViewStateTracker`: `src/backend/navigation/viewstatetracker.h:15`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`NativeWindowInteraction`: `src/backend/platform/nativewindowinteraction.h:16`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`NativeWindowStyle`: `src/backend/platform/nativewindowstyle.h:12`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Platform`: `src/backend/platform/platforminfo.h:17`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`WindowSafeAreaObserver`: `src/backend/platform/windowsafeareaobserver.h:15`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Debug`: `src/backend/runtime/debuglogger.h:13`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`GestureEvents`: `src/backend/runtime/gestureevents.h:18`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`RenderMonitor`: `src/backend/runtime/renderingmonitor.h:16`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`RenderQuality`: `src/backend/runtime/renderquality.h:16`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`RuntimeEvents`: `src/backend/runtime/runtimeevents.h:25`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`AppState`: `src/backend/state/appstate.h:13`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`StateModel`: `src/backend/state/statemodel.h:14`, 기반 `ViewModel`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ViewModel`: `src/backend/state/viewmodel.h:11`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ViewModels`: `src/backend/state/viewmodelregistry.h:18`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`TextDocumentModel`: `src/backend/text/textdocumentmodel.h:17`, 기반 `QAbstractListModel`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`TextMarkup`: `src/backend/text/textmarkup.h:11`, 기반 `QObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Motion`: `src/qml/Motion.qml:4`, 기반 `QtObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Theme`: `src/qml/Theme.qml:5`, 기반 `QtObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`ButtonMethodRegistry`: `src/qml/components/control/buttons/ButtonMethodRegistry.qml:3`, 기반 `QtObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`InteractionState`: `src/qml/components/control/util/InteractionState.qml:4`, 기반 `QtObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Navigator`: `src/qml/components/navigation/Navigator.qml:4`, 기반 `QtObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`PageRouterTransitionDriver`: `src/qml/components/navigation/PageRouterTransitionDriver.qml:4`, 기반 `QtObject`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`PageTransitionController`: `src/qml/components/navigation/PageTransitionController.qml:4`, 기반 `QtObject`.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 189,
+      "end_line": 189,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 190,
+      "end_line": 190,
+      "raw": "## 목록 갱신과 검증\n",
+      "level": 2,
+      "title": "목록 갱신과 검증"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 191,
+      "end_line": 191,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "fenced_code",
+      "start_line": 192,
+      "end_line": 196,
+      "raw": "```sh\npython3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS\npython3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS --check\npython3 tools/update_lvrs_keywords.py --snapshot-only --check\n```\n",
+      "language": "sh",
+      "code": "python3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS\npython3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS --check\npython3 tools/update_lvrs_keywords.py --snapshot-only --check\n",
+      "closed": true
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 197,
+      "end_line": 197,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 198,
+      "end_line": 198,
+      "raw": "일반 빌드와 설치 소비자는 LVRS·Qt·이 스크립트를 요구하지 않는다. 원본 조사 테스트에서 새 파일·등록·상속·내용 변경이 발견되면 목록을 다시 조사해야 한다. 내용이 같은 출력은 파일과 수정 시각을 보존한다. 비시각 소스의 내용만 바뀌었을 때 같은 예약어 헤더를 다시 써서 하위 C++ 모듈을 재컴파일시키지 않는다. 조사 도구와 회귀 검사는 Python 3.9 이상에서 동작하며, macOS와 Windows 모두 UTF-8·LF 출력과 변경 없는 파일의 수정 시각을 보존한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "예약어와 LVRS 시각 컴포넌트",
+      "anchor": "예약어와-lvrs-시각-컴포넌트",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실제 언어 구현",
+      "anchor": "실제-언어-구현",
+      "start_line": 11
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "예약어 목록",
+      "anchor": "예약어-목록",
+      "start_line": 22
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "비시각 객체",
+      "anchor": "비시각-객체",
+      "start_line": 147
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "목록 갱신과 검증",
+      "anchor": "목록-갱신과-검증",
+      "start_line": 190
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "> LVUI의 현재 예약어 목록을 갱신하지 않는다.",
+        "basis": "lexical_match",
+        "context": "quote"
+      },
+      {
+        "block_id": "b000009",
+        "line": 15,
+        "text": "`let`·`var` 이름과 import 바인딩에 예약어를 사용하면 진단한다. 예약은 대소문자를 구분하며 문자열과 주석의 텍스트에는 적용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 18,
+        "text": "iiGUI의 NativeView는 `external_source_files`에 별도 구현 해시를 기록한다. 이 추가 뷰를 기존 LVRS 선언이나 Qt 원본의 완성 수에 합산하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 19,
+        "text": "`InteractionMotion`, `SpringBehavior`, `StateColorBehavior`는 시각 보조 예약어이며 자식 `View` 생성자로 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 198,
+        "text": "일반 빌드와 설치 소비자는 LVRS·Qt·이 스크립트를 요구하지 않는다. 원본 조사 테스트에서 새 파일·등록·상속·내용 변경이 발견되면 목록을 다시 조사해야 한다. 내용이 같은 출력은 파일과 수정 시각을 보존한다. 비시각 소스의 내용만 바뀌었을 때 같은 예약어 헤더를 다시 써서 하위 C++ 모듈을 재컴파일시키지 않는다. 조사 도구와 회귀 검사는 Python 3.9 이상에서 동작하며, macOS와 Windows 모두 UTF-8·LF 출력과 변경 없는 파일의 수정 시각을 보존한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [
+      {
+        "block_id": "b000023",
+        "language": "sh",
+        "code": "python3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS\npython3 tools/update_lvrs_keywords.py --lvrs-root ../LVRS --check\npython3 tools/update_lvrs_keywords.py --snapshot-only --check\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "LVUI 예약어 목록",
+        "target": "KeywordRegistry.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000009",
+        "label": "LVRS 네이티브 구현",
+        "target": "LVRSNative.md",
+        "kind": "relative",
+        "line": 20
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000013",
+        "columns": [
+          "예약어",
+          "분류",
+          "원본",
+          "내부 타입"
+        ],
+        "rows": [
+          [
+            "`AbstractButton`",
+            "View",
+            "`src/qml/components/control/buttons/AbstractButton.qml:5`",
+            "아니오"
+          ],
+          [
+            "`AbstractInputBar`",
+            "View",
+            "`src/qml/components/control/input/AbstractInputBar.qml:5`",
+            "아니오"
+          ],
+          [
+            "`ActionSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:99`",
+            "예"
+          ],
+          [
+            "`AdaptiveLayoutHost`",
+            "View",
+            "`src/qml/ApplicationWindow.qml:566`",
+            "예"
+          ],
+          [
+            "`Alert`",
+            "View",
+            "`src/qml/components/surfaces/Alert.qml:6`",
+            "아니오"
+          ],
+          [
+            "`AlertButton`",
+            "View",
+            "`src/qml/components/surfaces/AlertButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`AppBootstrapWindow`",
+            "View",
+            "`src/qml/AppBootstrapWindow.qml:4`",
+            "아니오"
+          ],
+          [
+            "`AppCard`",
+            "View",
+            "`src/qml/components/surfaces/AppCard.qml:6`",
+            "아니오"
+          ],
+          [
+            "`AppHeader`",
+            "View",
+            "`src/qml/components/layout/AppHeader.qml:6`",
+            "아니오"
+          ],
+          [
+            "`AppShell`",
+            "View",
+            "`src/qml/AppShell.qml:4`",
+            "아니오"
+          ],
+          [
+            "`ApplicationWindow`",
+            "View",
+            "`src/qml/ApplicationWindow.qml:8`",
+            "아니오"
+          ],
+          [
+            "`Avatar`",
+            "View",
+            "`src/qml/components/control/display/Avatar.qml:5`",
+            "아니오"
+          ],
+          [
+            "`BodyText`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:16`",
+            "예"
+          ],
+          [
+            "`CaptionText`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:27`",
+            "예"
+          ],
+          [
+            "`Card`",
+            "View",
+            "`src/qml/components/surfaces/Card.qml:6`",
+            "아니오"
+          ],
+          [
+            "`CardImageContent`",
+            "View",
+            "`src/qml/components/surfaces/CardImageContent.qml:5`",
+            "예"
+          ],
+          [
+            "`CardInformationContent`",
+            "View",
+            "`src/qml/components/surfaces/CardInformationContent.qml:5`",
+            "예"
+          ],
+          [
+            "`ChannelRow`",
+            "View",
+            "`src/qml/components/control/input/ColorPicker.qml:131`",
+            "예"
+          ],
+          [
+            "`CheckBox`",
+            "View",
+            "`src/qml/components/control/check/CheckBox.qml:4`",
+            "아니오"
+          ],
+          [
+            "`CodeEditor`",
+            "View",
+            "`src/qml/components/control/input/CodeEditor.qml:5`",
+            "아니오"
+          ],
+          [
+            "`Color`",
+            "타입",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`ColorField`",
+            "View",
+            "`src/qml/components/control/input/ColorPicker.qml:225`",
+            "예"
+          ],
+          [
+            "`ColorInput`",
+            "View",
+            "`src/qml/components/control/input/ColorPicker.qml:71`",
+            "예"
+          ],
+          [
+            "`ColorPicker`",
+            "View",
+            "`src/qml/components/control/input/ColorPicker.qml:5`",
+            "아니오"
+          ],
+          [
+            "`ColorPickerButton`",
+            "View",
+            "`src/qml/components/control/buttons/ColorPickerButton.qml:5`",
+            "아니오"
+          ],
+          [
+            "`ColorPickerSurface`",
+            "View",
+            "`src/backend/graphics/colorpickersurface.h:13`",
+            "아니오"
+          ],
+          [
+            "`ComboBox`",
+            "View",
+            "`src/qml/components/control/buttons/ComboBox.qml:4`",
+            "아니오"
+          ],
+          [
+            "`ContentText`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:82`",
+            "예"
+          ],
+          [
+            "`ContextMenu`",
+            "View",
+            "`src/qml/components/navigation/ContextMenu.qml:6`",
+            "아니오"
+          ],
+          [
+            "`ContextMenuDivider`",
+            "View",
+            "`src/qml/components/navigation/ContextMenuDivider.qml:5`",
+            "아니오"
+          ],
+          [
+            "`ContextMenuItem`",
+            "View",
+            "`src/qml/components/navigation/ContextMenuItem.qml:5`",
+            "아니오"
+          ],
+          [
+            "`DetailRow`",
+            "View",
+            "`src/qml/components/surfaces/CardInformationContent.qml:10`",
+            "예"
+          ],
+          [
+            "`DropdownButton`",
+            "View",
+            "`src/qml/components/control/buttons/DropdownButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Endpoint`",
+            "View",
+            "`src/qml/components/control/input/Slider.qml:103`",
+            "예"
+          ],
+          [
+            "`EventListener`",
+            "View",
+            "`src/qml/components/control/util/EventListener.qml:5`",
+            "아니오"
+          ],
+          [
+            "`FocusRing`",
+            "View",
+            "`src/qml/components/control/util/FocusRing.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Glyph`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:41`",
+            "예"
+          ],
+          [
+            "`HStack`",
+            "View",
+            "`src/qml/components/layout/HStack.qml:5`",
+            "아니오"
+          ],
+          [
+            "`HelpButton`",
+            "View",
+            "`src/qml/components/control/buttons/HelpButton.qml:5`",
+            "아니오"
+          ],
+          [
+            "`Hierarchy`",
+            "View",
+            "`src/qml/components/navigation/Hierarchy.qml:5`",
+            "아니오"
+          ],
+          [
+            "`HierarchyItem`",
+            "View",
+            "`src/qml/components/navigation/HierarchyItem.qml:5`",
+            "아니오"
+          ],
+          [
+            "`HierarchyList`",
+            "View",
+            "`src/qml/components/navigation/HierarchyList.qml:4`",
+            "아니오"
+          ],
+          [
+            "`HierarchyToolbar`",
+            "View",
+            "`src/qml/components/navigation/HierarchyToolbar.qml:5`",
+            "아니오"
+          ],
+          [
+            "`IconButton`",
+            "View",
+            "`src/qml/components/control/buttons/IconButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`IconMenuButton`",
+            "View",
+            "`src/qml/components/control/buttons/IconMenuButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`IconSegmentedControl`",
+            "View",
+            "`src/qml/components/control/buttons/IconSegmentedControl.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Image`",
+            "View",
+            "`src/LVRS/Image.h:6`",
+            "아니오"
+          ],
+          [
+            "`InputField`",
+            "View",
+            "`src/qml/components/control/input/InputField.qml:7`",
+            "아니오"
+          ],
+          [
+            "`InputMethodGuard`",
+            "View",
+            "`src/qml/components/control/util/InputMethodGuard.qml:4`",
+            "아니오"
+          ],
+          [
+            "`InputSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:227`",
+            "예"
+          ],
+          [
+            "`InteractionMotion`",
+            "시각 보조",
+            "`src/qml/components/control/util/InteractionMotion.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Label`",
+            "View",
+            "`src/qml/components/control/display/Label.qml:4`",
+            "아니오"
+          ],
+          [
+            "`LabelButton`",
+            "View",
+            "`src/qml/components/control/buttons/LabelButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`LabelMenuButton`",
+            "View",
+            "`src/qml/components/control/buttons/LabelMenuButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`LabelSegmentedControl`",
+            "View",
+            "`src/qml/components/control/buttons/LabelSegmentedControl.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Link`",
+            "View",
+            "`src/qml/components/navigation/Link.qml:4`",
+            "아니오"
+          ],
+          [
+            "`List`",
+            "View",
+            "`src/qml/components/navigation/List.qml:6`",
+            "아니오"
+          ],
+          [
+            "`ListFooter`",
+            "View",
+            "`src/qml/components/navigation/ListFooter.qml:6`",
+            "아니오"
+          ],
+          [
+            "`ListItem`",
+            "View",
+            "`src/qml/components/navigation/ListItem.qml:4`",
+            "아니오"
+          ],
+          [
+            "`ListItemComposite`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:6`",
+            "아니오"
+          ],
+          [
+            "`ListItemSelector`",
+            "View",
+            "`src/qml/components/navigation/ListItemSelector.qml:5`",
+            "아니오"
+          ],
+          [
+            "`ListToolbar`",
+            "View",
+            "`src/qml/components/navigation/ListToolbar.qml:6`",
+            "아니오"
+          ],
+          [
+            "`Material`",
+            "View",
+            "`src/qml/components/control/input/Slider.qml:140`",
+            "예"
+          ],
+          [
+            "`MaterialSurface`",
+            "View",
+            "`src/qml/components/surfaces/MaterialSurface.qml:7`",
+            "아니오"
+          ],
+          [
+            "`Menu`",
+            "View",
+            "`src/qml/components/navigation/Menu.qml:5`",
+            "아니오"
+          ],
+          [
+            "`MenuDivider`",
+            "View",
+            "`src/qml/components/navigation/MenuDivider.qml:4`",
+            "아니오"
+          ],
+          [
+            "`MenuItem`",
+            "View",
+            "`src/qml/components/navigation/MenuItem.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Metric`",
+            "타입",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`MobileNavigationBar`",
+            "View",
+            "`src/qml/components/navigation/MobileNavigationBar.qml:6`",
+            "아니오"
+          ],
+          [
+            "`MobileNavigationTab`",
+            "View",
+            "`src/qml/components/navigation/MobileNavigationTab.qml:6`",
+            "아니오"
+          ],
+          [
+            "`MobileTab`",
+            "View",
+            "`src/qml/components/navigation/MobileTab.qml:6`",
+            "아니오"
+          ],
+          [
+            "`MobileTabBar`",
+            "View",
+            "`src/qml/components/navigation/MobileTabBar.qml:5`",
+            "아니오"
+          ],
+          [
+            "`Modal`",
+            "View",
+            "`src/qml/components/surfaces/Modal.qml:5`",
+            "아니오"
+          ],
+          [
+            "`MoreSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:118`",
+            "예"
+          ],
+          [
+            "`NativeView`",
+            "View",
+            "`../iiGUI/src/iiGUI/NativeView.h:20`",
+            "아니오"
+          ],
+          [
+            "`PageRouter`",
+            "View",
+            "`src/qml/components/navigation/PageRouter.qml:5`",
+            "아니오"
+          ],
+          [
+            "`PanelMaterial`",
+            "View",
+            "`src/qml/components/surfaces/PanelMaterial.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Popover`",
+            "View",
+            "`src/qml/components/surfaces/Popover.qml:5`",
+            "아니오"
+          ],
+          [
+            "`PreviewSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:292`",
+            "예"
+          ],
+          [
+            "`ProgressBar`",
+            "View",
+            "`src/qml/components/control/display/ProgressBar.qml:4`",
+            "아니오"
+          ],
+          [
+            "`PushButton`",
+            "View",
+            "`src/qml/components/control/buttons/PushButton.qml:5`",
+            "아니오"
+          ],
+          [
+            "`QuantityControl`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:189`",
+            "예"
+          ],
+          [
+            "`QuantitySlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:257`",
+            "예"
+          ],
+          [
+            "`RadialLayer`",
+            "View",
+            "`src/qml/components/surfaces/MaterialSurface.qml:95`",
+            "예"
+          ],
+          [
+            "`RadioButton`",
+            "View",
+            "`src/qml/components/control/check/RadioButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`SegmentsSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:263`",
+            "예"
+          ],
+          [
+            "`SelectionSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:162`",
+            "예"
+          ],
+          [
+            "`SelectorSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:175`",
+            "예"
+          ],
+          [
+            "`Sheet`",
+            "View",
+            "`src/qml/components/surfaces/Sheet.qml:5`",
+            "아니오"
+          ],
+          [
+            "`Slider`",
+            "View",
+            "`src/qml/components/control/input/Slider.qml:6`",
+            "아니오"
+          ],
+          [
+            "`Slot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:62`",
+            "예"
+          ],
+          [
+            "`Spacer`",
+            "View",
+            "`src/qml/components/layout/Spacer.qml:4`",
+            "아니오"
+          ],
+          [
+            "`SpringBehavior`",
+            "시각 보조",
+            "`src/qml/components/control/util/SpringBehavior.qml:4`",
+            "아니오"
+          ],
+          [
+            "`StateColorBehavior`",
+            "시각 보조",
+            "`src/qml/components/control/util/StateColorBehavior.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Stepper`",
+            "View",
+            "`src/qml/components/control/buttons/Stepper.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Swatch`",
+            "View",
+            "`src/qml/components/control/input/ColorPicker.qml:102`",
+            "예"
+          ],
+          [
+            "`Tab`",
+            "View",
+            "`src/qml/components/navigation/Tab.qml:6`",
+            "아니오"
+          ],
+          [
+            "`TabBar`",
+            "View",
+            "`src/qml/components/navigation/TabBar.qml:6`",
+            "아니오"
+          ],
+          [
+            "`Table`",
+            "View",
+            "`src/qml/components/control/display/Table.qml:5`",
+            "아니오"
+          ],
+          [
+            "`TableCellItem`",
+            "View",
+            "`src/qml/components/control/display/TableCellItem.qml:4`",
+            "아니오"
+          ],
+          [
+            "`TableHeader`",
+            "View",
+            "`src/qml/components/control/display/TableHeader.qml:5`",
+            "아니오"
+          ],
+          [
+            "`TableRow`",
+            "View",
+            "`src/qml/components/control/display/TableRow.qml:5`",
+            "아니오"
+          ],
+          [
+            "`TextEditor`",
+            "View",
+            "`src/qml/components/control/input/TextEditor.qml:5`",
+            "아니오"
+          ],
+          [
+            "`ToggleSlot`",
+            "View",
+            "`src/qml/components/navigation/ListItemComposite.qml:150`",
+            "예"
+          ],
+          [
+            "`ToggleSwitch`",
+            "View",
+            "`src/qml/components/control/check/ToggleSwitch.qml:6`",
+            "아니오"
+          ],
+          [
+            "`ToolbarButton`",
+            "View",
+            "`src/qml/components/navigation/ToolbarButton.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Tooltip`",
+            "View",
+            "`src/qml/components/surfaces/Tooltip.qml:5`",
+            "아니오"
+          ],
+          [
+            "`VStack`",
+            "View",
+            "`src/qml/components/layout/VStack.qml:5`",
+            "아니오"
+          ],
+          [
+            "`View`",
+            "타입",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`WheelScrollGuard`",
+            "View",
+            "`src/qml/components/control/util/WheelScrollGuard.qml:4`",
+            "아니오"
+          ],
+          [
+            "`Window`",
+            "View",
+            "`src/qml/Window.qml:5`",
+            "아니오"
+          ],
+          [
+            "`WindowChromeInteraction`",
+            "View",
+            "`src/qml/WindowChromeInteraction.qml:5`",
+            "아니오"
+          ],
+          [
+            "`WindowMaterial`",
+            "View",
+            "`src/qml/components/surfaces/WindowMaterial.qml:5`",
+            "아니오"
+          ],
+          [
+            "`WindowNoiseTexture`",
+            "View",
+            "`src/backend/graphics/windownoisetexture.h:15`",
+            "아니오"
+          ],
+          [
+            "`ZStack`",
+            "View",
+            "`src/qml/components/layout/ZStack.qml:3`",
+            "아니오"
+          ],
+          [
+            "`false`",
+            "리터럴",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`import`",
+            "선언",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`let`",
+            "선언",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`true`",
+            "리터럴",
+            "LVUI 언어",
+            "아니오"
+          ],
+          [
+            "`var`",
+            "선언",
+            "LVUI 언어",
+            "아니오"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

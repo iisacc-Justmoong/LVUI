@@ -1,0 +1,853 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e10c4b6ff9e5c4a8366a9ca86cddb77348ab62b7aa174e9f5a38dcc8a0e439bf",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/DeclarationAnnotations.md",
+    "sha256": "19a5fad3222c6a307e34262364a35f7c4d9eed2061a6e99ecd0961c9422ebaf8",
+    "bytes": 6666,
+    "line_count": 132,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "선언 어노테이션",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "html",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "<a id=\"declaration-annotations\"></a>\n"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "heading",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "# 선언 어노테이션\n",
+      "level": 1,
+      "title": "선언 어노테이션"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 8,
+      "raw": "상태: 2026-10-20에 채택한 언어 설계이다. 선언 앞에 `@Observable`과 `@Static`을 붙일 수 있다.\n컴포넌트 프런트엔드는 현재 두 어노테이션을 파싱한다. `@Static`은 불변 `let`만 허용하며,\n중복·충돌과 미확인 어노테이션은 진단한다. 상수 AOT와 외부 C++ 스냅샷의 구현 경계는\n[Expressions.md](Expressions.md)를 참조한다. 이전 HTML 0.1 파서와 이 프런트엔드를 구분한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 12,
+      "raw": "[AOT 컴파일러](CompilationModel.md)는 어노테이션을 네이티브 관찰·수명 동작으로 변환한다.\n일반 변수를 포함한 [반응형 값과 바인딩](ReactiveState.md)은 언어의 기본 동작이다.\n애플리케이션 실행 중 인터프리터가 소스 어노테이션을 평가하여 이 의미를 구현하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "html",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "<a id=\"placement\"></a>\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "## 배치 위치\n",
+      "level": 2,
+      "title": "배치 위치"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 19,
+      "raw": "어노테이션은 선언 키워드 앞에 온다. 채택한 선언 구문은 타입 앞에 콜론,\n초기값 앞에 등호를 사용하며 세미콜론 종결자는 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "fenced_code",
+      "start_line": 21,
+      "end_line": 24,
+      "raw": "```text\n@Observable var value: Int = 6\n@Static let initialValue: Int = 6\n```\n",
+      "language": "text",
+      "code": "@Observable var value: Int = 6\n@Static let initialValue: Int = 6\n",
+      "closed": true
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "html",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "<a id=\"selected-meanings\"></a>\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "## 채택한 의미\n",
+      "level": 2,
+      "title": "채택한 의미"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "table",
+      "start_line": 30,
+      "end_line": 33,
+      "raw": "| 어노테이션 | 의미 |\n|---|---|\n| `@Observable` | 관찰을 명시한다. 정적 값이 아닌 값은 이미 기본적으로 변경 추적과 바인딩을 사용한다. |\n| `@Static` | 해당 선언에 생성된 수명 동안 변경할 수 없는 값을 설정한다. |\n",
+      "columns": [
+        "어노테이션",
+        "의미"
+      ],
+      "rows": [
+        [
+          "`@Observable`",
+          "관찰을 명시한다. 정적 값이 아닌 값은 이미 기본적으로 변경 추적과 바인딩을 사용한다."
+        ],
+        [
+          "`@Static`",
+          "해당 선언에 생성된 수명 동안 변경할 수 없는 값을 설정한다."
+        ]
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 37,
+      "raw": "이 어노테이션은 `let`과 `var` 규칙에 선언 의미를 추가한다.\n`let`은 재대입을 금지하며 일반 `var`는 타입 계약에 따라 재대입을 허용한다.\n어노테이션으로 C++ 접근 제한을 우회하거나 읽기 전용 원본에 쓸 수는 없다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "html",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "<a id=\"bindings\"></a>\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "## 바인딩\n",
+      "level": 2,
+      "title": "바인딩"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 45,
+      "raw": "값은 기본적으로 반응형이며 ViewModel도 같은 일반 규칙을 따른다.\n뷰는 바인딩 어노테이션이나 별도의 바인딩 래퍼 선언 없이 기존 VM의 공개 상태를 직접 사용한다.\n다음 뷰 조각은 가져온 VM을 직접 사용하는 예이다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "fenced_code",
+      "start_line": 47,
+      "end_line": 52,
+      "raw": "```text\nimport vm CounterViewModel\n\nLabel(text: vm.value)\nPushButton(vm.increment)\n```\n",
+      "language": "text",
+      "code": "import vm CounterViewModel\n\nLabel(text: vm.value)\nPushButton(vm.increment)\n",
+      "closed": true
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 57,
+      "raw": "속성 바인딩은 원본 VM 상태를 읽고 해당 변경 계약을 따른다.\n편집 가능한 바인딩은 검증·쓰기 계약에 따라 쓰기 가능한 원본 속성에 변경을 전달한다.\n기본 동작은 상태를 복사하거나 다른 VM을 생성하지 않는다.\n전체 컴포넌트 입력과 바인딩 투영 구문은 추가 명세가 필요하다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 61,
+      "raw": "바인딩 접근은 가져온 VM의 소유권을 이전하지 않으며,\n기존 [스코프 종료 경계](InvocationLifecycle.md)보다 수신 객체의 사용 가능 수명을 늘리지 않는다.\n객체가 바인딩 가능하더라도 그 안의 읽기 전용 멤버는 계속 읽기 전용이다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 64,
+      "raw": "SwiftUI의 `$model.property` 투영 표기는 이번 결정에서 LVUI 구문으로 채택하지 않았다.\n정확한 투영 방식과 컨트롤 입력은 추가 언어 설계가 필요하다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "html",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "<a id=\"observation\"></a>\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "## 관찰\n",
+      "level": 2,
+      "title": "관찰"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 70,
+      "end_line": 74,
+      "raw": "소비자는 읽은 비정적 값과 속성을 기본적으로 추적하며,\n관련 변경이 발생하면 해당 의존 소비자를 무효화한다.\n`@Observable`로 관찰 의도를 명시할 수 있으나 기능을 선택적으로 활성화하는 조건은 아니다.\n이 어노테이션에 기본 동작 이상의 추가 동작은 채택하지 않았다.\n지원하는 전체 선언 대상은 추가 명세가 필요하다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 76,
+      "end_line": 78,
+      "raw": "반응형 동작은 멤버의 변경 가능 여부, C++ constness, 객체 소유권을 무시하지 않는다.\n`let`은 계속 재대입할 수 없으며, 원본이 의존 뷰 갱신에 참여할 수 있더라도\n읽기 전용 속성은 계속 읽기 전용이다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 80,
+      "end_line": 84,
+      "raw": "LVUI 소유 값에는 읽기·변경 추적 구현이 필요하다.\n가져온 C++ 값은 생성된 접근 경로나 백엔드 계약이 기본 반응형 계약에 필요한 변경 정보를 제공해야 한다.\n공개 접근만으로 임의의 C++ 대입 감지를 구현할 수는 없다.\n이는 값별로 관찰을 활성화하는 문제가 아닌 네이티브 연동의 책임이다.\n구현 범위는 [RuntimeContracts.md](RuntimeContracts.md)를 참조한다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "html",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "<a id=\"static-value-lifetime\"></a>\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "heading",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "## 정적 값의 수명\n",
+      "level": 2,
+      "title": "정적 값의 수명"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 90,
+      "end_line": 92,
+      "raw": "`@Static`은 초기화된 값이 고정되는 수명을 설정한다.\n해당 값을 변경하려는 시도는 거부해야 한다.\n같은 수명 안에서는 뷰를 다시 그리거나 선언을 재평가하더라도 값을 교체할 수 없다.\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 94,
+      "end_line": 96,
+      "raw": "채택한 보장은 해당 수명 동안의 값 안정성이다.\n정확한 수명의 소유자와 길이는 미정이며, 프로세스 전역 저장소나 애플리케이션 세션 수명을 확정하지 않는다.\n한 수명이 끝나면 새로운 수명에서 자체 초기값을 설정할 수 있다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 98,
+      "end_line": 101,
+      "raw": "`let`은 재대입 허용 여부를 지정한다.\n`@Static`은 같은 정적 수명 안에서 여러 번 평가하더라도 설정한 값이 고정됨을 추가로 지정한다.\n스냅샷이나 깊은 불변성 요구사항을 포함하여,\n외부에서 변경 가능한 객체를 참조하는 값의 동작은 미정이다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "html",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "<a id=\"core-query-integration\"></a>\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 104,
+      "end_line": 104,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "heading",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "## Core 쿼리 연동\n",
+      "level": 2,
+      "title": "Core 쿼리 연동"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 106,
+      "end_line": 106,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 107,
+      "end_line": 109,
+      "raw": "ViewModel은 계속 [iiSDKCore 객체 쿼리](ViewModelQueries.md)를 통해 값을 교환한다.\n바인딩의 읽기·쓰기는 원본 VM의 읽기·쓰기 계약에 대응한다.\n관찰은 변경 쿼리를 수신하고 읽기 계약을 통해 선택한 최신 값을 얻는다.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 110,
+      "end_line": 110,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 111,
+      "end_line": 113,
+      "raw": "어노테이션은 새로운 `.lvui` 쿼리 키워드를 도입하거나 공개 멤버에 `@export`를 요구하거나,\n가져온 인스턴스의 소유권을 바꾸지 않는다.\n구체적인 어댑터, 읽기 추적, 쿼리에서 뷰로의 전달은 아직 구현하지 않았다.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "html",
+      "start_line": 115,
+      "end_line": 115,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "heading",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "## 미정 사항\n",
+      "level": 2,
+      "title": "미정 사항"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "list",
+      "start_line": 119,
+      "end_line": 124,
+      "raw": "- 지원하는 선언 대상과 유효한 어노테이션·`let`·`var` 조합.\n- 여러 어노테이션의 결합 가능 여부와 충돌 진단 방식.\n- 바인딩 투영·컨트롤 입력·의존성 추적 API.\n- 정확한 `@Static` 수명 소유자·활성화 경계·초기화 시점.\n- 정적 참조 값과 외부에서 변경 가능한 원본.\n- 금지된 변경의 컴파일 타임 진단과 런타임 진단 구분.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "지원하는 선언 대상과 유효한 어노테이션·`let`·`var` 조합.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "여러 어노테이션의 결합 가능 여부와 충돌 진단 방식.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "바인딩 투영·컨트롤 입력·의존성 추적 API.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "정확한 `@Static` 수명 소유자·활성화 경계·초기화 시점.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "정적 참조 값과 외부에서 변경 가능한 원본.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "금지된 변경의 컴파일 타임 진단과 런타임 진단 구분.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "html",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "<a id=\"swiftui-references\"></a>\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 127,
+      "end_line": 127,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "heading",
+      "start_line": 128,
+      "end_line": 128,
+      "raw": "## SwiftUI 참고 자료\n",
+      "level": 2,
+      "title": "SwiftUI 참고 자료"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 129,
+      "end_line": 129,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 130,
+      "end_line": 132,
+      "raw": "Apple의 [SwiftUI Observation 소개](https://developer.apple.com/videos/play/wwdc2023/10149/)는\n여기서 참고한 관찰 동작을 설명한다. LVUI의 기본 반응성, 선택적인 명시적 관찰 표기,\n`@Static` 수명 규칙은 이 대화에서 채택한 언어 결정이다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000003",
+      "parent_id": null,
+      "level": 1,
+      "title": "선언 어노테이션",
+      "anchor": "선언-어노테이션",
+      "start_line": 3
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "배치 위치",
+      "anchor": "배치-위치",
+      "start_line": 16
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "채택한 의미",
+      "anchor": "채택한-의미",
+      "start_line": 28
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "바인딩",
+      "anchor": "바인딩",
+      "start_line": 41
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "관찰",
+      "anchor": "관찰",
+      "start_line": 68
+    },
+    {
+      "block_id": "b000051",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "정적 값의 수명",
+      "anchor": "정적-값의-수명",
+      "start_line": 88
+    },
+    {
+      "block_id": "b000061",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "Core 쿼리 연동",
+      "anchor": "core-쿼리-연동",
+      "start_line": 105
+    },
+    {
+      "block_id": "b000069",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "미정 사항",
+      "anchor": "미정-사항",
+      "start_line": 117
+    },
+    {
+      "block_id": "b000075",
+      "parent_id": "b000003",
+      "level": 2,
+      "title": "SwiftUI 참고 자료",
+      "anchor": "swiftui-참고-자료",
+      "start_line": 128
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 12,
+        "text": "애플리케이션 실행 중 인터프리터가 소스 어노테이션을 평가하여 이 의미를 구현하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 19,
+        "text": "초기값 앞에 등호를 사용하며 세미콜론 종결자는 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 36,
+        "text": "`let`은 재대입을 금지하며 일반 `var`는 타입 계약에 따라 재대입을 허용한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 56,
+        "text": "기본 동작은 상태를 복사하거나 다른 VM을 생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000045",
+        "line": 76,
+        "text": "반응형 동작은 멤버의 변경 가능 여부, C++ constness, 객체 소유권을 무시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000047",
+        "line": 81,
+        "text": "가져온 C++ 값은 생성된 접근 경로나 백엔드 계약이 기본 반응형 계약에 필요한 변경 정보를 제공해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000053",
+        "line": 91,
+        "text": "해당 값을 변경하려는 시도는 거부해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000055",
+        "line": 95,
+        "text": "정확한 수명의 소유자와 길이는 미정이며, 프로세스 전역 저장소나 애플리케이션 세션 수명을 확정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000071",
+        "line": 124,
+        "text": "- 금지된 변경의 컴파일 타임 진단과 런타임 진단 구분.",
+        "basis": "lexical_match",
+        "context": "list"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "Expressions.md",
+        "target": "Expressions.md",
+        "kind": "relative",
+        "line": 8
+      },
+      {
+        "block_id": "b000007",
+        "label": "AOT 컴파일러",
+        "target": "CompilationModel.md",
+        "kind": "relative",
+        "line": 10
+      },
+      {
+        "block_id": "b000007",
+        "label": "반응형 값과 바인딩",
+        "target": "ReactiveState.md",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000035",
+        "label": "스코프 종료 경계",
+        "target": "InvocationLifecycle.md",
+        "kind": "relative",
+        "line": 60
+      },
+      {
+        "block_id": "b000047",
+        "label": "RuntimeContracts.md",
+        "target": "RuntimeContracts.md",
+        "kind": "relative",
+        "line": 84
+      },
+      {
+        "block_id": "b000063",
+        "label": "iiSDKCore 객체 쿼리",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 107
+      },
+      {
+        "block_id": "b000077",
+        "label": "SwiftUI Observation 소개",
+        "target": "https://developer.apple.com/videos/play/wwdc2023/10149/",
+        "kind": "external",
+        "line": 130
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000021",
+        "columns": [
+          "어노테이션",
+          "의미"
+        ],
+        "rows": [
+          [
+            "`@Observable`",
+            "관찰을 명시한다. 정적 값이 아닌 값은 이미 기본적으로 변경 추적과 바인딩을 사용한다."
+          ],
+          [
+            "`@Static`",
+            "해당 선언에 생성된 수명 동안 변경할 수 없는 값을 설정한다."
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

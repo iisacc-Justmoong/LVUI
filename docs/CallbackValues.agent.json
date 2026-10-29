@@ -1,0 +1,626 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:c32000e39b91577b33789a5eb2915b2322cde0fe5cc57252ee56a347b7928c29",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/CallbackValues.md",
+    "sha256": "323239ef40d0de8fd33b1b6fbd2a6aa8f44e2a1948ff7d172c18990de198f791",
+    "bytes": 8188,
+    "line_count": 118,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "활성화가 소유하는 단일 콜백 값",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 활성화가 소유하는 단일 콜백 값\n",
+      "level": 1,
+      "title": "활성화가 소유하는 단일 콜백 값"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "타입 지정 콜백 매개변수에 C++ 팩터리 결과를 전달하면 컴포넌트 활성화가 하나의\n`CallbackValue<Signature>`를 소유한다. 같은 입력을 여러 컨트롤이나 자식 뷰로 전달해도\n각 컨트롤이 팩터리를 다시 만들지 않는다. 소스 해석기·문자열 메서드 탐색·별도 스레드는 없다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 15,
+      "raw": "```lvui\nimport vm Model\nlet Leaf(run: () -> Void): View = PushButton(run)\nlet Pair(run: () -> Void, again: () -> Void = run): View = VStack {\n    Leaf(run: run)\n    Leaf(run: again)\n}\nWindow { Pair(run: vm.makeHandler(vm.amount)) }\n```\n",
+      "language": "lvui",
+      "code": "import vm Model\nlet Leaf(run: () -> Void): View = PushButton(run)\nlet Pair(run: () -> Void, again: () -> Void = run): View = VStack {\n    Leaf(run: run)\n    Leaf(run: again)\n}\nWindow { Pair(run: vm.makeHandler(vm.amount)) }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "## 값과 함수 버전\n",
+      "level": 2,
+      "title": "값과 함수 버전"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 22,
+      "raw": "위 입력은 활성화 시 한 번 바인딩하고 두 소비자가 같은 값과 현재 함수 객체를 사용한다.\n함수가 가진 이동 전용 캡처와 가변 내부 상태도 현재 버전 안에서 공유한다. 인자를 단순히\n다시 전달하거나 앞선 콜백을 기본값으로 지정하면 새 값을 생성하지 않는다. 별도의\n컴포넌트 활성화나 별도로 작성한 팩터리 인자는 각각 독립된 값을 만든다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 29,
+      "raw": "C++ 값·우측값 반환은 소유하고, 좌측값 참조 반환은 수신 스코프에 연결하여 차용한다.\n참조를 복사본으로 바꾸거나 `const`를 제거하지 않는다. 값 반환은 C++의 보장된 복사\n생략을 사용하므로 이동·복사를 모두 금지한 함수 객체도 받을 수 있다. C++ 함수 참조도\n차용할 수 있다. 여러 활성화가 같은 C++ 객체의 참조를 명시적으로 받으면 그 대상 객체의\n상태는 공유한다. 외부 참조의 유효성과 컨테이너 변경에 따른 참조 무효화는 원래 C++\nAPI의 수명 계약을 따른다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 35,
+      "raw": "입력은 기본적으로 반응형이다. 팩터리가 읽은 의존 리비전이 바뀌면 컴포넌트의 팩터리\n바인딩을 한 번 평가하고 현재 함수 버전을 교체한다. 값의 정체성과 소비 위젯은 유지한다.\n일반 C++ 메서드의 반환 식은 기존 계약대로 백엔드의 합성 리비전도 읽는다. 따라서 해당\n리비전을 발행하는 네이티브 호출 이후 새 함수 버전이 계산될 수 있다. 함수 내부 상태가\n의존값 변경을 넘어 영구 보존된다는 계약은 아니다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 40,
+      "raw": "실행 접수 시 현재 함수 버전을 보존한다. 그 함수가 의존값을 변경하여 새 버전이 생겨도\n진행 중 호출의 캡처는 반환까지 유지한다. 이후 호출은 새 버전을 사용한다. 팩터리 평가가\n실패하면 모든 소비자가 마지막 유효 버전을 계속 사용하고 네이티브 바인딩 오류를 보존한다.\n초기 평가 실패는 후보 활성화를 실패시키며 이전 화면을 유지한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "## 소유권과 종료\n",
+      "level": 2,
+      "title": "소유권과 종료"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 46,
+      "raw": "컴파일러는 팩터리 입력을 내부 스코프 필드와 초기화 코드로 생성한다. 사용자 소스에 내부\n메서드나 보조 전역 객체를 추가하지 않는다. 일반·전달·조건·반복 뷰와 창 루트의 스코프를\n사용하며, C++ 타입과 직접 멤버 접근은 빌드 시 검사한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 48,
+      "end_line": 51,
+      "raw": "소비자 하나를 제거해도 살아 있는 소유 컴포넌트의 콜백 값은 유지한다. 소유 활성화를\n제거하면 팩터리 구독과 함수 자원을 퇴역시킨다. 외부에 저장한 값 핸들은 닫힌 수신자를\n되살리거나 캡처를 계속 보유하지 않는다. 실행 중 자기 컴포넌트나 루트를 제거하는 경우는\n진행 중 호출과 함수 버전이 돌아온 뒤 자원을 해제한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 56,
+      "raw": "콜백은 생성한 UI 실행 영역에서만 접수한다. 다른 스레드에서는 약한 수신자·바인딩 참조를\n잠그기 전에 거부한다. 이 사전 검사는 제거 중인 수신자의 마지막 참조가 잘못된 실행\n영역에서 잠시 생기는 것도 방지한다. 작업 스레드의 결과는 [명시적 UI 전달](ActivationWork.md)을\n사용한다. 콜백 값은 임의 백엔드 멤버의 동시 접근을 허용하는 잠금이 아니다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "## C++ API\n",
+      "level": 2,
+      "title": "C++ API"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 62,
+      "raw": "`make_callback_value<Signature>(scope, bindings, factory, invoke)`는\n`std::shared_ptr<CallbackValue<Signature>>`를 반환한다. 함수 버전의 저장·의존 추적은\n기존 `Bindings`가 소유한다. 값은 함수를 복사하지 않고 동일한 버전을 참조한다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "fenced_code",
+      "start_line": 64,
+      "end_line": 76,
+      "raw": "```cpp\nauto value = lvui::native::make_callback_value<void(std::int64_t)>(\n    owner, bindings,\n    [owner](lvui::native::ReadContext& context) {\n        return [state = std::make_unique<int>(context.read(owner->amount))](std::int64_t n) {\n            *state += int(n);\n        };\n    },\n    [](const auto&, auto& handler, std::int64_t n) { handler(n); });\nauto second = value;\n(*value)(1);\n(*second)(1);\n```\n",
+      "language": "cpp",
+      "code": "auto value = lvui::native::make_callback_value<void(std::int64_t)>(\n    owner, bindings,\n    [owner](lvui::native::ReadContext& context) {\n        return [state = std::make_unique<int>(context.read(owner->amount))](std::int64_t n) {\n            *state += int(n);\n        };\n    },\n    [](const auto&, auto& handler, std::int64_t n) { handler(n); });\nauto second = value;\n(*value)(1);\n(*second)(1);\n",
+      "closed": true
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 78,
+      "end_line": 82,
+      "raw": "이벤트 결과는 `Void`이며 실제 타입·payload 적응은 [콜백 입력 계약](CallableInputs.md)을\n따른다. 네이티브 C++ 이벤트 객체는 차용 참조를 보존한다. 값 객체가 자기 호출 안에서\n제거되더라도 이미 접수한 액션은 반환까지 유지한다.\n생성된 팩터리 람다는 `decltype(auto)`로 원래 반환 종류를 보존한다. 직접 C++ API를\n사용할 때에도 참조를 반환하려면 해당 팩터리의 C++ 반환 타입을 참조로 선언해야 한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "## 검증과 전체 완료 조건\n",
+      "level": 2,
+      "title": "검증과 전체 완료 조건"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 91,
+      "raw": "[네이티브 값 검사](../tests/native_callback_values.cpp)는 공유 정체성·상태·반응형 교체·\n실패 복구·실행 중 교체와 자기 제거·잘못된 스레드 호출을 검사한다.\n[위젯 검사](../../iiGUI/tests/native_shared_callable.cpp)는 실제 생성 C++에서 다중 소비자·\n별도 활성화·소비자와 소유자의 다른 수명·초기 후보 실패·갱신 실패·자기 제거를 확인한다.\n창 루트의 전달·조건부 콘텐츠와 이동 불가능한 차용 함수 객체도 검사한다.\n원래의 구문·서명·설치·기존 구성 회귀 검사도 유지한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 93,
+      "end_line": 96,
+      "raw": "실제 LVRS 앱·테스트 실행은 전체 목표의 최종 일괄 검증으로 유지한다. 함수 값의 나머지\n일반 타입·프로토콜, LVRS API·시각 상태·플랫폼 실행은\n[전체 완료 감사](Completion.md)의 별도 항목이다.\n반환값이 있는 함수 호출과 읽기 전용 선언은 [함수 값](FunctionValues.md)을 따른다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "heading",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "### 2026-10-26 검증 기록\n",
+      "level": 3,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 100,
+      "end_line": 101,
+      "raw": "현재 macOS arm64 작업 트리에서 다음 결과를 확인했다. 겹치는 검사 수를 합산하여\n독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "table",
+      "start_line": 103,
+      "end_line": 112,
+      "raw": "| 검사 | 결과 | 범위 |\n|---|---|---|\n| LVUI Release CTest | 162/162 통과 | 언어·AOT·구성·목록·작업·공유 값과 설치 소비자 |\n| AddressSanitizer + UndefinedBehaviorSanitizer | 85/85 통과 | 관련 네이티브 구현·생성 스코프·계측 AOT 도구, C++ 거부 검사는 구문 컴파일 |\n| ThreadSanitizer | 13/13 통과 | 작업 8개·공유 값 5개, 작업 검사의 빌린 Core Runtime 라이브러리는 비계측 |\n| iiGUI 창 없는 통합 검사 | 71/71 통과 | 기존 회귀 검사와 공유 값 7개 시나리오 |\n| iiGUI AddressSanitizer + UndefinedBehaviorSanitizer | 71/71 통과 | iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings 구현은 별도 LVUI 검사 |\n| 설치·재배치 독립 소비자 | 3/3 통과 | Native 공유 값·공개 컴파일러·선택적 Runtime, 잘못된 콜백 계약 거부 |\n| 생성 C++ 타입 검사 | 유효 1개 컴파일·잘못된 6개 거부 | 반환 타입·인자 수·payload 타입·필수 인자·private 접근·반환 없는 즉시 호출 |\n| LVRS 생성 C++ | 14개 팩터리 컴파일 | 공유·독립·창 루트·조건부·차용 참조를 포함하며 실행은 최종 일괄 검증으로 유지 |\n",
+      "columns": [
+        "검사",
+        "결과",
+        "범위"
+      ],
+      "rows": [
+        [
+          "LVUI Release CTest",
+          "162/162 통과",
+          "언어·AOT·구성·목록·작업·공유 값과 설치 소비자"
+        ],
+        [
+          "AddressSanitizer + UndefinedBehaviorSanitizer",
+          "85/85 통과",
+          "관련 네이티브 구현·생성 스코프·계측 AOT 도구, C++ 거부 검사는 구문 컴파일"
+        ],
+        [
+          "ThreadSanitizer",
+          "13/13 통과",
+          "작업 8개·공유 값 5개, 작업 검사의 빌린 Core Runtime 라이브러리는 비계측"
+        ],
+        [
+          "iiGUI 창 없는 통합 검사",
+          "71/71 통과",
+          "기존 회귀 검사와 공유 값 7개 시나리오"
+        ],
+        [
+          "iiGUI AddressSanitizer + UndefinedBehaviorSanitizer",
+          "71/71 통과",
+          "iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings 구현은 별도 LVUI 검사"
+        ],
+        [
+          "설치·재배치 독립 소비자",
+          "3/3 통과",
+          "Native 공유 값·공개 컴파일러·선택적 Runtime, 잘못된 콜백 계약 거부"
+        ],
+        [
+          "생성 C++ 타입 검사",
+          "유효 1개 컴파일·잘못된 6개 거부",
+          "반환 타입·인자 수·payload 타입·필수 인자·private 접근·반환 없는 즉시 호출"
+        ],
+        [
+          "LVRS 생성 C++",
+          "14개 팩터리 컴파일",
+          "공유·독립·창 루트·조건부·차용 참조를 포함하며 실행은 최종 일괄 검증으로 유지"
+        ]
+      ]
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 113,
+      "end_line": 113,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 114,
+      "end_line": 118,
+      "raw": "생성 위젯 실행 파일의 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 검사한다.\nDreamscapes 관측 QML 81개의 기준선 해시를 보존하며 제품 변환·재설치는 수행하지 않는다.\n로그·소스 해시·의존성·설치 소비자 기록은\n`build/lvui-completion/shared-callback-values-verification-20261026.json`에 둔다.\n이 기록은 실제 창·GPU·모든 플랫폼 또는 전체 언어·모듈 완성을 선언하는 것이 아니다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "활성화가 소유하는 단일 콜백 값",
+      "anchor": "활성화가-소유하는-단일-콜백-값",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "값과 함수 버전",
+      "anchor": "값과-함수-버전",
+      "start_line": 17
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "소유권과 종료",
+      "anchor": "소유권과-종료",
+      "start_line": 42
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "C++ API",
+      "anchor": "c-api",
+      "start_line": 58
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증과 전체 완료 조건",
+      "anchor": "검증과-전체-완료-조건",
+      "start_line": 84
+    },
+    {
+      "block_id": "b000039",
+      "parent_id": "b000033",
+      "level": 3,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 98
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000009",
+        "line": 21,
+        "text": "다시 전달하거나 앞선 콜백을 기본값으로 지정하면 새 값을 생성하지 않는다. 별도의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 25,
+        "text": "참조를 복사본으로 바꾸거나 `const`를 제거하지 않는다. 값 반환은 C++의 보장된 복사",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 26,
+        "text": "생략을 사용하므로 이동·복사를 모두 금지한 함수 객체도 받을 수 있다. C++ 함수 참조도",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 45,
+        "text": "메서드나 보조 전역 객체를 추가하지 않는다. 일반·전달·조건·반복 뷰와 창 루트의 스코프를",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 50,
+        "text": "되살리거나 캡처를 계속 보유하지 않는다. 실행 중 자기 컴포넌트나 루트를 제거하는 경우는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 82,
+        "text": "사용할 때에도 참조를 반환하려면 해당 팩터리의 C++ 반환 타입을 참조로 선언해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000041",
+        "line": 101,
+        "text": "독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 111,
+        "text": "| 생성 C++ 타입 검사 | 유효 1개 컴파일·잘못된 6개 거부 | 반환 타입·인자 수·payload 타입·필수 인자·private 접근·반환 없는 즉시 호출 |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000045",
+        "line": 115,
+        "text": "Dreamscapes 관측 QML 81개의 기준선 해시를 보존하며 제품 변환·재설치는 수행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000023",
+        "label": "명시적 UI 전달",
+        "target": "ActivationWork.md",
+        "kind": "relative",
+        "line": 55
+      },
+      {
+        "block_id": "b000031",
+        "label": "콜백 입력 계약",
+        "target": "CallableInputs.md",
+        "kind": "relative",
+        "line": 78
+      },
+      {
+        "block_id": "b000035",
+        "label": "네이티브 값 검사",
+        "target": "../tests/native_callback_values.cpp",
+        "kind": "relative",
+        "line": 86
+      },
+      {
+        "block_id": "b000035",
+        "label": "위젯 검사",
+        "target": "../../iiGUI/tests/native_shared_callable.cpp",
+        "kind": "relative",
+        "line": 88
+      },
+      {
+        "block_id": "b000037",
+        "label": "전체 완료 감사",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 95
+      },
+      {
+        "block_id": "b000037",
+        "label": "함수 값",
+        "target": "FunctionValues.md",
+        "kind": "relative",
+        "line": 96
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000043",
+        "columns": [
+          "검사",
+          "결과",
+          "범위"
+        ],
+        "rows": [
+          [
+            "LVUI Release CTest",
+            "162/162 통과",
+            "언어·AOT·구성·목록·작업·공유 값과 설치 소비자"
+          ],
+          [
+            "AddressSanitizer + UndefinedBehaviorSanitizer",
+            "85/85 통과",
+            "관련 네이티브 구현·생성 스코프·계측 AOT 도구, C++ 거부 검사는 구문 컴파일"
+          ],
+          [
+            "ThreadSanitizer",
+            "13/13 통과",
+            "작업 8개·공유 값 5개, 작업 검사의 빌린 Core Runtime 라이브러리는 비계측"
+          ],
+          [
+            "iiGUI 창 없는 통합 검사",
+            "71/71 통과",
+            "기존 회귀 검사와 공유 값 7개 시나리오"
+          ],
+          [
+            "iiGUI AddressSanitizer + UndefinedBehaviorSanitizer",
+            "71/71 통과",
+            "iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings 구현은 별도 LVUI 검사"
+          ],
+          [
+            "설치·재배치 독립 소비자",
+            "3/3 통과",
+            "Native 공유 값·공개 컴파일러·선택적 Runtime, 잘못된 콜백 계약 거부"
+          ],
+          [
+            "생성 C++ 타입 검사",
+            "유효 1개 컴파일·잘못된 6개 거부",
+            "반환 타입·인자 수·payload 타입·필수 인자·private 접근·반환 없는 즉시 호출"
+          ],
+          [
+            "LVRS 생성 C++",
+            "14개 팩터리 컴파일",
+            "공유·독립·창 루트·조건부·차용 참조를 포함하며 실행은 최종 일괄 검증으로 유지"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

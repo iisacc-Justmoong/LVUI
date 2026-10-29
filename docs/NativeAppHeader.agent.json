@@ -1,0 +1,121 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e993479eec9d4d2a8d721e19cc5345a8a9ea3fa4e0f9b4102d8d6dcf128ecd7c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeAppHeader.md",
+    "sha256": "68730b6ae9feebf7e6bb886929c1024ab0ee529fbb6f24f3a1e72d397a2ff073",
+    "bytes": 2340,
+    "line_count": 27,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 앱 헤더",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 앱 헤더\n",
+      "level": 1,
+      "title": "LVUI 독립 앱 헤더"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`AppHeader`의 기본값·압축 모드·입력 검증과 자연 크기 정책은 LVUI의 C++ 모델이\n소유한다. `NativeAppHeader`는 범용 호스트의 레이아웃·텍스트·입력 표면을 사용하여\n제목과 부제, 메뉴와 앱의 액션 슬롯을 구성한다. LVRS, Qt 또는 QML 구현을 호출하지\n않는다. 앱이 추가한 액션은 제목이나 스타일이 갱신되어도 같은 위젯 세대에 남는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 12,
+      "raw": "일반 모드의 가로·세로 여백은 16, 행 간격은 12, 액션 간격은 8, 메뉴 패딩은 10이다.\n압축 모드에서는 각각 10, 10, 8, 6, 8이며 명시적 입력이 이 기본값보다 우선한다.\n메뉴 높이는 일반 32, 압축 28이다. 자연 높이는 최소 56이며 구성된 내용의 자연 높이에\n32를 더한 값보다 작지 않다. 제목은 22px/700, 부제는 12px/600으로 표현한다.\n배경·텍스트·메뉴 표면 색상과 메뉴 표시 여부, 크기·활성 상태도 직접 지정할 수 있다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 18,
+      "raw": "직접 C++ 구성은 `NativeAppHeader::create`와 `actions_root()`를 사용한다. 메뉴 버튼은\n접근성 버튼 역할과 포커스 표시를 갖고 제공된 콜백을 호출한다. 갱신은 유효성 검사 후\n적용하며, 비활성화 중 재진입한 최신 설정을 덮어쓰지 않는다. 갱신 중 취소 콜백의\n예외는 원인을 가진 오류로 전달하고 이미 발생한 외부 부수 효과를 취소하지 않는다. 세대 퇴역 후에는 메뉴\n콜백과 호스트 핸들을 사용할 수 없다. 활성 세대에서는 `set_menu_clicked`로 콜백을 교체할 수 있다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 27,
+      "raw": "기본 선언형 `AppHeader`는 이 구현을 생성하고 자식 View를 액션 슬롯에 배치한다.\n`title`, `subtitle`, `enabled`, `width`, `height`, `menuVisible`, `compact`,\n`contentHorizontalPadding`, `contentVerticalPadding`, `rowSpacing`, `actionSpacing`,\n`menuButtonPadding`, 배경·텍스트·메뉴 색상과 `onMenuClicked` 및 공통 가시성·\n불투명도·flex를 지원한다. 관찰 가능한 입력은 함께 계산하여 기존 액션을 유지하고\n잘못된 입력은 바인딩 오류로 보고한다. 메뉴 패딩은 버튼 폭을 호스트 한도 이내로\n유지하기 위해 0–4090이다. 실제 플랫폼의 시각·접근성과 레거시 경로 제거는 아직\n진행 중이다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 앱 헤더",
+      "anchor": "lvui-독립-앱-헤더",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 17,
+        "text": "예외는 원인을 가진 오류로 전달하고 이미 발생한 외부 부수 효과를 취소하지 않는다. 세대 퇴역 후에는 메뉴",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

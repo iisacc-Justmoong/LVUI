@@ -1,0 +1,8 @@
+import vm NativeOwnedAlertButtonModel
+Window {
+    VStack {
+        AlertButton(id: "alert", text: vm.text, tone: vm.tone, dialogStyle: vm.dialog,
+                    height: vm.height, method: vm.method, onClick: vm.clicked,
+                    onPressed: vm.pressed, onReleased: vm.released, onCanceled: vm.canceled)
+    }
+}

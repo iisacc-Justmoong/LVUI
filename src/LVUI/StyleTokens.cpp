@@ -1,4 +1,5 @@
 #include "StyleTokens.h"
+#include "NativeColors.h"
 #include <algorithm>
 #include <array>
 #include <charconv>
@@ -251,58 +252,11 @@ StyleTokenResult<bool> StyleTokenCatalog::boolean(std::string_view name, const S
     return typed<bool>(resolve(name, o));
 }
 StyleColor composite_srgb(StyleColor foreground, StyleColor background) {
-    const auto alpha = foreground.alpha + background.alpha * (1 - foreground.alpha);
-    if (alpha == 0)
-        return {0, 0, 0, 0};
-    const auto channel = [&](double a, double b) {
-        return (a * foreground.alpha + b * background.alpha * (1 - foreground.alpha)) / alpha;
-    };
-    return {channel(foreground.red, background.red), channel(foreground.green, background.green),
-            channel(foreground.blue, background.blue), alpha};
+    return native::composite_color<StyleColor>(foreground,background);
 }
 StyleTokenResult<StyleColor> parse_style_color(std::string_view input) {
-    input = trim(input);
-    if (input == "transparent")
-        return StyleColor{0, 0, 0, 0};
-    if (input == "white")
-        return StyleColor{1, 1, 1, 1};
-    if (input == "black")
-        return StyleColor{0, 0, 0, 1};
-    if (input.starts_with('#')) {
-        input.remove_prefix(1);
-        const bool short_form = input.size() == 3 || input.size() == 4;
-        const auto width = short_form ? 1 : 2;
-        if (!short_form && input.size() != 6 && input.size() != 8)
-            return failure(StyleTokenErrorCode::invalid_value, "Invalid hexadecimal color");
-        double channels[]{0, 0, 0, 1};
-        for (std::size_t i = 0; i < input.size() / width; ++i) {
-            unsigned value = 0;
-            auto part = input.substr(i * width, width);
-            auto read = std::from_chars(part.data(), part.data() + part.size(), value, 16);
-            if (read.ec != std::errc{} || read.ptr != part.data() + part.size())
-                return failure(StyleTokenErrorCode::invalid_value, "Invalid hexadecimal color");
-            channels[i] = value / (short_form ? 15. : 255.);
-        }
-        return StyleColor{channels[0], channels[1], channels[2], channels[3]};
-    }
-    if (input.starts_with("rgba(") && input.ends_with(')')) {
-        input = input.substr(5, input.size() - 6);
-        std::array<double, 4> channels{};
-        for (std::size_t i = 0; i < 4; ++i) {
-            auto comma = input.find(',');
-            auto part = trim(input.substr(0, comma));
-            auto n = ii::core::parse_decimal(part);
-            if (!n || (i < 3 && comma == input.npos) || (i == 3 && comma != input.npos))
-                return failure(StyleTokenErrorCode::invalid_value, "Invalid RGBA color");
-            channels[i] = *n / (i < 3 ? 255. : 1.);
-            if (comma != input.npos)
-                input.remove_prefix(comma + 1);
-        }
-        StyleColor color{channels[0], channels[1], channels[2], channels[3]};
-        if (valid_style_token_value(color))
-            return color;
-    }
-    return failure(StyleTokenErrorCode::invalid_value, "Invalid style color");
+    if(auto value=native::parse_color_text(input))return native::color<StyleColor>(*value);
+    return failure(StyleTokenErrorCode::invalid_value,"Invalid style color");
 }
 StyleTokenResult<std::optional<StyleTokenValue>>
 StyleTokenCatalog::css_impl(std::string_view text, const StyleTokenOptions &o, unsigned depth) const {

@@ -1,0 +1,143 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:47dff76bc0c9d9ba31ca35f264b42890e2b746742a771b34e9a6e44835bcd831",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/TableSorting.md",
+    "sha256": "ca5c788ba8f60321f8ff9778aa253fb9f7ab7d06c98e0540553739cf33c771f8",
+    "bytes": 2532,
+    "line_count": 31,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "표 행 정렬",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 표 행 정렬\n",
+      "level": 1,
+      "title": "표 행 정렬"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`TableSorting.h`는 표의 정렬 정책과 행 순서 저장을 분리한다. `TableSorter`는 불변\n스냅샷의 열과 정렬 방향을 받아 행 키의 순서를 계산한다. `prepare_table_sort()`는\n열이 활성 상태인지 확인하고 결과가 현재 행 전체를 정확히 한 번씩 포함하는지 검사한다.\n이 단계에서는 문서를 수정하지 않는다. 앱은 정수·날짜·언어별 비교나 자체 도메인 규칙을\n반영하는 정렬 정책을 주입할 수 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "기본 `TableTextSorter`는 문자열의 바이트 순서로 비교하며 같은 값의 기존 순서를\n유지한다. 숫자나 날짜의 의미 및 운영체제 로캘을 추측하지 않는다. 앱별 의미가 필요한\n열에는 별도의 `TableSorter`를 공급한다. `TableOrderEditor`는 소스 리비전이 담긴\n`TableSortPlan`을 받아 원자적으로 게시하거나 거절한다. 선택적\n`TableMemoryOrderEditor`는 `TableMemory`의 전체 스냅샷 교체를 이용하며, 큰 표나\n영속 저장소는 다른 편집기를 구현할 수 있다. 오래된 계획이나 중복·누락된 행 키는\n거절된다. 순서가 변하지 않으면 메모리 소스는 새 문서 리비전을 발행하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 25,
+      "raw": "[독립 표 호스트](NativeOwnedTable.md)에서 정렬을 사용하려면 `sortingEnabled`와\n`orderEditor`를 지정한다. `sorter`는 생략하면 기본 문자열 정렬을 사용한다. 활성\n헤더를 누르면 오름차순으로 정렬하고 같은 열을 다시 누르면 내림차순으로 바꾼다.\n헤더에 포커스가 있으면 좌우·Home·End 키로 활성 열을 고르고 Enter 또는 Space로\n정렬한다. 비활성 열은 건너뛰며 선택한 열이 화면 밖이면 가로로 스크롤한다.\n`onRowsSorted`는 열 인덱스와 `TableSortOrder`를 전달한다. C++ 앱은\n`NativeTable::sort()`로 열 키와 방향을 지정할 수 있다. 선택은 행과 열 키를 기준으로\n유지되며 화면의 정렬 표시는 다른 문서 변경이 감지되면 지워진다. 셀 입력 중에는\n정렬을 요청할 수 없다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 31,
+      "raw": "`LVUI.OwnedTable.Sorting`은 안정 정렬, 사용자 정의 숫자 정렬, 잘못된 정책과\n오래된 계획의 거절, 키 기반 선택과 동시 정렬을 검사한다.\n`LVUI.OwnedTable.SortingHost`와 `LVUI.OwnedTable.Generated`는 헤더 입력, 표시\n상태와 반응형 갱신을 헤드리스 트리에서 검사한다. 실제 운영체제의 입력 및 보조\n기술 동작은 별도 검증이 필요하다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "표 행 정렬",
+      "anchor": "표-행-정렬",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "이 단계에서는 문서를 수정하지 않는다. 앱은 정수·날짜·언어별 비교나 자체 도메인 규칙을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 10,
+        "text": "유지한다. 숫자나 날짜의 의미 및 운영체제 로캘을 추측하지 않는다. 앱별 의미가 필요한",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 15,
+        "text": "거절된다. 순서가 변하지 않으면 메모리 소스는 새 문서 리비전을 발행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "독립 표 호스트",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 17
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

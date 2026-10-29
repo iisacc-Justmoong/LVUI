@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: .Navigation, label: vm.label, description: vm.description,
+                 selected: vm.selected, enabled: vm.enabled, visible: vm.visible, width: vm.width,
+                 onClick: vm.clicked)
+    }
+}

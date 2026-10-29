@@ -1,0 +1,8 @@
+import vm NativeOwnedColorButtonModel
+Window {
+    HStack {
+        ColorPickerButton(id: "source", model: vm.source, modelRevision: vm.revision, buttonSize: vm.size,
+                          showHueRing: vm.ring, onClick: vm.clicked, onPressed: vm.pressed, onReleased: vm.released)
+        ColorPickerButton(id: "direct", currentColor: vm.color, buttonSize: .Small, circular: true)
+    }
+}

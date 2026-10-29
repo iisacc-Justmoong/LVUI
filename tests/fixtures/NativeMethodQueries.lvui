@@ -1,0 +1,18 @@
+import class MethodDomain.Item
+import vm NativeMethodQueryModel
+let current = vm.selected
+let render: (Int) -> String = vm.format
+@Static let pinned: String = vm.format(vm.amount)
+let Details(item: Item): View = VStack {
+    Label(id: "parameter", text: item.format(vm.amount))
+    if (vm.visible) { Label(id: "conditional", text: item.format(vm.amount)) }
+}
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    Label(id: "direct", text: vm.format(vm.amount))
+    Label(id: "nested", text: vm.selected.format(vm.amount))
+    Label(id: "alias", text: current.format(vm.amount))
+    Label(id: "typed", text: render(vm.amount))
+    Label(id: "pinned", text: pinned)
+    Details(item: vm.selected)
+} }

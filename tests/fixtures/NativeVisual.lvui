@@ -1,0 +1,12 @@
+import vm NativeVisualBackend
+@Static let pinned = vm.source
+Window { VStack {
+    NativeView(id: "live", source: vm.source, width: vm.width, height: vm.height, enabled: vm.enabled, clip: vm.clip)
+    NativeView(id: "fixed", source: pinned, width: 240, height: 100)
+    Label(id: "caption", text: vm.caption)
+    PushButton(id: "replace", text: "Replace", onClick: vm.replace)
+    PushButton(id: "reject", text: "Reject", onClick: vm.reject)
+    PushButton(id: "recover", text: "Recover", onClick: vm.recover)
+    PushButton(id: "resize", text: "Resize", onClick: vm.resize)
+    PushButton(id: "rename", text: "Rename", onClick: vm.rename)
+} }

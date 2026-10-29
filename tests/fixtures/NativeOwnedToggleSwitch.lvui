@@ -1,0 +1,8 @@
+import vm NativeOwnedToggleSwitchModel
+Window {
+    VStack {
+        ToggleSwitch(id: "switch", text: vm.text, checked: vm.checked, enabled: vm.enabled,
+                     trackWidth: vm.width, rightToLeft: vm.rtl, motionEnabled: vm.motion_enabled,
+                     motion: vm.motion, onColor: vm.on_color, accessibilityName: "Snap to grid", onToggled: vm.changed)
+    }
+}

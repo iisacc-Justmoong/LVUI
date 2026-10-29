@@ -1,0 +1,29 @@
+import vm NativeFunctionVariableBackend
+let dynamic: (Int) -> String = vm.makeFormatter(vm.amount)
+var format: (Int) -> String = dynamic
+var native: (Int) -> String = vm.makeFormatter(vm.amount)
+var direct: (Int) -> String = vm.format
+var action: () -> Void = vm.increment
+let alias: (Int) -> String = format
+@Static let pinned: (Int) -> String = format
+let Group(render: (Int) -> String): View = Label(id: "formatted", text: render(vm.count))
+let Local(render: (Int) -> String): View = VStack {
+    var local: (Int) -> String = render
+    Label(id: "local", text: local(vm.count))
+}
+Window {
+    VStack {
+        Label(id: "native", text: native(vm.count))
+        Label(id: "direct", text: direct(vm.count))
+        Label(id: "pinned", text: pinned(vm.count))
+        Label(id: "events", text: vm.events)
+        PushButton(action, id: "action", text: "Run")
+        Group(render: format)
+        if(vm.visible) {
+            VStack {
+                Group(render: alias)
+                Local(render: format)
+            }
+        }
+    }
+}

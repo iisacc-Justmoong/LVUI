@@ -1,0 +1,11 @@
+import vm NativeFontBackend
+@Static let initial = vm.policy.effectiveFamily()
+Window(fontFamily: vm.policy.effectiveFamily()) { VStack {
+    Label(id: "effective", text: vm.policy.effectiveFamily())
+    Label(id: "available", text: vm.policy.pretendardAvailable())
+    Label(id: "warning", text: vm.policy.lastWarning())
+    Label(id: "initial", text: initial)
+    InputField(id: "edit", text: "Working", width: 160)
+    PushButton(id: "install", text: "Install", onClick: vm.install)
+    PushButton(id: "enforce", text: "Apply", onClick: vm.enforce)
+} }

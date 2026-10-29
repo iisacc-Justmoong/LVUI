@@ -1,0 +1,9 @@
+import vm NativeOwnedColorPickerModel
+Window {
+    HStack(spacing: 12, alignment: .top) {
+        ColorPicker(id: "picker", model: vm.model, modelRevision: vm.revision, type: vm.mode,
+                    width: vm.width, onColorEdited: vm.edited, onAccepted: vm.accepted,
+                    onCanceled: vm.canceled, onEyedropperRequested: vm.eyedropper)
+        ColorPicker(id: "default-picker", type: .Grayscale, showActions: false, showRecentColors: false)
+    }
+}

@@ -1,0 +1,6 @@
+import vm NativeScalarInputModel
+let Formatted(render: (Int) -> String, title: String = render(vm.count)): View = VStack {
+    Label(id: "first", text: title)
+    Label(id: "second", text: title)
+}
+Window { Formatted(render: vm.makeFormatter(vm.amount)) }

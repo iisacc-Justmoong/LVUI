@@ -1,0 +1,8 @@
+import vm NativeOwnedEventListenerModel
+Window {
+    VStack {
+        EventListener(id: "listener", width: vm.width, height: vm.height,
+                      onInput: vm.input, onResized: vm.resized)
+        EventListener(id: "listener-bool", width: 200, height: 80, onInput: vm.input_bool)
+    }
+}

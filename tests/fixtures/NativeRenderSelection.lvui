@@ -1,0 +1,24 @@
+import vm NativeRenderBackend
+@Static let initial = vm.monitor.frameCount()
+@Static let fixedSnapshot = vm.monitor.performanceSnapshot().frameCount
+let derivedSnapshot = vm.monitor.performanceSnapshot().frameCount
+Window { VStack {
+    Label(id: "active", text: vm.monitor.active())
+    Label(id: "frames", text: vm.monitor.frameCount())
+    Label(id: "samples", text: vm.monitor.recentSampleCount())
+    Label(id: "fps", text: vm.monitor.fps())
+    Label(id: "p95", text: vm.monitor.p95FrameMs())
+    Label(id: "snapshot", text: vm.monitor.performanceSnapshot().frameCount)
+    Label(id: "initial", text: initial)
+    Label(id: "fixedSnapshot", text: fixedSnapshot)
+    Label(id: "derivedSnapshot", text: derivedSnapshot)
+    Label(id: "error", text: vm.monitor.lastError())
+    InputField(id: "edit", text: "Working", width: 160)
+    PushButton(id: "sample", text: "Sample", onClick: vm.sample)
+    PushButton(id: "sample8", text: "Sample 8", onClick: vm.sample8)
+    PushButton(id: "pause", text: "Pause", onClick: vm.pause)
+    PushButton(id: "resume", text: "Resume", onClick: vm.resume)
+    PushButton(id: "reset", text: "Reset", onClick: vm.reset)
+    PushButton(id: "replace", text: "Replace", onClick: vm.replace)
+    PushButton(id: "close", text: "Close source", onClick: vm.close)
+} }

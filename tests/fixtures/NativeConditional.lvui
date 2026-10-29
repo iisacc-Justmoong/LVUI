@@ -1,0 +1,17 @@
+import vm NativeFixture
+Window {
+    VStack {
+        if (vm.ready) {
+            VStack(id: "ready", minimumWidth: 120, minimumHeight: 80) {
+                import child NativeFixture
+                let value: Int = child.count * 2
+                Label(id: "value", text: value)
+            }
+        } else {
+            VStack(id: "waiting", minimumHeight: 40) {
+                Label(text: "Waiting")
+            }
+        }
+        Label(id: "tail", text: vm.title)
+    }
+}

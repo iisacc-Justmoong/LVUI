@@ -1,0 +1,2 @@
+import vm NativeOwnedLinkMethodsModel
+Window { Link(id: "link", text: "Run", href: "", methods: vm.methods) }

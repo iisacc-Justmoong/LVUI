@@ -1,0 +1,11 @@
+import vm NativeSequenceModel
+let RowParts(title: String): [View] = [Label(id: "rowTitle", text: title), Label(id: "rowDetail", text: title)]
+let Row(title: String): View = VStack {
+    import local NativeSequenceLocal
+    RowParts(title: title)
+}
+Window {
+    VStack {
+        for(item in vm.items, key: item) { Row(title: item) }
+    }
+}

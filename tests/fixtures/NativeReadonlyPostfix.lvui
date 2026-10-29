@@ -1,0 +1,8 @@
+import vm NativeReadonlyModel
+Window {
+    VStack {
+        Label(id: "title", text: (vm.selected).title)
+        Label(id: "count", text: (vm.selected).metrics.count)
+        Label(id: "borrowed", text: (vm.borrowed).metrics.count)
+    }
+}

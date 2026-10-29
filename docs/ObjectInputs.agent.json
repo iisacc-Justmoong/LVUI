@@ -1,0 +1,601 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:026fbc510574f85c4733da2aacecd05b0f27cd34cc0f53f70191eb3dda1ff909",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ObjectInputs.md",
+    "sha256": "3c5f53aa69f1cff90f3d426dbf97427b6a68db342b63def46cef76d9a172baef",
+    "bytes": 7426,
+    "line_count": 103,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "타입을 지정한 C++ 구성 입력",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 타입을 지정한 C++ 구성 입력\n",
+      "level": 1,
+      "title": "타입을 지정한 C++ 구성 입력"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "재사용 View의 매개변수에 import한 C++ 타입을 사용할 수 있다. 기존 스코프 소유\n백엔드의 전달은 인스턴스를 차용하는 경로를 유지한다. 구조체 값과 소유·차용 핸들은\n호출자의 표현식을 네이티브 입력 값으로 계산하여 전달한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 17,
+      "raw": "```lvui\nimport class Domain.Record\nimport vm Model\nlet Details(item: Record, again: Record = item): View = VStack {\n    Label(text: item.title)\n    Label(text: again.title)\n    @Static let initial: String = item.title\n    Label(text: initial)\n}\nWindow { Details(item: vm.makeRecord(vm.count)) }\n```\n",
+      "language": "lvui",
+      "code": "import class Domain.Record\nimport vm Model\nlet Details(item: Record, again: Record = item): View = VStack {\n    Label(text: item.title)\n    Label(text: again.title)\n    @Static let initial: String = item.title\n    Label(text: initial)\n}\nWindow { Details(item: vm.makeRecord(vm.count)) }\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 23,
+      "raw": "호출자의 식은 활성화에서 한 번 평가한다. 원본 의존성이 바뀌면 해당 입력을 다시\n계산하고, 다중 소비자·앞선 입력을 사용하는 기본값·중간 전달 구성은 계산한 값을\n공유한다. 타입 추론에 사용하는 생성 C++의 `decltype` 식은 실행하지 않는다.\n이 경로는 [스칼라 구성 입력](ScalarInputs.md)의 저장소와 네이티브 의존성 그래프를\n재사용한다. 별도 인터프리터·런타임 타입 등록소·문자열 멤버 검색은 없다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "## 타입과 소유권\n",
+      "level": 2,
+      "title": "타입과 소유권"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "list",
+      "start_line": 27,
+      "end_line": 43,
+      "raw": "- 선언에는 `import class Domain.Record`로 가져온 타입의 이름을 사용한다. 최종 C++\n  payload는 해당 타입과 정확히 일치해야 한다. 관련 없는 구조체나 암묵적인 기반\n  타입 변환은 허용하지 않는다. 생성 C++ 컴파일 단계가 이 계약과 멤버 접근을 검사한다.\n- 값은 소유하는 복사본으로 저장한다. 값에 동등 비교가 없어도 Core의 publication\n  계약으로 변경을 전달한다. 입력 저장소의 타입을 임의 스칼라로 변환하지 않는다.\n- `std::shared_ptr<const Record>`, `const Record*`,\n  `std::reference_wrapper<const Record>`를 받으면 실제 핸들 타입과 const를 보존한다.\n  공유 소유자는 활성 입력이 보유하며, raw 포인터·표준 참조는 기존 외부 소유자를\n  차용한다. 차용 대상의 수명은 해당 활성화 이상이어야 한다.\n- 공유 핸들의 중첩 payload도 컴파일 시 검사한다. 입력 자체는 복사 가능하고 이동\n  대입이 예외를 던지지 않아야 한다. move-only 소유권의 암묵적인 복사·이전은\n  수행하지 않는다. 비복사 백엔드는 기존 스코프 차용 경로를 사용할 수 있다.\n- 필드 읽기는 읽기 전용이다. 객체의 `Observable` 멤버와 선택 객체의 교체는 각각\n  관측한다. 소유하는 구조체 값의 변경은 원본 값이나 소유 백엔드의 명시적인 publication을\n  사용한다. 같은 핸들이 가리키는 일반 필드의 변경까지 핸들의 동일성으로 발견하지는\n  않는다. 해당 필드를 `Observable`로 노출하거나 새 불변 값·새 핸들을 발행해야 한다.\n  파일 저장·문서 revision·생성 엔진을 입력 갱신에서 자동으로 호출하지 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "선언에는 `import class Domain.Record`로 가져온 타입의 이름을 사용한다. 최종 C++",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "값은 소유하는 복사본으로 저장한다. 값에 동등 비교가 없어도 Core의 publication",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`std::shared_ptr<const Record>`, `const Record*`,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "공유 핸들의 중첩 payload도 컴파일 시 검사한다. 입력 자체는 복사 가능하고 이동",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "필드 읽기는 읽기 전용이다. 객체의 `Observable` 멤버와 선택 객체의 교체는 각각",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "heading",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "## 실패와 퇴역\n",
+      "level": 2,
+      "title": "실패와 퇴역"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 51,
+      "raw": "널 객체 핸들은 입력 계산 단계에서 거부한다. 최초 계산 실패는 활성화를 실패로\n반환하며, 활성화 이후에는 마지막 정상 입력과 표시를 보존하고 네이티브 실패 경로에\n기록한다. 다음 정상 입력으로 복구할 수 있다. 선택 교체 후에는 이전 객체의 구독과\n불필요한 소유권을 해제한다. 자식 구성이나 조건부 내용의 퇴역은 기존 스코프 규칙을\n따르며, 다른 구성의 백엔드를 재생성하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 54,
+      "raw": "오류 기록은 입력 계산을 소유한 활성화의 `Bindings::failures()`에 속한다. 루트 활성화의\n목록이 모든 자식 구성의 오류를 자동으로 집계하는 계약은 아니다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 60,
+      "raw": "`@Static`의 예시는 투영한 문자열을 고정한다. 공유 객체 전체를 깊은 복사로 고정하는\n계약이 아니다. 즉시 객체 메서드 호출은 [네이티브 조회](MethodQueries.md)를 따른다.\n일반 객체의 지연 메서드 참조는 [네이티브 참조](ObjectMethodReferences.md)를 따른다.\n가변 View, 깊은 Static과 opaque handle의 사용자 정의\n복제·동등성 프로토콜은 별도 완료 대상이다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "## 검사 범위\n",
+      "level": 2,
+      "title": "검사 범위"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "list",
+      "start_line": 64,
+      "end_line": 75,
+      "raw": "- [컴파일러 검사](../tests/object_inputs.cpp)는 값·기본값·전달·루트·조건부·반복 구성과\n  소스 위치를 포함한 잘못된 선언을 검사한다.\n- [생성 C++ 타입 검사](../tests/native_object_input_validation.py)는 실제 팩터리를\n  컴파일하여 값·공유·포인터·표준 참조를 허용하고 잘못된 payload·접근·복사 계약을 거부한다.\n- [네이티브 입력 실행 검사](../tests/native_object_inputs.cpp)는 계산을 소유한 그래프의\n  오류 기록·정상값과 소유권 보존·복구·퇴역 및 차용 대상의 동일성을 검사한다.\n- [창 없는 위젯 검사](../../iiGUI/tests/native_object_inputs.cpp)는 계산 횟수·멤버 관측·\n  선택 전환·널 실패 보존·복구·로컬 입력과 포커스 보존·퇴역·조건부·행 구성을 검사한다.\n- 설치 후 재배치한 Native 소비자는 공개 헤더의 값·소유권·널 검사를 실행한다. iiGUI\n  재배치 소비자는 생성한 객체 입력 팩터리를 컴파일·링크하며 OS 창은 열지 않는다.\n- 같은 구성을 LVRS 팩터리로도 컴파일한다. LVRS 실행은 저장소 지침의 전체 작업 최종\n  일괄 단계에서 수행한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[컴파일러 검사](../tests/object_inputs.cpp)는 값·기본값·전달·루트·조건부·반복 구성과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[생성 C++ 타입 검사](../tests/native_object_input_validation.py)는 실제 팩터리를",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[네이티브 입력 실행 검사](../tests/native_object_inputs.cpp)는 계산을 소유한 그래프의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[창 없는 위젯 검사](../../iiGUI/tests/native_object_inputs.cpp)는 계산 횟수·멤버 관측·",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "설치 후 재배치한 Native 소비자는 공개 헤더의 값·소유권·널 검사를 실행한다. iiGUI",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "같은 구성을 LVRS 팩터리로도 컴파일한다. LVRS 실행은 저장소 지침의 전체 작업 최종",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 79,
+      "end_line": 80,
+      "raw": "macOS arm64 현재 작업 트리에서 다음을 확인했다. 구성별 반복 검사를 별개의 기능 수로\n합산하지 않으며, 창 없는 검사를 OS 창·GPU·다른 플랫폼의 실행 결과로 표시하지 않는다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "table",
+      "start_line": 82,
+      "end_line": 94,
+      "raw": "| 검사 | 확인 결과 |\n|---|---|\n| LVUI Release 전체 | 218/218 통과 |\n| LVUI 관련 ASan·UBSan | 147/147 통과 |\n| iiGUI 일반 창 없는 회귀·패키지 | 160/160 통과 |\n| iiGUI ASan·UBSan | 160/160 통과 |\n| 새 구성 입력 검사 | 컴파일러 4건, 네이티브 그래프 3건, 위젯 10건 각각 통과 |\n| 생성 C++ 타입 계약 | 두 구성 각각 유효 5개 컴파일, 부적합 7개 거부 |\n| 설치·재배치 소비자 | LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성의 소비자 통과 |\n| 생성 위젯 헤더 | 일반·메모리 검사 구성의 45개 내용 일치 |\n| LVRS 팩터리 | 두 구성에서 45개 컴파일, 이번에 추가한 4개 포함, 실행 미실시 |\n| 바이너리 경계 | 새 생성 위젯 바이너리에 파서·컴파일러 심볼 및 Qt 동적 의존성 없음 |\n| 제품 보존 | Dreamscapes QML 81개 해시 변경 없음, 제품 변환·재설치 없음 |\n",
+      "columns": [
+        "검사",
+        "확인 결과"
+      ],
+      "rows": [
+        [
+          "LVUI Release 전체",
+          "218/218 통과"
+        ],
+        [
+          "LVUI 관련 ASan·UBSan",
+          "147/147 통과"
+        ],
+        [
+          "iiGUI 일반 창 없는 회귀·패키지",
+          "160/160 통과"
+        ],
+        [
+          "iiGUI ASan·UBSan",
+          "160/160 통과"
+        ],
+        [
+          "새 구성 입력 검사",
+          "컴파일러 4건, 네이티브 그래프 3건, 위젯 10건 각각 통과"
+        ],
+        [
+          "생성 C++ 타입 계약",
+          "두 구성 각각 유효 5개 컴파일, 부적합 7개 거부"
+        ],
+        [
+          "설치·재배치 소비자",
+          "LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성의 소비자 통과"
+        ],
+        [
+          "생성 위젯 헤더",
+          "일반·메모리 검사 구성의 45개 내용 일치"
+        ],
+        [
+          "LVRS 팩터리",
+          "두 구성에서 45개 컴파일, 이번에 추가한 4개 포함, 실행 미실시"
+        ],
+        [
+          "바이너리 경계",
+          "새 생성 위젯 바이너리에 파서·컴파일러 심볼 및 Qt 동적 의존성 없음"
+        ],
+        [
+          "제품 보존",
+          "Dreamscapes QML 81개 해시 변경 없음, 제품 변환·재설치 없음"
+        ]
+      ]
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 96,
+      "end_line": 99,
+      "raw": "기존 컴포넌트 진단 검사 중 임시 메서드 결과를 무조건 거부하던 한 항목은 새 계약에\n맞게 허용 검사로 변경했다. 사용하지 않는 입력도 선언한 C++ 타입 검사를 생성하는지\n추가 확인하며, 잘못된 import 인스턴스 타입의 거부는 유지한다. 널 입력 오류는 해당\n계산의 그래프에서 확인하고 위젯 검사는 마지막 표시와 복구를 확인하도록 분리했다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 103,
+      "raw": "검증 기록은 `build/lvui-completion/native-object-input-verification-20261026.json`에\n로그 경로·소스 해시·설치 결과·검사 한계와 함께 보관한다. 현재 결과는 이 구성 입력\n단계의 증거이며 언어 전체나 모든 LVRS 동작의 완료 보고가 아니다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "타입을 지정한 C++ 구성 입력",
+      "anchor": "타입을-지정한-c-구성-입력",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "타입과 소유권",
+      "anchor": "타입과-소유권",
+      "start_line": 25
+    },
+    {
+      "block_id": "b000013",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실패와 퇴역",
+      "anchor": "실패와-퇴역",
+      "start_line": 45
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검사 범위",
+      "anchor": "검사-범위",
+      "start_line": 62
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 77
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 21,
+        "text": "공유한다. 타입 추론에 사용하는 생성 C++의 `decltype` 식은 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 28,
+        "text": "payload는 해당 타입과 정확히 일치해야 한다. 관련 없는 구조체나 암묵적인 기반",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 29,
+        "text": "타입 변환은 허용하지 않는다. 생성 C++ 컴파일 단계가 이 계약과 멤버 접근을 검사한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 31,
+        "text": "계약으로 변경을 전달한다. 입력 저장소의 타입을 임의 스칼라로 변환하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 38,
+        "text": "수행하지 않는다. 비복사 백엔드는 기존 스코프 차용 경로를 사용할 수 있다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 42,
+        "text": "않는다. 해당 필드를 `Observable`로 노출하거나 새 불변 값·새 핸들을 발행해야 한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 43,
+        "text": "파일 저장·문서 revision·생성 엔진을 입력 갱신에서 자동으로 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000015",
+        "line": 51,
+        "text": "따르며, 다른 구성의 백엔드를 재생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 80,
+        "text": "합산하지 않으며, 창 없는 검사를 OS 창·GPU·다른 플랫폼의 실행 결과로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "스칼라 구성 입력",
+        "target": "ScalarInputs.md",
+        "kind": "relative",
+        "line": 22
+      },
+      {
+        "block_id": "b000019",
+        "label": "네이티브 조회",
+        "target": "MethodQueries.md",
+        "kind": "relative",
+        "line": 57
+      },
+      {
+        "block_id": "b000019",
+        "label": "네이티브 참조",
+        "target": "ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 58
+      },
+      {
+        "block_id": "b000023",
+        "label": "컴파일러 검사",
+        "target": "../tests/object_inputs.cpp",
+        "kind": "relative",
+        "line": 64
+      },
+      {
+        "block_id": "b000023",
+        "label": "생성 C++ 타입 검사",
+        "target": "../tests/native_object_input_validation.py",
+        "kind": "relative",
+        "line": 66
+      },
+      {
+        "block_id": "b000023",
+        "label": "네이티브 입력 실행 검사",
+        "target": "../tests/native_object_inputs.cpp",
+        "kind": "relative",
+        "line": 68
+      },
+      {
+        "block_id": "b000023",
+        "label": "창 없는 위젯 검사",
+        "target": "../../iiGUI/tests/native_object_inputs.cpp",
+        "kind": "relative",
+        "line": 70
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000029",
+        "columns": [
+          "검사",
+          "확인 결과"
+        ],
+        "rows": [
+          [
+            "LVUI Release 전체",
+            "218/218 통과"
+          ],
+          [
+            "LVUI 관련 ASan·UBSan",
+            "147/147 통과"
+          ],
+          [
+            "iiGUI 일반 창 없는 회귀·패키지",
+            "160/160 통과"
+          ],
+          [
+            "iiGUI ASan·UBSan",
+            "160/160 통과"
+          ],
+          [
+            "새 구성 입력 검사",
+            "컴파일러 4건, 네이티브 그래프 3건, 위젯 10건 각각 통과"
+          ],
+          [
+            "생성 C++ 타입 계약",
+            "두 구성 각각 유효 5개 컴파일, 부적합 7개 거부"
+          ],
+          [
+            "설치·재배치 소비자",
+            "LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성의 소비자 통과"
+          ],
+          [
+            "생성 위젯 헤더",
+            "일반·메모리 검사 구성의 45개 내용 일치"
+          ],
+          [
+            "LVRS 팩터리",
+            "두 구성에서 45개 컴파일, 이번에 추가한 4개 포함, 실행 미실시"
+          ],
+          [
+            "바이너리 경계",
+            "새 생성 위젯 바이너리에 파서·컴파일러 심볼 및 Qt 동적 의존성 없음"
+          ],
+          [
+            "제품 보존",
+            "Dreamscapes QML 81개 해시 변경 없음, 제품 변환·재설치 없음"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

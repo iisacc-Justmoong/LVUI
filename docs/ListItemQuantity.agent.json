@@ -1,0 +1,85 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:cb75eed4d2121d5d2bbf22779679b229d059b6159b7e9f2c91706b081721c4d7",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ListItemQuantity.md",
+    "sha256": "3f0e70c39b41584c895764bc3a9dc5179890e35da8a7209de13e69070208bd01",
+    "bytes": 955,
+    "line_count": 12,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "목록 항목 수량 모델",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 목록 항목 수량 모델\n",
+      "level": 1,
+      "title": "목록 항목 수량 모델"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "`ListItemQuantity`는 스테퍼 위젯에 의존하지 않는 수량, 최소·최대와 증분 모델이다.\n`set_configuration()`은 유한한 현재 값과 최소값, 양의 유한 증분 및 유효한 최대값을\n검사한다. 최대값은 양의 무한대로 둘 수 있다. `step(1)`과 `step(-1)`은 범위 안에서\n변경된 값만 반환한다. 비활성 상태, 한계에 도달한 경우와 부동소수점 정밀도상 변화가\n없는 경우에는 이벤트를 만들지 않는다. 표현할 수 있는 유한 범위를 넘어가도 무한대가\n현재 값으로 저장되지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 12,
+      "raw": "이 모델은 독립 목록 항목의 스테퍼 구성에 연결되어 있다. LVUI 행은 위젯 입력과\n반응형 상태를 이 모델에 연결하고 수량 변경과 편집 이벤트를 순서대로 전달한다.\n`LVUI.OwnedListItem.Quantity`는 경계, 유효성, 비활성 및 오버플로 동작을 검사한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "목록 항목 수량 모델",
+      "anchor": "목록-항목-수량-모델",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

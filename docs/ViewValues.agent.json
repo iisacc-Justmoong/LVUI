@@ -1,0 +1,278 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:375fd66e3588acc82b9fe41926c189afbbc92b28e15ea7675af77402c0dba1d6",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ViewValues.md",
+    "sha256": "c793c77565dfd5f6994d7a94ef62c728af27049f46f307ca73f80efdc7b3c533",
+    "bytes": 4287,
+    "line_count": 78,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "재사용 가능한 View 값",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 재사용 가능한 View 값\n",
+      "level": 1,
+      "title": "재사용 가능한 View 값"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 4,
+      "raw": "`let`의 시각 초기값은 `View`로 명시하거나 추론할 수 있다. 선언은 빌드 시의 구성\n정의이며, 소스 파싱이나 선언 자체가 위젯·지역 백엔드를 생성하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 6,
+      "end_line": 18,
+      "raw": "```lvui\nimport document Backend\nlet header: View = HStack {\n    Label(text: document.title)\n    PushButton(document.save, text: \"Save\")\n}\nWindow {\n    VStack {\n        header()\n        header()\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import document Backend\nlet header: View = HStack {\n    Label(text: document.title)\n    PushButton(document.save, text: \"Save\")\n}\nWindow {\n    VStack {\n        header()\n        header()\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 23,
+      "raw": "각 사용 위치에서 정적인 구성을 C++로 생성한다. 정의에 있는 값·import는 정의한\n어휘 스코프에서 찾으며, 사용한 위치에서 같은 이름을 가려도 다른 객체로 바뀌지 않는다.\n정의 안에 지역 import가 있으면 각 활성화가 독립된 객체를 소유한다. 같은 부모 import를\n참조하면 기존 부모 인스턴스를 빌린다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 28,
+      "raw": "`let copied = header`는 같은 구성 정의를 다른 이름에 연결한다. `copied()`를 사용해도\n위젯 객체를 공유하지 않는다. 명시한 자식 ID에는 사용 위치별 이름 영역을 부여하여 두\n활성화가 서로 충돌하지 않게 한다. 메뉴·툴팁의 지역 `targetId`도 같은 영역에서 해석한다.\n`TabBar` 같은 타입 제한 자식 입력은 정의가 실제로 구성하는 뷰의 타입으로 검사한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "창을 값으로 정의한 뒤 루트에서 사용할 수도 있다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "fenced_code",
+      "start_line": 32,
+      "end_line": 35,
+      "raw": "```lvui\nlet app: View = Window(width: 720) { Label(text: \"Native app\") }\napp()\n```\n",
+      "language": "lvui",
+      "code": "let app: View = Window(width: 720) { Label(text: \"Native app\") }\napp()\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "호출 위치에서 이름이 있는 입력과 기본 자식 콘텐츠를 덮어쓸 수 있다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "fenced_code",
+      "start_line": 39,
+      "end_line": 52,
+      "raw": "```lvui\nimport document Backend\nlet heading: View = Label(text: \"Untitled\")\nlet save: View = PushButton(document.save, text: \"Save\")\nlet panel: View = VStack { Label(text: \"Default content\") }\nWindow {\n    import document OtherBackend\n    VStack {\n        heading(text: document.title)\n        save(onClick: document.save)\n        panel() { Label(text: document.title) }\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import document Backend\nlet heading: View = Label(text: \"Untitled\")\nlet save: View = PushButton(document.save, text: \"Save\")\nlet panel: View = VStack { Label(text: \"Default content\") }\nWindow {\n    import document OtherBackend\n    VStack {\n        heading(text: document.title)\n        save(onClick: document.save)\n        panel() { Label(text: document.title) }\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 59,
+      "raw": "전달한 입력·콜백·자식 콘텐츠는 **호출 위치**의 어휘 스코프를 사용한다. 정의 내부의\nimport가 같은 이름을 가려도 전달한 수신자가 바뀌지 않는다. 입력은 반응형 C++ 식으로\n생성하며 콜백은 지연 참조·종료 접수 경계를 유지한다. 자식에 호출 위치에서만 보이는 View\n값을 사용할 수 있으며, 그 View 자체가 포획한 정의 스코프도 유지한다. 입력은 원래 루트\n컴포넌트의 계약으로 검증한다. 자식 블록은 기본 자식 목록을 대체하며 선언 자체를 삭제하지\n않는다. 창을 값으로 사용한 루트도 이름 있는 입력과 기본 콘텐츠를 받을 수 있다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 70,
+      "raw": "명시적인 [타입 매개변수와 이름별 슬롯](Components.md)은 `let Name(...): View` 서명으로\n별도 제공한다. 위의 서명 없는 View 값 덮어쓰기와 구분한다. 전달한 자식의\n지역 선언은 `VStack { import ... }`처럼 자체 View 안에 둔다. 호출 본문의 직접 지역 선언,\n이름 없는 호출 입력, 조건부 View 값의 분기 입력 덮어쓰기는 명시적으로 거부한다.\n변경 가능한 `var View`와 `@Static View`의 깊은 스냅샷은 남아 있다.\n[여러 뷰의 구성](ViewSequences.md)은 `[View]` 값·매개변수로 전달할 수 있으며,\n빈 목록과 중첩 목록도 원래 부모에 직접 확장한다. 단일 View 슬롯과 타입을 구분한다.\n안정적인 키를 유지하는 구성은 [네이티브 반복](Repetition.md)을 따른다.\n지원하지 않는 형식을 조용히 무시하지 않는다.\n확장은 64단계, 생성 위젯은 기존 4,096개 한계를 유지한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 72,
+      "end_line": 74,
+      "raw": "`LVUI.ViewValues.*`는 AST·포획·이름 가림·ID·자식 타입·루트·진단을 검사한다.\n`LVUI.NativeViewValues`는 실제 생성된 C++를 컴파일·링크하고 UI 호스트 없이 두 지역\n객체의 독립 상태·파생값·스냅샷·종료를 실행한다. LVRS 위젯의 실행은 최종 일괄 단계이다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 76,
+      "end_line": 78,
+      "raw": "`iiGUI.native_view_inputs`는 실제 AOT 결과를 창 없는 iiGUI 위젯 상태에 연결하여 전달한\n값·콜백·자식·호출 위치의 지역 View 정의·반응형 갱신·퇴역 후 해제를 검사한다. 이는 실제\n창·입력·그리기나 LVRS 전체 컴포넌트의 최종 실행 검증과 구분한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "재사용 가능한 View 값",
+      "anchor": "재사용-가능한-view-값",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "정의이며, 소스 파싱이나 선언 자체가 위젯·지역 백엔드를 생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "위젯 객체를 공유하지 않는다. 명시한 자식 ID에는 사용 위치별 이름 영역을 부여하여 두",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 69,
+        "text": "지원하지 않는 형식을 조용히 무시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000021",
+        "label": "타입 매개변수와 이름별 슬롯",
+        "target": "Components.md",
+        "kind": "relative",
+        "line": 61
+      },
+      {
+        "block_id": "b000021",
+        "label": "여러 뷰의 구성",
+        "target": "ViewSequences.md",
+        "kind": "relative",
+        "line": 66
+      },
+      {
+        "block_id": "b000021",
+        "label": "네이티브 반복",
+        "target": "Repetition.md",
+        "kind": "relative",
+        "line": 68
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

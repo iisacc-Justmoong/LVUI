@@ -1,0 +1,11 @@
+import font lvrs.FontPolicy
+Window(fontFamily: font.effectiveFamily()) { VStack {
+    Label(id: "preferred", text: font.preferredFamily())
+    Label(id: "system", text: font.systemFamily())
+    Label(id: "effective", text: font.effectiveFamily())
+    Label(id: "available", text: font.pretendardAvailable())
+    Label(id: "weight", text: font.weightForTextSize(17, 400))
+    Label(id: "style", text: font.styleNameForTextSize(17, "Regular"))
+    Label(id: "compliant", text: font.isThemeTextStyleCompliant(17, 600, "SemiBold"))
+    Label(id: "warning", text: font.lastWarning())
+} }

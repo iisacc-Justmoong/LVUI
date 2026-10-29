@@ -1,0 +1,9 @@
+import vm NativeOwnedSheetModel
+Window {
+    VStack {
+        Sheet(id: "sheet", title: vm.title, preferredWidth: vm.width, presentation: vm.presentation,
+              detent: vm.detent, motionEnabled: false, onOpened: vm.opened, onClosed: vm.closed) {
+            InputField(id: "editor", text: vm.text, onEdited: vm.edited)
+        }
+    }
+}

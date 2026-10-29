@@ -88,8 +88,9 @@ iiGUI는 GPU 합성을 위해 이를 선형광 값으로 변환한다.
 텍스트는 자신의 콘텐츠 사각형에서 잘리고, 전체 장면은 뷰포트에서 잘린다.
 컨테이너를 자식보다 먼저 그린 다음, 겹치지 않는 텍스트 레이어를 그린다.
 
-`ii::gui::layout_view(document, size)`는 CanvasFrame과 ID가 있는 요소의 논리 경계를 반환한다.
-`Host::set_view(document)`는 현재 창 크기를 사용하여 기존의 갱신 병합 캔버스 API로
+앱이 `LVUI/NativeDocument.h`를 포함하면 `lvui::native::layout_document(document, size)`가
+CanvasFrame과 ID가 있는 요소의 논리 경계를 반환한다. `Host::set_view(document)`는
+LVUI 측 확장점을 통해 현재 창 크기를 사용하여 기존의 갱신 병합 캔버스 API로
 프레임을 접수한다. 값 스냅샷 방식이므로 Document를 유지하고 크기 변경 콜백에서 다시 호출해야 한다.
 유효하지 않은 레이아웃은 이전에 접수한 장면을 보존한다.
 숨겨진 폴링이나 애플리케이션 인터프리터를 도입하지 않는다.

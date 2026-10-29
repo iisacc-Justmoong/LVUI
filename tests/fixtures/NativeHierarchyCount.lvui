@@ -1,0 +1,20 @@
+import class Row lvrs.HierarchyItem
+import vm NativeHierarchyCountBackend
+let Counter(row: Row, caption: String = "Pick"): View = HStack(spacing: 2) {
+    import local NativeHierarchyCountLifetime
+    @Static let initial: String = vm.describe(row)
+    Label(id: "current", text: vm.describe(row))
+    Label(id: "initial", text: initial)
+    InputField(id: "private", text: "Private", width: 58)
+    PushButton(row.activate, id: "pick", text: caption)
+    Label(id: "ticket", text: local.ticket)
+    Label(id: "owner", text: vm.self(vm), visible: false)
+}
+Window { VStack {
+    HierarchyItem(id: "item", label: vm.label, count: vm.count,
+        width: 460, countWidth: 340, iconSize: 0, height: 24,
+        onClick: vm.clicked, countView: Counter)
+    PushButton(id: "rename", text: "Rename", onClick: vm.rename)
+    PushButton(id: "hide", text: "Hide count", onClick: vm.hide)
+    PushButton(id: "show", text: "Show count", onClick: vm.show)
+} }

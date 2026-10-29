@@ -1,0 +1,25 @@
+import vm NativeLayoutModel
+Window {
+    VStack(id: "outer", spacing: 0, alignment: .leading) {
+        HStack(id: "row", width: 200, height: 80, alignment: vm.rowAlignment) {
+            VStack(id: "rowChild", width: 40, height: 20) {}
+        }
+        VStack(id: "column", width: 200, height: 80, alignment: vm.columnAlignment) {
+            HStack(id: "columnChild", width: 40, height: 20) {}
+        }
+        ZStack(id: "overlay", width: 200, height: 80, alignment: vm.overlayAlignment) {
+            HStack(id: "overlayChild", width: 40, height: 20) {}
+        }
+        ZStack(id: "typed", width: 200, height: 80, alignment: vm.axes) {
+            HStack(id: "typedChild", width: 40, height: 20) {}
+        }
+        HStack(id: "weighted", width: 200, height: 40, spacing: 0, alignment: .stretch) {
+            VStack(id: "weightA", flex: vm.firstWeight) {}
+            VStack(id: "weightB", flex: vm.secondWeight) {}
+        }
+        HStack(id: "common", width: 200, height: 40, spacing: 0, alignment: .stretch) {
+            InputField(id: "commonA", width: 100, flex: vm.firstWeight)
+            InputField(id: "commonB", width: 100, flex: vm.secondWeight, visible: vm.childVisible)
+        }
+    }
+}

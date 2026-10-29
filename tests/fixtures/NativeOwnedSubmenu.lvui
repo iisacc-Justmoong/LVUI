@@ -1,0 +1,18 @@
+import vm NativeOwnedSubmenuModel
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        Menu(id: "parent", targetId: "anchor", onItemTriggered: vm.parentTriggered, onClosed: vm.parentClosed) {
+            MenuItem(id: "more", label: "More", enabled: vm.moreEnabled, hasChildItems: vm.hasChildren, onClick: vm.moreClicked) {
+                ContextMenu(id: "child", onOpened: vm.childOpened, onClosed: vm.childClosed, onItemTriggered: vm.childTriggered) {
+                    ContextMenuItem(id: "leaf", label: "Leaf", hasChildItems: false, onClick: vm.leafClicked)
+                    ContextMenuItem(id: "middle", label: "More") {
+                        Menu(id: "grandchild") {
+                            MenuItem(id: "deep", label: "Deep", hasChildItems: false, onClick: vm.deepClicked)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

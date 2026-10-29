@@ -1,0 +1,12 @@
+import vm NativeOwnedMaterialModel
+Window {
+    VStack {
+        PanelMaterial(id: "panel", width: vm.width, height: vm.height,
+                      density: vm.density, primaryColor: vm.accent, blurRadius: vm.blur,
+                      backdrop: vm.backdrop, enabled: vm.enabled, motionEnabled: false, motion: vm.motion, outlinePath: vm.outline) {
+            Label(id: "child", text: "Contained")
+        }
+        WindowMaterial(id: "window", width: 100, height: 60)
+        MaterialSurface(id: "surface", width: 50, height: 40, intenseOpacity: 0, faintOpacity: 0)
+    }
+}

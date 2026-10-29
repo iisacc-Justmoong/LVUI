@@ -1,0 +1,160 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:0a82ab962fb947381d4ae03af84348d3efc8abd38e86f1b091a59653b8960774",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeAlertButton.md",
+    "sha256": "338502664997cd115a0e53039d61e6bd944ce0d36d99bec6949ab408c3766d34",
+    "bytes": 2159,
+    "line_count": 33,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 경고 버튼",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 경고 버튼\n",
+      "level": 1,
+      "title": "LVUI 독립 경고 버튼"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`LVUI/AlertButton.h`는 LVUI 버튼의 입력·텍스트 배치 모델을 조합하면서 경고 버튼의\n스타일을 결정한다. 기본 높이는 20, 좌우 패딩은 8, 반경은 4이다. `dialogStyle`을\n켜면 좌우 패딩 16과 반경 16을 기본으로 쓰며, 명시적 크기·패딩·반경은 이 값을\n대체한다. 일반 대화상자 버튼은 투명 배경과 `#596168` 테두리를 사용하고 호버와\n눌림은 각각 흰색 5%, 9%를 더한다. 강조 색상과 텍스트 색상은 앱이 바꿀 수 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "```lvui\nimport vm DialogBackend\nWindow {\n    AlertButton(text: vm.label, tone: vm.tone, dialogStyle: true,\n                method: vm.confirm, onClick: vm.clicked)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm DialogBackend\nWindow {\n    AlertButton(text: vm.label, tone: vm.tone, dialogStyle: true,\n                method: vm.confirm, onClick: vm.clicked)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 24,
+      "raw": "기본 선언형 생성은 `text`, `enabled`, `tone`, `dialogStyle`, `width`, `height`,\n`horizontalPadding`, `cornerRadius`, `textColor`, `primaryColor`,\n`accessibilityName`의 상수와 반응형 입력을 받는다. 접근성 이름이 비어 있으면\n현재 문구를 사용한다. `method`는 인자가 없거나\n`const lvui::native::AlertButtonEvent&`를 받으며, 이벤트에는 클릭 출처와 종류가\n있다. `onPressed`, `onReleased`, `onCanceled`, `onClick`도 등록할 수 있다.\n정상 클릭에서는 누름, 해제, `method`, `onClick` 순서로 호출한다. `method`가 화면을\n폐기하거나 버튼을 비활성화하면 폐기된 화면의 클릭 콜백은 호출하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 29,
+      "raw": "`LVUI/NativeAlertButton.h`는 범용 호스트의 입력·포커스·접근성 표면에 이 모델을\n연결하고, 그리기와 스타일은 LVUI가 소유한다. 반응형 설정은 전체 후보를 검증한 뒤\n반영하므로 유효하지 않은 값은 기존 버튼을 유지하고 정상 값이 들어오면 복구한다.\n화면 게시·폐기에 이벤트 수명을 맞추고 재진입한 설정은 최신 갱신을 보존한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 33,
+      "raw": "모델과 어댑터는 Qt, QML, LVRS를 사용하지 않는다. [합성 경고창](NativeAlert.md)은\n이 버튼을 조합한다. 실제 운영체제 표시·접근성 검증은 별도 작업이다. 헤드리스 호스트\n검사는 창이나 GPU를 실행하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 경고 버튼",
+      "anchor": "lvui-독립-경고-버튼",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 24,
+        "text": "폐기하거나 버튼을 비활성화하면 폐기된 화면의 클릭 콜백은 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 31,
+        "text": "모델과 어댑터는 Qt, QML, LVRS를 사용하지 않는다. [합성 경고창](NativeAlert.md)은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 33,
+        "text": "검사는 창이나 GPU를 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "합성 경고창",
+        "target": "NativeAlert.md",
+        "kind": "relative",
+        "line": 31
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

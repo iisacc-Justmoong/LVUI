@@ -1,0 +1,7 @@
+import vm NativeOwnedListToolbarModel
+Window {
+    VStack(alignment: .leading) {
+        ListToolbar(id: "toolbar", icon1: vm.icon, icon2: "generalchevronRight",
+                    interactive: vm.interactive, onIconClicked: vm.clicked)
+    }
+}

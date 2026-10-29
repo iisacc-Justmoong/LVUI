@@ -1,0 +1,12 @@
+import vm NativeLayoutRows
+let Tile(title: String, gap: Metric, padding: Metric): View = VStack(id: "row", spacing: gap, padding: padding, alignment: .stretch) {
+    import state NativeRowActivation
+    Label(id: "title", text: title)
+    PushButton(id: "hit", text: state.count, onClick: state.increment)
+}
+Window {
+    for (item in vm.items, key: item.id, id: "results", itemHeight: 40, measureHeight: true,
+         width: vm.width, height: vm.height, spacing: 2, overscan: 1) {
+        Tile(title: item.title, gap: vm.rowGap, padding: vm.rowPadding)
+    }
+}

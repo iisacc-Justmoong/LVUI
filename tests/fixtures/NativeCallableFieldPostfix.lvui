@@ -1,0 +1,7 @@
+import vm NativeCallableFieldBackend
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    PushButton(id: "nested", onClick: vm.selected.run)
+    PushButton(id: "temporary", onClick: vm.temporary().run)
+    Label(id: "count", text: vm.temporary_calls)
+} }

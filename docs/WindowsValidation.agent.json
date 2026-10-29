@@ -1,0 +1,107 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:fa51bb9926687a38420f180f530ff9491610bb013646f7bff3dc415c8bfb920c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/WindowsValidation.md",
+    "sha256": "f6d9a4a42da22b2469e0fae326ec81823526277cde7049f2449b1d1628ab5801",
+    "bytes": 1358,
+    "line_count": 18,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "Windows 검증",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Windows 검증\n",
+      "level": 1,
+      "title": "Windows 검증"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "Windows에서도 C++23 AOT와 언어 검사를 동일하게 실행한다. Avatar는 기본 경로에서\nLVUI 자체 구현으로 생성되어야 하며, 프레임워크 옵션 없이도 성공해야 한다.\n생성 코드에서 LVRS 헤더와 타입이 없는지 별도로 검사한다. 실제 Windows에서의\n설치·화면·접근성 검증은 컴파일 검증과 구분해 기록한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 14,
+      "raw": "예약어 조사 검사의 임시 소스는 UTF-8과 LF로 작성한 뒤 명시적으로 CRLF로 변환한다.\nWindows 텍스트 출력의 자동 CRLF 변환과 테스트의 바이트 변환이 중첩되어 CR이\n중복되는 fixture 오류를 방지한다. 실제 내용 변경과 조사 스냅샷의 drift 검사는\n유지한다. LVRS 원본을 갱신하면 `tools/update_lvrs_keywords.py --lvrs-root ../LVRS`로\n조사 문서와 스냅샷을 재생성한 뒤 `--check`로 다시 검증한다.\n생성 문서·목록·헤더는 UTF-8/LF 바이트로 저장하며 내용이 같은 파일의 수정 시각은\n보존한다. 생성 결과의 실제 바이트와 수정 시각을 회귀 검사한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 18,
+      "raw": "전체 구성·빌드·CTest 출력은 `build/`에 저장한다. 공통 Windows 빌드 환경과\n검증 명령은 Workspace의 `SDK/Windows/README.md`를 기준으로 한다.\n컴파일 성공과 실제 테스트·설치 성공을 각각 기록한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Windows 검증",
+      "anchor": "windows-검증",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "LVUI 자체 구현으로 생성되어야 하며, 프레임워크 옵션 없이도 성공해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

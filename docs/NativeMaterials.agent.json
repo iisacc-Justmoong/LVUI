@@ -1,0 +1,242 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:ba422e0653cb32006231b4746d43da5003088dd114a77e4c8bb60f41203ae3e9",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeMaterials.md",
+    "sha256": "cb002870c5619fcf360eab8c99e1e087435c6093bc03764c5e92f6a93421ca62",
+    "bytes": 4208,
+    "line_count": 62,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 네이티브 머티리얼",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 네이티브 머티리얼\n",
+      "level": 1,
+      "title": "LVUI 네이티브 머티리얼"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "기본 C++ AOT 경로는 `MaterialSurface`, `PanelMaterial`, `WindowMaterial`을 LVUI가\n직접 작성한 `Material` 모델과 `NativeMaterial` 어댑터로 생성한다. LVRS의 타입이나\n팩터리를 호출하지 않는다. 앱은 iiGUI의 범용 레이아웃·그리기·프레임 서비스를\n공급하며, LVUI 모델 자체는 표준 C++만 사용한다. 재질 안의 자식 View는 같은 범위와\n재질의 중첩 레이아웃에 남는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 9,
+      "end_line": 17,
+      "raw": "```lvui\nimport vm MaterialBackend\nWindow {\n PanelMaterial(width: 380, height: 204, density: .Glass25,\n               primaryColor: vm.accent, backdrop: .PreviousLayers) {\n  Label(text: \"Native material\")\n }\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm MaterialBackend\nWindow {\n PanelMaterial(width: 380, height: 204, density: .Glass25,\n               primaryColor: vm.accent, backdrop: .PreviousLayers) {\n  Label(text: \"Native material\")\n }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "heading",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "## 값과 렌더링 계약\n",
+      "level": 2,
+      "title": "값과 렌더링 계약"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 27,
+      "raw": "`MaterialConfiguration`의 밀도별 기본값을 독립적으로 계산한다. 패널의 기본 크기는\n380×204, 창은 500×272 논리 px이다. 유리 밀도는 25% 채색과 16px 블러,\n밀집 밀도는 75% 채색과 64px 블러를 사용한다. 창의 기본 채색은 별도로 50%이다.\n개별 값은 명시적으로 덮어쓸 수 있고 밀도가 반응형으로 바뀌면 생략한 값은 새 밀도에\n따라 다시 계산된다. 색상과 불투명도, 테두리, 안쪽 하이라이트, 그림자와 블러 및\n`.None`·`.Content`·`.PreviousLayers` 배경 캡처를 전달한다. 그리기 값의 색상은\n호스트가 요구하는 선형 sRGB로 변환한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 36,
+      "raw": "LVUI는 크기에 따른 여덟 타원형 방사 그레디언트의 위치와 중첩 강도를 계산한다.\n강조색의 알파는 각 그레디언트가 겹치기 전에 적용한다. 그 결과는 불변 텍스처로\n캐시하여 같은 크기와 강도·강조색 알파에서는 다시 만들지 않는다.\n고해상도 화면에서는 텍스처 크기를 제한하고 논리 좌표에 맞게 샘플링한다.\n기본 강조색은 LVUI 디자인 토큰에서 구성하며 `primaryColor`로 교체할 수 있다.\n색상·채색 전환은 LVUI `Motion`과 호스트가 주입하는 프레임 시각을 사용한다.\n축소 모션과 `motionEnabled: false`는 즉시 변경한다. 프레임 서비스를 받을 수 없으면\n목표 색상으로 즉시 정착한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 45,
+      "raw": "지원 입력은 `density`, `primaryColor`, `color`, `borderColor`, `backdropBaseColor`,\n`tintOpacity`, `blurRadius`, `radius`, `innerHighlightOpacity`, `innerHighlightOffsetY`,\n`borderWidth`, `intenseOpacity`, `faintOpacity`, `shadowRadius`, `shadowOffsetY`,\n`shadowOpacity`, `blurEnabled`, `motionEnabled`, `enabled`, `backdrop`, `width`,\n`height`, `motion`, `outlinePath` 및 공통 `visible`·`opacity`·`flex`이다. 밀도와 배경은 각각\n`lvui::MaterialDensity`, `lvui::MaterialBackdrop` 값으로도 반응형 주입할 수 있다.\n범위를 벗어난 반응형 값은 기존 유효 설정을 보존하고 바인딩 오류로 보고한다.\n블러와 그림자 반경은 호스트 계약에 맞게 0~64 논리 px이다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 51,
+      "raw": "`outlinePath`는 재질의 로컬 좌표로 된 SVG 경로 데이터이다. LVUI가 명령과 좌표를\n검증하고, 범용 호스트의 메모리 전용 SVG 래스터화로 불변 마스크와 테두리를 만든다.\n같은 윤곽을 배경·안쪽 하이라이트·그림자에 사용하며, 값과 크기가 바뀔 때 갱신한다.\n경로에는 XML이나 외부 리소스를 포함할 수 없다.\n재질 헤더와 이를 사용하는 툴팁 표시 접점은 iOS·웹 대상 C++ 컴파일 검사로도 확인한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 55,
+      "raw": "아직 독립 경로는 임의의 `backdropSource`·`backdropBackground` 및 창별 강조색 자동 상속을 지원하지 않는다.\n지원하지 않는 입력은 오류로 거절하며, 강조색은 앱이 명시적으로 공급할 수 있다.\n실제 GPU 픽셀·운영체제별 효과 및 기존 디자인과의 시각 동등성은 검증되지 않았다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "heading",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "## 레거시 경로\n",
+      "level": 2,
+      "title": "레거시 경로"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 62,
+      "raw": "전환 전 `FRAMEWORK LVRS`는 계속 기존 LVRS 팩터리와 옵션을 생성한다. 이 선택 경로는\n아직 LVRS에 의존하고 `outlinePath`와 기존 `MotionPreferences` 타입을 받는다.\n기본 독립 경로와 레거시 경로의 지원 범위를 혼동하지 않는다. LVRS 경로 자체를\n제거하는 작업은 다른 컴포넌트의 독립 이식과 함께 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 네이티브 머티리얼",
+      "anchor": "lvui-네이티브-머티리얼",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "값과 렌더링 계약",
+      "anchor": "값과-렌더링-계약",
+      "start_line": 19
+    },
+    {
+      "block_id": "b000019",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "레거시 경로",
+      "anchor": "레거시-경로",
+      "start_line": 57
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "팩터리를 호출하지 않는다. 앱은 iiGUI의 범용 레이아웃·그리기·프레임 서비스를",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 53,
+        "text": "아직 독립 경로는 임의의 `backdropSource`·`backdropBackground` 및 창별 강조색 자동 상속을 지원하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 61,
+        "text": "기본 독립 경로와 레거시 경로의 지원 범위를 혼동하지 않는다. LVRS 경로 자체를",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

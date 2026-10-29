@@ -1,0 +1,10 @@
+import vm NativeHistoryBackend
+Window { VStack {
+    Label(id: "current", text: vm.current)
+    Label(id: "undoDepth", text: vm.history.undo_depth())
+    Label(id: "redoDepth", text: vm.history.redo_depth())
+    PushButton(id: "remember", text: "Remember", onClick: vm.remember)
+    PushButton(id: "undo", text: "Undo", enabled: vm.history.can_undo(), onClick: vm.undo)
+    PushButton(id: "redo", text: "Redo", enabled: vm.history.can_redo(), onClick: vm.redo)
+    PushButton(id: "clear", text: "Clear", onClick: vm.clear)
+} }

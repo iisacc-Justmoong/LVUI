@@ -1,0 +1,4 @@
+Window { VStack {
+    NativeView(id: "empty", width: 240, height: 120)
+    Label(id: "caption", text: "Waiting for native source")
+} }

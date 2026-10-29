@@ -18,7 +18,7 @@ void bad(std::string_view source, std::string_view reason) {
 }
 void catalog() {
     auto entries = lvui::keywords();
-    check(entries.size() > 100, "LVRS inline/native components missing from the catalog");
+    check(entries.size() > 100, "LVUI component keywords missing from the catalog");
     std::string_view previous;
     unsigned views = 0, modifiers = 0;
     for (const auto& word : entries) {
@@ -27,20 +27,24 @@ void catalog() {
         check(lvui::find_keyword(word.spelling) == &word && lvui::is_reserved_identifier(word.spelling), "Keyword lookup mismatch");
         if (word.kind == lvui::KeywordKind::view) {
             ++views;
-            check(!word.source_file.empty() && word.source_line > 0, "Visual keyword lacks source evidence");
+            check(word.source_file == "catalog/lvui-keywords.json" && word.source_line > 0, "Visual keyword lacks its LVUI registry location");
             auto parsed = good(std::string(word.spelling) + "()");
             check(parsed.root().component == &word, "Parser does not consume the builtin keyword table");
         }
         modifiers += word.kind == lvui::KeywordKind::modifier;
     }
-    check(views > 100 && modifiers == 3, "Visual source classification incomplete");
+    check(views > 100 && modifiers == 3, "Visual keyword classification incomplete");
     for (auto name : {"Avatar", "Tab", "CardImageContent", "AdaptiveLayoutHost", "ColorPickerSurface", "WindowNoiseTexture", "QuantitySlot"})
-        check(lvui::find_keyword(name)->kind == lvui::KeywordKind::view, "Missing QML/inline/native visual keyword");
+        check(lvui::find_keyword(name)->kind == lvui::KeywordKind::view, "Missing LVUI visual keyword");
+    check(lvui::find_keyword("NativeView")&&lvui::find_keyword("NativeView")->kind==lvui::KeywordKind::view,"Native C++ visual source is not a View constructor");
     for (auto name : {"Theme", "Motion", "Navigator", "ViewModel", "ColorPickerModel", "Backend"})
         check(!lvui::is_reserved_identifier(name), "Nonvisual service became a visual keyword");
     check(!lvui::find_keyword("pushButton") && !lvui::find_keyword("PushButtonSuffix"), "Keyword matching is not exact/case-sensitive");
 }
 void lexing() {
+    auto fractions=lvui::tokenize(".25 .5e-1 Color.primary .primary");
+    check(fractions&&fractions->at(0).kind==lvui::TokenKind::number&&fractions->at(1).kind==lvui::TokenKind::number&&fractions->at(3).kind==lvui::TokenKind::dot,
+          "Leading decimal literals consumed a style selector or failed to tokenize");
     auto tokens = lvui::tokenize("// Label ignored\nLabel(text: \"PushButton\") /* Avatar ignored */\nPushButton(vm.save)");
     check(bool(tokens), "Valid component source did not tokenize");
     unsigned reserved = 0, strings = 0;
@@ -51,7 +55,11 @@ void lexing() {
         }
     }
     check(reserved == 2 && strings == 1, "Comments/string boundaries are not lexical boundaries");
-    auto utf8 = lvui::tokenize("Label(\"한글\", @)");
+    auto annotated = lvui::tokenize("Label(\"한글\", @)");
+    check(bool(annotated) && std::ranges::any_of(*annotated, [](const auto& token) {
+        return token.kind == lvui::TokenKind::annotation && token.column == 13;
+    }), "Annotation token lost its UTF-8 scalar position");
+    auto utf8 = lvui::tokenize("Label(\"한글\", $)");
     check(!utf8 && utf8.error().column == 13, "UTF-8 scalar diagnostic positions incorrect");
     auto nul = lvui::tokenize(std::string("Label(\"한글\", ") + '\0' + ")");
     check(!nul && nul.error().column == 13, "NUL diagnostic does not point to the offending scalar position");
@@ -84,6 +92,14 @@ ApplicationWindow(title: title) {
     check(stack.children[1].inputs[1].name == "text", "Body properties not retained");
     check(stack.children[4].inputs[0].value.elements[2].kind == lvui::ValueKind::call, "Explicit method call became a reference");
     check(good("VStack { Label()\n HStack { Avatar()\n Spacer() } }").root().children.size() == 2, "Optional empty parentheses/nested braces failed");
+    auto types = good("import class Domain.Model\nimport vm Domain.Model\nLabel()");
+    check(types.imports().size() == 2 && types.imports()[0].type_only && types.imports()[0].name == "Model" &&
+          !types.imports()[1].type_only, "Type blueprint import created an instance declaration");
+    bad("import class Domain.Model\nlet Model = 1\nLabel()", "Duplicate");
+    const auto aliases=good("import class Row lvrs.HierarchyItem\nimport class AppWindow App.Window\nimport state App.Color\nLabel()");
+    check(aliases.imports()[0].name=="Row"&&aliases.imports()[0].type=="lvrs.HierarchyItem"&&aliases.imports()[0].type_only&&aliases.imports()[1].name=="AppWindow"&&aliases.imports()[2].type=="App.Color"&&!aliases.imports()[2].type_only,"A C++ type alias lost its blueprint-only contract or native type name");
+    bad("import class Bad.Alias App.Window\nLabel()","unqualified");
+    bad("import class Row App.import\nLabel()","reserved");
 }
 void shadowing() {
     const auto enumeration=good("Card(type: .Link)");
@@ -96,7 +112,8 @@ void shadowing() {
         bad("import " + name + " Backend\nLabel()", "reserved");
     }
     (void)good("let label = \"Label\"\nimport custom Backend\nLabel(text: label)");
-    bad("import vm PushButton\nLabel()", "reserved");
+    check(good("import vm PushButton\nLabel()").imports()[0].type=="PushButton","A C++ type name was confused with the declaration's binding name");
+    bad("import class lvrs.HierarchyItem\nLabel()","alias");
     bad("let name = 1\nvar name = 2\nLabel()", "Duplicate");
 }
 void diagnostics() {

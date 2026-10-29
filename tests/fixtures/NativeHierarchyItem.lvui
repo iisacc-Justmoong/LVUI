@@ -1,0 +1,7 @@
+import vm NativeHierarchyItemBackend
+Window { VStack {
+    HierarchyItem(id: "item", text: vm.label, itemKey: "layer", count: vm.count,
+        selected: vm.selected, expanded: vm.expanded,
+        onClick: vm.clicked, onExpansionChanged: vm.expand)
+    PushButton(id: "rename", text: "Rename", onClick: vm.rename)
+} }

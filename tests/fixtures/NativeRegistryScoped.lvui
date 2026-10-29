@@ -1,0 +1,6 @@
+import registry lvrs.ViewModels
+Window { VStack {
+    Label(id: "models", text: registry.keys().size())
+    Label(id: "error", text: registry.last_error())
+    Label(id: "writable", text: registry.can_write("Editor"))
+} }

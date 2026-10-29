@@ -1,0 +1,24 @@
+import vm NativeCallableBackend
+let Action(run: () -> Void, again: () -> Void = run): View = VStack {
+    PushButton(id: "action", onClick: run)
+    PushButton(id: "again", onClick: again)
+}
+let Entry(edit: (String) -> Void = vm.record): View = InputField(id: "edit", text: "", onEdited: edit)
+let Forward(run: () -> Void): View = VStack {
+    import vm NativeCallableShadow
+    Action(run: run)
+    Entry()
+}
+let Factory(run: () -> Void): View = PushButton(id: "factory", onClick: run)
+Window {
+    VStack {
+        Forward(run: vm.save)
+        if (vm.visible) {
+            VStack {
+                import local NativeCallableBackend
+                Factory(run: vm.make(vm.amount))
+                Entry(edit: local.makeText())
+            }
+        }
+    }
+}

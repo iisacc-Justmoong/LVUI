@@ -1,0 +1,12 @@
+import vm NativeOpacityModel
+@Static let initial: Double = vm.alpha
+let Content(alpha: Double): View = VStack(id: "group", opacity: alpha) {
+    Label(id: "label", text: "Layer")
+    InputField(id: "edit", text: "Working", width: 160)
+    PushButton(id: "action", text: "Use", opacity: 0.5, onClick: vm.clicked)
+}
+Window { VStack(id: "panel", opacity: vm.container_alpha) {
+    Content(alpha: vm.amount())
+    Label(id: "pinned", text: "Initial", opacity: initial)
+    if (vm.shown) { Label(id: "conditional", text: "Conditional", opacity: vm.alpha) }
+} }

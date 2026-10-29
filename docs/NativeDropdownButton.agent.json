@@ -1,0 +1,136 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:16cfe0292b58e044e610f47d29d16186c571741e89dfcb93f11f57bde018fb9d",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeDropdownButton.md",
+    "sha256": "1e81e8d1becdddef7705223faec5e91fa831df34a895ebd3f11fad202a657dcd",
+    "bytes": 1693,
+    "line_count": 22,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 드롭다운 버튼",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 드롭다운 버튼\n",
+      "level": 1,
+      "title": "LVUI 독립 드롭다운 버튼"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`DropdownConfiguration`과 `DropdownButton`은 액션 표면, 라벨 또는 아이콘과 아래\n방향 표시의 색상 및 배치를 정의한다. 기본 높이는 22 논리 px, 라벨의 왼쪽\n여백은 8, 오른쪽 여백은 2, 방향 표시 크기는 18, 모서리 반경은 8이다. 아이콘\n배치는 기본 왼쪽 여백 4와 간격 -2를 사용한다. 메뉴와 선택값은 앱이 소유한다.\n잘못된 설정은 유효한 기존 상태를 대체하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 12,
+      "raw": "기본 `DropdownButton`, `LabelMenuButton`, `IconMenuButton`은 LVUI의 모델과 범용\n액션 표면으로 생성한다. 포인터·키보드 입력과 클릭·눌림·놓음·취소 콜백,\n버튼 접근성 이름, 반응형 옵션 및 폐기 후 접근 거부를 제공한다. 세그먼트 묶음의\n임시 무테 스타일과 취소 콜백 중 재진입한 새 설정을 유지한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 19,
+      "raw": "아이콘 모드에서 앱이 원본을 지정하지 않으면 LVUI가 작성한 폴더 형태 기본\n도형을 표시한다. `iconName`은 [LVUI 내장 아이콘 또는 앱의 공급자](NativeIcons.md)를\n조회하며 `icon`은 앱의 `shared_ptr<const ii::gui::RasterImage>`를 사용한다. 두\n입력은 함께 지정할 수 없다. 알 수 없는 이름이나 유효하지 않은 SVG는 오류로\n보고하고 이전 화면을 유지한다. 기본 도형의 실제 플랫폼 시각 일치와 전체 이름\n기반 자산은 앞으로 검증·전환해야 한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 22,
+      "raw": "모델, 생성 코드, 범용 호스트 입력·수명 검사를 창 없이 수행했다. 실제 OS 입력과\n접근성 장치 검증 및 드롭다운 계열의 명시적 레거시 생성 경로 제거는 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 드롭다운 버튼",
+      "anchor": "lvui-독립-드롭다운-버튼",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 7,
+        "text": "잘못된 설정은 유효한 기존 상태를 대체하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 19,
+        "text": "기반 자산은 앞으로 검증·전환해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "LVUI 내장 아이콘 또는 앱의 공급자",
+        "target": "NativeIcons.md",
+        "kind": "relative",
+        "line": 15
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

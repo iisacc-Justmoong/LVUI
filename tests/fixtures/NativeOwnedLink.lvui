@@ -1,0 +1,14 @@
+import vm NativeOwnedLinkModel
+Window {
+    VStack {
+        Link(id: "report", text: vm.text, to: vm.href, params: vm.params, router: vm.router, navigator: vm.navigator, targetComponent: vm.page,
+             enabled: vm.enabled, replace: vm.replace, underline: vm.underline, linkColor: vm.color,
+             method: vm.log, methods: [vm.after], onClick: vm.clicked, onNavigated: vm.navigated)
+        Link(id: "child-link", text: "Fallback", href: "/child", navigator: vm.navigator) {
+            Label(id: "child", text: "Custom child")
+        }
+        if (vm.show_nested) {
+            Link(id: "nested", text: "Nested", href: "/nested")
+        }
+    }
+}

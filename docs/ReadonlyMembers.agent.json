@@ -1,0 +1,619 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:65ce5e6a16ea41b489c223fe5d8f8a4c0b0964003a57b82a04959be8ee9c70af",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ReadonlyMembers.md",
+    "sha256": "7b55bf3b819182a3d1d7fc96b765f8771f4e40e0994a0131ccb74f8c00afe5cd",
+    "bytes": 7877,
+    "line_count": 112,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "읽기 전용 C++ 멤버와 네이티브 값",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 읽기 전용 C++ 멤버와 네이티브 값\n",
+      "level": 1,
+      "title": "읽기 전용 C++ 멤버와 네이티브 값"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "일반 LVUI 값은 반응형이며 읽기 전용 접근을 스냅샷과 동일하게 취급하지 않는다.\n`let current = backend.selected`가 읽기 전용 객체를 가리키더라도 그 객체의 Observable\n멤버는 생산자의 변경을 계속 관측한다. `const_cast`, 문자열 필드 검색, 전역 버스나\n프레임별 폴링으로 이를 구현하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 20,
+      "raw": "```text\nimport model ReviewModel\nlet current = model.selected\nlet alias = current\n@Static let initialTitle: String = current.title\nWindow {\n    VStack {\n        Label(text: current.title)\n        Label(text: alias.metrics.count)\n        Label(text: initialTitle)\n    }\n}\n```\n",
+      "language": "text",
+      "code": "import model ReviewModel\nlet current = model.selected\nlet alias = current\n@Static let initialTitle: String = current.title\nWindow {\n    VStack {\n        Label(text: current.title)\n        Label(text: alias.metrics.count)\n        Label(text: initialTitle)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 26,
+      "raw": "`selected`가 `Observable<std::shared_ptr<const Item>>`을 제공하면 항목을 교체할 때\n선택 의존성과 멤버 의존성을 다시 연결한다. 같은 항목의 title·metrics.count 변경은 해당\n소비자를 갱신하며, 이전 항목의 변경은 새 선택을 갱신하지 않는다. 위 예의 initialTitle은\n활성화 시 복사한 String 값이다. 객체 전체나 View 전체의 깊은 Static 스냅샷을 이 예의\n증거로 대신하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "## 타입·접근·발행\n",
+      "level": 2,
+      "title": "타입·접근·발행"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "list",
+      "start_line": 30,
+      "end_line": 44,
+      "raw": "- Core의 `Observable::observe()`는 const 참조에서도 사용할 수 있다. 소유 스레드,\n  구독 lease, 종료와 이동 규칙을 유지하며 const 접근에 수정 권한을 주지 않는다.\n  사용자 C++ 관측자가 mutable observe만 제공하면 읽기 전용 멤버에서 조용히 스냅샷으로\n  바꾸지 않고 빌드 진단을 낸다. 고정값은 명시적인 Static 또는 스냅샷 인터페이스로 선택한다.\n- 네이티브 멤버 선택은 값·원시 포인터·표준 스마트 포인터 및 `reference_wrapper`의\n  실제 C++ const 자격을 보존한다. nullptr은 명시적인 오류이다.\n- 일반 member 경로와 `(model.selected).metrics.count` 형태의 member AST 모두 같은\n  `member(context, object, selector)` 및 `read_source()` 경로로 생성한다.\n- private 멤버·private 조상·없는 멤버는 생성된 C++의 정상 접근 제어로 거부한다.\n- 동등 비교가 없는 C++ 구조체도 네이티브 let·추론한 var의 값으로 사용할 수 있다.\n  Core Observable 값은 복사 생성과 예외 없는 이동 대입을 제공해야 한다. 비교 가능한\n  값은 기존 no-op 규칙을 따르며, 비교가 없는 값은 각 set을 명시적인 발행으로 처리한다.\n- 일반 public 멤버의 직접 수정은 자동으로 가로채지 않는다. 소유자가 제공하는\n  Observable 또는 명시적인 스코프 발행을 사용한다. var는 초기화 이후 자체 상태이며\n  초기화 식의 객체 변경을 자동으로 따라가지 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Core의 `Observable::observe()`는 const 참조에서도 사용할 수 있다. 소유 스레드,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "네이티브 멤버 선택은 값·원시 포인터·표준 스마트 포인터 및 `reference_wrapper`의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "일반 member 경로와 `(model.selected).metrics.count` 형태의 member AST 모두 같은",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "private 멤버·private 조상·없는 멤버는 생성된 C++의 정상 접근 제어로 거부한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "동등 비교가 없는 C++ 구조체도 네이티브 let·추론한 var의 값으로 사용할 수 있다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "일반 public 멤버의 직접 수정은 자동으로 가로채지 않는다. 소유자가 제공하는",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 48,
+      "raw": "읽기 전용 참조의 수정을 막는 것과 값의 복사·소유권을 구분한다. 표준 참조 래퍼와 원시\n포인터의 대상은 기존 소유자가 계속 소유해야 한다. 선택한 shared_ptr은 공유 소유권을\n제공하며 이를 값 복사와 혼동하지 않는다. 상위 UI가 Core에 역의존하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "## 계산 중 소유권\n",
+      "level": 2,
+      "title": "계산 중 소유권"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 54,
+      "raw": "C++ getter가 값을 읽은 뒤 선택 객체를 교체할 수 있다. 과거에는 이전 객체가 getter가\n끝나기 전에 파괴되어, 의존 구독 또는 revision 검사에서 해제된 Observable에 접근했다.\n이 경로는 ASan으로 재현했다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 59,
+      "raw": "ReadContext는 읽은 shared_ptr과 멤버 경로에서 만난 shared_ptr의 소유자를 해당 계산·\n의존성 검사·적용이 끝날 때까지 보존한다. 소유권 보존은 한 번의 평가에 한정하며 별도\n전역 레지스트리나 영속 객체 캐시를 만들지 않는다. 정상 선택 교체·오류·재진입·계산 종료\n후에는 임시 보존을 해제한다. 이전 객체를 계속 필요로 하는 별도 사용자 소유자는 유지한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 64,
+      "raw": "같은 control block의 보존은 중복하지 않는다. 평가 하나에서 최대 4096개 소유자를\n보존하며 한도 초과는 명시적인 실패이다. 실패는 마지막 정상 출력을 보존하고 다음\n유효한 변경에서 복구한다. 구독 전환 자체가 실패하면 이전 정상 연결을 보존한다. 이 수명 보호를 임의 원시 포인터나 사용자 정의\n불투명 핸들의 소유권 자동 발견으로 확대하지 않는다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "## 검사와 범위\n",
+      "level": 2,
+      "title": "검사와 범위"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "list",
+      "start_line": 68,
+      "end_line": 76,
+      "raw": "- `LVUI.NativeBindings.readonly*`: const 관측·선택 교체·재진입 수명·임시 소유자 퇴역·\n  보존 한도·표준 참조의 네이티브 연결을 실행한다.\n- `LVUI.NativeReadonlyValidation`: 실제 생성 팩터리에서 값·포인터·shared_ptr·참조를\n  컴파일하고 private 멤버·조상·없는 멤버·잘못된 객체를 거부한다.\n- `iiGUI.native_readonly.*`: 생성 C++를 실제 창 없는 위젯 상태에 연결하여 별칭·지역\n  스코프·스칼라 Static·선택·참조·구조체 let/var·널 복구·퇴역·조건부 재활성화·member\n  AST와 입력·포커스·파일 상태 보존을 실행한다.\n- `iiGUI.layout_package`와 `LVUI.NativeInstalled`: 재배치한 설치 패키지의 공개 const\n  관측·비교 없는 값·AOT 팩터리를 컴파일·링크하고 제한된 소비자를 실행한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`LVUI.NativeBindings.readonly*`: const 관측·선택 교체·재진입 수명·임시 소유자 퇴역·",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`LVUI.NativeReadonlyValidation`: 실제 생성 팩터리에서 값·포인터·shared_ptr·참조를",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI.native_readonly.*`: 생성 C++를 실제 창 없는 위젯 상태에 연결하여 별칭·지역",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`iiGUI.layout_package`와 `LVUI.NativeInstalled`: 재배치한 설치 패키지의 공개 const",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 78,
+      "end_line": 81,
+      "raw": "이는 현재 지원하는 C++ 값과 참조의 계약이다. 일반 C++ 타입을 명시한 모든 View 입력,\n사용자 정의 불투명 핸들의 보존·복제·비교 프로토콜, 가변 View·깊은 Static, LVRS 전체\n동작과 실제 OS 입력·GPU·플랫폼 실행의 완료를 뜻하지 않는다. 전체 조건은\n[완료 감사](Completion.md)에 유지한다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 85,
+      "end_line": 86,
+      "raw": "macOS arm64 현재 작업 트리에서 다음을 확인했다. 각 구성의 반복 실행을 서로 다른 기능\n수로 합산하지 않으며, Core 전체 회귀 검사를 관측 테스트의 성공으로 대신하지 않는다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "table",
+      "start_line": 88,
+      "end_line": 102,
+      "raw": "| 검사 | 확인 결과 |\n|---|---|\n| Core Observable | 기본 build와 독립 일반·ASan·UBSan 구성의 해당 검사 각각 통과 |\n| Core 새 패키지 | 일반·메모리 검사 구성에서 현재 Runtime·Embedded 빌드 및 스테이징 설치 |\n| Core 구조 경계 | 두 독립 구성의 의존성 경계·sealed 공개 타입·다중 상속 검사 통과 |\n| LVUI Release 전체 | 210/210 통과 |\n| LVUI 관련 ASan·UBSan | 139/139 통과 |\n| iiGUI 일반 창 없는 검사·패키지 | 150/150 통과 |\n| iiGUI ASan·UBSan | 150/150 통과 |\n| 새 생성 위젯 검사 | 각 구성 9건, 참조·선택·값·널 복구·퇴역·조건부 구성·입력 보존 포함 |\n| 생성 C++ 접근·타입 | 각 구성 유효 4개 컴파일, 부적합 5개 거부 |\n| 재배치 소비자 | LVUI 3건과 iiGUI의 일반·메모리 검사 구성 소비자 통과 |\n| 생성 위젯 헤더 | 일반·메모리 검사 구성의 41개 내용 일치 |\n| LVRS | 팩터리 41개를 두 구성에서 컴파일, 실행 미실시 |\n| 제품 보존 | Dreamscapes QML 81개 해시 유지, 제품 변환·재설치 없음 |\n",
+      "columns": [
+        "검사",
+        "확인 결과"
+      ],
+      "rows": [
+        [
+          "Core Observable",
+          "기본 build와 독립 일반·ASan·UBSan 구성의 해당 검사 각각 통과"
+        ],
+        [
+          "Core 새 패키지",
+          "일반·메모리 검사 구성에서 현재 Runtime·Embedded 빌드 및 스테이징 설치"
+        ],
+        [
+          "Core 구조 경계",
+          "두 독립 구성의 의존성 경계·sealed 공개 타입·다중 상속 검사 통과"
+        ],
+        [
+          "LVUI Release 전체",
+          "210/210 통과"
+        ],
+        [
+          "LVUI 관련 ASan·UBSan",
+          "139/139 통과"
+        ],
+        [
+          "iiGUI 일반 창 없는 검사·패키지",
+          "150/150 통과"
+        ],
+        [
+          "iiGUI ASan·UBSan",
+          "150/150 통과"
+        ],
+        [
+          "새 생성 위젯 검사",
+          "각 구성 9건, 참조·선택·값·널 복구·퇴역·조건부 구성·입력 보존 포함"
+        ],
+        [
+          "생성 C++ 접근·타입",
+          "각 구성 유효 4개 컴파일, 부적합 5개 거부"
+        ],
+        [
+          "재배치 소비자",
+          "LVUI 3건과 iiGUI의 일반·메모리 검사 구성 소비자 통과"
+        ],
+        [
+          "생성 위젯 헤더",
+          "일반·메모리 검사 구성의 41개 내용 일치"
+        ],
+        [
+          "LVRS",
+          "팩터리 41개를 두 구성에서 컴파일, 실행 미실시"
+        ],
+        [
+          "제품 보존",
+          "Dreamscapes QML 81개 해시 유지, 제품 변환·재설치 없음"
+        ]
+      ]
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 104,
+      "end_line": 107,
+      "raw": "먼저 읽기 전용 값의 갱신 중단을 평면·중첩 두 검사에서 재현했다. const 관측을 연결한 뒤\n재진입 선택 교체에서 ASan heap-use-after-free를 확인했고, 평가 소유권 보존을 추가한\n후 같은 경로를 포함한 메모리 검사를 통과했다. 기존 함수 값의 함수 포인터 소유권도\ncontrol block의 별칭으로 보존하며, 한 평가가 끝나면 해당 보존을 해제한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 112,
+      "raw": "이는 생성 C++·창 없는 실제 위젯 상태·제한된 설치 소비자의 증거이다. OS 창이나 GPU\n표면을 만들지 않았고 LVRS 앱·테스트는 저장소 지침의 최종 일괄 단계에 남겨 두었다.\niiGUI 메모리 검사에서 차용하는 일반 NativeBindings 아카이브의 구현은 별도 LVUI\nASan·UBSan 검사에 포함한다. 모든 상위 SDK나 플랫폼의 실행 완료로 확대하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "읽기 전용 C++ 멤버와 네이티브 값",
+      "anchor": "읽기-전용-c-멤버와-네이티브-값",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "타입·접근·발행",
+      "anchor": "타입접근발행",
+      "start_line": 28
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "계산 중 소유권",
+      "anchor": "계산-중-소유권",
+      "start_line": 50
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검사와 범위",
+      "anchor": "검사와-범위",
+      "start_line": 66
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 83
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 3,
+        "text": "일반 LVUI 값은 반응형이며 읽기 전용 접근을 스냅샷과 동일하게 취급하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "프레임별 폴링으로 이를 구현하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 24,
+        "text": "소비자를 갱신하며, 이전 항목의 변경은 새 선택을 갱신하지 않는다. 위 예의 initialTitle은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 26,
+        "text": "증거로 대신하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 40,
+        "text": "Core Observable 값은 복사 생성과 예외 없는 이동 대입을 제공해야 한다. 비교 가능한",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000013",
+        "line": 47,
+        "text": "포인터의 대상은 기존 소유자가 계속 소유해야 한다. 선택한 shared_ptr은 공유 소유권을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 48,
+        "text": "제공하며 이를 값 복사와 혼동하지 않는다. 상위 UI가 Core에 역의존하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 61,
+        "text": "같은 control block의 보존은 중복하지 않는다. 평가 하나에서 최대 4096개 소유자를",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 64,
+        "text": "불투명 핸들의 소유권 자동 발견으로 확대하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 80,
+        "text": "동작과 실제 OS 입력·GPU·플랫폼 실행의 완료를 뜻하지 않는다. 전체 조건은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 86,
+        "text": "수로 합산하지 않으며, Core 전체 회귀 검사를 관측 테스트의 성공으로 대신하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000037",
+        "line": 112,
+        "text": "ASan·UBSan 검사에 포함한다. 모든 상위 SDK나 플랫폼의 실행 완료로 확대하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000027",
+        "label": "완료 감사",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 81
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000033",
+        "columns": [
+          "검사",
+          "확인 결과"
+        ],
+        "rows": [
+          [
+            "Core Observable",
+            "기본 build와 독립 일반·ASan·UBSan 구성의 해당 검사 각각 통과"
+          ],
+          [
+            "Core 새 패키지",
+            "일반·메모리 검사 구성에서 현재 Runtime·Embedded 빌드 및 스테이징 설치"
+          ],
+          [
+            "Core 구조 경계",
+            "두 독립 구성의 의존성 경계·sealed 공개 타입·다중 상속 검사 통과"
+          ],
+          [
+            "LVUI Release 전체",
+            "210/210 통과"
+          ],
+          [
+            "LVUI 관련 ASan·UBSan",
+            "139/139 통과"
+          ],
+          [
+            "iiGUI 일반 창 없는 검사·패키지",
+            "150/150 통과"
+          ],
+          [
+            "iiGUI ASan·UBSan",
+            "150/150 통과"
+          ],
+          [
+            "새 생성 위젯 검사",
+            "각 구성 9건, 참조·선택·값·널 복구·퇴역·조건부 구성·입력 보존 포함"
+          ],
+          [
+            "생성 C++ 접근·타입",
+            "각 구성 유효 4개 컴파일, 부적합 5개 거부"
+          ],
+          [
+            "재배치 소비자",
+            "LVUI 3건과 iiGUI의 일반·메모리 검사 구성 소비자 통과"
+          ],
+          [
+            "생성 위젯 헤더",
+            "일반·메모리 검사 구성의 41개 내용 일치"
+          ],
+          [
+            "LVRS",
+            "팩터리 41개를 두 구성에서 컴파일, 실행 미실시"
+          ],
+          [
+            "제품 보존",
+            "Dreamscapes QML 81개 해시 유지, 제품 변환·재설치 없음"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

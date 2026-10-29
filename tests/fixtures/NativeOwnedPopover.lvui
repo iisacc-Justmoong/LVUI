@@ -1,0 +1,11 @@
+import vm NativeOwnedPopoverModel
+Window {
+    VStack {
+        Label(text: "Origin")
+        Popover(id: "popup", width: vm.width, height: 80, padding: vm.padding, surfaceOpacity: vm.opacity,
+                surfaceColor: vm.color, modal: vm.modal, dim: true, accessibilityName: "Details",
+                onOpened: vm.opened, onClosed: vm.closed, onCanceled: vm.canceled) {
+            VStack(id: "body") { Label(id: "label", text: vm.text) }
+        }
+    }
+}

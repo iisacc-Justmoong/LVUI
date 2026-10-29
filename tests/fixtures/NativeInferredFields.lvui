@@ -1,0 +1,20 @@
+import vm NativeInferredFieldsBackend
+let run = vm.run
+let bump = vm.bump
+let factory = vm.factory()
+let format = vm.format
+let alias = format
+@Static let frozen = alias
+var manual = alias
+let count = vm.count
+var number = vm.count
+Window { VStack {
+    Label(id: "count", text: count + number)
+    Label(id: "format", text: format(2))
+    Label(id: "alias", text: alias(2))
+    Label(id: "frozen", text: frozen(2))
+    Label(id: "manual", text: manual(2))
+    PushButton(id: "run", onClick: run)
+    PushButton(id: "bump", onClick: bump)
+    PushButton(id: "factory", onClick: factory)
+} }

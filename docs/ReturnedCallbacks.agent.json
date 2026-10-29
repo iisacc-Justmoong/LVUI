@@ -1,0 +1,565 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:9038dd3c2c9bfa5e34e1dcd609f7d4da0f4e55c3be1379177e23e5bd4c95d08c",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ReturnedCallbacks.md",
+    "sha256": "0e219a239f60ee9109b39d8446d53b1ec2e9a27df898c0990ca93f85761a9962",
+    "bytes": 6821,
+    "line_count": 99,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "C++ 메서드가 반환한 콜백",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# C++ 메서드가 반환한 콜백\n",
+      "level": 1,
+      "title": "C++ 메서드가 반환한 콜백"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "선택된 객체·임시 수신자와 인자에서 반환 함수를 얻는 경우의 보존 규칙은\n[반환 함수의 포획 수명](FactoryCaptures.md)을 따른다. 반환 함수 객체와 그 함수가\n차용하는 원본 객체의 소유권을 각각 확인한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 10,
+      "raw": "`PushButton(vm.makeHandler())`는 메서드 참조와 다른 표현식이다. `makeHandler()`를 C++\n입력 바인딩을 처음 연결할 때 호출하고, 반환한 호출 가능 객체를 버튼 이벤트에 사용한다.\n메서드 호출을 클릭 시점까지 연기하지 않는다. 반면 `PushButton(vm.increment)`는 기존\n수신자에 대한 지연 메서드 참조이며, 생성 중 `increment()`를 실행하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 12,
+      "end_line": 20,
+      "raw": "```lvui\nimport vm DocumentModel\nWindow {\n    VStack {\n        PushButton(vm.makeHandler(vm.amount))\n        InputField(onEdited: vm.makeTextHandler())\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm DocumentModel\nWindow {\n    VStack {\n        PushButton(vm.makeHandler(vm.amount))\n        InputField(onEdited: vm.makeTextHandler())\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 27,
+      "raw": "일반 입력의 반응형 규칙을 따른다. 팩토리 호출의 인자와 C++ 원본을 네이티브 `ReadContext`로\n읽고, 그 의존 원본이 바뀌면 새 함수를 만든다. 같은 위젯의 이벤트 연결은 유지한다. 표시·\n프레임 갱신 자체로 매번 팩토리를 실행하지 않는다. 일반 C++ 멤버·메서드에는 기존 합성\n백엔드 리비전 계약을 적용하므로 해당 리비전의 변경도 팩토리를 다시 평가할 수 있다.\n팩토리는 재평가될 수 있는 읽기 경로에 속하며 제품의 생성·파일 쓰기 명령을 그 안에서\n암묵적으로 발동하지 않도록 C++ 모델이 책임진다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "## 타입과 전달\n",
+      "level": 2,
+      "title": "타입과 전달"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "반환 객체는 C++ 컴파일 시 실제 이벤트 인자로 호출할 수 있어야 한다. `void` 반환과\n숫자 등 호출할 수 없는 결과는 생성 C++의 컴파일 오류이다. LVUI 문자열 검사만으로\n알 수 없는 C++ 반환 타입을 임의로 추정하지 않는다. 오버로드·const 접근성·인자 변환은\n해당 C++ 선언과 컴포넌트 이벤트 타입의 검사를 따른다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 39,
+      "raw": "iiGUI 버튼은 인자가 없는 호출, 입력 편집은 문자열 인자 등 각 이벤트 계약을 따른다.\nLVRS 버튼의 반환 함수는 `const lvrs::ButtonEvent&`를 받을 수 있으면 그 인자를 사용하고,\n그렇지 않으면 인자 없는 호출을 검사한다. 재사용 View의 입력 덮어쓰기와 중첩 스코프에\n전달해도 팩토리가 참조한 원래 수신자와 인자를 보존한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 44,
+      "raw": "반환 함수는 복사 가능할 필요가 없다. `unique_ptr`를 포획한 이동 전용 C++ 함수 객체도\n지원한다. 명시적인 함수 타입 매개변수·읽기 전용 선언·반환값은 후속\n[함수 값](FunctionValues.md)을 따른다. 가변 함수 교체·부분 적용·중첩 함수 타입 등\n나머지 일반 계약은 별도의 완료 대상이다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 49,
+      "raw": "이동·복사 불가능한 값 반환도 C++ 복사 생략으로 소유할 수 있다. 좌측값 참조는 복사하지\n않고 수신 스코프에 연결하여 차용하며 `const`를 보존한다. 함수 참조도 차용할 수 있다.\n참조 대상의 유효성은 원래 C++ API의 계약을 따른다. 타입 지정 매개변수를 통한 다중\n소비자와 공유 수명은 [단일 콜백 값](CallbackValues.md)을 사용한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "## 오류와 수명\n",
+      "level": 2,
+      "title": "오류와 수명"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "list",
+      "start_line": 53,
+      "end_line": 61,
+      "raw": "- 초기 팩토리 평가가 실패하면 해당 위젯 활성화도 실패한다.\n- 이후 재평가가 실패하면 기존 유효한 함수를 유지하고 네이티브 바인딩 오류에 기록한다.\n  의존 값이 복구되면 새 함수를 게시한다.\n- 바인딩 그래프가 현재 함수를 소유하며, 저장된 이벤트는 함수 슬롯을 약하게 참조한다.\n  뷰 퇴역 후 외부 이벤트 복사본이 백엔드나 반환 함수의 자원을 보관하지 않는다.\n- 실행 중인 이벤트는 수신자와 현재 함수를 잠시 보유한다. 호출 중 함수가 교체되거나\n  자신의 조건부 패널·창을 닫아도 반환 전에 객체가 파괴되지 않는다.\n- 닫힌 스코프와 다른 UI 실행 영역에서 시작한 새 이벤트는 접수하지 않는다. UI 종료 후\n  계속할 비동기 작업의 소유권은 별도 [수명 계약](InvocationLifecycle.md)을 따른다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "초기 팩토리 평가가 실패하면 해당 위젯 활성화도 실패한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "이후 재평가가 실패하면 기존 유효한 함수를 유지하고 네이티브 바인딩 오류에 기록한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "바인딩 그래프가 현재 함수를 소유하며, 저장된 이벤트는 함수 슬롯을 약하게 참조한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "실행 중인 이벤트는 수신자와 현재 함수를 잠시 보유한다. 호출 중 함수가 교체되거나",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "닫힌 스코프와 다른 UI 실행 영역에서 시작한 새 이벤트는 접수하지 않는다. UI 종료 후",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 68,
+      "raw": "공개 C++ 도우미 `lvui::native::returned_callback`은 팩토리·호출 어댑터를 네이티브 바인딩과\n접수 경계에 연결한다. 실행 중 LVUI 파싱·소스 식 해석·VM을 사용하지 않는다.\n값이나 오류를 반환해야 하는 입력 경로는 `returned_function<Result>`를 사용한다.\n이 도우미도 현재 유효한 팩터리 결과와 활성 범위·소유 스레드를 확인하며, 실패한\n팩터리 갱신은 이전 유효 호출 대상을 유지한다. [이벤트 리스너](NativeEventListener.md)의\n입력 결과가 이 경계를 사용한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "## 검증\n",
+      "level": 2,
+      "title": "검증"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 72,
+      "end_line": 76,
+      "raw": "`LVUI.NativeCallbacks.*`는 최초 평가·의존 갱신·실패 롤백·이동 전용 함수·외부 콜백 복사·\n접수 영역·실행 중 종료를 검사한다. `iiGUI.native_returned_callbacks.*`는 실제 생성 C++를\n버튼·문자열 입력·재사용 View·중첩·조건부 교체·종료에 연결한다. 설치·경로 이동 소비자는\n독립 프로젝트에서 이 헤더를 사용하고 `void`·숫자 반환이 C++ 컴파일에서 거부되는지\n확인한다. 실제 LVRS 버튼 연결은 오브젝트 컴파일과 최종 실행 검증을 구분한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "## 2026-10-26 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-26 검증 기록"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 80,
+      "end_line": 80,
+      "raw": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 각 범위는 겹치므로 합산하지 않는다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "table",
+      "start_line": 82,
+      "end_line": 90,
+      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 140/140 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 63/63 통과 |\n| iiGUI 창 없는 회귀·생성 C++ 연결 | 48/48 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 48/48 통과 |\n| 설치·재배치 독립 소비자 | 코어 실행·컴파일러 소비자 2/2 통과 |\n| 잘못된 C++ 콜백 결과 | 독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인 |\n| 실제 LVRS 버튼·문자열 콜백 | 생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음 |\n",
+      "columns": [
+        "범위",
+        "결과"
+      ],
+      "rows": [
+        [
+          "LVUI 전체 Release CTest",
+          "140/140 통과"
+        ],
+        [
+          "관련 언어·네이티브 런타임 ASan·UBSan",
+          "63/63 통과"
+        ],
+        [
+          "iiGUI 창 없는 회귀·생성 C++ 연결",
+          "48/48 통과"
+        ],
+        [
+          "iiGUI 구현·생성 C++ ASan·UBSan",
+          "동일 48/48 통과"
+        ],
+        [
+          "설치·재배치 독립 소비자",
+          "코어 실행·컴파일러 소비자 2/2 통과"
+        ],
+        [
+          "잘못된 C++ 콜백 결과",
+          "독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인"
+        ],
+        [
+          "실제 LVRS 버튼·문자열 콜백",
+          "생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음"
+        ]
+      ]
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 96,
+      "raw": "호출 전 팩토리 평가와 의존 갱신, 이동 전용 함수, 실패 후 이전 함수 유지·복구, 재사용\nView의 수신자 포획, 문자열 이벤트, 자신의 조건부 분기와 창을 닫는 동작을 검사했다.\n검사 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.\nDreamscapes QML 관측 기준선 81개 파일의 변경은 0개이다. 이는 제품 프레임 지연·전체\n플랫폼 실행·전체 언어 완성을 입증하는 결과가 아니다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 98,
+      "end_line": 99,
+      "raw": "원시 로그·소스 해시·설치 소비자·실행 경계는\n`build/lvui-completion/returned-callbacks-verification-20261026.json`에 기록한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "C++ 메서드가 반환한 콜백",
+      "anchor": "c-메서드가-반환한-콜백",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "타입과 전달",
+      "anchor": "타입과-전달",
+      "start_line": 29
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "오류와 수명",
+      "anchor": "오류와-수명",
+      "start_line": 51
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증",
+      "anchor": "검증",
+      "start_line": 70
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-26 검증 기록",
+      "anchor": "2026-10-26-검증-기록",
+      "start_line": 78
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 9,
+        "text": "메서드 호출을 클릭 시점까지 연기하지 않는다. 반면 `PushButton(vm.increment)`는 기존",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 10,
+        "text": "수신자에 대한 지연 메서드 참조이며, 생성 중 `increment()`를 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 24,
+        "text": "프레임 갱신 자체로 매번 팩토리를 실행하지 않는다. 일반 C++ 멤버·메서드에는 기존 합성",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 33,
+        "text": "알 수 없는 C++ 반환 타입을 임의로 추정하지 않는다. 오버로드·const 접근성·인자 변환은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 57,
+        "text": "뷰 퇴역 후 외부 이벤트 복사본이 백엔드나 반환 함수의 자원을 보관하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000023",
+        "line": 60,
+        "text": "- 닫힌 스코프와 다른 UI 실행 영역에서 시작한 새 이벤트는 접수하지 않는다. UI 종료 후",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000025",
+        "line": 64,
+        "text": "접수 경계에 연결한다. 실행 중 LVUI 파싱·소스 식 해석·VM을 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 80,
+        "text": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 각 범위는 겹치므로 합산하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000037",
+        "line": 94,
+        "text": "검사 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "반환 함수의 포획 수명",
+        "target": "FactoryCaptures.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000017",
+        "label": "함수 값",
+        "target": "FunctionValues.md",
+        "kind": "relative",
+        "line": 43
+      },
+      {
+        "block_id": "b000019",
+        "label": "단일 콜백 값",
+        "target": "CallbackValues.md",
+        "kind": "relative",
+        "line": 49
+      },
+      {
+        "block_id": "b000023",
+        "label": "수명 계약",
+        "target": "InvocationLifecycle.md",
+        "kind": "relative",
+        "line": 61
+      },
+      {
+        "block_id": "b000025",
+        "label": "이벤트 리스너",
+        "target": "NativeEventListener.md",
+        "kind": "relative",
+        "line": 67
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000035",
+        "columns": [
+          "범위",
+          "결과"
+        ],
+        "rows": [
+          [
+            "LVUI 전체 Release CTest",
+            "140/140 통과"
+          ],
+          [
+            "관련 언어·네이티브 런타임 ASan·UBSan",
+            "63/63 통과"
+          ],
+          [
+            "iiGUI 창 없는 회귀·생성 C++ 연결",
+            "48/48 통과"
+          ],
+          [
+            "iiGUI 구현·생성 C++ ASan·UBSan",
+            "동일 48/48 통과"
+          ],
+          [
+            "설치·재배치 독립 소비자",
+            "코어 실행·컴파일러 소비자 2/2 통과"
+          ],
+          [
+            "잘못된 C++ 콜백 결과",
+            "독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인"
+          ],
+          [
+            "실제 LVRS 버튼·문자열 콜백",
+            "생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

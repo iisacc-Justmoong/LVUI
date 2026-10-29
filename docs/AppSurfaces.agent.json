@@ -1,0 +1,157 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e3da5fea1cc1ede6c56b85b89fe2b5f134bf82b8037a6c769eaeecd16c2663d6",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/AppSurfaces.md",
+    "sha256": "ba689810f3d80cd0cb277b43569ada289d3633cf5fcce85c45332a200f187584",
+    "bytes": 1642,
+    "line_count": 22,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "AppHeader와 AppCard 코드 생성",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# AppHeader와 AppCard 코드 생성\n",
+      "level": 1,
+      "title": "AppHeader와 AppCard 코드 생성"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "기본 `AppCard`와 `AppHeader`는 각각 [카드](NativeAppCard.md)와\n[헤더](NativeAppHeader.md)의 LVUI 독립 구현으로 생성한다. 이 문서의 나머지는\n전환 중인 `FRAMEWORK LVRS` 경로의 기존 계약을 설명한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 9,
+      "raw": "FRAMEWORK LVRS에서 두 예약어를 실제 AppHeader/AppCard::create C++ 호출로 생성한다.\n자식은 같은 빌더에 구성하며 iiGUI의 기본 콘텐츠 슬롯으로 액션 행 또는 카드 본문에\n붙인다. 기존 백엔드를 재사용하고 새 OS 컨트롤·소스 해석기를 만들지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 15,
+      "raw": "title/subtitle와 enabled, width/height, 배경·텍스트 색상, AppHeader의 compact·\nmenuVisible·각 여백/간격, AppCard의 padding·spacing·cornerRadius·shapeStyle을 받는다.\nCore Observable인 직접 C++ 멤버는 BindingScope에 구독하고 plain 멤버는 구성 시 읽는다.\nshapeStyle의 상수는 roundRect/shapeRoundRect 또는 cylinder/shapeCylinder이고 C++\n멤버는 AppCardShape 타입이다. 색상 상수는 RGB/RGBA HEX이며 C++ 색상은 WidgetColor이다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 18,
+      "raw": "onMenuClicked는 지연된 C++ 메서드 참조이다. 잘못된 색상·음수 치수·잘못된 enum·호출식과\n미구현 motionEnabled는 소스 진단이다. 지원하지 않는 바인딩을 상수로 동결하지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 22,
+      "raw": "tests/compiler.cpp의 lvrs_app_surfaces와 실제 NativeAppSurfaces 예제의 C++ 빌드·\n설치 소비자 빌드로 연결한다. 앱·테스트·self-test 실행은 전체 작업 마지막에 모은다.\n지원 경계와 자연 크기·수명은 [LVRS 계약](../../LVRS/docs/native/AppSurfaces.md)을 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "AppHeader와 AppCard 코드 생성",
+      "anchor": "appheader와-appcard-코드-생성",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000009",
+        "line": 18,
+        "text": "미구현 motionEnabled는 소스 진단이다. 지원하지 않는 바인딩을 상수로 동결하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "카드",
+        "target": "NativeAppCard.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "헤더",
+        "target": "NativeAppHeader.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000011",
+        "label": "LVRS 계약",
+        "target": "../../LVRS/docs/native/AppSurfaces.md",
+        "kind": "relative",
+        "line": 22
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

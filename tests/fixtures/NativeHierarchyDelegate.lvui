@@ -1,0 +1,18 @@
+import class Entry lvrs.HierarchyDelegateContext
+import class Row lvrs.HierarchyItem
+import vm NativeHierarchyDelegateBackend
+let Controls(row: Row): View = HStack(spacing: 2) {
+    InputField(id: "private", text: "Private", width: 44)
+    PushButton(id: "count", text: "Show", onClick: vm.action(row))
+}
+let Item(entry: Entry): View = HierarchyItem(
+    id: "row", label: vm.title(entry), baseLeftPadding: vm.padding,
+    iconSize: 0, count: 0, countWidth: 100, onClick: vm.clicked,
+    countView: Controls) {
+    import local NativeHierarchyDelegateLifetime
+}
+Window { VStack {
+    Label(id: "active", text: vm.active())
+    HierarchyList(id: "tree", controller: vm.source_controller, height: 120,
+        generatedRowHeight: 17, itemDelegate: Item)
+} }

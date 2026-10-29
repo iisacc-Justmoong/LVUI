@@ -1,0 +1,6 @@
+Window {
+    VStack {
+        var count: Int = 3
+        Label(text: count)
+    }
+}

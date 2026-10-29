@@ -1,0 +1,8 @@
+import state lvrs.StateModel
+import progress lvrs.ProgressModel
+Window { VStack {
+    Label(id: "key", text: state.key())
+    Label(id: "busy", text: state.busy())
+    Label(id: "progress", text: progress.progress())
+    Label(id: "revision", text: state.revision())
+} }

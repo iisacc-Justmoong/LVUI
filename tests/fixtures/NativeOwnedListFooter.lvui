@@ -1,0 +1,7 @@
+import vm NativeOwnedListFooterModel
+Window {
+    VStack(alignment: .leading) {
+        ListFooter(id: "footer", button1: vm.first, interactive: vm.interactive,
+                   onButtonClicked: vm.clicked)
+    }
+}

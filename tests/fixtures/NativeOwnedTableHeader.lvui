@@ -1,0 +1,8 @@
+import vm NativeOwnedTableHeaderModel
+Window {
+    VStack(alignment: .leading) {
+        TableHeader(id: "header", columns: vm.columns, columnWidths: [100, 100, 100],
+                    interactive: true, enabled: vm.enabled, visible: vm.visible, width: vm.width,
+                    onColumnClicked: vm.click)
+    }
+}

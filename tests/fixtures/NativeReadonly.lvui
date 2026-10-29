@@ -1,0 +1,25 @@
+import vm NativeReadonlyModel
+let current = vm.selected
+let alias = current
+let borrowed = vm.borrowed
+let pointer = vm.pointer
+let record = vm.record
+var draft = vm.record
+@Static let initial: String = current.title
+Window {
+    VStack {
+        InputField(id: "edit", text: "Draft")
+        Label(id: "title", text: current.title)
+        Label(id: "count", text: alias.metrics.count)
+        Label(id: "initial", text: initial)
+        Label(id: "borrowed", text: borrowed.metrics.count)
+        Label(id: "pointer", text: pointer.metrics.count)
+        Label(id: "record", text: record.title)
+        Label(id: "draft", text: draft.title)
+        VStack {
+            let local = alias
+            Label(id: "local", text: local.metrics.count)
+        }
+        if (vm.visible) { Label(id: "conditional", text: alias.title) }
+    }
+}

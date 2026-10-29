@@ -1,0 +1,9 @@
+import vm NativeOwnedNamedIconsModel
+Window {
+    VStack {
+        IconButton(id: "builtin", iconName: "generaladd", accessibilityName: "Add")
+        IconMenuButton(id: "builtin_menu", iconName: "nodesfolder")
+        IconButton(id: "custom", iconName: vm.name, iconSource: vm.source, iconRevision: vm.revision)
+        IconMenuButton(id: "custom_menu", iconName: vm.name, iconSource: vm.source, iconRevision: vm.revision)
+    }
+}

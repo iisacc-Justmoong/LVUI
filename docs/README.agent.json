@@ -1,0 +1,5008 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:3778551219dd5b5ba2e84ae9eac5a1f6656755783cf6df50a12357e1da07e5af",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/README.md",
+    "sha256": "63e8376d62f4db8f44ecb10a412b80b2452847b6a3c8461d1f7f17ff92142316",
+    "bytes": 30047,
+    "line_count": 368,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "LVUI documentation",
+    "role": "overview",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI documentation\n",
+      "level": 1,
+      "title": "LVUI documentation"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "list",
+      "start_line": 3,
+      "end_line": 43,
+      "raw": "- [LVUI-owned components and LVRS independence status](LVUIIndependence.md)\n- [LVUI-owned native motion and frame injection](NativeMotion.md)\n- [LVUI-owned image layout and host adapter](NativeImage.md)\n- [LVUI-owned buttons and interaction host](NativeButton.md)\n- [LVUI-owned divider layout and host adapter](NativeDivider.md)\n- [LVUI-owned toggle state, gesture and motion](NativeToggleSwitch.md)\n- [LVUI-owned checkbox state and drawing](NativeCheckBox.md)\n- [LVUI-owned radio groups and motion](NativeRadioButton.md)\n- [LVUI-owned materials and custom outlines](NativeMaterials.md)\n- [LVUI-owned links and navigation interface](NativeLinks.md)\n- [LVUI-owned route matching and resolver](NativeRoutes.md)\n- [LVUI-owned transactional navigation history](NativeNavigationHistory.md)\n- [LVUI-owned page routing and native host](NativePageRouter.md)\n- [LVUI-owned AppCard model and host adapter](NativeAppCard.md)\n- [LVUI-owned AppHeader model and host adapter](NativeAppHeader.md)\n- [LVUI-owned event listener and host boundary](NativeEventListener.md)\n- [LVUI-owned Avatar and legacy Card media contracts](NativeMedia.md)\n- [LVUI-owned Tooltip placement and timing model](NativeTooltipModel.md)\n- [LVUI document layout and application-side host adapter](NativeDocument.md)\n- [LVUI-owned keyword registry](KeywordRegistry.md)\n- [Whole-language and native-module completion audit](Completion.md)\n- [Value expressions and compiler-only constant folding](Expressions.md)\n- [Native dependency tracking and value operations](NativeBindings.md)\n- [Native reactive stack layout, constant folding and atomic geometry updates](NativeLayout.md)\n- [Nested view declarations and scoped imports](LocalScopes.md)\n- [Reusable visual values and lexical composition](ViewValues.md)\n- [Typed reusable components, borrowed backends and named View slots](Components.md)\n- [Shared scalar component inputs, native evaluation and dependent defaults](ScalarInputs.md)\n- [Ordered View sequences and transparent content slots](ViewSequences.md)\n- [Keyed native repetition and bounded row projections](Repetition.md)\n- [Native natural-height measurements and sparse virtual rows](MeasuredCollections.md)\n- [Native virtual collection navigation and selection](CollectionNavigation.md)\n- [Returned C++ callbacks](ReturnedCallbacks.md)\n- [Typed native event callback inputs](CallableInputs.md)\n- [Activation-owned shared callback values](CallbackValues.md)\n- [Native value-returning functions and readonly declarations](FunctionValues.md)\n- [Mutable native function values and typed C++ setters](FunctionVariables.md)\n- [Native reactive colors and iiColorManager value contracts](NativeColors.md)\n- [Native backend construction inputs](BackendConstruction.md)\n- [Activation-owned asynchronous work](ActivationWork.md)\n- [Conditional view activations](ConditionalViews.md)\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[LVUI-owned components and LVRS independence status](LVUIIndependence.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned native motion and frame injection](NativeMotion.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned image layout and host adapter](NativeImage.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned buttons and interaction host](NativeButton.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned divider layout and host adapter](NativeDivider.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned toggle state, gesture and motion](NativeToggleSwitch.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned checkbox state and drawing](NativeCheckBox.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned radio groups and motion](NativeRadioButton.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned materials and custom outlines](NativeMaterials.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned links and navigation interface](NativeLinks.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned route matching and resolver](NativeRoutes.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned transactional navigation history](NativeNavigationHistory.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned page routing and native host](NativePageRouter.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned AppCard model and host adapter](NativeAppCard.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned AppHeader model and host adapter](NativeAppHeader.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned event listener and host boundary](NativeEventListener.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned Avatar and legacy Card media contracts](NativeMedia.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned Tooltip placement and timing model](NativeTooltipModel.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI document layout and application-side host adapter](NativeDocument.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[LVUI-owned keyword registry](KeywordRegistry.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Whole-language and native-module completion audit](Completion.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Value expressions and compiler-only constant folding](Expressions.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native dependency tracking and value operations](NativeBindings.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native reactive stack layout, constant folding and atomic geometry updates](NativeLayout.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Nested view declarations and scoped imports](LocalScopes.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Reusable visual values and lexical composition](ViewValues.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Typed reusable components, borrowed backends and named View slots](Components.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Shared scalar component inputs, native evaluation and dependent defaults](ScalarInputs.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Ordered View sequences and transparent content slots](ViewSequences.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Keyed native repetition and bounded row projections](Repetition.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native natural-height measurements and sparse virtual rows](MeasuredCollections.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native virtual collection navigation and selection](CollectionNavigation.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Returned C++ callbacks](ReturnedCallbacks.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Typed native event callback inputs](CallableInputs.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Activation-owned shared callback values](CallbackValues.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native value-returning functions and readonly declarations](FunctionValues.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Mutable native function values and typed C++ setters](FunctionVariables.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native reactive colors and iiColorManager value contracts](NativeColors.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native backend construction inputs](BackendConstruction.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Activation-owned asynchronous work](ActivationWork.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Conditional view activations](ConditionalViews.md)",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "list",
+      "start_line": 45,
+      "end_line": 47,
+      "raw": "- [LVRS default style tokens and Figma snapshot](StyleTokens.md)\n- [Color and Metric value types](StyleTypes.md)\n- [Complete Color and Metric member catalog](StyleTokenMembers.md)\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[LVRS default style tokens and Figma snapshot](StyleTokens.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Color and Metric value types](StyleTypes.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Complete Color and Metric member catalog](StyleTokenMembers.md)",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 49,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "list",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "- [Current LVRS self-rendered native implementation](LVRSNative.md)\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[Current LVRS self-rendered native implementation](LVRSNative.md)",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 54,
+      "raw": "This directory separates the current implementation contract from the selected\nLVUI language and runtime design, including the native widget and acceleration\ncontract and the `View` type/child-argument rules clarified on 2026-10-22.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 60,
+      "raw": "LVUI is an AOT-compiled native language. Its current LVRS path targets iiGUI's\nown C++ widgets and the selected Metal, DirectX/Direct3D or Vulkan graphics path.\nPlatform APIs provide windows, input and presentation. Core owns the application\nlifetime; native widgets and GPU resources are instantiated by compiled C++.\nIts execution model does not include a source interpreter or language VM.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 62,
+      "end_line": 63,
+      "raw": "The selected design follows the supplied scoped-ownership proposal. The earlier\nmetadata-only import and per-click instance model is retired.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "## Reading map\n",
+      "level": 2,
+      "title": "Reading map"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "table",
+      "start_line": 67,
+      "end_line": 88,
+      "raw": "| Document | Scope | Status |\n|---|---|---|\n| [NativeWidgetRuntime.md](NativeWidgetRuntime.md) | Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment | Implemented macOS path; Core remains independent of GUI/DSL |\n| [CoreWidgetVerification.md](CoreWidgetVerification.md) | Core entrypoint, C++ widget lifetime, native LVRS appearance and installed consumer | Verification of the Core-owned application path |\n| [CompilationModel.md](CompilationModel.md) | AOT native widget compilation, Metal/DirectX/Vulkan acceleration and delivery to iiGUI | Self-rendered iiGUI C++ widgets; platform execution coverage audited separately |\n| [NativeAOT.md](NativeAOT.md) | Initial C++ generation, supported inputs, scoped callbacks and CMake | Initial AOT subset; later bindings, components, functions and ownership are linked above |\n| [EmbeddedPages.md](EmbeddedPages.md) | Independent view-body scopes in an existing builder and LVRS PageRouter AOT | Code generation and compilation verified; actual execution deferred |\n| [NativeAOTVerification.md](NativeAOTVerification.md) | Earlier Hello World, AppKit tests, binary and relocated installed-consumer checks | Historical macOS arm64 evidence; not full current-widget execution proof |\n| [Language.md](Language.md) | HTML-shaped LVUI 0.1 syntax, styles, layout and diagnostics | Current implementation contract |\n| [ComponentLanguage.md](ComponentLanguage.md) | Native C++23 tokenizer, reserved identifiers, typed child View AST and lvui-check | Implemented front end; feeds the separate native AOT generator |\n| [ReservedWords.md](ReservedWords.md) | All 107 visual LVRS component keywords, three modifiers and six core words with source evidence | Generated from the audited source snapshot; verified against the actual parser |\n| [Verification.md](Verification.md) | Earlier source inventory, front-end tests, CLI diagnostics and staged installed consumer | Historical front-end evidence; see NativeAOTVerification for native execution |\n| [DeclarativeSyntax.md](DeclarativeSyntax.md) | Common `View` type, `{}` child-view arguments, component declarations, imported instance names, bound actions and properties | Selected design; draft grammar |\n| [MethodReferences.md](MethodReferences.md) | Method references versus immediate calls, typed callback inputs and component-owned event semantics | Typed event and result-valued inputs implemented; remaining general protocols are audited separately |\n| [ReactiveState.md](ReactiveState.md) | Reactive values by default, the static exception and the supplied [increment/reset counter](examples/ReactiveCounter.lvui) | Scalar native tracking and static snapshots implemented; complete input/lifecycle coverage remains pending |\n| [VariableDeclarations.md](VariableDeclarations.md) | `let` constants, `var` variables, typed initializers and no-semicolon syntax | Selected declaration rules; full type system remains open |\n| [DeclarationAnnotations.md](DeclarationAnnotations.md) | `@Observable` and `@Static` prefix annotations; default VM binding | Selected meanings; targets, combinations and static lifetime ownership remain open |\n| [TypeImports.md](TypeImports.md) | Scoped imports that create and own C++ backend instances with public-member access | Selected ownership and access semantics |\n| [InvocationLifecycle.md](InvocationLifecycle.md) | Use tracking, scope teardown, asynchronous work and deterministic destruction | Selected lifecycle semantics |\n| [RuntimeContracts.md](RuntimeContracts.md) | C++ access, bridge information, property observation, Core integration and resource ownership | Required design capabilities; concrete APIs remain open |\n| [ViewModelQueries.md](ViewModelQueries.md) | Default VM binding, Core query value exchange, notifications, execution domains and teardown | Selected binding/communication design; LVUI adapters remain unimplemented |\n| [CounterExample.md](CounterExample.md) | An application window with an observable counter and increment/decrement buttons; [source](examples/Counter.lvui) | Hypothetical scoped-backend example |\n",
+      "columns": [
+        "Document",
+        "Scope",
+        "Status"
+      ],
+      "rows": [
+        [
+          "[NativeWidgetRuntime.md](NativeWidgetRuntime.md)",
+          "Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment",
+          "Implemented macOS path; Core remains independent of GUI/DSL"
+        ],
+        [
+          "[CoreWidgetVerification.md](CoreWidgetVerification.md)",
+          "Core entrypoint, C++ widget lifetime, native LVRS appearance and installed consumer",
+          "Verification of the Core-owned application path"
+        ],
+        [
+          "[CompilationModel.md](CompilationModel.md)",
+          "AOT native widget compilation, Metal/DirectX/Vulkan acceleration and delivery to iiGUI",
+          "Self-rendered iiGUI C++ widgets; platform execution coverage audited separately"
+        ],
+        [
+          "[NativeAOT.md](NativeAOT.md)",
+          "Initial C++ generation, supported inputs, scoped callbacks and CMake",
+          "Initial AOT subset; later bindings, components, functions and ownership are linked above"
+        ],
+        [
+          "[EmbeddedPages.md](EmbeddedPages.md)",
+          "Independent view-body scopes in an existing builder and LVRS PageRouter AOT",
+          "Code generation and compilation verified; actual execution deferred"
+        ],
+        [
+          "[NativeAOTVerification.md](NativeAOTVerification.md)",
+          "Earlier Hello World, AppKit tests, binary and relocated installed-consumer checks",
+          "Historical macOS arm64 evidence; not full current-widget execution proof"
+        ],
+        [
+          "[Language.md](Language.md)",
+          "HTML-shaped LVUI 0.1 syntax, styles, layout and diagnostics",
+          "Current implementation contract"
+        ],
+        [
+          "[ComponentLanguage.md](ComponentLanguage.md)",
+          "Native C++23 tokenizer, reserved identifiers, typed child View AST and lvui-check",
+          "Implemented front end; feeds the separate native AOT generator"
+        ],
+        [
+          "[ReservedWords.md](ReservedWords.md)",
+          "All 107 visual LVRS component keywords, three modifiers and six core words with source evidence",
+          "Generated from the audited source snapshot; verified against the actual parser"
+        ],
+        [
+          "[Verification.md](Verification.md)",
+          "Earlier source inventory, front-end tests, CLI diagnostics and staged installed consumer",
+          "Historical front-end evidence; see NativeAOTVerification for native execution"
+        ],
+        [
+          "[DeclarativeSyntax.md](DeclarativeSyntax.md)",
+          "Common `View` type, `{}` child-view arguments, component declarations, imported instance names, bound actions and properties",
+          "Selected design; draft grammar"
+        ],
+        [
+          "[MethodReferences.md](MethodReferences.md)",
+          "Method references versus immediate calls, typed callback inputs and component-owned event semantics",
+          "Typed event and result-valued inputs implemented; remaining general protocols are audited separately"
+        ],
+        [
+          "[ReactiveState.md](ReactiveState.md)",
+          "Reactive values by default, the static exception and the supplied [increment/reset counter](examples/ReactiveCounter.lvui)",
+          "Scalar native tracking and static snapshots implemented; complete input/lifecycle coverage remains pending"
+        ],
+        [
+          "[VariableDeclarations.md](VariableDeclarations.md)",
+          "`let` constants, `var` variables, typed initializers and no-semicolon syntax",
+          "Selected declaration rules; full type system remains open"
+        ],
+        [
+          "[DeclarationAnnotations.md](DeclarationAnnotations.md)",
+          "`@Observable` and `@Static` prefix annotations; default VM binding",
+          "Selected meanings; targets, combinations and static lifetime ownership remain open"
+        ],
+        [
+          "[TypeImports.md](TypeImports.md)",
+          "Scoped imports that create and own C++ backend instances with public-member access",
+          "Selected ownership and access semantics"
+        ],
+        [
+          "[InvocationLifecycle.md](InvocationLifecycle.md)",
+          "Use tracking, scope teardown, asynchronous work and deterministic destruction",
+          "Selected lifecycle semantics"
+        ],
+        [
+          "[RuntimeContracts.md](RuntimeContracts.md)",
+          "C++ access, bridge information, property observation, Core integration and resource ownership",
+          "Required design capabilities; concrete APIs remain open"
+        ],
+        [
+          "[ViewModelQueries.md](ViewModelQueries.md)",
+          "Default VM binding, Core query value exchange, notifications, execution domains and teardown",
+          "Selected binding/communication design; LVUI adapters remain unimplemented"
+        ],
+        [
+          "[CounterExample.md](CounterExample.md)",
+          "An application window with an observable counter and increment/decrement buttons; [source](examples/Counter.lvui)",
+          "Hypothetical scoped-backend example"
+        ]
+      ]
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 90,
+      "end_line": 92,
+      "raw": "The existing filenames `TypeImports.md` and `InvocationLifecycle.md` are retained\nso earlier document links continue to work. Their contents now describe scoped\ninstance ownership.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "## Selected rules\n",
+      "level": 2,
+      "title": "Selected rules"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "list",
+      "start_line": 96,
+      "end_line": 153,
+      "raw": "1. LVUI describes views through declarative component-shaped syntax. MVVM is\n   the recommended application pattern, with ViewModel state rules inspired\n   by SwiftUI. ViewModels are bindable by default; views use their public state\n   directly without a binding annotation or wrapper declaration.\n2. An imported C++ object's public members are accessible without `@export`.\n   C++ accessibility and constness apply; private and protected members are\n   not exposed by import. Native observation support implements the default\n   reactive value contract.\n3. Activating a view or component scope activates its imports and creates the\n   owned backend instances. The syntax is `import bindingName CppObjectName`,\n   with the view's use name first and the C++ backend type second.\n   For example, `import cpp Class` exposes the created instance as `cpp`.\n   Parsing or compiling a source does not construct those instances.\n4. An imported name identifies the created instance. Each separate import\n   activation creates an independent instance.\n5. Child views borrow an explicitly passed instance. Passing it to a child does\n   not create another instance or transfer ownership.\n6. Event connections and property bindings use the existing instance. Repeated\n   clicks, property evaluation and redraw do not recreate it.\n7. Destruction becomes eligible when no future-use path remains and all active\n   uses have ended. A live import binding, event connection, subscription or\n   instance-using task can constitute a use.\n8. Scope removal closes admission, removes connections, cancels pending owned\n   work and lets active uses retire. The object is destroyed immediately once\n   safe, and its owned resources are returned.\n9. Shared runtime infrastructure has a separate owner. Work that must outlive\n   the view requires an explicit transfer to a longer-lived owner.\n10. ViewModels send and receive values through iiSDKCore object-query contracts.\n    Queries support reads, writes, commands, responses and change notifications.\n11. `let` declares a constant, and `var` declares a mutable variable. Typed,\n    initialized declarations use `let name: Type = initializer` or\n    `var name: Type = initializer`, such as `var variable: Int = 6`.\n    LVUI does not use semicolon terminators.\n12. Declarations can be prefixed by `@Observable` or `@Static`.\n    `@Observable` explicitly indicates the existing default observation behavior\n    and is optional. `@Static` prevents value changes\n    during the lifetime established for that declaration; its precise owner\n    remains to be specified.\n13. LVUI is compiled ahead of time into OS-native widget code, including\n    Cocoa/AppKit and Win32, together with the selected Metal, DirectX/Direct3D\n    or Vulkan acceleration path. The compiled UI and graphics integration are\n    handed to iiGUI and mounted in the iiSDK runtime. Native widgets and GPU\n    resources are created when this code runs. Execution does not interpret\n    LVUI source or bytecode and does not use a JVM or .NET/CLR layer.\n14. `vm.method` references a method bound to its receiver; `vm.method()`\n    explicitly invokes it when evaluated. Component interfaces declare callback\n    parameter types, and component implementations decide when to invoke them.\n    The language does not hardcode button-click semantics into member access\n    or argument passing.\n15. Values use state-change tracking and binding by default, including ordinary\n    LVUI variables. `Label(text: vm.value)` follows source changes without an\n    observation annotation. `@Static` explicitly fixes a value for its lifetime.\n    This does not relax `let`, read-only or C++ constness restrictions.\n16. `View` is the common type for everything displayed visually in LVUI,\n    including visual controls, layout containers and composed views. A view can\n    take other views as child arguments through `{}`; those children can in turn\n    take further child views through nested braces. The language type does not\n    prescribe a shared C++ base class.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "LVUI describes views through declarative component-shaped syntax. MVVM is",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "An imported C++ object's public members are accessible without `@export`.",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "Activating a view or component scope activates its imports and creates the",
+          "checked": null
+        },
+        {
+          "marker": "4.",
+          "text": "An imported name identifies the created instance. Each separate import",
+          "checked": null
+        },
+        {
+          "marker": "5.",
+          "text": "Child views borrow an explicitly passed instance. Passing it to a child does",
+          "checked": null
+        },
+        {
+          "marker": "6.",
+          "text": "Event connections and property bindings use the existing instance. Repeated",
+          "checked": null
+        },
+        {
+          "marker": "7.",
+          "text": "Destruction becomes eligible when no future-use path remains and all active",
+          "checked": null
+        },
+        {
+          "marker": "8.",
+          "text": "Scope removal closes admission, removes connections, cancels pending owned",
+          "checked": null
+        },
+        {
+          "marker": "9.",
+          "text": "Shared runtime infrastructure has a separate owner. Work that must outlive",
+          "checked": null
+        },
+        {
+          "marker": "10.",
+          "text": "ViewModels send and receive values through iiSDKCore object-query contracts.",
+          "checked": null
+        },
+        {
+          "marker": "11.",
+          "text": "`let` declares a constant, and `var` declares a mutable variable. Typed,",
+          "checked": null
+        },
+        {
+          "marker": "12.",
+          "text": "Declarations can be prefixed by `@Observable` or `@Static`.",
+          "checked": null
+        },
+        {
+          "marker": "13.",
+          "text": "LVUI is compiled ahead of time into OS-native widget code, including",
+          "checked": null
+        },
+        {
+          "marker": "14.",
+          "text": "`vm.method` references a method bound to its receiver; `vm.method()`",
+          "checked": null
+        },
+        {
+          "marker": "15.",
+          "text": "Values use state-change tracking and binding by default, including ordinary",
+          "checked": null
+        },
+        {
+          "marker": "16.",
+          "text": "`View` is the common type for everything displayed visually in LVUI,",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 154,
+      "end_line": 154,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "heading",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "## Implementation boundary\n",
+      "level": 2,
+      "title": "Implementation boundary"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 156,
+      "end_line": 156,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 157,
+      "end_line": 163,
+      "raw": "The package implements two C++23 front ends: `parse`/`Document` for the existing\n[HTML-shaped grammar](Language.md), and `tokenize`/`parse_view`/`ViewDocument` for\nthe [component grammar](ComponentLanguage.md). The latter uses the LVUI-owned\nreserved-word catalog and owns typed child Views, inputs, scalar declarations and\nimport syntax. The native `lvui-check` tool validates component source files.\nThe language and native-binding targets depend on iiSDKCore Contracts; the\noptional `LVUI::Runtime` target also uses the existing Core Runtime.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 164,
+      "end_line": 164,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 165,
+      "end_line": 174,
+      "raw": "Parsing alone does not activate C++ objects or execute a UI. The separate\n`compile_native`/`lvui-compile` path generates C++23 for the documented native\nsubset. LVUI is replacing legacy components with its own C++ models and paint\nrecipes on application-supplied iiGUI host primitives. The optional legacy\n`FRAMEWORK LVRS` path still requires LVRS and has not yet been replaced. The\ngenerated activation owns imported C++ backends, reactive\nbindings, typed reusable views, function inputs, conditional content and keyed\nor virtual collections. Runtime property reads, calls and updates execute as\ncompiled native C++; there is no LVUI source evaluator or QML dependency in this\npath. OS integration stays at the window, surface and input boundaries.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 176,
+      "end_line": 181,
+      "raw": "The optional activation runtime uses the existing Core workers, serial queues\nand task scopes for explicitly registered work and retirement. Complete type\nand slot protocols, all inherited LVRS properties and behavior, rendering and\nplatform execution remain subject to the [completion audit](Completion.md).\nHeadless generated-widget execution, compile-only LVRS factories and actual\nwindow/GPU execution are distinct verification boundaries.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 182,
+      "end_line": 182,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 183,
+      "end_line": 183,
+      "raw": "## Remaining design work\n",
+      "level": 2,
+      "title": "Remaining design work"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 184,
+      "end_line": 184,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "list",
+      "start_line": 185,
+      "end_line": 194,
+      "raw": "- [Native code generation and compiled-target mounting](CompilationModel.md#open-questions).\n- [Grammar, component definitions and expressions](DeclarativeSyntax.md#open-questions).\n- [Callable types and component callback interfaces](MethodReferences.md#open-questions).\n- [Type rules, variable scopes and initialization](VariableDeclarations.md#open-questions).\n- [Annotation targets, binding projections and static lifetimes](DeclarationAnnotations.md#open-questions).\n- [Constructor inputs and import activation details](TypeImports.md#open-questions).\n- [Cancellation, teardown scheduling and invocation policies](InvocationLifecycle.md#open-questions).\n- [C++ bridge information, execution domains and runtime adapters](RuntimeContracts.md#open-questions).\n- [Default ViewModel binding, query mapping and value delivery](ViewModelQueries.md).\n- [General reactive values and the static exception](ReactiveState.md).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[Native code generation and compiled-target mounting](CompilationModel.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Grammar, component definitions and expressions](DeclarativeSyntax.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Callable types and component callback interfaces](MethodReferences.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Type rules, variable scopes and initialization](VariableDeclarations.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Annotation targets, binding projections and static lifetimes](DeclarationAnnotations.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Constructor inputs and import activation details](TypeImports.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Cancellation, teardown scheduling and invocation policies](InvocationLifecycle.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[C++ bridge information, execution domains and runtime adapters](RuntimeContracts.md#open-questions).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Default ViewModel binding, query mapping and value delivery](ViewModelQueries.md).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[General reactive values and the static exception](ReactiveState.md).",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 195,
+      "end_line": 195,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 196,
+      "end_line": 199,
+      "raw": "The ownership model and native AOT execution model are selected. The C++23/Cocoa\nsubset has concrete code generation and mounting APIs. Full language syntax,\nreactive binding formats, asynchronous scope ownership and remaining backends\nstill require implementation work.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 200,
+      "end_line": 200,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "list",
+      "start_line": 201,
+      "end_line": 201,
+      "raw": "- [Shared application style profiles](StyleProfiles.md): build-time Color/Metric members for LVUI and native C++ panels.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[Shared application style profiles](StyleProfiles.md): build-time Color/Metric members for LVUI and native C++ panels.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 202,
+      "end_line": 202,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "list",
+      "start_line": 203,
+      "end_line": 203,
+      "raw": "- [Native Window properties](NativeWindow.md): activation-owned geometry, appearance, candidate commit and retained state.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[Native Window properties](NativeWindow.md): activation-owned geometry, appearance, candidate commit and retained state.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 204,
+      "end_line": 204,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "list",
+      "start_line": 205,
+      "end_line": 211,
+      "raw": "- [Readonly C++ members](ReadonlyMembers.md): const observation, member ownership, standard references and noncomparable values.\n- [Typed C++ component inputs](ObjectInputs.md): native value types, shared or borrowed handles, dependent defaults and ownership.\n- [Native object method queries](MethodQueries.md): nested receivers, private Observable reads, source identity and reentrant evaluation.\n- [Object method references](ObjectMethodReferences.md): deferred native receivers, retained shared parents, immovable temporaries and typed callbacks.\n- [Callable fields](CallableFields.md): native function publications, retained handler versions, borrowed functors and typed field inputs.\n- [Returned factory captures](FactoryCaptures.md): selected receiver and temporary argument ownership with native overloads and mandatory copy elision.\n- [Inferred native values](InferredValues.md): C++ type based value/function storage, aliases, fixed selections and variable replacement.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "[Readonly C++ members](ReadonlyMembers.md): const observation, member ownership, standard references and noncomparable values.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Typed C++ component inputs](ObjectInputs.md): native value types, shared or borrowed handles, dependent defaults and ownership.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Native object method queries](MethodQueries.md): nested receivers, private Observable reads, source identity and reentrant evaluation.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Object method references](ObjectMethodReferences.md): deferred native receivers, retained shared parents, immovable temporaries and typed callbacks.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Callable fields](CallableFields.md): native function publications, retained handler versions, borrowed functors and typed field inputs.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Returned factory captures](FactoryCaptures.md): selected receiver and temporary argument ownership with native overloads and mandatory copy elision.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "[Inferred native values](InferredValues.md): C++ type based value/function storage, aliases, fixed selections and variable replacement.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 212,
+      "end_line": 212,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "html",
+      "start_line": 213,
+      "end_line": 213,
+      "raw": "<!-- workspace-docs:document-map:start -->\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "heading",
+      "start_line": 214,
+      "end_line": 214,
+      "raw": "## Human and agent document map\n",
+      "level": 2,
+      "title": "Human and agent document map"
+    },
+    {
+      "id": "b000047",
+      "kind": "blank",
+      "start_line": 215,
+      "end_line": 215,
+      "raw": "\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "paragraph",
+      "start_line": 216,
+      "end_line": 216,
+      "raw": "Markdown is the maintained human source. Agent JSON is a structured, source-traceable projection.\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "blank",
+      "start_line": 217,
+      "end_line": 217,
+      "raw": "\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "table",
+      "start_line": 218,
+      "end_line": 367,
+      "raw": "| Document | Agent JSON |\n| --- | --- |\n| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |\n| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |\n| [`docs/ActivationWork.md`](ActivationWork.md) | [JSON](ActivationWork.agent.json) |\n| [`docs/AppSurfaces.md`](AppSurfaces.md) | [JSON](AppSurfaces.agent.json) |\n| [`docs/BackendConstruction.md`](BackendConstruction.md) | [JSON](BackendConstruction.agent.json) |\n| [`docs/CallableFields.md`](CallableFields.md) | [JSON](CallableFields.agent.json) |\n| [`docs/CallableInputs.md`](CallableInputs.md) | [JSON](CallableInputs.agent.json) |\n| [`docs/CallbackValues.md`](CallbackValues.md) | [JSON](CallbackValues.agent.json) |\n| [`docs/CodeDocument.md`](CodeDocument.md) | [JSON](CodeDocument.agent.json) |\n| [`docs/CollectionNavigation.md`](CollectionNavigation.md) | [JSON](CollectionNavigation.agent.json) |\n| [`docs/ColorSelection.md`](ColorSelection.md) | [JSON](ColorSelection.agent.json) |\n| [`docs/CompilationModel.md`](CompilationModel.md) | [JSON](CompilationModel.agent.json) |\n| [`docs/Completion.md`](Completion.md) | [JSON](Completion.agent.json) |\n| [`docs/ComponentLanguage.md`](ComponentLanguage.md) | [JSON](ComponentLanguage.agent.json) |\n| [`docs/Components.md`](Components.md) | [JSON](Components.agent.json) |\n| [`docs/ConditionalViews.md`](ConditionalViews.md) | [JSON](ConditionalViews.agent.json) |\n| [`docs/CoreWidgetVerification.md`](CoreWidgetVerification.md) | [JSON](CoreWidgetVerification.agent.json) |\n| [`docs/CounterExample.md`](CounterExample.md) | [JSON](CounterExample.agent.json) |\n| [`docs/DeclarationAnnotations.md`](DeclarationAnnotations.md) | [JSON](DeclarationAnnotations.agent.json) |\n| [`docs/DeclarativeSyntax.md`](DeclarativeSyntax.md) | [JSON](DeclarativeSyntax.agent.json) |\n| [`docs/EditorAppearance.md`](EditorAppearance.md) | [JSON](EditorAppearance.agent.json) |\n| [`docs/EmbeddedPages.md`](EmbeddedPages.md) | [JSON](EmbeddedPages.agent.json) |\n| [`docs/Expressions.md`](Expressions.md) | [JSON](Expressions.agent.json) |\n| [`docs/FactoryCaptures.md`](FactoryCaptures.md) | [JSON](FactoryCaptures.agent.json) |\n| [`docs/FunctionValues.md`](FunctionValues.md) | [JSON](FunctionValues.agent.json) |\n| [`docs/FunctionVariables.md`](FunctionVariables.md) | [JSON](FunctionVariables.agent.json) |\n| [`docs/HierarchyDrag.md`](HierarchyDrag.md) | [JSON](HierarchyDrag.agent.json) |\n| [`docs/InferredValues.md`](InferredValues.md) | [JSON](InferredValues.agent.json) |\n| [`docs/InvocationLifecycle.md`](InvocationLifecycle.md) | [JSON](InvocationLifecycle.agent.json) |\n| [`docs/KeywordRegistry.md`](KeywordRegistry.md) | [JSON](KeywordRegistry.agent.json) |\n| [`docs/LVRSNative.md`](LVRSNative.md) | [JSON](LVRSNative.agent.json) |\n| [`docs/LVUIIndependence.md`](LVUIIndependence.md) | [JSON](LVUIIndependence.agent.json) |\n| [`docs/Language.md`](Language.md) | [JSON](Language.agent.json) |\n| [`docs/ListItemQuantity.md`](ListItemQuantity.md) | [JSON](ListItemQuantity.agent.json) |\n| [`docs/ListItemSelector.md`](ListItemSelector.md) | [JSON](ListItemSelector.agent.json) |\n| [`docs/LocalScopes.md`](LocalScopes.md) | [JSON](LocalScopes.agent.json) |\n| [`docs/MeasuredCollections.md`](MeasuredCollections.md) | [JSON](MeasuredCollections.agent.json) |\n| [`docs/MethodQueries.md`](MethodQueries.md) | [JSON](MethodQueries.agent.json) |\n| [`docs/MethodReferences.md`](MethodReferences.md) | [JSON](MethodReferences.agent.json) |\n| [`docs/NativeAOT.md`](NativeAOT.md) | [JSON](NativeAOT.agent.json) |\n| [`docs/NativeAOTVerification.md`](NativeAOTVerification.md) | [JSON](NativeAOTVerification.agent.json) |\n| [`docs/NativeAlert.md`](NativeAlert.md) | [JSON](NativeAlert.agent.json) |\n| [`docs/NativeAlertButton.md`](NativeAlertButton.md) | [JSON](NativeAlertButton.agent.json) |\n| [`docs/NativeAppCard.md`](NativeAppCard.md) | [JSON](NativeAppCard.agent.json) |\n| [`docs/NativeAppHeader.md`](NativeAppHeader.md) | [JSON](NativeAppHeader.agent.json) |\n| [`docs/NativeBindings.md`](NativeBindings.md) | [JSON](NativeBindings.agent.json) |\n| [`docs/NativeButton.md`](NativeButton.md) | [JSON](NativeButton.agent.json) |\n| [`docs/NativeCheckBox.md`](NativeCheckBox.md) | [JSON](NativeCheckBox.agent.json) |\n| [`docs/NativeCodeEditor.md`](NativeCodeEditor.md) | [JSON](NativeCodeEditor.agent.json) |\n| [`docs/NativeColorChannel.md`](NativeColorChannel.md) | [JSON](NativeColorChannel.agent.json) |\n| [`docs/NativeColorPicker.md`](NativeColorPicker.md) | [JSON](NativeColorPicker.agent.json) |\n| [`docs/NativeColorPickerButton.md`](NativeColorPickerButton.md) | [JSON](NativeColorPickerButton.agent.json) |\n| [`docs/NativeColorSurface.md`](NativeColorSurface.md) | [JSON](NativeColorSurface.agent.json) |\n| [`docs/NativeColors.md`](NativeColors.md) | [JSON](NativeColors.agent.json) |\n| [`docs/NativeComboBox.md`](NativeComboBox.md) | [JSON](NativeComboBox.agent.json) |\n| [`docs/NativeCoreValues.md`](NativeCoreValues.md) | [JSON](NativeCoreValues.agent.json) |\n| [`docs/NativeDivider.md`](NativeDivider.md) | [JSON](NativeDivider.agent.json) |\n| [`docs/NativeDocument.md`](NativeDocument.md) | [JSON](NativeDocument.agent.json) |\n| [`docs/NativeDropdownButton.md`](NativeDropdownButton.md) | [JSON](NativeDropdownButton.agent.json) |\n| [`docs/NativeEventListener.md`](NativeEventListener.md) | [JSON](NativeEventListener.agent.json) |\n| [`docs/NativeFonts.md`](NativeFonts.md) | [JSON](NativeFonts.agent.json) |\n| [`docs/NativeHelpButton.md`](NativeHelpButton.md) | [JSON](NativeHelpButton.agent.json) |\n| [`docs/NativeHierarchy.md`](NativeHierarchy.md) | [JSON](NativeHierarchy.agent.json) |\n| [`docs/NativeHierarchyPanel.md`](NativeHierarchyPanel.md) | [JSON](NativeHierarchyPanel.agent.json) |\n| [`docs/NativeHistory.md`](NativeHistory.md) | [JSON](NativeHistory.agent.json) |\n| [`docs/NativeIcons.md`](NativeIcons.md) | [JSON](NativeIcons.agent.json) |\n| [`docs/NativeImage.md`](NativeImage.md) | [JSON](NativeImage.agent.json) |\n| [`docs/NativeImages.md`](NativeImages.md) | [JSON](NativeImages.agent.json) |\n| [`docs/NativeInputField.md`](NativeInputField.md) | [JSON](NativeInputField.agent.json) |\n| [`docs/NativeLayout.md`](NativeLayout.md) | [JSON](NativeLayout.agent.json) |\n| [`docs/NativeLinks.md`](NativeLinks.md) | [JSON](NativeLinks.agent.json) |\n| [`docs/NativeMarkup.md`](NativeMarkup.md) | [JSON](NativeMarkup.agent.json) |\n| [`docs/NativeMaterials.md`](NativeMaterials.md) | [JSON](NativeMaterials.agent.json) |\n| [`docs/NativeMedia.md`](NativeMedia.md) | [JSON](NativeMedia.agent.json) |\n| [`docs/NativeMenu.md`](NativeMenu.md) | [JSON](NativeMenu.agent.json) |\n| [`docs/NativeModal.md`](NativeModal.md) | [JSON](NativeModal.agent.json) |\n| [`docs/NativeModelSources.md`](NativeModelSources.md) | [JSON](NativeModelSources.agent.json) |\n| [`docs/NativeMotion.md`](NativeMotion.md) | [JSON](NativeMotion.agent.json) |\n| [`docs/NativeNavigationHistory.md`](NativeNavigationHistory.md) | [JSON](NativeNavigationHistory.agent.json) |\n| [`docs/NativeOpacity.md`](NativeOpacity.md) | [JSON](NativeOpacity.agent.json) |\n| [`docs/NativeOwnedCard.md`](NativeOwnedCard.md) | [JSON](NativeOwnedCard.agent.json) |\n| [`docs/NativeOwnedHierarchyItem.md`](NativeOwnedHierarchyItem.md) | [JSON](NativeOwnedHierarchyItem.agent.json) |\n| [`docs/NativeOwnedHierarchyList.md`](NativeOwnedHierarchyList.md) | [JSON](NativeOwnedHierarchyList.agent.json) |\n| [`docs/NativeOwnedHierarchyToolbar.md`](NativeOwnedHierarchyToolbar.md) | [JSON](NativeOwnedHierarchyToolbar.agent.json) |\n| [`docs/NativeOwnedListFooter.md`](NativeOwnedListFooter.md) | [JSON](NativeOwnedListFooter.agent.json) |\n| [`docs/NativeOwnedListItem.md`](NativeOwnedListItem.md) | [JSON](NativeOwnedListItem.agent.json) |\n| [`docs/NativeOwnedListItemSelector.md`](NativeOwnedListItemSelector.md) | [JSON](NativeOwnedListItemSelector.agent.json) |\n| [`docs/NativeOwnedListPanel.md`](NativeOwnedListPanel.md) | [JSON](NativeOwnedListPanel.agent.json) |\n| [`docs/NativeOwnedListToolbar.md`](NativeOwnedListToolbar.md) | [JSON](NativeOwnedListToolbar.agent.json) |\n| [`docs/NativeOwnedListView.md`](NativeOwnedListView.md) | [JSON](NativeOwnedListView.agent.json) |\n| [`docs/NativeOwnedTable.md`](NativeOwnedTable.md) | [JSON](NativeOwnedTable.agent.json) |\n| [`docs/NativeOwnedTableCellItem.md`](NativeOwnedTableCellItem.md) | [JSON](NativeOwnedTableCellItem.agent.json) |\n| [`docs/NativeOwnedTableHeader.md`](NativeOwnedTableHeader.md) | [JSON](NativeOwnedTableHeader.agent.json) |\n| [`docs/NativeOwnedTableRow.md`](NativeOwnedTableRow.md) | [JSON](NativeOwnedTableRow.agent.json) |\n| [`docs/NativeOwnedToolbarButton.md`](NativeOwnedToolbarButton.md) | [JSON](NativeOwnedToolbarButton.agent.json) |\n| [`docs/NativePageRouter.md`](NativePageRouter.md) | [JSON](NativePageRouter.agent.json) |\n| [`docs/NativePlatform.md`](NativePlatform.md) | [JSON](NativePlatform.agent.json) |\n| [`docs/NativePopover.md`](NativePopover.md) | [JSON](NativePopover.agent.json) |\n| [`docs/NativeProgress.md`](NativeProgress.md) | [JSON](NativeProgress.agent.json) |\n| [`docs/NativeRadioButton.md`](NativeRadioButton.md) | [JSON](NativeRadioButton.agent.json) |\n| [`docs/NativeReadiness.md`](NativeReadiness.md) | [JSON](NativeReadiness.agent.json) |\n| [`docs/NativeReadinessVerification.md`](NativeReadinessVerification.md) | [JSON](NativeReadinessVerification.agent.json) |\n| [`docs/NativeRendering.md`](NativeRendering.md) | [JSON](NativeRendering.agent.json) |\n| [`docs/NativeRouteModels.md`](NativeRouteModels.md) | [JSON](NativeRouteModels.agent.json) |\n| [`docs/NativeRoutes.md`](NativeRoutes.md) | [JSON](NativeRoutes.agent.json) |\n| [`docs/NativeSegmentedControl.md`](NativeSegmentedControl.md) | [JSON](NativeSegmentedControl.agent.json) |\n| [`docs/NativeSheet.md`](NativeSheet.md) | [JSON](NativeSheet.agent.json) |\n| [`docs/NativeSlider.md`](NativeSlider.md) | [JSON](NativeSlider.agent.json) |\n| [`docs/NativeStepper.md`](NativeStepper.md) | [JSON](NativeStepper.agent.json) |\n| [`docs/NativeTabs.md`](NativeTabs.md) | [JSON](NativeTabs.agent.json) |\n| [`docs/NativeToggleSwitch.md`](NativeToggleSwitch.md) | [JSON](NativeToggleSwitch.agent.json) |\n| [`docs/NativeTooltip.md`](NativeTooltip.md) | [JSON](NativeTooltip.agent.json) |\n| [`docs/NativeTooltipModel.md`](NativeTooltipModel.md) | [JSON](NativeTooltipModel.agent.json) |\n| [`docs/NativeViews.md`](NativeViews.md) | [JSON](NativeViews.agent.json) |\n| [`docs/NativeWidgetRuntime.md`](NativeWidgetRuntime.md) | [JSON](NativeWidgetRuntime.agent.json) |\n| [`docs/NativeWindow.md`](NativeWindow.md) | [JSON](NativeWindow.agent.json) |\n| [`docs/ObjectInputs.md`](ObjectInputs.md) | [JSON](ObjectInputs.agent.json) |\n| [`docs/ObjectMethodReferences.md`](ObjectMethodReferences.md) | [JSON](ObjectMethodReferences.agent.json) |\n| [`docs/OwnedHierarchyModel.md`](OwnedHierarchyModel.md) | [JSON](OwnedHierarchyModel.agent.json) |\n| [`docs/OwnedListModel.md`](OwnedListModel.md) | [JSON](OwnedListModel.agent.json) |\n| [`docs/OwnedTableModel.md`](OwnedTableModel.md) | [JSON](OwnedTableModel.agent.json) |\n| [`docs/ReactiveState.md`](ReactiveState.md) | [JSON](ReactiveState.agent.json) |\n| [`docs/ReadonlyMembers.md`](ReadonlyMembers.md) | [JSON](ReadonlyMembers.agent.json) |\n| [`docs/Repetition.md`](Repetition.md) | [JSON](Repetition.agent.json) |\n| [`docs/ReservedWords.md`](ReservedWords.md) | [JSON](ReservedWords.agent.json) |\n| [`docs/ReturnedCallbacks.md`](ReturnedCallbacks.md) | [JSON](ReturnedCallbacks.agent.json) |\n| [`docs/RuntimeContracts.md`](RuntimeContracts.md) | [JSON](RuntimeContracts.agent.json) |\n| [`docs/ScalarInputs.md`](ScalarInputs.md) | [JSON](ScalarInputs.agent.json) |\n| [`docs/StyleProfiles.md`](StyleProfiles.md) | [JSON](StyleProfiles.agent.json) |\n| [`docs/StyleTokenMembers.md`](StyleTokenMembers.md) | [JSON](StyleTokenMembers.agent.json) |\n| [`docs/StyleTokens.md`](StyleTokens.md) | [JSON](StyleTokens.agent.json) |\n| [`docs/StyleTypes.md`](StyleTypes.md) | [JSON](StyleTypes.agent.json) |\n| [`docs/TableClipboard.md`](TableClipboard.md) | [JSON](TableClipboard.agent.json) |\n| [`docs/TableEditing.md`](TableEditing.md) | [JSON](TableEditing.agent.json) |\n| [`docs/TableSorting.md`](TableSorting.md) | [JSON](TableSorting.agent.json) |\n| [`docs/TableStructure.md`](TableStructure.md) | [JSON](TableStructure.agent.json) |\n| [`docs/TextInput.md`](TextInput.md) | [JSON](TextInput.agent.json) |\n| [`docs/Toolbars.md`](Toolbars.md) | [JSON](Toolbars.agent.json) |\n| [`docs/TypeImports.md`](TypeImports.md) | [JSON](TypeImports.agent.json) |\n| [`docs/VariableDeclarations.md`](VariableDeclarations.md) | [JSON](VariableDeclarations.agent.json) |\n| [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |\n| [`docs/ViewModelQueries.md`](ViewModelQueries.md) | [JSON](ViewModelQueries.agent.json) |\n| [`docs/ViewSequences.md`](ViewSequences.md) | [JSON](ViewSequences.agent.json) |\n| [`docs/ViewValues.md`](ViewValues.md) | [JSON](ViewValues.agent.json) |\n| [`docs/WindowsValidation.md`](WindowsValidation.md) | [JSON](WindowsValidation.agent.json) |\n| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |\n| [`example/README.md`](../example/README.md) | [JSON](mirrors/example/README.agent.json) |\n| [`example/StyleTokens/README.md`](../example/StyleTokens/README.md) | [JSON](mirrors/example/StyleTokens/README.agent.json) |\n",
+      "columns": [
+        "Document",
+        "Agent JSON"
+      ],
+      "rows": [
+        [
+          "[`AGENT.md`](../AGENT.md)",
+          "[JSON](entrypoints/AGENT.agent.json)"
+        ],
+        [
+          "[`README.md`](../README.md)",
+          "[JSON](entrypoints/README.agent.json)"
+        ],
+        [
+          "[`docs/ActivationWork.md`](ActivationWork.md)",
+          "[JSON](ActivationWork.agent.json)"
+        ],
+        [
+          "[`docs/AppSurfaces.md`](AppSurfaces.md)",
+          "[JSON](AppSurfaces.agent.json)"
+        ],
+        [
+          "[`docs/BackendConstruction.md`](BackendConstruction.md)",
+          "[JSON](BackendConstruction.agent.json)"
+        ],
+        [
+          "[`docs/CallableFields.md`](CallableFields.md)",
+          "[JSON](CallableFields.agent.json)"
+        ],
+        [
+          "[`docs/CallableInputs.md`](CallableInputs.md)",
+          "[JSON](CallableInputs.agent.json)"
+        ],
+        [
+          "[`docs/CallbackValues.md`](CallbackValues.md)",
+          "[JSON](CallbackValues.agent.json)"
+        ],
+        [
+          "[`docs/CodeDocument.md`](CodeDocument.md)",
+          "[JSON](CodeDocument.agent.json)"
+        ],
+        [
+          "[`docs/CollectionNavigation.md`](CollectionNavigation.md)",
+          "[JSON](CollectionNavigation.agent.json)"
+        ],
+        [
+          "[`docs/ColorSelection.md`](ColorSelection.md)",
+          "[JSON](ColorSelection.agent.json)"
+        ],
+        [
+          "[`docs/CompilationModel.md`](CompilationModel.md)",
+          "[JSON](CompilationModel.agent.json)"
+        ],
+        [
+          "[`docs/Completion.md`](Completion.md)",
+          "[JSON](Completion.agent.json)"
+        ],
+        [
+          "[`docs/ComponentLanguage.md`](ComponentLanguage.md)",
+          "[JSON](ComponentLanguage.agent.json)"
+        ],
+        [
+          "[`docs/Components.md`](Components.md)",
+          "[JSON](Components.agent.json)"
+        ],
+        [
+          "[`docs/ConditionalViews.md`](ConditionalViews.md)",
+          "[JSON](ConditionalViews.agent.json)"
+        ],
+        [
+          "[`docs/CoreWidgetVerification.md`](CoreWidgetVerification.md)",
+          "[JSON](CoreWidgetVerification.agent.json)"
+        ],
+        [
+          "[`docs/CounterExample.md`](CounterExample.md)",
+          "[JSON](CounterExample.agent.json)"
+        ],
+        [
+          "[`docs/DeclarationAnnotations.md`](DeclarationAnnotations.md)",
+          "[JSON](DeclarationAnnotations.agent.json)"
+        ],
+        [
+          "[`docs/DeclarativeSyntax.md`](DeclarativeSyntax.md)",
+          "[JSON](DeclarativeSyntax.agent.json)"
+        ],
+        [
+          "[`docs/EditorAppearance.md`](EditorAppearance.md)",
+          "[JSON](EditorAppearance.agent.json)"
+        ],
+        [
+          "[`docs/EmbeddedPages.md`](EmbeddedPages.md)",
+          "[JSON](EmbeddedPages.agent.json)"
+        ],
+        [
+          "[`docs/Expressions.md`](Expressions.md)",
+          "[JSON](Expressions.agent.json)"
+        ],
+        [
+          "[`docs/FactoryCaptures.md`](FactoryCaptures.md)",
+          "[JSON](FactoryCaptures.agent.json)"
+        ],
+        [
+          "[`docs/FunctionValues.md`](FunctionValues.md)",
+          "[JSON](FunctionValues.agent.json)"
+        ],
+        [
+          "[`docs/FunctionVariables.md`](FunctionVariables.md)",
+          "[JSON](FunctionVariables.agent.json)"
+        ],
+        [
+          "[`docs/HierarchyDrag.md`](HierarchyDrag.md)",
+          "[JSON](HierarchyDrag.agent.json)"
+        ],
+        [
+          "[`docs/InferredValues.md`](InferredValues.md)",
+          "[JSON](InferredValues.agent.json)"
+        ],
+        [
+          "[`docs/InvocationLifecycle.md`](InvocationLifecycle.md)",
+          "[JSON](InvocationLifecycle.agent.json)"
+        ],
+        [
+          "[`docs/KeywordRegistry.md`](KeywordRegistry.md)",
+          "[JSON](KeywordRegistry.agent.json)"
+        ],
+        [
+          "[`docs/LVRSNative.md`](LVRSNative.md)",
+          "[JSON](LVRSNative.agent.json)"
+        ],
+        [
+          "[`docs/LVUIIndependence.md`](LVUIIndependence.md)",
+          "[JSON](LVUIIndependence.agent.json)"
+        ],
+        [
+          "[`docs/Language.md`](Language.md)",
+          "[JSON](Language.agent.json)"
+        ],
+        [
+          "[`docs/ListItemQuantity.md`](ListItemQuantity.md)",
+          "[JSON](ListItemQuantity.agent.json)"
+        ],
+        [
+          "[`docs/ListItemSelector.md`](ListItemSelector.md)",
+          "[JSON](ListItemSelector.agent.json)"
+        ],
+        [
+          "[`docs/LocalScopes.md`](LocalScopes.md)",
+          "[JSON](LocalScopes.agent.json)"
+        ],
+        [
+          "[`docs/MeasuredCollections.md`](MeasuredCollections.md)",
+          "[JSON](MeasuredCollections.agent.json)"
+        ],
+        [
+          "[`docs/MethodQueries.md`](MethodQueries.md)",
+          "[JSON](MethodQueries.agent.json)"
+        ],
+        [
+          "[`docs/MethodReferences.md`](MethodReferences.md)",
+          "[JSON](MethodReferences.agent.json)"
+        ],
+        [
+          "[`docs/NativeAOT.md`](NativeAOT.md)",
+          "[JSON](NativeAOT.agent.json)"
+        ],
+        [
+          "[`docs/NativeAOTVerification.md`](NativeAOTVerification.md)",
+          "[JSON](NativeAOTVerification.agent.json)"
+        ],
+        [
+          "[`docs/NativeAlert.md`](NativeAlert.md)",
+          "[JSON](NativeAlert.agent.json)"
+        ],
+        [
+          "[`docs/NativeAlertButton.md`](NativeAlertButton.md)",
+          "[JSON](NativeAlertButton.agent.json)"
+        ],
+        [
+          "[`docs/NativeAppCard.md`](NativeAppCard.md)",
+          "[JSON](NativeAppCard.agent.json)"
+        ],
+        [
+          "[`docs/NativeAppHeader.md`](NativeAppHeader.md)",
+          "[JSON](NativeAppHeader.agent.json)"
+        ],
+        [
+          "[`docs/NativeBindings.md`](NativeBindings.md)",
+          "[JSON](NativeBindings.agent.json)"
+        ],
+        [
+          "[`docs/NativeButton.md`](NativeButton.md)",
+          "[JSON](NativeButton.agent.json)"
+        ],
+        [
+          "[`docs/NativeCheckBox.md`](NativeCheckBox.md)",
+          "[JSON](NativeCheckBox.agent.json)"
+        ],
+        [
+          "[`docs/NativeCodeEditor.md`](NativeCodeEditor.md)",
+          "[JSON](NativeCodeEditor.agent.json)"
+        ],
+        [
+          "[`docs/NativeColorChannel.md`](NativeColorChannel.md)",
+          "[JSON](NativeColorChannel.agent.json)"
+        ],
+        [
+          "[`docs/NativeColorPicker.md`](NativeColorPicker.md)",
+          "[JSON](NativeColorPicker.agent.json)"
+        ],
+        [
+          "[`docs/NativeColorPickerButton.md`](NativeColorPickerButton.md)",
+          "[JSON](NativeColorPickerButton.agent.json)"
+        ],
+        [
+          "[`docs/NativeColorSurface.md`](NativeColorSurface.md)",
+          "[JSON](NativeColorSurface.agent.json)"
+        ],
+        [
+          "[`docs/NativeColors.md`](NativeColors.md)",
+          "[JSON](NativeColors.agent.json)"
+        ],
+        [
+          "[`docs/NativeComboBox.md`](NativeComboBox.md)",
+          "[JSON](NativeComboBox.agent.json)"
+        ],
+        [
+          "[`docs/NativeCoreValues.md`](NativeCoreValues.md)",
+          "[JSON](NativeCoreValues.agent.json)"
+        ],
+        [
+          "[`docs/NativeDivider.md`](NativeDivider.md)",
+          "[JSON](NativeDivider.agent.json)"
+        ],
+        [
+          "[`docs/NativeDocument.md`](NativeDocument.md)",
+          "[JSON](NativeDocument.agent.json)"
+        ],
+        [
+          "[`docs/NativeDropdownButton.md`](NativeDropdownButton.md)",
+          "[JSON](NativeDropdownButton.agent.json)"
+        ],
+        [
+          "[`docs/NativeEventListener.md`](NativeEventListener.md)",
+          "[JSON](NativeEventListener.agent.json)"
+        ],
+        [
+          "[`docs/NativeFonts.md`](NativeFonts.md)",
+          "[JSON](NativeFonts.agent.json)"
+        ],
+        [
+          "[`docs/NativeHelpButton.md`](NativeHelpButton.md)",
+          "[JSON](NativeHelpButton.agent.json)"
+        ],
+        [
+          "[`docs/NativeHierarchy.md`](NativeHierarchy.md)",
+          "[JSON](NativeHierarchy.agent.json)"
+        ],
+        [
+          "[`docs/NativeHierarchyPanel.md`](NativeHierarchyPanel.md)",
+          "[JSON](NativeHierarchyPanel.agent.json)"
+        ],
+        [
+          "[`docs/NativeHistory.md`](NativeHistory.md)",
+          "[JSON](NativeHistory.agent.json)"
+        ],
+        [
+          "[`docs/NativeIcons.md`](NativeIcons.md)",
+          "[JSON](NativeIcons.agent.json)"
+        ],
+        [
+          "[`docs/NativeImage.md`](NativeImage.md)",
+          "[JSON](NativeImage.agent.json)"
+        ],
+        [
+          "[`docs/NativeImages.md`](NativeImages.md)",
+          "[JSON](NativeImages.agent.json)"
+        ],
+        [
+          "[`docs/NativeInputField.md`](NativeInputField.md)",
+          "[JSON](NativeInputField.agent.json)"
+        ],
+        [
+          "[`docs/NativeLayout.md`](NativeLayout.md)",
+          "[JSON](NativeLayout.agent.json)"
+        ],
+        [
+          "[`docs/NativeLinks.md`](NativeLinks.md)",
+          "[JSON](NativeLinks.agent.json)"
+        ],
+        [
+          "[`docs/NativeMarkup.md`](NativeMarkup.md)",
+          "[JSON](NativeMarkup.agent.json)"
+        ],
+        [
+          "[`docs/NativeMaterials.md`](NativeMaterials.md)",
+          "[JSON](NativeMaterials.agent.json)"
+        ],
+        [
+          "[`docs/NativeMedia.md`](NativeMedia.md)",
+          "[JSON](NativeMedia.agent.json)"
+        ],
+        [
+          "[`docs/NativeMenu.md`](NativeMenu.md)",
+          "[JSON](NativeMenu.agent.json)"
+        ],
+        [
+          "[`docs/NativeModal.md`](NativeModal.md)",
+          "[JSON](NativeModal.agent.json)"
+        ],
+        [
+          "[`docs/NativeModelSources.md`](NativeModelSources.md)",
+          "[JSON](NativeModelSources.agent.json)"
+        ],
+        [
+          "[`docs/NativeMotion.md`](NativeMotion.md)",
+          "[JSON](NativeMotion.agent.json)"
+        ],
+        [
+          "[`docs/NativeNavigationHistory.md`](NativeNavigationHistory.md)",
+          "[JSON](NativeNavigationHistory.agent.json)"
+        ],
+        [
+          "[`docs/NativeOpacity.md`](NativeOpacity.md)",
+          "[JSON](NativeOpacity.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedCard.md`](NativeOwnedCard.md)",
+          "[JSON](NativeOwnedCard.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedHierarchyItem.md`](NativeOwnedHierarchyItem.md)",
+          "[JSON](NativeOwnedHierarchyItem.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedHierarchyList.md`](NativeOwnedHierarchyList.md)",
+          "[JSON](NativeOwnedHierarchyList.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedHierarchyToolbar.md`](NativeOwnedHierarchyToolbar.md)",
+          "[JSON](NativeOwnedHierarchyToolbar.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedListFooter.md`](NativeOwnedListFooter.md)",
+          "[JSON](NativeOwnedListFooter.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedListItem.md`](NativeOwnedListItem.md)",
+          "[JSON](NativeOwnedListItem.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedListItemSelector.md`](NativeOwnedListItemSelector.md)",
+          "[JSON](NativeOwnedListItemSelector.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedListPanel.md`](NativeOwnedListPanel.md)",
+          "[JSON](NativeOwnedListPanel.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedListToolbar.md`](NativeOwnedListToolbar.md)",
+          "[JSON](NativeOwnedListToolbar.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedListView.md`](NativeOwnedListView.md)",
+          "[JSON](NativeOwnedListView.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedTable.md`](NativeOwnedTable.md)",
+          "[JSON](NativeOwnedTable.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedTableCellItem.md`](NativeOwnedTableCellItem.md)",
+          "[JSON](NativeOwnedTableCellItem.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedTableHeader.md`](NativeOwnedTableHeader.md)",
+          "[JSON](NativeOwnedTableHeader.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedTableRow.md`](NativeOwnedTableRow.md)",
+          "[JSON](NativeOwnedTableRow.agent.json)"
+        ],
+        [
+          "[`docs/NativeOwnedToolbarButton.md`](NativeOwnedToolbarButton.md)",
+          "[JSON](NativeOwnedToolbarButton.agent.json)"
+        ],
+        [
+          "[`docs/NativePageRouter.md`](NativePageRouter.md)",
+          "[JSON](NativePageRouter.agent.json)"
+        ],
+        [
+          "[`docs/NativePlatform.md`](NativePlatform.md)",
+          "[JSON](NativePlatform.agent.json)"
+        ],
+        [
+          "[`docs/NativePopover.md`](NativePopover.md)",
+          "[JSON](NativePopover.agent.json)"
+        ],
+        [
+          "[`docs/NativeProgress.md`](NativeProgress.md)",
+          "[JSON](NativeProgress.agent.json)"
+        ],
+        [
+          "[`docs/NativeRadioButton.md`](NativeRadioButton.md)",
+          "[JSON](NativeRadioButton.agent.json)"
+        ],
+        [
+          "[`docs/NativeReadiness.md`](NativeReadiness.md)",
+          "[JSON](NativeReadiness.agent.json)"
+        ],
+        [
+          "[`docs/NativeReadinessVerification.md`](NativeReadinessVerification.md)",
+          "[JSON](NativeReadinessVerification.agent.json)"
+        ],
+        [
+          "[`docs/NativeRendering.md`](NativeRendering.md)",
+          "[JSON](NativeRendering.agent.json)"
+        ],
+        [
+          "[`docs/NativeRouteModels.md`](NativeRouteModels.md)",
+          "[JSON](NativeRouteModels.agent.json)"
+        ],
+        [
+          "[`docs/NativeRoutes.md`](NativeRoutes.md)",
+          "[JSON](NativeRoutes.agent.json)"
+        ],
+        [
+          "[`docs/NativeSegmentedControl.md`](NativeSegmentedControl.md)",
+          "[JSON](NativeSegmentedControl.agent.json)"
+        ],
+        [
+          "[`docs/NativeSheet.md`](NativeSheet.md)",
+          "[JSON](NativeSheet.agent.json)"
+        ],
+        [
+          "[`docs/NativeSlider.md`](NativeSlider.md)",
+          "[JSON](NativeSlider.agent.json)"
+        ],
+        [
+          "[`docs/NativeStepper.md`](NativeStepper.md)",
+          "[JSON](NativeStepper.agent.json)"
+        ],
+        [
+          "[`docs/NativeTabs.md`](NativeTabs.md)",
+          "[JSON](NativeTabs.agent.json)"
+        ],
+        [
+          "[`docs/NativeToggleSwitch.md`](NativeToggleSwitch.md)",
+          "[JSON](NativeToggleSwitch.agent.json)"
+        ],
+        [
+          "[`docs/NativeTooltip.md`](NativeTooltip.md)",
+          "[JSON](NativeTooltip.agent.json)"
+        ],
+        [
+          "[`docs/NativeTooltipModel.md`](NativeTooltipModel.md)",
+          "[JSON](NativeTooltipModel.agent.json)"
+        ],
+        [
+          "[`docs/NativeViews.md`](NativeViews.md)",
+          "[JSON](NativeViews.agent.json)"
+        ],
+        [
+          "[`docs/NativeWidgetRuntime.md`](NativeWidgetRuntime.md)",
+          "[JSON](NativeWidgetRuntime.agent.json)"
+        ],
+        [
+          "[`docs/NativeWindow.md`](NativeWindow.md)",
+          "[JSON](NativeWindow.agent.json)"
+        ],
+        [
+          "[`docs/ObjectInputs.md`](ObjectInputs.md)",
+          "[JSON](ObjectInputs.agent.json)"
+        ],
+        [
+          "[`docs/ObjectMethodReferences.md`](ObjectMethodReferences.md)",
+          "[JSON](ObjectMethodReferences.agent.json)"
+        ],
+        [
+          "[`docs/OwnedHierarchyModel.md`](OwnedHierarchyModel.md)",
+          "[JSON](OwnedHierarchyModel.agent.json)"
+        ],
+        [
+          "[`docs/OwnedListModel.md`](OwnedListModel.md)",
+          "[JSON](OwnedListModel.agent.json)"
+        ],
+        [
+          "[`docs/OwnedTableModel.md`](OwnedTableModel.md)",
+          "[JSON](OwnedTableModel.agent.json)"
+        ],
+        [
+          "[`docs/ReactiveState.md`](ReactiveState.md)",
+          "[JSON](ReactiveState.agent.json)"
+        ],
+        [
+          "[`docs/ReadonlyMembers.md`](ReadonlyMembers.md)",
+          "[JSON](ReadonlyMembers.agent.json)"
+        ],
+        [
+          "[`docs/Repetition.md`](Repetition.md)",
+          "[JSON](Repetition.agent.json)"
+        ],
+        [
+          "[`docs/ReservedWords.md`](ReservedWords.md)",
+          "[JSON](ReservedWords.agent.json)"
+        ],
+        [
+          "[`docs/ReturnedCallbacks.md`](ReturnedCallbacks.md)",
+          "[JSON](ReturnedCallbacks.agent.json)"
+        ],
+        [
+          "[`docs/RuntimeContracts.md`](RuntimeContracts.md)",
+          "[JSON](RuntimeContracts.agent.json)"
+        ],
+        [
+          "[`docs/ScalarInputs.md`](ScalarInputs.md)",
+          "[JSON](ScalarInputs.agent.json)"
+        ],
+        [
+          "[`docs/StyleProfiles.md`](StyleProfiles.md)",
+          "[JSON](StyleProfiles.agent.json)"
+        ],
+        [
+          "[`docs/StyleTokenMembers.md`](StyleTokenMembers.md)",
+          "[JSON](StyleTokenMembers.agent.json)"
+        ],
+        [
+          "[`docs/StyleTokens.md`](StyleTokens.md)",
+          "[JSON](StyleTokens.agent.json)"
+        ],
+        [
+          "[`docs/StyleTypes.md`](StyleTypes.md)",
+          "[JSON](StyleTypes.agent.json)"
+        ],
+        [
+          "[`docs/TableClipboard.md`](TableClipboard.md)",
+          "[JSON](TableClipboard.agent.json)"
+        ],
+        [
+          "[`docs/TableEditing.md`](TableEditing.md)",
+          "[JSON](TableEditing.agent.json)"
+        ],
+        [
+          "[`docs/TableSorting.md`](TableSorting.md)",
+          "[JSON](TableSorting.agent.json)"
+        ],
+        [
+          "[`docs/TableStructure.md`](TableStructure.md)",
+          "[JSON](TableStructure.agent.json)"
+        ],
+        [
+          "[`docs/TextInput.md`](TextInput.md)",
+          "[JSON](TextInput.agent.json)"
+        ],
+        [
+          "[`docs/Toolbars.md`](Toolbars.md)",
+          "[JSON](Toolbars.agent.json)"
+        ],
+        [
+          "[`docs/TypeImports.md`](TypeImports.md)",
+          "[JSON](TypeImports.agent.json)"
+        ],
+        [
+          "[`docs/VariableDeclarations.md`](VariableDeclarations.md)",
+          "[JSON](VariableDeclarations.agent.json)"
+        ],
+        [
+          "[`docs/Verification.md`](Verification.md)",
+          "[JSON](Verification.agent.json)"
+        ],
+        [
+          "[`docs/ViewModelQueries.md`](ViewModelQueries.md)",
+          "[JSON](ViewModelQueries.agent.json)"
+        ],
+        [
+          "[`docs/ViewSequences.md`](ViewSequences.md)",
+          "[JSON](ViewSequences.agent.json)"
+        ],
+        [
+          "[`docs/ViewValues.md`](ViewValues.md)",
+          "[JSON](ViewValues.agent.json)"
+        ],
+        [
+          "[`docs/WindowsValidation.md`](WindowsValidation.md)",
+          "[JSON](WindowsValidation.agent.json)"
+        ],
+        [
+          "[`docs/documentation-structure.md`](documentation-structure.md)",
+          "[JSON](documentation-structure.agent.json)"
+        ],
+        [
+          "[`example/README.md`](../example/README.md)",
+          "[JSON](mirrors/example/README.agent.json)"
+        ],
+        [
+          "[`example/StyleTokens/README.md`](../example/StyleTokens/README.md)",
+          "[JSON](mirrors/example/StyleTokens/README.agent.json)"
+        ]
+      ]
+    },
+    {
+      "id": "b000051",
+      "kind": "html",
+      "start_line": 368,
+      "end_line": 368,
+      "raw": "<!-- workspace-docs:document-map:end -->\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI documentation",
+      "anchor": "lvui-documentation",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Reading map",
+      "anchor": "reading-map",
+      "start_line": 65
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Selected rules",
+      "anchor": "selected-rules",
+      "start_line": 94
+    },
+    {
+      "block_id": "b000025",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Implementation boundary",
+      "anchor": "implementation-boundary",
+      "start_line": 155
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Remaining design work",
+      "anchor": "remaining-design-work",
+      "start_line": 183
+    },
+    {
+      "block_id": "b000046",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Human and agent document map",
+      "anchor": "human-and-agent-document-map",
+      "start_line": 214
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000017",
+        "line": 86,
+        "text": "| [RuntimeContracts.md](RuntimeContracts.md) | C++ access, bridge information, property observation, Core integration and resource ownership | Required design capabilities; concrete APIs remain open |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000023",
+        "line": 114,
+        "text": "clicks, property evaluation and redraw do not recreate it.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000023",
+        "line": 121,
+        "text": "9. Shared runtime infrastructure has a separate owner. Work that must outlive",
+        "basis": "lexical_match",
+        "context": "list"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned components and LVRS independence status",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned native motion and frame injection",
+        "target": "NativeMotion.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned image layout and host adapter",
+        "target": "NativeImage.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned buttons and interaction host",
+        "target": "NativeButton.md",
+        "kind": "relative",
+        "line": 6
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned divider layout and host adapter",
+        "target": "NativeDivider.md",
+        "kind": "relative",
+        "line": 7
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned toggle state, gesture and motion",
+        "target": "NativeToggleSwitch.md",
+        "kind": "relative",
+        "line": 8
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned checkbox state and drawing",
+        "target": "NativeCheckBox.md",
+        "kind": "relative",
+        "line": 9
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned radio groups and motion",
+        "target": "NativeRadioButton.md",
+        "kind": "relative",
+        "line": 10
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned materials and custom outlines",
+        "target": "NativeMaterials.md",
+        "kind": "relative",
+        "line": 11
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned links and navigation interface",
+        "target": "NativeLinks.md",
+        "kind": "relative",
+        "line": 12
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned route matching and resolver",
+        "target": "NativeRoutes.md",
+        "kind": "relative",
+        "line": 13
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned transactional navigation history",
+        "target": "NativeNavigationHistory.md",
+        "kind": "relative",
+        "line": 14
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned page routing and native host",
+        "target": "NativePageRouter.md",
+        "kind": "relative",
+        "line": 15
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned AppCard model and host adapter",
+        "target": "NativeAppCard.md",
+        "kind": "relative",
+        "line": 16
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned AppHeader model and host adapter",
+        "target": "NativeAppHeader.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned event listener and host boundary",
+        "target": "NativeEventListener.md",
+        "kind": "relative",
+        "line": 18
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned Avatar and legacy Card media contracts",
+        "target": "NativeMedia.md",
+        "kind": "relative",
+        "line": 19
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned Tooltip placement and timing model",
+        "target": "NativeTooltipModel.md",
+        "kind": "relative",
+        "line": 20
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI document layout and application-side host adapter",
+        "target": "NativeDocument.md",
+        "kind": "relative",
+        "line": 21
+      },
+      {
+        "block_id": "b000003",
+        "label": "LVUI-owned keyword registry",
+        "target": "KeywordRegistry.md",
+        "kind": "relative",
+        "line": 22
+      },
+      {
+        "block_id": "b000003",
+        "label": "Whole-language and native-module completion audit",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 23
+      },
+      {
+        "block_id": "b000003",
+        "label": "Value expressions and compiler-only constant folding",
+        "target": "Expressions.md",
+        "kind": "relative",
+        "line": 24
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native dependency tracking and value operations",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 25
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native reactive stack layout, constant folding and atomic geometry updates",
+        "target": "NativeLayout.md",
+        "kind": "relative",
+        "line": 26
+      },
+      {
+        "block_id": "b000003",
+        "label": "Nested view declarations and scoped imports",
+        "target": "LocalScopes.md",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000003",
+        "label": "Reusable visual values and lexical composition",
+        "target": "ViewValues.md",
+        "kind": "relative",
+        "line": 28
+      },
+      {
+        "block_id": "b000003",
+        "label": "Typed reusable components, borrowed backends and named View slots",
+        "target": "Components.md",
+        "kind": "relative",
+        "line": 29
+      },
+      {
+        "block_id": "b000003",
+        "label": "Shared scalar component inputs, native evaluation and dependent defaults",
+        "target": "ScalarInputs.md",
+        "kind": "relative",
+        "line": 30
+      },
+      {
+        "block_id": "b000003",
+        "label": "Ordered View sequences and transparent content slots",
+        "target": "ViewSequences.md",
+        "kind": "relative",
+        "line": 31
+      },
+      {
+        "block_id": "b000003",
+        "label": "Keyed native repetition and bounded row projections",
+        "target": "Repetition.md",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native natural-height measurements and sparse virtual rows",
+        "target": "MeasuredCollections.md",
+        "kind": "relative",
+        "line": 33
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native virtual collection navigation and selection",
+        "target": "CollectionNavigation.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000003",
+        "label": "Returned C++ callbacks",
+        "target": "ReturnedCallbacks.md",
+        "kind": "relative",
+        "line": 35
+      },
+      {
+        "block_id": "b000003",
+        "label": "Typed native event callback inputs",
+        "target": "CallableInputs.md",
+        "kind": "relative",
+        "line": 36
+      },
+      {
+        "block_id": "b000003",
+        "label": "Activation-owned shared callback values",
+        "target": "CallbackValues.md",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native value-returning functions and readonly declarations",
+        "target": "FunctionValues.md",
+        "kind": "relative",
+        "line": 38
+      },
+      {
+        "block_id": "b000003",
+        "label": "Mutable native function values and typed C++ setters",
+        "target": "FunctionVariables.md",
+        "kind": "relative",
+        "line": 39
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native reactive colors and iiColorManager value contracts",
+        "target": "NativeColors.md",
+        "kind": "relative",
+        "line": 40
+      },
+      {
+        "block_id": "b000003",
+        "label": "Native backend construction inputs",
+        "target": "BackendConstruction.md",
+        "kind": "relative",
+        "line": 41
+      },
+      {
+        "block_id": "b000003",
+        "label": "Activation-owned asynchronous work",
+        "target": "ActivationWork.md",
+        "kind": "relative",
+        "line": 42
+      },
+      {
+        "block_id": "b000003",
+        "label": "Conditional view activations",
+        "target": "ConditionalViews.md",
+        "kind": "relative",
+        "line": 43
+      },
+      {
+        "block_id": "b000005",
+        "label": "LVRS default style tokens and Figma snapshot",
+        "target": "StyleTokens.md",
+        "kind": "relative",
+        "line": 45
+      },
+      {
+        "block_id": "b000005",
+        "label": "Color and Metric value types",
+        "target": "StyleTypes.md",
+        "kind": "relative",
+        "line": 46
+      },
+      {
+        "block_id": "b000005",
+        "label": "Complete Color and Metric member catalog",
+        "target": "StyleTokenMembers.md",
+        "kind": "relative",
+        "line": 47
+      },
+      {
+        "block_id": "b000007",
+        "label": "Current LVRS self-rendered native implementation",
+        "target": "LVRSNative.md",
+        "kind": "relative",
+        "line": 50
+      },
+      {
+        "block_id": "b000017",
+        "label": "NativeWidgetRuntime.md",
+        "target": "NativeWidgetRuntime.md",
+        "kind": "relative",
+        "line": 69
+      },
+      {
+        "block_id": "b000017",
+        "label": "CoreWidgetVerification.md",
+        "target": "CoreWidgetVerification.md",
+        "kind": "relative",
+        "line": 70
+      },
+      {
+        "block_id": "b000017",
+        "label": "CompilationModel.md",
+        "target": "CompilationModel.md",
+        "kind": "relative",
+        "line": 71
+      },
+      {
+        "block_id": "b000017",
+        "label": "NativeAOT.md",
+        "target": "NativeAOT.md",
+        "kind": "relative",
+        "line": 72
+      },
+      {
+        "block_id": "b000017",
+        "label": "EmbeddedPages.md",
+        "target": "EmbeddedPages.md",
+        "kind": "relative",
+        "line": 73
+      },
+      {
+        "block_id": "b000017",
+        "label": "NativeAOTVerification.md",
+        "target": "NativeAOTVerification.md",
+        "kind": "relative",
+        "line": 74
+      },
+      {
+        "block_id": "b000017",
+        "label": "Language.md",
+        "target": "Language.md",
+        "kind": "relative",
+        "line": 75
+      },
+      {
+        "block_id": "b000017",
+        "label": "ComponentLanguage.md",
+        "target": "ComponentLanguage.md",
+        "kind": "relative",
+        "line": 76
+      },
+      {
+        "block_id": "b000017",
+        "label": "ReservedWords.md",
+        "target": "ReservedWords.md",
+        "kind": "relative",
+        "line": 77
+      },
+      {
+        "block_id": "b000017",
+        "label": "Verification.md",
+        "target": "Verification.md",
+        "kind": "relative",
+        "line": 78
+      },
+      {
+        "block_id": "b000017",
+        "label": "DeclarativeSyntax.md",
+        "target": "DeclarativeSyntax.md",
+        "kind": "relative",
+        "line": 79
+      },
+      {
+        "block_id": "b000017",
+        "label": "MethodReferences.md",
+        "target": "MethodReferences.md",
+        "kind": "relative",
+        "line": 80
+      },
+      {
+        "block_id": "b000017",
+        "label": "ReactiveState.md",
+        "target": "ReactiveState.md",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000017",
+        "label": "increment/reset counter",
+        "target": "examples/ReactiveCounter.lvui",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000017",
+        "label": "VariableDeclarations.md",
+        "target": "VariableDeclarations.md",
+        "kind": "relative",
+        "line": 82
+      },
+      {
+        "block_id": "b000017",
+        "label": "DeclarationAnnotations.md",
+        "target": "DeclarationAnnotations.md",
+        "kind": "relative",
+        "line": 83
+      },
+      {
+        "block_id": "b000017",
+        "label": "TypeImports.md",
+        "target": "TypeImports.md",
+        "kind": "relative",
+        "line": 84
+      },
+      {
+        "block_id": "b000017",
+        "label": "InvocationLifecycle.md",
+        "target": "InvocationLifecycle.md",
+        "kind": "relative",
+        "line": 85
+      },
+      {
+        "block_id": "b000017",
+        "label": "RuntimeContracts.md",
+        "target": "RuntimeContracts.md",
+        "kind": "relative",
+        "line": 86
+      },
+      {
+        "block_id": "b000017",
+        "label": "ViewModelQueries.md",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 87
+      },
+      {
+        "block_id": "b000017",
+        "label": "CounterExample.md",
+        "target": "CounterExample.md",
+        "kind": "relative",
+        "line": 88
+      },
+      {
+        "block_id": "b000017",
+        "label": "source",
+        "target": "examples/Counter.lvui",
+        "kind": "relative",
+        "line": 88
+      },
+      {
+        "block_id": "b000027",
+        "label": "HTML-shaped grammar",
+        "target": "Language.md",
+        "kind": "relative",
+        "line": 158
+      },
+      {
+        "block_id": "b000027",
+        "label": "component grammar",
+        "target": "ComponentLanguage.md",
+        "kind": "relative",
+        "line": 159
+      },
+      {
+        "block_id": "b000031",
+        "label": "completion audit",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 179
+      },
+      {
+        "block_id": "b000035",
+        "label": "Native code generation and compiled-target mounting",
+        "target": "CompilationModel.md#open-questions",
+        "kind": "relative",
+        "line": 185
+      },
+      {
+        "block_id": "b000035",
+        "label": "Grammar, component definitions and expressions",
+        "target": "DeclarativeSyntax.md#open-questions",
+        "kind": "relative",
+        "line": 186
+      },
+      {
+        "block_id": "b000035",
+        "label": "Callable types and component callback interfaces",
+        "target": "MethodReferences.md#open-questions",
+        "kind": "relative",
+        "line": 187
+      },
+      {
+        "block_id": "b000035",
+        "label": "Type rules, variable scopes and initialization",
+        "target": "VariableDeclarations.md#open-questions",
+        "kind": "relative",
+        "line": 188
+      },
+      {
+        "block_id": "b000035",
+        "label": "Annotation targets, binding projections and static lifetimes",
+        "target": "DeclarationAnnotations.md#open-questions",
+        "kind": "relative",
+        "line": 189
+      },
+      {
+        "block_id": "b000035",
+        "label": "Constructor inputs and import activation details",
+        "target": "TypeImports.md#open-questions",
+        "kind": "relative",
+        "line": 190
+      },
+      {
+        "block_id": "b000035",
+        "label": "Cancellation, teardown scheduling and invocation policies",
+        "target": "InvocationLifecycle.md#open-questions",
+        "kind": "relative",
+        "line": 191
+      },
+      {
+        "block_id": "b000035",
+        "label": "C++ bridge information, execution domains and runtime adapters",
+        "target": "RuntimeContracts.md#open-questions",
+        "kind": "relative",
+        "line": 192
+      },
+      {
+        "block_id": "b000035",
+        "label": "Default ViewModel binding, query mapping and value delivery",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 193
+      },
+      {
+        "block_id": "b000035",
+        "label": "General reactive values and the static exception",
+        "target": "ReactiveState.md",
+        "kind": "relative",
+        "line": 194
+      },
+      {
+        "block_id": "b000039",
+        "label": "Shared application style profiles",
+        "target": "StyleProfiles.md",
+        "kind": "relative",
+        "line": 201
+      },
+      {
+        "block_id": "b000041",
+        "label": "Native Window properties",
+        "target": "NativeWindow.md",
+        "kind": "relative",
+        "line": 203
+      },
+      {
+        "block_id": "b000043",
+        "label": "Readonly C++ members",
+        "target": "ReadonlyMembers.md",
+        "kind": "relative",
+        "line": 205
+      },
+      {
+        "block_id": "b000043",
+        "label": "Typed C++ component inputs",
+        "target": "ObjectInputs.md",
+        "kind": "relative",
+        "line": 206
+      },
+      {
+        "block_id": "b000043",
+        "label": "Native object method queries",
+        "target": "MethodQueries.md",
+        "kind": "relative",
+        "line": 207
+      },
+      {
+        "block_id": "b000043",
+        "label": "Object method references",
+        "target": "ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 208
+      },
+      {
+        "block_id": "b000043",
+        "label": "Callable fields",
+        "target": "CallableFields.md",
+        "kind": "relative",
+        "line": 209
+      },
+      {
+        "block_id": "b000043",
+        "label": "Returned factory captures",
+        "target": "FactoryCaptures.md",
+        "kind": "relative",
+        "line": 210
+      },
+      {
+        "block_id": "b000043",
+        "label": "Inferred native values",
+        "target": "InferredValues.md",
+        "kind": "relative",
+        "line": 211
+      },
+      {
+        "block_id": "b000050",
+        "label": "`AGENT.md`",
+        "target": "../AGENT.md",
+        "kind": "relative",
+        "line": 220
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "entrypoints/AGENT.agent.json",
+        "kind": "relative",
+        "line": 220
+      },
+      {
+        "block_id": "b000050",
+        "label": "`README.md`",
+        "target": "../README.md",
+        "kind": "relative",
+        "line": 221
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "entrypoints/README.agent.json",
+        "kind": "relative",
+        "line": 221
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ActivationWork.md`",
+        "target": "ActivationWork.md",
+        "kind": "relative",
+        "line": 222
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ActivationWork.agent.json",
+        "kind": "relative",
+        "line": 222
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/AppSurfaces.md`",
+        "target": "AppSurfaces.md",
+        "kind": "relative",
+        "line": 223
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "AppSurfaces.agent.json",
+        "kind": "relative",
+        "line": 223
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/BackendConstruction.md`",
+        "target": "BackendConstruction.md",
+        "kind": "relative",
+        "line": 224
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "BackendConstruction.agent.json",
+        "kind": "relative",
+        "line": 224
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CallableFields.md`",
+        "target": "CallableFields.md",
+        "kind": "relative",
+        "line": 225
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CallableFields.agent.json",
+        "kind": "relative",
+        "line": 225
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CallableInputs.md`",
+        "target": "CallableInputs.md",
+        "kind": "relative",
+        "line": 226
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CallableInputs.agent.json",
+        "kind": "relative",
+        "line": 226
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CallbackValues.md`",
+        "target": "CallbackValues.md",
+        "kind": "relative",
+        "line": 227
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CallbackValues.agent.json",
+        "kind": "relative",
+        "line": 227
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CodeDocument.md`",
+        "target": "CodeDocument.md",
+        "kind": "relative",
+        "line": 228
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CodeDocument.agent.json",
+        "kind": "relative",
+        "line": 228
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CollectionNavigation.md`",
+        "target": "CollectionNavigation.md",
+        "kind": "relative",
+        "line": 229
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CollectionNavigation.agent.json",
+        "kind": "relative",
+        "line": 229
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ColorSelection.md`",
+        "target": "ColorSelection.md",
+        "kind": "relative",
+        "line": 230
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ColorSelection.agent.json",
+        "kind": "relative",
+        "line": 230
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CompilationModel.md`",
+        "target": "CompilationModel.md",
+        "kind": "relative",
+        "line": 231
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CompilationModel.agent.json",
+        "kind": "relative",
+        "line": 231
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Completion.md`",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 232
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Completion.agent.json",
+        "kind": "relative",
+        "line": 232
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ComponentLanguage.md`",
+        "target": "ComponentLanguage.md",
+        "kind": "relative",
+        "line": 233
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ComponentLanguage.agent.json",
+        "kind": "relative",
+        "line": 233
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Components.md`",
+        "target": "Components.md",
+        "kind": "relative",
+        "line": 234
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Components.agent.json",
+        "kind": "relative",
+        "line": 234
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ConditionalViews.md`",
+        "target": "ConditionalViews.md",
+        "kind": "relative",
+        "line": 235
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ConditionalViews.agent.json",
+        "kind": "relative",
+        "line": 235
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CoreWidgetVerification.md`",
+        "target": "CoreWidgetVerification.md",
+        "kind": "relative",
+        "line": 236
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CoreWidgetVerification.agent.json",
+        "kind": "relative",
+        "line": 236
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/CounterExample.md`",
+        "target": "CounterExample.md",
+        "kind": "relative",
+        "line": 237
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "CounterExample.agent.json",
+        "kind": "relative",
+        "line": 237
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/DeclarationAnnotations.md`",
+        "target": "DeclarationAnnotations.md",
+        "kind": "relative",
+        "line": 238
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "DeclarationAnnotations.agent.json",
+        "kind": "relative",
+        "line": 238
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/DeclarativeSyntax.md`",
+        "target": "DeclarativeSyntax.md",
+        "kind": "relative",
+        "line": 239
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "DeclarativeSyntax.agent.json",
+        "kind": "relative",
+        "line": 239
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/EditorAppearance.md`",
+        "target": "EditorAppearance.md",
+        "kind": "relative",
+        "line": 240
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "EditorAppearance.agent.json",
+        "kind": "relative",
+        "line": 240
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/EmbeddedPages.md`",
+        "target": "EmbeddedPages.md",
+        "kind": "relative",
+        "line": 241
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "EmbeddedPages.agent.json",
+        "kind": "relative",
+        "line": 241
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Expressions.md`",
+        "target": "Expressions.md",
+        "kind": "relative",
+        "line": 242
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Expressions.agent.json",
+        "kind": "relative",
+        "line": 242
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/FactoryCaptures.md`",
+        "target": "FactoryCaptures.md",
+        "kind": "relative",
+        "line": 243
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "FactoryCaptures.agent.json",
+        "kind": "relative",
+        "line": 243
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/FunctionValues.md`",
+        "target": "FunctionValues.md",
+        "kind": "relative",
+        "line": 244
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "FunctionValues.agent.json",
+        "kind": "relative",
+        "line": 244
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/FunctionVariables.md`",
+        "target": "FunctionVariables.md",
+        "kind": "relative",
+        "line": 245
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "FunctionVariables.agent.json",
+        "kind": "relative",
+        "line": 245
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/HierarchyDrag.md`",
+        "target": "HierarchyDrag.md",
+        "kind": "relative",
+        "line": 246
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "HierarchyDrag.agent.json",
+        "kind": "relative",
+        "line": 246
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/InferredValues.md`",
+        "target": "InferredValues.md",
+        "kind": "relative",
+        "line": 247
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "InferredValues.agent.json",
+        "kind": "relative",
+        "line": 247
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/InvocationLifecycle.md`",
+        "target": "InvocationLifecycle.md",
+        "kind": "relative",
+        "line": 248
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "InvocationLifecycle.agent.json",
+        "kind": "relative",
+        "line": 248
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/KeywordRegistry.md`",
+        "target": "KeywordRegistry.md",
+        "kind": "relative",
+        "line": 249
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "KeywordRegistry.agent.json",
+        "kind": "relative",
+        "line": 249
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/LVRSNative.md`",
+        "target": "LVRSNative.md",
+        "kind": "relative",
+        "line": 250
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "LVRSNative.agent.json",
+        "kind": "relative",
+        "line": 250
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/LVUIIndependence.md`",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 251
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "LVUIIndependence.agent.json",
+        "kind": "relative",
+        "line": 251
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Language.md`",
+        "target": "Language.md",
+        "kind": "relative",
+        "line": 252
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Language.agent.json",
+        "kind": "relative",
+        "line": 252
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ListItemQuantity.md`",
+        "target": "ListItemQuantity.md",
+        "kind": "relative",
+        "line": 253
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ListItemQuantity.agent.json",
+        "kind": "relative",
+        "line": 253
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ListItemSelector.md`",
+        "target": "ListItemSelector.md",
+        "kind": "relative",
+        "line": 254
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ListItemSelector.agent.json",
+        "kind": "relative",
+        "line": 254
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/LocalScopes.md`",
+        "target": "LocalScopes.md",
+        "kind": "relative",
+        "line": 255
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "LocalScopes.agent.json",
+        "kind": "relative",
+        "line": 255
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/MeasuredCollections.md`",
+        "target": "MeasuredCollections.md",
+        "kind": "relative",
+        "line": 256
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "MeasuredCollections.agent.json",
+        "kind": "relative",
+        "line": 256
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/MethodQueries.md`",
+        "target": "MethodQueries.md",
+        "kind": "relative",
+        "line": 257
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "MethodQueries.agent.json",
+        "kind": "relative",
+        "line": 257
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/MethodReferences.md`",
+        "target": "MethodReferences.md",
+        "kind": "relative",
+        "line": 258
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "MethodReferences.agent.json",
+        "kind": "relative",
+        "line": 258
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeAOT.md`",
+        "target": "NativeAOT.md",
+        "kind": "relative",
+        "line": 259
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeAOT.agent.json",
+        "kind": "relative",
+        "line": 259
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeAOTVerification.md`",
+        "target": "NativeAOTVerification.md",
+        "kind": "relative",
+        "line": 260
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeAOTVerification.agent.json",
+        "kind": "relative",
+        "line": 260
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeAlert.md`",
+        "target": "NativeAlert.md",
+        "kind": "relative",
+        "line": 261
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeAlert.agent.json",
+        "kind": "relative",
+        "line": 261
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeAlertButton.md`",
+        "target": "NativeAlertButton.md",
+        "kind": "relative",
+        "line": 262
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeAlertButton.agent.json",
+        "kind": "relative",
+        "line": 262
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeAppCard.md`",
+        "target": "NativeAppCard.md",
+        "kind": "relative",
+        "line": 263
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeAppCard.agent.json",
+        "kind": "relative",
+        "line": 263
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeAppHeader.md`",
+        "target": "NativeAppHeader.md",
+        "kind": "relative",
+        "line": 264
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeAppHeader.agent.json",
+        "kind": "relative",
+        "line": 264
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeBindings.md`",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 265
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeBindings.agent.json",
+        "kind": "relative",
+        "line": 265
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeButton.md`",
+        "target": "NativeButton.md",
+        "kind": "relative",
+        "line": 266
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeButton.agent.json",
+        "kind": "relative",
+        "line": 266
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeCheckBox.md`",
+        "target": "NativeCheckBox.md",
+        "kind": "relative",
+        "line": 267
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeCheckBox.agent.json",
+        "kind": "relative",
+        "line": 267
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeCodeEditor.md`",
+        "target": "NativeCodeEditor.md",
+        "kind": "relative",
+        "line": 268
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeCodeEditor.agent.json",
+        "kind": "relative",
+        "line": 268
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeColorChannel.md`",
+        "target": "NativeColorChannel.md",
+        "kind": "relative",
+        "line": 269
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeColorChannel.agent.json",
+        "kind": "relative",
+        "line": 269
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeColorPicker.md`",
+        "target": "NativeColorPicker.md",
+        "kind": "relative",
+        "line": 270
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeColorPicker.agent.json",
+        "kind": "relative",
+        "line": 270
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeColorPickerButton.md`",
+        "target": "NativeColorPickerButton.md",
+        "kind": "relative",
+        "line": 271
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeColorPickerButton.agent.json",
+        "kind": "relative",
+        "line": 271
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeColorSurface.md`",
+        "target": "NativeColorSurface.md",
+        "kind": "relative",
+        "line": 272
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeColorSurface.agent.json",
+        "kind": "relative",
+        "line": 272
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeColors.md`",
+        "target": "NativeColors.md",
+        "kind": "relative",
+        "line": 273
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeColors.agent.json",
+        "kind": "relative",
+        "line": 273
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeComboBox.md`",
+        "target": "NativeComboBox.md",
+        "kind": "relative",
+        "line": 274
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeComboBox.agent.json",
+        "kind": "relative",
+        "line": 274
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeCoreValues.md`",
+        "target": "NativeCoreValues.md",
+        "kind": "relative",
+        "line": 275
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeCoreValues.agent.json",
+        "kind": "relative",
+        "line": 275
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeDivider.md`",
+        "target": "NativeDivider.md",
+        "kind": "relative",
+        "line": 276
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeDivider.agent.json",
+        "kind": "relative",
+        "line": 276
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeDocument.md`",
+        "target": "NativeDocument.md",
+        "kind": "relative",
+        "line": 277
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeDocument.agent.json",
+        "kind": "relative",
+        "line": 277
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeDropdownButton.md`",
+        "target": "NativeDropdownButton.md",
+        "kind": "relative",
+        "line": 278
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeDropdownButton.agent.json",
+        "kind": "relative",
+        "line": 278
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeEventListener.md`",
+        "target": "NativeEventListener.md",
+        "kind": "relative",
+        "line": 279
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeEventListener.agent.json",
+        "kind": "relative",
+        "line": 279
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeFonts.md`",
+        "target": "NativeFonts.md",
+        "kind": "relative",
+        "line": 280
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeFonts.agent.json",
+        "kind": "relative",
+        "line": 280
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeHelpButton.md`",
+        "target": "NativeHelpButton.md",
+        "kind": "relative",
+        "line": 281
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeHelpButton.agent.json",
+        "kind": "relative",
+        "line": 281
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeHierarchy.md`",
+        "target": "NativeHierarchy.md",
+        "kind": "relative",
+        "line": 282
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeHierarchy.agent.json",
+        "kind": "relative",
+        "line": 282
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeHierarchyPanel.md`",
+        "target": "NativeHierarchyPanel.md",
+        "kind": "relative",
+        "line": 283
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeHierarchyPanel.agent.json",
+        "kind": "relative",
+        "line": 283
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeHistory.md`",
+        "target": "NativeHistory.md",
+        "kind": "relative",
+        "line": 284
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeHistory.agent.json",
+        "kind": "relative",
+        "line": 284
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeIcons.md`",
+        "target": "NativeIcons.md",
+        "kind": "relative",
+        "line": 285
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeIcons.agent.json",
+        "kind": "relative",
+        "line": 285
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeImage.md`",
+        "target": "NativeImage.md",
+        "kind": "relative",
+        "line": 286
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeImage.agent.json",
+        "kind": "relative",
+        "line": 286
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeImages.md`",
+        "target": "NativeImages.md",
+        "kind": "relative",
+        "line": 287
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeImages.agent.json",
+        "kind": "relative",
+        "line": 287
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeInputField.md`",
+        "target": "NativeInputField.md",
+        "kind": "relative",
+        "line": 288
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeInputField.agent.json",
+        "kind": "relative",
+        "line": 288
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeLayout.md`",
+        "target": "NativeLayout.md",
+        "kind": "relative",
+        "line": 289
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeLayout.agent.json",
+        "kind": "relative",
+        "line": 289
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeLinks.md`",
+        "target": "NativeLinks.md",
+        "kind": "relative",
+        "line": 290
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeLinks.agent.json",
+        "kind": "relative",
+        "line": 290
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeMarkup.md`",
+        "target": "NativeMarkup.md",
+        "kind": "relative",
+        "line": 291
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeMarkup.agent.json",
+        "kind": "relative",
+        "line": 291
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeMaterials.md`",
+        "target": "NativeMaterials.md",
+        "kind": "relative",
+        "line": 292
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeMaterials.agent.json",
+        "kind": "relative",
+        "line": 292
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeMedia.md`",
+        "target": "NativeMedia.md",
+        "kind": "relative",
+        "line": 293
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeMedia.agent.json",
+        "kind": "relative",
+        "line": 293
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeMenu.md`",
+        "target": "NativeMenu.md",
+        "kind": "relative",
+        "line": 294
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeMenu.agent.json",
+        "kind": "relative",
+        "line": 294
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeModal.md`",
+        "target": "NativeModal.md",
+        "kind": "relative",
+        "line": 295
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeModal.agent.json",
+        "kind": "relative",
+        "line": 295
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeModelSources.md`",
+        "target": "NativeModelSources.md",
+        "kind": "relative",
+        "line": 296
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeModelSources.agent.json",
+        "kind": "relative",
+        "line": 296
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeMotion.md`",
+        "target": "NativeMotion.md",
+        "kind": "relative",
+        "line": 297
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeMotion.agent.json",
+        "kind": "relative",
+        "line": 297
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeNavigationHistory.md`",
+        "target": "NativeNavigationHistory.md",
+        "kind": "relative",
+        "line": 298
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeNavigationHistory.agent.json",
+        "kind": "relative",
+        "line": 298
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOpacity.md`",
+        "target": "NativeOpacity.md",
+        "kind": "relative",
+        "line": 299
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOpacity.agent.json",
+        "kind": "relative",
+        "line": 299
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedCard.md`",
+        "target": "NativeOwnedCard.md",
+        "kind": "relative",
+        "line": 300
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedCard.agent.json",
+        "kind": "relative",
+        "line": 300
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedHierarchyItem.md`",
+        "target": "NativeOwnedHierarchyItem.md",
+        "kind": "relative",
+        "line": 301
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedHierarchyItem.agent.json",
+        "kind": "relative",
+        "line": 301
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedHierarchyList.md`",
+        "target": "NativeOwnedHierarchyList.md",
+        "kind": "relative",
+        "line": 302
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedHierarchyList.agent.json",
+        "kind": "relative",
+        "line": 302
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedHierarchyToolbar.md`",
+        "target": "NativeOwnedHierarchyToolbar.md",
+        "kind": "relative",
+        "line": 303
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedHierarchyToolbar.agent.json",
+        "kind": "relative",
+        "line": 303
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedListFooter.md`",
+        "target": "NativeOwnedListFooter.md",
+        "kind": "relative",
+        "line": 304
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedListFooter.agent.json",
+        "kind": "relative",
+        "line": 304
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedListItem.md`",
+        "target": "NativeOwnedListItem.md",
+        "kind": "relative",
+        "line": 305
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedListItem.agent.json",
+        "kind": "relative",
+        "line": 305
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedListItemSelector.md`",
+        "target": "NativeOwnedListItemSelector.md",
+        "kind": "relative",
+        "line": 306
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedListItemSelector.agent.json",
+        "kind": "relative",
+        "line": 306
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedListPanel.md`",
+        "target": "NativeOwnedListPanel.md",
+        "kind": "relative",
+        "line": 307
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedListPanel.agent.json",
+        "kind": "relative",
+        "line": 307
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedListToolbar.md`",
+        "target": "NativeOwnedListToolbar.md",
+        "kind": "relative",
+        "line": 308
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedListToolbar.agent.json",
+        "kind": "relative",
+        "line": 308
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedListView.md`",
+        "target": "NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 309
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedListView.agent.json",
+        "kind": "relative",
+        "line": 309
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedTable.md`",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 310
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedTable.agent.json",
+        "kind": "relative",
+        "line": 310
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedTableCellItem.md`",
+        "target": "NativeOwnedTableCellItem.md",
+        "kind": "relative",
+        "line": 311
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedTableCellItem.agent.json",
+        "kind": "relative",
+        "line": 311
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedTableHeader.md`",
+        "target": "NativeOwnedTableHeader.md",
+        "kind": "relative",
+        "line": 312
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedTableHeader.agent.json",
+        "kind": "relative",
+        "line": 312
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedTableRow.md`",
+        "target": "NativeOwnedTableRow.md",
+        "kind": "relative",
+        "line": 313
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedTableRow.agent.json",
+        "kind": "relative",
+        "line": 313
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeOwnedToolbarButton.md`",
+        "target": "NativeOwnedToolbarButton.md",
+        "kind": "relative",
+        "line": 314
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeOwnedToolbarButton.agent.json",
+        "kind": "relative",
+        "line": 314
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativePageRouter.md`",
+        "target": "NativePageRouter.md",
+        "kind": "relative",
+        "line": 315
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativePageRouter.agent.json",
+        "kind": "relative",
+        "line": 315
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativePlatform.md`",
+        "target": "NativePlatform.md",
+        "kind": "relative",
+        "line": 316
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativePlatform.agent.json",
+        "kind": "relative",
+        "line": 316
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativePopover.md`",
+        "target": "NativePopover.md",
+        "kind": "relative",
+        "line": 317
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativePopover.agent.json",
+        "kind": "relative",
+        "line": 317
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeProgress.md`",
+        "target": "NativeProgress.md",
+        "kind": "relative",
+        "line": 318
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeProgress.agent.json",
+        "kind": "relative",
+        "line": 318
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeRadioButton.md`",
+        "target": "NativeRadioButton.md",
+        "kind": "relative",
+        "line": 319
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeRadioButton.agent.json",
+        "kind": "relative",
+        "line": 319
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeReadiness.md`",
+        "target": "NativeReadiness.md",
+        "kind": "relative",
+        "line": 320
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeReadiness.agent.json",
+        "kind": "relative",
+        "line": 320
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeReadinessVerification.md`",
+        "target": "NativeReadinessVerification.md",
+        "kind": "relative",
+        "line": 321
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeReadinessVerification.agent.json",
+        "kind": "relative",
+        "line": 321
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeRendering.md`",
+        "target": "NativeRendering.md",
+        "kind": "relative",
+        "line": 322
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeRendering.agent.json",
+        "kind": "relative",
+        "line": 322
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeRouteModels.md`",
+        "target": "NativeRouteModels.md",
+        "kind": "relative",
+        "line": 323
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeRouteModels.agent.json",
+        "kind": "relative",
+        "line": 323
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeRoutes.md`",
+        "target": "NativeRoutes.md",
+        "kind": "relative",
+        "line": 324
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeRoutes.agent.json",
+        "kind": "relative",
+        "line": 324
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeSegmentedControl.md`",
+        "target": "NativeSegmentedControl.md",
+        "kind": "relative",
+        "line": 325
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeSegmentedControl.agent.json",
+        "kind": "relative",
+        "line": 325
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeSheet.md`",
+        "target": "NativeSheet.md",
+        "kind": "relative",
+        "line": 326
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeSheet.agent.json",
+        "kind": "relative",
+        "line": 326
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeSlider.md`",
+        "target": "NativeSlider.md",
+        "kind": "relative",
+        "line": 327
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeSlider.agent.json",
+        "kind": "relative",
+        "line": 327
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeStepper.md`",
+        "target": "NativeStepper.md",
+        "kind": "relative",
+        "line": 328
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeStepper.agent.json",
+        "kind": "relative",
+        "line": 328
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeTabs.md`",
+        "target": "NativeTabs.md",
+        "kind": "relative",
+        "line": 329
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeTabs.agent.json",
+        "kind": "relative",
+        "line": 329
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeToggleSwitch.md`",
+        "target": "NativeToggleSwitch.md",
+        "kind": "relative",
+        "line": 330
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeToggleSwitch.agent.json",
+        "kind": "relative",
+        "line": 330
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeTooltip.md`",
+        "target": "NativeTooltip.md",
+        "kind": "relative",
+        "line": 331
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeTooltip.agent.json",
+        "kind": "relative",
+        "line": 331
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeTooltipModel.md`",
+        "target": "NativeTooltipModel.md",
+        "kind": "relative",
+        "line": 332
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeTooltipModel.agent.json",
+        "kind": "relative",
+        "line": 332
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeViews.md`",
+        "target": "NativeViews.md",
+        "kind": "relative",
+        "line": 333
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeViews.agent.json",
+        "kind": "relative",
+        "line": 333
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeWidgetRuntime.md`",
+        "target": "NativeWidgetRuntime.md",
+        "kind": "relative",
+        "line": 334
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeWidgetRuntime.agent.json",
+        "kind": "relative",
+        "line": 334
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/NativeWindow.md`",
+        "target": "NativeWindow.md",
+        "kind": "relative",
+        "line": 335
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "NativeWindow.agent.json",
+        "kind": "relative",
+        "line": 335
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ObjectInputs.md`",
+        "target": "ObjectInputs.md",
+        "kind": "relative",
+        "line": 336
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ObjectInputs.agent.json",
+        "kind": "relative",
+        "line": 336
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ObjectMethodReferences.md`",
+        "target": "ObjectMethodReferences.md",
+        "kind": "relative",
+        "line": 337
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ObjectMethodReferences.agent.json",
+        "kind": "relative",
+        "line": 337
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/OwnedHierarchyModel.md`",
+        "target": "OwnedHierarchyModel.md",
+        "kind": "relative",
+        "line": 338
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "OwnedHierarchyModel.agent.json",
+        "kind": "relative",
+        "line": 338
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/OwnedListModel.md`",
+        "target": "OwnedListModel.md",
+        "kind": "relative",
+        "line": 339
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "OwnedListModel.agent.json",
+        "kind": "relative",
+        "line": 339
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/OwnedTableModel.md`",
+        "target": "OwnedTableModel.md",
+        "kind": "relative",
+        "line": 340
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "OwnedTableModel.agent.json",
+        "kind": "relative",
+        "line": 340
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ReactiveState.md`",
+        "target": "ReactiveState.md",
+        "kind": "relative",
+        "line": 341
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ReactiveState.agent.json",
+        "kind": "relative",
+        "line": 341
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ReadonlyMembers.md`",
+        "target": "ReadonlyMembers.md",
+        "kind": "relative",
+        "line": 342
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ReadonlyMembers.agent.json",
+        "kind": "relative",
+        "line": 342
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Repetition.md`",
+        "target": "Repetition.md",
+        "kind": "relative",
+        "line": 343
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Repetition.agent.json",
+        "kind": "relative",
+        "line": 343
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ReservedWords.md`",
+        "target": "ReservedWords.md",
+        "kind": "relative",
+        "line": 344
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ReservedWords.agent.json",
+        "kind": "relative",
+        "line": 344
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ReturnedCallbacks.md`",
+        "target": "ReturnedCallbacks.md",
+        "kind": "relative",
+        "line": 345
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ReturnedCallbacks.agent.json",
+        "kind": "relative",
+        "line": 345
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/RuntimeContracts.md`",
+        "target": "RuntimeContracts.md",
+        "kind": "relative",
+        "line": 346
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "RuntimeContracts.agent.json",
+        "kind": "relative",
+        "line": 346
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ScalarInputs.md`",
+        "target": "ScalarInputs.md",
+        "kind": "relative",
+        "line": 347
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ScalarInputs.agent.json",
+        "kind": "relative",
+        "line": 347
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/StyleProfiles.md`",
+        "target": "StyleProfiles.md",
+        "kind": "relative",
+        "line": 348
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "StyleProfiles.agent.json",
+        "kind": "relative",
+        "line": 348
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/StyleTokenMembers.md`",
+        "target": "StyleTokenMembers.md",
+        "kind": "relative",
+        "line": 349
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "StyleTokenMembers.agent.json",
+        "kind": "relative",
+        "line": 349
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/StyleTokens.md`",
+        "target": "StyleTokens.md",
+        "kind": "relative",
+        "line": 350
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "StyleTokens.agent.json",
+        "kind": "relative",
+        "line": 350
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/StyleTypes.md`",
+        "target": "StyleTypes.md",
+        "kind": "relative",
+        "line": 351
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "StyleTypes.agent.json",
+        "kind": "relative",
+        "line": 351
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/TableClipboard.md`",
+        "target": "TableClipboard.md",
+        "kind": "relative",
+        "line": 352
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "TableClipboard.agent.json",
+        "kind": "relative",
+        "line": 352
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/TableEditing.md`",
+        "target": "TableEditing.md",
+        "kind": "relative",
+        "line": 353
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "TableEditing.agent.json",
+        "kind": "relative",
+        "line": 353
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/TableSorting.md`",
+        "target": "TableSorting.md",
+        "kind": "relative",
+        "line": 354
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "TableSorting.agent.json",
+        "kind": "relative",
+        "line": 354
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/TableStructure.md`",
+        "target": "TableStructure.md",
+        "kind": "relative",
+        "line": 355
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "TableStructure.agent.json",
+        "kind": "relative",
+        "line": 355
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/TextInput.md`",
+        "target": "TextInput.md",
+        "kind": "relative",
+        "line": 356
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "TextInput.agent.json",
+        "kind": "relative",
+        "line": 356
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Toolbars.md`",
+        "target": "Toolbars.md",
+        "kind": "relative",
+        "line": 357
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Toolbars.agent.json",
+        "kind": "relative",
+        "line": 357
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/TypeImports.md`",
+        "target": "TypeImports.md",
+        "kind": "relative",
+        "line": 358
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "TypeImports.agent.json",
+        "kind": "relative",
+        "line": 358
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/VariableDeclarations.md`",
+        "target": "VariableDeclarations.md",
+        "kind": "relative",
+        "line": 359
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "VariableDeclarations.agent.json",
+        "kind": "relative",
+        "line": 359
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/Verification.md`",
+        "target": "Verification.md",
+        "kind": "relative",
+        "line": 360
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "Verification.agent.json",
+        "kind": "relative",
+        "line": 360
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ViewModelQueries.md`",
+        "target": "ViewModelQueries.md",
+        "kind": "relative",
+        "line": 361
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ViewModelQueries.agent.json",
+        "kind": "relative",
+        "line": 361
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ViewSequences.md`",
+        "target": "ViewSequences.md",
+        "kind": "relative",
+        "line": 362
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ViewSequences.agent.json",
+        "kind": "relative",
+        "line": 362
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/ViewValues.md`",
+        "target": "ViewValues.md",
+        "kind": "relative",
+        "line": 363
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "ViewValues.agent.json",
+        "kind": "relative",
+        "line": 363
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/WindowsValidation.md`",
+        "target": "WindowsValidation.md",
+        "kind": "relative",
+        "line": 364
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "WindowsValidation.agent.json",
+        "kind": "relative",
+        "line": 364
+      },
+      {
+        "block_id": "b000050",
+        "label": "`docs/documentation-structure.md`",
+        "target": "documentation-structure.md",
+        "kind": "relative",
+        "line": 365
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "documentation-structure.agent.json",
+        "kind": "relative",
+        "line": 365
+      },
+      {
+        "block_id": "b000050",
+        "label": "`example/README.md`",
+        "target": "../example/README.md",
+        "kind": "relative",
+        "line": 366
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "mirrors/example/README.agent.json",
+        "kind": "relative",
+        "line": 366
+      },
+      {
+        "block_id": "b000050",
+        "label": "`example/StyleTokens/README.md`",
+        "target": "../example/StyleTokens/README.md",
+        "kind": "relative",
+        "line": 367
+      },
+      {
+        "block_id": "b000050",
+        "label": "JSON",
+        "target": "mirrors/example/StyleTokens/README.agent.json",
+        "kind": "relative",
+        "line": 367
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000017",
+        "columns": [
+          "Document",
+          "Scope",
+          "Status"
+        ],
+        "rows": [
+          [
+            "[NativeWidgetRuntime.md](NativeWidgetRuntime.md)",
+            "Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment",
+            "Implemented macOS path; Core remains independent of GUI/DSL"
+          ],
+          [
+            "[CoreWidgetVerification.md](CoreWidgetVerification.md)",
+            "Core entrypoint, C++ widget lifetime, native LVRS appearance and installed consumer",
+            "Verification of the Core-owned application path"
+          ],
+          [
+            "[CompilationModel.md](CompilationModel.md)",
+            "AOT native widget compilation, Metal/DirectX/Vulkan acceleration and delivery to iiGUI",
+            "Self-rendered iiGUI C++ widgets; platform execution coverage audited separately"
+          ],
+          [
+            "[NativeAOT.md](NativeAOT.md)",
+            "Initial C++ generation, supported inputs, scoped callbacks and CMake",
+            "Initial AOT subset; later bindings, components, functions and ownership are linked above"
+          ],
+          [
+            "[EmbeddedPages.md](EmbeddedPages.md)",
+            "Independent view-body scopes in an existing builder and LVRS PageRouter AOT",
+            "Code generation and compilation verified; actual execution deferred"
+          ],
+          [
+            "[NativeAOTVerification.md](NativeAOTVerification.md)",
+            "Earlier Hello World, AppKit tests, binary and relocated installed-consumer checks",
+            "Historical macOS arm64 evidence; not full current-widget execution proof"
+          ],
+          [
+            "[Language.md](Language.md)",
+            "HTML-shaped LVUI 0.1 syntax, styles, layout and diagnostics",
+            "Current implementation contract"
+          ],
+          [
+            "[ComponentLanguage.md](ComponentLanguage.md)",
+            "Native C++23 tokenizer, reserved identifiers, typed child View AST and lvui-check",
+            "Implemented front end; feeds the separate native AOT generator"
+          ],
+          [
+            "[ReservedWords.md](ReservedWords.md)",
+            "All 107 visual LVRS component keywords, three modifiers and six core words with source evidence",
+            "Generated from the audited source snapshot; verified against the actual parser"
+          ],
+          [
+            "[Verification.md](Verification.md)",
+            "Earlier source inventory, front-end tests, CLI diagnostics and staged installed consumer",
+            "Historical front-end evidence; see NativeAOTVerification for native execution"
+          ],
+          [
+            "[DeclarativeSyntax.md](DeclarativeSyntax.md)",
+            "Common `View` type, `{}` child-view arguments, component declarations, imported instance names, bound actions and properties",
+            "Selected design; draft grammar"
+          ],
+          [
+            "[MethodReferences.md](MethodReferences.md)",
+            "Method references versus immediate calls, typed callback inputs and component-owned event semantics",
+            "Typed event and result-valued inputs implemented; remaining general protocols are audited separately"
+          ],
+          [
+            "[ReactiveState.md](ReactiveState.md)",
+            "Reactive values by default, the static exception and the supplied [increment/reset counter](examples/ReactiveCounter.lvui)",
+            "Scalar native tracking and static snapshots implemented; complete input/lifecycle coverage remains pending"
+          ],
+          [
+            "[VariableDeclarations.md](VariableDeclarations.md)",
+            "`let` constants, `var` variables, typed initializers and no-semicolon syntax",
+            "Selected declaration rules; full type system remains open"
+          ],
+          [
+            "[DeclarationAnnotations.md](DeclarationAnnotations.md)",
+            "`@Observable` and `@Static` prefix annotations; default VM binding",
+            "Selected meanings; targets, combinations and static lifetime ownership remain open"
+          ],
+          [
+            "[TypeImports.md](TypeImports.md)",
+            "Scoped imports that create and own C++ backend instances with public-member access",
+            "Selected ownership and access semantics"
+          ],
+          [
+            "[InvocationLifecycle.md](InvocationLifecycle.md)",
+            "Use tracking, scope teardown, asynchronous work and deterministic destruction",
+            "Selected lifecycle semantics"
+          ],
+          [
+            "[RuntimeContracts.md](RuntimeContracts.md)",
+            "C++ access, bridge information, property observation, Core integration and resource ownership",
+            "Required design capabilities; concrete APIs remain open"
+          ],
+          [
+            "[ViewModelQueries.md](ViewModelQueries.md)",
+            "Default VM binding, Core query value exchange, notifications, execution domains and teardown",
+            "Selected binding/communication design; LVUI adapters remain unimplemented"
+          ],
+          [
+            "[CounterExample.md](CounterExample.md)",
+            "An application window with an observable counter and increment/decrement buttons; [source](examples/Counter.lvui)",
+            "Hypothetical scoped-backend example"
+          ]
+        ]
+      },
+      {
+        "block_id": "b000050",
+        "columns": [
+          "Document",
+          "Agent JSON"
+        ],
+        "rows": [
+          [
+            "[`AGENT.md`](../AGENT.md)",
+            "[JSON](entrypoints/AGENT.agent.json)"
+          ],
+          [
+            "[`README.md`](../README.md)",
+            "[JSON](entrypoints/README.agent.json)"
+          ],
+          [
+            "[`docs/ActivationWork.md`](ActivationWork.md)",
+            "[JSON](ActivationWork.agent.json)"
+          ],
+          [
+            "[`docs/AppSurfaces.md`](AppSurfaces.md)",
+            "[JSON](AppSurfaces.agent.json)"
+          ],
+          [
+            "[`docs/BackendConstruction.md`](BackendConstruction.md)",
+            "[JSON](BackendConstruction.agent.json)"
+          ],
+          [
+            "[`docs/CallableFields.md`](CallableFields.md)",
+            "[JSON](CallableFields.agent.json)"
+          ],
+          [
+            "[`docs/CallableInputs.md`](CallableInputs.md)",
+            "[JSON](CallableInputs.agent.json)"
+          ],
+          [
+            "[`docs/CallbackValues.md`](CallbackValues.md)",
+            "[JSON](CallbackValues.agent.json)"
+          ],
+          [
+            "[`docs/CodeDocument.md`](CodeDocument.md)",
+            "[JSON](CodeDocument.agent.json)"
+          ],
+          [
+            "[`docs/CollectionNavigation.md`](CollectionNavigation.md)",
+            "[JSON](CollectionNavigation.agent.json)"
+          ],
+          [
+            "[`docs/ColorSelection.md`](ColorSelection.md)",
+            "[JSON](ColorSelection.agent.json)"
+          ],
+          [
+            "[`docs/CompilationModel.md`](CompilationModel.md)",
+            "[JSON](CompilationModel.agent.json)"
+          ],
+          [
+            "[`docs/Completion.md`](Completion.md)",
+            "[JSON](Completion.agent.json)"
+          ],
+          [
+            "[`docs/ComponentLanguage.md`](ComponentLanguage.md)",
+            "[JSON](ComponentLanguage.agent.json)"
+          ],
+          [
+            "[`docs/Components.md`](Components.md)",
+            "[JSON](Components.agent.json)"
+          ],
+          [
+            "[`docs/ConditionalViews.md`](ConditionalViews.md)",
+            "[JSON](ConditionalViews.agent.json)"
+          ],
+          [
+            "[`docs/CoreWidgetVerification.md`](CoreWidgetVerification.md)",
+            "[JSON](CoreWidgetVerification.agent.json)"
+          ],
+          [
+            "[`docs/CounterExample.md`](CounterExample.md)",
+            "[JSON](CounterExample.agent.json)"
+          ],
+          [
+            "[`docs/DeclarationAnnotations.md`](DeclarationAnnotations.md)",
+            "[JSON](DeclarationAnnotations.agent.json)"
+          ],
+          [
+            "[`docs/DeclarativeSyntax.md`](DeclarativeSyntax.md)",
+            "[JSON](DeclarativeSyntax.agent.json)"
+          ],
+          [
+            "[`docs/EditorAppearance.md`](EditorAppearance.md)",
+            "[JSON](EditorAppearance.agent.json)"
+          ],
+          [
+            "[`docs/EmbeddedPages.md`](EmbeddedPages.md)",
+            "[JSON](EmbeddedPages.agent.json)"
+          ],
+          [
+            "[`docs/Expressions.md`](Expressions.md)",
+            "[JSON](Expressions.agent.json)"
+          ],
+          [
+            "[`docs/FactoryCaptures.md`](FactoryCaptures.md)",
+            "[JSON](FactoryCaptures.agent.json)"
+          ],
+          [
+            "[`docs/FunctionValues.md`](FunctionValues.md)",
+            "[JSON](FunctionValues.agent.json)"
+          ],
+          [
+            "[`docs/FunctionVariables.md`](FunctionVariables.md)",
+            "[JSON](FunctionVariables.agent.json)"
+          ],
+          [
+            "[`docs/HierarchyDrag.md`](HierarchyDrag.md)",
+            "[JSON](HierarchyDrag.agent.json)"
+          ],
+          [
+            "[`docs/InferredValues.md`](InferredValues.md)",
+            "[JSON](InferredValues.agent.json)"
+          ],
+          [
+            "[`docs/InvocationLifecycle.md`](InvocationLifecycle.md)",
+            "[JSON](InvocationLifecycle.agent.json)"
+          ],
+          [
+            "[`docs/KeywordRegistry.md`](KeywordRegistry.md)",
+            "[JSON](KeywordRegistry.agent.json)"
+          ],
+          [
+            "[`docs/LVRSNative.md`](LVRSNative.md)",
+            "[JSON](LVRSNative.agent.json)"
+          ],
+          [
+            "[`docs/LVUIIndependence.md`](LVUIIndependence.md)",
+            "[JSON](LVUIIndependence.agent.json)"
+          ],
+          [
+            "[`docs/Language.md`](Language.md)",
+            "[JSON](Language.agent.json)"
+          ],
+          [
+            "[`docs/ListItemQuantity.md`](ListItemQuantity.md)",
+            "[JSON](ListItemQuantity.agent.json)"
+          ],
+          [
+            "[`docs/ListItemSelector.md`](ListItemSelector.md)",
+            "[JSON](ListItemSelector.agent.json)"
+          ],
+          [
+            "[`docs/LocalScopes.md`](LocalScopes.md)",
+            "[JSON](LocalScopes.agent.json)"
+          ],
+          [
+            "[`docs/MeasuredCollections.md`](MeasuredCollections.md)",
+            "[JSON](MeasuredCollections.agent.json)"
+          ],
+          [
+            "[`docs/MethodQueries.md`](MethodQueries.md)",
+            "[JSON](MethodQueries.agent.json)"
+          ],
+          [
+            "[`docs/MethodReferences.md`](MethodReferences.md)",
+            "[JSON](MethodReferences.agent.json)"
+          ],
+          [
+            "[`docs/NativeAOT.md`](NativeAOT.md)",
+            "[JSON](NativeAOT.agent.json)"
+          ],
+          [
+            "[`docs/NativeAOTVerification.md`](NativeAOTVerification.md)",
+            "[JSON](NativeAOTVerification.agent.json)"
+          ],
+          [
+            "[`docs/NativeAlert.md`](NativeAlert.md)",
+            "[JSON](NativeAlert.agent.json)"
+          ],
+          [
+            "[`docs/NativeAlertButton.md`](NativeAlertButton.md)",
+            "[JSON](NativeAlertButton.agent.json)"
+          ],
+          [
+            "[`docs/NativeAppCard.md`](NativeAppCard.md)",
+            "[JSON](NativeAppCard.agent.json)"
+          ],
+          [
+            "[`docs/NativeAppHeader.md`](NativeAppHeader.md)",
+            "[JSON](NativeAppHeader.agent.json)"
+          ],
+          [
+            "[`docs/NativeBindings.md`](NativeBindings.md)",
+            "[JSON](NativeBindings.agent.json)"
+          ],
+          [
+            "[`docs/NativeButton.md`](NativeButton.md)",
+            "[JSON](NativeButton.agent.json)"
+          ],
+          [
+            "[`docs/NativeCheckBox.md`](NativeCheckBox.md)",
+            "[JSON](NativeCheckBox.agent.json)"
+          ],
+          [
+            "[`docs/NativeCodeEditor.md`](NativeCodeEditor.md)",
+            "[JSON](NativeCodeEditor.agent.json)"
+          ],
+          [
+            "[`docs/NativeColorChannel.md`](NativeColorChannel.md)",
+            "[JSON](NativeColorChannel.agent.json)"
+          ],
+          [
+            "[`docs/NativeColorPicker.md`](NativeColorPicker.md)",
+            "[JSON](NativeColorPicker.agent.json)"
+          ],
+          [
+            "[`docs/NativeColorPickerButton.md`](NativeColorPickerButton.md)",
+            "[JSON](NativeColorPickerButton.agent.json)"
+          ],
+          [
+            "[`docs/NativeColorSurface.md`](NativeColorSurface.md)",
+            "[JSON](NativeColorSurface.agent.json)"
+          ],
+          [
+            "[`docs/NativeColors.md`](NativeColors.md)",
+            "[JSON](NativeColors.agent.json)"
+          ],
+          [
+            "[`docs/NativeComboBox.md`](NativeComboBox.md)",
+            "[JSON](NativeComboBox.agent.json)"
+          ],
+          [
+            "[`docs/NativeCoreValues.md`](NativeCoreValues.md)",
+            "[JSON](NativeCoreValues.agent.json)"
+          ],
+          [
+            "[`docs/NativeDivider.md`](NativeDivider.md)",
+            "[JSON](NativeDivider.agent.json)"
+          ],
+          [
+            "[`docs/NativeDocument.md`](NativeDocument.md)",
+            "[JSON](NativeDocument.agent.json)"
+          ],
+          [
+            "[`docs/NativeDropdownButton.md`](NativeDropdownButton.md)",
+            "[JSON](NativeDropdownButton.agent.json)"
+          ],
+          [
+            "[`docs/NativeEventListener.md`](NativeEventListener.md)",
+            "[JSON](NativeEventListener.agent.json)"
+          ],
+          [
+            "[`docs/NativeFonts.md`](NativeFonts.md)",
+            "[JSON](NativeFonts.agent.json)"
+          ],
+          [
+            "[`docs/NativeHelpButton.md`](NativeHelpButton.md)",
+            "[JSON](NativeHelpButton.agent.json)"
+          ],
+          [
+            "[`docs/NativeHierarchy.md`](NativeHierarchy.md)",
+            "[JSON](NativeHierarchy.agent.json)"
+          ],
+          [
+            "[`docs/NativeHierarchyPanel.md`](NativeHierarchyPanel.md)",
+            "[JSON](NativeHierarchyPanel.agent.json)"
+          ],
+          [
+            "[`docs/NativeHistory.md`](NativeHistory.md)",
+            "[JSON](NativeHistory.agent.json)"
+          ],
+          [
+            "[`docs/NativeIcons.md`](NativeIcons.md)",
+            "[JSON](NativeIcons.agent.json)"
+          ],
+          [
+            "[`docs/NativeImage.md`](NativeImage.md)",
+            "[JSON](NativeImage.agent.json)"
+          ],
+          [
+            "[`docs/NativeImages.md`](NativeImages.md)",
+            "[JSON](NativeImages.agent.json)"
+          ],
+          [
+            "[`docs/NativeInputField.md`](NativeInputField.md)",
+            "[JSON](NativeInputField.agent.json)"
+          ],
+          [
+            "[`docs/NativeLayout.md`](NativeLayout.md)",
+            "[JSON](NativeLayout.agent.json)"
+          ],
+          [
+            "[`docs/NativeLinks.md`](NativeLinks.md)",
+            "[JSON](NativeLinks.agent.json)"
+          ],
+          [
+            "[`docs/NativeMarkup.md`](NativeMarkup.md)",
+            "[JSON](NativeMarkup.agent.json)"
+          ],
+          [
+            "[`docs/NativeMaterials.md`](NativeMaterials.md)",
+            "[JSON](NativeMaterials.agent.json)"
+          ],
+          [
+            "[`docs/NativeMedia.md`](NativeMedia.md)",
+            "[JSON](NativeMedia.agent.json)"
+          ],
+          [
+            "[`docs/NativeMenu.md`](NativeMenu.md)",
+            "[JSON](NativeMenu.agent.json)"
+          ],
+          [
+            "[`docs/NativeModal.md`](NativeModal.md)",
+            "[JSON](NativeModal.agent.json)"
+          ],
+          [
+            "[`docs/NativeModelSources.md`](NativeModelSources.md)",
+            "[JSON](NativeModelSources.agent.json)"
+          ],
+          [
+            "[`docs/NativeMotion.md`](NativeMotion.md)",
+            "[JSON](NativeMotion.agent.json)"
+          ],
+          [
+            "[`docs/NativeNavigationHistory.md`](NativeNavigationHistory.md)",
+            "[JSON](NativeNavigationHistory.agent.json)"
+          ],
+          [
+            "[`docs/NativeOpacity.md`](NativeOpacity.md)",
+            "[JSON](NativeOpacity.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedCard.md`](NativeOwnedCard.md)",
+            "[JSON](NativeOwnedCard.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedHierarchyItem.md`](NativeOwnedHierarchyItem.md)",
+            "[JSON](NativeOwnedHierarchyItem.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedHierarchyList.md`](NativeOwnedHierarchyList.md)",
+            "[JSON](NativeOwnedHierarchyList.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedHierarchyToolbar.md`](NativeOwnedHierarchyToolbar.md)",
+            "[JSON](NativeOwnedHierarchyToolbar.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedListFooter.md`](NativeOwnedListFooter.md)",
+            "[JSON](NativeOwnedListFooter.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedListItem.md`](NativeOwnedListItem.md)",
+            "[JSON](NativeOwnedListItem.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedListItemSelector.md`](NativeOwnedListItemSelector.md)",
+            "[JSON](NativeOwnedListItemSelector.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedListPanel.md`](NativeOwnedListPanel.md)",
+            "[JSON](NativeOwnedListPanel.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedListToolbar.md`](NativeOwnedListToolbar.md)",
+            "[JSON](NativeOwnedListToolbar.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedListView.md`](NativeOwnedListView.md)",
+            "[JSON](NativeOwnedListView.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedTable.md`](NativeOwnedTable.md)",
+            "[JSON](NativeOwnedTable.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedTableCellItem.md`](NativeOwnedTableCellItem.md)",
+            "[JSON](NativeOwnedTableCellItem.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedTableHeader.md`](NativeOwnedTableHeader.md)",
+            "[JSON](NativeOwnedTableHeader.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedTableRow.md`](NativeOwnedTableRow.md)",
+            "[JSON](NativeOwnedTableRow.agent.json)"
+          ],
+          [
+            "[`docs/NativeOwnedToolbarButton.md`](NativeOwnedToolbarButton.md)",
+            "[JSON](NativeOwnedToolbarButton.agent.json)"
+          ],
+          [
+            "[`docs/NativePageRouter.md`](NativePageRouter.md)",
+            "[JSON](NativePageRouter.agent.json)"
+          ],
+          [
+            "[`docs/NativePlatform.md`](NativePlatform.md)",
+            "[JSON](NativePlatform.agent.json)"
+          ],
+          [
+            "[`docs/NativePopover.md`](NativePopover.md)",
+            "[JSON](NativePopover.agent.json)"
+          ],
+          [
+            "[`docs/NativeProgress.md`](NativeProgress.md)",
+            "[JSON](NativeProgress.agent.json)"
+          ],
+          [
+            "[`docs/NativeRadioButton.md`](NativeRadioButton.md)",
+            "[JSON](NativeRadioButton.agent.json)"
+          ],
+          [
+            "[`docs/NativeReadiness.md`](NativeReadiness.md)",
+            "[JSON](NativeReadiness.agent.json)"
+          ],
+          [
+            "[`docs/NativeReadinessVerification.md`](NativeReadinessVerification.md)",
+            "[JSON](NativeReadinessVerification.agent.json)"
+          ],
+          [
+            "[`docs/NativeRendering.md`](NativeRendering.md)",
+            "[JSON](NativeRendering.agent.json)"
+          ],
+          [
+            "[`docs/NativeRouteModels.md`](NativeRouteModels.md)",
+            "[JSON](NativeRouteModels.agent.json)"
+          ],
+          [
+            "[`docs/NativeRoutes.md`](NativeRoutes.md)",
+            "[JSON](NativeRoutes.agent.json)"
+          ],
+          [
+            "[`docs/NativeSegmentedControl.md`](NativeSegmentedControl.md)",
+            "[JSON](NativeSegmentedControl.agent.json)"
+          ],
+          [
+            "[`docs/NativeSheet.md`](NativeSheet.md)",
+            "[JSON](NativeSheet.agent.json)"
+          ],
+          [
+            "[`docs/NativeSlider.md`](NativeSlider.md)",
+            "[JSON](NativeSlider.agent.json)"
+          ],
+          [
+            "[`docs/NativeStepper.md`](NativeStepper.md)",
+            "[JSON](NativeStepper.agent.json)"
+          ],
+          [
+            "[`docs/NativeTabs.md`](NativeTabs.md)",
+            "[JSON](NativeTabs.agent.json)"
+          ],
+          [
+            "[`docs/NativeToggleSwitch.md`](NativeToggleSwitch.md)",
+            "[JSON](NativeToggleSwitch.agent.json)"
+          ],
+          [
+            "[`docs/NativeTooltip.md`](NativeTooltip.md)",
+            "[JSON](NativeTooltip.agent.json)"
+          ],
+          [
+            "[`docs/NativeTooltipModel.md`](NativeTooltipModel.md)",
+            "[JSON](NativeTooltipModel.agent.json)"
+          ],
+          [
+            "[`docs/NativeViews.md`](NativeViews.md)",
+            "[JSON](NativeViews.agent.json)"
+          ],
+          [
+            "[`docs/NativeWidgetRuntime.md`](NativeWidgetRuntime.md)",
+            "[JSON](NativeWidgetRuntime.agent.json)"
+          ],
+          [
+            "[`docs/NativeWindow.md`](NativeWindow.md)",
+            "[JSON](NativeWindow.agent.json)"
+          ],
+          [
+            "[`docs/ObjectInputs.md`](ObjectInputs.md)",
+            "[JSON](ObjectInputs.agent.json)"
+          ],
+          [
+            "[`docs/ObjectMethodReferences.md`](ObjectMethodReferences.md)",
+            "[JSON](ObjectMethodReferences.agent.json)"
+          ],
+          [
+            "[`docs/OwnedHierarchyModel.md`](OwnedHierarchyModel.md)",
+            "[JSON](OwnedHierarchyModel.agent.json)"
+          ],
+          [
+            "[`docs/OwnedListModel.md`](OwnedListModel.md)",
+            "[JSON](OwnedListModel.agent.json)"
+          ],
+          [
+            "[`docs/OwnedTableModel.md`](OwnedTableModel.md)",
+            "[JSON](OwnedTableModel.agent.json)"
+          ],
+          [
+            "[`docs/ReactiveState.md`](ReactiveState.md)",
+            "[JSON](ReactiveState.agent.json)"
+          ],
+          [
+            "[`docs/ReadonlyMembers.md`](ReadonlyMembers.md)",
+            "[JSON](ReadonlyMembers.agent.json)"
+          ],
+          [
+            "[`docs/Repetition.md`](Repetition.md)",
+            "[JSON](Repetition.agent.json)"
+          ],
+          [
+            "[`docs/ReservedWords.md`](ReservedWords.md)",
+            "[JSON](ReservedWords.agent.json)"
+          ],
+          [
+            "[`docs/ReturnedCallbacks.md`](ReturnedCallbacks.md)",
+            "[JSON](ReturnedCallbacks.agent.json)"
+          ],
+          [
+            "[`docs/RuntimeContracts.md`](RuntimeContracts.md)",
+            "[JSON](RuntimeContracts.agent.json)"
+          ],
+          [
+            "[`docs/ScalarInputs.md`](ScalarInputs.md)",
+            "[JSON](ScalarInputs.agent.json)"
+          ],
+          [
+            "[`docs/StyleProfiles.md`](StyleProfiles.md)",
+            "[JSON](StyleProfiles.agent.json)"
+          ],
+          [
+            "[`docs/StyleTokenMembers.md`](StyleTokenMembers.md)",
+            "[JSON](StyleTokenMembers.agent.json)"
+          ],
+          [
+            "[`docs/StyleTokens.md`](StyleTokens.md)",
+            "[JSON](StyleTokens.agent.json)"
+          ],
+          [
+            "[`docs/StyleTypes.md`](StyleTypes.md)",
+            "[JSON](StyleTypes.agent.json)"
+          ],
+          [
+            "[`docs/TableClipboard.md`](TableClipboard.md)",
+            "[JSON](TableClipboard.agent.json)"
+          ],
+          [
+            "[`docs/TableEditing.md`](TableEditing.md)",
+            "[JSON](TableEditing.agent.json)"
+          ],
+          [
+            "[`docs/TableSorting.md`](TableSorting.md)",
+            "[JSON](TableSorting.agent.json)"
+          ],
+          [
+            "[`docs/TableStructure.md`](TableStructure.md)",
+            "[JSON](TableStructure.agent.json)"
+          ],
+          [
+            "[`docs/TextInput.md`](TextInput.md)",
+            "[JSON](TextInput.agent.json)"
+          ],
+          [
+            "[`docs/Toolbars.md`](Toolbars.md)",
+            "[JSON](Toolbars.agent.json)"
+          ],
+          [
+            "[`docs/TypeImports.md`](TypeImports.md)",
+            "[JSON](TypeImports.agent.json)"
+          ],
+          [
+            "[`docs/VariableDeclarations.md`](VariableDeclarations.md)",
+            "[JSON](VariableDeclarations.agent.json)"
+          ],
+          [
+            "[`docs/Verification.md`](Verification.md)",
+            "[JSON](Verification.agent.json)"
+          ],
+          [
+            "[`docs/ViewModelQueries.md`](ViewModelQueries.md)",
+            "[JSON](ViewModelQueries.agent.json)"
+          ],
+          [
+            "[`docs/ViewSequences.md`](ViewSequences.md)",
+            "[JSON](ViewSequences.agent.json)"
+          ],
+          [
+            "[`docs/ViewValues.md`](ViewValues.md)",
+            "[JSON](ViewValues.agent.json)"
+          ],
+          [
+            "[`docs/WindowsValidation.md`](WindowsValidation.md)",
+            "[JSON](WindowsValidation.agent.json)"
+          ],
+          [
+            "[`docs/documentation-structure.md`](documentation-structure.md)",
+            "[JSON](documentation-structure.agent.json)"
+          ],
+          [
+            "[`example/README.md`](../example/README.md)",
+            "[JSON](mirrors/example/README.agent.json)"
+          ],
+          [
+            "[`example/StyleTokens/README.md`](../example/StyleTokens/README.md)",
+            "[JSON](mirrors/example/StyleTokens/README.agent.json)"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

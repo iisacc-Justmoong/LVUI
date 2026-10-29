@@ -1,0 +1,9 @@
+import vm NativeVisualBackend
+Window { VStack {
+    if (vm.shown) {
+        NativeView(id: "visual", source: vm.source, width: vm.width, height: vm.height)
+    } else {
+        Label(id: "waiting", text: "Waiting")
+    }
+    Label(id: "caption", text: vm.caption)
+} }

@@ -1,0 +1,171 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:b91bddf11aca7df8bf694087584761222065a5ada0efd7201f44427d146179a1",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeNavigationHistory.md",
+    "sha256": "14be069c8622053f112d94fa5b4dd9f59104effbc269a5a61d127ad5ddb0b22c",
+    "bytes": 2592,
+    "line_count": 32,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 탐색 이력과 변경 후보",
+    "role": "history",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 탐색 이력과 변경 후보\n",
+      "level": 1,
+      "title": "LVUI 탐색 이력과 변경 후보"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`NavigationHistory`는 LVUI가 직접 소유하는 C++ 이력 모델이다. Qt·QML·LVRS와\n위젯 호스트를 참조하지 않는다. 각 `NavigationEntry`는 정규화된 경로, 타입을\n보존하는 `ii::core::Value` 매개변수, 선택적인 `NavigationPage` 객체와 활성\n상태를 담는다. 페이지 객체를 직접 전달하고 경로를 생략하면 빈 경로를 보존한다.\nnull 매개변수는 빈 객체로 정규화한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 16,
+      "raw": "`prepare`는 push, replace, set_root, pop, pop_to_root, clear의 입력·예산을\n확인하고 불변 `NavigationPlan`을 반환한다. 이때 이력은 바뀌지 않는다. 페이지\n호스트는 후보의 `destination()`으로 새 뷰를 준비한 다음 성공한 경우에만 `commit`을\n호출할 수 있다. 같은 이력의 revision이 변경된 뒤 오래된 후보를 적용하면 `busy`,\n다른 이력에 속한 후보를 적용하면 `invalid_argument`이다. 유효한 무동작은 false를\n반환하고 revision을 바꾸지 않는다. pop은 마지막 루트를 제거하지 않는다.\n`destination()`의 포인터는 같은 후보 스냅샷을 소유하는 계획 객체가 살아 있는 동안\n유효하다. 그보다 오래 보관해야 하는 앱은 항목을 값으로 복사한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 23,
+      "raw": "이력은 최대 65536개 항목, 항목당 계산 예산 2 MiB, 전체 계산 예산 16 MiB이다.\n매개변수는 링크와 같은 4096개 노드·깊이 64·문자열 및 바이트 1 MiB 한도를\n따른다. 계산 예산에는 경로·값의 크기와 노드별 고정 비용을 포함하지만 외부 페이지\n객체, 보유 중인 후보 사본이나 allocator의 실제 메타데이터까지 포함하지 않는다.\n예산 초과나 잘못된 후보는 기존 이력을 보존한다. `state()`는 현재 항목과 revision,\n깊이·계산 예산만 복사하고 `entries()`는 명시적으로 전체 이력 사본을 만든다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 27,
+      "raw": "변경과 조회는 이력을 만든 스레드에서만 허용한다. 항목 제거·교체 중 객체 소멸자가\n이력에 재진입하면 부분 상태를 노출하지 않고 `busy`로 거절한다. 외부 페이지 객체가\n별도로 일으킨 부수 효과를 되돌린다는 뜻은 아니다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 32,
+      "raw": "이 모델은 화면을 게시하거나 탐색 이벤트를 자동으로 발생시키지 않는다. 독립\n[페이지 라우터](NativePageRouter.md)는 후보 뷰의 생성과 이력 확정, 호스트 게시를 연결한다.\n경로 패턴은 [경로 계약](NativeRoutes.md), 앱이 주입하는 탐색 경계는\n[링크 계약](NativeLinks.md)을 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 탐색 이력과 변경 후보",
+      "anchor": "lvui-탐색-이력과-변경-후보",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "위젯 호스트를 참조하지 않는다. 각 `NavigationEntry`는 정규화된 경로, 타입을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 14,
+        "text": "반환하고 revision을 바꾸지 않는다. pop은 마지막 루트를 제거하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 21,
+        "text": "객체, 보유 중인 후보 사본이나 allocator의 실제 메타데이터까지 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "페이지 라우터",
+        "target": "NativePageRouter.md",
+        "kind": "relative",
+        "line": 30
+      },
+      {
+        "block_id": "b000011",
+        "label": "경로 계약",
+        "target": "NativeRoutes.md",
+        "kind": "relative",
+        "line": 31
+      },
+      {
+        "block_id": "b000011",
+        "label": "링크 계약",
+        "target": "NativeLinks.md",
+        "kind": "relative",
+        "line": 32
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

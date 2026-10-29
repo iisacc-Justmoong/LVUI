@@ -1,0 +1,9 @@
+import vm NativeOwnedAlertModel
+Window {
+    VStack {
+        Alert(id: "alert", title: vm.title, message: vm.message, buttonCount: vm.count,
+              primaryText: "Apply", secondaryText: "Cancel", tertiaryText: "Later",
+              secondaryEnabled: vm.secondaryEnabled, showIcon: false, motionEnabled: false,
+              button1Method: vm.apply, onPrimaryClicked: vm.clicked, onDismissed: vm.dismissed)
+    }
+}

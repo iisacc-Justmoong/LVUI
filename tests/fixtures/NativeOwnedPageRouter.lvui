@@ -1,0 +1,7 @@
+import vm NativeOwnedPageRouterModel
+Window {
+    VStack {
+        Link(id: "report-link", text: "Open report", href: "/report/42")
+        PageRouter(id: "pages", router: vm.router, width: vm.width, height: vm.height)
+    }
+}

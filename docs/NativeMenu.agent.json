@@ -1,0 +1,128 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:82ae05fea45a2d5d019c2958cc4ae9b29f1739634d07c312f47e7b58122c5d30",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeMenu.md",
+    "sha256": "9c193d4faa725642ceebd7eafbb0253d77f7b39a057386820cbcbbe827976b1e",
+    "bytes": 3812,
+    "line_count": 42,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 메뉴 전환",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 메뉴 전환\n",
+      "level": 1,
+      "title": "LVUI 독립 메뉴 전환"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`Menu`는 메뉴 항목의 고유 키, 라벨, 단축키, 아이콘 이름, 표시·활성 상태와\n항목 종류를 표준 C++로 보유한다. 구분선과 비활성·숨김 항목은 키보드 선택에서\n건너뛰며 처음·마지막·이전·다음 이동을 지원한다. 목록 교체 시 선택한 항목이\n남아 있으면 키로 동일 항목을 유지한다. 개수·입력 문자열·전체 바이트 한도를\n검사하고 잘못된 후보가 기존 상태를 변경하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "호출 전 `prepare_activation`은 현재 열린 세대와 모델 리비전을 담은 계획을 만든다.\n앱의 항목 콜백이 메뉴를 닫거나 다시 열거나 목록·선택을 바꾸면 이전 계획은 더 이상\n메뉴를 닫을 수 없다. 하위 메뉴 항목은 기본적으로 부모를 유지하며 일반 항목의\n자동 닫기는 메뉴 또는 항목 정책으로 지정한다. 이벤트 콜백과 팝업 호스트는 이\n모델이 소유하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 34,
+      "raw": "기본 항목 폭 141, 간격 2, 컴팩트 항목 높이 18과 일반 항목 높이 24는 디자인 값을\n기준으로 LVUI에서 새로 정의했다. `NativeMenu`는 범용 팝업·스택 경계를 사용해\n직접 자식 항목을 등록하고 메뉴 배경, 선택, 키보드 이동과 실행 순서를 소유한다.\n개별 항목 높이를 설정하면 메뉴 전체 높이에도 반영된다.\n메뉴 표면은 기본 불투명 바탕 위에 채색 레이어를 합성한다. `menuOpacity`는 전체\n팝업의 투명도가 아닌 채색 레이어의 강도이며 기본값은 0.12이다. `baseColor`,\n`backgroundColor`, `borderColor`로 각 레이어를 바꿀 수 있다.\n앱은 팝업 핸들을 기존 위젯의 문맥 메뉴로 연결하고 일반 외부 클릭과 외부 문맥\n메뉴 요청의 닫기 정책을 각각 지정할 수 있다. 기본 선언형 `Menu`와 `ContextMenu`도\n이 구현을 사용하며 `targetId`, 정적 문자열 `items`, 직접 자식 항목과 구분선, 반응형 선택과\n디자인 값, 열림·닫힘·취소·항목 실행 콜백을 지원한다. `keepOpen`이 참이면 항목을\n실행해도 메뉴를 유지하며 거짓이면 메뉴의 기본 정책을 따른다. `closeOnTrigger`는\n해당 항목의 정책을 명시적으로 지정하고 `keepOpen`과 함께 사용할 수 없다.\n구분선은 선택 순서의 인덱스에는 포함되지만 키보드 선택에서는 건너뛴다. 표시나\n크기를 바꾸면 팝업 크기가 함께 변경된다. 변경 결과가 팝업 크기 제한을 넘으면\n자식과 메뉴를 기존 유효 상태로 되돌리고 반응형 오류를 전달한다. `MenuItem` 안에\n하나의 직접 `Menu` 또는 `ContextMenu`를 두어 하위 메뉴를 구성할 수 있다. 오른쪽\n키는 하위 메뉴를 열고 첫 항목에 포커스를 넘기며, 왼쪽 키는 현재 하위 메뉴를 닫고\n부모 항목으로 돌아간다. 마지막 동작은 열린 조상 메뉴를 닫는다. 콜백이 메뉴를\n다시 열면 이전 동작의 닫기 계획은 새 메뉴에 적용되지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 42,
+      "raw": "조건·반복 자식, 포인터를 통한 하위 메뉴 전환과 실제 플랫폼·보조 기술 검증은\n추가 구현 또는 검증이 필요하다. 헤드리스 검사는 실제 플랫폼 실행과 구분한다.\n`MenuItem`은 별도로 기본·선택·비활성 상태와 라벨·아이콘 슬롯·단축키·방향 표시의\n공간을 계산한다. `NativeMenuItem`은 자체 디자인과 범용 호스트를 연결하며 이름\n아이콘, 방향 표시, 포인터·키보드 이벤트와 메뉴 항목 접근성 역할을 제공한다.\n기본 선언형 `MenuItem`과 `ContextMenuItem`은 이 어댑터를 사용한다. 항목의 닫기\n정책은 메뉴 안에서 지정할 수 있으며 메뉴 밖에서는 진단한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 메뉴 전환",
+      "anchor": "lvui-독립-메뉴-전환",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 7,
+        "text": "검사하고 잘못된 후보가 기존 상태를 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 13,
+        "text": "모델이 소유하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

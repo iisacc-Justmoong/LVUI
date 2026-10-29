@@ -1,0 +1,25 @@
+import class DeferredDomain.Item
+import vm NativeObjectMethodReferenceBackend
+let current = vm.selected
+let render: () -> String = vm.selected.describe
+@Static let pinned: () -> Void = vm.selected.act
+var manual: () -> Void = vm.selected.act
+let Actions(item: Item, run: () -> Void = item.act): View = VStack {
+    PushButton(id: "typed", onClick: run)
+    InputField(id: "payload", onEdited: item.record)
+}
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    Label(id: "description", text: render())
+    PushButton(id: "direct", onClick: vm.selected.act)
+    PushButton(id: "alias", onClick: current.act)
+    PushButton(id: "grouped", onClick: (vm.selected).act)
+    PushButton(id: "indexed", onClick: vm.rows[0].act)
+    PushButton(id: "getter", onClick: vm.current().act)
+    PushButton(id: "factory", onClick: vm.selected.makeHandler())
+    PushButton(id: "pinned", onClick: pinned)
+    PushButton(id: "manual", onClick: manual)
+    PushButton(id: "receiver_condition", onClick: (vm.visible ? vm.first : vm.second).act)
+    Actions(item: vm.selected)
+    if (vm.visible) { PushButton(id: "conditional", onClick: vm.selected.act) }
+} }

@@ -1,0 +1,16 @@
+import vm NativeReturnedBackend
+let Action: View = PushButton(text: "Action")
+Window {
+    VStack {
+        PushButton(id: "direct", onClick: vm.make(vm.amount))
+        Action(id: "supplied", onClick: vm.make(vm.amount + 1))
+        InputField(id: "text", text: "", onEdited: vm.makeText())
+        if (vm.visible) {
+            VStack {
+                import local NativeReturnedBackend
+                Action(id: "nested", onClick: vm.make(vm.amount + 2))
+                PushButton(id: "local", onClick: local.make(local.amount))
+            }
+        }
+    }
+}

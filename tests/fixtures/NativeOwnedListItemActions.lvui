@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemActionsModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: .ActionGroup, label: vm.label, primaryAction: vm.primary,
+                 secondaryAction: "Edit", moreMenu: "More", showSecondaryAction: vm.show_secondary,
+                 onActionTriggered: vm.triggered)
+    }
+}

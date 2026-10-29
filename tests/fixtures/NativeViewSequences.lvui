@@ -1,0 +1,32 @@
+import vm NativeSequenceModel
+let Cell(title: String, action: () -> Void): View = VStack(id: "cell") {
+    import vm NativeSequenceLocal
+    Label(id: "cellTitle", text: title)
+    Label(id: "local", text: vm.title)
+    Label(id: "count", text: vm.count)
+    PushButton(action, id: "action", text: "Root")
+    PushButton(vm.increment, id: "localAction", text: "Local")
+    PushButton(vm.retire, id: "retire", text: "Retire")
+}
+let Parts(title: String, action: () -> Void = vm.makeHandler()): [View] = [
+    Label(id: "heading", text: title),
+    Cell(title: title, action: action),
+    [Label(id: "tail", text: title)]
+]
+let Panel(content: [View]): View = HStack(id: "panel") {
+    import vm NativeSequenceLocal
+    content()
+}
+let entries: [View] = Parts(title: vm.title)
+let copy = entries
+let EmptyPanel(onContent: [View]): View = HStack(id: "emptyPanel") { onContent() }
+let emptyAlias: View = EmptyPanel(onContent: [Label(text: "Replaced")])
+Window {
+    VStack(id: "main") {
+        Label(id: "mainCount", text: vm.count)
+        emptyAlias(onContent: [])
+        HStack(id: "first") { entries() }
+        HStack(id: "second") { copy() }
+        if(vm.ready) { Panel(content: Parts(title: vm.title)) }
+    }
+}

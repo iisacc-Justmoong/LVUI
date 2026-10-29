@@ -1,0 +1,524 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:b4b900a16b7cd801ef3ee93d13ceeac6b1d9db5e3731b37fad14828b7fddeaeb",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeWidgetRuntime.md",
+    "sha256": "5860dcdcc6b2aad28ad7efdab610684e16889f18e38a2f8c96d77c7cf1b058f5",
+    "bytes": 6655,
+    "line_count": 108,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 C++ 위젯과 Core 앱 연결",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 C++ 위젯과 Core 앱 연결\n",
+      "level": 1,
+      "title": "네이티브 C++ 위젯과 Core 앱 연결"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 3,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "quote",
+      "start_line": 4,
+      "end_line": 6,
+      "raw": "> 이 문서는 2026-10-22 당시의 Cocoa 및 LVRS 연결과 검증 기록이다. 현재 전환 목표는\n> LVRS의 시각 언어와 디자인 값만 계승하고 LVUI 자체에서 컴포넌트를 구현하는 것이다.\n> 독립 구현과 남은 레거시 경로는 [LVUI 독립 구현 현황](LVUIIndependence.md)을 따른다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 11,
+      "raw": "2026-10-22에 런타임 소유 구조를 확장했다. `View` 컴포넌트 소스는 빌드할 때\n인스턴스화 가능한 네이티브 C++ 위젯 클래스로 변환했다. 당시 LVRS는 외형 값을 제공하고,\n앱 런타임과 최종 실행 파일의 진입점·부착 수명은 iiSDKCore가 담당한다.\niiGUI는 Core가 소유한 이벤트 루프를 빌려 네이티브 OS 창과 컨트롤을 연결한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 13,
+      "end_line": 20,
+      "raw": "```text\nLVUI View 소스 → AOT C++ 위젯 클래스\nLVRS 외형 값·글꼴 → 네이티브 위젯의 표현\n일반 C++ SDK 모듈 + 생성한 위젯 + 앱 구성 함수\n    → iiSDKCore의 실행 파일 타깃 + Core main()\n    → Core Application / EventLoop / Runtime / 부착 수명\n    → iiGUI의 OS 호스트 / Cocoa 위젯 / 이벤트·표시\n```\n",
+      "language": "text",
+      "code": "LVUI View 소스 → AOT C++ 위젯 클래스\nLVRS 외형 값·글꼴 → 네이티브 위젯의 표현\n일반 C++ SDK 모듈 + 생성한 위젯 + 앱 구성 함수\n    → iiSDKCore의 실행 파일 타깃 + Core main()\n    → Core Application / EventLoop / Runtime / 부착 수명\n    → iiGUI의 OS 호스트 / Cocoa 위젯 / 이벤트·표시\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 24,
+      "raw": "Core는 iiGUI·LVUI·LVRS를 참조하지 않는다. 상위 모듈이 `ApplicationDriver`와\n`ApplicationAttachment`의 표준 C++ 콜백을 제공한다. Qt·QML 런타임이나\nLVUI 소스·AST·바이트코드 실행기는 배포 UI를 실행하는 데 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "## 생성되는 C++ 위젯\n",
+      "level": 2,
+      "title": "생성되는 C++ 위젯"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 29,
+      "raw": "`lvui_generated::MainView` 같은 클래스는 기본 생성할 수 있는 `final` C++ 타입이다.\n복사하지 않으며 다음 인터페이스를 제공한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "table",
+      "start_line": 31,
+      "end_line": 36,
+      "raw": "| API | 역할 |\n|---|---|\n| `View::options()` | 생성한 창 속성을 제공한다. |\n| `view.attach(host, configure)` | 실제 네이티브 위젯을 구성하고 뷰 정체성을 부착한다. |\n| `view.widgets()` | 해당 위젯의 약한 네이티브 핸들·ID 조회를 제공한다. |\n| `view.detach(host)` | 해당 세대의 네이티브 위젯을 해제하고 소유 C++ 스코프를 반환한다. |\n",
+      "columns": [
+        "API",
+        "역할"
+      ],
+      "rows": [
+        [
+          "`View::options()`",
+          "생성한 창 속성을 제공한다."
+        ],
+        [
+          "`view.attach(host, configure)`",
+          "실제 네이티브 위젯을 구성하고 뷰 정체성을 부착한다."
+        ],
+        [
+          "`view.widgets()`",
+          "해당 위젯의 약한 네이티브 핸들·ID 조회를 제공한다."
+        ],
+        [
+          "`view.detach(host)`",
+          "해당 세대의 네이티브 위젯을 해제하고 소유 C++ 스코프를 반환한다."
+        ]
+      ]
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 40,
+      "raw": "기존 정적 `mount`는 직접 마운트하는 호출자를 위해 유지한다. Core가 앱을 소유하는\n새 경로는 위젯 객체를 만들어 `view_attachment`로 부착한다. 생성된 코드는 직접적인\nC++ 위젯 생성·속성 설정·메서드 콜백을 호출한다. 런타임은 컴포넌트 이름을 해석하지 않는다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 46,
+      "raw": "창이 닫히면 네이티브 입력과 핸들을 먼저 무효화한다. 생성한 C++ 위젯 객체는\n가져온 C++ 백엔드를 계속 소유한다. Core가 소유 작업의 접수를 닫고 활성 작업을 정리한 후\n역순 해제에서 그 스코프를 반환한다. 창 종료와 C++ 백엔드 소멸을 같은 순간으로 취급하지 않는다.\n직접 C++에서 사용하는 경우도 `attach`·`detach`를 짝지어야 하며,\n제어하지 않는 외부 작업의 수명을 자동으로 보장하는 것은 아니다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "## Core가 만드는 최종 앱\n",
+      "level": 2,
+      "title": "Core가 만드는 최종 앱"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "fenced_code",
+      "start_line": 50,
+      "end_line": 58,
+      "raw": "```cmake\nfind_package(iiGUI 0.4 CONFIG REQUIRED)\nlvui_generate(NAME MainView SOURCE MainView.lvui OUTPUT_VARIABLE generated)\niisdkcore_add_application(MyApp GUI\n    SOURCES application.cpp \"${generated}\"\n    LIBRARIES iiGUI::iiGUI\n    RESOURCES ${iiGUI_NATIVE_RESOURCES})\ntarget_include_directories(MyApp PRIVATE \"${CMAKE_CURRENT_BINARY_DIR}\")\n```\n",
+      "language": "cmake",
+      "code": "find_package(iiGUI 0.4 CONFIG REQUIRED)\nlvui_generate(NAME MainView SOURCE MainView.lvui OUTPUT_VARIABLE generated)\niisdkcore_add_application(MyApp GUI\n    SOURCES application.cpp \"${generated}\"\n    LIBRARIES iiGUI::iiGUI\n    RESOURCES ${iiGUI_NATIVE_RESOURCES})\ntarget_include_directories(MyApp PRIVATE \"${CMAKE_CURRENT_BINARY_DIR}\")\n",
+      "closed": true
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "fenced_code",
+      "start_line": 60,
+      "end_line": 71,
+      "raw": "```cpp\n#include \"MainView.generated.h\"\n#include <iiGUI/Application.h>\n\nii::core::Result<void> ii::runtime::configure_application(Application& app) {\n    using View = lvui_generated::MainView;\n    auto host = ii::gui::attach_application(app, View::options());\n    if (!host) return std::unexpected(host.error());\n    return app.attach(ii::gui::view_attachment(\n        \"main\", *host, std::make_shared<View>()));\n}\n```\n",
+      "language": "cpp",
+      "code": "#include \"MainView.generated.h\"\n#include <iiGUI/Application.h>\n\nii::core::Result<void> ii::runtime::configure_application(Application& app) {\n    using View = lvui_generated::MainView;\n    auto host = ii::gui::attach_application(app, View::options());\n    if (!host) return std::unexpected(host.error());\n    return app.attach(ii::gui::view_attachment(\n        \"main\", *host, std::make_shared<View>()));\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 78,
+      "raw": "애플리케이션 소스는 구성 함수를 제공하고 Core의 설치 패키지가 `main()`을 제공한다.\nCore가 `Application`을 생성하고 구성·실행·종료·오류·종료 값을 관리한다.\n`Application::post`는 앱 전체가 공유하는 Core 작업자 풀을 사용한다.\n`app.workers()`로 같은 런타임을 빌려 기존 `SerialQueue`·`Concurrent` API와 연결할 수 있다.\n`app.event_loop().sender()`로 보낸 타이머·결과는 같은 Core 루프를 구동하는 iiGUI에서 처리한다.\n일반 C++로 직접 작성한 위젯도 같은 `attach`·`detach` 인터페이스로 연동할 수 있다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 80,
+      "end_line": 80,
+      "raw": "## 당시 외형 구현 기록\n",
+      "level": 2,
+      "title": "당시 외형 구현 기록"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 82,
+      "end_line": 83,
+      "raw": "당시 네이티브 외형은 LVRS의 디자인 값 스냅샷을 사용했다. 현재 독립 구현은\nLVUI가 보유한 디자인 값을 사용하며 LVRS 구현을 참조하는 것이 목표가 아니다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "list",
+      "start_line": 85,
+      "end_line": 90,
+      "raw": "- 창의 `#141414`에 기본 악센트 2%를 혼합한다. 기본 악센트에서 배경은 `#141619`이다.\n- `PushButton`의 기본·hover·pressed·disabled 색상, 높이 22, 좌우 패딩 8, 모서리 반경 8을 적용한다.\n- `Label`은 `.title`, `.title2`, `.header`, `.header2`, `.body`, `.description`, `.caption`, `.disabled` 역할을 지원한다.\n- 역할에 따른 26·22·17·15·13·12·11 크기와 글꼴 굵기·텍스트 투명도를 적용한다.\n- 스택 기본 간격은 8이다. 스타일을 적용한 세로 스택은 LVRS처럼 기본 가운데 정렬이다.\n- Pretendard Regular·Medium·SemiBold·Bold와 원문 OFL 고지를 앱 리소스로 부착한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "창의 `#141414`에 기본 악센트 2%를 혼합한다. 기본 악센트에서 배경은 `#141619`이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`PushButton`의 기본·hover·pressed·disabled 색상, 높이 22, 좌우 패딩 8, 모서리 반경 8을 적용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Label`은 `.title`, `.title2`, `.header`, `.header2`, `.body`, `.description`, `.caption`, `.disabled` 역할을 지원한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "역할에 따른 26·22·17·15·13·12·11 크기와 글꼴 굵기·텍스트 투명도를 적용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "스택 기본 간격은 8이다. 스타일을 적용한 세로 스택은 LVRS처럼 기본 가운데 정렬이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Pretendard Regular·Medium·SemiBold·Bold와 원문 OFL 고지를 앱 리소스로 부착한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 91,
+      "end_line": 91,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 95,
+      "raw": "실제 입력·접근성·동작은 네이티브 AppKit 컨트롤이 처리한다. 버튼의 표현은\n네이티브 `NSButton` 하위 클래스가 LVRS 디자인 값으로 그린다. Qt 버튼이나 QML 객체를 생성하지 않는다.\n글꼴 파일은 수정하지 않았으며, 원본·외형 파일 해시를 iiGUI의\n`resources/lvrs-native-appearance.json`에 기록했다. 테스트가 소스 변경을 감지한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 97,
+      "end_line": 99,
+      "raw": "당시 지원 범위는 기존 AOT 컴포넌트 5종이었다. 모든 LVRS 컴포넌트·재질·그레인·모션을\n완전히 재현하거나 다른 OS의 위젯 마운트를 구현한 결과로 확대하지 않는다.\n일반 반응형 필드 바인딩·GPU 코드 생성의 미구현 범위도 유지한다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "heading",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "## 실제 예제와 검증\n",
+      "level": 2,
+      "title": "실제 예제와 검증"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 108,
+      "raw": "`SDK/iiGUI/examples/HelloWorld`는 Core 진입점과 앱 부착을 사용하는 실제 앱이다.\n같은 Core 이벤트 루프 정체성, 네이티브 위젯·Pretendard, 타이머·백그라운드 결과,\n크기 변경·반복 클릭·정상 종료와 백엔드의 지연 소멸을 검사한다.\n설치 소비자 검증은 설치된 Core의 진입점 소스를 실제 최종 바이너리에 컴파일하고,\n글꼴 리소스 해시·Qt/파서 부재·소스와 도구가 없는 실행을 검사한다.\n기존 [AOT 검증 기록](NativeAOTVerification.md)과 이후 실행 결과를 구분한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 C++ 위젯과 Core 앱 연결",
+      "anchor": "네이티브-c-위젯과-core-앱-연결",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "생성되는 C++ 위젯",
+      "anchor": "생성되는-c-위젯",
+      "start_line": 26
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Core가 만드는 최종 앱",
+      "anchor": "core가-만드는-최종-앱",
+      "start_line": 48
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "당시 외형 구현 기록",
+      "anchor": "당시-외형-구현-기록",
+      "start_line": 80
+    },
+    {
+      "block_id": "b000039",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실제 예제와 검증",
+      "anchor": "실제-예제와-검증",
+      "start_line": 101
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000009",
+        "line": 22,
+        "text": "Core는 iiGUI·LVUI·LVRS를 참조하지 않는다. 상위 모듈이 `ApplicationDriver`와",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 24,
+        "text": "LVUI 소스·AST·바이트코드 실행기는 배포 UI를 실행하는 데 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 40,
+        "text": "C++ 위젯 생성·속성 설정·메서드 콜백을 호출한다. 런타임은 컴포넌트 이름을 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 44,
+        "text": "역순 해제에서 그 스코프를 반환한다. 창 종료와 C++ 백엔드 소멸을 같은 순간으로 취급하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 93,
+        "text": "네이티브 `NSButton` 하위 클래스가 LVRS 디자인 값으로 그린다. Qt 버튼이나 QML 객체를 생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000037",
+        "line": 98,
+        "text": "완전히 재현하거나 다른 OS의 위젯 마운트를 구현한 결과로 확대하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "LVUI 독립 구현 현황",
+        "target": "LVUIIndependence.md",
+        "kind": "relative",
+        "line": 6
+      },
+      {
+        "block_id": "b000041",
+        "label": "AOT 검증 기록",
+        "target": "NativeAOTVerification.md",
+        "kind": "relative",
+        "line": 108
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000015",
+        "columns": [
+          "API",
+          "역할"
+        ],
+        "rows": [
+          [
+            "`View::options()`",
+            "생성한 창 속성을 제공한다."
+          ],
+          [
+            "`view.attach(host, configure)`",
+            "실제 네이티브 위젯을 구성하고 뷰 정체성을 부착한다."
+          ],
+          [
+            "`view.widgets()`",
+            "해당 위젯의 약한 네이티브 핸들·ID 조회를 제공한다."
+          ],
+          [
+            "`view.detach(host)`",
+            "해당 세대의 네이티브 위젯을 해제하고 소유 C++ 스코프를 반환한다."
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

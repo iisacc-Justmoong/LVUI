@@ -1,0 +1,171 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5e2a1270927c31acddeced6eae0dc738b9ed0e59cbd81b7289fbd6a26a602170",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeRoutes.md",
+    "sha256": "27d2121bbd32960975af64d8b1042951bb74cea0dfca58e19166c2af802ce7ed",
+    "bytes": 2366,
+    "line_count": 30,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 경로 해석",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 경로 해석\n",
+      "level": 1,
+      "title": "LVUI 경로 해석"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "LVUI의 경로 정규화와 매칭은 C++ 값으로 동작하며 Qt·QML·LVRS 타입이나 런타임을\n사용하지 않는다. 문자열 소스를 실행하지 않고 경로 문자열과 앱이 등록한 패턴을\n비교한다. 경로 해석과 실제 페이지 생성·이력 변경은 별도 책임이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 11,
+      "raw": "`normalize_route`는 앞뒤 Unicode 공백을 제거하고, 빈 경로를 `/`로 정하며,\n필요하면 앞에 `/`를 붙이고 루트가 아닌 경로의 끝 `/`를 제거한다. 내부의 연속된\n`/`, 대소문자와 문자열의 Unicode 정규화 형태는 유지한다. URL 해석, 퍼센트\n디코딩, query 분리나 파일 권한 검사는 수행하지 않는다. 경로는 최대 65536바이트의\nNUL 없는 UTF-8이며 최대 4096개 세그먼트로 제한한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 16,
+      "raw": "`RoutePattern`은 리터럴 세그먼트, 한 세그먼트의 `[name]`, 나머지 세그먼트의\n`[...name]`를 지원한다. 나머지 캡처는 빈 값도 허용하고 그 뒤 패턴은 검사하지\n않는다. 중복 이름은 나중에 캡처한 값이 우선한다. 매칭 실패에서는 부분 캡처를\n내보내지 않는다. 빈 원본 패턴은 비활성 슬롯이며 공백만 있는 패턴은 루트이다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 24,
+      "raw": "`RouteResolver`는 패턴을 선언 순서대로 검사하고 결과를 불변 객체로 반환한다.\n같은 경로의 캐시 적중은 같은 결과를 재사용하며, 결과를 소유한 호출자는 캐시\n축출이나 패턴 교체 이후에도 안전하게 읽을 수 있다. 캐시는 기본 256개, 최소\n16개, 최대 65536개와 계산 예산 8 MiB로 제한하고 오래 사용하지 않은 항목부터\n축출한다. 패턴은 최대 65536개, 원본 합계 8 MiB, 컴파일된 세그먼트 262144개이다.\n잘못된 패턴 목록은 기존 설정과 캐시를 유지한다. resolver의 캐시와 변경은 생성한\n스레드에서만 접근한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 30,
+      "raw": "경로 모델 자체는 페이지 빌드나 이력 변경을 수행하지 않는다. 별도의\n[이력 모델](NativeNavigationHistory.md)은 준비와 확정을 분리하고,\n[독립 페이지 라우터](NativePageRouter.md)가 이 두 모델과 앱의 페이지 팩터리를 연결한다.\n플랫폼별 실제 표시와 접근성은 별도 검증이 필요하다. 앱에서 공급한 탐색 대상과 링크의\n연결은 [링크 계약](NativeLinks.md)을 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 경로 해석",
+      "anchor": "lvui-경로-해석",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "사용하지 않는다. 문자열 소스를 실행하지 않고 경로 문자열과 앱이 등록한 패턴을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 10,
+        "text": "디코딩, query 분리나 파일 권한 검사는 수행하지 않는다. 경로는 최대 65536바이트의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 26,
+        "text": "경로 모델 자체는 페이지 빌드나 이력 변경을 수행하지 않는다. 별도의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "이력 모델",
+        "target": "NativeNavigationHistory.md",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000011",
+        "label": "독립 페이지 라우터",
+        "target": "NativePageRouter.md",
+        "kind": "relative",
+        "line": 28
+      },
+      {
+        "block_id": "b000011",
+        "label": "링크 계약",
+        "target": "NativeLinks.md",
+        "kind": "relative",
+        "line": 30
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

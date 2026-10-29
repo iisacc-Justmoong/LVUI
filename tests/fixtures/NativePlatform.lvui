@@ -1,0 +1,18 @@
+import platform lvrs.PlatformInfo
+Window { VStack {
+    Label(id: "os", text: platform.os())
+    Label(id: "canonical", text: platform.canonicalOs())
+    Label(id: "architecture", text: platform.arch())
+    Label(id: "backend", text: platform.graphicsBackend())
+    Label(id: "mobile", text: platform.mobile())
+    Label(id: "desktop", text: platform.desktop())
+    Label(id: "metal", text: platform.metalSupported())
+    Label(id: "vulkan", text: platform.vulkanSupported())
+    Label(id: "alias", text: platform.normalizeTarget("Darwin"))
+    Label(id: "target", text: platform.runtimeProfile("iphoneos")["target"])
+    Label(id: "width", text: platform.runtimeProfile("ios")["adaptiveWideBreakpoint"])
+    Label(id: "profile-order", text: platform.runtimeProfiles()[5]["target"])
+    HStack(id: "navigation", width: platform.runtimeProfile("ios")["adaptiveNavWidth"]) {
+        Label(text: "Navigation")
+    }
+} }

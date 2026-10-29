@@ -1,0 +1,12 @@
+import vm NativeSequenceModel
+let Default(title: String): [View] = [Label(text: "Default")]
+let Frame(content: [View]): View = VStack { content(title: vm.title) }
+let alias: View = Frame(content: Default)
+Window {
+    import vm NativeSequenceModel
+    let Local(title: String): [View] = [
+        Label(id: "override", text: title + " / " + vm.title),
+        PushButton(vm.increment, id: "overrideAction", text: "Caller")
+    ]
+    alias(content: Local)
+}

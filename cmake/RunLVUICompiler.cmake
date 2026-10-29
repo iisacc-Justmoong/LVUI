@@ -26,4 +26,11 @@ if(NOT _status EQUAL 0)
     message(FATAL_ERROR "LVUI native compilation failed (${_status}):\n${_error}")
 endif()
 # CMake owns this generated build artifact. Never replace it on compiler failure.
+# Preserve dependent C++ objects when recompiling the tool produces identical code.
+if(EXISTS "${LVUI_AOT_OUTPUT}")
+    file(READ "${LVUI_AOT_OUTPUT}" _previous_code)
+    if("${_previous_code}" STREQUAL "${_code}")
+        return()
+    endif()
+endif()
 file(WRITE "${LVUI_AOT_OUTPUT}" "${_code}")

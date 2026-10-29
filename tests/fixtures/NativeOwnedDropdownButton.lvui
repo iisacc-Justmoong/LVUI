@@ -1,0 +1,13 @@
+import vm NativeOwnedDropdownButtonModel
+Window {
+    VStack {
+        DropdownButton(id: "drop", text: vm.text, width: vm.width, enabled: vm.enabled,
+                       iconMode: vm.iconMode, icon: vm.icon, onClick: vm.clicked,
+                       onPressed: vm.pressed, onReleased: vm.released)
+        LabelMenuButton(id: "label", text: "Label", onClick: vm.clicked)
+        IconMenuButton(id: "icon", iconName: "projectStructure", onClick: vm.clicked)
+        LabelSegmentedControl(forceBorderlessTone: vm.force) {
+            DropdownButton(id: "contained", text: "Inside", onClick: vm.clicked)
+        }
+    }
+}

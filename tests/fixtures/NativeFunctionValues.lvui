@@ -1,0 +1,27 @@
+import vm NativeFunctionBackend
+let direct: (Int) -> String = vm.format
+let dynamic: (Int) -> String = vm.makeFormatter(vm.amount)
+@Static let frozen: (Int) -> String = vm.makeFormatter(vm.amount)
+@Static let frozenAlias: (Int) -> String = dynamic
+let Info(format: (Int) -> String, accepts: (Int) -> Bool = vm.accepts): View = VStack {
+    Label(id: "formatted", text: format(vm.count))
+    PushButton(id: "accepted", enabled: accepts(vm.count))
+}
+let Pinned(format: (Int) -> String): View = VStack {
+    @Static let pinned: (Int) -> String = format
+    Label(id: "pinned", text: pinned(vm.count))
+}
+Window {
+    VStack {
+        Label(id: "direct", text: direct(vm.count))
+        Label(id: "frozen", text: frozen(vm.count))
+        Label(id: "frozenAlias", text: frozenAlias(vm.count))
+        Info(format: dynamic)
+        if (vm.visible) {
+            VStack {
+                Info(format: dynamic)
+                Pinned(format: dynamic)
+            }
+        }
+    }
+}

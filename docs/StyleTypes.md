@@ -47,7 +47,10 @@ var distance: Metric = .space8
 
 `Color()`는 Color 값 또는 기존 HEX 문자열 하나, 또는 유한한 0~1 RGBA 채널 네 개를 받는다. `Metric()`은 유한한 Number/Metric을 하나 받는다. 명시적인 타입 선언에서 해당 리터럴을 바로 사용할 수도 있다. `Metric`은 별도 값 종류로 검사되며 수치 스타일을 생성할 때 double로 내려간다. `Int`·`Float`·`Double` 선언을 통해 명시적으로 수치로 받을 수 있고, Int는 기존 정수 검사를 따른다.
 
-Metric `var`는 기존 Core Observable 수치 바인딩과 생성 setter를 사용한다. Color는 현재 기존 구현처럼 불변 `let`과 구성 시점 입력을 지원한다. 실행 중 변경 가능한 Color 바인딩을 새로 추가한 것은 아니다. 외부 C++ 속성의 실제 타입은 생성 C++ 컴파일러도 검사한다.
+Metric `var`는 기존 Core Observable 수치 바인딩과 생성 setter를 사용한다.
+[네이티브 Color](NativeColors.md)는 `Color` 타입의 재사용 뷰 입력·일반 let/var·Static
+스냅샷·조건식·합성·함수 인자와 결과를 C++ 값과 바인딩으로 연결한다. 색상은 iiColorManager의
+공유 값 계약으로 검증하며, 외부 C++ 속성의 실제 타입은 생성 C++ 컴파일러도 검사한다.
 
 Color는 원본 encoded sRGB와 독립 알파를 유지한다. `composite(.material.surface.dense.edge, .window)`는 두 인자를 Color로 추론한다. Metric도 원본 수치·단위를 유지한다. 예를 들어 `Metric.opacity32`는 32이며 0.32로 자동 정규화하지 않는다. 속성별 크기·범위·글꼴 굵기 검사는 계속 적용된다.
 
@@ -84,7 +87,7 @@ options.style_tokens.overrides["Color.primary"] = lvui::StyleColor{.2, .4, .8, 1
 ```sh
 python3 -B tools/update_style_tokens.py
 python3 -B tools/update_style_tokens.py --check
-python3 -B tools/update_lvrs_keywords.py --snapshot-only
+python3 -B tools/update_keywords.py --check
 cmake --build build --parallel 4
 ctest --test-dir build --output-on-failure
 ```

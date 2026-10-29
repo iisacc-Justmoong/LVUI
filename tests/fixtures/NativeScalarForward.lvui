@@ -1,0 +1,18 @@
+import vm NativeScalarInputModel
+let Leaf(title: String, other: String, fallback: String): View = VStack {
+    Label(id: "title", text: title)
+    Label(id: "other", text: other)
+    Label(id: "fallback", text: fallback)
+}
+let Forward(vm: String, other: String, fallback: String = vm): View = VStack {
+    import vm NativeScalarInputModel
+    Leaf(title: fallback, other: other, fallback: fallback)
+}
+let Defined(title: String = vm.compute(vm.count)): View = Label(id: "definition", text: title)
+Window {
+    import vm NativeScalarInputModel
+    HStack {
+        Forward(other: vm.compute(vm.count), vm: "Explicit")
+        Defined()
+    }
+}

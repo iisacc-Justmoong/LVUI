@@ -1,0 +1,9 @@
+import source lvrs.ModelSource
+import adapter lvrs.ModelAdapter
+Window { VStack {
+    Label(id: "count", text: source.count())
+    Label(id: "column", text: source.column())
+    Label(id: "revision", text: source.revision())
+    Label(id: "item-model", text: source.itemModel())
+    Label(id: "adapter-count", text: adapter.count(source.source()))
+} }

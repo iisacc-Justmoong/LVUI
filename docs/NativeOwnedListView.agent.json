@@ -1,0 +1,150 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:13d3d406b7522551eef0ae0d88cde2bfd094d39d38cc31921fe930fbd5e1206a",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeOwnedListView.md",
+    "sha256": "d9fabbbb1c200c4a2a6612f1eb29fd217e57594c7dfa471a6b3898c075691eae",
+    "bytes": 2056,
+    "line_count": 23,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 독립 일반 목록 화면",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 독립 일반 목록 화면\n",
+      "level": 1,
+      "title": "LVUI 독립 일반 목록 화면"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`NativeListView`는 [독립 평면 목록 모델](OwnedListModel.md)의 스냅샷과 선택 상태를\n범용 iiGUI 스크롤 호스트에 연결한다. 계층 모델과 레거시 위젯을 요구하지 않는다.\n`ListViewInput`에 앱의 `ListController`, 크기, 행 높이와 선택적인 아이콘 공급자를\n전달한다. 소스가 변경되면 관측 가능한 `source_revision`을 바꿔 기존 화면을 갱신한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 12,
+      "raw": "고정 높이의 보이는 행과 `overscan`만 만들고, 계속 보이는 키의 행은 재사용한다.\n각 행은 [독립 목록 항목](NativeOwnedListItem.md)과 같은 LVUI 배치·그리기 코드를 사용해 배경·선택·포커스·아이콘·레이블을 그리며 높이가 32 이상인 행에는\n설명도 표시한다. 표시와 접근성에 제공하는 레이블 및 설명은 각각 UTF-8 경계를 지킨\n최대 8,192바이트로 제한하고, 원본 스냅샷은 변경하지 않는다. 한 화면의 표시 텍스트\n예산은 4 MiB다. 사용자 지정 아이콘이 잘못되면 가능한 범위에서 기존 화면을 유지한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 18,
+      "raw": "행 활성화는 원본 항목과 인덱스를 전달하고 선택만 변경한다. 방향키, Home, End와 페이지\n키는 비활성 또는 선택할 수 없는 행을 건너뛰며 스크롤한다. 사용자 입력 직전에 소스가\n바뀌었다면 이전 행의 이벤트를 버리고 새로운 스냅샷을 표시한다. 삽입과 제거 후에는\n가능하면 보이던 키와 행 내부 위치를 유지한다. 소스나 다른 앱 상태의 변경은 실패한\n화면 갱신이 되돌리지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 23,
+      "raw": "`LVUI.OwnedList.Host`는 창을 열지 않는 위젯 트리에서 가상화, 다국어 긴 문자열,\n선택과 키보드, 오래된 입력, 아이콘 오류 복구, 스레드와 수명 경계를 검사한다.\n[목록 패널과 기본 선언](NativeOwnedListPanel.md)은 이 화면을 도구 모음·푸터와\n조합한다. 사용자 행 대리자, 편집 UI와 실제 플랫폼 접근성 검증은 아직 남아 있다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 독립 일반 목록 화면",
+      "anchor": "lvui-독립-일반-목록-화면",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "범용 iiGUI 스크롤 호스트에 연결한다. 계층 모델과 레거시 위젯을 요구하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 11,
+        "text": "최대 8,192바이트로 제한하고, 원본 스냅샷은 변경하지 않는다. 한 화면의 표시 텍스트",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "독립 평면 목록 모델",
+        "target": "OwnedListModel.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000005",
+        "label": "독립 목록 항목",
+        "target": "NativeOwnedListItem.md",
+        "kind": "relative",
+        "line": 9
+      },
+      {
+        "block_id": "b000009",
+        "label": "목록 패널과 기본 선언",
+        "target": "NativeOwnedListPanel.md",
+        "kind": "relative",
+        "line": 22
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

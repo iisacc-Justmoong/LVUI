@@ -1,12 +1,21 @@
 # 컴포넌트 언어의 실제 구현
 
+후속 구현은 [값 표현식·상수 AOT 계산](Expressions.md)을 추가했다. 단항·이항·조건식,
+인덱스·후위 접근 AST 및 선언 어노테이션을 인식한다. 아래 초기 구현 설명에서 이를
+미구현으로 기술한 부분은 해당 문서의 현재 계약을 따른다. 현재 스칼라 반응형 수식,
+지역 스코프와 고정 View 값은 생성 C++로 실행을 검사한다. 동적 구성 전체의 완료는 아니다.
+
 2026-10-22에 추가한 C++23 컴포넌트 언어 프런트엔드이다.
 `LVUI/Language.h`와 `lvui-check`는 실제로 빌드·실행되며, 예약어와 컴포넌트 구문을 검사한다.
 기존 HTML 형태의 `lvui::parse`와 `Document` 계약은 유지한다.
 
 ## 예약어의 근거
 
-LVRS `src/`의 소스 213개 파일을 읽어 파일 해시와 타입 선언 149개를
+현재 언어 계약은 [LVUI 자체 예약어 목록](KeywordRegistry.md)이 소유한다. 아래의
+LVRS/QML 조사는 초기 이름을 정한 당시의 기록이며 새 예약어의 구현 근거나 갱신
+지시가 아니다. `Keyword::source_file`과 `source_line`은 현재 LVUI 목록을 가리킨다.
+
+LVRS `src/`의 소스 334개 파일을 읽어 파일 해시와 타입 선언 149개를
 `catalog/lvrs-components.json`에 기록했다. QML 파일 91개, 그 내부 컴포넌트 선언 25개와
 C++ QML 등록 타입 33개를 대조했다. 루트·인라인 상속과 CMake 등록을 함께 확인한다.
 
@@ -16,7 +25,7 @@ C++ QML 등록 타입 33개를 대조했다. 루트·인라인 상속과 CMake �
 모든 원본을 조사 파일에 남기고 예약어는 한 번만 등록한다.
 
 `InteractionMotion`, `SpringBehavior`, `StateColorBehavior`는 시각 변환·동작 보조 예약어이다.
-`View`, `import`, `let`, `var`, `true`, `false`를 포함하면 전체 예약어는 **116개**이다.
+`View`, `Color`, `Metric`, `import`, `let`, `var`, `true`, `false`를 포함하면 전체 예약어는 **118개**이다.
 `Theme`, `Motion`, 모델·서비스·상태 등 비시각 객체 38개 선언은 시각 예약어에서 제외한다.
 전체 이름과 원본 위치는 [예약어 목록](ReservedWords.md)에 있다.
 
@@ -30,7 +39,7 @@ C++ QML 등록 타입 33개를 대조했다. 루트·인라인 상속과 CMake �
 
 const auto* keyword = lvui::find_keyword("PushButton");
 // keyword->kind == lvui::KeywordKind::view
-// keyword->source_file / source_line: 조사한 LVRS 선언 위치
+// keyword->source_file / source_line: LVUI 예약어 목록의 항목 위치
 
 auto tokens = lvui::tokenize("VStack { Label(text: \"Hello\") }");
 auto document = lvui::parse_view("VStack { Label(text: \"Hello\") }");
@@ -71,7 +80,8 @@ ApplicationWindow(title: title) {
 ```
 
 - 한 문서는 루트 `View` 하나를 가지며, 선언과 import는 루트 앞이나 뷰 본문에 둘 수 있다.
-- 컴포넌트 이름은 등록된 시각 예약어여야 한다. `{}`로 다른 `View`를 자식 인자로 전달한다.
+- 컴포넌트 이름은 등록된 시각 예약어 또는 어휘 스코프에 선언한 `View` 값이다.
+  `{}`로 다른 `View`를 자식 인자로 전달한다.
 - `VStack() { ... }`와 `VStack { ... }`를 지원한다. 인자가 없는 생성에도 `()` 또는 `{}`가 필요하다.
 - `()`는 위치 인자와 이름 지정 인자를 받으며, 위치 인자는 이름 지정 인자보다 앞에 둔다.
 - 본문 속성 `text: "Save"`도 입력으로 보관한다. 괄호와 본문 사이에서도 같은 입력 이름을 중복하면 오류이다.
@@ -84,8 +94,16 @@ ApplicationWindow(title: title) {
 - 입력은 최대 1 MiB, 소스 토큰은 65,536개, `View`는 4,096개이며 뷰·표현식 깊이는 64단계이다.
 
 `View()` 자체는 구체적인 시각 컴포넌트 생성자가 아니다.
-`View` 타입 변수의 뷰 초기화, 사용자 정의 컴포넌트 선언, 어노테이션,
-임의 연산자·람다·이벤트 처리 블록, 컴포넌트별 입력 타입·필수 인자 검사는 아직 구현하지 않았다.
+`let panel: View = VStack { ... }`와 추론한 시각 초기값은
+[고정 View 값](ViewValues.md)으로 구성한다. 메서드·지역 값·import는
+[지역 스코프](LocalScopes.md)를 따르며 재사용 시 사용 위치별 ID를 갖는다.
+명시적인 스칼라·백엔드·View 매개변수와 이름별 슬롯은 [재사용 구성](Components.md)을 따른다.
+[이벤트 콜백 매개변수](CallableInputs.md)는 `(String, Bool) -> Void` 같은 서명을 AST에
+보존하고 네이티브 AOT에서 인자·결과 타입 계약을 검사한다.
+동적 View 교체, 람다·이벤트 처리 블록과 전체 컴포넌트별 입력 검사는
+아직 완료된 범위가 아니다.
+[키 기반 반복](Repetition.md)은 C++ 범위와 명시적인 키·행 스코프를 네이티브 코드로 생성한다.
+연산자·조건식·후위 접근과 선언 어노테이션의 현재 범위는 [Expressions.md](Expressions.md)를 따른다.
 이 범위 밖의 구문은 무시하지 않고 진단한다.
 
 ## 명령행 검사와 검증
@@ -105,7 +123,8 @@ cmake --install build
 파일·사용법 오류이면 2를 반환한다. [실제 검사 예제](examples/ReservedComponents.lvui)와
 [카운터 예제](examples/Counter.lvui)를 CTest로 검사한다.
 
-소스 조사 테스트는 현재 LVRS 소스와 스냅샷을 대조한다. LVRS 소스가 없는 환경에서도
+선택적인 레거시 조사 테스트만 LVRS 소스와 과거 스냅샷을 대조한다. 기본 빌드에서는
+인접 LVRS 소스를 읽지 않는다. LVRS 소스가 없는 환경에서도
 스냅샷과 생성된 예약어의 일치, 전체 예약어와 파서, 이름 충돌, 입력 한계는 검사할 수 있다.
 Python은 조사·검증 도구에만 사용하며 C++ 라이브러리와 명령행 도구의 실행 의존성이 아니다.
 

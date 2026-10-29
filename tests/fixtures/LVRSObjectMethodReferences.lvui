@@ -1,0 +1,5 @@
+import vm NativeObjectMethodReferenceBackend
+Window { VStack {
+    Link(text: "Action", method: vm.selected.act)
+    PushButton(onClick: vm.rows[0].act)
+} }

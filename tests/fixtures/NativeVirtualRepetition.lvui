@@ -1,0 +1,15 @@
+import vm NativeVirtualCollectionBackend
+Window {
+    VStack(spacing: 0) {
+        for (item in vm.items, key: item.id, index: ordinal, id: "results",
+             itemHeight: 80, itemWidth: 150, spacing: 10, overscan: 1,
+             horizontal: vm.horizontal, width: vm.width, height: vm.height) {
+            VStack(id: "row", spacing: 0) {
+                import state NativeRowActivation
+                Label(id: "title", text: item.title)
+                Label(id: "ordinal", text: ordinal)
+                PushButton(id: "hit", text: state.count, onClick: state.increment)
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+import vm NativeOwnedListItemCompositeModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: vm.kind, label: vm.label, checked: vm.checked, enabled: vm.enabled,
+                 visible: vm.visible, onCheckedChanged: vm.changed, onEdited: vm.edited)
+    }
+}

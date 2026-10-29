@@ -11,6 +11,7 @@
 namespace lvui {
 // Authored, encoded sRGB. Keep alpha independent of the RGB channels.
 struct StyleColor final {
+    static constexpr bool encoded_srgb = true;
     double red = 0, green = 0, blue = 0, alpha = 1;
     friend bool operator==(const StyleColor &, const StyleColor &) = default;
 };

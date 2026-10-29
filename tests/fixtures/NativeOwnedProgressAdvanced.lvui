@@ -1,0 +1,10 @@
+import vm NativeOwnedProgressModel
+Window {
+    VStack {
+        ProgressBar(id: "advanced", motionEnabled: false, minimumValue: vm.minimum, endValue: vm.maximum,
+            startValue: vm.start, currentValue: vm.current, width: vm.width, height: vm.height,
+            size: vm.size, shapeStyle: vm.shape, largeHeight: vm.large, regularHeight: vm.regular,
+            cornerRadius: vm.radius, trackColor: vm.track, fillColor: vm.fill,
+            displayedStart: vm.displayed_start, displayedProgress: vm.displayed_progress)
+    }
+}

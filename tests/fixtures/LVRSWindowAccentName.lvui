@@ -1,0 +1,2 @@
+import vm NativeWindowAccentModel
+Window(accent: vm.name) { PushButton(text: "Native") }

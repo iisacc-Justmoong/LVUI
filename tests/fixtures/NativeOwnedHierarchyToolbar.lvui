@@ -1,0 +1,7 @@
+import vm NativeOwnedHierarchyToolbarModel
+Window {
+    VStack(alignment: .leading) {
+        HierarchyToolbar(id: "toolbar", buttonItems: vm.items, activeButtonId: vm.active,
+                         width: vm.width, onActiveChanged: vm.changed, onButtonTriggered: vm.triggered)
+    }
+}

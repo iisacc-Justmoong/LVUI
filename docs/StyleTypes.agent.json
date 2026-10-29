@@ -1,0 +1,660 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:72dc0978dd111e630559deab07e7c2a4cc4426150d1dfc57a7ed5e69d7dfd2d0",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/StyleTypes.md",
+    "sha256": "4eb7eefbefb8459003dafe752aefe9e7dec60c9397d66e28a50ccaf7e9599288",
+    "bytes": 8059,
+    "line_count": 105,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "Color와 Metric 값 타입",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Color와 Metric 값 타입\n",
+      "level": 1,
+      "title": "Color와 Metric 값 타입"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "LVUI의 `Color`와 `Metric`은 색상과 스타일 수치를 선택하는 내장 값 타입이다. Figma의 긴 CSS 이름이나 문자열 경로 대신 타입 멤버로 선택한다. `Color` 138개, `Metric` 67개를 [전체 멤버 목록](StyleTokenMembers.md)에 공개한다. 원본 값·ID·별칭·모드·앱별 설정은 [기본 토큰 카탈로그](StyleTokens.md)와 공유한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "## 선택과 타입 추론\n",
+      "level": 2,
+      "title": "선택과 타입 추론"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 17,
+      "raw": "```text\nlet ink: Color = .primary\nlet gap: Metric = .space8\n\nApplicationWindow(backgroundColor: Color.window) {\n    VStack(spacing: gap, padding: Metric.space24) {\n        Label(text: \"Native LVUI\", color: ink,\n              fontSize: Metric.textBody, fontWeight: Metric.weightMedium)\n    }\n}\n```\n",
+      "language": "text",
+      "code": "let ink: Color = .primary\nlet gap: Metric = .space8\n\nApplicationWindow(backgroundColor: Color.window) {\n    VStack(spacing: gap, padding: Metric.space24) {\n        Label(text: \"Native LVUI\", color: ink,\n              fontSize: Metric.textBody, fontWeight: Metric.weightMedium)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "타입 멤버의 문법은 `Color.멤버`와 `Metric.멤버`이다. 타입을 명시한 선언이나 색상·수치 입력에서는 `.멤버`로 축약할 수 있다. 위 Label의 색상을 `.primary`, 글자 크기를 `.textBody`로 작성해도 같은 C++ 코드가 생성된다. 기존 컴포넌트 enum인 `style: .body`, `tone: .primary`는 기존 의미를 유지한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "table",
+      "start_line": 21,
+      "end_line": 32,
+      "raw": "| 선택 | 원본 |\n|---|---|\n| `Color.primary` | Theme Colors / Action/primary |\n| `Color.window` | Theme Colors / Panel/window |\n| `Color.text.body` | Theme Colors / Text/bodyColor |\n| `Color.blue`, `Color.blue.hover` | Theme Colors / Accent/Blue/Default, Hover |\n| `Color.material.surface.dense.edge` | Material / Surface/Dense/Edge |\n| `Color.picker.current` | ColorPicker / Current color |\n| `Metric.space8`, `Metric.radius8` | Theme Metrics / Space/8, Radius/8 |\n| `Metric.size22`, `Metric.stroke1_5` | Theme Metrics / Size/22, Stroke/1_5 |\n| `Metric.textBody`, `Metric.textBodyLineHeight` | Theme Typography / Body의 크기·줄 높이 |\n| `Metric.weightMedium` | Theme Typography / Weight/Medium |\n",
+      "columns": [
+        "선택",
+        "원본"
+      ],
+      "rows": [
+        [
+          "`Color.primary`",
+          "Theme Colors / Action/primary"
+        ],
+        [
+          "`Color.window`",
+          "Theme Colors / Panel/window"
+        ],
+        [
+          "`Color.text.body`",
+          "Theme Colors / Text/bodyColor"
+        ],
+        [
+          "`Color.blue`, `Color.blue.hover`",
+          "Theme Colors / Accent/Blue/Default, Hover"
+        ],
+        [
+          "`Color.material.surface.dense.edge`",
+          "Material / Surface/Dense/Edge"
+        ],
+        [
+          "`Color.picker.current`",
+          "ColorPicker / Current color"
+        ],
+        [
+          "`Metric.space8`, `Metric.radius8`",
+          "Theme Metrics / Space/8, Radius/8"
+        ],
+        [
+          "`Metric.size22`, `Metric.stroke1_5`",
+          "Theme Metrics / Size/22, Stroke/1_5"
+        ],
+        [
+          "`Metric.textBody`, `Metric.textBodyLineHeight`",
+          "Theme Typography / Body의 크기·줄 높이"
+        ],
+        [
+          "`Metric.weightMedium`",
+          "Theme Typography / Weight/Medium"
+        ]
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "접두사를 생략할 타입 문맥이 없는 `let ink = .primary`는 오류이다. `let ink = Color.primary`로 타입을 추론하거나 `let ink: Color = .primary`로 지정한다. 수치 입력은 Number와 Metric을 받으며, Metric을 색상·문자열·Bool로 사용하는 것은 거부한다. 수치 목록 입력에서도 `[Metric.size44, .size56]`처럼 작성할 수 있다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "타입 이름은 예약어이다. 변수나 import 바인딩 이름으로 `Color`·`Metric`을 다시 선언할 수 없다. 멤버는 정적 카탈로그 선택이며 임의 객체의 동적 속성이나 C++ 백엔드 참조로 해석하지 않는다. `Color.primary()`처럼 멤버를 함수로 호출하는 것도 오류이다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "## 직접 값 생성과 상태\n",
+      "level": 2,
+      "title": "직접 값 생성과 상태"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 40,
+      "end_line": 46,
+      "raw": "```text\nlet customInk: Color = Color(\"#12345678\")\nlet customGap: Metric = Metric(12)\nlet otherInk: Color = \"#abcdef\"\nlet otherGap: Metric = 16\nvar distance: Metric = .space8\n```\n",
+      "language": "text",
+      "code": "let customInk: Color = Color(\"#12345678\")\nlet customGap: Metric = Metric(12)\nlet otherInk: Color = \"#abcdef\"\nlet otherGap: Metric = 16\nvar distance: Metric = .space8\n",
+      "closed": true
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "`Color()`는 Color 값 또는 기존 HEX 문자열 하나, 또는 유한한 0~1 RGBA 채널 네 개를 받는다. `Metric()`은 유한한 Number/Metric을 하나 받는다. 명시적인 타입 선언에서 해당 리터럴을 바로 사용할 수도 있다. `Metric`은 별도 값 종류로 검사되며 수치 스타일을 생성할 때 double로 내려간다. `Int`·`Float`·`Double` 선언을 통해 명시적으로 수치로 받을 수 있고, Int는 기존 정수 검사를 따른다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 53,
+      "raw": "Metric `var`는 기존 Core Observable 수치 바인딩과 생성 setter를 사용한다.\n[네이티브 Color](NativeColors.md)는 `Color` 타입의 재사용 뷰 입력·일반 let/var·Static\n스냅샷·조건식·합성·함수 인자와 결과를 C++ 값과 바인딩으로 연결한다. 색상은 iiColorManager의\n공유 값 계약으로 검증하며, 외부 C++ 속성의 실제 타입은 생성 C++ 컴파일러도 검사한다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "Color는 원본 encoded sRGB와 독립 알파를 유지한다. `composite(.material.surface.dense.edge, .window)`는 두 인자를 Color로 추론한다. Metric도 원본 수치·단위를 유지한다. 예를 들어 `Metric.opacity32`는 32이며 0.32로 자동 정규화하지 않는다. 속성별 크기·범위·글꼴 굵기 검사는 계속 적용된다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "## HTML 형태 문법\n",
+      "level": 2,
+      "title": "HTML 형태 문법"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "fenced_code",
+      "start_line": 59,
+      "end_line": 66,
+      "raw": "```html\n<ApplicationWindow style=\"background:Color.window\">\n  <div style=\"gap:Metric.space8;padding:.space24\">\n    <span color={Color.text.body}\n          style=\"font-size:.textBody;font-weight:Metric.weightMedium\">Native LVUI</span>\n  </div>\n</ApplicationWindow>\n```\n",
+      "language": "html",
+      "code": "<ApplicationWindow style=\"background:Color.window\">\n  <div style=\"gap:Metric.space8;padding:.space24\">\n    <span color={Color.text.body}\n          style=\"font-size:.textBody;font-weight:Metric.weightMedium\">Native LVUI</span>\n  </div>\n</ApplicationWindow>\n",
+      "closed": true
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "인라인 스타일은 속성의 색상·수치 문맥에서 접두사를 생략할 수 있다. 초기 `<main>` 파서도 기존 지원 속성에서 같은 선택을 해석한다. `.5` 같은 숫자 표기를 스타일 멤버로 재해석하지 않는다. String 토큰 3개는 Color/Metric 멤버에 포함하지 않는다. 글꼴 이름 등에는 기존 `token()` 또는 `var()`를 사용한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "## C++ 카탈로그와 재생성\n",
+      "level": 2,
+      "title": "C++ 카탈로그와 재생성"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "fenced_code",
+      "start_line": 72,
+      "end_line": 81,
+      "raw": "```cpp\nconst auto& catalog = lvui::default_style_tokens();\nauto primary = catalog.color(\"Color.primary\");\nauto spacing = catalog.number(\"Metric.space8\");\nauto selected = catalog.select(\"Color.material.surface.dense.edge\");\n\nlvui::NativeCompileOptions options;\noptions.style_tokens.overrides[\"Metric.space8\"] = 10.0;\noptions.style_tokens.overrides[\"Color.primary\"] = lvui::StyleColor{.2, .4, .8, 1};\n```\n",
+      "language": "cpp",
+      "code": "const auto& catalog = lvui::default_style_tokens();\nauto primary = catalog.color(\"Color.primary\");\nauto spacing = catalog.number(\"Metric.space8\");\nauto selected = catalog.select(\"Color.material.surface.dense.edge\");\n\nlvui::NativeCompileOptions options;\noptions.style_tokens.overrides[\"Metric.space8\"] = 10.0;\noptions.style_tokens.overrides[\"Color.primary\"] = lvui::StyleColor{.2, .4, .8, 1};\n",
+      "closed": true
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "`StyleToken::selector`는 해당 변수의 선택 이름이다. String/Boolean 변수는 비어 있다. `select()`는 Color/Metric 멤버를 검증하고 원본 ID로 조회한다. 기존 ID/key/CSS/컬렉션 경로 조회도 유지한다. `style_value(text, context, options)`는 인라인 스타일의 문맥상 멤버를 해석하고, 기존 `css_value(text, options)` API도 그대로 사용할 수 있다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "선택 이름은 컬렉션·변수 경로에서 결정하므로 다른 토큰을 추가해도 기존 이름을 단독 leaf의 유일성 때문에 변경하지 않는다. 이름 충돌은 생성 오류이며 자동으로 덮어쓰지 않는다. 원본 변수 경로를 이름 변경할 때에는 공개 선택 이름의 변경도 검토해야 한다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "fenced_code",
+      "start_line": 87,
+      "end_line": 93,
+      "raw": "```sh\npython3 -B tools/update_style_tokens.py\npython3 -B tools/update_style_tokens.py --check\npython3 -B tools/update_keywords.py --check\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n```\n",
+      "language": "sh",
+      "code": "python3 -B tools/update_style_tokens.py\npython3 -B tools/update_style_tokens.py --check\npython3 -B tools/update_keywords.py --check\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n",
+      "closed": true
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "생성기는 값 카탈로그와 멤버 문서를 함께 검증한다. 예약어 생성기는 Color/Metric을 type으로 등록한다. AOT는 이 선택을 C++ WidgetColor와 숫자로 확정하므로 실행 중 타입 이름·선택 문자열·LVUI 토큰 해석기를 필요로 하지 않는다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "heading",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "## 2026-10-25 검증 기록\n",
+      "level": 2,
+      "title": "2026-10-25 검증 기록"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "macOS arm64 Release 빌드와 LVUI 전체 CTest **60/60**이 통과했다. 새 테스트는 205개 선택 이름의 원본 ID 대응, 별칭·값 변경 유지, 타입 예약·명시/문맥상 선택의 동일한 코드 생성, 값 생성자, Metric 반응형 상태, 수치 목록, 잘못된 타입·멤버와 소스 진단 위치를 검사한다. Python 생성기 테스트 10개는 멤버 전체 수량·이름 충돌·문서 드리프트도 포함한다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "`build/style-token-prefix`에 설치한 패키지로 별도 소비자를 다시 빌드했고 **4/4** 테스트가 통과했다. Metal/Vulkan의 실제 하드웨어·sRGB attachment에서 기본 배경 20, 합성 보더 약 48, Pretendard 제목 26·본문 13을 유지했다. HTML 형태 뷰를 새로 마운트한 뒤 Metric 값 8을 생성 setter로 14로 변경하여 같은 네이티브 슬라이더에 반영되는 것도 확인했다. Windows/Linux 실제 실행은 이 기록에 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "생성 헤더에는 Color/Metric 선택 문자열이나 LVUI 토큰 해석기가 없으며, 소비자와 연결 Core/FileProvider 라이브러리에 Qt 링크가 없다. 원본 Figma 스냅샷의 SHA-256은 기존 `7d9b1bfa1c345568afe4fea6ba97f793c415c0008fca59a7c25f4ff7e049bc0b`를 유지한다. 로그는 `build/typed-styles-build.log`, `build/typed-styles-tests.log`, `build/typed-styles-consumer-build.log`, `build/typed-styles-consumer-tests.log`에 있다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 104,
+      "end_line": 104,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "앱 고유 Color·Metric과 수작업 C++ 패널의 공유 방법은 [스타일 프로필](StyleProfiles.md)에 기록한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Color와 Metric 값 타입",
+      "anchor": "color와-metric-값-타입",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "선택과 타입 추론",
+      "anchor": "선택과-타입-추론",
+      "start_line": 5
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "직접 값 생성과 상태",
+      "anchor": "직접-값-생성과-상태",
+      "start_line": 38
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "HTML 형태 문법",
+      "anchor": "html-형태-문법",
+      "start_line": 57
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "C++ 카탈로그와 재생성",
+      "anchor": "c-카탈로그와-재생성",
+      "start_line": 70
+    },
+    {
+      "block_id": "b000045",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-10-25 검증 기록",
+      "anchor": "2026-10-25-검증-기록",
+      "start_line": 97
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000015",
+        "line": 36,
+        "text": "타입 이름은 예약어이다. 변수나 import 바인딩 이름으로 `Color`·`Metric`을 다시 선언할 수 없다. 멤버는 정적 카탈로그 선택이며 임의 객체의 동적 속성이나 C++ 백엔드 참조로 해석하지 않는다. `Color.primary()`처럼 멤버를 함수로 호출하는 것도 오류이다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 55,
+        "text": "Color는 원본 encoded sRGB와 독립 알파를 유지한다. `composite(.material.surface.dense.edge, .window)`는 두 인자를 Color로 추론한다. Metric도 원본 수치·단위를 유지한다. 예를 들어 `Metric.opacity32`는 32이며 0.32로 자동 정규화하지 않는다. 속성별 크기·범위·글꼴 굵기 검사는 계속 적용된다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 68,
+        "text": "인라인 스타일은 속성의 색상·수치 문맥에서 접두사를 생략할 수 있다. 초기 `<main>` 파서도 기존 지원 속성에서 같은 선택을 해석한다. `.5` 같은 숫자 표기를 스타일 멤버로 재해석하지 않는다. String 토큰 3개는 Color/Metric 멤버에 포함하지 않는다. 글꼴 이름 등에는 기존 `token()` 또는 `var()`를 사용한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000039",
+        "line": 85,
+        "text": "선택 이름은 컬렉션·변수 경로에서 결정하므로 다른 토큰을 추가해도 기존 이름을 단독 leaf의 유일성 때문에 변경하지 않는다. 이름 충돌은 생성 오류이며 자동으로 덮어쓰지 않는다. 원본 변수 경로를 이름 변경할 때에는 공개 선택 이름의 변경도 검토해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 95,
+        "text": "생성기는 값 카탈로그와 멤버 문서를 함께 검증한다. 예약어 생성기는 Color/Metric을 type으로 등록한다. AOT는 이 선택을 C++ WidgetColor와 숫자로 확정하므로 실행 중 타입 이름·선택 문자열·LVUI 토큰 해석기를 필요로 하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000049",
+        "line": 101,
+        "text": "`build/style-token-prefix`에 설치한 패키지로 별도 소비자를 다시 빌드했고 **4/4** 테스트가 통과했다. Metal/Vulkan의 실제 하드웨어·sRGB attachment에서 기본 배경 20, 합성 보더 약 48, Pretendard 제목 26·본문 13을 유지했다. HTML 형태 뷰를 새로 마운트한 뒤 Metric 값 8을 생성 setter로 14로 변경하여 같은 네이티브 슬라이더에 반영되는 것도 확인했다. Windows/Linux 실제 실행은 이 기록에 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [
+      {
+        "block_id": "b000041",
+        "language": "sh",
+        "code": "python3 -B tools/update_style_tokens.py\npython3 -B tools/update_style_tokens.py --check\npython3 -B tools/update_keywords.py --check\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "전체 멤버 목록",
+        "target": "StyleTokenMembers.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000003",
+        "label": "기본 토큰 카탈로그",
+        "target": "StyleTokens.md",
+        "kind": "relative",
+        "line": 3
+      },
+      {
+        "block_id": "b000023",
+        "label": "네이티브 Color",
+        "target": "NativeColors.md",
+        "kind": "relative",
+        "line": 51
+      },
+      {
+        "block_id": "b000053",
+        "label": "스타일 프로필",
+        "target": "StyleProfiles.md",
+        "kind": "relative",
+        "line": 105
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000011",
+        "columns": [
+          "선택",
+          "원본"
+        ],
+        "rows": [
+          [
+            "`Color.primary`",
+            "Theme Colors / Action/primary"
+          ],
+          [
+            "`Color.window`",
+            "Theme Colors / Panel/window"
+          ],
+          [
+            "`Color.text.body`",
+            "Theme Colors / Text/bodyColor"
+          ],
+          [
+            "`Color.blue`, `Color.blue.hover`",
+            "Theme Colors / Accent/Blue/Default, Hover"
+          ],
+          [
+            "`Color.material.surface.dense.edge`",
+            "Material / Surface/Dense/Edge"
+          ],
+          [
+            "`Color.picker.current`",
+            "ColorPicker / Current color"
+          ],
+          [
+            "`Metric.space8`, `Metric.radius8`",
+            "Theme Metrics / Space/8, Radius/8"
+          ],
+          [
+            "`Metric.size22`, `Metric.stroke1_5`",
+            "Theme Metrics / Size/22, Stroke/1_5"
+          ],
+          [
+            "`Metric.textBody`, `Metric.textBodyLineHeight`",
+            "Theme Typography / Body의 크기·줄 높이"
+          ],
+          [
+            "`Metric.weightMedium`",
+            "Theme Typography / Weight/Medium"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

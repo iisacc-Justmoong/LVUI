@@ -1,0 +1,22 @@
+import vm NativeNavigationBackend
+import nav lvui.native.CollectionNavigation
+Window {
+    VStack(spacing: 0) {
+        Label(id: "current", text: nav.state.current_key)
+        for (item in vm.items, key: item.id, id: "results", itemHeight: 100,
+             itemWidth: 150, spacing: 10, width: 480, height: 200,
+             navigation: nav, selectionMode: .multiple,
+             selectOnClick: vm.select_on_click,
+             navigationFilter: item.title != "Disabled",
+             onCurrentChanged: vm.focus_changed,
+             onSelectionChanged: vm.selection_changed,
+             onActivate: vm.activate) {
+            VStack(id: "row", spacing: 2, alignment: .stretch) {
+                Label(id: "title", text: item.title)
+                CheckBox(id: "selected", checked: nav.is_selected(item.id))
+                InputField(id: "text", text: item.title)
+                PushButton(id: "action", text: "Action", onClick: vm.button_action)
+            }
+        }
+    }
+}

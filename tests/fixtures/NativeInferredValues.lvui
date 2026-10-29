@@ -1,0 +1,27 @@
+import vm NativeFactoryCaptureBackend
+let action = vm.selected.make()
+let method = vm.selected.act
+let render = vm.selected.description()
+let alias = render
+@Static let pinned = action
+var manual = action
+let temporary = vm.temporary().make()
+let argument = vm.capture(vm.argument())
+let mixed = vm.mixed(vm.argument(), vm.argument())
+let Actions(run: () -> Void, describe: () -> String): View = VStack {
+    PushButton(id: "typed", onClick: run)
+    Label(id: "forwarded", text: describe())
+}
+Window { VStack {
+    InputField(id: "edit", text: "Ready")
+    Label(id: "description", text: alias())
+    PushButton(id: "method", onClick: method)
+    PushButton(id: "action", onClick: action)
+    PushButton(id: "pinned", onClick: pinned)
+    PushButton(id: "manual", onClick: manual)
+    PushButton(id: "temporary", onClick: temporary)
+    PushButton(id: "argument", onClick: argument)
+    PushButton(id: "mixed", onClick: mixed)
+    Actions(run: action, describe: render)
+    if (vm.visible) { PushButton(id: "conditional", onClick: action) }
+} }

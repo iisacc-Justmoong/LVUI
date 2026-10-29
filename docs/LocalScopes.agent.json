@@ -1,0 +1,209 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:d3668ecbd458ac930eb46ce378de0603d98974309be961d34146be8ed0c79fb7",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/LocalScopes.md",
+    "sha256": "61b420bb079dd8cd1b6c089300cb76d183c8f7688af9df5dd27225c4e059453c",
+    "bytes": 2413,
+    "line_count": 41,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "중첩 뷰의 지역 스코프",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 중첩 뷰의 지역 스코프\n",
+      "level": 1,
+      "title": "중첩 뷰의 지역 스코프"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "뷰 본문의 지역 `let`·`var`·import는 해당 뷰를 구성하는 C++ 활성화에 속한다.\nAOT는 이를 별도 스코프와 구성 함수로 생성한다. 부모의 값과 import는 같은 객체를\n빌려 읽고, 지역 import는 자체 객체를 생성한다. 지역 이름은 부모 이름을 가릴 수 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 7,
+      "end_line": 20,
+      "raw": "```lvui\nimport document Backend\nWindow {\n    VStack {\n        VStack {\n            import inspector Backend\n            let status: String = document.ready ? \"Ready\" : \"Waiting\"\n            Label(text: status)\n            PushButton(inspector.refresh, text: \"Refresh\")\n        }\n        Label(text: document.title)\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "import document Backend\nWindow {\n    VStack {\n        VStack {\n            import inspector Backend\n            let status: String = document.ready ? \"Ready\" : \"Waiting\"\n            Label(text: status)\n            PushButton(inspector.refresh, text: \"Refresh\")\n        }\n        Label(text: document.title)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 24,
+      "raw": "새로 그리거나 속성을 갱신할 때 import를 다시 만들지 않는다. 일반 정적 자식은 기존\n위젯 세대와 함께 유지된다. 모달 콘텐츠의 구성 함수 안에 있으면 실제 콘텐츠 활성화 때\n생성하여 닫을 때 그 세대의 연결과 함께 해제한다. 부모 객체를 자식의 새 import로 복사하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 28,
+      "raw": "지역 ID의 메뉴·툴팁 연결은 그 지역 컴포넌트 안에서 정의한다. 바깥 지역의 임시 C++\n변수 이름을 다른 구성 함수 안에서 참조하도록 생성하지 않는다. 같은 실제 빌더에 구성하는\n정적 자식들의 ID는 계속 유일해야 한다. 독립 모달 세대는 기존의 ID 격리를 유지한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 32,
+      "raw": "루트 Window 본문에서도 지역 선언과 import를 사용한다. 모듈 선언과 창 본문에서 같은\n이름을 사용하면 본문의 이름이 가리되, 이미 생성한 모듈 파생값의 원본은 바뀌지 않는다.\n타입 청사진을 가져온 뒤 `import instance Model`처럼 짧은 타입 이름으로 객체를 생성할 수 있다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 34,
+      "end_line": 37,
+      "raw": "[조건](ConditionalViews.md)·[반복](Repetition.md)·[사용자 View 값](ViewValues.md)은 각\n문서의 현재 생성·실행 범위를 따른다. 취소 가능한 비동기 작업과 종료 접수 게이트 전체의\n수명 계약은 후속 검증 범위이다.\n지역 스코프의 성공을 이 전체 수명 기능의 완료로 간주하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 41,
+      "raw": "`LVUI.NativeNested`는 실제 생성된 C++를 컴파일·링크하고 UI 호스트 없이 세 단계의\n부모 값 추적, 지역 객체 분리, 이름 가림과 독립 바인딩 종료를 검사한다. 위젯 실행은\n전체 작업의 최종 일괄 검증 단계에 유지한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "중첩 뷰의 지역 스코프",
+      "anchor": "중첩-뷰의-지역-스코프",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 24,
+        "text": "생성하여 닫을 때 그 세대의 연결과 함께 해제한다. 부모 객체를 자식의 새 import로 복사하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 27,
+        "text": "변수 이름을 다른 구성 함수 안에서 참조하도록 생성하지 않는다. 같은 실제 빌더에 구성하는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 28,
+        "text": "정적 자식들의 ID는 계속 유일해야 한다. 독립 모달 세대는 기존의 ID 격리를 유지한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 37,
+        "text": "지역 스코프의 성공을 이 전체 수명 기능의 완료로 간주하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000013",
+        "label": "조건",
+        "target": "ConditionalViews.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000013",
+        "label": "반복",
+        "target": "Repetition.md",
+        "kind": "relative",
+        "line": 34
+      },
+      {
+        "block_id": "b000013",
+        "label": "사용자 View 값",
+        "target": "ViewValues.md",
+        "kind": "relative",
+        "line": 34
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

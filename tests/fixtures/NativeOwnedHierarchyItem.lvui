@@ -1,0 +1,8 @@
+import vm NativeOwnedHierarchyItemModel
+Window {
+    VStack(alignment: .leading) {
+        HierarchyItem(id: "item", itemKey: "camera", label: vm.label, count: vm.count,
+                      expanded: vm.expanded, hasChildItems: vm.children, iconName: "home",
+                      onClick: vm.clicked, onExpansionChanged: vm.changed)
+    }
+}

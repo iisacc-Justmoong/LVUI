@@ -1,0 +1,605 @@
+{
+  "schema": 1,
+  "entries": [
+    {
+      "name": "AbstractButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AbstractInputBar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ActionSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "AdaptiveLayoutHost",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Alert",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AlertButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppBootstrapWindow",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppCard",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppHeader",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "AppShell",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ApplicationWindow",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Avatar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "BodyText",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "CaptionText",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Card",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "CardImageContent",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "CardInformationContent",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ChannelRow",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "CheckBox",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "CodeEditor",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Color",
+      "kind": "type",
+      "internal": false
+    },
+    {
+      "name": "ColorField",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ColorInput",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ColorPicker",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ColorPickerButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ColorPickerSurface",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ComboBox",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ContentText",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ContextMenu",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ContextMenuDivider",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ContextMenuItem",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "DetailRow",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "DropdownButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Endpoint",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "EventListener",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "FocusRing",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Glyph",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "HStack",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HelpButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Hierarchy",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HierarchyItem",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HierarchyList",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "HierarchyToolbar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconMenuButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconSegmentedControl",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Image",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "InputField",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "InputMethodGuard",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "InputSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "InteractionMotion",
+      "kind": "modifier",
+      "internal": false
+    },
+    {
+      "name": "Label",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "LabelButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "LabelMenuButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "LabelSegmentedControl",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Link",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "List",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListFooter",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListItem",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListItemComposite",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListItemSelector",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ListToolbar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Material",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "MaterialSurface",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Menu",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MenuDivider",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MenuItem",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Metric",
+      "kind": "type",
+      "internal": false
+    },
+    {
+      "name": "MobileNavigationBar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileNavigationTab",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileTab",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MobileTabBar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Modal",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "MoreSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "NativeView",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PageRouter",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PanelMaterial",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Popover",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PreviewSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ProgressBar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "PushButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "QuantityControl",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "QuantitySlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "RadialLayer",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "RadioButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "SegmentsSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "SelectionSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "SelectorSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Sheet",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Slider",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Slot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Spacer",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "SpringBehavior",
+      "kind": "modifier",
+      "internal": false
+    },
+    {
+      "name": "StateColorBehavior",
+      "kind": "modifier",
+      "internal": false
+    },
+    {
+      "name": "Stepper",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Swatch",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "Tab",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TabBar",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Table",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TableCellItem",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TableHeader",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TableRow",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TextEditor",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ToggleSlot",
+      "kind": "view",
+      "internal": true
+    },
+    {
+      "name": "ToggleSwitch",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ToolbarButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Tooltip",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "VStack",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "View",
+      "kind": "type",
+      "internal": false
+    },
+    {
+      "name": "WheelScrollGuard",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Window",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "WindowChromeInteraction",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "WindowMaterial",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "WindowNoiseTexture",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ZStack",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "false",
+      "kind": "literal",
+      "internal": false
+    },
+    {
+      "name": "import",
+      "kind": "declaration",
+      "internal": false
+    },
+    {
+      "name": "let",
+      "kind": "declaration",
+      "internal": false
+    },
+    {
+      "name": "true",
+      "kind": "literal",
+      "internal": false
+    },
+    {
+      "name": "var",
+      "kind": "declaration",
+      "internal": false
+    }
+  ]
+}

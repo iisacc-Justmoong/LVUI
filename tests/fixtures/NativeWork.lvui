@@ -1,0 +1,15 @@
+import vm NativeWorkBackend
+Window {
+    VStack {
+        Label(id: "result", text: vm.result)
+        Label(id: "error", text: vm.error())
+        PushButton(id: "start", onClick: vm.start)
+        if (vm.visible) {
+            VStack {
+                import local NativeWorkBackend
+                Label(id: "localResult", text: local.result)
+                PushButton(id: "localStart", onClick: local.start)
+            }
+        }
+    }
+}

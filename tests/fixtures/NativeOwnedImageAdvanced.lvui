@@ -1,0 +1,9 @@
+import vm NativeOwnedImageAdvancedModel
+Window {
+    VStack {
+        Image(id: "art", source: vm.image, width: vm.width, height: vm.height,
+              padding: vm.padding, cornerRadius: vm.radius, borderWidth: vm.border_width,
+              backgroundColor: vm.background, borderColor: vm.border, fit: vm.fit,
+              circular: vm.circular, allowEmpty: vm.allow_empty, accessibilityName: vm.name)
+    }
+}

@@ -5,7 +5,7 @@ namespace lvui {
 struct NativeCompileOptions final {
     std::string name = "MainView";
     std::vector<std::string> includes;
-    std::string framework = "iiGUI"; // LVRS selects the independently packaged native framework.
+    std::string framework = "iiGUI"; // LVRS selects the temporary legacy generator.
     StyleTokenOptions style_tokens;
 };
 // Emits an instantiable C++23 widget class with options/attach/detach. No LVUI runtime parser

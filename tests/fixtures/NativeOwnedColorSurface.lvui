@@ -1,0 +1,10 @@
+import vm NativeOwnedColorSurfaceModel
+Window {
+    HStack {
+        ColorPickerSurface(id: "plane", model: vm.source, modelRevision: vm.revision, field: vm.kind,
+                           width: 100, height: 100, onColorEdited: vm.edited)
+        ColorField(id: "rail", model: vm.source, modelRevision: vm.revision, field: .HueRail,
+                   width: 18, height: 100, onColorEdited: vm.edited)
+        ColorPickerButton(id: "button", model: vm.colorSource, modelRevision: vm.revision)
+    }
+}

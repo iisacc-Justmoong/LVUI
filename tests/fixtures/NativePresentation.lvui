@@ -1,0 +1,11 @@
+import vm NativePresentationBackend
+let amount = vm.progress.progress() * 100
+let label = vm.state.display_name()
+let Action(run: () -> Void): View = PushButton(id: "advance", onClick: run)
+Window { VStack {
+    Label(id: "label", text: label)
+    Label(id: "amount", text: amount)
+    Label(id: "current", text: vm.progress.state_number("currentValue", 0))
+    ProgressBar(id: "progress", currentValue: amount)
+    Action(run: vm.advance)
+} }

@@ -18,7 +18,13 @@ LVUI 컴파일러 자체는 LVRS·iiGUI 런타임에 의존하지 않는다.
 `ColorField`, `Popover`, `ColorPickerButton`, `Modal`, `Alert`, `AlertButton`, `Sheet`,
 `TableCellItem`, `TableRow`, `TableHeader`를 C++ 위젯 호출로 생성한다.
 각 컴포넌트의 지원 입력은 LVRS의 `catalog/native/parity.json`을 기준으로 한다.
+[ProgressBar](NativeProgress.md)는 단순 iiGUI 막대 대신 원본의 상태 제공자·스타일·모션을
+가진 네이티브 컨트롤을 생성한다. 직접 scoped import와 타입 지정 View 입력도 연결한다.
 현재 지원은 기본 동작의 부분 이식이며 기존 LVRS 전체의 동등성 달성을 의미하지 않는다.
+
+[페이지와 모델 수명](NativeRouteModels.md)은 스코프의 네이티브 PageRouter와
+ViewModelRegistry를 연결한다. LVUI는 반응형 표시와 C++ 명령 참조를 생성하며 경로·권한·
+정리를 C++ 컨트롤러가 소유한다. 생성 팩터리와 설치 소비자 빌드, 최종 실행 증거를 구분한다.
 
 `Sheet`는 `presentation: .automatic/.mobile/.desktop`, `detent: .fit/.medium/.large`,
 제목·설명·표시 플래그·크기/여백·안전 영역·닫기 정책·RGBA 색상·motion과 밀리초 단위의
@@ -38,8 +44,10 @@ LVRS 프레임워크를 선택한 창은 `accent: .green`과 같은 악센트 �
 blue·purple·rose·red·orange·yellow·green·gray·brown·cyan·teal·white를 제공하며
 상태 색상과 2% 창 혼합이 같은 테마에서 계산된다.
 
-아이콘 버튼은 `iconName`, `iconSize`, `iconMode`를 지원하며 원본 SVG를 최종 바이너리에
-내장한다. 이 입력과 추가 버튼·탭은 `FRAMEWORK LVRS`가 필요하다.
+이 레거시 경로의 아이콘 버튼은 `iconName`, `iconSize`, `iconMode`를 지원한다.
+기본 경로의 아이콘 버튼과 드롭다운은 [LVUI 독립 아이콘](NativeIcons.md)을 사용한다.
+이 문서의 탭과 탭 묶음은 `FRAMEWORK LVRS` 경로를 설명한다. 기본 경로는 독립
+단일 탭과 직접 자식 탭 묶음을 제공하며 지원 범위는 [현재 현황](NativeTabs.md)을 따른다.
 `Tab`의 `iconName`은 필수이며 누락·공백 값은 소스 위치가 있는 AOT 오류이다.
 유효하지 않은 자산 이름이나 미지원 SVG 기능은 마운트 시 오류를 반환한다.
 

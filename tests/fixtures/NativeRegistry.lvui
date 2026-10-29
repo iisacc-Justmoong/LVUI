@@ -1,0 +1,12 @@
+import vm NativeRegistryBackend
+Window { VStack {
+    Label(id: "name", text: vm.registry.read_property("Editor", "displayName"))
+    Label(id: "busy", text: vm.registry.read_property("Editor", "busy"))
+    Label(id: "type", text: vm.registry.descriptor("Canvas")["className"])
+    Label(id: "models", text: vm.registry.keys().size())
+    Label(id: "error", text: vm.registry.last_error())
+    PushButton(id: "toggle", text: "Toggle", enabled: vm.registry.can_write("Editor"), onClick: vm.toggle_busy)
+    PushButton(id: "denied", text: "Reader write", onClick: vm.denied)
+    PushButton(id: "replace", text: "Replace", onClick: vm.replace)
+    PushButton(id: "release", text: "Release", onClick: vm.release)
+} }

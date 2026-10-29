@@ -1,0 +1,20 @@
+import vm NativeMeasuredCollectionBackend
+import nav lvui.native.CollectionNavigation
+Window {
+    VStack(spacing: 0) {
+        for (item in vm.items, key: item.id, id: "results", itemHeight: 80,
+             itemWidth: vm.cell_width, spacing: vm.spacing, overscan: 1,
+             measureHeight: vm.measured, measureRevision: vm.geometry_revision,
+             navigation: nav, selectionMode: .multiple,
+             width: vm.width, height: vm.height) {
+            if (vm.empty || item.title == "") { VStack(spacing: 0) {} }
+            else {
+                VStack(id: "row", spacing: 2, alignment: .stretch) {
+                    import state NativeRowActivation
+                    Label(id: "title", text: item.title)
+                    PushButton(id: "hit", text: state.count, onClick: state.increment)
+                }
+            }
+        }
+    }
+}

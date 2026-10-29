@@ -1,0 +1,576 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:197711fbe18ece755faa16f85fe36d633339aba5fa8c5b57479d057902d327a6",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Expressions.md",
+    "sha256": "23d3947224bb974ac095b3e66acbac7874cd793fcadb155709a4cff8daf542d4",
+    "bytes": 5899,
+    "line_count": 88,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "값 표현식과 상수 AOT 계산",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 값 표현식과 상수 AOT 계산\n",
+      "level": 1,
+      "title": "값 표현식과 상수 AOT 계산"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "LVUI 컴포넌트 프런트엔드는 단항·이항·조건식, 묶음, 인덱스 및 후위 멤버·호출을\n위치가 있는 AST로 보관한다. 이 문서는 현재의 실제 구현과 남은 네이티브 반응형 생성\n범위를 구분한다. 언어·모듈 전체의 완료 기준은 [Completion.md](Completion.md)에 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## 구문과 우선순위\n",
+      "level": 2,
+      "title": "구문과 우선순위"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "높은 우선순위부터 다음과 같다. 이항 연산은 왼쪽, 조건 연산은 오른쪽으로 결합한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "table",
+      "start_line": 11,
+      "end_line": 20,
+      "raw": "| 구문 | 의미 |\n|---|---|\n| `()`, `a[i]`, `a.member`, `a.method()` | 묶음과 후위 접근·호출 |\n| `!`, 단항 `+`, 단항 `-` | 불리언 부정과 숫자 부호 |\n| `*`, `/`, `%` | 수치 곱·나눗셈·나머지 |\n| `+`, `-` | 수치 연산 또는 String끼리의 연결 |\n| `<`, `<=`, `>`, `>=` | 수치 또는 String 순서 비교 |\n| `==`, `!=` | 호환 타입의 값 비교 |\n| `&&`, `||` | Bool 논리 연산 |\n| `condition ? accepted : rejected` | Bool 조건과 호환 타입의 두 분기 |\n",
+      "columns": [
+        "구문",
+        "의미"
+      ],
+      "rows": [
+        [
+          "`()`, `a[i]`, `a.member`, `a.method()`",
+          "묶음과 후위 접근·호출"
+        ],
+        [
+          "`!`, 단항 `+`, 단항 `-`",
+          "불리언 부정과 숫자 부호"
+        ],
+        [
+          "`*`, `/`, `%`",
+          "수치 곱·나눗셈·나머지"
+        ],
+        [
+          "`+`, `-`",
+          "수치 연산 또는 String끼리의 연결"
+        ],
+        [
+          "`<`, `<=`, `>`, `>=`",
+          "수치 또는 String 순서 비교"
+        ],
+        [
+          "`==`, `!=`",
+          "호환 타입의 값 비교"
+        ],
+        [
+          "`&&`, `||`",
+          "Bool 논리 연산"
+        ],
+        [
+          "`condition ? accepted : rejected`",
+          "Bool 조건과 호환 타입의 두 분기"
+        ]
+      ]
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 23,
+      "raw": "`===`와 `!==`는 JavaScript 호환 연산자로 가져오지 않는다. LVUI의 비교는 값 타입의\n계약을 따르며 숫자와 문자열을 암시적으로 같은 값으로 취급하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "fenced_code",
+      "start_line": 25,
+      "end_line": 34,
+      "raw": "```lvui\n@Static let gap: Metric = .space4 + 2\nlet title: String = true ? \"Dense \" + \"tools\" : \"Other\"\nWindow(width: 640 + 80) {\n    VStack(spacing: gap) {\n        Label(text: title)\n        PushButton(text: \"Run\", enabled: 3 * 4 >= 12)\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "@Static let gap: Metric = .space4 + 2\nlet title: String = true ? \"Dense \" + \"tools\" : \"Other\"\nWindow(width: 640 + 80) {\n    VStack(spacing: gap) {\n        Label(text: title)\n        PushButton(text: \"Run\", enabled: 3 * 4 >= 12)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 37,
+      "raw": "줄바꿈은 연산자 뒤, 괄호·목록·호출 인자 안에서 사용할 수 있다. 연산자 앞의 줄바꿈을\n임의로 다음 문장과 합치지 않는다. 문장 종결용 세미콜론은 계속 허용하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "## 현재 상수 계산 계약\n",
+      "level": 2,
+      "title": "현재 상수 계산 계약"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 43,
+      "raw": "`LVUI/ConstantExpression.h`의 `fold_constant_expression`은 컴파일 단계의 API이다.\n컴파일러가 이미 알고 있는 선언과 스타일 값을 resolver로 공급하며, 가져온 C++ 객체나\n메서드를 실행하지 않는다. 생성된 네이티브 위젯 코드는 이 evaluator나 AST를 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "list",
+      "start_line": 45,
+      "end_line": 51,
+      "raw": "- 논리 연산과 조건식은 값 계산을 단락 평가한다. 비활성 숫자 분기의 0 나누기는 실행하지 않는다.\n- 조건과 논리 피연산자는 Bool이어야 한다. 두 조건 분기는 호환 타입이어야 한다.\n- 활성 계산의 0 나누기·나머지와 비유한 수치 결과는 원본 위치의 진단으로 반환한다.\n- String 연결 결과는 1 MiB를 넘을 수 없다.\n- 상수 목록 인덱스는 유한한 비음수 정수이며 목록 범위 안이어야 한다.\n- Metric끼리의 나눗셈은 비율 Number이다. Metric 제곱·역수처럼 지원하지 않는 차원은 거부한다.\n- 표현식 깊이는 64, 계산 대상 AST는 65,536 노드로 제한한다. 기존 입력·토큰·View 한계도 유지한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "논리 연산과 조건식은 값 계산을 단락 평가한다. 비활성 숫자 분기의 0 나누기는 실행하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "조건과 논리 피연산자는 Bool이어야 한다. 두 조건 분기는 호환 타입이어야 한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "활성 계산의 0 나누기·나머지와 비유한 수치 결과는 원본 위치의 진단으로 반환한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "String 연결 결과는 1 MiB를 넘을 수 없다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "상수 목록 인덱스는 유한한 비음수 정수이며 목록 범위 안이어야 한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Metric끼리의 나눗셈은 비율 Number이다. Metric 제곱·역수처럼 지원하지 않는 차원은 거부한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "표현식 깊이는 64, 계산 대상 AST는 65,536 노드로 제한한다. 기존 입력·토큰·View 한계도 유지한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "## 어노테이션과 구현 경계\n",
+      "level": 2,
+      "title": "어노테이션과 구현 경계"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 57,
+      "raw": "`@Observable`과 `@Static`은 선언 앞에서 파싱한다. `@Observable`은 이미 기본인 반응성을\n명시하며 추가 인스턴스를 생성하지 않는다. `@Static`은 고정 값이므로 불변 `let`에만\n사용한다. 중복·충돌·미확인 어노테이션과 선언이 아닌 곳의 사용은 진단한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 62,
+      "raw": "현재 AOT는 상수 계산 외에 C++ 속성의 산술·비교·논리·조건식과 동적 인덱스,\n메서드 호출 결과를 네이티브 getter로 생성한다. `let`의 파생값은 읽기 전용이며\n원본 변경을 따라간다. `@Static let initial = vm.value`는 활성화마다 한 번 소유 값을\n복사하고 이후 변경을 따르지 않는다. 같은 활성화의 값 초기화는 중복 수행하지 않는다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 66,
+      "raw": "`vm.method`는 지연 메서드 참조이다. `vm.method()`는 getter의 실제 평가 때 호출하며,\n반응형 getter에서 사용하는 메서드는 표시를 위한 읽기 작업이어야 한다. 임의의 C++ 메서드\n본문을 분석하여 그 안의 모든 의존성을 추측하지 않는다. 객체의 변경 발행 계약을 사용한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 68,
+      "end_line": 70,
+      "raw": "일반 공개 멤버는 생성 스코프의 변경 버전을 구독한다. 바인딩된 메서드 실행 후 버전을\n발행하며, 외부 작업에서 직접 바꿀 때에는 소유 UI 스레드에서 같은 변경을 발행해야 한다.\nCore Observable 멤버는 자체 속성 변경만 구독한다. [NativeBindings.md](NativeBindings.md)를 참조한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 72,
+      "end_line": 77,
+      "raw": "`vm.document.title` 같은 C++ 멤버 경로는 공개 멤버를 직접 선택하는 타입 있는 C++로 생성한다.\n객체·공유/고유 포인터·원시 포인터를 따라가며, 중간 객체의 변경 버전과 관찰 가능한 최종 값을\n추적한다. 중간 객체가 바뀌면 이전 최종 값의 연결을 해제한다. null 경로는 마지막 성공 값을\n보존하는 실패이며 다음 유효한 변경에서 복구한다. private·const 접근을 우회하지 않는다.\n소유 스코프의 모델 별칭은 네이티브 데이터 입력에도 사용할 수 있다. 수명이 고정되어야 하는\n서비스 입력은 계속 멤버/별칭 참조를 요구하며 임의 호출 결과를 서비스로 보관하지 않는다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 79,
+      "end_line": 80,
+      "raw": "중첩 선언·동적 뷰 구성·후위 메서드 호출 전체와 모든 컴포넌트 입력의 갱신은 완료된\n범위가 아니다. 구문 분석이나 일부 getter의 성공을 언어 전체 완료로 간주하지 않는다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 81,
+      "end_line": 81,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "## 검사\n",
+      "level": 2,
+      "title": "검사"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 84,
+      "end_line": 88,
+      "raw": "`LVUI.Expressions.*`는 우선순위, 단락 평가와 타입 오류, 후위 AST, 어노테이션,\n위치 진단·한계 및 상수 AOT 출력을 검사한다. 생성 문자열 검사와 생성 C++의 실제\n컴파일·위젯 실행 증거는 구분한다. `LVUI.NativeGenerated`는 실제 생성한 C++를 컴파일·링크하고,\nUI 호스트 없이 파생값·분기·인덱스 오류와 복구·고정 스냅샷·변경 발행을 실행한다.\nLVRS 앱·위젯의 실행은 전체 작업의 최종 일괄 검증 단계에 유지한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "값 표현식과 상수 AOT 계산",
+      "anchor": "값-표현식과-상수-aot-계산",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "구문과 우선순위",
+      "anchor": "구문과-우선순위",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "현재 상수 계산 계약",
+      "anchor": "현재-상수-계산-계약",
+      "start_line": 39
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "어노테이션과 구현 경계",
+      "anchor": "어노테이션과-구현-경계",
+      "start_line": 53
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검사",
+      "anchor": "검사",
+      "start_line": 82
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000011",
+        "line": 23,
+        "text": "계약을 따르며 숫자와 문자열을 암시적으로 같은 값으로 취급하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 37,
+        "text": "임의로 다음 문장과 합치지 않는다. 문장 종결용 세미콜론은 계속 허용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 43,
+        "text": "메서드를 실행하지 않는다. 생성된 네이티브 위젯 코드는 이 evaluator나 AST를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 45,
+        "text": "- 논리 연산과 조건식은 값 계산을 단락 평가한다. 비활성 숫자 분기의 0 나누기는 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000025",
+        "line": 56,
+        "text": "명시하며 추가 인스턴스를 생성하지 않는다. `@Static`은 고정 값이므로 불변 `let`에만",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 62,
+        "text": "복사하고 이후 변경을 따르지 않는다. 같은 활성화의 값 초기화는 중복 수행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 66,
+        "text": "본문을 분석하여 그 안의 모든 의존성을 추측하지 않는다. 객체의 변경 발행 계약을 사용한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 69,
+        "text": "발행하며, 외부 작업에서 직접 바꿀 때에는 소유 UI 스레드에서 같은 변경을 발행해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 75,
+        "text": "보존하는 실패이며 다음 유효한 변경에서 복구한다. private·const 접근을 우회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 77,
+        "text": "서비스 입력은 계속 멤버/별칭 참조를 요구하며 임의 호출 결과를 서비스로 보관하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000035",
+        "line": 80,
+        "text": "범위가 아니다. 구문 분석이나 일부 getter의 성공을 언어 전체 완료로 간주하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "Completion.md",
+        "target": "Completion.md",
+        "kind": "relative",
+        "line": 5
+      },
+      {
+        "block_id": "b000031",
+        "label": "NativeBindings.md",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 70
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000009",
+        "columns": [
+          "구문",
+          "의미"
+        ],
+        "rows": [
+          [
+            "`()`, `a[i]`, `a.member`, `a.method()`",
+            "묶음과 후위 접근·호출"
+          ],
+          [
+            "`!`, 단항 `+`, 단항 `-`",
+            "불리언 부정과 숫자 부호"
+          ],
+          [
+            "`*`, `/`, `%`",
+            "수치 곱·나눗셈·나머지"
+          ],
+          [
+            "`+`, `-`",
+            "수치 연산 또는 String끼리의 연결"
+          ],
+          [
+            "`<`, `<=`, `>`, `>=`",
+            "수치 또는 String 순서 비교"
+          ],
+          [
+            "`==`, `!=`",
+            "호환 타입의 값 비교"
+          ],
+          [
+            "`&&`, `||`",
+            "Bool 논리 연산"
+          ],
+          [
+            "`condition ? accepted : rejected`",
+            "Bool 조건과 호환 타입의 두 분기"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

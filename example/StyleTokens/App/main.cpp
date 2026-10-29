@@ -81,7 +81,7 @@ void native(bool vulkan) {
             check(take(slider.snapshot()).value == 14, "Metric Observable did not update its native widget");
             good(inline_view.detach(host));
             std::cout << (vulkan ? "Vulkan" : "Native")
-                      << ": mounted generated LVRS view, window=20, border=48, "
+                      << ": mounted generated LVUI view, window=20, border=48, "
                          "Pretendard typography and Metric Observable verified\n";
         } catch (const std::exception& error) {
             failure = error.what();
@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
         if (argc > 1)
             native(std::string_view(argv[1]) == "vulkan");
         else
-            std::cout << "Compiled LVRS/inline token appearances verified\n";
+            std::cout << "Compiled LVUI/inline token appearances verified\n";
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
         return 1;

@@ -1,0 +1,13 @@
+import vm NativeSvgBackend
+@Static let initial = vm.policy.revision()
+Window { VStack {
+    Image(id: "preview", source: vm.policy.image(vm.url()), width: vm.width, height: vm.height, padding: vm.padding, fit: .Contain)
+    Label(id: "revision", text: vm.policy.revision())
+    Label(id: "initial", text: initial)
+    Label(id: "error", text: vm.policy.lastError())
+    InputField(id: "edit", text: "Working", width: 160)
+    PushButton(id: "complete", text: "Complete", onClick: vm.complete)
+    PushButton(id: "fail", text: "Fail", onClick: vm.fail)
+    PushButton(id: "resize", text: "Resize", onClick: vm.resize)
+    PushButton(id: "retarget", text: "Retarget", onClick: vm.retarget)
+} }
