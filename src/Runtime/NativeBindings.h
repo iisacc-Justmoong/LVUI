@@ -15,10 +15,13 @@
 #include <utility>
 #include <vector>
 
+#define LVUI_BINDINGS_RETIRE_EFFECTS_API 1
+
 namespace lvui::native {
 using BindingId = std::uint64_t;
 namespace detail {
 struct BindingState;
+struct BindingDiagnosticsState;
 using SourceRead=ii::core::ObservableRead;
 template<class T>
 using StoredValue = std::conditional_t<std::convertible_to<T, std::string_view>, std::string,
@@ -102,6 +105,9 @@ private:
 struct BindingStats final {
     std::size_t bindings = 0, sources = 0, pending = 0;
     std::uint64_t evaluations = 0, applications = 0;
+    std::uint64_t invalidations = 0, coalesced = 0, flushes = 0, failed_flushes = 0;
+    std::size_t high_watermark = 0, batch_depth = 0;
+    bool draining = false;
 };
 struct BindingFailure final { BindingId binding; ii::core::Error error; };
 
@@ -138,7 +144,16 @@ public:
     [[nodiscard]] ii::core::Result<void> remove(BindingId);
     [[nodiscard]] ii::core::Result<void> begin_batch();
     [[nodiscard]] ii::core::Result<void> end_batch();
+    // Callback batches preserve an existing identical diagnostic without
+    // treating its retry as a new callback failure. Explicit batches remain strict.
+    [[nodiscard]] ii::core::Result<void> end_callback_batch();
     [[nodiscard]] ii::core::Result<void> flush();
+    // Refresh callable/derived values before a nested synchronous callback,
+    // while leaving presentation effects in their current batch.
+    [[nodiscard]] ii::core::Result<void> settle_derived();
+    // Retire presentation effects while retaining derived values and callback
+    // admission for a final owner-thread lifecycle notification.
+    [[nodiscard]] ii::core::Result<void> retire_effects();
     [[nodiscard]] ii::core::Result<void> close();
     // A weak callback may check admission without touching model storage.
     [[nodiscard]] bool available() const noexcept;
@@ -166,5 +181,28 @@ private:
     [[nodiscard]] ii::core::Result<BindingId> add(Prepare, bool derived, std::function<void()> close);
     [[nodiscard]] std::shared_ptr<const std::atomic_bool> lifetime() const;
     std::shared_ptr<detail::BindingState> state_;
+};
+
+using BindingActivationId = std::uint64_t;
+struct ScopedBindingFailure final { BindingActivationId activation; BindingFailure failure; };
+
+// Owner-thread diagnostics over weak activation graphs. Retiring a child does
+// not keep it alive, and a recovered binding disappears from the report.
+class BindingDiagnostics final {
+public:
+    static constexpr std::size_t maximum_activations=65536,maximum_failures=65536;
+    BindingDiagnostics();
+    ~BindingDiagnostics();
+    BindingDiagnostics(const BindingDiagnostics&)=delete;
+    BindingDiagnostics& operator=(const BindingDiagnostics&)=delete;
+    BindingDiagnostics(BindingDiagnostics&&)=delete;
+    BindingDiagnostics& operator=(BindingDiagnostics&&)=delete;
+    [[nodiscard]] ii::core::Result<BindingActivationId> attach(const std::shared_ptr<Bindings>&);
+    [[nodiscard]] ii::core::Result<void> detach(BindingActivationId);
+    [[nodiscard]] ii::core::Result<std::size_t> activation_count();
+    [[nodiscard]] ii::core::Result<std::vector<ScopedBindingFailure>> failures();
+    [[nodiscard]] ii::core::Result<void> close();
+private:
+    std::shared_ptr<detail::BindingDiagnosticsState> state_;
 };
 } // namespace lvui::native

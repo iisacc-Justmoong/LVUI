@@ -24,21 +24,26 @@ foreach(_resource IN LISTS iiGUI_NATIVE_RESOURCES)
 endforeach()
 
 function(lvui_tutorial name)
-    cmake_parse_arguments(PARSE_ARGV 1 TUTORIAL "" "" "INCLUDES")
+    cmake_parse_arguments(PARSE_ARGV 1 TUTORIAL "APPLICATION" "" "INCLUDES")
     set(include_arguments)
     if(TUTORIAL_INCLUDES)
         list(APPEND include_arguments INCLUDES ${TUTORIAL_INCLUDES})
     endif()
-    lvui_generate(NAME "${name}" SOURCE "App/${name}.lvui"
-        ${include_arguments} OUTPUT_VARIABLE generated)
-    iisdkcore_add_application("LVUI${name}" GUI
-        SOURCES App/Application.cpp "${generated}"
-        LIBRARIES iiGUI::iiGUI LVUI::Native)
+    if(TUTORIAL_APPLICATION)
+        lvui_add_application("LVUI${name}" NAME "${name}" SOURCE "App/${name}.lvui"
+            ${include_arguments} OUTPUT_VARIABLE generated)
+    else()
+        lvui_generate(NAME "${name}" SOURCE "App/${name}.lvui"
+            ${include_arguments} OUTPUT_VARIABLE generated)
+        iisdkcore_add_application("LVUI${name}" GUI
+            SOURCES App/Application.cpp "${generated}"
+            LIBRARIES iiGUI::iiGUI LVUI::Native)
+        target_compile_definitions("LVUI${name}" PRIVATE
+            "LVUI_EXAMPLE_HEADER=\"${name}.generated.h\"" "LVUI_EXAMPLE_VIEW=${name}")
+    endif()
     target_compile_features("LVUI${name}" PRIVATE cxx_std_23)
     target_include_directories("LVUI${name}" PRIVATE
         "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/App")
-    target_compile_definitions("LVUI${name}" PRIVATE
-        "LVUI_EXAMPLE_HEADER=\"${name}.generated.h\"" "LVUI_EXAMPLE_VIEW=${name}")
     set_target_properties("LVUI${name}" PROPERTIES CXX_EXTENSIONS OFF
         MACOSX_BUNDLE_GUI_IDENTIFIER "com.iisacc.lvui.example.${name}"
         MACOSX_BUNDLE_BUNDLE_NAME "LVUI ${name}")
@@ -55,7 +60,8 @@ function(lvui_tutorial name)
     set("${name}_GENERATED" "${generated}" PARENT_SCOPE)
 endfunction()
 
-lvui_tutorial(Hello)
+lvui_tutorial(Hello APPLICATION)
+lvui_tutorial(Scenes APPLICATION)
 lvui_tutorial(ReadingList INCLUDES ReadingListBackend.h)
 lvui_tutorial(Inventory INCLUDES InventoryBackend.h)
 

@@ -1,5 +1,6 @@
 #include "InlineTokens.generated.h"
 #include "TokenWindow.generated.h"
+#include <LVUI/StyleTokens.h>
 #include <chrono>
 #include <cmath>
 #include <iostream>
@@ -24,11 +25,11 @@ void contracts() {
     const auto a = lvui_generated::TokenWindow::appearance();
     const auto b = lvui_generated::InlineTokens::appearance();
     check(a.font_family == "Pretendard" && b.font_family == a.font_family, "Compiled font token missing");
-    check(std::abs(a.window.red - .0784313753247261) < 1e-12 && a.window == b.window,
+    check(std::abs(a.window.red - lvui::figma_defaults::panel_window.red) < 1e-12 && a.window == b.window,
           "Compiled window token changed");
     check(a.button_height == 22 && a.button_padding == 8 && a.button_radius == 8,
           "Compiled control metrics changed");
-    check(a.primary.red == .08120492845773697, "Action alias changed");
+    check(a.primary.red == lvui::figma_defaults::accent_blue_default.red, "Action alias changed");
     check(a.text_alpha[4] == .800000011920929, "Text alpha precision changed");
 }
 void native(bool vulkan) {
@@ -54,10 +55,13 @@ void native(bool vulkan) {
                 const auto offset = (py * image.width + px) * 4;
                 return image.rgba[offset];
             };
-            check(std::abs(int(color(4, 4)) - 20) <= 1, "Default window pixel differs from Figma");
-            check(std::abs(int(color(panel.bounds.x + 8, panel.bounds.y + 8)) - 20) <= 1,
+            const auto window_value = int(std::lround(lvui::figma_defaults::panel_window.red * 255));
+            const auto border_value = int(std::lround((lvui::figma_defaults::panel_window.red +
+                (1 - lvui::figma_defaults::panel_window.red) * .11999999731779099) * 255));
+            check(std::abs(int(color(4, 4)) - window_value) <= 1, "Default window pixel differs from Figma");
+            check(std::abs(int(color(panel.bounds.x + 8, panel.bounds.y + 8)) - window_value) <= 1,
                   "Stack background color differs from window");
-            check(std::abs(int(color(panel.bounds.x + .25, panel.bounds.y + panel.bounds.height / 2)) - 48) <=
+            check(std::abs(int(color(panel.bounds.x + .25, panel.bounds.y + panel.bounds.height / 2)) - border_value) <=
                       2,
                   "sRGB border composite differs from Figma");
             const auto info = take(host.graphics_info());
@@ -81,7 +85,7 @@ void native(bool vulkan) {
             check(take(slider.snapshot()).value == 14, "Metric Observable did not update its native widget");
             good(inline_view.detach(host));
             std::cout << (vulkan ? "Vulkan" : "Native")
-                      << ": mounted generated LVUI view, window=20, border=48, "
+                      << ": mounted generated LVUI view with current window and border tokens, "
                          "Pretendard typography and Metric Observable verified\n";
         } catch (const std::exception& error) {
             failure = error.what();

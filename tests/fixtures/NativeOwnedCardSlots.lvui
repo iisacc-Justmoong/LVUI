@@ -1,0 +1,17 @@
+import vm NativeOwnedCardSlotsBackend
+let Symbol(value: String): View = Label(id: "custom-icon", text: value)
+VStack(spacing: 0) {
+    Card(id: "body-card", type: .Model, title: "Default title", selectable: false,
+         showMenu: false, showAction: false, width: 240, height: 180, onClick: vm.clicked) {
+        VStack(id: "custom-body") {
+            var count: Int = 0
+            Label(id: "card-value", text: count)
+            Label(id: "card-caption", text: vm.caption)
+            PushButton(id: "card-button", text: "+", onClick: { count = count + 1 })
+        }
+    }
+    Card(id: "preview-card", type: .File, width: 160, height: 160,
+         previewSource: "not-loaded.png", previewComponent: Label(id: "custom-preview", text: vm.caption))
+    Card(id: "icon-card", type: .Model, width: 240, height: 180,
+         iconName: "not-loaded-icon", iconComponent: Symbol(value: vm.caption))
+}

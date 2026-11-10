@@ -2,7 +2,10 @@ import vm NativeOwnedCheckBoxModel
 Window {
     VStack {
         CheckBox(id: "check", text: vm.text, checked: vm.checked, enabled: vm.enabled,
-                 boxSize: vm.size, checkedColor: vm.color,
+                 boxSize: vm.size, checkedColor: vm.color, shapeStyle: vm.shape, useFigmaCheckedAssets: vm.useAsset,
+                 motionEnabled: vm.motionEnabled, motion: vm.motion, transitionDuration: vm.duration,
+                 innerShadowSoftColor: vm.softShadow, innerShadowStrongColor: vm.strongShadow,
                  accessibilityName: "Remember choice", onToggled: vm.changed)
+        CheckBox(id: "stock", checked: true)
     }
 }

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeHelpButton.md",
-    "sha256": "d4b0c8ff2ff41e0c1fd35182eb1a1f8b19f107f0ddf1623bf701fbf9f62efb95",
-    "bytes": 1194,
-    "line_count": 16,
+    "sha256": "a6bf063a9df9e369d6edad9730c4712c3a0edf44a5b69480774cef3a4be0d9b7",
+    "bytes": 1783,
+    "line_count": 22,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -56,22 +56,22 @@
       "id": "b000005",
       "kind": "paragraph",
       "start_line": 9,
-      "end_line": 13,
-      "raw": "기본 선언형 `HelpButton`은 이 설정과 범용 액션 표면을 사용한다. 텍스트, 활성\n상태, 톤, 크기, 여백, 모서리, 글꼴 크기와 줄 높이, 텍스트 세로 위치, 접근성\n이름 및 색상을 반응형으로 지정할 수 있다. `backgroundColor`, `hoverColor`,\n`pressedColor`는 기본 톤의 상태별 색상을 바꾼다. 잘못된 후보는 적용하지 않으며\n정상 후보로 복구한다. 세그먼트 묶음 안에서는 다른 버튼과 같이 임시 톤을 받는다.\n"
+      "end_line": 19,
+      "raw": "기본 선언형 `HelpButton`은 이 설정과 범용 액션 표면을 사용한다. 텍스트, 활성\n상태, 톤, 크기, 여백, 모서리, 글꼴 크기와 줄 높이, 텍스트 세로 위치, 접근성\n이름 및 색상을 반응형으로 지정할 수 있다. `backgroundColor`, `hoverColor`,\n`pressedColor`는 기본 톤의 상태별 색상을 바꾼다. 잘못된 후보는 적용하지 않으며\n정상 후보로 복구한다. 세그먼트 묶음 안에서는 다른 버튼과 같이 임시 톤을 받는다.\n파괴적 톤은 컴파일 시 선택한 공통 빨강의 호버·누름 토큰도 사용한다.\n`motionEnabled`는 상수 또는 반응형 값으로 지정하며 기본값은 `true`이다.\n변경 중인 색상·포커스 전환의 처리와 전역 축소 모션의 우선순위는 [공통 버튼 계약](NativeButton.md)을 따른다.\n`onPressed`, `onReleased`, `onCanceled`, `onClick`도 동일한 공통 버튼 입력\n계약으로 전달하며 `method`와 `methods`도 같은 버튼 메서드 계약을 사용한다.\n`enterKeyActivation`은 기본적으로 꺼져 있으며 상수나 반응형 값으로 켤 수 있다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 14,
-      "end_line": 14,
+      "start_line": 20,
+      "end_line": 20,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 15,
-      "end_line": 16,
-      "raw": "모델, 생성 코드, 범용 호스트 상호작용과 수명을 창 없이 검사했다. 실제 플랫폼의\n시각·접근성 검증과 레거시 생성 경로 제거는 아직 남아 있다.\n"
+      "start_line": 21,
+      "end_line": 22,
+      "raw": "모델, 생성 코드, 범용 호스트 상호작용과 수명을 창 없이 검사했다. 실제 플랫폼의\n시각·접근성 검증은 아직 남아 있다.\n"
     }
   ],
   "outline": [
@@ -87,7 +87,15 @@
   "indexes": {
     "directive_candidates": [],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "공통 버튼 계약",
+        "target": "NativeButton.md",
+        "kind": "relative",
+        "line": 16
+      }
+    ],
     "tables": []
   },
   "provenance": {

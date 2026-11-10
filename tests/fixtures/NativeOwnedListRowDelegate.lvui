@@ -1,0 +1,17 @@
+import vm NativeOwnedListPanelModel
+let Row(label: String, selected: Bool, index: Int, height: Double, action: () -> Void): View = HStack(spacing: 2) {
+    Label(id: "custom-label", text: label)
+    Label(id: "custom-selected", text: selected)
+    Label(id: "custom-index", text: index)
+    PushButton(id: "custom-trigger", text: "Open", height: height, onClick: action)
+}
+let Rows(content: View): View = List(id: "list", controller: vm.controller, modelRevision: vm.revision, viewRevision: vm.view_revision,
+    width: vm.width, height: 60, rowHeight: 20, overscan: 0, footerVisible: false,
+    itemRow: "item", itemDelegate: content, onItemActivated: vm.selected)
+Window {
+    VStack(spacing: 0) {
+        Rows(content: Row(label: item.entry.label, selected: item.selected, index: item.source_index, height: vm.row_height, action: item.trigger))
+        List(id: "shared-list", model: vm.source, modelRevision: vm.revision, height: 40, rowHeight: 20,
+             footerVisible: false, itemDelegate: Label(id: "shared-label", text: "Shared"))
+    }
+}

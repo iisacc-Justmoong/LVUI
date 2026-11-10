@@ -1,0 +1,5 @@
+import vm NativeOwnedListItemMenuModel
+Window {
+    ListItem(id: "item", type: .ActionGroup, label: "Project", moreItems: vm.entries,
+             onMenuSelectionTriggered: vm.selected)
+}

@@ -89,7 +89,7 @@ Core의 소유 작업 정리가 끝나고 `detach`가 호출될 때까지 백엔
 ## CMake 연동
 
 ```cmake
-find_package(iiGUI 0.4 CONFIG REQUIRED)
+find_package(iiGUI 0.5.0 CONFIG REQUIRED)
 lvui_generate(NAME HelloWorld SOURCE HelloWorld.lvui
     OUTPUT_VARIABLE generated INCLUDES HelloBackend.h)
 add_executable(HelloWorld MACOSX_BUNDLE main.cpp "${generated}")

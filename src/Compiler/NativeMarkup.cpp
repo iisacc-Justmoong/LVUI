@@ -45,7 +45,7 @@ struct Markup final {
         if(std::ranges::any_of(view.inputs,[&](const auto& item){return item.name==key;}))fail("Duplicate markup input: "+key);
         view.inputs.push_back({std::move(key),std::move(val),at});
     }
-    void style(View& view,std::string_view styles,std::string& direction){
+    void style(View& view,std::string_view styles){
         static const std::map<std::string_view, std::string_view> names{
             {"width", "width"},
             {"height", "height"},
@@ -65,7 +65,7 @@ struct Markup final {
         while(!styles.empty()){auto end=styles.find(';');auto part=trim(styles.substr(0,end));if(end==styles.npos)styles={};else styles.remove_prefix(end+1);if(part.empty())continue;
             const auto colon=part.find(':');if(colon==part.npos)fail("Inline style requires name: value");auto key=trim(part.substr(0,colon)),raw=trim(part.substr(colon+1));
             if(key=="display"){if(raw!="flex")fail("Native markup supports display: flex");continue;}
-            if(key=="flex-direction"){if(raw!="row"&&raw!="column")fail("Expected row or column flex direction");direction=raw;continue;}
+            if(key=="flex-direction")fail("Use HStack, VStack, or ZStack instead of flex-direction");
             if(key=="align-items"){const auto alignment=raw=="flex-start"?".leading":raw=="flex-end"?".trailing":raw=="center"?".center":raw=="stretch"?".stretch":"";if(!*alignment)fail("Unsupported native alignment");input(view,"alignment",expression(alignment),view.position);continue;}
             auto known=names.find(key);if(known==names.end())fail("Unsupported native inline style: "+std::string(key));
             if((key=="width"||key=="height")&&raw=="auto")continue;
@@ -96,16 +96,24 @@ struct Markup final {
     View view(unsigned depth){
         if(depth>64||++nodes>4096)fail("Native markup tree limit exceeded");
         View result;result.position=position();expect('<');const auto tag=name();
-        const auto component=tag=="div"?"VStack":tag=="span"||tag=="label"?"Label":tag=="button"||tag=="Button"?"PushButton":tag=="input"?"InputField":tag;
+        if(tag=="div")fail("div is not a layout View; use HStack, VStack, or ZStack");
+        const auto component=tag=="span"||tag=="label"?"Label":tag=="button"||tag=="Button"?"PushButton":tag=="input"?"InputField":tag;
         result.component=find_keyword(component);if(!result.component||result.component->kind!=KeywordKind::view)fail("Unknown native component: "+tag);
-        std::string direction="column";
         skip();while(peek()!='>'&&!starts("/>")){
-            auto at=position();auto key=name();skip();Value val{ValueKind::boolean,"true",{}};if(peek()=='='){take();skip();val=value();}
-            if(key=="style"){if(val.kind!=ValueKind::string)fail("Inline style must be a literal string");style(result,val.text,direction);}
-            else {if(key.starts_with("on:")){key="on"+key.substr(3);if(key.size()>2)key[2]=char(std::toupper(static_cast<unsigned char>(key[2])));}
+            auto at=position();auto key=name();
+            if(result.component->spelling=="Application" && key!="onStart" && key!="onReady" && key!="onStop" &&
+               key!="onActive" && key!="onInactive" && key!="onForeground" && key!="onBackground" && key!="onOpenFiles" && key!="onLaunchArguments" && key!="onCloseRequested" && key!="on:start" && key!="on:ready" && key!="on:stop" &&
+               key!="on:active" && key!="on:inactive" && key!="on:foreground" && key!="on:background" && key!="on:openFiles" && key!="on:open-files" &&
+               key!="on:launchArguments" && key!="on:launch-arguments" && key!="on:closeRequested" && key!="on:close-requested")fail("Unsupported Application input");
+            skip();Value val{ValueKind::boolean,"true",{}};if(peek()=='='){take();skip();val=value();}
+            if(key=="style"&&val.kind==ValueKind::string)style(result,val.text);
+            else if(key=="style")input(result,std::move(key),std::move(val),at);
+            else {if(key=="on:open-files")key="onOpenFiles";
+                else if(key=="on:launch-arguments")key="onLaunchArguments";
+                else if(key=="on:close-requested")key="onCloseRequested";
+                else if(key.starts_with("on:")){key="on"+key.substr(3);if(key.size()>2)key[2]=char(std::toupper(static_cast<unsigned char>(key[2])));}
                 input(result,std::move(key),std::move(val),at);}skip();
         }
-        if(tag=="div")result.component=find_keyword(direction=="row"?"HStack":"VStack");
         if(starts("/>")){take();take();return result;}expect('>');
         std::string text;
         while(!starts("</")){
@@ -138,8 +146,7 @@ ViewParseResult parse_native_markup(std::string_view source, const StyleTokenOpt
         }
         if(parser.starts("<script>")){parser.script();parser.skip();}
         auto root=parser.view(0);parser.skip();while(parser.starts("<!--")){parser.comment();parser.skip();}
-        if(parser.peek())parser.fail("Native markup requires one root window");
-        if(root.component->spelling!="Window"&&root.component->spelling!="ApplicationWindow")parser.fail("The root native component must be a Window or ApplicationWindow");
+        if(parser.peek())parser.fail("Native markup requires exactly one root View or Application");
         return ViewDocument(std::move(root),std::move(parser.imports),std::move(parser.bindings));
     } catch (Diagnostic& error) {
         return std::unexpected(std::move(error));

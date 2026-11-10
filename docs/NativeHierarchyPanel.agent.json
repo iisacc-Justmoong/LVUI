@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeHierarchyPanel.md",
-    "sha256": "b0f837c68d17223e238ae430ba33952f56f7b387e1abe1a55d87ef109972a346",
-    "bytes": 3053,
-    "line_count": 44,
+    "sha256": "d3c24355131a351adede7c2d27f5f0d15bf81c13298b02156466c4b8c268b128",
+    "bytes": 5051,
+    "line_count": 63,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 6,
-      "raw": "`HierarchyPanel.h`는 LVUI 계층 패널의 배경과 도구 모음·목록·푸터 배치를 소유한다.\n기본 크기는 200×530이고 도구 모음은 26 높이, 푸터는 기본 숨김이다. 크기와 표시\n여부는 `HierarchyPanelConfiguration`으로 바꿀 수 있다. 계산은 Qt, QML, LVRS에\n의존하지 않으며 기존 LVUI 계층 목록과 도구 모음의 상태를 변경하지 않는다.\n"
+      "raw": "`HierarchyPanel.h`는 계층 패널의 디자인 값을 제공하며 도구 모음·목록·푸터의 영역 배치는 iiGUI가 계산한다.\n기본 크기는 200×530이고 도구 모음은 26 높이, 푸터는 기본 숨김이다. 크기와 표시\n여부는 `HierarchyPanelConfiguration`으로 바꿀 수 있다. 계산은 Qt, QML, LVRS에\n의존하지 않으며 기존 LVUI 계층 목록과 도구 모음의 상태를 변경하지 않는다.\n"
     },
     {
       "id": "b000004",
@@ -70,53 +70,50 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 13,
-      "end_line": 17,
-      "raw": "`NativeHierarchyPanel.h`는 독립 도구 모음, 가상 계층 목록과 푸터를 이 배치에 맞춰\n조합한다. 입력은 각 구성요소의 LVUI 모델과 교체 가능한 편집기를 받으며, 구성요소의\n선택·펼침·드래그·버튼 이벤트를 앱에 전달한다. 크기와 표시 설정을 갱신해도 유지되는\n목록 행은 재사용한다. 잘못된 후보가 실패하면 가능한 범위에서 이전 구성과 배치를\n복구한다. 이미 외부 소스가 수정된 경우 그 외부 변경은 되돌리지 않는다.\n"
+      "end_line": 18,
+      "raw": "`iiGUI/NativeHierarchyPanelView.h`는 주입된 도구 모음, 가상 계층 목록과 푸터를\n이 배치에 맞춰 조합한다. `LVUI/NativeHierarchyPanel.h`는 Core 외 SDK를 직접\n참조하지 않는 값과 `HierarchyPanelBinding`을 제공한다. 입력은 각 구성요소의 LVUI 모델과 교체 가능한 편집기를 받으며, 구성요소의\n선택·펼침·드래그·버튼 이벤트를 앱에 전달한다. 크기와 표시 설정을 갱신해도 유지되는\n목록 행은 재사용한다. 잘못된 후보가 실패하면 가능한 범위에서 이전 구성과 배치를\n복구한다. 이미 외부 소스가 수정된 경우 그 외부 변경은 되돌리지 않는다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 18,
-      "end_line": 18,
+      "start_line": 19,
+      "end_line": 19,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 19,
-      "end_line": 20,
+      "start_line": 20,
+      "end_line": 21,
       "raw": "`LVUI.OwnedHierarchyPanel.Host`는 실제 창 없이 가상 행, 세 영역의 이벤트, 크기 변경,\n잘못된 후보 복구, 스레드와 수명 경계를 검사한다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 21,
-      "end_line": 21,
+      "start_line": 22,
+      "end_line": 22,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 22,
-      "end_line": 25,
-      "raw": "기본 LVUI `Hierarchy` 선언은 이 패널을 직접 생성한다. `controller`와 `editor`는 각각\nLVUI의 계층 화면 상태와 교체 가능한 편집 경계이며 `editable: true`에는 편집기가\n필요하다. `modelRevision`을 바꿔 외부 소스의 변경을 반영한다. 컨트롤러를 생략하면\n패널은 자체 빈 모델을 사용한다.\n"
+      "start_line": 23,
+      "end_line": 27,
+      "raw": "기본 LVUI `Hierarchy` 선언은 이 패널을 직접 생성한다. `controller`와 `editor`는 각각\nLVUI의 계층 화면 상태와 교체 가능한 편집 경계이며 `editable: true`에는 편집기가\n필요하다. `modelRevision`을 바꿔 외부 소스의 변경을 반영하고, 컨트롤러의 행 높이를\n바꿀 때는 별도의 `viewRevision`을 바꿔 문서 수정 없이 목록을 갱신한다. 컨트롤러를 생략하면\n패널은 자체 빈 모델을 사용한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 26,
-      "end_line": 26,
+      "start_line": 28,
+      "end_line": 28,
       "raw": "\n"
     },
     {
       "id": "b000013",
-      "kind": "fenced_code",
-      "start_line": 27,
+      "kind": "paragraph",
+      "start_line": 29,
       "end_line": 36,
-      "raw": "```lvui\nimport vm LayerModel\nWindow {\n    Hierarchy(controller: vm.controller, editor: vm.editor, editable: true,\n              modelRevision: vm.revision, width: vm.width, height: 530,\n              toolbarItems: vm.tools, activeToolbarButtonId: vm.activeTool,\n              footerVisible: true, onItemActivated: vm.selectItem,\n              onToolbarTriggered: vm.activateTool, onFooterClicked: vm.footerAction)\n}\n```\n",
-      "language": "lvui",
-      "code": "import vm LayerModel\nWindow {\n    Hierarchy(controller: vm.controller, editor: vm.editor, editable: true,\n              modelRevision: vm.revision, width: vm.width, height: 530,\n              toolbarItems: vm.tools, activeToolbarButtonId: vm.activeTool,\n              footerVisible: true, onItemActivated: vm.selectItem,\n              onToolbarTriggered: vm.activateTool, onFooterClicked: vm.footerAction)\n}\n",
-      "closed": true
+      "raw": "`countView`는 [계층 목록](NativeOwnedHierarchyList.md)의 개수 View를 그대로\n전달하며, 각 가상 행에 별도 인스턴스를 만든다. 선언형 View는 원래 스코프의 값을\n읽는다. `countRow: \"item\"`을 지정하면 `countView` 안에서 `item.entry.count`와\n`item.selected`, `item.height` 등 현재 행의 관찰 가능한 값도 읽을 수 있다. C++에서는 `NativeHierarchyPanel::create`의\n마지막 `HierarchyCountViewFactory`가 각 행의 관찰 가능한 컨텍스트를 받는다.\n팩터리는 패널 생성 시 정하며 교체하려면 새 패널을 구성한다.\n`itemDelegate`와 `itemRow`도 내부 목록으로 전달한다. 사용자 행은 기본 행의\n선택·펼침·탐색과 가상화 수명을 유지한다. 사용자 행과 `countView`는 함께 지정할 수 없다.\n"
     },
     {
       "id": "b000014",
@@ -127,10 +124,55 @@
     },
     {
       "id": "b000015",
-      "kind": "paragraph",
+      "kind": "fenced_code",
       "start_line": 38,
-      "end_line": 44,
-      "raw": "크기·행 스타일·아이콘 공급자와 리비전·도구 버튼·푸터 표시 및 슬롯은 반응형으로\n갱신된다. 목록 활성화는 키, 선택적 ID(없으면 -1), 원본 인덱스를 전달한다. 펼침과\n이동은 각각 키와 펼침 값, `HierarchyMovePlan`을 전달한다. 도구 모음 이벤트는\n`HierarchyToolbarSelection`, 푸터 이벤트는 슬롯 인덱스와 `ListFooterSlot`을 전달한다.\n직접 자식, 사용자 행 대리자, 이름별 도구 이벤트 및 실제 플랫폼 화면·접근성 검증은\n아직 제공하지 않는다. `LVUI.OwnedHierarchyPanel.Codegen`과\n`LVUI.OwnedHierarchyPanel.Generated`는 기본 생성 코드와 반응형 조합을 검사한다.\n"
+      "end_line": 48,
+      "raw": "```lvui\nimport vm LayerModel\nWindow {\n    Hierarchy(controller: vm.controller, editor: vm.editor, editable: true,\n              modelRevision: vm.revision, width: vm.width, height: 530,\n              toolbarItems: vm.tools, activeToolbarButtonId: vm.activeTool,\n              countRow: \"item\", countView: Label(text: item.entry.count),\n              footerVisible: true, onItemActivated: vm.selectItem,\n              onToolbarTriggered: vm.activateTool, onFooterClicked: vm.footerAction)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm LayerModel\nWindow {\n    Hierarchy(controller: vm.controller, editor: vm.editor, editable: true,\n              modelRevision: vm.revision, width: vm.width, height: 530,\n              toolbarItems: vm.tools, activeToolbarButtonId: vm.activeTool,\n              countRow: \"item\", countView: Label(text: item.entry.count),\n              footerVisible: true, onItemActivated: vm.selectItem,\n              onToolbarTriggered: vm.activateTool, onFooterClicked: vm.footerAction)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 59,
+      "raw": "크기·행 스타일·아이콘 공급자와 리비전·도구 버튼·푸터 표시 및 슬롯은 반응형으로\n갱신된다. 목록 활성화는 키, 선택적 ID(없으면 -1), 원본 인덱스를 전달한다. 펼침과\n이동은 각각 키와 펼침 값, `HierarchyMovePlan`을 전달한다. 도구 모음 이벤트는\n`HierarchyToolbarSelection`, 푸터 이벤트는 슬롯 인덱스와 `ListFooterSlot`을 전달한다.\n직접 자식, 이름별 도구 이벤트 및 실제 플랫폼 화면·접근성 검증은\n아직 제공하지 않는다. `LVUI.OwnedHierarchyPanel.Codegen`과\n`LVUI.OwnedHierarchyPanel.Generated`는 기본 생성 코드와 반응형 조합을 검사한다.\n`CountViewGenerated`는 패널 내부 행의 개수 View, 반응형 입력과 가상화 수명을 검사한다.\n`CountRowGenerated`는 각 행의 값과 선택·순서 변경을 생성된 View에 전달하는지 검사한다.\n`RowDelegateGenerated`는 패널에서 생성한 사용자 행과 포인터 선택을 검사한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "공통 `iiGUI/PanelLayout.h`는 주입된 설정을 검증하고 좁은 영역도 겹침 없이 나눈다. LVUI의 `PanelLayoutBinding`은 그래픽 SDK를 직접 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "패널이 퇴역하면 진행 중인 갱신이 끝난 뒤 자식 핸들·빈 컨트롤러와 입력을 해제한다. 갱신 중 퇴역으로 위젯이 닫히면 해당 갱신은 닫힘 오류로 끝날 수 있다. macOS arm64의 iiGUI 독립 설치 소비자와 LVUI 생성·헤드리스 경로를 검사했다.\n"
     }
   ],
   "outline": [
@@ -160,15 +202,30 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000015",
-        "line": 43,
+        "block_id": "b000017",
+        "line": 55,
         "text": "아직 제공하지 않는다. `LVUI.OwnedHierarchyPanel.Codegen`과",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 61,
+        "text": "공통 `iiGUI/PanelLayout.h`는 주입된 설정을 검증하고 좁은 영역도 겹침 없이 나눈다. LVUI의 `PanelLayoutBinding`은 그래픽 SDK를 직접 참조하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000013",
+        "label": "계층 목록",
+        "target": "NativeOwnedHierarchyList.md",
+        "kind": "relative",
+        "line": 29
+      }
+    ],
     "tables": []
   },
   "provenance": {

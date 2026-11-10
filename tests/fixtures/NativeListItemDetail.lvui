@@ -1,0 +1,7 @@
+import vm NativeListItemDetailModel
+Window {
+    ListItem(id: "detail", type: .Detail, label: "Files", detail: "No files",
+        showLeadingIcon: false, showBookmark: false, dateText: vm.date,
+        folderLabel1: "Work", tagLabel1: "Art", showDate: vm.dateVisible,
+        showFolders: vm.foldersVisible, showTags: vm.tagsVisible)
+}

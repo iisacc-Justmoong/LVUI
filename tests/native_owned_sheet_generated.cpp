@@ -46,10 +46,16 @@ int main() {
     require(take(take(sheet.popup_content("editor")).snapshot()).id == id && text(editor) == "Updated" &&
             scope->backend_0.opens == 2 && scope->backend_0.closes == 1,
             "Generated Sheet did not preserve content across openings");
-    scope->backend_0.presentation.set(lvui::SheetPresentation::mobile);
-    scope->backend_0.detent.set(lvui::SheetDetent::medium);
+    scope->backend_0.presentation.set(ii::gui::SheetPresentation::mobile);
+    scope->backend_0.detent.set(ii::gui::SheetDetent::medium);
     require(take(sheet.snapshot()).bounds.width == 800 && take(sheet.snapshot()).bounds.height == 342 &&
             take(editor.snapshot()).id == id, "Reactive Sheet presentation replaced content or ignored its detent");
-    good(sheet.close_popup()); std::weak_ptr<View::Scope> weak = scope; good(host.clear_content()); scope.reset(); graph.reset();
+    auto close = take(sheet.popup_content("sheet.close")); const auto close_state=take(close.snapshot());
+    require(close_state.accessibility_name=="Close" && close_state.bounds.width==26 && close_state.bounds.height==26,
+            "Generated Sheet did not retain its styled accessible close control");
+    good(close.activate());
+    require(!take(sheet.snapshot()).opened && scope->backend_0.closes==2,
+            "Generated Sheet close control did not dismiss exactly once");
+    std::weak_ptr<View::Scope> weak = scope; good(host.clear_content()); scope.reset(); graph.reset();
     require(weak.expired() && !sheet.snapshot() && !editor.snapshot(), "Generated Sheet retained its activation"); tree->close();
 }

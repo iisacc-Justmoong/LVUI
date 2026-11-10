@@ -1,5 +1,6 @@
 """Compile real generated factories for native inferred value contracts."""
 from pathlib import Path
+from workspace_support import checked_workspace, provider
 import argparse, json, subprocess, tempfile
 
 
@@ -8,7 +9,11 @@ def main():
     for name in ('build', 'compiler', 'core', 'color', 'gui'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--cxx', required=True)
+    parser.add_argument('--workspace', type=Path, required=True)
+    parser.add_argument('--gui-include', type=Path, required=True)
+    parser.add_argument('--gui-export-include', type=Path, required=True)
     args = parser.parse_args()
+    args.workspace = checked_workspace(args.workspace)
     source = Path(__file__).resolve().parents[1]
     cases = {
         'method': ('struct Backend {std::string format(std::int64_t n){return std::to_string(n);}};', 'let format = vm.format\nWindow { Label(text: format(2)) }', True),
@@ -25,6 +30,9 @@ def main():
         'referenced_field': ('struct Handler {std::string operator()(std::int64_t n){return std::to_string(n);}}; struct Backend {Handler handler;std::reference_wrapper<Handler> format{handler};};', 'let format = vm.format\nWindow { Label(text: format(2)) }', True),
         'typed_alias': ('struct Backend {auto make(){return []{return std::string("Native");};}};', 'let source: () -> String = vm.make()\nlet alias = source\nWindow { Label(text: alias()) }', True),
         'explicit_overload': ('struct Backend {std::string format(std::int64_t n){return std::to_string(n);} std::string format(std::string n){return n;}};', 'let format: (Int) -> String = vm.format\nWindow { Label(text: format(2)) }', True),
+        'scene_string': ('struct Backend {std::string target="tools";};', 'Application { Window { PushButton(onClick: openWindow(vm.target)) }\nWindow(id: "tools", initiallyOpen: false) { Label() } }', True),
+        'scene_boolean': ('struct Backend {bool target=true;};', 'Application { Window { PushButton(onClick: openWindow(vm.target)) }\nWindow(id: "tools", initiallyOpen: false) { Label() } }', False),
+        'scene_number': ('struct Backend {int target=1;};', 'Application { Window { PushButton(onClick: closeWindow(vm.target)) }\nWindow(id: "tools", initiallyOpen: false) { Label() } }', False),
         'wrong_arity': ('struct Backend {auto make(){return [](int){return std::string("Native");};}};', 'let format = vm.make()\nWindow { Label(text: format()) }', False),
         'void_display': ('struct Backend {auto make(){return []{};}};', 'let run = vm.make()\nWindow { Label(text: run()) }', False),
         'scalar_call': ('struct Backend {int count=2;};', 'let count = vm.count\nWindow { Label(text: count()) }', False),
@@ -33,18 +41,18 @@ def main():
     }
     report = {}
     unexpected = []
-    with tempfile.TemporaryDirectory(prefix='native-inferred-value-types-', dir=args.build) as temporary:
+    with provider.TemporaryDirectory(prefix='native-inferred-value-types-', dir=args.workspace) as temporary:
         root = Path(temporary)
-        includes = [root, source / 'src', args.build / 'lvui-generated-icons', (args.core / '../../../include').resolve(), (args.color / '../../../include').resolve(), args.gui / 'src', args.gui / 'build/install/include']
+        includes = [root, source / 'src', args.build / 'include', args.build / 'lvui-generated-icons', (args.core / '../../../include').resolve(), (args.color / '../../../include').resolve(), args.gui / 'src', args.gui_include, args.gui_export_include]
         for name, (members, body, valid) in cases.items():
-            (root / 'Fixture.h').write_text('#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <memory>\n#include <functional>\n#include <string>\n#include <cstdint>\n' + members + '\n')
-            (root / 'View.lvui').write_text('import vm Backend\n' + body + '\n')
+            provider.write_text(root / 'Fixture.h', '#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <memory>\n#include <functional>\n#include <string>\n#include <cstdint>\n' + members + '\n')
+            provider.write_text(root / 'View.lvui', 'import vm Backend\n' + body + '\n')
             generated = subprocess.run([str(args.compiler), '--name', 'InferredValueContract', '--include', 'Fixture.h', str(root / 'View.lvui')], text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             if generated.returncode:
                 raise RuntimeError(f'Inferred value generation failed for {name}: {generated.stderr}')
-            (root / 'View.generated.h').write_text(generated.stdout)
+            provider.write_text(root / 'View.generated.h', generated.stdout)
             setter = 'void replace(lvui_generated::InferredValueContract& view){(void)view.set_format_native([]{return []{return std::string("Replaced");};});}\n' if name == 'variable' else ''
-            (root / 'probe.cpp').write_text('#include "View.generated.h"\nauto factory=&lvui_generated::InferredValueContract::build;\n' + setter)
+            provider.write_text(root / 'probe.cpp', '#include "View.generated.h"\nauto factory=&lvui_generated::InferredValueContract::build;\n' + setter)
             msvc = Path(args.cxx).name.lower() in ('cl', 'cl.exe')
             command = [args.cxx, '/std:c++latest', '/Zs', '/utf-8'] if msvc else [args.cxx, '-std=c++23', '-fsyntax-only']
             for include in includes:
@@ -54,9 +62,9 @@ def main():
             if (compiled.returncode == 0) != valid:
                 unexpected.append(name)
                 print(f'Unexpected inferred value contract: {name}\n{compiled.stdout[:6500]}', flush=True)
-    destination = args.build / 'lvui-completion/native-inferred-value-type-validation.json'
-    destination.parent.mkdir(exist_ok=True)
-    destination.write_text(json.dumps(report, indent=2) + '\n')
+    destination = args.workspace / 'lvui-completion/native-inferred-value-type-validation.json'
+    provider.mkdir(destination.parent, exist_ok=True)
+    provider.write_text(destination, json.dumps(report, indent=2) + '\n')
     if unexpected:
         raise RuntimeError('Inferred value mismatches: ' + ', '.join(unexpected))
     print(f'Inferred values: {sum(item[2] for item in cases.values())} valid native contracts, {sum(not item[2] for item in cases.values())} rejected')

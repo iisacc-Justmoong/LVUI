@@ -1,4 +1,13 @@
 #include <LVUI/NativeTableRow.h>
+#include <iiGUI/NativeTableRowView.h>
+#include <iiGUI/NativeTableCellItemView.h>
+#include <iiGUI/TableCellItemModel.h>
+#include <iiGUI/TableRowViewModel.h>
+using TableRowTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using TableRowTestCellModel=lvui::TableCellItemModelBinding<ii::gui::BasicTableCellItem>;
+using TableRowTestModel=lvui::TableRowViewModelBinding<ii::gui::BasicTableRowView,TableRowTestCellModel>;
+using TableRowTestCell=lvui::native::TableCellItemBinding<ii::gui::BasicTableCellItem,ii::gui::BasicNativeTableCellItem,TableRowTestField>;
+using TableRowTestView=lvui::native::TableRowBinding<ii::gui::BasicNativeTableRow,TableRowTestModel,TableRowTestCell>;
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -17,11 +26,11 @@ int main(){
     native::TableRowInput input;input.configuration.width=350;input.configuration.cell_width=100;input.configuration.inputable=true;
     input.configuration.cells={{"a",{"2","int"}},{"b",{"Second"}},{"c",{"Third"}}};
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto host=take(tree->content_host({},"host",{400,80}));std::optional<native::NativeTableRow> row;
+    auto host=take(tree->content_host({},"host",{400,80}));std::optional<TableRowTestView> row;
     std::vector<std::string> edits,submissions,rejections;bool echo=true;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});if(!column)return std::unexpected(column.error());
-        auto value=native::NativeTableRow::create(builder,*column,"row",input,
+        auto value=TableRowTestView::create(builder,*column,"row",input,
             {.edited=[&](std::size_t index,std::string text){edits.push_back(text);if(echo){auto next=take(row->options());next.configuration.cells[index].value.text=text;good(row->set_options(next));}},
              .submitted=[&](std::size_t index,std::string text){submissions.push_back(std::to_string(index)+":"+text);},
              .rejected=[&](std::size_t index,std::string text,std::string){rejections.push_back(std::to_string(index)+":"+text);}});
@@ -56,7 +65,7 @@ int main(){
     bool reordered=false;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});if(!column)return std::unexpected(column.error());
-        auto value=native::NativeTableRow::create(builder,*column,"reentrant",input,
+        auto value=TableRowTestView::create(builder,*column,"reentrant",input,
             {.edited=[&](std::size_t index,std::string text){if(reordered)return;reordered=true;auto next=take(row->options());
                 next.configuration.cells[index].value.text=std::move(text);std::swap(next.configuration.cells[0],next.configuration.cells[1]);good(row->set_options(next));}});
         if(!value)return std::unexpected(value.error());row=*value;return {};

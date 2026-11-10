@@ -1,0 +1,13 @@
+import vm NativeHierarchyListCountViewModel
+let Badge(value: Int, selected: Bool, index: Int, height: Double): View = VStack(spacing: 0) {
+    Label(id: "row-count", text: value)
+    Label(id: "row-selected", text: selected)
+    Label(id: "row-index", text: index)
+    Label(id: "row-height", text: height)
+}
+let Rows(content: View): View = HierarchyList(id: "tree", controller: vm.controller, modelRevision: vm.revision, viewRevision: vm.view_revision,
+                                               width: 220, height: 40, rowHeight: 20, overscan: 1,
+                                               countRow: "item", countView: content)
+Window {
+    Rows(content: Badge(value: item.entry.count, selected: item.selected, index: item.source_index, height: item.height))
+}

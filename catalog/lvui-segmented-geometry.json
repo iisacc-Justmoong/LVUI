@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "reference": "LVUI segmented control defaults",
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=188-451",
+  "label": {
+    "componentKey": "7c3cdd39193a1b885b00fca9485274da57689141",
+    "verifiedVariantCount": 14,
+    "horizontalPadding": 0,
+    "verticalPadding": 0
+  },
+  "icon": {
+    "componentKey": "7e3c7ca1d49263a96af7a39b61d03c2649102253",
+    "verifiedVariantCount": 28,
+    "horizontalPadding": 0,
+    "verticalPadding": 0
+  },
+  "spacing": 2,
+  "borderWidth": 0,
+  "cornerRadius": 8,
+  "cornerRadiusVariableKey": "2ad4a5fe96667e3a8aa1d1a0c94984bbc3c35676",
+  "backgroundVariableKey": "d85cd617845f702e5e60f0b0549c9fa9ba490420",
+  "borderVariableKey": "bc403375ef0e6802cdde781868975f618fda4031",
+  "borderVariableUsage": "explicit-override-fallback"
+}

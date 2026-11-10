@@ -1,0 +1,9 @@
+import vm NativeOwnedInputFieldModel
+Window {
+    VStack {
+        AbstractButton(id: "account", width: 40, height: 40,
+                       accessibilityName: "Account", onClick: vm.submit) {
+            Avatar(id: "avatar")
+        }
+    }
+}

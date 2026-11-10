@@ -8,9 +8,9 @@
 ```lvui
 import class Domain.Item
 import vm Model
-let current = vm.selected
-let render: () -> String = vm.selected.describe
-let Action(item: Item, run: () -> Void = item.act): View = PushButton(run)
+const current = vm.selected
+const render: () -> String = vm.selected.describe
+const Action(item: Item, run: () -> Void = item.act): View = PushButton(run)
 Window { VStack {
     Label(text: render())
     PushButton(current.act)
@@ -28,8 +28,8 @@ Window { VStack {
 선택의 의존값이 바뀌면 현재 버전을 교체한다. 마운트·레이아웃·의존값 갱신 자체를
 메서드 호출로 바꾸지 않는다.
 
-명시적인 함수 선언·입력은 기존 `(인자 타입) -> 결과 타입` 계약을 따른다. `let` 함수 값은
-의존값에 따라 갱신하고, `@Static let`은 해당 활성화의 처음 선택을 고정한다. `var` 함수
+명시적인 함수 선언·입력은 기존 `(인자 타입) -> 결과 타입` 계약을 따른다. `const` 함수 값은
+의존값에 따라 갱신하고, `@Static const`는 해당 활성화의 처음 선택을 고정한다. `var` 함수
 값은 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 참조가 선택하는 객체를 깊은
 복사로 고정하는 계약은 아니다.
 
@@ -140,6 +140,11 @@ AOT가 만드는 읽기 문맥 인자는 `[[maybe_unused]]`로 표시한다. 수
 
 같은 어댑터가 순수 조회 콜백과 상태 변경 콜백에 공통으로 쓰이므로 스코프·버튼 이벤트
 인자도 선택 경로에서 사용하지 않을 수 있음을 표시한다. 필요할 때의 참조·이벤트 전달은 유지한다.
+
+선택된 호출 가능 필드가 함수 호출 연산자를 제공하지 않으면 같은 인자를 받는
+`invoke` 또는 `trigger` 멤버를 호출할 수 있다. 함수 호출 연산자, `invoke`,
+`trigger` 순으로 선택하며 선택한 원본 객체의 수명과 발행 경계는 그대로 유지한다.
+이는 LVRS 버튼 메서드 객체를 네이티브 C++ 콜백으로 이식하는 공통 경로이다.
 
 자동으로 대화상자를 여는 페이지의 embedded build 거부 경로에서는 생성자 팩토리 인자도
 명시적으로 소비한다. 이 경로는 오류를 반환하는 기존 정책을 유지하며 엄격한 예제 빌드로 검사한다.

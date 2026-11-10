@@ -1,0 +1,18 @@
+Window(title: "Figma component declarations") {
+    VStack {
+        PushButton { type: LabelButton, kind: accent }
+        Icon { name: "javascript" }
+        Checkbox { state: On }
+        Radio { state: Off }
+        Toggle { state: On }
+        Slider { type: Filled, size: Mini }
+        Card { type: Folder }
+        ListItem { type: Navigation, kind: Selected }
+        TextField { style: Cylinder, mode: Password }
+        Stepper { arrow: UpDown, tone: Primary }
+        ComboBox { arrow: UpDown, tone: primary }
+        Sheet { presentation: MobileLarge }
+        Material { type: Window }
+        Tab(iconName: "home") { style: Surface }
+    }
+}

@@ -1,0 +1,7 @@
+Application {
+    Window(id: "main") { Label(text: "Main") }
+    AppShell(id: "shell") { Label(text: "Shell") }
+    AppBootstrapWindow(id: "closed", visible: false) { Label(text: "Closed") }
+    AppShell(id: "shown", visible: true) { Label(text: "Shown") }
+    AppBootstrapWindow(id: "bootstrap") { Label(text: "Bootstrap") }
+}

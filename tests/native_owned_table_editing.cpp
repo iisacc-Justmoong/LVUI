@@ -1,7 +1,10 @@
 #include <LVUI/NativeTable.h>
+#include "table_host_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <charconv>
+#include <algorithm>
+#include <cmath>
 #include <memory>
 #include <optional>
 #include <stdexcept>
@@ -71,6 +74,26 @@ int main() {
     const auto replace = [&](std::string text) { auto field = take(table->editor()); auto state = take(field.snapshot());
         good(field.set_selection(0, state.text.size())); good(tree->input({.kind=WidgetInputKind::text, .text=std::move(text)})); };
     click(40, 34); key(WidgetKey::enter); require(bool(table->editor()), "Enter did not open a table editor");
+    auto field = take(table->editor()); good(tree->input({.kind=WidgetInputKind::composition, .text="ㅎ"}));
+    const auto before_palette = take(field.snapshot());
+    input.appearance.palette.current = lvui::figma_defaults::accent_purple_default;
+    good(table->set_options(input));
+    const auto after_palette = take(field.snapshot());
+    require(before_palette.marked && after_palette.marked == before_palette.marked && after_palette.text == before_palette.text &&
+            after_palette.selection == before_palette.selection && take(field.root().snapshot()).focused && take(source->snapshot())->revision == 0,
+            "Changing a table palette disturbed its active composition or data");
+    const auto drawing = take(tree->drawing_snapshot({240, 130}));
+    const auto bounds = take(field.root().snapshot()).bounds; const auto expected = lvui::figma_defaults::accent_purple_default;
+    const auto linear = [](double c) { return c <= .04045 ? c / 12.92 : std::pow((c + .055) / 1.055, 2.4); };
+    const auto matches = [&](const auto& panels) { return std::ranges::any_of(panels, [&](const auto& panel) {
+        const auto& b = panel.bounds; const auto& c = panel.top;
+        return b.x >= bounds.x - .01 && b.y >= bounds.y - .01 && b.x + b.width <= bounds.x + bounds.width + .01 &&
+            b.y + b.height <= bounds.y + bounds.height + .01 && std::abs(c.red-linear(expected.red)) < 1e-5 &&
+            std::abs(c.green-linear(expected.green)) < 1e-5 && std::abs(c.blue-linear(expected.blue)) < 1e-5 && std::abs(c.alpha-expected.alpha) < 1e-5;
+    }); };
+    require(matches(drawing.panels) || std::ranges::any_of(drawing.overlays, [&](const auto& layer) { return matches(layer.panels); }),
+            "Active table editor did not inherit its new focus color");
+    good(tree->input({.kind=WidgetInputKind::text, .text="7"}));
     replace("bad"); require(drafts.back() == "bad" && last_event && last_event->position.row == "r0" &&
             last_event->position.column == "amount" && last_event->row_index == 0 && last_event->column_index == 0 &&
             last_event->value_type == "integer" && take(source->snapshot())->revision == 0, "Typing lost its context or edited the source document");

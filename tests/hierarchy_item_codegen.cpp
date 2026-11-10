@@ -5,7 +5,7 @@
 int main() {
     auto code = lvui::compile_native("import vm Model\nWindow { HierarchyItem(label: vm.label, count: vm.count, expanded: vm.open, hasChildItems: true, iconName: \"home\", onClick: vm.clicked, onExpansionChanged: vm.expanded) }");
     if (!code) throw std::runtime_error(code.error().message);
-    for (auto part : {"#include <LVUI/NativeHierarchyItem.h>", "lvui::native::NativeHierarchyItem::create(",
+    for (auto part : {"#include <LVUI/NativeHierarchyItem.h>", "lvui_generated::detail_hierarchy_item::NativeHierarchyItem::create(",
                       "lvui::native::HierarchyItemInput", "component.set_options(value)"})
         if (code->find(part) == code->npos) throw std::runtime_error(std::string("Independent hierarchy item lost ") + part);
     if (code->find("lvrs::") != code->npos || code->find("<LVRS/") != code->npos || code->find("<Qt") != code->npos)

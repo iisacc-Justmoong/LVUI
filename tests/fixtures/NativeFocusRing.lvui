@@ -1,0 +1,5 @@
+import vm NativeFocusRingModel
+Window {
+    FocusRing(id: "focus", width: vm.width, height: 36, active: vm.active,
+              motionEnabled: false, color: "#ff0000")
+}

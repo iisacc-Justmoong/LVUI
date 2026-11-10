@@ -1,4 +1,5 @@
 #include <LVUI/NativeColorPickerButton.h>
+#include <iiGUI/NativeColorPickerButtonView.h>
 #include <LVUI/ColorSelection.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
@@ -9,6 +10,9 @@
 #include <stdexcept>
 #include <thread>
 #include <vector>
+namespace lvui::native {
+using NativeColorPickerButton=ColorPickerButtonBinding<ii::gui::BasicColorPickerButton,ii::gui::BasicNativeColorPickerButton>;
+}
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
@@ -26,8 +30,23 @@ const ii::gui::ImageRun* ring(const ii::gui::CanvasFrame& frame){
     if(auto found=find(frame.images))return found;
     for(const auto& layer:frame.overlays)if(auto found=find(layer.images))return found;return nullptr;
 }
+void retired_ring_is_released(){
+    using namespace ii::gui;auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"host",{100,100}));std::optional<lvui::native::NativeColorPickerButton> button;
+    good(host.set_content([&](auto& builder)->ii::core::Result<void>{auto stack=builder.vstack({},"stack");if(!stack)return std::unexpected(stack.error());
+        auto result=lvui::native::NativeColorPickerButton::create(builder,*stack,"button");
+        if(!result)return std::unexpected(result.error());button=*result;
+        auto second=lvui::native::NativeColorPickerButton::create(builder,*stack,"second");if(!second)return std::unexpected(second.error());return {};}));
+    std::weak_ptr<const ii::gui::RasterImage> image;
+    {auto frame=take(tree->drawing_snapshot({100,100}));std::vector<std::shared_ptr<const ii::gui::RasterImage>> images;
+     const auto collect=[&](const auto& runs){for(const auto& run:runs)if(run.image&&run.image->width()==320)images.push_back(run.image);};
+     collect(frame.images);for(const auto& layer:frame.overlays)collect(layer.images);
+     require(images.size()==2&&images[0]==images[1],"Live buttons did not share the hue ring");image=images[0];}
+    good(host.clear_content());require(image.expired(),"Retired color button retained its shared hue ring");tree->close();
+}
 }
 int main(){
+    retired_ring_is_released();
     using namespace ii::gui;auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{240,100}));std::optional<lvui::native::NativeColorPickerButton> button;
     auto source=std::make_shared<Source>();lvui::native::ColorPickerButtonInput input;input.source=source;std::vector<std::string> events;

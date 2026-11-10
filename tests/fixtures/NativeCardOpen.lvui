@@ -1,0 +1,5 @@
+import vm NativeCardOpenModel
+Window {
+    Card(id: "file", type: .File, filename: "Image", selectable: false,
+         onClick: vm.select, onDoubleClicked: vm.open)
+}

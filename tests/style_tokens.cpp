@@ -2,6 +2,8 @@
 #include <LVUI/Document.h>
 #include <LVUI/Language.h>
 #include <LVUI/StyleTokens.h>
+#include <LVUI/Card.h>
+#include <LVUI/InputField.h>
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -29,25 +31,73 @@ std::string compile(std::string_view source, NativeCompileOptions options = {}) 
     return *value;
 }
 void catalog() {
-    check(tokens().tokens().size() == 208 && tokens().collections().size() == 5, "Incomplete Figma catalog");
+    check(tokens().tokens().size() == 242 && tokens().collections().size() == 5, "Incomplete Figma catalog");
     check(bool(tokens().validate()), "Default catalog is invalid");
-    unsigned numbers = 0, colors = 0, strings = 0;
+    unsigned numbers = 0, colors = 0, strings = 0, legacy_aliases = 0;
     std::set<std::string> names;
     for (const auto &token : tokens().tokens()) {
+        check(token.css_name.starts_with("--lvui-") && token.id.starts_with("VariableID:"),
+              "Token identity does not belong to the independent LVUI library");
         check(names.insert(token.css_name).second, "CSS token collision");
         auto value = take(tokens().resolve(token.id));
         check(value == take(tokens().resolve(token.css_name)) && value == take(tokens().resolve(token.key)),
               "Identity lookup changed");
+        const auto legacy = tokens().resolve("--lvrs-"+token.css_name.substr(7));
+        if (legacy) {
+            ++legacy_aliases;
+            check(value == *legacy, "A legacy CSS identity resolves to the wrong LVUI token");
+        }
         check(token.type == style_token_type(value) && !token.id.empty() && !token.key.empty(),
               "Figma metadata/type missing");
         numbers += token.type == StyleTokenType::number;
         colors += token.type == StyleTokenType::color;
         strings += token.type == StyleTokenType::string;
     }
-    check(numbers == 67 && colors == 138 && strings == 3, "Token types changed");
+    check(numbers == 71 && colors == 168 && strings == 3 && legacy_aliases == 237,
+          "Token types or compatibility identities changed");
+    near(take(tokens().number("Metric.textFieldPaddingHorizontal")), 7);
+    near(take(tokens().number("Metric.textFieldPaddingVertical")), 4.5);
+    near(take(tokens().number("Metric.textFieldIconSize")), 12);
+    near(take(tokens().number("Metric.textFieldBorderWidth")), .5);
+    near(take(tokens().color("Color.icon.search")).red, 0.8078431487083435);
+    check(take(tokens().resolve("VariableID:33:7")) == take(tokens().select("Color.icon.search")),
+          "Search icon color lost its Figma identity");
+    check(take(tokens().resolve("VariableID:1814:247")) == take(tokens().select("Color.icon.search")) &&
+              take(tokens().resolve("cfffd9e1c8da3bd933aa6b19de0e5866352b4352")) == take(tokens().select("Color.icon.search")),
+          "Renamed Figma library identity did not resolve to the existing search color");
+    near(take(tokens().number("VariableID:1814:248")), 7);
+    near(take(tokens().number("f737efc560f38281163aaa5f90d49dd830d53c48")), 4.5);
+    near(take(tokens().number("VariableID:1814:250")), 12);
+    near(take(tokens().number("VariableID:1814:251")), .5);
     check(take(tokens().string("Theme Typography/Font/fontBody")) == "Pretendard", "Font missing");
     near(take(tokens().number("--lvrs-theme-metrics-opacity-32")), 32);
-    near(take(tokens().color("--lvrs-theme-colors-panel-window")).red, 0.0784313753247261);
+    near(take(tokens().number("--lvui-theme-metrics-space-8")),
+         take(tokens().number("VariableID:1571:123")));
+    near(take(tokens().number("--lvui-theme-metrics-space-8")),
+         take(tokens().number("1683d7ac5b337e260c86fceeff8820ae780023e2")));
+    StyleTokenOptions legacy_mode;legacy_mode.modes["VariableCollectionId:1571:103"]="1571:0";
+    near(take(tokens().number("--lvui-theme-metrics-space-8",legacy_mode)),8);
+    legacy_mode.overrides["--lvrs-theme-metrics-space-8"]=10.;
+    near(take(tokens().number("--lvui-theme-metrics-space-8",legacy_mode)),10);
+    legacy_mode.overrides["--lvui-theme-metrics-space-8"]=11.;
+    check(!tokens().validate(legacy_mode),"Legacy and LVUI aliases accepted duplicate overrides");
+    near(take(tokens().color("--lvrs-theme-colors-panel-window")).red, 0.09921568632125854);
+    check(take(tokens().color("Theme Colors/Accent/Blue/Default")) == figma_defaults::accent_blue_default,
+          "Native accent default differs from the Figma snapshot");
+    check(take(tokens().color("Color.text.body")) == figma_defaults::text_body_color,
+          "Avatar's native default differs from the Figma body color token");
+    check(take(tokens().color("Color.material.alert.actionBorder")) == figma_defaults::material_alert_action_border,
+          "Slider symbol default differs from the Figma material token");
+    check(take(tokens().color("Theme Colors/Accent/Blue/Hover")) == figma_defaults::accent_blue_hover,
+          "Darker icon role differs from the Figma snapshot");
+    check(take(tokens().color("Theme Colors/Icon/Accent/Blue/Subtle/Darker")) == figma_defaults::icon_accent_blue_subtle_darker,
+          "Figma icon state token missing");
+    check(CardPalette{}.surface == take(tokens().color("Theme Colors/Panel/surfaceSolid")) &&
+              CardPalette{}.progress == take(tokens().color("Theme Colors/Accent/Blue/Default")),
+          "Card defaults diverged from style tokens");
+    check(InputFieldPalette{}.background == take(tokens().color("Theme Colors/Panel/surfaceInput")) &&
+              InputFieldPalette{}.selection == figma_defaults::with_alpha(figma_defaults::accent_blue_default, .38),
+          "Input defaults lost the current Figma palette or alpha");
     near(take(tokens().color("--lvrs-material-surface-dense-edge")).alpha, 0.11999999731779099);
 }
 void aliases() {
@@ -65,8 +115,8 @@ void aliases() {
     check(take(tokens().color("ColorPicker/Previous color", options)) == StyleColor{.2, .3, .4, .5},
           "Alias ignored target override");
     options.overrides["Theme Colors/Action/primary"] = StyleColor{.7, .6, .5, 1};
-    check(take(tokens().color("ColorPicker/Previous color", options)) == StyleColor{.7, .6, .5, 1},
-          "Alias ignored intermediate override");
+    check(take(tokens().color("ColorPicker/Previous color", options)) == StyleColor{.2, .3, .4, .5},
+          "Current Figma alias incorrectly follows the retired action override");
     check(take(tokens().color("Theme Colors/Accent/Blue/Default")) == blue,
           "Overrides mutated shared defaults");
 }
@@ -108,6 +158,22 @@ void modes() {
     check(bool(c.validate(o)), "Equivalent mode name/id rejected");
     o.modes["Sample"] = "Dark";
     check(!c.validate(o), "Conflicting collection modes accepted");
+    o.modes.clear();o.modes["collection-key"]="Light";
+    near(take(c.number("--alias",o)),16);
+    auto collections=std::vector<StyleTokenCollection>(tokens().collections().begin(),tokens().collections().end());
+    auto values=std::vector<StyleToken>(tokens().tokens().begin(),tokens().tokens().end());
+    auto foreign=values;auto foreign_token=std::ranges::find(foreign,std::string("Space/8"),&StyleToken::name);
+    check(foreign_token!=foreign.end(),"Expected size token missing");foreign_token->key="different-file-key";
+    StyleTokenCatalog foreign_catalog(collections,foreign);
+    check(!foreign_catalog.find("VariableID:1571:123"),"Legacy alias leaked into a different file identity");
+    auto other=collections[0];other.id="other";other.key="other-key";other.name="VariableCollectionId:44:457";
+    collections.push_back(other);
+    StyleTokenCatalog ambiguous_collection(collections,values);StyleTokenOptions ambiguous;
+    ambiguous.modes["VariableCollectionId:44:457"]="Dark";
+    check(!ambiguous_collection.validate(ambiguous),"Ambiguous legacy collection alias accepted");
+    collections.pop_back();collections[0].modes.push_back({"other-mode","44:0"});
+    StyleTokenCatalog ambiguous_mode(collections,values);ambiguous.modes.clear();ambiguous.modes["Theme Colors"]="44:0";
+    check(!ambiguous_mode.validate(ambiguous),"Ambiguous legacy mode alias accepted");
     check(!sample(true).validate(), "Alias cycle accepted");
     auto bad = tokens().number("--lvrs-theme-colors-action-primary");
     check(!bad && bad.error().code == StyleTokenErrorCode::wrong_type, "Typed getter coerced a color");
@@ -157,7 +223,7 @@ void composite() {
     auto c = composite_srgb(edge, window);
     near(c.red, window.red + (1 - window.red) * edge.alpha);
     near(c.alpha, 1);
-    check(c.red * 255 > 47 && c.red * 255 < 49, "Encoded sRGB composition changed");
+    check(c.red * 255 > 52 && c.red * 255 < 54, "Encoded sRGB composition changed");
     check(composite_srgb({0, 0, 0, 0}, {0, 0, 0, 0}) == StyleColor{0, 0, 0, 0},
           "Transparent composite became opaque");
 }
@@ -169,7 +235,7 @@ void parser() {
           "CSS var padding split failed");
     check(d->root().style.font_size == 13 && d->root().children.front().style.font_size == 26,
           "Default typography not token based");
-    check(d->root().style.background && std::abs(d->root().style.background->red - .0784313753) < 1e-7,
+    check(d->root().style.background && std::abs(d->root().style.background->red - .0992156863) < 1e-7,
           "Default window color missing");
     StyleTokenOptions o;
     o.overrides["--lvrs-theme-typography-body-text-body"] = 19.;
@@ -200,21 +266,35 @@ ApplicationWindow(fontFamily: token("Theme Typography/Font/fontBody")) {
           "Token typography recipe missing");
     check(code.find("token(") == code.npos && code.find("LVUI/") == code.npos,
           "Runtime token resolver leaked into app");
+    check(code.find("IIGUI_TEXT_WEIGHT_RULES_API") != code.npos &&
+              code.find("ii::gui::require_text_weight_rules_abi_v1()") != code.npos &&
+              code.find("requires iiGUI 0.5.0") != code.npos,
+          "Generated view did not diagnose an older iiGUI appearance API");
     NativeCompileOptions o;
     o.style_tokens.overrides["--lvrs-theme-metrics-space-8"] = 14.;
     check(compile(source, o).find(".spacing = 14") != code.npos, "AOT override ignored");
+    NativeCompileOptions typography;
+    typography.style_tokens.overrides["--lvrs-theme-typography-body-text-body"] = 19.5;
+    typography.style_tokens.overrides["--lvrs-theme-typography-weight-medium"] = 700.;
+    const auto weighted = compile("Window { Label(text: \"Body\", style: .body) }", typography);
+    const auto rules = weighted.find("result.text_weight_rules = ");
+    check(rules != weighted.npos && weighted.find("{19.5, 700}", rules) != weighted.npos,
+          "Window typography policy ignored LVUI token overrides");
+    typography.style_tokens.overrides["--lvrs-theme-typography-weight-medium"] = 450.;
+    check(!compile_native("Window { Label() }", typography), "Unsupported host font weight was accepted");
     auto html = compile(
-        R"LVUI(<ApplicationWindow style="background:var(--lvrs-theme-colors-panel-window);font-family:var(--lvrs-theme-typography-font-font-body)"><div style="gap:var(--lvrs-theme-metrics-space-8)"><span style="font-size:var(--lvrs-theme-typography-body-text-body);color:var(--lvrs-theme-colors-action-primary)">Native</span></div></ApplicationWindow>)LVUI",
+        R"LVUI(ApplicationWindow(backgroundColor: Color.window, fontFamily: token("--lvrs-theme-typography-font-font-body")) { VStack(gap: Metric.space8) { Label(text: "Native", fontSize: Metric.textBody, color: Color.primary) } })LVUI",
         o);
-    check(html.find(".spacing = 14") != html.npos, "Markup lost compiler token options");
+    check(html.find(".spacing = 14") != html.npos, "View declaration lost compiler token options");
     auto composite = compile(
         R"(Window { Label(color: composite(token("--lvrs-material-surface-dense-edge"),token("--lvrs-theme-colors-panel-window"))) })");
     check(composite.find(".color = ii::gui::WidgetColor{") != composite.npos,
           "Explicit sRGB composition not compiled");
     auto panel = compile(
         R"(Window { VStack(backgroundColor: token("Theme Colors/Panel/window"),borderColor: token("--lvrs-material-surface-dense-edge"),borderWidth: token("Theme Metrics/Stroke/1")) {} })");
-    check(panel.find("set_paint_handler") != panel.npos && panel.find(".stroke_width = 1") != panel.npos,
-          "Token panel painting not generated");
+    check(panel.find("ii::gui::install_panel_paint") != panel.npos && panel.find("ii::gui::PanelColors{") != panel.npos &&
+          panel.find("drawing->panels.push_back") == panel.npos && panel.find("LVUI/NativeWidgetColors.h") == panel.npos,
+          "Token panel painting was not delegated to iiGUI");
     auto colors = compile(R"(Window { VStack {
       Popover(surfaceColor: token("--lvrs-theme-colors-panel-window")) {}
       ColorPickerButton(currentColor: token("--lvrs-color-picker-current-color"))
@@ -257,7 +337,7 @@ void selectors() {
         colors += token.selector.starts_with("Color.");
         metrics += token.selector.starts_with("Metric.");
     }
-    check(colors == 138 && metrics == 67, "Typed selector inventory incomplete");
+    check(colors == 168 && metrics == 71, "Typed selector inventory incomplete");
     check(take(tokens().select("Color.primary")) == take(tokens().resolve("Theme Colors/Action/primary")),
           "Color primary alias changed");
     near(take(tokens().number("Metric.space8")), 8);
@@ -327,9 +407,9 @@ Window { VStack(spacing: gap) { Label(color: ink) } })");
                 {.framework = "iiGUI"});
     check(columns.find("table_header_widths(value.configuration.columns, std::vector<double>{44, 56})") != columns.npos, "Numeric list lost Metric context");
     auto html = compile(
-        R"LVUI(<ApplicationWindow style="background:Color.window"><div style="padding:Metric.space24;gap:.space8"><span color={Color.text.body} style="font-size:Metric.textBody;font-weight:.weightMedium">Typed</span></div></ApplicationWindow>)LVUI");
+        R"LVUI(ApplicationWindow(backgroundColor: Color.window) { VStack(padding: Metric.space24, gap: .space8) { Label(text: "Typed", color: Color.text.body, fontSize: Metric.textBody, fontWeight: .weightMedium) } })LVUI");
     check(html.find(".spacing = 8") != html.npos && html.find(".font_size = 13") != html.npos,
-          "Native inline typed style failed");
+          "Native typed View style failed");
     auto legacy = parse(
         "<main "
         "style='background:Color.window;gap:Metric.space8;font-weight:.weightMedium;color:.text.body'/>");

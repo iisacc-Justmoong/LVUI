@@ -15,6 +15,10 @@ python3 -B tests/test_lvui_keywords.py
 공개 `Keyword::source_file`과 `source_line`은 LVUI 목록의 실제 항목 위치이다.
 예약된 이름은 파서의 어휘 계약을 의미한다. 이름이 등록된 사실만으로 해당
 컴포넌트의 속성, 동작, 접근성 또는 플랫폼 구현이 완성된 것은 아니다.
+`ScrollView`는 LVUI가 추가한 네이티브 레이아웃 예약어이며 실제 지원 범위는
+[스크롤 뷰 계약](NativeScrollView.md)을 따른다.
+`Scene`은 앱의 네이티브 창 장면을 선언하는 예약어이며 임의의 View 안에서는
+사용할 수 없다. 장면의 소유권과 입력은 [Scene 계약](Scenes.md)을 따른다.
 
 [기존 소스 조사](ReservedWords.md)는 이 목록을 시작할 때의 역사적 자료이다.
 그 조사 도구는 현재 목록과 문서를 덮어쓰지 않으며 기본 빌드에도 필요하지 않다.

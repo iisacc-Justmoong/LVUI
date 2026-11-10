@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <thread>
+#include <vector>
 
 namespace {
 using namespace lvui::native;
@@ -130,6 +131,40 @@ void derived() {
     input.set(4);
     check(applications == 2 && twice->get() == 8, "Derived values did not settle before effects");
 }
+void retire_effects() {
+    Bindings graph;
+    Observable<int> input{1};
+    auto value = require(graph.derive([&](ReadContext& context) { return context.read(input) * 2; }));
+    int shown = 0, applications = 0;
+    require(graph.bind([&](ReadContext& context) { return context.read(*value); },
+                       [&](int next) -> Result<void> { shown = next; ++applications; return {}; }));
+    require(graph.begin_batch()); input.set(4);
+    require(graph.retire_effects()); require(graph.retire_effects()); require(graph.end_batch());
+    check(shown == 2 && applications == 1 && value->get() == 8,
+          "Retiring presentation effects also stopped derived state or applied a pending effect");
+    input.set(5);
+    check(shown == 2 && value->get() == 10 && graph.available(), "A retired effect updated or closed its callback graph");
+    auto rejected = graph.bind([](ReadContext&) { return 0; }, [](int) -> Result<void> { return {}; });
+    check(!rejected && rejected.error().code == ii::core::ErrorCode::closed, "A retired graph accepted a new presentation effect");
+    auto late_derived = require(graph.derive([&](ReadContext& context) { return context.read(input) + 1; }));
+    check(late_derived->get() == 6, "Retiring effects closed derived value admission");
+    bool wrong_thread = false;
+    std::thread worker([&] { auto result = graph.retire_effects(); wrong_thread = !result && result.error().code == ii::core::ErrorCode::wrong_executor; });
+    worker.join();
+    check(wrong_thread, "Another thread retired presentation effects");
+    require(graph.close());
+
+    Bindings reentrant;
+    Observable<int> changing{0};
+    int writes = 0;
+    require(reentrant.bind([&](ReadContext& context) {
+        auto current = context.read(changing);
+        if (current == 1) require(reentrant.retire_effects());
+        return current;
+    }, [&](int) -> Result<void> { ++writes; return {}; }));
+    changing.set(1);
+    check(writes == 1, "An in-flight getter applied its effect after retirement");
+}
 void batches() {
     Bindings bindings;
     Observable<int> a{1}, b{2};
@@ -142,6 +177,126 @@ void batches() {
     require(bindings.end_batch());
     check(applications == 2 && result == 7, "A batch did not coalesce effects");
     check(!bindings.end_batch(), "Unbalanced batch accepted");
+}
+void event_transactions() {
+    struct Model final { Observable<int> x{0}, y{0}; };
+    auto model = std::make_shared<Model>();
+    auto graph = std::make_shared<Bindings>();
+    std::vector<int> snapshots;
+    require(graph->bind([&](ReadContext& context) { return context.read(model->x) + context.read(model->y); },
+                        [&](int value) -> Result<void> { snapshots.push_back(value); return {}; }));
+    auto input = scoped_function<int>(model, graph, [](const auto& owner, int sample) {
+        owner->x.set(sample);
+        owner->y.set(sample);
+        return sample;
+    });
+    for (int sample = 1; sample <= 3; ++sample)
+        check(input(sample) == sample, "An input callback lost its return value");
+    std::cout << "EVENT_TRACE inputs=3 effects=" << snapshots.size()-1 << " values=";
+    for (auto value : snapshots) std::cout << value << ',';
+    std::cout << '\n';
+    check((snapshots == std::vector<int>{0, 2, 4, 6}),
+          "An input exposed intermediate model states to the binding graph");
+    const auto trace = require(graph->stats());
+    check(trace.invalidations == 6 && trace.coalesced == 3 && trace.flushes == 3 &&
+              trace.applications == 4 && trace.high_watermark == 1 && trace.pending == 0 &&
+              trace.batch_depth == 0 && !trace.draining,
+          "Binding diagnostics did not describe the completed input transactions");
+    std::vector<int> invoked;
+    auto selected = returned_callback(model, graph, [&](ReadContext& context) {
+        const auto version = context.read(model->x);
+        if (version < 0) throw std::runtime_error("invalid callback version");
+        return [&, version] { invoked.push_back(version); };
+    }, [](const auto&, auto& handler) { handler(); });
+    auto nested = callback(model, graph, [&](const auto& owner) {
+        owner->x.set(7);
+        selected();
+        owner->y.set(7);
+    });
+    nested();
+    check(invoked == std::vector<int>{7} && snapshots.back() == 14,
+          "A nested callback used the previous viewmodel state");
+    bool during_effect = false;
+    require(graph->bind([&](ReadContext& context) { return context.read(model->y); },
+                        [&](int value) -> Result<void> {
+        if (value == 9) { model->x.set(9); selected(); during_effect = true; }
+        return {};
+    }));
+    auto reenter = callback(model, graph, [](const auto& owner) { owner->y.set(9); });
+    reenter();
+    check(during_effect && invoked.back() == 9 && snapshots.back() == 18,
+          "A callback invoked while effects drain used an obsolete derived handler");
+    auto invalid = callback(model, graph, [&](const auto& owner) { owner->x.set(-1); selected(); });
+    invalid();
+    check(invoked.back() == 9 && !require(graph->failures()).empty(),
+          "A failed nested callback switch did not preserve its last valid handler and diagnostic");
+    model->x.set(9);
+    check(require(graph->failures()).empty(), "A later valid callback switch did not recover");
+    auto rejected = scoped_function<Result<bool>>(model, graph, [](const auto& owner) -> Result<bool> {
+        owner->x.set(-2);
+        return ii::core::fail(ii::core::ErrorCode::cancelled, "input cancelled");
+    });
+    const auto rejection = rejected();
+    check(!rejection && rejection.error().code == ii::core::ErrorCode::cancelled &&
+              !require(graph->failures()).empty(),
+          "A binding failure replaced the input's explicit error");
+    model->x.set(9);
+    auto failing = callback(model, graph, [](const auto& owner) {
+        owner->x.set(10);
+        throw std::runtime_error("original input error");
+    });
+    bool original = false;
+    try { failing(); } catch (const std::runtime_error& error) {
+        original = std::string_view(error.what()) == "original input error";
+    }
+    check(original && snapshots.back() == 19 && require(graph->stats()).pending == 0,
+          "An input exception lost its cause or left the graph batched");
+
+    // A previously rejected presentation value can be reevaluated when an
+    // unrelated method publishes its backend revision. It must not stop that
+    // callback, while a newly introduced failure must still be reported.
+    struct FailureModel final {
+        Observable<int> value{0}, other{0}, revision{0};
+        int callbacks = 0, shown = 0;
+    };
+    auto state = std::make_shared<FailureModel>(); auto retry_graph = std::make_shared<Bindings>();
+    require(retry_graph->bind([&](ReadContext& context) {
+        (void)context.read(state->revision); return context.read(state->value);
+    }, [&](int value) -> Result<void> {
+        if(value<0)return ii::core::fail(ii::core::ErrorCode::invalid_argument,value==-1?"bad option":"changed option");
+        state->shown=value;return {};
+    }));
+    require(retry_graph->bind([&](ReadContext& context) {
+        (void)context.read(state->revision); return context.read(state->other);
+    }, [](int value) -> Result<void> {
+        if(value<0)return ii::core::fail(ii::core::ErrorCode::invalid_argument,"new option");return {};
+    }));
+    state->value.set(-1);
+    check(require(retry_graph->failures()).size()==1 && state->shown==0,"A rejected value lost its diagnostic or last valid display");
+    auto independent=callback(state,retry_graph,[](const auto& owner){++owner->callbacks;owner->revision.set(owner->revision.get()+1);});
+    const auto previous_failed_flushes=require(retry_graph->stats()).failed_flushes;
+    independent();
+    check(state->callbacks==1 && state->shown==0 && require(retry_graph->failures()).size()==1 &&
+          require(retry_graph->stats()).failed_flushes==previous_failed_flushes+1,
+          "An existing rejected value interrupted a callback or disappeared from failure statistics");
+    auto query=scoped_function<Result<int>>(state,retry_graph,[](const auto& owner) -> Result<int> {
+        owner->revision.set(owner->revision.get()+1);return 42;
+    });
+    auto answer=query();
+    check(answer && *answer==42 && require(retry_graph->failures()).size()==1,
+          "A repeated binding failure changed an independent callback result");
+    require(retry_graph->begin_batch());state->revision.set(state->revision.get()+1);
+    auto manual=retry_graph->end_batch();
+    check(!manual && manual.error().message=="bad option","An explicit batch hid its repeated failure");
+    auto changed=callback(state,retry_graph,[](const auto& owner){owner->value.set(-2);});
+    bool changed_error=false;try{changed();}catch(const std::runtime_error& error){changed_error=std::string_view(error.what())=="changed option";}
+    check(changed_error,"A changed binding failure was hidden by the earlier diagnostic");
+    state->value.set(-1);
+    auto additional=callback(state,retry_graph,[](const auto& owner){owner->revision.set(owner->revision.get()+1);owner->other.set(-1);});
+    bool new_error=false;try{additional();}catch(const std::runtime_error& error){new_error=std::string_view(error.what())=="new option";}
+    check(new_error && require(retry_graph->failures()).size()==2,"A new binding failure was hidden by a repeated one");
+    state->value.set(0);state->other.set(0);
+    check(require(retry_graph->failures()).empty(),"Recovered values retained binding failures");
 }
 void fanout() {
     Bindings bindings;
@@ -197,6 +352,30 @@ void reentry() {
     auto rejected = closed.bind([&](ReadContext&) { require(closed.close()); return 1; },
                                [](int) -> Result<void> { throw std::runtime_error("Closed getter applied"); });
     check(!rejected && rejected.error().code == ii::core::ErrorCode::closed, "A closed initializer returned a live binding");
+    {
+        auto dying = std::make_unique<Bindings>();
+        Observable<int> source{0};
+        require(dying->bind([&](ReadContext& c) { return c.read(source); },
+                            [&](int n) -> Result<void> { if (n == 1) dying.reset(); return {}; }));
+        require(dying->begin_batch());source.set(1);
+        auto* raw = dying.get();
+        require(raw->end_batch());
+        check(!dying, "A graph retired during flush did not finish safely");
+    }
+    {
+        Bindings deep;Observable<int> source{0};int shown=0;
+        require(deep.bind([&](ReadContext& c) { return c.read(source); },
+                          [&](int n) -> Result<void> { shown=n;return {}; }));
+        const auto nest=[&](auto&& self,std::size_t depth)->void {
+            if(depth) ii::core::ObservableReadScope::collect([](auto){},[&]{self(self,depth-1);});
+            else source.set(1);
+        };
+        nest(nest,ii::core::ObservableReadScope::maximum_depth);
+        check(shown==0&&!require(deep.failures()).empty(),
+              "An evaluation scope failure was not retained as a binding diagnostic");
+        source.set(2);
+        check(shown==2&&require(deep.failures()).empty(),"A binding did not recover after a scope failure");
+    }
 }
 void lifetime() {
     Observable<int> input{1};
@@ -343,11 +522,13 @@ int main(int argc, char** argv) {
         else if (name == "readonly_owners") readonly_owners();else if (name == "readonly_references") readonly_references();
         else if (name == "branches") branches();
         else if (name == "derived") derived(); else if (name == "batches") batches();
+        else if (name == "event_transactions") event_transactions();
         else if (name == "fanout") fanout(); else if (name == "errors") errors();
         else if (name == "reentry") reentry(); else if (name == "lifetime") lifetime();
         else if (name == "threading") threading(); else if (name == "values") values();
         else if (name == "cycle") cycle(); else if (name == "subscription_rollback") subscription_rollback();
         else if (name == "callbacks") callbacks();
+        else if (name == "retire_effects") retire_effects();
         else throw std::runtime_error("Unknown native binding test");
         std::cout << "LVUI native bindings " << name << " passed\n";
     } catch (const std::exception& error) { std::cerr << error.what() << '\n'; return 1; }

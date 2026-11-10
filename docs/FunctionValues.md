@@ -5,16 +5,18 @@
 함수 버전이 보존한다. 가변 내부 상태와 외부 원본의 깊은 복사는 구분한다.
 
 LVUI의 함수 값은 C++ 메서드 참조, [callable 필드](CallableFields.md) 또는 C++가 반환한 callable을 선언된 서명으로
-연결한다. 처리 본문은 C++에 두며 `.lvui`에 실행 함수 본문이나 소스 인터프리터를 추가하지 않는다.
+연결한다. 함수와 메서드 본문은 C++에 둔다. 일회성 [LVUI 이벤트 블록](ImmediateDeclaration.md)은
+화면 상태와 가져온 명령을 연결하며 네이티브 C++로 변환한다. 이름 붙인 스크립트
+본문과 소스 인터프리터는 사용하지 않는다.
 
 ```lvui
 import vm Model
-let direct: (Int) -> String = vm.format
-let dynamic: (Int) -> String = vm.makeFormatter(vm.amount)
-@Static let frozen: (Int) -> String = vm.makeFormatter(vm.amount)
-@Static let selected: (Int) -> String = dynamic
+const direct: (Int) -> String = vm.format
+const dynamic: (Int) -> String = vm.makeFormatter(vm.amount)
+@Static const frozen: (Int) -> String = vm.makeFormatter(vm.amount)
+@Static const selected: (Int) -> String = dynamic
 
-let Info(format: (Int) -> String, accepts: (Int) -> Bool = vm.accepts): View = VStack {
+const Info(format: (Int) -> String, accepts: (Int) -> Bool = vm.accepts): View = VStack {
     Label(text: format(vm.count))
     PushButton(enabled: accepts(vm.count))
 }
@@ -23,7 +25,7 @@ Window { Info(format: dynamic) }
 
 ## 선언·호출·타입
 
-함수 매개변수와 읽기 전용 `let`은 `(입력 타입, ...) -> 결과 타입`을 사용한다.
+함수 매개변수와 읽기 전용 `const`는 `(입력 타입, ...) -> 결과 타입`을 사용한다.
 기본값·별칭·다단계 전달은 호출 위치와 정의 위치의 기존 어휘 환경을 유지한다.
 직접 호출과 괄호로 묶은 함수 값의 호출을 네이티브 C++로 생성한다. 인자 수가 다른 호출,
 표시값이 필요한 곳의 `Void` 호출, 이벤트 입력에 결과가 있는 함수를 전달하는 경우는 거부한다.
@@ -54,7 +56,7 @@ C++ 객체 결과의 값 반환 계약과 팩터리가 반환한 **함수 객체
 유효 결과를 유지한다. 의존값이 복구되면 새 결과로 회복한다. 원래 C++ 메서드·팩터리의
 합성 리비전 읽기 규칙은 유지하므로 그 리비전 변경도 계산을 갱신할 수 있다.
 
-`@Static let`의 팩터리 식은 해당 활성화에서 한 번 평가하며 이후 입력 변경으로 팩터리를
+`@Static const`의 팩터리 식은 해당 활성화에서 한 번 평가하며 이후 입력 변경으로 팩터리를
 다시 실행하지 않는다. 함수에 나중에 전달하는 호출 인자는 계속 반응형이다. C++ 함수가
 참조한 원본 객체의 모든 내부 상태를 깊게 복사하는 기능은 아니다.
 
@@ -92,8 +94,9 @@ C++ callable을 전달한다. 결과가 있는 함수에는 읽기 전용 호출
 
 [가변 함수 값](FunctionVariables.md)은 명시적 대입·초기 버전 선택·현재 버전 공유와
 C++ setter를 별도 네이티브 슬롯에 연결한다.
-LVUI 함수 본문, 부분 적용, 중첩 함수 타입과
-전체 일반 타입·프로토콜은 전체 완료의 남은 항목이다.
+값을 반환하는 메서드와 함수 구현은 C++에서 가져온다. `Void` 이벤트 스크립트는
+화면 상태와 가져온 동작을 연결하는 범위에서 LVUI로 작성할 수 있다.
+부분 적용, 중첩 함수 타입과 전체 일반 타입·프로토콜은 별도의 범위이다.
 
 호출·추적·선택 메타데이터는 하나의 공유 상태로 접수한다. 사용자 C++ 접수 검사나 선택
 콜백이 함수 값 자체를 제거해도 실행 중인 메타데이터는 반환까지 보존한다. 이 보존을

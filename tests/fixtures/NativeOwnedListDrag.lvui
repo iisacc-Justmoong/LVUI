@@ -1,0 +1,6 @@
+import vm NativeOwnedListDragModel
+Window {
+    List(id: "list", controller: vm.controller, editor: vm.editor, reorderable: vm.reorderable,
+         modelRevision: vm.revision, width: 200, height: 80, rowHeight: 20, footerVisible: false,
+         onItemMoved: vm.moved)
+}

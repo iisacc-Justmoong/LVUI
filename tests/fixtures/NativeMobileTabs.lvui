@@ -1,0 +1,9 @@
+import vm NativeMobileTabsModel
+Window {
+    HStack {
+        MobileTab(id: "tab", iconName: "home", text: vm.label, selected: vm.selected,
+                  badge: vm.badge, motionEnabled: false, onClick: vm.activate)
+        MobileNavigationTab(id: "navigation", iconName: "home", text: "Explore",
+                            badgeDot: true, platformStyle: .android, motionEnabled: false)
+    }
+}

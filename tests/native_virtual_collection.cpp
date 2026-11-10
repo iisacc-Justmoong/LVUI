@@ -1,10 +1,24 @@
 #include <LVUI/NativeVirtualCollection.h>
+#include <iiGUI/VirtualViewport.h>
+#include <iiGUI/VirtualCollectionPlanner.h>
+namespace lvui::native {using VirtualViewport=VirtualViewportBinding<ii::gui::BasicVirtualViewport>;}
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
 #include <thread>
 namespace {
 using namespace lvui::native;
+using Planner=VirtualCollectionPlannerBinding<ii::gui::BasicVirtualCollectionPlanner>;
+template<class T>
+auto virtual_collection_frame(const VirtualCollectionSource<T>& source,VirtualCollectionLayout layout,
+                              VirtualViewportState viewport,VirtualAnchor anchor={}){
+    return Planner::frame(source,layout,viewport,std::move(anchor));
+}
+template<class Range,class Key> requires std::ranges::forward_range<const Range>
+auto virtual_collection_frame(const Range& values,Key key,VirtualCollectionLayout layout,
+                              VirtualViewportState viewport,VirtualAnchor anchor={}){
+    return Planner::frame(*virtual_collection_source(values,std::move(key)),layout,viewport,std::move(anchor));
+}
 void check(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 auto data(){std::vector<int> values(1000);std::iota(values.begin(),values.end(),0);return values;}
 auto key=[](int value,std::size_t){return value;};

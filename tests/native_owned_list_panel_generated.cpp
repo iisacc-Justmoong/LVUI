@@ -20,11 +20,25 @@ int main(){
     using View=lvui_generated::NativeOwnedListPanel;
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{240,320}));std::shared_ptr<View::Scope> scope;
-    good(host.set_content([&](auto& builder){return View::build(builder,{},[](auto&){},&scope);}));
+    good(host.set_content([&](auto& builder){return View::build(builder,{},[](auto& state){
+        auto source=take(lvui::ListMemory::create({{.key="a",.label="Alpha"},{.key="b",.label="Beta"},
+            {.key="c",.label="C"},{.key="d",.label="D"},{.key="e",.label="E"},{.key="f",.label="F"},
+            {.key="g",.label="G"},{.key="h",.label="H"},{.key="i",.label="I"}}));
+        state.backend_0.source=source;
+        state.backend_0.controller.set(std::make_shared<lvui::ListController>(take(lvui::ListController::create(source))));
+    },&scope);}));
     (void)take(tree->drawing_snapshot({240,320}));auto row=find(tree,"Alpha"),tool=find(tree,"home"),add=find(tree,"Add file");
     good(row.activate());good(tool.activate());good(add.activate());
     require(scope->backend_0.activations==1&&scope->backend_0.tools==1&&scope->backend_0.footers==1&&take(scope->backend_0.source->snapshot())->revision==0,
             "Generated list lost child actions or changed the source");
+    ii::gui::Widget viewport;for(const auto& node:take(tree->snapshots()))if(node.id.ends_with("/list.list"))viewport=take(tree->find(node.id));
+    auto bounds=take(viewport.snapshot()).bounds;
+    const auto wheel=[&]{good(tree->input({.kind=ii::gui::WidgetInputKind::scroll,.x=bounds.x+10,.y=bounds.y+10,.scroll_y=20}));};
+    scope->backend_0.scrollable.set(false);wheel();
+    require(take(viewport.snapshot()).scroll_offset==0,"Generated list ignored its reactive scroll lock");
+    scope->backend_0.scrollable.set(true);wheel();
+    require(take(viewport.snapshot()).scroll_offset==20,"Generated list did not restore scrolling");
+    good(viewport.set_scroll_offset(0));
     auto item=take(scope->backend_0.source->snapshot())->entries.front();item.label="Updated";
     scope->backend_0.revision.set(std::int64_t(take(scope->backend_0.source->apply({.revision=0,.kind=lvui::ListEditKind::replace,.key="a",.item=item}))));
     auto graph=scope->native_lifetime.lock();require(graph&&take(graph->failures()).empty()&&take(row.action_options()).accessibility_name=="Updated",

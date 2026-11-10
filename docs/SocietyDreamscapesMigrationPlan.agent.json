@@ -1,0 +1,1720 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:783e37776aad5919f36d16d892768ca5480d592262178b50437b4a98b3b0cd0d",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/SocietyDreamscapesMigrationPlan.md",
+    "sha256": "a5975bf67634f2ae50e8de928aa336e0a16ffc1db42da0a557f3bfca819f8dd6",
+    "bytes": 26917,
+    "line_count": 282,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "Society·Dreamscapes의 LVUI 이전 계획",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Society·Dreamscapes의 LVUI 이전 계획\n",
+      "level": 1,
+      "title": "Society·Dreamscapes의 LVUI 이전 계획"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "작성일: 2026-11-07. 이 문서는 현재 작업 공간의 소스와 명세를 읽어 작성한 계획이다.\n앱 실행, 성능 측정, 설치 또는 제품 변경 결과가 아니다. 앱을 이전하기 전에 LVUI와\niiGUI의 부족한 계약을 먼저 완성하고, 제품의 기능과 데이터 의미를 유지한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## 목표와 범위\n",
+      "level": 2,
+      "title": "목표와 범위"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "list",
+      "start_line": 9,
+      "end_line": 20,
+      "raw": "- `.lvui`를 빌드 시 C++23으로 생성하고, LVUI가 소유하는 사용자 정의 위젯을\n  iiGUI의 운영체제 창·입력·그리기 표면에 마운트한다. 소스 해석기나 가상머신을\n  제품 UI 실행 경로에 추가하지 않는다.\n- 두 제품의 동작과 현행 Figma의 LVUI 디자인을 기준으로 상태·레이아웃·키보드·\n  접근성을 이전한다. 화면 변경은 각 제품의 Figma에서 먼저 검토한다. 제품별\n  스타일 토큰이나 LVUI 위젯 오버라이드를 새로 도입하지 않는다.\n- LVUI와 iiGUI를 포함한 SDK에서 iiSDKCore 런타임과 그 공개 의존 계약은 사용할 수\n  있다. 현행 Runtime 패키지는 Contracts와 Observation을 공개 의존성으로 포함한다.\n  그 밖의 SDK 기능 모듈끼리는 직접 의존하지 않으며, 앱 조합 계층에서 인터페이스와\n  플랫폼 서비스를 연결한다. 실제 남아 있는 직접 의존성은 선행 작업으로 관리한다.\n- Qt가 없는 **UI 경로**, Qt가 없는 **앱 전체**, 각 플랫폼의 **실제 실행**을\n  별도 완료 조건으로 둔다. GUI 전환만으로 백엔드의 Qt 의존성이 제거되지는 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`.lvui`를 빌드 시 C++23으로 생성하고, LVUI가 소유하는 사용자 정의 위젯을",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "두 제품의 동작과 현행 Figma의 LVUI 디자인을 기준으로 상태·레이아웃·키보드·",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "LVUI와 iiGUI를 포함한 SDK에서 iiSDKCore 런타임과 그 공개 의존 계약은 사용할 수",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Qt가 없는 **UI 경로**, Qt가 없는 **앱 전체**, 각 플랫폼의 **실제 실행**을",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "## 현재 소스에서 확인한 출발점\n",
+      "level": 2,
+      "title": "현재 소스에서 확인한 출발점"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "table",
+      "start_line": 24,
+      "end_line": 29,
+      "raw": "| 구분 | 관측 | 의미 |\n|---|---|---|\n| Society | `App/Society`의 QML 54개, 약 1.18만 행. 51개가 LVRS를 import한다. | Dashboard·저장소·사진·모델·계정·기기·캘린더·프로젝트·도구를 포함한다. |\n| Dreamscapes | `src/App`의 QML 82개, 약 1.83만 행. 77개가 LVRS를 import한다. | 홈·생성·결과·편집기·타임라인·출판·설정을 포함한다. |\n| 공통 | 두 앱 모두 Qt Quick, Qt Layouts, Controls, 동적 Loader·반복 모델·신호 연결, 파일 선택과 접근성 속성을 사용한다. | 구문과 위젯 이름만 치환해서는 입력·모델·수명·OS 통합이 보존되지 않는다. |\n| LVUI | AOT 컴파일러, 뷰 세션, 반응형 바인딩, 버튼·입력·목록·계층·표·카드·팝업·가상 컬렉션의 독립 구현이 존재한다. | 각 앱에 필요한 속성·이벤트·플랫폼 및 성능 동등성은 별도 검사해야 한다. |\n",
+      "columns": [
+        "구분",
+        "관측",
+        "의미"
+      ],
+      "rows": [
+        [
+          "Society",
+          "`App/Society`의 QML 54개, 약 1.18만 행. 51개가 LVRS를 import한다.",
+          "Dashboard·저장소·사진·모델·계정·기기·캘린더·프로젝트·도구를 포함한다."
+        ],
+        [
+          "Dreamscapes",
+          "`src/App`의 QML 82개, 약 1.83만 행. 77개가 LVRS를 import한다.",
+          "홈·생성·결과·편집기·타임라인·출판·설정을 포함한다."
+        ],
+        [
+          "공통",
+          "두 앱 모두 Qt Quick, Qt Layouts, Controls, 동적 Loader·반복 모델·신호 연결, 파일 선택과 접근성 속성을 사용한다.",
+          "구문과 위젯 이름만 치환해서는 입력·모델·수명·OS 통합이 보존되지 않는다."
+        ],
+        [
+          "LVUI",
+          "AOT 컴파일러, 뷰 세션, 반응형 바인딩, 버튼·입력·목록·계층·표·카드·팝업·가상 컬렉션의 독립 구현이 존재한다.",
+          "각 앱에 필요한 속성·이벤트·플랫폼 및 성능 동등성은 별도 검사해야 한다."
+        ]
+      ]
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 34,
+      "raw": "파일 수와 import 수는 위 두 앱 소스 디렉터리의 정적 텍스트 집계이다. 테스트와\n다른 SDK가 공급하는 외부 QML은 제외되며, 인스턴스 수나 기능 완성도를 의미하지\n않는다. 예를 들어 Society는 계정 화면과 에이전트 질문 화면을, Dreamscapes는\n라이선스 화면과 에이전트 질문 화면을 SDK의 QML 리소스로도 불러온다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 39,
+      "raw": "Dreamscapes의 `Dreamscapes.Style`은 이름만으로 별도 토큰 체계라고 판정하지\n않는다. 현재 [LvuiStyleTokens.cpp](../../../Product/Dreamscapes/src/App/ViewModels/LvuiStyleTokens.cpp)는\nLVUI 토큰을 QML에 노출하는 연결부이며, 화면에는 이 연결부와 기존 `LV.Theme`이\n함께 사용된다. 실제 Figma·LVUI 카탈로그·화면별 적용 값은 이전 전에 대조한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 46,
+      "raw": "Dreamscapes에는 [순수 네이티브 뷰모델](../../../Product/Dreamscapes/cmake/NativeViewModels.cmake)과\n별도의 결과 검토 세션이 이미 있다. 그러나 제품에서 사용 중인 뷰는 여전히 QML이고,\n[결과 그리드 빌드](../../../Product/Dreamscapes/cmake/NativeReviewNavigation.cmake)는\n`FRAMEWORK LVRS`와 `LVRS::LVRS`를 요구한다. 현재 [LVUI AOT CMake](../cmake/LVUIAot.cmake)는\n`iiGUI` 이외의 프레임워크를 거부한다. 따라서 이 소스 조합의 네이티브 기반 구성은\n현재 LVUI로 전환하기 전 정리가 필요하다. 이 문서 작성 시 빌드로 재현하지는 않았다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 47,
+      "end_line": 47,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 48,
+      "end_line": 52,
+      "raw": "현재 LVUI의 [CMake 구성](../CMakeLists.txt)은 Core를 직접 찾고, 선택 기능은\nColorManager·iiGUI·FileProvider·Network·VisualCodec 등을 직접 연결한다.\nCore 런타임 및 그 공개 의존 계약의 사용은 허용된다. 기본 색상 값은 LVUI가\n소유하므로 Native를 쓰기 위해 ColorManager를 찾지 않는다. Core를 제외한 기능\n모듈 사이의 직접 의존성은 제품의 조합 계층으로 옮겨야 한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 58,
+      "raw": "2026-11-07 기준 iiGUI Wayland에는 단일 접점 touch 전달과 장치 제거·다중 접점\n취소가 추가되었다. 다중 접점 제스처와 tablet은 아직 없다. 클립보드 송신은 pipe\n준비 신호와 전송 만료에 따라 대기한다. 현재 LVUI `QueryConnections`의 미완료 구독\n퇴역은 1ms 재검사를 사용하므로 이벤트 기반 완료 통지와 독립적인 구독 포트로\n교체해야 한다. 위 변경만으로 P0·P1 또는 제품 이전 진입 조건이 충족된 것은 아니다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "## 앱 화면과 LVUI의 차이\n",
+      "level": 2,
+      "title": "앱 화면과 LVUI의 차이"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "table",
+      "start_line": 62,
+      "end_line": 71,
+      "raw": "| 화면·기능 | 현재 제품의 중요한 계약 | LVUI 선행 작업과 확인할 점 |\n|---|---|---|\n| 두 앱의 창·내비게이션·설정 | 애플리케이션 메뉴, 여러 창, 닫기 승인, 모바일 뒤로 가기, 안전 영역, 파일 열기와 입력기 | `Application`·Scene·Window 기반은 존재한다. 플랫폼별 메뉴·창·파일 열기·안전 영역과 보조 창 동작을 제품 요구에 맞춰 검증한다. Android 다중 창과 Wayland 전경 등 미지원 조건은 감추지 않는다. |\n| Society 파일·사진·모델 | [FileGridView](../../../Product/Society/App/Society/FileGridView.qml)는 동적 디렉터리 모델, 가상 그리드, 다중 선택, 스크롤 복원과 키보드·메뉴를 사용한다. [PhotosView](../../../Product/Society/App/Society/Photos/PhotosView.qml)는 가시 영역의 사진을 우선한다. | 기존 가상 컬렉션을 활용하되 안정된 키, 행별 변경, 페이징, 65,536개 제한을 넘는 경우, 썸네일 취소·역압·접근성과 보기 상태 복원을 제품 데이터로 확인한다. |\n| Society 캘린더·프로젝트·작업 | [Dashboard](../../../Product/Society/App/Society/Dashboard/Dashboard.qml)는 계정·활성 상태·캘린더·프로젝트 모델을 조합한다. [ModelsView](../../../Product/Society/App/Society/Models/ModelsView.qml)는 작업별 성공·실패·재시도와 체크포인트를 표시한다. | 달력 셀, 날짜·시간대·계정 연결, 계층 선택과 대량 작업의 부분 갱신을 타입 지정 뷰모델로 연결한다. 작업은 화면이 닫혀도 유지하고 재접속 시 영속 상태를 다시 조회한다. |\n| Society 계정·네트워크 | [Main.qml](../../../Product/Society/App/Society/Main.qml)은 계정 뷰, 기기 페어링, 데몬·드라이브 상태와 알림을 조합한다. QR는 현재 `QQuickPaintedItem`이다. | 계정·인증·QR·사진·OS 권한 및 에이전트 질문 UI의 네이티브 경계를 제공한다. Society 앱이 열려 있어야 다른 앱의 라이선스를 확인하는 구조를 다시 만들지 않는다. |\n| Dreamscapes 홈·생성 | [QuickGenerate](../../../Product/Dreamscapes/src/App/Views/Home/QuickGenerate.qml)와 홈은 프롬프트·첨부·작업 큐·이미지 선택·파일 드래그를 사용한다. | 다중행 텍스트·입력기·첨부와 가변 크기, 작업 진행·취소, 파일 선택 및 드래그를 보장한다. 사용자 값은 뷰에서 임의 변경하지 않는다. |\n| Dreamscapes 결과·미디어 | 결과 그리드, 선택·비교·내보내기와 [비디오 재생](../../../Product/Dreamscapes/src/App/Views/Result/ReviewMediaView.qml)이 필요하다. | 기존 NativeReviewSession을 재사용하되 현재 레거시 생성 경로를 LVUI로 바꾸고 실제 작업·썸네일·비교·편집·내보내기와 연결한다. 이미지뿐 아니라 재생·시킹·오디오·오류·종료 계약을 제공한다. |\n| Dreamscapes 캔버스·타임라인 | [EditorCanvas](../../../Product/Dreamscapes/src/App/Views/Editor/EditorCanvas.h)는 Qt용 `CanvasItem`을 상속하며, [CanvasEditor](../../../Product/Dreamscapes/src/App/Views/Editor/CanvasEditor.qml)는 셰이더·드롭·단축키를 사용한다. | 문서·편집 명령을 Qt 없는 뷰모델로 분리하고 iiSharedCanvas의 네이티브 렌더·입력 포트를 앱에서 조합한다. 확대·팬·펜·선택·레이어·Undo·프레임·내보내기와 GPU 자원 수명을 별도로 검증한다. |\n| Dreamscapes 출판·연동 | 출판 초안·미리보기·권리·공개와 MCP/에이전트 명령이 UI 및 Qt 객체와 연결된다. | 초안 저장과 외부 공개를 구별하고, 기존 MCP 인증·스키마·질문 응답·생성 취소를 네이티브 백엔드로 연결한다. 사용자 승인과 기존 서비스 계약을 보존한다. |\n",
+      "columns": [
+        "화면·기능",
+        "현재 제품의 중요한 계약",
+        "LVUI 선행 작업과 확인할 점"
+      ],
+      "rows": [
+        [
+          "두 앱의 창·내비게이션·설정",
+          "애플리케이션 메뉴, 여러 창, 닫기 승인, 모바일 뒤로 가기, 안전 영역, 파일 열기와 입력기",
+          "`Application`·Scene·Window 기반은 존재한다. 플랫폼별 메뉴·창·파일 열기·안전 영역과 보조 창 동작을 제품 요구에 맞춰 검증한다. Android 다중 창과 Wayland 전경 등 미지원 조건은 감추지 않는다."
+        ],
+        [
+          "Society 파일·사진·모델",
+          "[FileGridView](../../../Product/Society/App/Society/FileGridView.qml)는 동적 디렉터리 모델, 가상 그리드, 다중 선택, 스크롤 복원과 키보드·메뉴를 사용한다. [PhotosView](../../../Product/Society/App/Society/Photos/PhotosView.qml)는 가시 영역의 사진을 우선한다.",
+          "기존 가상 컬렉션을 활용하되 안정된 키, 행별 변경, 페이징, 65,536개 제한을 넘는 경우, 썸네일 취소·역압·접근성과 보기 상태 복원을 제품 데이터로 확인한다."
+        ],
+        [
+          "Society 캘린더·프로젝트·작업",
+          "[Dashboard](../../../Product/Society/App/Society/Dashboard/Dashboard.qml)는 계정·활성 상태·캘린더·프로젝트 모델을 조합한다. [ModelsView](../../../Product/Society/App/Society/Models/ModelsView.qml)는 작업별 성공·실패·재시도와 체크포인트를 표시한다.",
+          "달력 셀, 날짜·시간대·계정 연결, 계층 선택과 대량 작업의 부분 갱신을 타입 지정 뷰모델로 연결한다. 작업은 화면이 닫혀도 유지하고 재접속 시 영속 상태를 다시 조회한다."
+        ],
+        [
+          "Society 계정·네트워크",
+          "[Main.qml](../../../Product/Society/App/Society/Main.qml)은 계정 뷰, 기기 페어링, 데몬·드라이브 상태와 알림을 조합한다. QR는 현재 `QQuickPaintedItem`이다.",
+          "계정·인증·QR·사진·OS 권한 및 에이전트 질문 UI의 네이티브 경계를 제공한다. Society 앱이 열려 있어야 다른 앱의 라이선스를 확인하는 구조를 다시 만들지 않는다."
+        ],
+        [
+          "Dreamscapes 홈·생성",
+          "[QuickGenerate](../../../Product/Dreamscapes/src/App/Views/Home/QuickGenerate.qml)와 홈은 프롬프트·첨부·작업 큐·이미지 선택·파일 드래그를 사용한다.",
+          "다중행 텍스트·입력기·첨부와 가변 크기, 작업 진행·취소, 파일 선택 및 드래그를 보장한다. 사용자 값은 뷰에서 임의 변경하지 않는다."
+        ],
+        [
+          "Dreamscapes 결과·미디어",
+          "결과 그리드, 선택·비교·내보내기와 [비디오 재생](../../../Product/Dreamscapes/src/App/Views/Result/ReviewMediaView.qml)이 필요하다.",
+          "기존 NativeReviewSession을 재사용하되 현재 레거시 생성 경로를 LVUI로 바꾸고 실제 작업·썸네일·비교·편집·내보내기와 연결한다. 이미지뿐 아니라 재생·시킹·오디오·오류·종료 계약을 제공한다."
+        ],
+        [
+          "Dreamscapes 캔버스·타임라인",
+          "[EditorCanvas](../../../Product/Dreamscapes/src/App/Views/Editor/EditorCanvas.h)는 Qt용 `CanvasItem`을 상속하며, [CanvasEditor](../../../Product/Dreamscapes/src/App/Views/Editor/CanvasEditor.qml)는 셰이더·드롭·단축키를 사용한다.",
+          "문서·편집 명령을 Qt 없는 뷰모델로 분리하고 iiSharedCanvas의 네이티브 렌더·입력 포트를 앱에서 조합한다. 확대·팬·펜·선택·레이어·Undo·프레임·내보내기와 GPU 자원 수명을 별도로 검증한다."
+        ],
+        [
+          "Dreamscapes 출판·연동",
+          "출판 초안·미리보기·권리·공개와 MCP/에이전트 명령이 UI 및 Qt 객체와 연결된다.",
+          "초안 저장과 외부 공개를 구별하고, 기존 MCP 인증·스키마·질문 응답·생성 취소를 네이티브 백엔드로 연결한다. 사용자 승인과 기존 서비스 계약을 보존한다."
+        ]
+      ]
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "heading",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "## LVUI와 iiGUI 선행 작업\n",
+      "level": 2,
+      "title": "LVUI와 iiGUI 선행 작업"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "### P0. 실제 계약과 빌드 경계 고정\n",
+      "level": 3,
+      "title": "P0. 실제 계약과 빌드 경계 고정"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "list",
+      "start_line": 77,
+      "end_line": 92,
+      "raw": "1. 각 화면의 필수 상태, 명령, 서비스, 오류, 접근성, 키보드, 모바일 크기와\n   파일·계정 권한을 표로 고정한다. 위젯별로 `구현`, `부분 구현`, `미구현`,\n   `소스만`, `대상 OS 실행 확인`을 구분하고 기존 QML 검사와 대응시킨다.\n2. Dreamscapes 결과 검토의 `FRAMEWORK LVRS`와 LVRS 전용 타입을 현재 LVUI\n   모델·가상 컬렉션으로 대체할 수 있도록 SDK 컴포넌트와 테스트 계약을 먼저\n   정리한다. 기존의 순수 뷰모델은 별도로 빌드 가능하게 유지한다.\n3. LVUI 공개 헤더·CMake·생성 C++·선택 기능의 직접 SDK 의존성을 목록화하고,\n   허용된 Core 런타임을 제외한 iiGUI·이미지·색상·저장소 연결을 앱이 주입하는\n   포트로 분리한다. 큐 포화 시 완료 이벤트가 유실되지 않는 예약·재개·취소 장벽도 포함한다.\n4. 기존 Society 세션 전체 검사의 300초 시간 초과는\n   [반응형 감사](../../docs/ReactiveRuntimeAudit.md)에 기록된 미완료 사항이다.\n   Core API 사용 자체와 별개로 이벤트 누락 복구·수명·취소·폴링 금지 위반은\n   유지보수해야 한다. 과거 검사 실패를 현재 통과한 것으로 간주하지 않는다.\n   현재 작업 공간의 iiSocietyHelper 0.12는 상태 API와 ABI가 바뀌었으므로 두 앱,\n   컴파일러와 설치 소비자가 실제로 사용하는 SDK 버전·라이브러리를 함께 고정하고\n   구버전 설치본과 새 헤더를 섞어 회귀를 판정하지 않는다.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "각 화면의 필수 상태, 명령, 서비스, 오류, 접근성, 키보드, 모바일 크기와",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "Dreamscapes 결과 검토의 `FRAMEWORK LVRS`와 LVRS 전용 타입을 현재 LVUI",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "LVUI 공개 헤더·CMake·생성 C++·선택 기능의 직접 SDK 의존성을 목록화하고,",
+          "checked": null
+        },
+        {
+          "marker": "4.",
+          "text": "기존 Society 세션 전체 검사의 300초 시간 초과는",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "heading",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "### P1. 언어·상태·수명\n",
+      "level": 3,
+      "title": "P1. 언어·상태·수명"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "list",
+      "start_line": 96,
+      "end_line": 105,
+      "raw": "- QML의 `required property`, alias, 바인딩, 이벤트 인자, `Connections`, 동적\n  `Loader`·반복 항목, 조건부 View와 C++ 모델 경계를 제품 사례로 대조한다.\n  현재 뷰 세션은 상태·타입 지정 쿼리를 지원하지만 임의 컨트롤 이벤트 인자를\n  이름으로 읽는 일반 구문은 제한된다. 누락 표현은 컴파일 오류로 드러낸다.\n- 객체·구독은 앱/창/뷰 세션에 명확히 소유시키고, 중복 활성화·늦은 응답·뷰\n  파괴 중 콜백·비동기 취소와 `revision`/`gap` 뒤 재조회 경로를 검증한다.\n  UI 실행기 밖의 작업은 비동기로 완료를 전달한다.\n- 반복 모델은 안정된 ID와 범위별 삽입·삭제·변경을 사용하고, 일상적인 선택·진행\n  변경이 전체 컬렉션을 다시 그리거나 저장소를 다시 훑지 않도록 한다. 프레임은\n  재생·모션·활성 편집 중에만 호스트 프레임 시계로 구동한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "QML의 `required property`, alias, 바인딩, 이벤트 인자, `Connections`, 동적",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "객체·구독은 앱/창/뷰 세션에 명확히 소유시키고, 중복 활성화·늦은 응답·뷰",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "반복 모델은 안정된 ID와 범위별 삽입·삭제·변경을 사용하고, 일상적인 선택·진행",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 106,
+      "end_line": 106,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 107,
+      "end_line": 107,
+      "raw": "### P2. 공통 위젯과 플랫폼 서비스\n",
+      "level": 3,
+      "title": "P2. 공통 위젯과 플랫폼 서비스"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "list",
+      "start_line": 109,
+      "end_line": 122,
+      "raw": "- 두 앱의 빈도와 실제 화면 계약을 기준으로 Label·버튼·아이콘·InputField·\n  ComboBox·Slider·탭·메뉴·Sheet·모달·카드·목록·그리드·계층·표를 먼저\n  완성한다. 컴포넌트 이름이 카탈로그에 있다는 사실은 해당 입력과 동작의 완성을\n  뜻하지 않는다. [컴파일 범위](NativeCompilerCoverage.md)의 `TextEditor`, 모바일\n  탭과 입력기 가드 등 미완료 항목을 제품 요구에 맞춰 해결한다.\n- 긴 프롬프트와 편집에는 다중행·선택·복사·실행 취소·Unicode/IME·접근성을\n  검증한다. 현재 InputField는 크기와 플랫폼별 입력기 제한이 있으므로 모든\n  `TextEditor`를 동일한 필드 하나로 대체하지 않는다.\n- 파일 열기/저장 대화상자, 드래그 앤 드롭, 클립보드, 카메라·사진 권한, 외부\n  링크, QR, 공유와 앱 메뉴는 교체 가능한 OS 포트로 연결한다. 파일의 실제 생성과\n  제공은 iiFileProvider가 담당한다. 비동기 취소와 권한 거부를 정상 상태로 다룬다.\n- Wayland는 기본 Linux 호스트이다. 현재 호스트 문서는 다중 접점 제스처·태블릿·DnD·\n  fractional scale·activation token 공백을 명시한다. 웹은 AOT WASM이지만\n  현재 파일 핸들·IME·접근성·보조 창에 제한이 있으므로 제품 지원을 별도 결정한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "두 앱의 빈도와 실제 화면 계약을 기준으로 Label·버튼·아이콘·InputField·",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "긴 프롬프트와 편집에는 다중행·선택·복사·실행 취소·Unicode/IME·접근성을",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "파일 열기/저장 대화상자, 드래그 앤 드롭, 클립보드, 카메라·사진 권한, 외부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Wayland는 기본 Linux 호스트이다. 현재 호스트 문서는 다중 접점 제스처·태블릿·DnD·",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "heading",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "### P3. 대량 미디어·캔버스·재생\n",
+      "level": 3,
+      "title": "P3. 대량 미디어·캔버스·재생"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "list",
+      "start_line": 126,
+      "end_line": 133,
+      "raw": "- 가상 그리드와 계층의 정체성, 부분 갱신, 미리보기 캐시·취소·메모리 예산,\n  비동기 디코딩과 색상 관리를 실제 Society/Dreamscapes 데이터 크기로 확인한다.\n- iiSharedCanvas 문서·편집 로직과 렌더 표면을 분리하고, iiGUI/플랫폼 포트를\n  앱 조합 계층에서 주입한다. 포인터·펜·터치·줌·회전·고DPI, 레이어·마스크,\n  색상, GPU device loss 및 저장 중 종료를 다룬다.\n- 비디오·오디오·카메라는 OS별 교체 가능한 미디어 포트로 취급한다. 파일이나\n  모델을 UI에서 직접 복사해 관리하지 않는다. 하드웨어 가속은 실제 선택된 백엔드와\n  대상 장치에서 확인하며, 프레임 타이밍과 비활성 시 자원 해제를 검사한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "가상 그리드와 계층의 정체성, 부분 갱신, 미리보기 캐시·취소·메모리 예산,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "iiSharedCanvas 문서·편집 로직과 렌더 표면을 분리하고, iiGUI/플랫폼 포트를",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "비디오·오디오·카메라는 OS별 교체 가능한 미디어 포트로 취급한다. 파일이나",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 134,
+      "end_line": 134,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 135,
+      "end_line": 137,
+      "raw": "**제품 이전 진입 조건:** 해당 화면이 쓰는 LVUI 계약·호스트 능력·Qt 없는\n컴파일/링크·자동 테스트·설치 소비자 검증이 먼저 통과하고, 남은 플랫폼 제약이\n명시되어 있어야 한다. 아직 존재하지 않는 기능을 빈 위젯이나 폴링 대체로 숨기지 않는다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 138,
+      "end_line": 138,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "heading",
+      "start_line": 139,
+      "end_line": 139,
+      "raw": "## 제품별 이전 순서\n",
+      "level": 2,
+      "title": "제품별 이전 순서"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 140,
+      "end_line": 140,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "list",
+      "start_line": 141,
+      "end_line": 160,
+      "raw": "1. **대표 경계 검증:** Society의 캘린더 소형 뷰와 Dreamscapes의 결과 그리드를\n   별도 테스트 구성에서 작성한다. 동등한 입력·데이터로 현행 뷰모델과 결과를\n   비교하고, 실제 제품 화면이라고 주장하지 않는다.\n2. **Society 기본 경로:** 앱 창·온보딩·계정·설정과 Dashboard를 연결한다.\n   이어 파일/모델/사진 그리드, 검색·필터·미리보기, 작업 이력·재시도, 캘린더와\n   프로젝트를 순서대로 옮긴다. 자원 ID, 내용/메타데이터 판본, 위치·복제본,\n   권한과 Job의 의미를 유지한다.\n3. **Society 서비스 경로:** 로컬 데몬, 라이선스·인증, 기기 발견·연결·권한 철회,\n   오프라인·재접속·이벤트 누락 복구를 연결한다. 오래된 캐시와 진행 중 작업을\n   파괴하거나 다른 컨테이너로 연결하지 않는다.\n4. **Dreamscapes 생성 경로:** 홈·프롬프트·모델/옵션·첨부와 작업 큐, 결과\n   그리드·미디어 재생·비교·내보내기를 연결한다. 기존 Native 뷰모델과 결과\n   세션을 우선 재사용하고 Qt 변환 래퍼만 제거 가능한 경계에서 제거한다.\n5. **Dreamscapes 편집 경로:** 캔버스·도구·레이어·문서·타임라인·사진/카메라,\n   출판과 에이전트/MCP 연결을 기능 단위로 이전한다. 저장 형식, 작업 세션,\n   Undo/Redo와 미완료 생성 작업이 이전 전후에 동일해야 한다.\n6. **제품 전환:** 두 구현을 비교하는 기간에는 별도 테스트/빌드 구성으로 분리하고\n   실제 저장소에 두 쓰기 주체를 동시에 붙이지 않는다. 기능별 회귀와 데이터 복구\n   조건이 충족된 뒤 제품 진입점을 전환한다. 최종 산출물에는 QML 엔진, LVRS,\n   Qt GUI 및 과도기 어댑터를 남기지 않는다.\n",
+      "items": [
+        {
+          "marker": "1.",
+          "text": "**대표 경계 검증:** Society의 캘린더 소형 뷰와 Dreamscapes의 결과 그리드를",
+          "checked": null
+        },
+        {
+          "marker": "2.",
+          "text": "**Society 기본 경로:** 앱 창·온보딩·계정·설정과 Dashboard를 연결한다.",
+          "checked": null
+        },
+        {
+          "marker": "3.",
+          "text": "**Society 서비스 경로:** 로컬 데몬, 라이선스·인증, 기기 발견·연결·권한 철회,",
+          "checked": null
+        },
+        {
+          "marker": "4.",
+          "text": "**Dreamscapes 생성 경로:** 홈·프롬프트·모델/옵션·첨부와 작업 큐, 결과",
+          "checked": null
+        },
+        {
+          "marker": "5.",
+          "text": "**Dreamscapes 편집 경로:** 캔버스·도구·레이어·문서·타임라인·사진/카메라,",
+          "checked": null
+        },
+        {
+          "marker": "6.",
+          "text": "**제품 전환:** 두 구현을 비교하는 기간에는 별도 테스트/빌드 구성으로 분리하고",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 161,
+      "end_line": 161,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "heading",
+      "start_line": 162,
+      "end_line": 162,
+      "raw": "## 검증과 완료 판정\n",
+      "level": 2,
+      "title": "검증과 완료 판정"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "list",
+      "start_line": 164,
+      "end_line": 184,
+      "raw": "- **설계:** 각 화면의 Figma 컴포넌트·토큰·상태와 구현을 대조한다. 제품별 사용자\n  위젯 재정의 대신 공통 LVUI를 수정하고 두 제품의 회귀를 함께 확인한다.\n- **행동:** 기존 테스트의 의미와 시간 제한을 유지한 채 뷰모델·AOT·위젯·통합\n  검사를 작성한다. 로그인·데몬 부재, 권한 거부, 파일 이동·복제, 작업 중 앱\n  재시작, 실패 항목 재시도, 알림 유실, 화면 취소·파괴를 포함한다.\n- **대용량과 성능:** 파일·사진·결과·레이어의 실제 크기별 기준선을 먼저 재고,\n  입력 지연·가시 행 수·디코딩·메모리·유휴 깨움·프레임 누락을 같은 장치와\n  같은 데이터에서 비교한다. 허용치는 측정 전 기능별로 합의하고, 근거 없이\n  현재보다 빠르다고 주장하지 않는다.\n- **플랫폼:** macOS/Cocoa·Metal, Windows/Win32·D3D11 또는 지원 Vulkan,\n  Linux/Wayland·Vulkan, iOS/UIKit·Metal, Android/NativeActivity·Vulkan의\n  빌드·설치·입력·접근성·실행을 각각 기록한다. Web은 별도 제품 요구와 보안·\n  저장소 제약이 해결된 경우에만 WASM으로 검증한다. 소스 이식·교차 빌드와\n  실기기 동작을 구분한다.\n- **패키지:** 호스트용 AOT 컴파일러와 대상용 런타임의 버전을 일치시키고,\n  재배치된 설치 소비자에서 생성·컴파일·링크한다. CMake, 공개 헤더, 바이너리와\n  런타임에 선택되는 플러그인을 조사해 Qt/QML·LVRS와 금지된 SDK 간 직접\n  의존성이 최종 대상에 없는지 확인한다.\n- **배포:** 새 제품의 동일한 데이터 접근·파일 열기·권한·라이선스·업데이트를\n  검증한 뒤 설치와 실행 검증을 별도로 수행한다. 실제 앱 실행은 해당 작업에서\n  명시적으로 요청된 경우에만 마지막 검증 단계에서 수행한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "**설계:** 각 화면의 Figma 컴포넌트·토큰·상태와 구현을 대조한다. 제품별 사용자",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**행동:** 기존 테스트의 의미와 시간 제한을 유지한 채 뷰모델·AOT·위젯·통합",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**대용량과 성능:** 파일·사진·결과·레이어의 실제 크기별 기준선을 먼저 재고,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**플랫폼:** macOS/Cocoa·Metal, Windows/Win32·D3D11 또는 지원 Vulkan,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**패키지:** 호스트용 AOT 컴파일러와 대상용 런타임의 버전을 일치시키고,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "**배포:** 새 제품의 동일한 데이터 접근·파일 열기·권한·라이선스·업데이트를",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 185,
+      "end_line": 185,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "heading",
+      "start_line": 186,
+      "end_line": 186,
+      "raw": "## 2026-11-07 비용 재산정: Core 런타임 허용\n",
+      "level": 2,
+      "title": "2026-11-07 비용 재산정: Core 런타임 허용"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 187,
+      "end_line": 187,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 188,
+      "end_line": 194,
+      "raw": "다음은 현재 소스의 정적 조사와 작업 분해에 따른 초기 계획값이다. 실제 이 프로젝트의\n유사 작업 속도, 인건비, 인력 구성, 플랫폼별 수용 기준을 아직 반영하지 못했으므로\n견적이나 신뢰수준이 확인된 통계 예측이 아니다. 낮음·계획·높음은 각각 작업 항목의\n판단 범위를 더한 시나리오이며 P50·P90이나 확정 상한을 뜻하지 않는다. 항목 사이\n위험이 함께 커질 수도 있다. 전제와 불확실성을 명시하고 실적에 따라 갱신하는 방식은\n[미국 GAO 비용 추정 지침](https://www.gao.gov/assets/gao-20-195g.pdf)과\n[NASA 소프트웨어 비용 추정 지침](https://swehb.nasa.gov/pages/viewpage.action?navigatingVersions=true&pageId=16777319)의 원칙을 참고했다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 195,
+      "end_line": 195,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "heading",
+      "start_line": 196,
+      "end_line": 196,
+      "raw": "### 산정 경계와 현재 크기\n",
+      "level": 3,
+      "title": "산정 경계와 현재 크기"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 197,
+      "end_line": 197,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "list",
+      "start_line": 198,
+      "end_line": 219,
+      "raw": "- 한 인일은 관련 개발·코드 검토·해당 항목의 단위 검사를 수행하는 사람 한 명의\n  8시간 작업량이다. 휴가, 다른 프로젝트 배정과 대기 시간은 달력 일정에서 따로 다룬다.\n- 기본 목표는 현재 기능과 디자인의 유지, LVUI의 C++23 AOT 출력, iiGUI 네이티브\n  호스트, 그리고 macOS·Windows·Linux/Wayland의 데스크톱 빌드와 기능 검증이다.\n  Figma 현행 디자인 대조는 포함하되 새 화면 디자인이나 제품 기능 확대는 포함하지 않는다.\n- UI 이전 단계는 QML·Qt Quick·LVRS에 의존하는 UI 경로를 제거하는 범위이다.\n  백엔드에 QtCore·QtNetwork 또는 다른 Qt 라이브러리가 남아 바이너리에 링크될 수 있다.\n  앱과 필수 SDK 의존성 폐쇄에서 Qt를 완전히 제거하는 비용은 별도 행으로 더한다.\n- iiSDKCore `Runtime`과 현재 그 공개 의존성인 `Contracts`·`Observation`은 허용한다.\n  다른 SDK 간 직접 의존성은 여전히 금지하며 앱 조합 계층에서 연결한다. 기존 Core\n  호출을 다른 구현으로 갈아엎는 비용은 포함하지 않는다. 구독 취소·수명, 이벤트\n  누락 복구 및 불필요한 폴링 제거는 별도로 수행해야 한다.\n- 2026-11-07 작업 트리에서 `App/Society`의 QML은 54개·11,767행이며, 51개가\n  LVRS를 import한다. `src/App`의 Dreamscapes QML은 82개·18,237행이며 77개가\n  LVRS를 import한다. 이 집계는 SDK가 공급하는 외부 QML을 제외한다.\n- 같은 경로의 `.cpp`·`.h`·`.mm` 중 `tst_` 파일명을 제외한 정적 검색에서\n  `Q_OBJECT`가 포함된 파일은 Society 26개, Dreamscapes 57개였다. `QQuick` 또는\n  `QQml` 이름이 포함된 파일은 각각 6개와 19개였다. 주석과 다중 선언을 구분하지\n  않는 텍스트 지표이므로 클래스 수, 화면 수 또는 선형적인 작업량으로 취급하지 않는다.\n- 파일·그리드·대용량 목록, 생성·결과·캔버스·타임라인과 계정·공유 경로를 포함한다.\n  현재 서비스·데이터 형식·권한·파일 제공자·Job 의미는 보존한다. 앱에서 실제로\n  사용하는 외부 SDK QML 화면도 범위에 두되, SDK 전체를 일괄 재작성하지 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "한 인일은 관련 개발·코드 검토·해당 항목의 단위 검사를 수행하는 사람 한 명의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "기본 목표는 현재 기능과 디자인의 유지, LVUI의 C++23 AOT 출력, iiGUI 네이티브",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "UI 이전 단계는 QML·Qt Quick·LVRS에 의존하는 UI 경로를 제거하는 범위이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "iiSDKCore `Runtime`과 현재 그 공개 의존성인 `Contracts`·`Observation`은 허용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "2026-11-07 작업 트리에서 `App/Society`의 QML은 54개·11,767행이며, 51개가",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "같은 경로의 `.cpp`·`.h`·`.mm` 중 `tst_` 파일명을 제외한 정적 검색에서",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "파일·그리드·대용량 목록, 생성·결과·캔버스·타임라인과 계정·공유 경로를 포함한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 220,
+      "end_line": 220,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "heading",
+      "start_line": 221,
+      "end_line": 221,
+      "raw": "### 작업 분해와 인일\n",
+      "level": 3,
+      "title": "작업 분해와 인일"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 222,
+      "end_line": 222,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "table",
+      "start_line": 223,
+      "end_line": 238,
+      "raw": "| 구간 | 낮음 | 계획 | 높음 | 포함 범위 |\n|---|---:|---:|---:|---|\n| 기능·디자인 기준선과 대표 경계 | 8 | 12 | 18 | 두 앱의 필수 동작, Figma 대조, 취소·복구·성능 기준과 대표 뷰 |\n| 공통 LVUI 보강 | 22 | 35 | 55 | 텍스트 편집·입력기, 뷰 입력·이벤트, 가상 컬렉션과 접근성 공백 |\n| iiGUI 데스크톱 호스트 보강 | 18 | 30 | 48 | Wayland DnD·배율 등과 세 OS의 입력·파일·창·접근성 연결 |\n| 모듈 경계와 반응형 수명 | 12 | 20 | 30 | Core 이외 SDK 포트, 쿼리 종료의 1ms 재검사, 취소·누락 복구 |\n| Society 제품 이전 | 40 | 65 | 95 | 창·계정·파일·사진·모델·캘린더·프로젝트·데몬과 Job UI |\n| Dreamscapes 생성·결과 | 30 | 45 | 70 | 프롬프트·옵션·작업 큐·결과·미디어·내보내기 |\n| Dreamscapes 캔버스·타임라인 | 40 | 60 | 95 | 입력·편집·레이어·프레임·Undo/Redo·렌더 표면 |\n| Dreamscapes 출판·계정·에이전트 | 12 | 20 | 30 | 게시 초안·권한·MCP와 기존 기능 연결 |\n| 데스크톱 제품 간 최종 검증 | 20 | 35 | 55 | 세 OS의 전체 경로·설치·데이터·성능·회귀 및 전환 검증 |\n| **두 앱 UI 이전 합계** | **202** | **322** | **496** | 공통 기반은 두 앱에 한 번만 계상 |\n| 앱과 필수 SDK의 Qt 완전 제거 추가 | +45 | +80 | +150 | Qt 기반 비 UI 모델·입출력·타 필수 라이브러리의 대체 및 의존성 폐쇄 확인 |\n| **세 데스크톱의 Qt 없는 두 앱** | **247** | **402** | **646** | 위 두 행의 합 |\n| iOS·Android 추가 | +45 | +80 | +140 | 모바일 창·안전 영역·권한·입력·서비스 수명과 기기 검증 |\n| **다섯 OS의 Qt 없는 두 앱** | **292** | **482** | **786** | 세 데스크톱과 모바일 추가의 합 |\n",
+      "columns": [
+        "구간",
+        "낮음",
+        "계획",
+        "높음",
+        "포함 범위"
+      ],
+      "rows": [
+        [
+          "기능·디자인 기준선과 대표 경계",
+          "8",
+          "12",
+          "18",
+          "두 앱의 필수 동작, Figma 대조, 취소·복구·성능 기준과 대표 뷰"
+        ],
+        [
+          "공통 LVUI 보강",
+          "22",
+          "35",
+          "55",
+          "텍스트 편집·입력기, 뷰 입력·이벤트, 가상 컬렉션과 접근성 공백"
+        ],
+        [
+          "iiGUI 데스크톱 호스트 보강",
+          "18",
+          "30",
+          "48",
+          "Wayland DnD·배율 등과 세 OS의 입력·파일·창·접근성 연결"
+        ],
+        [
+          "모듈 경계와 반응형 수명",
+          "12",
+          "20",
+          "30",
+          "Core 이외 SDK 포트, 쿼리 종료의 1ms 재검사, 취소·누락 복구"
+        ],
+        [
+          "Society 제품 이전",
+          "40",
+          "65",
+          "95",
+          "창·계정·파일·사진·모델·캘린더·프로젝트·데몬과 Job UI"
+        ],
+        [
+          "Dreamscapes 생성·결과",
+          "30",
+          "45",
+          "70",
+          "프롬프트·옵션·작업 큐·결과·미디어·내보내기"
+        ],
+        [
+          "Dreamscapes 캔버스·타임라인",
+          "40",
+          "60",
+          "95",
+          "입력·편집·레이어·프레임·Undo/Redo·렌더 표면"
+        ],
+        [
+          "Dreamscapes 출판·계정·에이전트",
+          "12",
+          "20",
+          "30",
+          "게시 초안·권한·MCP와 기존 기능 연결"
+        ],
+        [
+          "데스크톱 제품 간 최종 검증",
+          "20",
+          "35",
+          "55",
+          "세 OS의 전체 경로·설치·데이터·성능·회귀 및 전환 검증"
+        ],
+        [
+          "**두 앱 UI 이전 합계**",
+          "**202**",
+          "**322**",
+          "**496**",
+          "공통 기반은 두 앱에 한 번만 계상"
+        ],
+        [
+          "앱과 필수 SDK의 Qt 완전 제거 추가",
+          "+45",
+          "+80",
+          "+150",
+          "Qt 기반 비 UI 모델·입출력·타 필수 라이브러리의 대체 및 의존성 폐쇄 확인"
+        ],
+        [
+          "**세 데스크톱의 Qt 없는 두 앱**",
+          "**247**",
+          "**402**",
+          "**646**",
+          "위 두 행의 합"
+        ],
+        [
+          "iOS·Android 추가",
+          "+45",
+          "+80",
+          "+140",
+          "모바일 창·안전 영역·권한·입력·서비스 수명과 기기 검증"
+        ],
+        [
+          "**다섯 OS의 Qt 없는 두 앱**",
+          "**292**",
+          "**482**",
+          "**786**",
+          "세 데스크톱과 모바일 추가의 합"
+        ]
+      ]
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 239,
+      "end_line": 239,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 240,
+      "end_line": 243,
+      "raw": "공통 구간에는 각 기능의 단위 검사, 제품 구간에는 해당 화면과 뷰모델의 집중 검사를\n포함한다. 마지막 데스크톱 검증은 여러 화면을 잇는 사용 경로·패키지·플랫폼 검증만\n담으며 같은 단위 검사를 다시 공수로 더하지 않는다. Society의 계획값 65인일과\nDreamscapes의 계획값 125인일은 각각 제품 전용 구간이며 공통 구간을 두 번 청구하지 않는다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 244,
+      "end_line": 244,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 245,
+      "end_line": 252,
+      "raw": "Qt 완전 제거 추가분은 두 앱이 실제로 요구하는 SDK 의존성 폐쇄가 위 범위에서\n처리 가능하다는 가정의 잠정치이다. 모든 SDK의 전체 Qt 제거 비용은 포함하지 않는다.\n전체 의존성 그래프와 실제 실행 패키지를 아직 확인하지 않았으므로 이 행의 높은 값도\n상한이 아니다. iOS·Android 추가분은 해당 플랫폼의 모델 추론·미디어·저장 서비스와\n권한이 실제로 제공되고, 데스크톱 전용 데몬이나 드라이브 기능은 OS가 허용하는 제품\n경로로 설계할 수 있다는 가정이다. 모바일에서 데스크톱과 동일한 시스템 권한이나\n상주 동작을 약속하지 않는다. Web/WASM은 포함하지 않으며 브라우저 파일 권한·모델\n실행·메모리·접근성의 별도 타당성 평가가 필요하다.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 253,
+      "end_line": 253,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "heading",
+      "start_line": 254,
+      "end_line": 254,
+      "raw": "### Core 허용의 영향\n",
+      "level": 3,
+      "title": "Core 허용의 영향"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 255,
+      "end_line": 255,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 256,
+      "end_line": 262,
+      "raw": "기존 이전 계획에는 인일 기준 비용이 기재되지 않았으므로 과거 견적 대비 실제\n절감액이나 확정된 절감률은 계산할 수 없다. 비교를 위해 Core 런타임까지 분리한다고\n가정하면 iiGUI 호스트·실행기 경계 10~20인일, LVUI 바인딩·쿼리와 생성 코드 경계\n15~30인일, 패키지·소비자 전환 5~10인일, 합계 약 **30~60인일**이 추가되는\n초기 판단이다. 이 수치는 비교를 위해 새로 설정한 저신뢰 반사실적 추정이며 실측이\n아니다. 위 표에서는 이 추가분을 계상하지 않는다. 기존 코드의 1ms 재검사, 이벤트\n유실·취소·수명과 Core 이외 모듈 간 직접 결합은 여전히 표에 포함한다.\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 263,
+      "end_line": 263,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "heading",
+      "start_line": 264,
+      "end_line": 264,
+      "raw": "### 일정과 금액 산정 방법\n",
+      "level": 3,
+      "title": "일정과 금액 산정 방법"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 265,
+      "end_line": 265,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 266,
+      "end_line": 270,
+      "raw": "숙련된 C++/플랫폼·LVUI·Society·Dreamscapes 담당 네 명이 각각 근무일의 75%를\n이 작업에 투입하고 한 달을 20근무일로 보면, 계획값 402인일은 단순 나눗셈으로\n약 6.7개월, 다섯 OS 계획값 482인일은 약 8.0개월이다. 플랫폼 선행 조건과 통합\n직렬 구간을 감안한 초기 일정 가정은 각각 약 8~11개월, 10~14개월이다. 이는 팀\n구성·숙련도·병렬성·결함과 대기 시간을 실측한 일정이 아니다.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 271,
+      "end_line": 271,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "paragraph",
+      "start_line": 272,
+      "end_line": 278,
+      "raw": "실질 투입 인일당 비용을 `R`로 정하면 세 데스크톱의 전체 Qt 제거 개발비 계획값은\n`402 × R`, 다섯 OS는 `482 × R`이다. `R`에는 급여·복리후생·간접비와 비가동률을\n어떻게 반영했는지 명시해야 한다. 순전히 계산 예시로 `R = USD 500`이면 계획값은\n각각 USD 201,000과 USD 241,000이다. 이는 실제 단가나 시장 가격이 아니다. 기기·CI·\n외부 서비스·라이선스·앱스토어 비용·세금·지원 및 제품 지연에 따른 기회비용은 별도이다.\n자동화 에이전트의 처리량과 검토 비용도 측정되지 않았으므로 사람 인일을 모델 호출\n시간이나 비용으로 환산하지 않는다.\n"
+    },
+    {
+      "id": "b000080",
+      "kind": "blank",
+      "start_line": 279,
+      "end_line": 279,
+      "raw": "\n"
+    },
+    {
+      "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 280,
+      "end_line": 282,
+      "raw": "먼저 Society 캘린더 및 Dreamscapes 결과 그리드의 수직 경로에서 같은 입력·기능·\n테스트로 작업량과 결함을 측정하고, 그 실적과 앱별 SDK 의존성 폐쇄를 반영해 위 표를\n갱신한다. 대표 경로 비용은 이미 각 공통·제품 구간에 포함되어 별도 가산하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Society·Dreamscapes의 LVUI 이전 계획",
+      "anchor": "societydreamscapes의-lvui-이전-계획",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "목표와 범위",
+      "anchor": "목표와-범위",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "현재 소스에서 확인한 출발점",
+      "anchor": "현재-소스에서-확인한-출발점",
+      "start_line": 22
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "앱 화면과 LVUI의 차이",
+      "anchor": "앱-화면과-lvui의-차이",
+      "start_line": 60
+    },
+    {
+      "block_id": "b000027",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "LVUI와 iiGUI 선행 작업",
+      "anchor": "lvui와-iigui-선행-작업",
+      "start_line": 73
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000027",
+      "level": 3,
+      "title": "P0. 실제 계약과 빌드 경계 고정",
+      "anchor": "p0-실제-계약과-빌드-경계-고정",
+      "start_line": 75
+    },
+    {
+      "block_id": "b000033",
+      "parent_id": "b000027",
+      "level": 3,
+      "title": "P1. 언어·상태·수명",
+      "anchor": "p1-언어상태수명",
+      "start_line": 94
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000027",
+      "level": 3,
+      "title": "P2. 공통 위젯과 플랫폼 서비스",
+      "anchor": "p2-공통-위젯과-플랫폼-서비스",
+      "start_line": 107
+    },
+    {
+      "block_id": "b000041",
+      "parent_id": "b000027",
+      "level": 3,
+      "title": "P3. 대량 미디어·캔버스·재생",
+      "anchor": "p3-대량-미디어캔버스재생",
+      "start_line": 124
+    },
+    {
+      "block_id": "b000047",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "제품별 이전 순서",
+      "anchor": "제품별-이전-순서",
+      "start_line": 139
+    },
+    {
+      "block_id": "b000051",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증과 완료 판정",
+      "anchor": "검증과-완료-판정",
+      "start_line": 162
+    },
+    {
+      "block_id": "b000055",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "2026-11-07 비용 재산정: Core 런타임 허용",
+      "anchor": "2026-11-07-비용-재산정-core-런타임-허용",
+      "start_line": 186
+    },
+    {
+      "block_id": "b000059",
+      "parent_id": "b000055",
+      "level": 3,
+      "title": "산정 경계와 현재 크기",
+      "anchor": "산정-경계와-현재-크기",
+      "start_line": 196
+    },
+    {
+      "block_id": "b000063",
+      "parent_id": "b000055",
+      "level": 3,
+      "title": "작업 분해와 인일",
+      "anchor": "작업-분해와-인일",
+      "start_line": 221
+    },
+    {
+      "block_id": "b000071",
+      "parent_id": "b000055",
+      "level": 3,
+      "title": "Core 허용의 영향",
+      "anchor": "core-허용의-영향",
+      "start_line": 254
+    },
+    {
+      "block_id": "b000075",
+      "parent_id": "b000055",
+      "level": 3,
+      "title": "일정과 금액 산정 방법",
+      "anchor": "일정과-금액-산정-방법",
+      "start_line": 264
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 11,
+        "text": "제품 UI 실행 경로에 추가하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000007",
+        "line": 14,
+        "text": "스타일 토큰이나 LVUI 위젯 오버라이드를 새로 도입하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000011",
+        "line": 29,
+        "text": "| LVUI | AOT 컴파일러, 뷰 세션, 반응형 바인딩, 버튼·입력·목록·계층·표·카드·팝업·가상 컬렉션의 독립 구현이 존재한다. | 각 앱에 필요한 속성·이벤트·플랫폼 및 성능 동등성은 별도 검사해야 한다. |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000021",
+        "line": 58,
+        "text": "교체해야 한다. 위 변경만으로 P0·P1 또는 제품 이전 진입 조건이 충족된 것은 아니다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 68,
+        "text": "| Dreamscapes 홈·생성 | [QuickGenerate](../../../Product/Dreamscapes/src/App/Views/Home/QuickGenerate.qml)와 홈은 프롬프트·첨부·작업 큐·이미지 선택·파일 드래그를 사용한다. | 다중행 텍스트·입력기·첨부와 가변 크기, 작업 진행·취소, 파일 선택 및 드래그를 보장한다. 사용자 값은 뷰에서 임의 변경하지 않는다. |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000031",
+        "line": 77,
+        "text": "1. 각 화면의 필수 상태, 명령, 서비스, 오류, 접근성, 키보드, 모바일 크기와",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000031",
+        "line": 88,
+        "text": "Core API 사용 자체와 별개로 이벤트 누락 복구·수명·취소·폴링 금지 위반은",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000031",
+        "line": 89,
+        "text": "유지보수해야 한다. 과거 검사 실패를 현재 통과한 것으로 간주하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000031",
+        "line": 92,
+        "text": "구버전 설치본과 새 헤더를 섞어 회귀를 판정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000035",
+        "line": 96,
+        "text": "- QML의 `required property`, alias, 바인딩, 이벤트 인자, `Connections`, 동적",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000039",
+        "line": 112,
+        "text": "뜻하지 않는다. [컴파일 범위](NativeCompilerCoverage.md)의 `TextEditor`, 모바일",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000039",
+        "line": 116,
+        "text": "`TextEditor`를 동일한 필드 하나로 대체하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000043",
+        "line": 132,
+        "text": "모델을 UI에서 직접 복사해 관리하지 않는다. 하드웨어 가속은 실제 선택된 백엔드와",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000049",
+        "line": 143,
+        "text": "비교하고, 실제 제품 화면이라고 주장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000049",
+        "line": 150,
+        "text": "파괴하거나 다른 컨테이너로 연결하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000049",
+        "line": 156,
+        "text": "Undo/Redo와 미완료 생성 작업이 이전 전후에 동일해야 한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000053",
+        "line": 172,
+        "text": "현재보다 빠르다고 주장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000053",
+        "line": 180,
+        "text": "런타임에 선택되는 플러그인을 조사해 Qt/QML·LVRS와 금지된 SDK 간 직접",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000057",
+        "line": 191,
+        "text": "판단 범위를 더한 시나리오이며 P50·P90이나 확정 상한을 뜻하지 않는다. 항목 사이",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000061",
+        "line": 202,
+        "text": "Figma 현행 디자인 대조는 포함하되 새 화면 디자인이나 제품 기능 확대는 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000061",
+        "line": 205,
+        "text": "앱과 필수 SDK 의존성 폐쇄에서 Qt를 완전히 제거하는 비용은 별도 행으로 더한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000061",
+        "line": 207,
+        "text": "다른 SDK 간 직접 의존성은 여전히 금지하며 앱 조합 계층에서 연결한다. 기존 Core",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000061",
+        "line": 208,
+        "text": "호출을 다른 구현으로 갈아엎는 비용은 포함하지 않는다. 구독 취소·수명, 이벤트",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000061",
+        "line": 209,
+        "text": "누락 복구 및 불필요한 폴링 제거는 별도로 수행해야 한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000061",
+        "line": 216,
+        "text": "않는 텍스트 지표이므로 클래스 수, 화면 수 또는 선형적인 작업량으로 취급하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000061",
+        "line": 219,
+        "text": "사용하는 외부 SDK QML 화면도 범위에 두되, SDK 전체를 일괄 재작성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000065",
+        "line": 225,
+        "text": "| 기능·디자인 기준선과 대표 경계 | 8 | 12 | 18 | 두 앱의 필수 동작, Figma 대조, 취소·복구·성능 기준과 대표 뷰 |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000065",
+        "line": 235,
+        "text": "| 앱과 필수 SDK의 Qt 완전 제거 추가 | +45 | +80 | +150 | Qt 기반 비 UI 모델·입출력·타 필수 라이브러리의 대체 및 의존성 폐쇄 확인 |",
+        "basis": "lexical_match",
+        "context": "table"
+      },
+      {
+        "block_id": "b000067",
+        "line": 242,
+        "text": "담으며 같은 단위 검사를 다시 공수로 더하지 않는다. Society의 계획값 65인일과",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000067",
+        "line": 243,
+        "text": "Dreamscapes의 계획값 125인일은 각각 제품 전용 구간이며 공통 구간을 두 번 청구하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000069",
+        "line": 246,
+        "text": "처리 가능하다는 가정의 잠정치이다. 모든 SDK의 전체 Qt 제거 비용은 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000069",
+        "line": 251,
+        "text": "상주 동작을 약속하지 않는다. Web/WASM은 포함하지 않으며 브라우저 파일 권한·모델",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000073",
+        "line": 261,
+        "text": "아니다. 위 표에서는 이 추가분을 계상하지 않는다. 기존 코드의 1ms 재검사, 이벤트",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000079",
+        "line": 274,
+        "text": "어떻게 반영했는지 명시해야 한다. 순전히 계산 예시로 `R = USD 500`이면 계획값은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000079",
+        "line": 278,
+        "text": "시간이나 비용으로 환산하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000081",
+        "line": 282,
+        "text": "갱신한다. 대표 경로 비용은 이미 각 공통·제품 구간에 포함되어 별도 가산하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000015",
+        "label": "LvuiStyleTokens.cpp",
+        "target": "../../../Product/Dreamscapes/src/App/ViewModels/LvuiStyleTokens.cpp",
+        "kind": "relative",
+        "line": 37
+      },
+      {
+        "block_id": "b000017",
+        "label": "순수 네이티브 뷰모델",
+        "target": "../../../Product/Dreamscapes/cmake/NativeViewModels.cmake",
+        "kind": "relative",
+        "line": 41
+      },
+      {
+        "block_id": "b000017",
+        "label": "결과 그리드 빌드",
+        "target": "../../../Product/Dreamscapes/cmake/NativeReviewNavigation.cmake",
+        "kind": "relative",
+        "line": 43
+      },
+      {
+        "block_id": "b000017",
+        "label": "LVUI AOT CMake",
+        "target": "../cmake/LVUIAot.cmake",
+        "kind": "relative",
+        "line": 44
+      },
+      {
+        "block_id": "b000019",
+        "label": "CMake 구성",
+        "target": "../CMakeLists.txt",
+        "kind": "relative",
+        "line": 48
+      },
+      {
+        "block_id": "b000025",
+        "label": "FileGridView",
+        "target": "../../../Product/Society/App/Society/FileGridView.qml",
+        "kind": "relative",
+        "line": 65
+      },
+      {
+        "block_id": "b000025",
+        "label": "PhotosView",
+        "target": "../../../Product/Society/App/Society/Photos/PhotosView.qml",
+        "kind": "relative",
+        "line": 65
+      },
+      {
+        "block_id": "b000025",
+        "label": "Dashboard",
+        "target": "../../../Product/Society/App/Society/Dashboard/Dashboard.qml",
+        "kind": "relative",
+        "line": 66
+      },
+      {
+        "block_id": "b000025",
+        "label": "ModelsView",
+        "target": "../../../Product/Society/App/Society/Models/ModelsView.qml",
+        "kind": "relative",
+        "line": 66
+      },
+      {
+        "block_id": "b000025",
+        "label": "Main.qml",
+        "target": "../../../Product/Society/App/Society/Main.qml",
+        "kind": "relative",
+        "line": 67
+      },
+      {
+        "block_id": "b000025",
+        "label": "QuickGenerate",
+        "target": "../../../Product/Dreamscapes/src/App/Views/Home/QuickGenerate.qml",
+        "kind": "relative",
+        "line": 68
+      },
+      {
+        "block_id": "b000025",
+        "label": "비디오 재생",
+        "target": "../../../Product/Dreamscapes/src/App/Views/Result/ReviewMediaView.qml",
+        "kind": "relative",
+        "line": 69
+      },
+      {
+        "block_id": "b000025",
+        "label": "EditorCanvas",
+        "target": "../../../Product/Dreamscapes/src/App/Views/Editor/EditorCanvas.h",
+        "kind": "relative",
+        "line": 70
+      },
+      {
+        "block_id": "b000025",
+        "label": "CanvasEditor",
+        "target": "../../../Product/Dreamscapes/src/App/Views/Editor/CanvasEditor.qml",
+        "kind": "relative",
+        "line": 70
+      },
+      {
+        "block_id": "b000031",
+        "label": "반응형 감사",
+        "target": "../../docs/ReactiveRuntimeAudit.md",
+        "kind": "relative",
+        "line": 87
+      },
+      {
+        "block_id": "b000039",
+        "label": "컴파일 범위",
+        "target": "NativeCompilerCoverage.md",
+        "kind": "relative",
+        "line": 112
+      },
+      {
+        "block_id": "b000057",
+        "label": "미국 GAO 비용 추정 지침",
+        "target": "https://www.gao.gov/assets/gao-20-195g.pdf",
+        "kind": "external",
+        "line": 193
+      },
+      {
+        "block_id": "b000057",
+        "label": "NASA 소프트웨어 비용 추정 지침",
+        "target": "https://swehb.nasa.gov/pages/viewpage.action?navigatingVersions=true&pageId=16777319",
+        "kind": "external",
+        "line": 194
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000011",
+        "columns": [
+          "구분",
+          "관측",
+          "의미"
+        ],
+        "rows": [
+          [
+            "Society",
+            "`App/Society`의 QML 54개, 약 1.18만 행. 51개가 LVRS를 import한다.",
+            "Dashboard·저장소·사진·모델·계정·기기·캘린더·프로젝트·도구를 포함한다."
+          ],
+          [
+            "Dreamscapes",
+            "`src/App`의 QML 82개, 약 1.83만 행. 77개가 LVRS를 import한다.",
+            "홈·생성·결과·편집기·타임라인·출판·설정을 포함한다."
+          ],
+          [
+            "공통",
+            "두 앱 모두 Qt Quick, Qt Layouts, Controls, 동적 Loader·반복 모델·신호 연결, 파일 선택과 접근성 속성을 사용한다.",
+            "구문과 위젯 이름만 치환해서는 입력·모델·수명·OS 통합이 보존되지 않는다."
+          ],
+          [
+            "LVUI",
+            "AOT 컴파일러, 뷰 세션, 반응형 바인딩, 버튼·입력·목록·계층·표·카드·팝업·가상 컬렉션의 독립 구현이 존재한다.",
+            "각 앱에 필요한 속성·이벤트·플랫폼 및 성능 동등성은 별도 검사해야 한다."
+          ]
+        ]
+      },
+      {
+        "block_id": "b000025",
+        "columns": [
+          "화면·기능",
+          "현재 제품의 중요한 계약",
+          "LVUI 선행 작업과 확인할 점"
+        ],
+        "rows": [
+          [
+            "두 앱의 창·내비게이션·설정",
+            "애플리케이션 메뉴, 여러 창, 닫기 승인, 모바일 뒤로 가기, 안전 영역, 파일 열기와 입력기",
+            "`Application`·Scene·Window 기반은 존재한다. 플랫폼별 메뉴·창·파일 열기·안전 영역과 보조 창 동작을 제품 요구에 맞춰 검증한다. Android 다중 창과 Wayland 전경 등 미지원 조건은 감추지 않는다."
+          ],
+          [
+            "Society 파일·사진·모델",
+            "[FileGridView](../../../Product/Society/App/Society/FileGridView.qml)는 동적 디렉터리 모델, 가상 그리드, 다중 선택, 스크롤 복원과 키보드·메뉴를 사용한다. [PhotosView](../../../Product/Society/App/Society/Photos/PhotosView.qml)는 가시 영역의 사진을 우선한다.",
+            "기존 가상 컬렉션을 활용하되 안정된 키, 행별 변경, 페이징, 65,536개 제한을 넘는 경우, 썸네일 취소·역압·접근성과 보기 상태 복원을 제품 데이터로 확인한다."
+          ],
+          [
+            "Society 캘린더·프로젝트·작업",
+            "[Dashboard](../../../Product/Society/App/Society/Dashboard/Dashboard.qml)는 계정·활성 상태·캘린더·프로젝트 모델을 조합한다. [ModelsView](../../../Product/Society/App/Society/Models/ModelsView.qml)는 작업별 성공·실패·재시도와 체크포인트를 표시한다.",
+            "달력 셀, 날짜·시간대·계정 연결, 계층 선택과 대량 작업의 부분 갱신을 타입 지정 뷰모델로 연결한다. 작업은 화면이 닫혀도 유지하고 재접속 시 영속 상태를 다시 조회한다."
+          ],
+          [
+            "Society 계정·네트워크",
+            "[Main.qml](../../../Product/Society/App/Society/Main.qml)은 계정 뷰, 기기 페어링, 데몬·드라이브 상태와 알림을 조합한다. QR는 현재 `QQuickPaintedItem`이다.",
+            "계정·인증·QR·사진·OS 권한 및 에이전트 질문 UI의 네이티브 경계를 제공한다. Society 앱이 열려 있어야 다른 앱의 라이선스를 확인하는 구조를 다시 만들지 않는다."
+          ],
+          [
+            "Dreamscapes 홈·생성",
+            "[QuickGenerate](../../../Product/Dreamscapes/src/App/Views/Home/QuickGenerate.qml)와 홈은 프롬프트·첨부·작업 큐·이미지 선택·파일 드래그를 사용한다.",
+            "다중행 텍스트·입력기·첨부와 가변 크기, 작업 진행·취소, 파일 선택 및 드래그를 보장한다. 사용자 값은 뷰에서 임의 변경하지 않는다."
+          ],
+          [
+            "Dreamscapes 결과·미디어",
+            "결과 그리드, 선택·비교·내보내기와 [비디오 재생](../../../Product/Dreamscapes/src/App/Views/Result/ReviewMediaView.qml)이 필요하다.",
+            "기존 NativeReviewSession을 재사용하되 현재 레거시 생성 경로를 LVUI로 바꾸고 실제 작업·썸네일·비교·편집·내보내기와 연결한다. 이미지뿐 아니라 재생·시킹·오디오·오류·종료 계약을 제공한다."
+          ],
+          [
+            "Dreamscapes 캔버스·타임라인",
+            "[EditorCanvas](../../../Product/Dreamscapes/src/App/Views/Editor/EditorCanvas.h)는 Qt용 `CanvasItem`을 상속하며, [CanvasEditor](../../../Product/Dreamscapes/src/App/Views/Editor/CanvasEditor.qml)는 셰이더·드롭·단축키를 사용한다.",
+            "문서·편집 명령을 Qt 없는 뷰모델로 분리하고 iiSharedCanvas의 네이티브 렌더·입력 포트를 앱에서 조합한다. 확대·팬·펜·선택·레이어·Undo·프레임·내보내기와 GPU 자원 수명을 별도로 검증한다."
+          ],
+          [
+            "Dreamscapes 출판·연동",
+            "출판 초안·미리보기·권리·공개와 MCP/에이전트 명령이 UI 및 Qt 객체와 연결된다.",
+            "초안 저장과 외부 공개를 구별하고, 기존 MCP 인증·스키마·질문 응답·생성 취소를 네이티브 백엔드로 연결한다. 사용자 승인과 기존 서비스 계약을 보존한다."
+          ]
+        ]
+      },
+      {
+        "block_id": "b000065",
+        "columns": [
+          "구간",
+          "낮음",
+          "계획",
+          "높음",
+          "포함 범위"
+        ],
+        "rows": [
+          [
+            "기능·디자인 기준선과 대표 경계",
+            "8",
+            "12",
+            "18",
+            "두 앱의 필수 동작, Figma 대조, 취소·복구·성능 기준과 대표 뷰"
+          ],
+          [
+            "공통 LVUI 보강",
+            "22",
+            "35",
+            "55",
+            "텍스트 편집·입력기, 뷰 입력·이벤트, 가상 컬렉션과 접근성 공백"
+          ],
+          [
+            "iiGUI 데스크톱 호스트 보강",
+            "18",
+            "30",
+            "48",
+            "Wayland DnD·배율 등과 세 OS의 입력·파일·창·접근성 연결"
+          ],
+          [
+            "모듈 경계와 반응형 수명",
+            "12",
+            "20",
+            "30",
+            "Core 이외 SDK 포트, 쿼리 종료의 1ms 재검사, 취소·누락 복구"
+          ],
+          [
+            "Society 제품 이전",
+            "40",
+            "65",
+            "95",
+            "창·계정·파일·사진·모델·캘린더·프로젝트·데몬과 Job UI"
+          ],
+          [
+            "Dreamscapes 생성·결과",
+            "30",
+            "45",
+            "70",
+            "프롬프트·옵션·작업 큐·결과·미디어·내보내기"
+          ],
+          [
+            "Dreamscapes 캔버스·타임라인",
+            "40",
+            "60",
+            "95",
+            "입력·편집·레이어·프레임·Undo/Redo·렌더 표면"
+          ],
+          [
+            "Dreamscapes 출판·계정·에이전트",
+            "12",
+            "20",
+            "30",
+            "게시 초안·권한·MCP와 기존 기능 연결"
+          ],
+          [
+            "데스크톱 제품 간 최종 검증",
+            "20",
+            "35",
+            "55",
+            "세 OS의 전체 경로·설치·데이터·성능·회귀 및 전환 검증"
+          ],
+          [
+            "**두 앱 UI 이전 합계**",
+            "**202**",
+            "**322**",
+            "**496**",
+            "공통 기반은 두 앱에 한 번만 계상"
+          ],
+          [
+            "앱과 필수 SDK의 Qt 완전 제거 추가",
+            "+45",
+            "+80",
+            "+150",
+            "Qt 기반 비 UI 모델·입출력·타 필수 라이브러리의 대체 및 의존성 폐쇄 확인"
+          ],
+          [
+            "**세 데스크톱의 Qt 없는 두 앱**",
+            "**247**",
+            "**402**",
+            "**646**",
+            "위 두 행의 합"
+          ],
+          [
+            "iOS·Android 추가",
+            "+45",
+            "+80",
+            "+140",
+            "모바일 창·안전 영역·권한·입력·서비스 수명과 기기 검증"
+          ],
+          [
+            "**다섯 OS의 Qt 없는 두 앱**",
+            "**292**",
+            "**482**",
+            "**786**",
+            "세 데스크톱과 모바일 추가의 합"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

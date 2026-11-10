@@ -1,0 +1,152 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=323-9164",
+  "reference": "SearchField/Enabled",
+  "backgroundVariableId": "VariableID:215:9618",
+  "backgroundOpacity": 0.6399999856948853,
+  "fillGradient": {
+    "type": "GRADIENT_LINEAR",
+    "visible": true,
+    "opacity": 1,
+    "blendMode": "NORMAL",
+    "gradientStops": [
+      {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.20000000298023224
+        },
+        "position": 0,
+        "boundVariables": {}
+      },
+      {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0
+        },
+        "position": 0.5199999809265137,
+        "boundVariables": {}
+      },
+      {
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.03500000014901161
+        },
+        "position": 1,
+        "boundVariables": {}
+      }
+    ],
+    "gradientTransform": [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        -1,
+        0,
+        1
+      ]
+    ]
+  },
+  "strokeGradient": {
+    "type": "GRADIENT_LINEAR",
+    "visible": true,
+    "opacity": 1,
+    "blendMode": "NORMAL",
+    "gradientStops": [
+      {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.2800000011920929
+        },
+        "position": 0,
+        "boundVariables": {}
+      },
+      {
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.014999999664723873
+        },
+        "position": 0.5,
+        "boundVariables": {}
+      },
+      {
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.17000000178813934
+        },
+        "position": 1,
+        "boundVariables": {}
+      }
+    ],
+    "gradientTransform": [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        -1,
+        0,
+        1
+      ]
+    ]
+  },
+  "effects": [
+    {
+      "type": "BACKGROUND_BLUR",
+      "visible": true,
+      "radius": 8,
+      "boundVariables": {},
+      "blurType": "NORMAL"
+    },
+    {
+      "type": "INNER_SHADOW",
+      "visible": true,
+      "radius": 2,
+      "boundVariables": {},
+      "color": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.30000001192092896
+      },
+      "offset": {
+        "x": 0.5,
+        "y": 1.2000000476837158
+      },
+      "spread": 0,
+      "blendMode": "NORMAL"
+    },
+    {
+      "type": "INNER_SHADOW",
+      "visible": true,
+      "radius": 0.800000011920929,
+      "boundVariables": {},
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.1599999964237213
+      },
+      "offset": {
+        "x": 0,
+        "y": -0.5
+      },
+      "spread": 0,
+      "blendMode": "NORMAL"
+    }
+  ]
+}

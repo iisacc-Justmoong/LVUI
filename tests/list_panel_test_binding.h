@@ -1,0 +1,15 @@
+#pragma once
+#include <LVUI/NativeListPanel.h>
+#include "list_view_test_binding.h"
+#include <iiGUI/NativeListPanelView.h>
+#include <iiGUI/PanelLayout.h>
+#include <iiGUI/NativeListToolbarView.h>
+#include <iiGUI/NativeListFooterView.h>
+#include <iiGUI/SvgImageCache.h>
+using ListPanelTestButtonModel=ii::gui::BasicToolbarButton<lvui::native::ToolbarButtonModelPolicy>;
+using ListPanelTestFooterModel=ii::gui::BasicListFooter<lvui::native::ListFooterModelPolicy<ListPanelTestButtonModel>>;
+using ListPanelTestFooter=lvui::native::ListFooterBinding<ii::gui::BasicListFooter,ii::gui::BasicNativeListFooter,ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+using ListPanelTestToolbarModel=ii::gui::BasicListToolbar<lvui::native::ListToolbarModelPolicy>;
+using ListPanelTestToolbar=lvui::native::ListToolbarBinding<ii::gui::BasicListToolbar,ii::gui::BasicNativeListToolbar,ii::gui::CachedSvgDecoder>;
+using ListPanelTestLayout=lvui::PanelLayoutBinding<ii::gui::BasicPanelLayout,lvui::ListPanelConfiguration>;
+using ListPanelTestView=lvui::native::ListPanelBinding<ii::gui::BasicNativeListPanel,ListPanelTestLayout,ListPanelTestToolbarModel,ListPanelTestFooterModel,ListViewTestView,ListPanelTestToolbar,ListPanelTestFooter,ListViewTestField,ii::gui::WidgetBuilder>;

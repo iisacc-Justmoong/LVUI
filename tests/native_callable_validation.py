@@ -1,5 +1,6 @@
 """Compile generated callback adapters and reject incompatible C++ contracts."""
 from pathlib import Path
+from workspace_support import checked_workspace, provider
 import argparse
 import json
 import subprocess
@@ -12,9 +13,12 @@ def main():
     parser.add_argument("--compiler", type=Path, required=True)
     parser.add_argument("--cxx", required=True)
     parser.add_argument("--core", type=Path, required=True)
-    parser.add_argument("--color", type=Path, required=True)
     parser.add_argument("--gui", type=Path, required=True)
+    parser.add_argument('--workspace', type=Path, required=True)
+    parser.add_argument('--gui-include', type=Path, required=True)
+    parser.add_argument('--gui-export-include', type=Path, required=True)
     args = parser.parse_args()
+    args.workspace = checked_workspace(args.workspace)
     source_root = Path(__file__).resolve().parents[1]
     build = args.build.resolve()
     cases = {
@@ -34,7 +38,7 @@ def main():
         "variable_valid": ('std::string run(std::int64_t) { return "Native"; }', "(Int)", "Label(text: action(2))", "vm.run", None),
         "variable_wrong_result": ("int run() { return 1; }", "()", "Label(text: action())", "vm.run", "Callback Bool input requires Bool"),
         "variable_wrong_replacement": ('std::string run(std::int64_t) { return "Native"; }', "(Int)", "Label(text: action(2))", "vm.run", "Callback String input requires native text"),
-        "valid_color_function": ('iiColorManager::Rgba run(double) { return {.2,.4,.6,1}; }', "(Double)", "Label(color: action(.5))", "vm.run", None),
+        "valid_color_function": ('lvui::native::EncodedSrgb run(double) { return {.2,.4,.6,1}; }', "(Double)", "Label(color: action(.5))", "vm.run", None),
         "wrong_color_result": ('double run() { return .5; }', "()", "Label(color: action())", "vm.run", "Callback Color requires an encoded sRGB color value"),
         "linear_color_result": ('ii::gui::Color run() { return {.2,.4,.6,1}; }', "()", "Label(color: action())", "vm.run", "Callback Color requires an encoded sRGB color value"),
         "wrong_color_argument": ('std::string run(ii::gui::WidgetColor) { return "Native"; }', "(Color)", "Label(text: action(true))", "vm.run", "Callback Color requires an encoded sRGB color value"),
@@ -42,28 +46,39 @@ def main():
     results = {"valid_function":"String","wrong_bool_result":"Bool","wrong_string_result":"String","void_function_result":"String"}
     results.update(variable_valid="String",variable_wrong_result="Bool",variable_wrong_replacement="String")
     results.update(valid_color_function="Color",wrong_color_result="Color",linear_color_result="Color",wrong_color_argument="String")
+    cases.update({
+        "close_valid": ("bool run() { return true; }", "()", "Label()", "vm.run", None),
+        "close_shared": ("bool run() { return true; }", "()", "Label()", "decision", None),
+        "close_factory": ("auto make() { return [p = std::make_unique<int>(1)] { return *p > 0; }; }", "()", "Label()", "vm.make()", None),
+        "close_wrong_bool": ("int run() { return 1; }", "()", "Label()", "vm.run", "Callback Bool input requires Bool"),
+        "close_void": ("void run() {}", "()", "Label()", "vm.run", "A value-returning callable requires a native result"),
+        "close_argument": ("bool run(int) { return true; }", "()", "Label()", "vm.run", "run"),
+    })
     result = {}
-    with tempfile.TemporaryDirectory(prefix="callback-types-", dir=build) as temporary:
+    with provider.TemporaryDirectory(prefix="callback-types-", dir=args.workspace) as temporary:
         root = Path(temporary)
         for name, (body, signature, view, action, expected) in cases.items():
             fixture = root / "Fixture.h"
-            fixture.write_text("#pragma once\n#include <cstdint>\n#include <string>\nstruct Backend final {" + body + "};\n")
+            provider.write_text(fixture, "#pragma once\n#include <cstdint>\n#include <memory>\n#include <string>\nstruct Backend final {" + body + "};\n")
             source = root / "View.lvui"
-            source.write_text("import vm Backend\nlet Control(action: " + signature + " -> " + results.get(name,"Void") + "): View = " + view + "\nWindow { Control(action: " + action + ") }\n")
+            provider.write_text(source, "import vm Backend\nlet Control(action: " + signature + " -> " + results.get(name,"Void") + "): View = " + view + "\nWindow { Control(action: " + action + ") }\n")
+            if name.startswith("close_"):
+                shared = "let decision: () -> Bool = vm.run\n" if name == "close_shared" else ""
+                provider.write_text(source, "import vm Backend\n" + shared + "Application(onCloseRequested: " + action + ") { Window { " + view + " } }\n")
             if name.startswith("variable_"):
-                source.write_text("import vm Backend\nvar action: " + signature + " -> " + results[name] + " = " + action + "\nWindow { " + view + " }\n")
+                provider.write_text(source, "import vm Backend\nvar action: " + signature + " -> " + results[name] + " = " + action + "\nWindow { " + view + " }\n")
             generated = root / "View.generated.h"
             command = [str(args.compiler), "--name", "CallbackContract", "--include", "Fixture.h", str(source)]
             generation = subprocess.run(command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             if generation.returncode:
                 raise RuntimeError(f"AOT generation failed for {name}: {generation.stderr}")
-            generated.write_text(generation.stdout)
+            provider.write_text(generated, generation.stdout)
             probe = root / "probe.cpp"
-            probe.write_text('#include "View.generated.h"\nauto factory = &lvui_generated::CallbackContract::build;\n')
+            provider.write_text(probe, '#include "View.generated.h"\nauto factory = &lvui_generated::CallbackContract::build;\n')
             if name=="variable_wrong_replacement":
-                probe.write_text(probe.read_text()+'void rejected(lvui_generated::CallbackContract& view) { (void)view.set_action_native([] { return [](std::int64_t) { return 7; }; }); }\n')
-            includes = [root, source_root / "src", args.build / "lvui-generated-icons", (args.core / "../../../include").resolve(),(args.color / "../../../include").resolve(),
-                        args.gui / "src", args.gui / "build/install/include"]
+                provider.write_text(probe, probe.read_text()+'void rejected(lvui_generated::CallbackContract& view) { (void)view.set_action_native([] { return [](std::int64_t) { return 7; }; }); }\n')
+            includes = [root, source_root / "src", args.build / 'include', args.build / 'lvui-generated-icons', (args.core / "../../../include").resolve(),
+                        args.gui / "src", args.gui_include, args.gui_export_include]
             msvc = Path(args.cxx).name.lower() in ("cl", "cl.exe")
             compile_command = ([args.cxx, "/std:c++latest", "/Zs", "/utf-8"] if msvc else
                                [args.cxx, "-std=c++23", "-fsyntax-only"])
@@ -77,9 +92,9 @@ def main():
             elif compiled.returncode == 0 or not any(message in compiled.stdout for message in (expected if isinstance(expected, tuple) else (expected,))):
                 raise RuntimeError(f"Invalid generated callback was not rejected for {name}: {compiled.stdout}")
             result[name] = {"compiled": compiled.returncode == 0, "expected_rejection": expected}
-    report = build / "lvui-completion/native-callable-validation.json"
-    report.parent.mkdir(exist_ok=True)
-    report.write_text(json.dumps(result, indent=2) + "\n")
+    report = args.workspace / "lvui-completion/native-callable-validation.json"
+    provider.mkdir(report.parent, exist_ok=True)
+    provider.write_text(report, json.dumps(result, indent=2) + "\n")
     valid = sum(value[4] is None for value in cases.values())
     print(f"Generated native callables: {valid} valid, {len(cases)-valid} rejected; report {report}")
 

@@ -1,0 +1,3 @@
+TableHeader(id: "header", columns: ["Alpha", "Beta"], columnWidths: [80, 80], width: 160,
+            interactive: true, cellContext: "heading",
+            columnViews: [TableColumn(key: "0", header: Label(id: "custom-heading", text: heading.text))])

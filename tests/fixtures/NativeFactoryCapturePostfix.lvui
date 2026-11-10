@@ -1,7 +1,7 @@
 import vm NativeFactoryCaptureBackend
 Window { VStack {
-    PushButton(id: "temporary", onClick: vm.temporary().make())
-    PushButton(id: "owned_temporary", onClick: vm.temporary().value())
-    PushButton(id: "argument", onClick: vm.capture(vm.argument()))
-    PushButton(id: "mixed", onClick: vm.mixed(vm.argument(), vm.argument()))
+    PushButton(id: "temporary", onClick: callback(vm.temporary().make()))
+    PushButton(id: "owned_temporary", onClick: callback(vm.temporary().value()))
+    PushButton(id: "argument", onClick: callback(vm.capture(vm.argument())))
+    PushButton(id: "mixed", onClick: callback(vm.mixed(vm.argument(), vm.argument())))
 } }

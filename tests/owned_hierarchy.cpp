@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <atomic>
+#include <limits>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -46,10 +47,17 @@ int main() {
             "Expansion or hidden selection was not kept as view state");
     require(take(view.set_expanded("a1", true)) && take(view.projection()).entries[2].selected,
             "Expanding a branch lost the selected descendant");
-    auto style = HierarchyItemConfiguration{}; style.width = 240;
-    const auto visual = hierarchy_item_configuration(take(view.projection()).entries[2], style);
-    require(visual && visual->key == "a1x" && visual->depth == 2 && visual->selected && visual->width == 240 && !visual->has_children,
-            "Hierarchy row projection lost source state or caller appearance");
+    const auto revision_before_extent=take(view.projection()).view_revision;
+    require(take(view.set_row_extent("a1x",48.))&&!take(view.set_row_extent("a1x",48.))&&
+            take(view.projection()).entries[2].row_extent==48.&&
+            take(view.projection()).view_revision==revision_before_extent+1&&take(model->snapshot())->revision==0,
+            "A row extent did not remain independent view state");
+    require(!view.set_row_extent("missing",48.)&&!view.set_row_extent("a1x",0.)&&
+            !view.set_row_extent("a1x",std::numeric_limits<double>::quiet_NaN())&&
+            take(view.projection()).entries[2].row_extent==48.,"Invalid row extents changed the view");
+    const auto projected_row=take(view.projection()).entries[2];
+    require(projected_row.entry.key=="a1x"&&projected_row.depth==2&&projected_row.selected&&projected_row.row_extent==48.&&projected_row.child_count==0,
+            "Hierarchy projection lost source state");
     require(take(view.set_expanded("a", false)) && take(view.selected_key()) == "a1x" &&
             original->revision == 0 && take(model->snapshot())->revision == 0,
             "Navigation changed the document or discarded hidden selection");
@@ -115,9 +123,12 @@ int main() {
     source->value = nested;
     require(take(view.set_expanded("b", true)), "A moved branch could not be expanded");
     require(visible(take(view.projection())) == std::vector<std::string>{"a", "a1", "a1x", "b", "b1", "c"} &&
-            take(view.selected_key()) == "a1x", "A new model projection did not retain surviving view state");
+            take(view.selected_key()) == "a1x" && take(view.projection()).entries[2].row_extent==48.,
+            "A new model projection did not retain surviving view state");
     auto shortened = std::make_shared<HierarchySnapshot>(HierarchySnapshot{{{.key="c", .label="C"}}, 3});
     source->value = shortened; auto latest = take(view.projection());
     require(visible(latest) == std::vector<std::string>{"c"} && take(view.selected_key()).empty(),
             "Removed hierarchy selection was not retired from view state");
+    source->value=original;require(take(view.set_expanded("a",true))&&take(view.set_expanded("a1",true))&&
+            !take(view.projection()).entries[2].row_extent,"A removed row retained its previous height when its key returned");
 }

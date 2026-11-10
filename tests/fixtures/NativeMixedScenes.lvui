@@ -1,0 +1,9 @@
+import vm NativeApplicationBackend
+let Shared: View = VStack {
+    var local: Int = 1
+    Label(id: "shared", text: vm.title)
+}
+Application {
+    Window { Shared() }
+    Window(onClosed: vm.scene_closed) { Shared() }
+}

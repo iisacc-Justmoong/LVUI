@@ -4,7 +4,8 @@
 
 상태: 기존 iiSDKCore 쿼리 계약을 바탕으로 2026-10-20에 채택한 LVUI 통신 설계이다.
 아래에 명시한 기능은 Core에 이미 존재한다.
-LVUI 멤버 어댑터와 바인딩 연동은 아직 설계 단계이다.
+멤버 전체의 자동 쿼리 어댑터는 여전히 설계 단계이다. 명시적 타입 지정 요청은
+[뷰 세션](ViewSessions.md), 다중 수신 변경 알림은 [쿼리 연결](QueryConnections.md)을 따른다.
 
 채택한 [AOT 컴파일 모델](CompilationModel.md)은 네이티브 뷰·VM 어댑터를 생성한다.
 쿼리는 네이티브 객체 사이에서 런타임 값을 교환하며 LVUI 소스나 바이트코드를 실행하지 않는다.
@@ -21,6 +22,37 @@ ViewModel은 iiSDKCore 객체 쿼리로 값을 송수신한다.
 VM은 요청을 받고 Model·Service를 쿼리한 뒤 선택한 결과를 수신하고 소비자에게 변경 쿼리를 발행할 수 있다.
 포트는 VM 또는 같은 소유 스코프로 수명이 제한되는 어댑터에 속한다.
 
+## 쿼리 값의 기본 양방향 바인딩
+
+C++ 소유자는 읽기·검증된 쓰기 `QueryPort`와 변경 표식을 묶은 Core
+`QueryValue`를 공개 멤버로 제공할 수 있다. 저장값은 C++ 소유 객체에 남고,
+일반적인 뷰 표기에서 읽기와 사용자 편집이 각각 쿼리로 전달된다.
+
+```lvui
+import vm ProfileViewModel
+VStack {
+    InputField(text: vm.name)
+    Label(text: vm.name)
+}
+```
+
+여기서 `vm.name`은 C++의 `ii::runtime::QueryValue`이다. 소유자가 해당 값의
+변경 표식을 발행하면 의존 바인딩이 다시 읽는다. `const QueryValue`는 쓰지
+않고, `@Static` 값은 초기 스냅샷을 유지한다. 입력에 별도의 편집 명령이 있다면
+그 명령의 검증을 우회하지 않는다. 생성된 뷰와 iiGUI 위젯에서 이 경로를 검사한
+예제는 [쿼리 값 테스트](../tests/native_query_value.cpp)이다.
+기존 C++ `Observable`을 직접 노출한 바인딩도 아직 허용하며, 컴파일러가 이를
+자동으로 쿼리 포트로 바꾸거나 모든 앱 상태의 쿼리 사용을 강제하지는 않는다.
+
+값 하나를 반환하는 `query(port, request)` 식은 읽기 결과이며 쓰기 경로를
+추론할 수 없으므로 그 식 자체가 양방향 쓰기 대상이 되지는 않는다. 다른 실행
+영역의 쿼리는 비동기 전달과 UI 영역에 대한 변경 통지를 명시적으로 연결한다.
+Core의 실행 영역·실패·수명과 누락 복구 조건은
+[쿼리 값 계약](../../iiSDKCore/docs/query-values.md)을 따른다.
+2026-11-07 macOS arm64의 헤드리스 검사에서 생성 뷰의 양방향 편집·외부 쿼리
+변경·거부·수명 및 기존 바인딩 회귀 27건이 통과했다. 앱 창이나 다른 운영체제의
+실행은 확인하지 않았다.
+
 ```text
 뷰 바인딩·동작 어댑터 -> 쿼리 -> ViewModel
 ViewModel             -> 쿼리 -> Model 또는 Service
@@ -36,10 +68,9 @@ Model·Service 소스 코드가 구체적인 ViewModel이나 LVUI 타입에 의�
 
 ## 기본 ViewModel 바인딩
 
-ViewModel은 기본 바인딩을 제공한다.
-뷰는 바인딩 어노테이션·래퍼 선언·별도 활성화 없이 VM 멤버를 직접 사용할 수 있다.
-이는 [공통 반응형 값 모델](ReactiveState.md)을 따른다.
-속성 읽기는 원본 VM 상태와 그 변경에 대한 실시간 의존성을 설정한다.
+뷰는 공개 VM 멤버를 직접 사용할 수 있으며, Core `Observable` 등 지원하는 관찰
+계약을 읽을 때 원본 상태의 변경에 의존한다. 일반 C++ 필드에 대한 임의 대입은
+자동으로 관찰하지 않는다. 이는 [공통 반응형 값 모델](ReactiveState.md)을 따른다.
 편집 가능한 컨트롤 바인딩은 멤버의 공개 쓰기 계약이 허용하는 경우 같은 원본에 변경을 전달한다.
 읽기 전용 getter·const 멤버·도메인 검증의 기존 제한을 유지한다.
 
@@ -67,9 +98,9 @@ import vm CounterViewModel
 private·protected 접근 제한과 C++ constness는 유지된다.
 쿼리 전송은 이 규칙을 수동 export·멤버 등록 요구사항으로 대체하지 않는다.
 
-`vm.value`, `PushButton(vm.increment)` 같은 표현식은 계속 뷰의 공개 멤버 표기이다.
-UI 어댑터는 뷰 파일에 전송 세부사항을 노출하지 않고 읽기·동작을 쿼리 계약으로 매핑할 수 있다.
-`.lvui`에 추가 쿼리 키워드나 저수준 `send`/`post` 구문은 채택하지 않았다.
+`vm.value`, `PushButton(onClick: vm.increment)` 같은 표현식은 뷰의 공개 멤버 표기이다.
+명시적 `query(owner.port, request)`는 동기 요청을 전송하며, `QueryConnection`은
+`QueryStream`을 UI 수신자에 연결한다. `.lvui`의 범용 비동기 `post` 구문은 아직 없다.
 
 `vm.increment`를 형성하면 연결된 메서드 참조를 만들며 호출 쿼리는 발행하지 않는다.
 `PushButton(vm.increment)`는 컴포넌트의 입력 계약에 따라 해당 callable을 전달한다.

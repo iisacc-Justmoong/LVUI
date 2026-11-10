@@ -1,10 +1,14 @@
 #include <LVUI/CodeViewport.h>
+#include <iiGUI/CodeViewport.h>
 
 #include <limits>
 #include <stdexcept>
 #include <string>
 
 namespace {
+auto code_viewport(const lvui::CodeDocumentView& view,lvui::CodeViewportRequest request={}) {
+    return lvui::CodeViewportBinding<ii::gui::BasicCodeViewport>::frame(view,request);
+}
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }
 template<class T> T take(lvui::CodeDocumentResult<T> value) {
     if (!value) throw std::runtime_error(value.error().message); return std::move(*value);

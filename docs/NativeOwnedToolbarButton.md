@@ -1,8 +1,9 @@
 # LVUI 독립 도구 버튼
 
-`ToolbarButton`은 LVUI가 소유한 버튼 상태, 아이콘·텍스트 배치와 그리기를 범용 iiGUI
-입력 표면에 연결한다. Qt, QML과 LVRS 위젯을 사용하지 않는다. 도구 모음과 별도로도
-사용할 수 있으며, 이후 도구 모음에서 조합할 수 있는 독립 구성 요소다.
+`ToolbarButton`의 상태, 아이콘·텍스트 배치, 입력·접근성·그리기와 위젯 수명은
+iiGUI가 소유한다. LVUI는 기존 값과 디자인 토큰, 아이콘 공급자 및 선언형 바인딩을
+정책 어댑터로 전달한다. Qt, QML과 LVRS 위젯을 사용하지 않으며 도구 모음과
+별도로도 사용할 수 있다.
 
 ```text
 import vm ToolbarBackend
@@ -23,6 +24,9 @@ Window {
 명시적으로 좁은 폭에서는 내용이 영역 안에 들어가도록 축소하고 텍스트를 생략 표시한다.
 `tone`은 `.primary`, `.default`, `.borderless`, `.destructive`, `.disabled`를 지원하며
 기본값은 `.borderless`다. 기본 색상과 포커스 표시는 LVUI가 결정한다.
+primary·누름·포커스의 기본 색상은 정적 또는 반응형 [창 강조색](NativeWindow.md)을
+따른다. 각각 `primaryColor`, `pressedColor`, `focusColor`를 지정하면 그 값이
+우선하며 destructive 톤의 위험 색상은 별도로 유지한다.
 
 아이콘은 `iconName`과 선택적인 `iconSource`·`iconRevision`, 또는 앱이 제공하는
 `icon` 래스터를 사용한다. 이름과 래스터를 함께 지정할 수 없다. 설정, 표시 여부와
@@ -34,3 +38,12 @@ Window {
 헤드리스 트리에서 확인한다. [계층 도구 모음](NativeOwnedHierarchyToolbar.md)은 이
 버튼을 항목으로 조합한다. 직접 자식 등록과 실제 운영체제 렌더링·보조 기술 검증은
 별도로 필요하다.
+
+iiGUI의 `ToolbarButtonModel`과 `ToolbarButtonView`는 LVUI 없이도 사용 가능하며,
+호출자가 색상과 래스터 또는 아이콘 공급자를 지정한다. 동일 설정은 중복 적용하지
+않으며 공급자 리비전이 바뀐 경우 앱이 새 입력을 게시해야 한다. 다른 구성요소가
+참조하던 구형 `lvui::ToolbarButton` 계산 모델은 제거되었다. 직접 소비자는 `ii::gui::ToolbarButtonModel`을 사용하거나 `ToolbarButtonBinding`에
+모델·호스트·디코더를 명시적으로 주입한다. LVUI 디자인 값과 바인딩은 iiSDKCore 외
+SDK를 직접 참조하지 않는다.
+macOS arm64에서 iiGUI 독립 모델·호스트·설치 소비자와 LVUI의 도구 버튼, 목록
+하단, 계층 도구 모음 및 복합 목록 검사 14건이 통과했다. 실제 창은 실행하지 않았다.

@@ -1,0 +1,20 @@
+import vm NativeMenuSequenceModel
+let Actions(firstLabel: String): [View] = [
+    ContextMenuItem(id: "sequenceFirst", label: firstLabel, hasChildItems: false, keepOpen: true, onClick: vm.first),
+    ContextMenuDivider(id: "sequenceDivider"),
+    ContextMenuItem(id: "sequenceSecond", label: vm.second_label, visible: vm.show_second,
+                    hasChildItems: false, keepOpen: true, onClick: vm.second)
+]
+let Empty(): [View] = []
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", onItemTriggered: vm.on_triggered) {
+            ContextMenuItem(id: "before", label: "Before", hasChildItems: false, keepOpen: true)
+            Empty()
+            Actions(firstLabel: vm.first_label)
+            ContextMenuItem(id: "after", label: "After", hasChildItems: false, keepOpen: true)
+            Actions(firstLabel: "Another action")
+        }
+    }
+}

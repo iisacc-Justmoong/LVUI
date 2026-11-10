@@ -13,7 +13,7 @@
 
 namespace lvui {
 
-enum class MotionCurve { linear, out_back };
+enum class MotionCurve { linear, out_back, out_cubic, css_ease_out };
 
 // A value supplied by an application, not a dependency on a host scheduler.
 struct Motion final {
@@ -27,7 +27,8 @@ struct Motion final {
 [[nodiscard]] inline bool valid_motion(const Motion& value) noexcept {
     return value.duration >= std::chrono::milliseconds::zero() &&
            value.duration <= std::chrono::hours(24) &&
-           (value.curve == MotionCurve::linear || value.curve == MotionCurve::out_back) &&
+           (value.curve == MotionCurve::linear || value.curve == MotionCurve::out_back ||
+            value.curve == MotionCurve::out_cubic || value.curve == MotionCurve::css_ease_out) &&
            std::isfinite(value.overshoot) && value.overshoot >= 0 && value.overshoot <= 10;
 }
 
@@ -92,8 +93,21 @@ public:
         const double t = static_cast<double>(std::clamp(elapsed / duration, 0.L, 1.L));
         if (t >= 1) { value_ = target_; active_ = false; return false; }
         const auto u = t - 1;
-        const double factor = policy_.curve == MotionCurve::linear ? t
-            : 1 + (policy_.overshoot + 1) * u * u * u + policy_.overshoot * u * u;
+        double factor;
+        if (policy_.curve == MotionCurve::css_ease_out) {
+            // CSS ease-out is cubic-bezier(0,0,.58,1). Its x coordinate is
+            // time, so invert x before evaluating y; the parameter is not t.
+            double low=0,high=1;
+            for (int iteration=0;iteration<40;++iteration) {
+                const double parameter=(low+high)/2;
+                const double x=3*(1-parameter)*parameter*parameter*.58+parameter*parameter*parameter;
+                if (x<t) low=parameter; else high=parameter;
+            }
+            const double parameter=(low+high)/2;
+            factor=3*(1-parameter)*parameter*parameter+parameter*parameter*parameter;
+        } else if (policy_.curve == MotionCurve::linear) factor=t;
+        else if (policy_.curve == MotionCurve::out_cubic) factor=1+u*u*u;
+        else factor=1+(policy_.overshoot+1)*u*u*u+policy_.overshoot*u*u;
         for (std::size_t i = 0; i < N; ++i) value_[i] = from_[i] + (target_[i] - from_[i]) * factor;
         return true;
     }

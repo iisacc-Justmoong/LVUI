@@ -8,7 +8,7 @@ Window { Link(id: "report", text: vm.text, to: vm.href, params: vm.params, route
               linkColor: vm.color, method: vm.log, methods: [vm.log, vm.after], onClick: vm.clicked,
               onNavigated: vm.navigated) { Label(text: "Custom") } })");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto token:{"#include <LVUI/NativeLink.h>","lvui::native::NativeLink::create(","lvui::LinkConfiguration","lvui::LinkEvent","component.set_options(value)"})
+    for(auto token:{"#include <LVUI/NativeLink.h>","lvui::native::LinkBinding<","iiGUI/NativeLinkView.h","lvui::LinkConfiguration","lvui::LinkEvent","component.set_options(value)"})
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("Generated Link lost ")+token);
     require(code->find("lvrs::")==code->npos&&code->find("<LVRS/")==code->npos,"Generated Link refers to LVRS");
     for(auto text:{"Window { Link(href: \"/a\", to: \"/b\") }","Window { Link(linkColor: \"bad\") }",

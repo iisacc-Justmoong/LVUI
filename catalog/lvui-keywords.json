@@ -52,6 +52,11 @@
       "internal": false
     },
     {
+      "name": "Application",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "ApplicationWindow",
       "kind": "view",
       "internal": false
@@ -97,6 +102,11 @@
       "internal": false
     },
     {
+      "name": "Checkbox",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "CodeEditor",
       "kind": "view",
       "internal": false
@@ -123,6 +133,11 @@
     },
     {
       "name": "ColorPickerButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ColorPickerPanel",
       "kind": "view",
       "internal": false
     },
@@ -182,6 +197,11 @@
       "internal": false
     },
     {
+      "name": "GeneralSearch",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "Glyph",
       "kind": "view",
       "internal": true
@@ -217,12 +237,22 @@
       "internal": false
     },
     {
+      "name": "Icon",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "IconButton",
       "kind": "view",
       "internal": false
     },
     {
       "name": "IconMenuButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "IconSegementedControl",
       "kind": "view",
       "internal": false
     },
@@ -272,6 +302,11 @@
       "internal": false
     },
     {
+      "name": "LabelSegementedControl",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "LabelSegmentedControl",
       "kind": "view",
       "internal": false
@@ -314,7 +349,7 @@
     {
       "name": "Material",
       "kind": "view",
-      "internal": true
+      "internal": false
     },
     {
       "name": "MaterialSurface",
@@ -417,12 +452,37 @@
       "internal": true
     },
     {
+      "name": "QueryConnection",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "RadialLayer",
       "kind": "view",
       "internal": true
     },
     {
+      "name": "Radio",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "RadioButton",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Scene",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "ScrollView",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "SearchField",
       "kind": "view",
       "internal": false
     },
@@ -455,6 +515,11 @@
       "name": "Slot",
       "kind": "view",
       "internal": true
+    },
+    {
+      "name": "SmallList",
+      "kind": "view",
+      "internal": false
     },
     {
       "name": "Spacer",
@@ -502,6 +567,11 @@
       "internal": false
     },
     {
+      "name": "TableColumn",
+      "kind": "view",
+      "internal": false
+    },
+    {
       "name": "TableHeader",
       "kind": "view",
       "internal": false
@@ -513,6 +583,16 @@
     },
     {
       "name": "TextEditor",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "TextField",
+      "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "Toggle",
       "kind": "view",
       "internal": false
     },
@@ -574,6 +654,11 @@
     {
       "name": "ZStack",
       "kind": "view",
+      "internal": false
+    },
+    {
+      "name": "const",
+      "kind": "declaration",
       "internal": false
     },
     {

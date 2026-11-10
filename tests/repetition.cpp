@@ -63,21 +63,21 @@ void diagnostics(){
         "Window { for (item in [1], key: item, navigation: true) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, navigation: true) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, selectionMode: .multiple) { Label() } }",
-        "import nav lvui.native.CollectionNavigation\nWindow { for (item in [1], key: item, itemHeight: 20, navigation: nav, selectionMode: .invalid) { Label() } }",
+        "import nav CollectionNavigation\nWindow { for (item in [1], key: item, itemHeight: 20, navigation: nav, selectionMode: .invalid) { Label() } }",
         "Window { for (item in [1], key: item) { Label()\nLabel() } }",
         "Window { for (item in [], key: item) { Label() } }",
         "let items = []\nWindow { Label() }",
         "let items: String = [1,2]\nWindow { Label() }",
         "let items = [1,2]\nlet copied = items\nlet wrong: String = copied\nWindow { Label() }",
         "Window { VStack { for (item in [1], key: item) { Label() }\nLabel(text: item) } }",
-        "let Wrong: View = Label(text: item.title)\nimport vm Backend\nWindow { for (item in vm.items, key: item.id) { Wrong() } }",
-        "for (item in [1], key: item) { Label() }"}) {
+        "let Wrong: View = Label(text: item.title)\nimport vm Backend\nWindow { for (item in vm.items, key: item.id) { Wrong() } }"}) {
         auto result=lvui::compile_native(source);
         check(!result&&result.error().line>0&&result.error().column>0,"Invalid repetition was accepted without a source diagnostic");
     }
+    check(bool(lvui::compile_native("for (item in [1], key: item) { Label() }")),"Standalone repetition root was rejected");
 }
 void navigation(){
-    const auto code=compile("import vm Backend\nimport nav lvui.native.CollectionNavigation\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, navigation: nav, selectionMode: .multiple, selectOnMove: false, navigationFilter: item.enabled, onActivate: vm.activate) { Label(text: nav.state.current_key) } }");
+    const auto code=compile("import vm Backend\nimport nav CollectionNavigation\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, navigation: nav, selectionMode: .multiple, selectOnMove: false, navigationFilter: item.enabled, onActivate: vm.activate) { Label(text: nav.state.current_key) } }");
     check(code.find("CollectionWidgetNavigation")!=code.npos&&code.find("navigation->publish(frame)")!=code.npos&&
           code.find("CollectionSelectionMode::multiple")!=code.npos&&code.find("object).activate(std::forward")!=code.npos,
           "Navigated repetition omitted its native adapter, presentation, options or C++ endpoint");

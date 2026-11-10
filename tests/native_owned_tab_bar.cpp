@@ -1,4 +1,4 @@
-#include <LVUI/NativeTabBar.h>
+#include "native_tab_composition.h"
 #include <iiGUI/WidgetState.h>
 #include <cmath>
 #include <memory>

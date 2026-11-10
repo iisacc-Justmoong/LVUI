@@ -3,7 +3,7 @@
 #include <limits>
 #include <stdexcept>
 #include <thread>
-using Color=iiColorManager::Rgba;
+using Color=lvui::native::EncodedSrgb;
 struct UiColor final {static constexpr bool encoded_srgb=true;double red=0,green=0,blue=0,alpha=1;bool operator==(const UiColor&)const=default;};
 struct LinearColor final {double red=0,green=0,blue=0,alpha=1;};
 struct FloatColor final {static constexpr bool encoded_srgb=true;float red=0,green=0,blue=0,alpha=1;bool operator==(const FloatColor&)const=default;};

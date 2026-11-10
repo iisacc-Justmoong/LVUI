@@ -5,15 +5,18 @@
 #include <algorithm>
 #include <chrono>
 #include <cmath>
+#include <limits>
 #include <stdexcept>
 #include <thread>
+
+using RadioButtonView=lvui::native::RadioButtonBinding<ii::gui::BasicRadioButton,ii::gui::BasicNativeRadioButton>;
 
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
 void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value.error().message);}
 bool near(double a,double b){return std::abs(a-b)<1e-4;}
-struct ReentrantPeer final:lvui::RadioGroupMember {
+struct ReentrantPeer final:ii::gui::RadioGroupMember {
     bool selected_value=true,displayed=true,live=true;
     std::function<void()> during;
     std::string_view group()const noexcept override{return "choice";}
@@ -24,6 +27,18 @@ struct ReentrantPeer final:lvui::RadioGroupMember {
         if(displayed==selected_value)return;displayed=selected_value;
         if(during){auto callback=during;callback();}
     }
+};
+struct InvalidNavigationPeer final:ii::gui::RadioGroupMember,ii::gui::RadioGroupNavigation {
+    std::shared_ptr<const void> domain;
+    std::string_view group()const noexcept override{return "choices";}
+    bool selected()const noexcept override{return false;}
+    bool participating()const noexcept override{return true;}
+    void assign(bool)noexcept override{}
+    void publish()noexcept override{}
+    std::optional<ii::gui::RadioNavigationPosition> navigation_position()const override{
+        return ii::gui::RadioNavigationPosition{std::numeric_limits<double>::quiet_NaN(),0,domain};
+    }
+    bool navigate_to(std::string_view)override{throw std::runtime_error("Invalid navigation peer was selected");}
 };
 ii::gui::Widget find(const std::shared_ptr<ii::gui::detail::WidgetState>& state,std::string_view suffix){
     const auto snapshots=take(state->snapshots());
@@ -91,14 +106,15 @@ void animation_and_retirement(){
     ii::runtime::EventLoop events;ii::runtime::FrameLoop frames(events);ii::gui::detail::WidgetFrameHooks hooks;
     hooks.frames=[&]()->ii::core::Result<ii::runtime::FrameLoop*>{return &frames;};
     auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();},ii::gui::WidgetAppearance{},std::move(hooks));
-    auto host=take(state->content_host({},"host",{320,200}));auto groups=std::make_shared<lvui::RadioGroups>();
-    std::optional<lvui::native::NativeRadioButton> radio;ii::gui::Widget widget;int callbacks=0;
-    lvui::RadioButtonConfiguration config;config.checked=true;config.group="test";config.motion.curve=lvui::MotionCurve::linear;
+    auto host=take(state->content_host({},"host",{320,200}));auto groups=std::make_shared<ii::gui::RadioGroups>();
+    std::optional<RadioButtonView> radio;ii::gui::Widget widget;int callbacks=0;
+    lvui::RadioButtonConfiguration config;config.checked=true;config.group="test";config.motion.duration=180ms;config.motion.curve=lvui::MotionCurve::linear;
     good(host.set_content([&](ii::gui::WidgetBuilder& builder)->ii::core::Result<void>{
-        auto item=lvui::native::NativeRadioButton::create(builder,{},"radio",groups,config,[&](bool){++callbacks;good(host.clear_content());});
+        auto item=RadioButtonView::create(builder,{},"radio",groups,config,[&](bool){++callbacks;good(host.clear_content());});
         if(!item)return std::unexpected(item.error());widget=item->root();radio=*item;return {};
     }));
     auto bounds=take(widget.snapshot()).bounds;config.checked=false;good(radio->set_options(config));
+    require(near(dot_width(take(state->drawing_snapshot({320,200})),bounds),0),"Deselection did not immediately hide the native radio dot");
     const auto anchor=ii::runtime::Clock::now()+1h;(void)frames.step(anchor);
     require(near(dot_width(take(state->drawing_snapshot({320,200})),bounds),0),"Radio dot did not settle off");
     config.checked=true;good(radio->set_options(config));(void)frames.step(anchor+90ms);
@@ -135,16 +151,78 @@ void repeated_groups(){
     std::swap(values[0],values[2]);scope->backend_0.items.set(values);
     require(take(a.snapshot()).id==original_id&&take(a.snapshot()).checked&&!take(c.snapshot()).checked,
             "Reordering republished a retained row or changed selection");
+    good(head.focus());good(state->input({.kind=ii::gui::WidgetInputKind::key_down,.key=ii::gui::WidgetKey::down}));
+    require(take(c.snapshot()).checked&&take(c.interaction()).focused&&!take(a.snapshot()).checked,
+            "Arrow navigation did not follow the reordered visible rows");
+    good(state->input({.kind=ii::gui::WidgetInputKind::key_down,.key=ii::gui::WidgetKey::up}));
+    require(take(head.snapshot()).checked&&take(head.interaction()).focused,"Reverse navigation did not return to the group head");
     good(host.clear_content());scope.reset();graph.reset();require(!a.snapshot(),"Retired row remained active");state->close();
+}
+void keyboard_navigation(){
+    using namespace ii::gui;
+    auto state=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(state->content_host({},"host",{400,300}));auto groups=std::make_shared<ii::gui::RadioGroups>();
+    Widget first,disabled,third,hidden,other,plain;std::vector<std::string> events;bool retire_on_third=false;
+    good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
+        auto column=builder.vstack({},"column");if(!column)return std::unexpected(column.error());
+        const auto add=[&](std::string name,std::string group,bool checked,bool enabled)->ii::core::Result<Widget>{
+            lvui::RadioButtonConfiguration c;c.text=name;c.group=group;c.checked=checked;c.enabled=enabled;c.motion_enabled=false;
+            auto button=RadioButtonView::create(builder,*column,name,groups,c,[&,name](bool value){
+                if(value){events.push_back(name);if(name=="third"&&retire_on_third)good(host.clear_content());}
+            });
+            if(!button)return std::unexpected(button.error());return button->root();
+        };
+        first=take(add("first","choices",true,true));disabled=take(add("disabled","choices",false,false));
+        third=take(add("third","choices",false,true));hidden=take(add("hidden","choices",false,true));
+        other=take(add("other","other",false,true));plain=take(add("plain","",false,true));
+        return hidden.set_visible(false);
+    }));
+    (void)take(state->drawing_snapshot({400,300}));
+    auto invalid=std::make_shared<InvalidNavigationPeer>();invalid->domain=take(first.placement()).domain.lock();
+    require(bool(invalid->domain)&&groups->prepare(invalid),"Invalid peer fixture did not join its group");good(first.focus());
+    const auto key=[&](WidgetKey value){good(state->input({.kind=WidgetInputKind::key_down,.key=value}));};
+    key(WidgetKey::down);
+    require(take(third.snapshot()).checked&&take(third.interaction()).focused&&!take(first.snapshot()).checked&&
+            !take(disabled.snapshot()).checked&&!take(hidden.snapshot()).checked&&events==std::vector<std::string>{"third"},
+            "Arrow navigation did not skip unavailable or unrelated radios");
+    key(WidgetKey::right);
+    require(take(first.snapshot()).checked&&take(first.interaction()).focused&&events==std::vector<std::string>({"third","first"}),
+            "Arrow navigation did not wrap to the first eligible radio");
+    key(WidgetKey::left);
+    require(take(third.snapshot()).checked&&take(third.interaction()).focused&&events==std::vector<std::string>({"third","first","third"}),
+            "Reverse arrow navigation did not wrap or emit the selected callback");
+    good(plain.focus());key(WidgetKey::down);
+    require(!take(plain.snapshot()).checked&&!take(other.snapshot()).checked&&events.size()==3,
+            "An unnamed radio navigated into another group");
+    good(first.activate());good(first.focus());retire_on_third=true;key(WidgetKey::down);
+    require(!first.snapshot()&&!third.snapshot()&&events.back()=="third","A navigation callback could not retire its view safely");
+    state->close();
+}
+void separate_domains(){
+    using namespace ii::gui;
+    auto first_tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto other_tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto first_host=take(first_tree->content_host({},"host",{200,80}));auto other_host=take(other_tree->content_host({},"host",{200,80}));
+    auto groups=std::make_shared<ii::gui::RadioGroups>();Widget first,other;int callbacks=0;
+    const auto mount=[&](Widget host,Widget& out,bool checked){good(host.set_content([&,checked](WidgetBuilder& builder)->ii::core::Result<void>{
+        lvui::RadioButtonConfiguration c;c.text="Choice";c.group="shared";c.checked=checked;c.motion_enabled=false;
+        auto value=RadioButtonView::create(builder,{},"choice",groups,c,[&](bool){++callbacks;});
+        if(!value)return std::unexpected(value.error());out=value->root();return {};
+    }));};
+    mount(first_host,first,true);mount(other_host,other,false);good(first.focus());
+    good(first_tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::down}));
+    require(take(first.snapshot()).checked&&!take(other.snapshot()).checked&&callbacks==0,
+            "Radio arrow navigation crossed between independent presentation domains");
+    good(first_host.clear_content());good(other_host.clear_content());first_tree->close();other_tree->close();
 }
 void reentrant_options(){
     auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto host=take(state->content_host({},"host",{320,200}));auto groups=std::make_shared<lvui::RadioGroups>();
+    auto host=take(state->content_host({},"host",{320,200}));auto groups=std::make_shared<ii::gui::RadioGroups>();
     auto peer=std::make_shared<ReentrantPeer>();require(groups->prepare(peer)&&groups->refresh(peer),"Peer registration failed");
-    std::optional<lvui::native::NativeRadioButton> radio;ii::gui::Widget widget;
+    std::optional<RadioButtonView> radio;ii::gui::Widget widget;
     lvui::RadioButtonConfiguration config;config.group="choice";config.text="Before";config.motion_enabled=false;
     good(host.set_content([&](ii::gui::WidgetBuilder& builder)->ii::core::Result<void>{
-        auto item=lvui::native::NativeRadioButton::create(builder,{},"radio",groups,config);
+        auto item=RadioButtonView::create(builder,{},"radio",groups,config);
         if(!item)return std::unexpected(item.error());widget=item->root();radio=*item;return {};
     }));
     peer->during=[&]{peer->during={};(void)groups->select(peer,true);};
@@ -155,4 +233,4 @@ void reentrant_options(){
     good(host.clear_content());radio.reset();peer->live=false;groups->retire(peer);state->close();
 }
 }
-int main(){interaction();animation_and_retirement();repeated_groups();reentrant_options();}
+int main(){interaction();animation_and_retirement();repeated_groups();keyboard_navigation();separate_domains();reentrant_options();}

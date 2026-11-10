@@ -1,0 +1,14 @@
+Application() {
+    Scene(title: localized("window.title")) {
+        var count: Int = 0,
+        VStack() {
+            Label() { text: localized("counter.heading") },
+            Label() { text: count },
+            PushButton() { text: localized("counter.increment"), onClick: { count = count + 1 } },
+            PushButton() { text: localized("language.korean"), onClick: setLocale("ko-KR") },
+            PushButton() { text: localized("counter.replace"), onClick: {
+                setString("counter.heading", localized("counter.replacement"))
+            } },
+        },
+    },
+}

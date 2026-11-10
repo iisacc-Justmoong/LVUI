@@ -1,5 +1,5 @@
 #pragma once
-#include <iiGUI/NativeWidgets.h>
+#include <iiSDKCore/Core/Result/Result.h>
 #include <functional>
 namespace lvui::native {
 // A replaceable, non-owning connection to a child's temporary visual policy.

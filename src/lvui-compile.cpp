@@ -15,6 +15,10 @@ int main(int argc, char** argv) {
             emit_styles = true;
             continue;
         }
+        if (arg == "--view-factory") {
+            options.view_factory_only = true;
+            continue;
+        }
         if ((arg == "--name" || arg == "--include" || arg == "--framework" || arg == "--style-mode" ||
              arg == "--style-file" || arg == "--namespace") &&
             i + 1 < argc) {
@@ -40,13 +44,14 @@ int main(int argc, char** argv) {
         } else if (!arg.starts_with('-') && input_file.empty())
             input_file = argv[i];
         else {
-            std::cerr << "Usage: lvui-compile [--name Name] [--include relative/header.h] [--framework "
+            std::cerr << "Usage: lvui-compile [--view-factory] [--name Name] [--include relative/header.h] [--framework "
                          "iiGUI] [--style-mode Collection=Mode] [--style-file Theme.lvui] file.lvui\n"
                          "       lvui-compile --emit-styles [--namespace App.Style] Theme.lvui\n";
             return 2;
         }
     }
     if (input_file.empty()) { std::cerr << "An LVUI source file is required\n"; return 2; }
+    if (emit_styles && options.view_factory_only) { std::cerr << "--view-factory cannot be combined with --emit-styles\n"; return 2; }
     std::ifstream input(input_file, std::ios::binary);
     if (!input) { std::cerr << "Cannot open LVUI source: " << input_file.string() << '\n'; return 2; }
     std::string source(1024 * 1024 + 1, '\0');

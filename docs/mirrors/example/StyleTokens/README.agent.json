@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "example/StyleTokens/README.md",
-    "sha256": "09ca0bedeb2daa8d77522b0fd133ac31a8087f570501d4733849b62d7c14170e",
-    "bytes": 1320,
-    "line_count": 26,
+    "sha256": "0698d55840f454871bbe4ed8c45cf544e0e171aae085f3cab0d5f9a18f76f9db",
+    "bytes": 2013,
+    "line_count": 38,
     "encoding": "utf-8",
     "language": "en"
   },
@@ -42,22 +42,22 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 7,
-      "raw": "This installed-package consumer compiles both component and HTML-shaped `.lvui`\nsources into native C++23 using LVUI-owned style values and ProgressBar geometry.\nThe application supplies iiGUI as the host. It does not find or link LVRS.\nThe final view has no runtime token lookup or LVUI source parser. A separate\ncatalog probe exercises the public LVUI API.\n"
+      "end_line": 8,
+      "raw": "This installed-package consumer compiles both component and HTML-shaped `.lvui`\nsources into native C++23 using LVUI-owned style values and ProgressBar geometry.\nThe application supplies iiGUI as the host. It does not find or link LVRS.\nThe final view has no runtime token lookup or LVUI source parser. A separate\ncatalog probe exercises the public LVUI API, including the independent search\nfield tokens and legacy lookup compatibility.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 8,
-      "end_line": 8,
+      "start_line": 9,
+      "end_line": 9,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 9,
+      "start_line": 10,
       "end_line": 11,
-      "raw": "The examples use `Color.window`, `Metric.space12`, contextual `.space24` and\ntyped `let`/`var` declarations. The inline view also verifies that a Metric\nObservable updates the same native slider after mounting.\n"
+      "raw": "The expected accent and window values follow LVUI's checked-in Figma color\ndefaults; native pixel checks derive their background from the same window token.\n"
     },
     {
       "id": "b000006",
@@ -70,38 +70,80 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 13,
-      "end_line": 14,
-      "raw": "Build from the LVUI repository into its existing `build/` directory with a\nQt-free native iiGUI kit available to CMake:\n"
+      "end_line": 15,
+      "raw": "The examples use `Color.window`, `Metric.space12`, contextual `.space24` and\ntyped `const`/`var` declarations. The inline view also verifies that a Metric\nObservable updates the same native slider after mounting.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 15,
-      "end_line": 15,
+      "start_line": 16,
+      "end_line": 16,
       "raw": "\n"
     },
     {
       "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 18,
+      "raw": "Build from the LVUI repository into its existing `build/` directory with a\nQt-free native iiGUI kit available to CMake.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 20,
+      "end_line": 22,
+      "raw": "Use matching iiGUI headers and libraries from a revision that provides native\naccessibility semantics and widget font families. An older installed iiGUI kit\nmay not compile generated views from the current LVUI sources:\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
       "kind": "fenced_code",
-      "start_line": 16,
-      "end_line": 21,
+      "start_line": 24,
+      "end_line": 29,
       "raw": "```sh\ncmake -S . -B build -DLVUI_BUILD_STYLE_EXAMPLE=ON \\\n  -DCMAKE_PREFIX_PATH=\"/path/to/native-sdk/prefix\"\ncmake --build build --target LVUIStyleTokenConsumer LVUITokenCatalogConsumer\nctest --test-dir build --output-on-failure -R '^LVUI.StyleTokens.(InstalledCatalog|CompiledAppearance)$'\n```\n",
       "language": "sh",
       "code": "cmake -S . -B build -DLVUI_BUILD_STYLE_EXAMPLE=ON \\\n  -DCMAKE_PREFIX_PATH=\"/path/to/native-sdk/prefix\"\ncmake --build build --target LVUIStyleTokenConsumer LVUITokenCatalogConsumer\nctest --test-dir build --output-on-failure -R '^LVUI.StyleTokens.(InstalledCatalog|CompiledAppearance)$'\n",
       "closed": true
     },
     {
-      "id": "b000010",
+      "id": "b000014",
       "kind": "blank",
-      "start_line": 22,
-      "end_line": 22,
+      "start_line": 30,
+      "end_line": 30,
       "raw": "\n"
     },
     {
-      "id": "b000011",
+      "id": "b000015",
       "kind": "paragraph",
-      "start_line": 23,
-      "end_line": 26,
+      "start_line": 31,
+      "end_line": 33,
+      "raw": "When the sibling iiGUI source checkout is present, headless host fixtures use a\nprivate forwarding header in this example's build directory to inspect widget\nstate. This is test infrastructure, not an installed or public iiGUI API.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 38,
       "raw": "`LVUI_STYLE_TOKEN_NATIVE_TESTS=ON` additionally registers two GPU tests for\nMetal and Vulkan on macOS. They create a short-lived window and verify the\nbackground, border and mounted font properties. Leave them disabled unless\nnative execution is requested. See [the token contract](../../docs/StyleTokens.md).\n"
     }
   ],
@@ -119,18 +161,18 @@
     "directive_candidates": [],
     "commands": [
       {
-        "block_id": "b000009",
+        "block_id": "b000013",
         "language": "sh",
         "code": "cmake -S . -B build -DLVUI_BUILD_STYLE_EXAMPLE=ON \\\n  -DCMAKE_PREFIX_PATH=\"/path/to/native-sdk/prefix\"\ncmake --build build --target LVUIStyleTokenConsumer LVUITokenCatalogConsumer\nctest --test-dir build --output-on-failure -R '^LVUI.StyleTokens.(InstalledCatalog|CompiledAppearance)$'\n"
       }
     ],
     "links": [
       {
-        "block_id": "b000011",
+        "block_id": "b000017",
         "label": "the token contract",
         "target": "../../docs/StyleTokens.md",
         "kind": "relative",
-        "line": 26
+        "line": 38
       }
     ],
     "tables": []

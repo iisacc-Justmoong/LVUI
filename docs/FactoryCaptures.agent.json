@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/FactoryCaptures.md",
-    "sha256": "0ca249088410c1abafe94ede4147816a753c5661343283f9caa42d4a4ee5b51c",
-    "bytes": 6740,
+    "sha256": "7b6b64a3463b1b3866e5d526f7f251c7713b8951285bbf38d036537d3505adb9",
+    "bytes": 6744,
     "line_count": 93,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 16,
-      "raw": "```lvui\nimport vm Model\nlet render: () -> String = vm.selected.makeDescription()\n@Static let original: () -> Void = vm.selected.makeHandler()\nWindow { VStack {\n    PushButton(vm.temporary().makeHandler())\n    PushButton(vm.capture(vm.makeArgument()))\n    Label(text: render())\n} }\n```\n",
+      "raw": "```lvui\nimport vm Model\nconst render: () -> String = vm.selected.makeDescription()\n@Static const original: () -> Void = vm.selected.makeHandler()\nWindow { VStack {\n    PushButton(vm.temporary().makeHandler())\n    PushButton(vm.capture(vm.makeArgument()))\n    Label(text: render())\n} }\n```\n",
       "language": "lvui",
-      "code": "import vm Model\nlet render: () -> String = vm.selected.makeDescription()\n@Static let original: () -> Void = vm.selected.makeHandler()\nWindow { VStack {\n    PushButton(vm.temporary().makeHandler())\n    PushButton(vm.capture(vm.makeArgument()))\n    Label(text: render())\n} }\n",
+      "code": "import vm Model\nconst render: () -> String = vm.selected.makeDescription()\n@Static const original: () -> Void = vm.selected.makeHandler()\nWindow { VStack {\n    PushButton(vm.temporary().makeHandler())\n    PushButton(vm.capture(vm.makeArgument()))\n    Label(text: render())\n} }\n",
       "closed": true
     },
     {

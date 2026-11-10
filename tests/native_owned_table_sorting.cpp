@@ -1,4 +1,5 @@
 #include <LVUI/NativeTable.h>
+#include "table_host_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>

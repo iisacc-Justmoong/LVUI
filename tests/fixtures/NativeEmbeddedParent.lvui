@@ -1,0 +1,4 @@
+import vm NativeEmbeddedHostBackend
+VStack(id: "parent") {
+    NativeView(id: "embedded", source: vm.source, width: 320, height: 100)
+}

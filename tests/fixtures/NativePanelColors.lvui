@@ -1,0 +1,9 @@
+import vm NativePanelColorsModel
+Window {
+    VStack {
+        VStack(id: "staticPanel", width: 120, height: 60, backgroundColor: "#808080",
+               borderColor: "#ffffff", borderWidth: 1, cornerRadius: 4) {}
+        VStack(id: "dynamicPanel", width: 120, height: 60, backgroundColor: vm.color,
+               borderColor: "#ffffff", borderWidth: vm.width, cornerRadius: 4) {}
+    }
+}

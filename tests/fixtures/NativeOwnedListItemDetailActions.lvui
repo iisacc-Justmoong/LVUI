@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemDetailActionsModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: .DetailActions, label: "Project", metadata1: vm.metadata,
+                 showMetadata: vm.show_metadata, moreItems: vm.options,
+                 onActionTriggered: vm.action, onMenuItemTriggered: vm.menu)
+    }
+}

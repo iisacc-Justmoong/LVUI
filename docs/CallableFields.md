@@ -17,9 +17,9 @@ struct Model {
 
 ```lvui
 import vm Model
-let render: (Int) -> String = vm.format
-@Static let original: (Int) -> String = render
-let Actions(run: () -> Void = vm.run): View = PushButton(run)
+const render: (Int) -> String = vm.format
+@Static const original: (Int) -> String = render
+const Actions(run: () -> Void = vm.run): View = PushButton(run)
 Window { VStack {
     Label(text: render(4))
     Actions()
@@ -53,7 +53,7 @@ Window { VStack {
 
 ## 함수 값과 실패
 
-타입 지정 `let`, `@Static let`, `var`, 구성 매개변수·기본값·전달과 이벤트에 같은 선택을
+타입 지정 `const`, `@Static const`, `var`, 구성 매개변수·기본값·전달과 이벤트에 같은 선택을
 적용한다. 선언한 인자·반환 타입, 접근 권한·const 접근은 실제 생성 C++로 검사한다.
 읽기 전용 호출은 파일 리비전을 발행하지 않는다.
 

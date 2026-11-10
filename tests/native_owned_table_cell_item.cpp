@@ -1,4 +1,8 @@
 #include <LVUI/NativeTableCellItem.h>
+#include <iiGUI/NativeTableCellItemView.h>
+#include <iiGUI/TableCellItemModel.h>
+using TableCellTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using TableCellTestView=lvui::native::TableCellItemBinding<ii::gui::BasicTableCellItem,ii::gui::BasicNativeTableCellItem,TableCellTestField>;
 #include <iiGUI/WidgetState.h>
 
 #include <functional>
@@ -25,10 +29,10 @@ int main(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{300,80}));
     native::TableCellItemInput input;input.configuration.text="2";input.configuration.value_type="int";input.configuration.inputable=true;
-    std::optional<native::NativeTableCellItem> cell;std::vector<std::string> drafts,submitted,rejected;
+    std::optional<TableCellTestView> cell;std::vector<std::string> drafts,submitted,rejected;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});if(!column)return std::unexpected(column.error());
-        auto value=native::NativeTableCellItem::create(builder,*column,"cell",input,
+        auto value=TableCellTestView::create(builder,*column,"cell",input,
             {.edited=[&](std::string value){drafts.push_back(std::move(value));},
              .submitted=[&](std::string value){submitted.push_back(std::move(value));},
              .rejected=[&](std::string value,std::string){rejected.push_back(std::move(value));}});
@@ -50,6 +54,15 @@ int main(){
     good(cell->cancel_edit());require(!cell->editor(),"Canceled cell edit stayed open");
     good(cell->begin_edit());good(tree->input({.kind=WidgetInputKind::composition,.text="한"}));
     require(take(take(cell->editor()).snapshot()).marked.has_value()&&!cell->commit_edit(),"Uncommitted composition was submitted");
+    auto field=take(cell->editor());const auto before_palette=take(field.snapshot());
+    changed=take(cell->options());changed.configuration.palette.current=figma_defaults::accent_purple_default;
+    changed.configuration.palette.selection=figma_defaults::with_alpha(figma_defaults::accent_purple_default,31./255.);
+    good(cell->set_options(changed));const auto after_palette=take(field.snapshot());
+    require(after_palette.marked==before_palette.marked&&after_palette.selection==before_palette.selection&&
+        after_palette.text==before_palette.text&&take(field.root().snapshot()).focused&&
+        take(field.options()).palette.focus==figma_defaults::accent_purple_default&&
+        take(field.options()).palette.selection==changed.configuration.palette.selection,
+        "A palette change lost the active cell composition or failed to recolor its editor");
     good(tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::escape}));
     require(!cell->editor()&&take(cell->options()).configuration.text=="99","Escape did not cancel the cell draft");
     changed.configuration.enabled=false;good(cell->set_options(changed));require(!cell->begin_edit(),"Disabled cell began editing");
@@ -60,7 +73,7 @@ int main(){
     custom.configuration.text="no";custom.configuration.value_type="custom";custom.configuration.inputable=true;custom.validator=validator;
     unsigned echo=0,after_remove=0;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
-        auto value=native::NativeTableCellItem::create(builder,{},"custom",custom,
+        auto value=TableCellTestView::create(builder,{},"custom",custom,
             {.edited=[&](std::string value){++echo;auto options=take(cell->options());options.configuration.text=std::move(value);good(cell->set_options(options));},
              .submitted=[&](std::string){++after_remove;good(host.clear_content());}});
         if(!value)return std::unexpected(value.error());cell=*value;return {};

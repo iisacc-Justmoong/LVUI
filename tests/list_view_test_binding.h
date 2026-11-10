@@ -1,0 +1,15 @@
+#pragma once
+#include <LVUI/NativeListView.h>
+#include <iiGUI/NativeListView.h>
+#include <iiGUI/ListViewport.h>
+#include <iiGUI/ListDrag.h>
+#include <iiGUI/ListItemDrawing.h>
+#include <iiGUI/SrgbColor.h>
+#include <iiGUI/NativeInputFieldView.h>
+#include <iiGUI/SvgImageCache.h>
+using ListViewTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using ListViewTestItemModel=lvui::native::ListItemModelBinding<ii::gui::BasicListItem>;
+using ListViewTestDrawing=lvui::native::ListItemDrawingBinding<ii::gui::BasicListItemDrawing,ListViewTestItemModel,ii::gui::SrgbColorConverter>;
+using ListViewTestSource=lvui::ListViewportBinding<ii::gui::BasicListViewportSource>;
+using ListViewTestDrag=lvui::ListDragBinding<ii::gui::BasicListDrag,ListViewTestSource>;
+using ListViewTestView=lvui::native::ListViewBinding<ii::gui::BasicNativeListView,ListViewTestDrawing,ListViewTestField,ii::gui::RasterImage,ii::gui::CachedSvgDecoder,ii::gui::WidgetBuilder,ListViewTestSource,ListViewTestDrag>;

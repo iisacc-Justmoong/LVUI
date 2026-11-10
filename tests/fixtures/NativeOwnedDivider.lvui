@@ -4,5 +4,6 @@ Window {
         MenuDivider(id: "rule", axis: vm.axis, lineLength: vm.length, thickness: vm.thickness,
                     crossPadding: vm.cross, linePadding: vm.inset, dividerColor: vm.color)
         ContextMenuDivider(id: "context")
+        MenuDivider(id: "defaultRule")
     }
 }

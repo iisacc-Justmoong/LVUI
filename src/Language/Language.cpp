@@ -177,6 +177,10 @@ struct Parser final {
         if(value.kind==ValueKind::view||(value.kind==ValueKind::reference&&known_view(value.text)))return true;
         return value.kind==ValueKind::list&&std::ranges::any_of(value.elements,[&](const auto& child){return contains_view(child);});
     }
+    bool contains_declared_action(const Value& value) const {
+        if (value.kind == ValueKind::action) return true;
+        return std::ranges::any_of(value.elements, [&](const auto& child) { return contains_declared_action(child); });
+    }
     const Token& current() const { return tokens[cursor]; }
     const Token& next() const { return tokens[std::min(cursor + 1, tokens.size() - 1)]; }
     [[noreturn]] void error(std::string message) const {
@@ -186,10 +190,12 @@ struct Parser final {
     bool at(TokenKind kind) const { return current().kind == kind; }
     SourcePosition position() const { return {current().offset, current().line, current().column}; }
     bool word(std::string_view value) const { return at(TokenKind::keyword) && current().text == value; }
+    bool binding_declaration() const { return word("const") || word("var") || word("let"); }
     bool accept(TokenKind kind) { if (!at(kind)) return false; ++cursor; return true; }
     void expect(TokenKind kind, std::string message) { if (!accept(kind)) error(std::move(message)); }
     void newlines() { while (accept(TokenKind::newline)) {} }
-    void separator() {
+    void separator(bool comma_allowed = false) {
+        if (comma_allowed && accept(TokenKind::comma)) { newlines(); return; }
         if (!at(TokenKind::newline) && !at(TokenKind::right_brace) && !at(TokenKind::end)) error("Expected a newline between statements");
         newlines();
     }
@@ -239,9 +245,93 @@ struct Parser final {
             throw Diagnostic{at.offset, at.line, at.column, "Maximum expression depth is 64"};
         return result;
     }
+    bool action_word(std::string_view name) const {
+        return at(TokenKind::identifier) && current().text == name;
+    }
+    Value action_body(std::size_t depth) {
+        if (depth > 64) error("Maximum event statement depth is 64");
+        const auto start = position();
+        expect(TokenKind::left_brace, "Expected '{' to open an event block");
+        return action_contents(depth + 1, start);
+    }
+    Value action_conditional(std::size_t depth) {
+        if (depth > 64) error("Maximum event statement depth is 64");
+        const auto start = position();
+        ++cursor; // if
+        expect(TokenKind::left_paren, "Expected '(' after if"); newlines();
+        auto condition = value(depth + 1); newlines();
+        expect(TokenKind::right_paren, "Expected ')' after an event condition"); newlines();
+        std::vector<Value> parts;
+        parts.push_back(std::move(condition));
+        parts.push_back(action_body(depth + 1));
+        auto following = cursor;
+        while (tokens[following].kind == TokenKind::newline) ++following;
+        if (tokens[following].kind == TokenKind::identifier && tokens[following].text == "else") {
+            cursor = following + 1; newlines();
+            if (action_word("if")) {
+                const auto nested = position();
+                std::vector<Value> branch;
+                branch.push_back(action_conditional(depth + 1));
+                parts.push_back(node(ValueKind::action, {}, std::move(branch), nested));
+            } else parts.push_back(action_body(depth + 1));
+        }
+        return node(ValueKind::action_if, {}, std::move(parts), start);
+    }
+    Value action_contents(std::size_t depth, SourcePosition start) {
+        if (depth > 64) error("Maximum event statement depth is 64");
+        std::vector<Value> statements;
+        newlines();
+        while (!accept(TokenKind::right_brace)) {
+            if (at(TokenKind::end)) error("Expected '}' after event block");
+            if (statements.size() == 256) error("Maximum event statement count is 256");
+            const auto at = position();
+            if (action_word("if")) statements.push_back(action_conditional(depth + 1));
+            else if (action_word("for")) {
+                ++cursor;
+                expect(TokenKind::left_paren, "Expected '(' after for"); newlines();
+                auto name = identifier();
+                if (name == "if" || name == "else" || name == "for" || name == "in" ||
+                    name == "break" || name == "continue" || name == "return")
+                    error("An event control word is reserved and cannot name a loop item");
+                if (!action_word("in")) error("Expected 'in' after the event item name");
+                ++cursor; newlines();
+                auto source = value(depth + 1); newlines();
+                expect(TokenKind::right_paren, "Expected ')' after the event collection"); newlines();
+                auto body = action_body(depth + 1);
+                statements.push_back(node(ValueKind::action_for, std::move(name),
+                                          {std::move(source), std::move(body)}, at));
+            } else if (action_word("break") || action_word("continue") || action_word("return")) {
+                const auto kind = current().text == "break" ? ValueKind::action_break :
+                    current().text == "continue" ? ValueKind::action_continue : ValueKind::action_return;
+                ++cursor;
+                statements.push_back(node(kind, {}, {}, at));
+            } else if (at_name_assignment()) {
+                auto name = path();
+                expect(TokenKind::equal, "Expected '=' in event assignment"); newlines();
+                auto assigned = value(depth + 1);
+                if (contains_declared_action(assigned))
+                    error("Named callable bodies are not LVUI syntax; import the C++ method");
+                statements.push_back(node(ValueKind::assignment, std::move(name), {std::move(assigned)}, at));
+            } else {
+                auto statement = value(depth + 1);
+                if (statement.kind != ValueKind::call && statement.kind != ValueKind::invocation)
+                    error("An event statement requires an assignment or callable invocation");
+                statements.push_back(std::move(statement));
+            }
+            separator();
+        }
+        return node(ValueKind::action, {}, std::move(statements), start);
+    }
     Value primary(std::size_t depth) {
         if (depth > 64) error("Maximum expression depth is 64");
         const auto start = position();
+        if (accept(TokenKind::left_brace)) {
+            newlines();
+            if (at(TokenKind::identifier) && next().kind == TokenKind::colon) {
+                error("Object literals are not LVUI syntax; provide objects through a C++ import");
+            }
+            return action_contents(depth + 1, start);
+        }
         if ((at(TokenKind::identifier)&&(current().text=="if"||current().text=="for"))||(at(TokenKind::keyword) && current().reserved->kind == KeywordKind::view) ||
             (at(TokenKind::identifier) && known_view(current().text) &&
              (next().kind == TokenKind::left_paren || next().kind == TokenKind::left_brace))) {
@@ -276,6 +366,13 @@ struct Parser final {
             return {ValueKind::reference, std::move(reference), {}, start};
         }
         error("Expected a scalar, list or reference value");
+    }
+    bool at_name_assignment() const {
+        if (!at(TokenKind::identifier)) return false;
+        auto index = cursor + 1;
+        while (index + 1 < tokens.size() && tokens[index].kind == TokenKind::dot &&
+               tokens[index + 1].kind == TokenKind::identifier) index += 2;
+        return tokens[index].kind == TokenKind::equal;
     }
     Value postfix(std::size_t depth) {
         auto result = primary(depth);
@@ -359,7 +456,7 @@ struct Parser final {
     static void bind(std::unordered_set<std::string>& names, const std::string& name, const Parser& parser) {
         if (!names.insert(name).second) parser.error("Duplicate binding name");
     }
-    BackendImport import(std::unordered_set<std::string>& names) {
+    BackendImport import(std::unordered_set<std::string>& names, bool comma_allowed = false) {
         const auto start = position();
         ++cursor;
         if (at(TokenKind::identifier) && current().text == "class") {
@@ -373,12 +470,12 @@ struct Parser final {
             if(find_keyword(name))error("A reserved C++ type name requires an explicit blueprint alias");
             bind(names, name, *this);
             view_names.back()[name] = {};
-            separator();
+            separator(comma_allowed);
             return {std::move(name), std::move(type), start, true};
         }
         auto name = identifier(); bind(names, name, *this);
         view_names.back()[name] = {};
-        auto type = cpp_type_path(); separator();
+        auto type = cpp_type_path(); separator(comma_allowed);
         return {std::move(name), std::move(type), start};
     }
     std::pair<std::string,std::optional<CallableSignature>> declared_type(){
@@ -399,27 +496,38 @@ struct Parser final {
         newlines();expect(TokenKind::arrow,"Expected '->' and a callback result type");newlines();
         signature.result=type_name();return {"Callable",std::move(signature)};
     }
-    Binding binding(std::unordered_set<std::string>& names) {
+    Binding binding(std::unordered_set<std::string>& names, bool comma_allowed = false) {
         const auto start = position();
         BindingAnnotation annotation = BindingAnnotation::none;
+        bool explicit_state = false;
+        bool explicit_bindable = false;
         while (accept(TokenKind::annotation)) {
             const auto name = identifier();
-            const auto next = name == "Static" ? BindingAnnotation::static_value :
-                              name == "Observable" ? BindingAnnotation::observable : BindingAnnotation::none;
-            if (next == BindingAnnotation::none) error("Unknown declaration annotation '" + name + "'");
-            if (annotation != BindingAnnotation::none) error("Duplicate or conflicting declaration annotations");
-            annotation = next;
+            if (name == "State" || name == "Bindable") {
+                auto& marker = name == "State" ? explicit_state : explicit_bindable;
+                if (marker || annotation == BindingAnnotation::static_value)
+                    error("Duplicate or conflicting declaration annotations");
+                marker = true;
+            } else {
+                const auto next = name == "Static" ? BindingAnnotation::static_value :
+                                  name == "Observable" ? BindingAnnotation::observable : BindingAnnotation::none;
+                if (next == BindingAnnotation::none) error("Unknown declaration annotation '" + name + "'");
+                if (annotation != BindingAnnotation::none ||
+                    (next == BindingAnnotation::static_value && (explicit_state || explicit_bindable)))
+                    error("Duplicate or conflicting declaration annotations");
+                annotation = next;
+            }
             newlines();
         }
-        if (!word("let") && !word("var")) error("An annotation must precede a let or var declaration");
-        const bool mutableValue = word("var"); ++cursor;
+        if (!binding_declaration()) error("An annotation must precede a const or var declaration");
+        bool mutableValue = word("var"); ++cursor;
         if (mutableValue && annotation == BindingAnnotation::static_value)
-            error("@Static requires an immutable let declaration");
+            error("@Static requires an immutable const declaration");
         auto name = identifier(); bind(names, name, *this);
         std::optional<std::vector<ComponentParameter>> parameters;
         if (accept(TokenKind::left_paren)) {
-            if (mutableValue || annotation != BindingAnnotation::none)
-                error("A reusable View signature requires an unannotated let declaration");
+            if (mutableValue || annotation != BindingAnnotation::none || explicit_state || explicit_bindable)
+                error("A reusable View signature requires an unannotated const declaration");
             parameters.emplace();
             view_names.emplace_back();
             std::unordered_set<std::string> parameter_names;
@@ -431,7 +539,11 @@ struct Parser final {
                 expect(TokenKind::colon, "Expected ':' and a type after a component parameter name");
                 auto [parameter_type,callable]=declared_type();
                 std::optional<Value> fallback;
-                if (accept(TokenKind::equal)) { newlines(); fallback = value(); }
+                if (accept(TokenKind::equal)) {
+                    newlines(); fallback = value();
+                    if (contains_declared_action(*fallback))
+                        error("Named callable bodies are not LVUI syntax; import the C++ method");
+                }
                 view_names.back()[parameter_name] = parameter_type=="View"||parameter_type=="[View]"?parameter_type:std::string{};
                 parameters->push_back({std::move(parameter_name), std::move(parameter_type), std::move(fallback), at, std::move(callable)});
                 newlines();
@@ -444,6 +556,19 @@ struct Parser final {
         std::optional<CallableSignature> callable;
         if (accept(TokenKind::colon)) {
             auto declared=declared_type();type=std::move(declared.first);callable=std::move(declared.second);
+        }
+        // A computed View property describes a visual definition, not a
+        // replaceable stored View. Its body has exactly one visual root.
+        if (mutableValue && type == "View" && !parameters && at(TokenKind::left_brace)) {
+            if (explicit_state || explicit_bindable) error("Default value annotations cannot decorate a computed View");
+            ++cursor; newlines();
+            Value initializer{ValueKind::view, {}, {}, position()};
+            initializer.view = std::make_shared<View>(view(active_view_depth + 1));
+            newlines();
+            expect(TokenKind::right_brace, "A computed View property requires exactly one root View");
+            view_names.back()[name] = type;
+            separator(comma_allowed);
+            return {std::move(name), std::move(type), std::move(initializer), false, start, annotation, {}, {}, explicit_state, explicit_bindable};
         }
         expect(TokenKind::equal, "Expected '=' in value declaration");
         const bool sequence_constructor=at(TokenKind::identifier)&&view_type(current().text)=="[View]";
@@ -459,9 +584,12 @@ struct Parser final {
             initializer.position = position();
             initializer.view = std::make_shared<View>(view(active_view_depth + 1));
         } else initializer = value();
+        if (contains_declared_action(initializer))
+            error("Named callable bodies are not LVUI syntax; import the C++ method");
         if (type.empty() && initializer.kind == ValueKind::reference && known_view(initializer.text)) type = view_type(initializer.text);
         if(type.empty()&&initializer.kind==ValueKind::list&&contains_view(initializer))type="[View]";
         if (type == "View"||type=="[View]") {
+            if (explicit_state || explicit_bindable) error("Default value annotations cannot decorate a View declaration");
             if (mutableValue) error("Mutable View declarations require dynamic replacement support");
             if (annotation == BindingAnnotation::static_value) error("@Static View declarations require a deep snapshot contract");
         }
@@ -472,8 +600,8 @@ struct Parser final {
             view_names.pop_back();
         }
         view_names.back()[name] = type=="View"||type=="[View]"?type:std::string{};
-        separator();
-        return {std::move(name), std::move(type), std::move(initializer), mutableValue, start, annotation, std::move(parameters),std::move(callable)};
+        separator(comma_allowed);
+        return {std::move(name), std::move(type), std::move(initializer), mutableValue, start, annotation, std::move(parameters),std::move(callable),explicit_state,explicit_bindable};
     }
     void input(View& view, std::unordered_set<std::string>& names, bool named) {
         const auto start = position();
@@ -483,7 +611,18 @@ struct Parser final {
             if (!names.insert(name).second) error("Duplicate component input");
             expect(TokenKind::colon, "Expected ':' after an input name");
         }
-        view.inputs.push_back({std::move(name), value(), start});
+        // A bare reserved View name can also denote a Figma component variant
+        // in a named type/kind input. Parentheses or braces retain View-value
+        // meaning; ordinary identifiers still resolve through lexical scope.
+        if ((name == "type" || name == "kind") && at(TokenKind::keyword) &&
+            current().reserved->kind == KeywordKind::view &&
+            (next().kind == TokenKind::comma || next().kind == TokenKind::newline ||
+             next().kind == TokenKind::right_brace || next().kind == TokenKind::right_paren)) {
+            const auto at = position();
+            view.inputs.push_back({std::move(name), Value{ValueKind::enumeration, "." + tokens[cursor++].text, {}, at}, start});
+        } else {
+            view.inputs.push_back({std::move(name), value(), start});
+        }
     }
     View view(std::size_t depth) {
         if (depth > 64) error("Maximum View depth is 64");
@@ -529,12 +668,27 @@ struct Parser final {
             result.condition = value(); newlines();
             expect(TokenKind::right_paren, "Expected ')' after a View condition"); newlines();
             const auto branch = [&] {
+                const auto branch_position = position();
                 expect(TokenKind::left_brace, "Expected '{' to open a conditional View branch"); newlines();
                 view_names.emplace_back();
-                auto child = view(depth + 1); newlines();
-                expect(TokenKind::right_brace, "A conditional View branch requires exactly one root View");
+                const auto previous_depth = std::exchange(active_view_depth, depth);
+                std::unordered_set<std::string> names;
+                View local; local.position=branch_position; local.fragment=true;
+                while (!accept(TokenKind::right_brace)) {
+                    if (at(TokenKind::end)) error("Expected '}' to close a conditional View branch");
+                    if (binding_declaration() || at(TokenKind::annotation)) local.bindings.push_back(binding(names, true));
+                    else if (word("import")) local.imports.push_back(import(names, true));
+                    else {
+                        if (!local.children.empty()) error("A conditional View branch requires exactly one root View");
+                        local.children.push_back(view(depth + 1));
+                        separator(true);
+                    }
+                }
+                active_view_depth = previous_depth;
                 view_names.pop_back();
-                return child;
+                if (local.children.empty()) error("A conditional View branch requires exactly one root View");
+                if (local.imports.empty() && local.bindings.empty()) return std::move(local.children.front());
+                return local;
             };
             result.children.push_back(branch());
             auto following = cursor;
@@ -547,7 +701,10 @@ struct Parser final {
             return result;
         }
         if (at(TokenKind::identifier)) {
-            if (!known_view(current().text)) error("Unknown View component '" + current().text + "'");
+            if (!known_view(current().text)) {
+                if (current().text == "div") error("div is not a built-in View; use HStack, VStack, or ZStack");
+                error("Unknown View component '" + current().text + "'");
+            }
             result.custom_component = tokens[cursor++].text;
         } else {
             if (!at(TokenKind::keyword) || current().reserved->kind != KeywordKind::view) error("Expected a concrete View component");
@@ -556,9 +713,9 @@ struct Parser final {
         const auto previous_depth = std::exchange(active_view_depth, depth);
         view_names.emplace_back();
         std::unordered_set<std::string> inputs, bindings;
-        bool namedSeen = false, constructed = false;
+        bool namedSeen = false;
         if (accept(TokenKind::left_paren)) {
-            constructed = true; newlines();
+            newlines();
             if (!accept(TokenKind::right_paren)) for (;;) {
                 const bool named = at(TokenKind::identifier) && next().kind == TokenKind::colon;
                 if (!named && namedSeen) error("Positional input cannot follow a named input");
@@ -573,19 +730,18 @@ struct Parser final {
         while (tokens[body].kind == TokenKind::newline) ++body;
         if (tokens[body].kind == TokenKind::left_brace) cursor = body;
         if (accept(TokenKind::left_brace)) {
-            constructed = true; newlines();
+            newlines();
             while (!accept(TokenKind::right_brace)) {
                 if (at(TokenKind::end)) error("Expected '}' to close the View body");
-                if (word("let") || word("var") || at(TokenKind::annotation)) result.bindings.push_back(binding(bindings));
-                else if (word("import")) result.imports.push_back(import(bindings));
+                if (binding_declaration() || at(TokenKind::annotation)) result.bindings.push_back(binding(bindings, true));
+                else if (word("import")) result.imports.push_back(import(bindings, true));
                 else {
                     if (at(TokenKind::identifier) && next().kind == TokenKind::colon) input(result, inputs, true);
                     else result.children.push_back(view(depth + 1));
-                    separator();
+                    separator(true);
                 }
             }
         }
-        if (!constructed) error("Expected '()' or '{}' after a View component");
         view_names.pop_back();
         active_view_depth = previous_depth;
         return result;
@@ -614,7 +770,7 @@ ViewParseResult parse_view(std::string_view source) {
         std::unordered_set<std::string> names;
         std::vector<BackendImport> imports;
         std::vector<Binding> bindings;
-        while (parser.word("import") || parser.word("let") || parser.word("var") || parser.at(TokenKind::annotation)) {
+        while (parser.word("import") || parser.binding_declaration() || parser.at(TokenKind::annotation)) {
             if (parser.word("import")) imports.push_back(parser.import(names));
             else bindings.push_back(parser.binding(names));
         }

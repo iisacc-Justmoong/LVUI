@@ -8,8 +8,11 @@ struct NativeOwnedListPanelModel final {
     ii::core::Observable<std::shared_ptr<lvui::ListController>> controller{
         std::make_shared<lvui::ListController>(lvui::ListController::create(source).value())};
     ii::core::Observable<std::int64_t> revision{0};
+    ii::core::Observable<std::int64_t> view_revision{0};
     ii::core::Observable<double> width{200};
+    ii::core::Observable<double> row_height{30};
     ii::core::Observable<bool> footer{true};
+    ii::core::Observable<bool> scrollable{true};
     int activations=0,tools=0,footers=0;
     void selected(std::size_t,const lvui::ListEntry&){++activations;}
     void tool(std::size_t,std::string){++tools;}

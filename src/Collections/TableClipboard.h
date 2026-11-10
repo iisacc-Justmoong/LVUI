@@ -140,6 +140,8 @@ struct TableClipboardData final {
         return invalid("Expanded table paste exceeds its byte limit");
     TableEdit edit{.revision=snapshot->revision}; edit.cells.reserve(rows * columns);
     for (std::size_t r = 0; r < rows; ++r) for (std::size_t c = 0; c < columns; ++c) {
+        if (index->merge_at(selection.first_row + r, selection.first_column + c))
+            return invalid("Split merged cells before pasting a range");
         const auto& row = snapshot->rows[selection.first_row + r];
         const auto& column = snapshot->columns[selection.first_column + c];
         const auto& cell = row.cells[selection.first_column + c];

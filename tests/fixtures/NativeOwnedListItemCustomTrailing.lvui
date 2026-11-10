@@ -1,0 +1,11 @@
+import vm NativeOwnedListItemCustomTrailingModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: vm.kind, label: "Library", trailingWidth: vm.width, trailingHeight: vm.height,
+                 leadingComponent: PushButton(id: "leading", text: "L", onClick: vm.leadingClicked),
+                 trailingComponent: PushButton(id: "trailing", text: vm.label, onClick: vm.trailingClicked),
+                 footerComponent: PushButton(id: "footer", text: "More", height: 30, onClick: vm.footerClicked))
+        ListItem(id: "natural", type: .Navigation, label: "Natural",
+                 trailingComponent: PushButton(id: "automatic", text: "Auto", width: 106, height: 55))
+    }
+}

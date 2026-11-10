@@ -61,9 +61,13 @@ int main() {
     require(!take(graph->failures()).empty() && take(modal.snapshot()).bounds.width == 600,
             "Invalid Modal input changed its popup");
     scope->backend_0.width.set(700); require(take(graph->failures()).empty(), "Modal did not recover after invalid input");
+    scope->backend_0.childFontSize.set(-1);
+    require(take(graph->failures()).empty() && !take(scope->binding_failures()).empty(),
+            "Modal content failure was not reported by its root activation");
     good(modal.cancel_popup());
-    require(scope->backend_0.closes == 1 && scope->backend_0.cancels == 1 && !editor.snapshot(),
+    require(scope->backend_0.closes == 1 && scope->backend_0.cancels == 1 && !editor.snapshot() && take(scope->binding_failures()).empty(),
             "Generated Modal did not retire and notify its body");
+    scope->backend_0.childFontSize.set(13);
     good(modal.open_at(0, 0));
     auto replacement = take(modal.popup_content("editor"));
     require(take(replacement.snapshot()).id != first && text(replacement) == "Updated body" && scope->backend_0.opens == 2,

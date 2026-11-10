@@ -1,5 +1,6 @@
 #include <LVUI/Compiler.h>
 #include <LVUI/WindowAccent.h>
+#include <iiSDKCore/Core/Text/Number.h>
 #include <iostream>
 #include <stdexcept>
 void check(bool ok,const char* message){if(!ok)throw std::runtime_error(message);}
@@ -16,7 +17,10 @@ void dynamic(){
 }
 void accent(){
     auto fixed=generate("Window(accent: .purple) { PushButton(text: \"Save\") }");
-    check(fixed.find(".527506")!=fixed.npos&&fixed.find(".291259")!=fixed.npos,
+    const auto purple=lvui::figma_defaults::accent_purple_default;
+    const auto expected="result.primary = ii::gui::WidgetColor{"+ii::core::format_decimal(purple.red)+", "+
+                        ii::core::format_decimal(purple.green)+", "+ii::core::format_decimal(purple.blue)+", 1}";
+    check(fixed.find(expected)!=fixed.npos,
           "Static Window accent did not affect the generated appearance");
     auto reactive=generate("import vm Model\nWindow(accent: vm.accent) { PushButton(text: \"Save\") }");
     check(reactive.find("lvui::native::window_accent(")!=reactive.npos&&
@@ -33,6 +37,14 @@ void accent(){
     auto overridden=lvui::compile_native("Window(accent: .purple) { PushButton(text: \"Save\") }",options);
     check(overridden&&overridden->find("0.125, 0.25, 0.5, 1")!=overridden->npos,
           "Window accent ignored an application style override");
+    auto extras=lvui::compile_native("Window(accent: .purple) { VStack {\nProgressBar(currentValue: 50)\nColorPickerButton()\nAlertButton(tone: .primary)\nToolbarButton(tone: .primary)\nAlert(primaryText: \"OK\")\n} }",options);
+    if(!extras)throw std::runtime_error(extras.error().message);
+    check(extras->find("value.style.fill = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
+          extras->find("value.configuration.palette.focus = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
+          extras->find("value.palette.primary = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
+          extras->find("value.configuration.palette.primary = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
+          extras->find("value.configuration.primary_color = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos,
+          "Window accent extras ignored the overridden token");
     for(auto source:{"Window(accent: .unknown) { Label() }", "Window(accent: 9) { Label() }"}){
         auto rejected=lvui::compile_native(source);
         check(!rejected&&rejected.error().line>0,"Invalid Window accent lacked a source diagnostic");

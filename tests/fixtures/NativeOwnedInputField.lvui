@@ -2,7 +2,10 @@ import vm NativeOwnedInputFieldModel
 Window {
     VStack {
         InputField(id: "field", text: vm.text, placeholder: vm.placeholder, width: vm.width,
-                   enabled: vm.enabled, readOnly: vm.readOnly, password: vm.password,
+                   enabled: vm.enabled, readOnly: vm.readOnly, password: vm.password, maximumLength: vm.maxLength, size: vm.size,
+                   clearButtonVisible: vm.clear, clearAccessibilityName: vm.clearName, surface: vm.surface,
                    onEdited: vm.edited, onSubmit: vm.submit)
+        InputField(id: "multi", text: "one two three four", width: 80, height: 100,
+                   multiline: true, wrapEnabled: vm.wrap)
     }
 }

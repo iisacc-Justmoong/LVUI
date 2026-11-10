@@ -1,4 +1,4 @@
-#include <LVUI/NativeCard.h>
+#include "native_card_composition.h"
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -28,7 +28,7 @@ bool image_present(const ii::gui::CanvasFrame& frame) {
 }
 }
 int main() {
-    using namespace lvui; using namespace ii::gui;
+    using namespace lvui; using namespace ii::gui;using lvui::CardType;using lvui::CardDisplayState;
     auto tree = std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({},"host",{340,340}));
     native::CardInput input; auto& c = input.configuration; c.type = CardType::project;
@@ -49,6 +49,25 @@ int main() {
     auto frame=take(tree->drawing_snapshot({340,340}));
     require(contains(frame,"Project") && contains(frame,"Shared project") && contains(frame,"Owner") &&
             contains(frame,"50%") && image_present(frame), "Card omitted its owned text, progress, or image");
+    const auto check_outer=[&](bool has_fill,float radius,float border_width){
+        auto shot=take(tree->drawing_snapshot({340,340}));const auto bounds=take(card->surface().snapshot()).bounds;
+        bool fill=false,border=false;
+        const auto check=[&](const auto& panels){for(const auto& panel:panels)if(panel.bounds==bounds){
+            if(panel.stroke_width==0)fill=true;
+            if(panel.stroke_width==border_width && panel.radius==radius)border=true;
+        }};
+        check(shot.panels);for(const auto& layer:shot.overlays)check(layer.panels);
+        require(fill==has_fill && border,"Card surface fill, radius or border state differs from the contract");
+    };
+    for(int kind=2;kind<8;++kind)for(int state=1;state<=3;++state){
+        auto current=take(card->options());current.configuration.type=static_cast<CardType>(kind);
+        current.configuration.display_state=static_cast<CardDisplayState>(state);good(card->set_options(current));
+        check_outer(false,0,state==3?2.f:1.f);
+    }
+    auto original=take(card->options());original.configuration.type=CardType::file;
+    original.configuration.display_state=CardDisplayState::normal;good(card->set_options(original));check_outer(true,12,1);
+    original.configuration.type=CardType::project;original.configuration.corner_radius=5;good(card->set_options(original));check_outer(false,5,1);
+    original.configuration.corner_radius.reset();original.configuration.display_state=CardDisplayState::automatic;good(card->set_options(original));
     good(card->surface().activate());
     require(clicks==1 && selection==std::vector<bool>{true} && take(card->options()).configuration.selected,
             "Card selection and click order failed");

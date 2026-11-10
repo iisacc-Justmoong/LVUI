@@ -1,0 +1,4 @@
+Application {
+    Window { PushButton(id: "open", text: "Open", onClick: openWindow("tools")) }
+    Window(id: "tools", initiallyOpen: false) { PushButton(text: "Close", onClick: closeWindow("tools")) }
+}

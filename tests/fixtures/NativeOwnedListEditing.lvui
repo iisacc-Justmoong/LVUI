@@ -1,0 +1,6 @@
+import vm NativeOwnedListEditingModel
+Window {
+    List(id: "list", controller: vm.controller, editor: vm.editor, editable: vm.editable,
+         modelRevision: vm.revision, width: 200, height: 60, rowHeight: 20, footerVisible: false,
+         onItemEdited: vm.edited, onItemSubmitted: vm.submitted, onItemRejected: vm.rejected)
+}

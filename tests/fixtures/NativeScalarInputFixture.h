@@ -1,6 +1,6 @@
 #pragma once
 #include <iiSDKCore/Core/Property/Observable.h>
-#include <iiColorManager/ColorValue.h>
+#include <LVUI/NativeColors.h>
 #include <string>
 #include <stdexcept>
 #include <cstdint>
@@ -9,7 +9,7 @@ struct NativeScalarInputModel final {
     ii::core::Observable<int> count{2};
     ii::core::Observable<bool> visible{true};
     ii::core::Observable<double> amount{.25}, size{12};
-    ii::core::Observable<iiColorManager::Rgba> ink{iiColorManager::Rgba{.25,.5,.75,1}};
+    ii::core::Observable<lvui::native::EncodedSrgb> ink{lvui::native::EncodedSrgb{.25,.5,.75,1}};
     ii::core::Observable<int> file_revision{0};
     int calls = 0;
     int formatter_factories = 0, formatter_calls = 0;

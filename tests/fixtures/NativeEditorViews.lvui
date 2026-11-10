@@ -1,0 +1,7 @@
+import vm NativeEditorViewsModel
+Window {
+    VStack(spacing: 0) {
+        NativeView(id: "canvasHost", source: vm.canvas, width: 400, height: 100)
+        NativeView(id: "timelineHost", source: vm.timeline, width: 400, height: 160)
+    }
+}

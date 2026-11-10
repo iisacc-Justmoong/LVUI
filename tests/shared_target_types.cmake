@@ -1,0 +1,6 @@
+if(NOT COMPILER_TYPE STREQUAL "SHARED_LIBRARY" OR NOT NATIVE_TYPE STREQUAL "SHARED_LIBRARY")
+    message(FATAL_ERROR "LVUI shared build requested, but compiler=${COMPILER_TYPE}, native=${NATIVE_TYPE}")
+endif()
+if(DEFINED RUNTIME_TYPE AND NOT RUNTIME_TYPE STREQUAL "SHARED_LIBRARY")
+    message(FATAL_ERROR "LVUI runtime was requested as shared, but is ${RUNTIME_TYPE}")
+endif()

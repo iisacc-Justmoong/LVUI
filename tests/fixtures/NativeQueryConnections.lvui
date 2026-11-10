@@ -1,0 +1,19 @@
+import vm NativeQueryBackend
+
+Window {
+    var count: Int = 0
+    var calls: Int = 0
+    VStack {
+        QueryConnection(source: vm.events, query: vm.selection, value: "message",
+                        capacity: 2, deliveryBatch: 1, overflow: .dropOldest,
+                        onValue: { count = message.number })
+        Label(id: "count", text: count)
+        Label(id: "calls", text: calls)
+        PushButton(id: "increment", text: "+", onClick: { count = count + 1 })
+        if (vm.visible) {
+            QueryConnection(source: vm.stream(), query: vm.selection, onValue: vm.changed)
+        }
+        QueryConnection(source: vm.events, query: vm.selection, onValue: vm.refresh)
+        QueryConnection(source: vm.events, query: vm.selection, onValue: { calls = calls + 1 })
+    }
+}

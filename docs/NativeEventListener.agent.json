@@ -10,14 +10,14 @@
   },
   "source": {
     "path": "docs/NativeEventListener.md",
-    "sha256": "14c1bfdd7aca30b3ddb5857eb428997dff8cdf94cbefc76eed758616b9ac2f13",
-    "bytes": 2102,
-    "line_count": 26,
+    "sha256": "3e2bf4f80fc7746c1cde4643f2ee1053ef984a7f7eded4c88a8c5217c8bdf54e",
+    "bytes": 7679,
+    "line_count": 90,
     "encoding": "utf-8",
     "language": "ko"
   },
   "document": {
-    "title": "LVUI 이벤트 리스너",
+    "title": "LVUI 선언과 iiGUI 이벤트 리스너",
     "role": "guide",
     "authority": "markdown_source"
   },
@@ -27,9 +27,9 @@
       "kind": "heading",
       "start_line": 1,
       "end_line": 1,
-      "raw": "# LVUI 이벤트 리스너\n",
+      "raw": "# LVUI 선언과 iiGUI 이벤트 리스너\n",
       "level": 1,
-      "title": "LVUI 이벤트 리스너"
+      "title": "LVUI 선언과 iiGUI 이벤트 리스너"
     },
     {
       "id": "b000002",
@@ -42,50 +42,164 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 6,
-      "raw": "`EventListener`는 고정 폭·높이를 검증하는 LVUI C++ 모델이다. 기본 크기는\n640×480이며 각 축은 1–8192 논리 px이다. `NativeEventListener`는 앱이 공급하는\n범용 iiGUI 입력·배치 호스트에 이 모델을 연결한다. Qt·QML·LVRS 타입이나 팩터리를\n호출하지 않는다.\n"
+      "end_line": 5,
+      "raw": "입력 표면의 크기 모델과 입력 전달·배치·수명 구현은 `iiGUI/EventListenerModel.h`와\n`iiGUI/NativeEventListenerView.h`가 소유한다. LVUI는 선언, C++ 콜백과 반응형 크기\n바인딩을 앱의 iiGUI 호출로 생성한다. iiGUI는 LVUI를 찾거나 참조하지 않는다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 7,
-      "end_line": 7,
+      "start_line": 6,
+      "end_line": 6,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 8,
-      "end_line": 12,
-      "raw": "앱은 `EventListenerCallbacks`의 입력 및 크기 변경 함수를 지정한다. 입력 함수는\n타입 있는 `WidgetInput`을 받고 처리 여부 또는 오류를 반환한다. 호스트가 보낸 좌표는\n리스너의 로컬 좌표이다. 입력의 종류·숫자·문자열을 검증하고 같은 리스너의 중첩\n디스패치는 `busy`로 거절한다. 콜백 예외는 원인을 보존한 오류로 전달한다. 앱이 직접\n`dispatch`를 호출할 수도 있다. 크기 변경 콜백은 호스트의 배치 결과 `Rect`를 받는다.\n"
+      "start_line": 7,
+      "end_line": 14,
+      "raw": "iiGUI가 `IIGUI_POINTER_CANCEL_API`를 제공하면 `onInput`은 포커스 손실과 별개인\n`pointer_cancel`을 전달한다. 캡처된 목록·계층·표·시트는 이 이벤트에서 진행 중인\n포인터 조작만 취소하고 입력기의 포커스와 조합은 보존한다. 이전 iiGUI 계약을 쓰는\n소비자는 기존 `focus_lost` 취소 경로를 유지한다. Android 두 손가락 핀치는 중심\n좌표와 `control`, `precise_scroll`, 로그 비율을 가진 터치 스크롤로 리스너에 도달한다.\nViewModel은 `ii::gui::pinch_scale_factor(input)`을 호출해 해당 이벤트의 증분 확대\n배율을 읽을 수 있다. 반환값이 없으면 확대 이벤트가 아니므로 다른 입력 처리로 넘긴다.\n이 배율을 앱의 관찰 가능한 상태에 반영하면 일반 LVUI 바인딩이 갱신된다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 13,
-      "end_line": 13,
+      "start_line": 15,
+      "end_line": 15,
       "raw": "\n"
     },
     {
       "id": "b000007",
-      "kind": "paragraph",
-      "start_line": 14,
-      "end_line": 19,
-      "raw": "새 세대가 게시되기 전의 크기와 입력은 앱에 전달하지 않는다. 게시 후 최초 배치가\n통지되며, 퇴역하면 콜백을 해제하고 늦은 게시·입력 요청은 무시하거나 거절한다.\n`set_options`는 유효한 크기만 갱신하고 `set_callbacks`는 콜백을 교체한다. 이 API는\n소유 스레드에서 사용하며 다른 스레드의 변경·입력 요청은 거절한다. 배치 콜백이\n설정이나 콜백을 다시 변경하면 나중 변경이 유지된다. 외부 콜백의 부수 효과를 되돌리는\n기능은 없다.\n"
+      "kind": "heading",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "## 콘텐츠 기준 크기\n",
+      "level": 2,
+      "title": "콘텐츠 기준 크기"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 20,
-      "end_line": 20,
+      "start_line": 17,
+      "end_line": 17,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 21,
-      "end_line": 26,
-      "raw": "기본 선언형 `EventListener`는 이 구현을 생성하며 `width`, `height`, `onInput`,\n`onResized`와 공통 가시성·불투명도·flex를 지원한다. 크기는 관찰 가능한 C++ 값으로\n갱신할 수 있다. `onInput`은 C++ `WidgetInput`을 받아 `ii::core::Result<bool>` 또는\n그에 변환 가능한 값을 돌려주는 콜백이고, `onResized`는 `ii::gui::Rect`를 받는\n콜백이다. 입력 결과를 보존하는 반환 콜백은 현재 팩터리 결과와 활성 범위를 사용한다.\n실제 플랫폼 입력·접근성과 레거시 경로 제거는 아직 검증·전환 중이다.\n"
+      "start_line": 18,
+      "end_line": 24,
+      "raw": "선언형 `sizeToContent={true}`는 한 자식의 자연 크기를 기본 입력 영역으로 사용한다.\n자식의 크기가 바뀌면 리스너의 고유 크기도 다시 계산한다. 명시된 `width` 또는\n`height`는 해당 축을 우선하며, 생략한 축은 자식을 따른다. 자식이 없는 축의\n자연 크기는 0이다. 이 모드는 자식을 시작점에 놓는 일반 중첩 스택을 사용하므로\n절대 좌표 프레임을 가진 여러 자식의 대체 용도는 아니다. 크기 모드는 생성 시\n고정하고 반응형으로 교체하지 않으며 변경 시 오류를 반환한다. 기존 기본\n리스너와 명시 크기·입력·캡처·배치·퇴역 계약은 유지한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 26,
+      "end_line": 30,
+      "raw": "직접 C++에서 이 방식을 선택할 때는 `ii::gui::EventListenerOptions`의\n`size_to_content`를 켜고 자동으로 계산할 축을 0으로 지정한다. C++ 구성의 기존\n기본값 640×480은 유지한다. 생성 후에는 크기 값을 갱신할 수 있지만 스택 종류가\n바뀌는 크기 모드 자체는 교체하지 않는다. 기존 LVUI 리스너 모델과 호스트는\n제거했으므로 직접 C++ 소비자는 iiGUI의 모델·옵션·호스트 이름으로 이전해야 한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 34,
+      "raw": "네이티브 모형·위젯 트리·선언형 생성 검사에서 최초 크기, 자식 크기 변경,\n명시 축, 빈 자식, 오류와 포인터 입력을 확인한다. 실제 OS 입력과 화면 표시는\n이 검사에 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 40,
+      "raw": "`ii::gui::EventListenerModel`은 폭·높이를 검증하는 C++ 모델이다. 기본 크기는\n640×480이며 각 축은 0–8192 논리 px이다. 0은 부모 배치에서 자동으로 정할 축을\n나타내며 음수와 비유한 값은 거부한다. `ii::gui::NativeEventListener`는 iiGUI의\n입력·배치 호스트에 이 모델을 연결한다. Qt·QML·LVRS 타입이나 팩터리를\n호출하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 48,
+      "raw": "앱은 `EventListenerCallbacks`의 입력 및 크기 변경 함수를 지정한다. 입력 함수는\n타입 있는 `WidgetInput`을 받고 처리 여부 또는 오류를 반환한다. 호스트가 보낸 좌표는\n리스너의 로컬 좌표이다. 입력의 종류·숫자·문자열을 검증하고 앱이 직접 호출한\n`dispatch`의 중첩 호출은 `busy`로 거절한다. 콜백 예외는 원인을 보존한 오류로\n전달한다. 크기 변경 콜백은 호스트의 배치 결과 `Rect`를 받는다.\n`IIGUI_KEY_CANCEL_API`를 제공하는 iiGUI에서는 `key_cancel`도 유효한 입력으로\n전달하며, 이전 iiGUI 헤더를 사용하는 빌드는 기존 입력 범위를 유지한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 56,
+      "raw": "호스트 입력 처리 중 같은 리스너에 다시 도착한 입력은 현재 콜백이 반환한 뒤 도착한\n순서대로 전달한다. 포인터 압력·시간 등 `WidgetInput` 값도 보존한다. 특히 포인터를\n캡처한 위젯을 숨길 때 동기적으로 들어오는 `focus_lost`가 `busy` 오류로 창을 종료하지\n않도록 한다. 지연 입력은 호스트에 우선 처리된 것으로 보고하며 실제 콜백 결과의 오류는\n바깥 입력에 전파한다. 한 처리 주기의 대기열과 전달 건수는 각각 256개로 제한한다.\n한도를 넘기면 남은 입력을 버리고 현재 콜백에 한 번의 `focus_lost`를 보내 진행 중인\n제스처를 취소한다. 콜백 교체 또는 리스너 퇴역 시 이전 콜백을 위한 대기 입력은 폐기한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 63,
+      "raw": "새 세대가 게시되기 전의 크기와 입력은 앱에 전달하지 않는다. 게시 후 최초 배치가\n통지되며, 퇴역하면 콜백을 해제하고 늦은 게시·입력 요청은 무시하거나 거절한다.\n`set_options`는 유효한 크기만 갱신하고 `set_callbacks`는 콜백을 교체한다. 이 API는\n소유 스레드에서 사용하며 다른 스레드의 변경·입력 요청은 거절한다. 배치 콜백이\n설정이나 콜백을 다시 변경하면 나중 변경이 유지된다. 외부 콜백의 부수 효과를 되돌리는\n기능은 없다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 65,
+      "end_line": 75,
+      "raw": "기본 선언형 `EventListener`는 이 구현을 생성하며 `width`, `height`, `onInput`,\n`onResized`와 공통 가시성·불투명도·flex를 지원한다. 크기는 관찰 가능한 C++ 값으로\n갱신할 수 있다. `onInput`은 C++ `WidgetInput`을 받아 `ii::core::Result<bool>` 또는\n그에 변환 가능한 값을 돌려주는 콜백이고, `onResized`는 `ii::gui::Rect`를 받는\n콜백이다. 입력 결과를 보존하는 반환 콜백은 현재 팩터리 결과와 활성 범위를 사용한다.\n선언형 리스너는 하나의 콘텐츠 뷰를 자식으로 받을 수 있다. 자식은 리스너의\n절대 배치 표면에 놓이며, 여러 콘텐츠가 필요하면 스택으로 묶는다. 예를 들어\n`EventListener { Avatar(size: .Large) }`는 공통 아바타를 그리면서 리스너가\n처리하는 입력을 전달한다. 자식의 입력 처리와 상위 전달은 호스트의 일반적인\n히트 테스트 계약을 따른다.\n실제 플랫폼 입력·접근성 검증은 아직 남아 있다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 77,
+      "end_line": 90,
+      "raw": "`tests/native_owned_event_listener.cpp`는 중첩 호스트 입력의 순서와 압력, 캡처 취소,\n누름 중 재진입한 해제의 캡처 수명, 콜백 교체·퇴역과 대기열 한도를 다룬다. 이 동작은 실제 운영체제의 포인터 입력과\n결합해 별도로 확인해야 한다.\nmacOS arm64에서 iiGUI 단독 모델·호스트와 설치 소비자, LVUI 생성·호스트와 설치\n패키지 경계의 헤드리스 검사를 통과했다. 이 결과에 실제 OS 입력은 포함되지 않는다.\n소스 트리의 iiGUI 테스트 헤더와 호환 설치본을 사용할 수 있으면 LVUI 구성에서\n`LVUI_TEST_NATIVE_EVENT_HOST=ON`을 지정해 같은 `build/`의\n`LVUI.NativeEventFlow.Host` 검사로 실행한다. 이 선택적 검사는 LVUI의 기본 Native\n모듈에 iiGUI 의존성을 추가하지 않는다.\n같은 선택적 구성의 `LVUIHostInputProbe`는 네이티브 창에서 한 번 드래그한 뒤 종료하며\n운영체제에서 들어온 입력·바인딩 갱신·Core 작업 수를 `OS_INPUT_TRACE`로 출력한다.\n입력 좌표나 원본 사용자 데이터는 기록하지 않는다. 실제 마우스와 물리 펜의 검증은 구분한다.\nmacOS에서 자동화한 한 번의 마우스 드래그는 누름 1·이동 2·해제 1, 바인딩 무효화 8·\n중복 병합 4·효과 4로 관측됐다. 이는 해당 실행의 표본이며 장치나 입력 속도별 보장은 아니다.\n"
     }
   ],
   "outline": [
@@ -93,24 +207,81 @@
       "block_id": "b000001",
       "parent_id": null,
       "level": 1,
-      "title": "LVUI 이벤트 리스너",
-      "anchor": "lvui-이벤트-리스너",
+      "title": "LVUI 선언과 iiGUI 이벤트 리스너",
+      "anchor": "lvui-선언과-iigui-이벤트-리스너",
       "start_line": 1
+    },
+    {
+      "block_id": "b000007",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "콘텐츠 기준 크기",
+      "anchor": "콘텐츠-기준-크기",
+      "start_line": 16
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
         "block_id": "b000003",
-        "line": 6,
+        "line": 5,
+        "text": "바인딩을 앱의 iiGUI 호출로 생성한다. iiGUI는 LVUI를 찾거나 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 29,
+        "text": "바뀌는 크기 모드 자체는 교체하지 않는다. 기존 LVUI 리스너 모델과 호스트는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 30,
+        "text": "제거했으므로 직접 C++ 소비자는 iiGUI의 모델·옵션·호스트 이름으로 이전해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 34,
+        "text": "이 검사에 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 40,
         "text": "호출하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000007",
-        "line": 14,
+        "block_id": "b000021",
+        "line": 58,
         "text": "새 세대가 게시되기 전의 크기와 입력은 앱에 전달하지 않는다. 게시 후 최초 배치가",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 79,
+        "text": "결합해 별도로 확인해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 85,
+        "text": "모듈에 iiGUI 의존성을 추가하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 88,
+        "text": "입력 좌표나 원본 사용자 데이터는 기록하지 않는다. 실제 마우스와 물리 펜의 검증은 구분한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }

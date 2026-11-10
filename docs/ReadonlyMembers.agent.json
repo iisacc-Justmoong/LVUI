@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/ReadonlyMembers.md",
-    "sha256": "7b55bf3b819182a3d1d7fc96b765f8771f4e40e0994a0131ccb74f8c00afe5cd",
-    "bytes": 7877,
+    "sha256": "79a07135627421e36e3e2b7c60b7d2b892457d9ed613b52ddc331aa80d7069c0",
+    "bytes": 7889,
     "line_count": 112,
     "encoding": "utf-8",
     "language": "ko"
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 6,
-      "raw": "일반 LVUI 값은 반응형이며 읽기 전용 접근을 스냅샷과 동일하게 취급하지 않는다.\n`let current = backend.selected`가 읽기 전용 객체를 가리키더라도 그 객체의 Observable\n멤버는 생산자의 변경을 계속 관측한다. `const_cast`, 문자열 필드 검색, 전역 버스나\n프레임별 폴링으로 이를 구현하지 않는다.\n"
+      "raw": "일반 LVUI 값은 반응형이며 읽기 전용 접근을 스냅샷과 동일하게 취급하지 않는다.\n`const current = backend.selected`가 읽기 전용 객체를 가리키더라도 그 객체의 Observable\n멤버는 생산자의 변경을 계속 관측한다. `const_cast`, 문자열 필드 검색, 전역 버스나\n프레임별 폴링으로 이를 구현하지 않는다.\n"
     },
     {
       "id": "b000004",
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 8,
       "end_line": 20,
-      "raw": "```text\nimport model ReviewModel\nlet current = model.selected\nlet alias = current\n@Static let initialTitle: String = current.title\nWindow {\n    VStack {\n        Label(text: current.title)\n        Label(text: alias.metrics.count)\n        Label(text: initialTitle)\n    }\n}\n```\n",
+      "raw": "```text\nimport model ReviewModel\nconst current = model.selected\nconst alias = current\n@Static const initialTitle: String = current.title\nWindow {\n    VStack {\n        Label(text: current.title)\n        Label(text: alias.metrics.count)\n        Label(text: initialTitle)\n    }\n}\n```\n",
       "language": "text",
-      "code": "import model ReviewModel\nlet current = model.selected\nlet alias = current\n@Static let initialTitle: String = current.title\nWindow {\n    VStack {\n        Label(text: current.title)\n        Label(text: alias.metrics.count)\n        Label(text: initialTitle)\n    }\n}\n",
+      "code": "import model ReviewModel\nconst current = model.selected\nconst alias = current\n@Static const initialTitle: String = current.title\nWindow {\n    VStack {\n        Label(text: current.title)\n        Label(text: alias.metrics.count)\n        Label(text: initialTitle)\n    }\n}\n",
       "closed": true
     },
     {
@@ -104,7 +104,7 @@
       "kind": "list",
       "start_line": 30,
       "end_line": 44,
-      "raw": "- Core의 `Observable::observe()`는 const 참조에서도 사용할 수 있다. 소유 스레드,\n  구독 lease, 종료와 이동 규칙을 유지하며 const 접근에 수정 권한을 주지 않는다.\n  사용자 C++ 관측자가 mutable observe만 제공하면 읽기 전용 멤버에서 조용히 스냅샷으로\n  바꾸지 않고 빌드 진단을 낸다. 고정값은 명시적인 Static 또는 스냅샷 인터페이스로 선택한다.\n- 네이티브 멤버 선택은 값·원시 포인터·표준 스마트 포인터 및 `reference_wrapper`의\n  실제 C++ const 자격을 보존한다. nullptr은 명시적인 오류이다.\n- 일반 member 경로와 `(model.selected).metrics.count` 형태의 member AST 모두 같은\n  `member(context, object, selector)` 및 `read_source()` 경로로 생성한다.\n- private 멤버·private 조상·없는 멤버는 생성된 C++의 정상 접근 제어로 거부한다.\n- 동등 비교가 없는 C++ 구조체도 네이티브 let·추론한 var의 값으로 사용할 수 있다.\n  Core Observable 값은 복사 생성과 예외 없는 이동 대입을 제공해야 한다. 비교 가능한\n  값은 기존 no-op 규칙을 따르며, 비교가 없는 값은 각 set을 명시적인 발행으로 처리한다.\n- 일반 public 멤버의 직접 수정은 자동으로 가로채지 않는다. 소유자가 제공하는\n  Observable 또는 명시적인 스코프 발행을 사용한다. var는 초기화 이후 자체 상태이며\n  초기화 식의 객체 변경을 자동으로 따라가지 않는다.\n",
+      "raw": "- Core의 `Observable::observe()`는 const 참조에서도 사용할 수 있다. 소유 스레드,\n  구독 lease, 종료와 이동 규칙을 유지하며 const 접근에 수정 권한을 주지 않는다.\n  사용자 C++ 관측자가 mutable observe만 제공하면 읽기 전용 멤버에서 조용히 스냅샷으로\n  바꾸지 않고 빌드 진단을 낸다. 고정값은 명시적인 Static 또는 스냅샷 인터페이스로 선택한다.\n- 네이티브 멤버 선택은 값·원시 포인터·표준 스마트 포인터 및 `reference_wrapper`의\n  실제 C++ const 자격을 보존한다. nullptr은 명시적인 오류이다.\n- 일반 member 경로와 `(model.selected).metrics.count` 형태의 member AST 모두 같은\n  `member(context, object, selector)` 및 `read_source()` 경로로 생성한다.\n- private 멤버·private 조상·없는 멤버는 생성된 C++의 정상 접근 제어로 거부한다.\n- 동등 비교가 없는 C++ 구조체도 네이티브 const·추론한 var의 값으로 사용할 수 있다.\n  Core Observable 값은 복사 생성과 예외 없는 이동 대입을 제공해야 한다. 비교 가능한\n  값은 기존 no-op 규칙을 따르며, 비교가 없는 값은 각 set을 명시적인 발행으로 처리한다.\n- 일반 public 멤버의 직접 수정은 자동으로 가로채지 않는다. 소유자가 제공하는\n  Observable 또는 명시적인 스코프 발행을 사용한다. var는 초기화 이후 자체 상태이며\n  초기화 식의 객체 변경을 자동으로 따라가지 않는다.\n",
       "items": [
         {
           "marker": "-",
@@ -128,7 +128,7 @@
         },
         {
           "marker": "-",
-          "text": "동등 비교가 없는 C++ 구조체도 네이티브 let·추론한 var의 값으로 사용할 수 있다.",
+          "text": "동등 비교가 없는 C++ 구조체도 네이티브 const·추론한 var의 값으로 사용할 수 있다.",
           "checked": null
         },
         {
@@ -238,7 +238,7 @@
       "kind": "list",
       "start_line": 68,
       "end_line": 76,
-      "raw": "- `LVUI.NativeBindings.readonly*`: const 관측·선택 교체·재진입 수명·임시 소유자 퇴역·\n  보존 한도·표준 참조의 네이티브 연결을 실행한다.\n- `LVUI.NativeReadonlyValidation`: 실제 생성 팩터리에서 값·포인터·shared_ptr·참조를\n  컴파일하고 private 멤버·조상·없는 멤버·잘못된 객체를 거부한다.\n- `iiGUI.native_readonly.*`: 생성 C++를 실제 창 없는 위젯 상태에 연결하여 별칭·지역\n  스코프·스칼라 Static·선택·참조·구조체 let/var·널 복구·퇴역·조건부 재활성화·member\n  AST와 입력·포커스·파일 상태 보존을 실행한다.\n- `iiGUI.layout_package`와 `LVUI.NativeInstalled`: 재배치한 설치 패키지의 공개 const\n  관측·비교 없는 값·AOT 팩터리를 컴파일·링크하고 제한된 소비자를 실행한다.\n",
+      "raw": "- `LVUI.NativeBindings.readonly*`: const 관측·선택 교체·재진입 수명·임시 소유자 퇴역·\n  보존 한도·표준 참조의 네이티브 연결을 실행한다.\n- `LVUI.NativeReadonlyValidation`: 실제 생성 팩터리에서 값·포인터·shared_ptr·참조를\n  컴파일하고 private 멤버·조상·없는 멤버·잘못된 객체를 거부한다.\n- `iiGUI.native_readonly.*`: 생성 C++를 실제 창 없는 위젯 상태에 연결하여 별칭·지역\n  스코프·스칼라 Static·선택·참조·구조체 const/var·널 복구·퇴역·조건부 재활성화·member\n  AST와 입력·포커스·파일 상태 보존을 실행한다.\n- `iiGUI.layout_package`와 `LVUI.NativeInstalled`: 재배치한 설치 패키지의 공개 const\n  관측·비교 없는 값·AOT 팩터리를 컴파일·링크하고 제한된 소비자를 실행한다.\n",
       "items": [
         {
           "marker": "-",

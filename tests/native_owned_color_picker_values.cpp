@@ -1,5 +1,8 @@
 #include <LVUI/ColorSelectionSurface.h>
 #include <LVUI/NativeColorPickerValues.h>
+#include <iiGUI/NativeColorPickerValuesView.h>
+using ColorPickerValuesTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using ColorPickerValuesTestView=lvui::native::ColorPickerValuesBinding<ii::gui::BasicNativeColorPickerValues,ColorPickerValuesTestField>;
 #include <iiGUI/WidgetState.h>
 
 #include <cmath>
@@ -34,10 +37,10 @@ int main() {
     auto source = std::make_shared<lvui::ColorSelectionSurface>(editor);
     auto session = std::make_shared<lvui::ColorPickerSession>(picker, source, source);
     lvui::native::ColorPickerValuesInput input; input.session = session;
-    std::optional<lvui::native::NativeColorPickerValues> values; Widget other; std::vector<lvui::StyleColor> edits;
+    std::optional<ColorPickerValuesTestView> values; Widget other; std::vector<lvui::StyleColor> edits;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto root = builder.vstack({}, "root"); if (!root) return std::unexpected(root.error());
-        auto row = lvui::native::NativeColorPickerValues::create(builder, *root, "values", input,
+        auto row = ColorPickerValuesTestView::create(builder, *root, "values", input,
             [&](lvui::StyleColor color) { edits.push_back(color); });
         if (!row) return std::unexpected(row.error()); values = *row;
         auto button = builder.action_surface(*root, "other", {.text = "Other", .width = 60, .height = 22});

@@ -1,4 +1,14 @@
 #include <LVUI/NativeHierarchyToolbar.h>
+#include <iiGUI/NativeHierarchyToolbarView.h>
+#include <iiGUI/HierarchyToolbarModel.h>
+#include <iiGUI/HierarchyToolbarLayout.h>
+#include <iiGUI/NativeToolbarButtonView.h>
+#include <iiGUI/SvgImageCache.h>
+using ToolbarModelTest=lvui::HierarchyToolbarModelBinding<ii::gui::BasicHierarchyToolbar>;
+using ToolbarButtonModelTest=ii::gui::BasicToolbarButton<lvui::native::ToolbarButtonModelPolicy>;
+using ToolbarButtonTest=lvui::native::ToolbarButtonBinding<ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+using ToolbarLayoutTest=lvui::native::HierarchyToolbarLayoutBinding<ii::gui::BasicHierarchyToolbarLayout,ToolbarButtonModelTest>;
+using HierarchyToolbarTestView=lvui::native::HierarchyToolbarBinding<ii::gui::BasicNativeHierarchyToolbar,ToolbarModelTest,ToolbarLayoutTest,ToolbarButtonModelTest,ToolbarButtonTest,ii::gui::RasterImage,ii::gui::CachedSvgDecoder>;
 #include <iiGUI/WidgetState.h>
 
 #include <functional>
@@ -31,12 +41,12 @@ int main() {
     input.items = {{.id=first_id, .icon_name="home"}, {.id=second_id, .icon_name="generaladd", .command=command},
                    {.id=third_id, .icon_name="settings", .enabled=false}};
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
-    auto host = take(tree->content_host({}, "host", {300, 80})); std::optional<lvui::native::NativeHierarchyToolbar> toolbar;
+    auto host = take(tree->content_host({}, "host", {300, 80})); std::optional<HierarchyToolbarTestView> toolbar;
     std::vector<std::string> events; bool retire = false, reconfigure = false, confirm_active = false;
     command->action = [&] { events.push_back("command"); };
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading}); if (!column) return std::unexpected(column.error());
-        auto value = lvui::native::NativeHierarchyToolbar::create(builder, *column, "toolbar", input,
+        auto value = HierarchyToolbarTestView::create(builder, *column, "toolbar", input,
             {.active_changed = [&](const auto& selected) { events.push_back("active");
                 if (confirm_active) { auto next = input; next.active_id = selected.id; good(toolbar->set_options(next)); }
                 if (reconfigure) { auto next = input; next.appearance.width = 250; good(toolbar->set_options(next)); }

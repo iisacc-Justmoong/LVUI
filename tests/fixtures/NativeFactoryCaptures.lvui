@@ -6,12 +6,12 @@ let Actions(run: () -> Void = vm.selected.make()): View = PushButton(id: "typed"
 Window { VStack {
     InputField(id: "edit", text: "Ready")
     Label(id: "description", text: render())
-    PushButton(id: "direct", onClick: vm.selected.make())
-    PushButton(id: "value", onClick: vm.selected.value())
-    PushButton(id: "indexed", onClick: vm.rows[0].make())
-    InputField(id: "payload", onEdited: vm.selected.text())
+    PushButton(id: "direct", onClick: callback(vm.selected.make()))
+    PushButton(id: "value", onClick: callback(vm.selected.value()))
+    PushButton(id: "indexed", onClick: callback(vm.rows[0].make()))
+    InputField(id: "payload", onEdited: callback(vm.selected.text()))
     PushButton(id: "pinned", onClick: pinned)
     PushButton(id: "manual", onClick: manual)
     Actions()
-    if (vm.visible) { PushButton(id: "conditional", onClick: vm.selected.make()) }
+    if (vm.visible) { PushButton(id: "conditional", onClick: callback(vm.selected.make())) }
 } }

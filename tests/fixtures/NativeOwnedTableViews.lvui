@@ -1,0 +1,13 @@
+import vm NativeOwnedTableModel
+let Heading(value: String): View = HStack(spacing: 0) {
+    Label(text: "Header")
+    Label(id: "heading-value", text: value)
+}
+let Cell(value: String, selected: Bool): View = HStack(spacing: 0) {
+    Label(text: "Cell")
+    Label(id: "cell-value", text: value)
+    Label(id: "cell-selected", text: selected)
+}
+Table(id: "table", model: vm.controller, modelRevision: vm.revision, width: 200, height: 96,
+      headerContext: "heading", headerDelegate: Heading(value: heading.text),
+      cellContext: "cell", cellDelegate: Cell(value: cell.text, selected: cell.selected))

@@ -1,0 +1,10 @@
+import vm NativeWindowAccentCollectionsModel
+Window(accent: .purple) {
+    HStack(spacing: 6) {
+        HierarchyItem(id: "staticItem", label: "Item", selected: true, width: 120, height: 28)
+        ListItem(id: "staticListItem", label: "List", selected: true, width: 110, height: 28)
+        TableCellItem(id: "staticCell", text: "Cell", selected: true, current: true, width: 100, height: 28)
+        TableRow(id: "staticRow", cells: vm.cells, cellWidth: 100, width: 110)
+        ListItem(id: "staticToggle", type: .Toggle, label: "Toggle", checked: true, width: 150, height: 28)
+    }
+}

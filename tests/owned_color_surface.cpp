@@ -29,7 +29,7 @@ int main() {
         ColorSurfaceKind::hue_rail, ColorSurfaceKind::brightness_rail};
     for (auto kind : kinds) {
         const auto frame = take(source.frame(kind, 33, 33));
-        require(ColorSurface::valid_frame(frame) && frame.color == red && frame.revision == 0,
+        require(valid_color_surface_frame(frame) && frame.color == red && frame.revision == 0,
                 "A color surface returned an invalid or inconsistent frame");
     }
     const auto wheel = take(source.frame(ColorSurfaceKind::wheel, 33, 33));
@@ -42,18 +42,6 @@ int main() {
             red_channel.revision == 0 && red_channel.color == red &&
             near(red_channel.stops.front().red, 0) && near(red_channel.stops.back().red, 1),
             "A color channel did not provide a consistent value and ramp");
-    auto channel_source = std::make_shared<ColorSelectionSurface>(selection);
-    ColorChannelSurface red_ramp(channel_source, ColorChannel::red);
-    const auto ramp = take(red_ramp.frame(ColorSurfaceKind::spectrum, 13, 12));
-    require(ColorSurface::valid_frame(ramp) && near(ramp.marker.x, 1) &&
-            ramp.rgba[0] == 0 && ramp.rgba[(13 - 1) * 4] == 255 &&
-            ramp.rgba[3] == 255, "Numeric channel did not produce a reusable gradient surface");
-    auto ramp_revision = take(red_ramp.edit(ColorSurfaceKind::spectrum, {.5, .5}, selection->revision()));
-    require(near(selection->snapshot().color.red, .5) &&
-            !red_ramp.edit(ColorSurfaceKind::spectrum, {0, .5}, ramp_revision - 1) &&
-            !red_ramp.frame(ColorSurfaceKind::wheel, 13, 12),
-            "Channel surface input or stale-revision protection failed");
-    require(bool(selection->set_color(red)), "Unable to reset selection after the channel ramp");
 
     const auto token = selection->begin();
     require(bool(token), "Shared selection could not start editing");
@@ -126,15 +114,6 @@ int main() {
     (void)take(source.edit_channel(ColorChannel::brightness, 100, selection->revision()));
     require(near(selection->snapshot().color.red, 1) && near(selection->snapshot().color.green, 0),
             "Channel cancellation did not restore the hidden hue");
-    ColorSurface model;
-    require(model.position(-10, 50, 100, 100) == ColorSurfacePoint{0, .5},
-            "Pointer position was not clamped to the surface");
-    auto config = model.configuration(); config.enabled = false;
-    require(model.set_configuration(config) && !model.position(1, 1, 100, 100),
-            "Disabled surface accepted pointer input");
-    config.width = 0;
-    require(!model.set_configuration(config) && model.configuration().width == 192,
-            "Invalid surface configuration changed the current state");
     auto malformed = wheel; malformed.rgba.pop_back();
-    require(!ColorSurface::valid_frame(malformed), "A malformed image frame was accepted");
+    require(!valid_color_surface_frame(malformed), "A malformed image frame was accepted");
 }

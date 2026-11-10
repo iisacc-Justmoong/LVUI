@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "reference": "LVUI Slider/Center biased",
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-7350",
+  "capturedOn": "2026-11-03",
+  "fillVariableId": "VariableID:2:188",
+  "sourceFillVariableId": "VariableID:44:461",
+  "centerMarkWidth": 2,
+  "centerMarkOverhang": 2,
+  "variants": [
+    {
+      "node": "879:6566",
+      "size": "Mini",
+      "state": "Idle",
+      "trackHeight": 4,
+      "markWidth": 2,
+      "markHeight": 8,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6615",
+      "size": "Mini",
+      "state": "Hover",
+      "trackHeight": 4,
+      "markWidth": 2,
+      "markHeight": 8,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6664",
+      "size": "Mini",
+      "state": "Pressed",
+      "trackHeight": 4,
+      "markWidth": 2,
+      "markHeight": 8,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6713",
+      "size": "Mini",
+      "state": "Disabled",
+      "trackHeight": 4,
+      "markWidth": 2,
+      "markHeight": 8,
+      "markOverhang": 2,
+      "opacity": 0.32,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6762",
+      "size": "Small",
+      "state": "Idle",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6811",
+      "size": "Small",
+      "state": "Hover",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6860",
+      "size": "Small",
+      "state": "Pressed",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6909",
+      "size": "Small",
+      "state": "Disabled",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 0.32,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:6958",
+      "size": "Regular",
+      "state": "Idle",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7007",
+      "size": "Regular",
+      "state": "Hover",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7056",
+      "size": "Regular",
+      "state": "Pressed",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7105",
+      "size": "Regular",
+      "state": "Disabled",
+      "trackHeight": 6,
+      "markWidth": 2,
+      "markHeight": 10,
+      "markOverhang": 2,
+      "opacity": 0.32,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7154",
+      "size": "Large",
+      "state": "Idle",
+      "trackHeight": 8,
+      "markWidth": 2,
+      "markHeight": 12,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7203",
+      "size": "Large",
+      "state": "Hover",
+      "trackHeight": 8,
+      "markWidth": 2,
+      "markHeight": 12,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7252",
+      "size": "Large",
+      "state": "Pressed",
+      "trackHeight": 8,
+      "markWidth": 2,
+      "markHeight": 12,
+      "markOverhang": 2,
+      "opacity": 1,
+      "markCornerRadius": 999
+    },
+    {
+      "node": "879:7301",
+      "size": "Large",
+      "state": "Disabled",
+      "trackHeight": 8,
+      "markWidth": 2,
+      "markHeight": 12,
+      "markOverhang": 2,
+      "opacity": 0.32,
+      "markCornerRadius": 999
+    }
+  ],
+  "sourceCornerRadius": 999
+}

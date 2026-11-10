@@ -1,4 +1,5 @@
 #include <LVUI/NativeListItemComposite.h>
+#include "list_item_composite_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -29,8 +30,13 @@ int main(){
     require(take(item->root().snapshot()).size.width==280&&take(item->root().snapshot()).size.height==44&&take(item->checked())&&
             take(item->toggle().interaction()).visible&&!take(item->checkbox().interaction()).visible,"Toggle row defaults or layout changed");
     auto unused_selector=take(item->selector());require(!take(unused_selector.root().snapshot()).has_content,"A hidden selector mounted unnecessarily");
+    auto unused_unit=take(item->unit_selector());auto unused_segments=take(item->segments());
+    require(!take(unused_unit.root().snapshot()).has_content&&!take(unused_segments.root().snapshot()).has_content,
+            "Hidden compound controls mounted unnecessarily");
     auto renamed=take(item->options());renamed.row.configuration.label="Camera updated";good(item->set_options(renamed));
     require(!take(unused_selector.root().snapshot()).has_content,"A hidden selector mounted during an unrelated row update");
+    require(!take(unused_unit.root().snapshot()).has_content&&!take(unused_segments.root().snapshot()).has_content,
+            "Hidden compound controls mounted during an unrelated row update");
     good(item->toggle().activate());
     require(changes==std::vector<bool>{false}&&fields==std::vector<std::string>{"checked"}&&!take(item->checked()),
             "Toggle row lost its checked callbacks or reactive echo");

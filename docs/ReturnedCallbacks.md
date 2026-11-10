@@ -14,10 +14,14 @@ import vm DocumentModel
 Window {
     VStack {
         PushButton(vm.makeHandler(vm.amount))
-        InputField(onEdited: vm.makeTextHandler())
+        InputField(onEdited: callback(vm.makeTextHandler()))
     }
 }
 ```
+
+이름을 지정한 이벤트 입력에서 `vm.method()`는 이벤트가 발생할 때 메서드를 직접
+호출한다. 이벤트 입력에 팩토리의 반환 함수를 연결하려면 위의 `callback(...)`을
+사용한다. 위치 콜백 인자에서 반환 함수를 전달하는 기존 표현도 유지한다.
 
 일반 입력의 반응형 규칙을 따른다. 팩토리 호출의 인자와 C++ 원본을 네이티브 `ReadContext`로
 읽고, 그 의존 원본이 바뀌면 새 함수를 만든다. 같은 위젯의 이벤트 연결은 유지한다. 표시·

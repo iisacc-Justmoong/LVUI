@@ -1,0 +1,8 @@
+import vm NativeOwnedListItemCustomFooterModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: vm.kind, label: "Item",
+                 footerComponent: PushButton(id: "extra", text: vm.label, width: 80,
+                                             height: vm.height, onClick: vm.clicked))
+    }
+}

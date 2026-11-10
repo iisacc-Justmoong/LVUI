@@ -1,4 +1,7 @@
 #include <LVUI/HierarchyDrag.h>
+#include <iiGUI/HierarchyViewport.h>
+#include <iiGUI/HierarchyDrag.h>
+namespace lvui {using HierarchyViewportSource=HierarchyViewportBinding<ii::gui::BasicHierarchyViewportSource>;using HierarchyDragViewport=HierarchyDragViewportValue<HierarchyViewportSource>;using HierarchyDrag=HierarchyDragBinding<ii::gui::BasicHierarchyDrag,HierarchyViewportSource>;}
 
 #include <memory>
 #include <stdexcept>
@@ -20,6 +23,14 @@ int main() {
     auto projection = take(controller.projection());
     auto source = take(HierarchyViewportSource::create(std::make_shared<const HierarchyProjection>(projection)));
     HierarchyDragViewport viewport{.source=source, .width=200, .height=120, .offset=0, .row_height=20};
+    auto variable=projection;variable.entries[0].row_extent=40.;
+    auto varied=take(HierarchyViewportSource::create(std::make_shared<const HierarchyProjection>(variable)));
+    auto mixed_viewport=viewport;mixed_viewport.source=varied;
+    auto mixed=take(HierarchyDrag::begin(snapshot,"b",{10,70},0));
+    auto mixed_target=take(mixed.update({10,97},mixed_viewport));
+    require(mixed_target.proposal&&mixed_target.proposal->request.target=="c"&&
+            mixed_target.proposal->request.placement==HierarchyPlacement::after,
+            "Variable-height drag used a fixed-size target or placement");
     auto drag = take(HierarchyDrag::begin(snapshot, "a", {10, 10}));
     auto idle = take(drag.update({12, 10}, viewport)); require(!idle.dragging && !idle.proposal, "Drag started below the movement threshold");
     auto cycle = take(drag.update({10, 30}, viewport)); require(cycle.dragging && !cycle.proposal, "A subtree could target its own descendant");

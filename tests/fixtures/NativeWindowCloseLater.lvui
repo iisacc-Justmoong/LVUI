@@ -1,0 +1,7 @@
+Application {
+    Window { VStack { Label(text: "No policy") } }
+    ApplicationWindow(onCloseRequested: window.can_close) {
+        import window WindowCloseFixtureBackend
+        Label(text: "Policy on later window")
+    }
+}

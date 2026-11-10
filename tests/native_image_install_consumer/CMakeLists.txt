@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.31)
+project(LVUIImageConsumer LANGUAGES CXX)
+
+find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS ImageIO)
+find_package(iiSDKCore 0.20 CONFIG REQUIRED COMPONENTS Runtime)
+find_package(iiGUI 0.5.0 CONFIG REQUIRED)
+find_package(iiFileProviderNative 0.9 CONFIG REQUIRED)
+find_package(iiNetwork 0.5 CONFIG REQUIRED)
+find_package(iiVisualCodec 0.2 CONFIG REQUIRED COMPONENTS Image)
+find_package(CURL 7.62 REQUIRED)
+find_package(ZLIB REQUIRED)
+add_library(application_image_adapter STATIC NativeImageLoader.cpp NativeImageSource.cpp)
+target_include_directories(application_image_adapter PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(application_image_adapter PUBLIC LVUI::ImageIO iiGUI::iiGUI iiSDKCore::Runtime
+    PRIVATE iiFileProvider::Native iiNetwork::iiNetwork iiVisualCodec::Image CURL::libcurl ZLIB::ZLIB)
+add_executable(image_consumer main.cpp)
+target_link_libraries(image_consumer PRIVATE application_image_adapter)
+set_target_properties(image_consumer PROPERTIES CXX_EXTENSIONS OFF)
+
+enable_testing()
+add_test(NAME LVUI.ImageIOConsumer COMMAND image_consumer)

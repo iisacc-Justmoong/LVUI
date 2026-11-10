@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/NativeHierarchy.md",
-    "sha256": "2cb1a146786b29f642a5b01817297ac00c2009dd3ca0472a6b2ec6330e22d474",
-    "bytes": 10569,
+    "sha256": "149da39e53d5d26d89f29b80210d1d2c2add0dcf1c5882bdf47e0bbc07567b14",
+    "bytes": 10573,
     "line_count": 152,
     "encoding": "utf-8",
     "language": "ko"
@@ -202,9 +202,9 @@
       "kind": "fenced_code",
       "start_line": 62,
       "end_line": 70,
-      "raw": "```lvui\nimport class Row lvrs.HierarchyItem\nimport vm Backend\nlet Controls(row: Row, caption: String = \"Select\"): View = HStack {\n    Label(text: vm.describe(row))\n    PushButton(row.activate, text: caption)\n}\nWindow { HierarchyItem(count: vm.count, countView: Controls) }\n```\n",
+      "raw": "```lvui\nimport class Row lvrs.HierarchyItem\nimport vm Backend\nconst Controls(row: Row, caption: String = \"Select\"): View = HStack {\n    Label(text: vm.describe(row))\n    PushButton(row.activate, text: caption)\n}\nWindow { HierarchyItem(count: vm.count, countView: Controls) }\n```\n",
       "language": "lvui",
-      "code": "import class Row lvrs.HierarchyItem\nimport vm Backend\nlet Controls(row: Row, caption: String = \"Select\"): View = HStack {\n    Label(text: vm.describe(row))\n    PushButton(row.activate, text: caption)\n}\nWindow { HierarchyItem(count: vm.count, countView: Controls) }\n",
+      "code": "import class Row lvrs.HierarchyItem\nimport vm Backend\nconst Controls(row: Row, caption: String = \"Select\"): View = HStack {\n    Label(text: vm.describe(row))\n    PushButton(row.activate, text: caption)\n}\nWindow { HierarchyItem(count: vm.count, countView: Controls) }\n",
       "closed": true
     },
     {
@@ -291,9 +291,9 @@
       "kind": "fenced_code",
       "start_line": 94,
       "end_line": 102,
-      "raw": "```lvui\nimport class Entry lvrs.HierarchyDelegateContext\nimport vm Backend\nlet Layer(entry: Entry): View = HierarchyItem(\n    label: vm.title(entry), baseLeftPadding: 4, iconSize: 0)\nWindow {\n    HierarchyList(controller: vm.tree, itemDelegate: Layer)\n}\n```\n",
+      "raw": "```lvui\nimport class Entry lvrs.HierarchyDelegateContext\nimport vm Backend\nconst Layer(entry: Entry): View = HierarchyItem(\n    label: vm.title(entry), baseLeftPadding: 4, iconSize: 0)\nWindow {\n    HierarchyList(controller: vm.tree, itemDelegate: Layer)\n}\n```\n",
       "language": "lvui",
-      "code": "import class Entry lvrs.HierarchyDelegateContext\nimport vm Backend\nlet Layer(entry: Entry): View = HierarchyItem(\n    label: vm.title(entry), baseLeftPadding: 4, iconSize: 0)\nWindow {\n    HierarchyList(controller: vm.tree, itemDelegate: Layer)\n}\n",
+      "code": "import class Entry lvrs.HierarchyDelegateContext\nimport vm Backend\nconst Layer(entry: Entry): View = HierarchyItem(\n    label: vm.title(entry), baseLeftPadding: 4, iconSize: 0)\nWindow {\n    HierarchyList(controller: vm.tree, itemDelegate: Layer)\n}\n",
       "closed": true
     },
     {

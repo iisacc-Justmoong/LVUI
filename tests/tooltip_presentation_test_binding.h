@@ -1,0 +1,9 @@
+#pragma once
+#include "tooltip_model_test_binding.h"
+#include <LVUI/NativeTooltipPresentation.h>
+#include <iiGUI/NativeTooltipPresentationView.h>
+#include <iiGUI/NativeMaterialView.h>
+using TooltipTestMaterialModel=ii::gui::BasicMaterial<lvui::MaterialModelPolicy>;
+using TooltipTestMaterial=lvui::native::MaterialBinding<ii::gui::BasicMaterial,ii::gui::BasicMaterialGradient,ii::gui::BasicNativeMaterial,ii::gui::Widget>;
+using TooltipTestStyle=lvui::native::TooltipPresentationStyleValue<ii::gui::MotionPreferences>;
+using TooltipTestPresentation=lvui::native::TooltipPresentationBinding<ii::gui::BasicNativeTooltipPresentation,ii::gui::MotionPreferences,TooltipTestMaterialModel,TooltipTestMaterial,TooltipTestOutline>;

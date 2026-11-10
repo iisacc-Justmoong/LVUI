@@ -1,0 +1,9 @@
+import vm NativeWheelGuardModel
+Window {
+    WheelScrollGuard(id: "guard", targetId: "scroll", width: 120, height: 100,
+                     enabled: vm.enabled, consumeInside: vm.consume, onWheelRouted: vm.routed) {
+        ScrollView(id: "scroll", width: 120, height: 100) {
+            VStack(height: 500) { Label(text: "Scrollable content") }
+        }
+    }
+}

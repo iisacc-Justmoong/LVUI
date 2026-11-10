@@ -59,7 +59,7 @@ public:
                 --count; part = read({position, count}, 4 * 65536);
             }
             if (!part) return std::unexpected(part.error());
-            if (part->size() > std::numeric_limits<std::size_t>::max() - result)
+            if (part->size() > (std::numeric_limits<std::size_t>::max)() - result)
                 return std::unexpected(CodeDocumentError{CodeDocumentErrorCode::too_large, "Code range byte count overflow"});
             result += part->size(); position += count;
         }
@@ -225,10 +225,10 @@ public:
         const auto removed = current->absolute_byte(*last) - current->absolute_byte(*first);
         if (edit.text.size() > limits_.maximum_bytes - (current->byte_size() - removed))
             return error(CodeDocumentErrorCode::too_large, "Code document exceeds its byte limit");
-        if (edit.revision == std::numeric_limits<std::uint64_t>::max()) return error(CodeDocumentErrorCode::exhausted, "Code document revision exhausted");
+        if (edit.revision == (std::numeric_limits<std::uint64_t>::max)()) return error(CodeDocumentErrorCode::exhausted, "Code document revision exhausted");
         const auto& old = current->parts(); const auto count = old.size();
         const auto low = first->chunk ? first->chunk - 1 : 0;
-        const auto high = last->chunk < count ? std::min(count, last->chunk + 2) : count;
+        const auto high = last->chunk < count ? (std::min)(count, last->chunk + 2) : count;
         std::string local;
         for (auto i = low; i < first->chunk; ++i) local += old[i]->text;
         if (first->chunk < count) local.append(old[first->chunk]->text, 0, first->byte);

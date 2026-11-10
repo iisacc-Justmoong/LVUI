@@ -10,8 +10,8 @@ namespace lvui {
 enum class MenuDirection { automatic,right,left,up,down };
 struct MenuItemPalette final {
     StyleColor text{1,1,1,.8},disabled_text{1,1,1,.3},detail{1,1,1,.6};
-    StyleColor selected{.0812049285,.5099760294,1,1},hover{.1230252981,.1252803057,.1275353134,1};
-    StyleColor pressed{.1315810233,.2001844049,.2785882354,1},focus{.0812049285,.5099760294,1,1};
+    StyleColor selected{figma_defaults::accent_blue_default},hover{figma_defaults::panel_surface_alt};
+    StyleColor pressed{figma_defaults::accent_blue_subtle},focus{figma_defaults::accent_blue_default};
     friend bool operator==(const MenuItemPalette&,const MenuItemPalette&)=default;
 };
 struct MenuItemConfiguration final {
@@ -29,60 +29,10 @@ struct MenuItemInteraction final {bool enabled=true,hovered=false,pressed=false,
 struct MenuItemVisual final {StyleColor background,text,detail,focus;bool enabled=true,focused=false;};
 struct MenuItemGeometry final {MenuRect surface,icon,label,shortcut,chevron;double radius=0;};
 
-// The host resolves icons and measures text; state and layout remain LVUI-owned.
-class MenuItem final {
-    MenuItemConfiguration value_;
-public:
-    [[nodiscard]] const MenuItemConfiguration& configuration()const noexcept{return value_;}
-    [[nodiscard]] static bool validate(const MenuItemConfiguration& value)noexcept{
-        const auto bound=[](double n,double low,double high){return std::isfinite(n)&&n>=low&&n<=high;};
-        const auto color=[&](StyleColor c){return bound(c.red,0,1)&&bound(c.green,0,1)&&bound(c.blue,0,1)&&bound(c.alpha,0,1);};
-        if(!valid_accessibility_text(value.label)||!valid_accessibility_text(value.shortcut)||!valid_accessibility_text(value.key_placeholder)||
-           !valid_accessibility_text(value.icon_name)||value.icon_name.size()>256||!valid_accessibility_text(value.accessibility_name)||
-           !bound(value.width,0,8192)||!bound(value.height,0,8192)||!bound(value.icon_size,1,256)||!bound(value.chevron_size,1,256)||
-           !bound(value.horizontal_padding,0,4096)||!bound(value.spacing,0,8192)||!bound(value.font_size,1,256)||!bound(value.line_height,0,8192)||
-           (value.font_weight!=400&&value.font_weight!=500&&value.font_weight!=600&&value.font_weight!=700))return false;
-        if(value.state!=MenuEntryState::normal&&value.state!=MenuEntryState::selected&&value.state!=MenuEntryState::inactive)return false;
-        if(value.direction!=MenuDirection::automatic&&value.direction!=MenuDirection::right&&value.direction!=MenuDirection::left&&
-           value.direction!=MenuDirection::up&&value.direction!=MenuDirection::down)return false;
-        const auto& p=value.palette;
-        return color(p.text)&&color(p.disabled_text)&&color(p.detail)&&color(p.selected)&&color(p.hover)&&color(p.pressed)&&color(p.focus);
-    }
-    bool set_configuration(MenuItemConfiguration value){if(!validate(value))return false;value_=std::move(value);return true;}
-    [[nodiscard]] double width()const noexcept{return value_.width>0?value_.width:(value_.compact?141:161);}
-    [[nodiscard]] double height()const noexcept{return value_.height>0?value_.height:(value_.compact?18:24);}
-    [[nodiscard]] std::string_view shortcut()const noexcept{
-        if(!value_.key_visible)return {};
-        return value_.shortcut.empty()?std::string_view(value_.key_placeholder):std::string_view(value_.shortcut);
-    }
-    [[nodiscard]] MenuDirection direction()const noexcept{
-        return value_.direction==MenuDirection::automatic?(value_.expanded?MenuDirection::down:MenuDirection::right):value_.direction;
-    }
-    [[nodiscard]] MenuItemVisual visual(MenuItemInteraction state)const noexcept{
-        const auto& p=value_.palette;const bool enabled=value_.enabled&&state.enabled&&value_.state!=MenuEntryState::inactive;
-        MenuItemVisual result{.background={0,0,0,0},.text=enabled?p.text:p.disabled_text,.detail=enabled?p.detail:p.disabled_text,
-                              .focus=p.focus,.enabled=enabled,.focused=enabled&&state.focused};
-        if(value_.state==MenuEntryState::selected)result.background=p.selected;
-        else if(enabled&&state.pressed)result.background=p.pressed;
-        else if(enabled&&state.hovered)result.background=p.hover;
-        return result;
-    }
-    [[nodiscard]] std::optional<MenuItemGeometry> geometry(double width,double height,double label_width,double label_height,
-                                                            double shortcut_width,double shortcut_height)const noexcept{
-        const auto extent=[](double n){return std::isfinite(n)&&n>=0&&n<=32767;};
-        if(!extent(width)||!extent(height)||!extent(label_width)||!extent(label_height)||!extent(shortcut_width)||!extent(shortcut_height))return std::nullopt;
-        MenuItemGeometry result;result.surface={0,0,width,height};result.radius=value_.compact?0:std::min({4.,width/2,height/2});
-        if(!width||!height)return result;
-        const auto padding=std::min(value_.horizontal_padding,width/2);double left=padding,right=width-padding;
-        if(value_.show_icon_slot){const auto size=std::min({value_.icon_size,height,right-left});result.icon={left,(height-size)/2,size,size};
-            left+=size;if(left<right)left+=std::min(value_.spacing,right-left);}
-        if(value_.show_chevron&&value_.has_children){const auto size=std::min({value_.chevron_size,height,std::max(0.,right-left)});right-=size;
-            result.chevron={right,(height-size)/2,size,size};if(right>left)right-=std::min(value_.spacing,right-left);}
-        if(!shortcut().empty()&&shortcut_width>0&&shortcut_height>0){const auto size=std::min(shortcut_width,std::max(0.,right-left));right-=size;
-            const auto h=std::min(shortcut_height,height);result.shortcut={right,(height-h)/2,size,h};if(right>left)right-=std::min(value_.spacing,right-left);}
-        if(!value_.label.empty()&&label_width>0&&label_height>0){const auto h=std::min(label_height,height);
-            result.label={left,(height-h)/2,std::min(label_width,std::max(0.,right-left)),h};}
-        return result;
-    }
+// Design values and text policy are supplied to the application-composed iiGUI model.
+struct MenuItemModelPolicy final {
+    using Configuration=MenuItemConfiguration;using Interaction=MenuItemInteraction;using Visual=MenuItemVisual;
+    using Geometry=MenuItemGeometry;using State=MenuEntryState;using Direction=MenuDirection;using Color=StyleColor;
+    [[nodiscard]] static bool valid_text(std::string_view value)noexcept{return valid_accessibility_text(value);}
 };
 } // namespace lvui

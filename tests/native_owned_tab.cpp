@@ -1,4 +1,6 @@
 #include <LVUI/NativeTab.h>
+#include <iiGUI/NativeTabView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
 #include <functional>
@@ -7,6 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <thread>
+namespace lvui::native { using NativeTab=TabBinding<ii::gui::BasicTab,ii::gui::BasicNativeTab,ii::gui::CachedSvgDecoder,ii::gui::Widget,ii::gui::WidgetSnapshot>; }
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}

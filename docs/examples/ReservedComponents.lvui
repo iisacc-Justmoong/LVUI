@@ -1,5 +1,5 @@
 import vm ExampleBackend
-let title: String = "Native LVUI"
+const title: String = "Native LVUI"
 
 ApplicationWindow(title: title) {
     VStack(spacing: 16) {

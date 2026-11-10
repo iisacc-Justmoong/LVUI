@@ -1,4 +1,5 @@
 #include "NativeOwnedDivider.generated.h"
+#include <LVUI/StyleTokens.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
 #include <cmath>
@@ -29,13 +30,19 @@ int main(){
     auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(state->content_host({},"host",{640,480}));std::shared_ptr<View::Scope> scope;
     good(host.set_content([&](ii::gui::WidgetBuilder& builder){return View::build(builder,{}, {},&scope);}));
-    auto rule=find(state,"/rule"),context=find(state,"/context");
-    const auto first=take(rule.snapshot()),second=take(context.snapshot());
+    auto rule=find(state,"/rule"),context=find(state,"/context"),default_rule=find(state,"/defaultRule");
+    const auto first=take(rule.snapshot()),second=take(context.snapshot()),stock=take(default_rule.snapshot());
     require(first.kind==ii::gui::WidgetKind::absolute_stack&&near(first.bounds.width,120)&&near(first.bounds.height,6)&&
             near(second.bounds.width,145)&&near(second.bounds.height,3),"Divider natural size or kind is incorrect");
     auto frame=take(state->drawing_snapshot({640,480}));
     require(line(frame,{first.bounds.x+4,first.bounds.y+2,112,2},{1,0,0,.5})&&
             line(frame,{second.bounds.x+4,second.bounds.y+1,137,1},{1,1,1,.3}),"Divider drawing or default context inset is incorrect");
+    const auto encoded=lvui::figma_defaults::panel_surface_panel;
+    const auto linear=[](double c){return float(c<=.04045?c/12.92:std::pow((c+.055)/1.055,2.4));};
+    require(near(stock.bounds.width,220)&&near(stock.bounds.height,3)&&
+            line(frame,{stock.bounds.x,stock.bounds.y+1,220,1},
+                 {linear(encoded.red),linear(encoded.green),linear(encoded.blue),float(encoded.alpha)}),
+            "Default divider differs from the Figma size or surface token");
     require(!rule.activate(),"Divider unexpectedly accepted activation");
     scope->backend_0.axis.set(std::string("vertical"));scope->backend_0.length.set(80);
     auto updated=take(rule.snapshot());

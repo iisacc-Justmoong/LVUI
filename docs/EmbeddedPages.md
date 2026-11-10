@@ -9,8 +9,9 @@ return lvui_generated::ReportPage::build(widgets, parent,
     [&](auto& scope) { scope.backend_0.title.set("Report 42"); });
 ```
 
-최상위 LVUI 문서는 기존처럼 Window 또는 ApplicationWindow와 자식 한 개이다.
-`build`에서는 창 옵션을 사용하지 않고 자식 본문만 구성한다. 부모를 생략하면
+최상위 LVUI 문서는 독립 View이거나 Window 또는 ApplicationWindow와 자식 한 개일
+수 있다. 독립 View와 동적 루트의 계약은 [네이티브 부착](NativeEmbeddedViews.md)을
+따른다. `build`에서는 창 옵션을 사용하지 않고 자식 본문만 구성한다. 부모를 생략하면
 독립 콘텐츠 빌더의 루트가 되며, 명시하면 해당 빌더 안의 부모 아래에 붙는다.
 각 호출은 독립된 Scope와 BindingScope를 생성하여 해당 위젯 세대에 retain한다.
 정적 `mount`와 인스턴스 `attach`도 같은 생성 함수를 재사용한다.

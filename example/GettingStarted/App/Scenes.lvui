@@ -1,0 +1,23 @@
+Application {
+    Scene(id: "main", title: "Scenes") {
+        var count: Int = 0
+        VStack(spacing: Metric.space12, padding: .space24) {
+            Label(text: "Scene counter", style: .header)
+            Label(text: count)
+            PushButton(text: "Increase", onClick: { count = count + 1 })
+            PushButton(text: "Count and open tools", onClick: {
+                count = count + 1
+                openScene("tools")
+            })
+        }
+    }
+    Scene(id: "tools", title: "Tools", initiallyOpen: false) {
+        var count: Int = 0
+        VStack(spacing: Metric.space12, padding: .space24) {
+            Label(text: "Tools scene counter", style: .header)
+            Label(text: count)
+            PushButton(text: "Increase", onClick: { count = count + 1 })
+            PushButton(text: "Close tools", onClick: closeScene("tools"))
+        }
+    }
+}

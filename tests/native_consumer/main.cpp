@@ -11,6 +11,8 @@
 #include <LVUI/NativeInferredValues.h>
 #include <LVUI/NativeLayoutValues.h>
 #include <LVUI/NativeWindowValues.h>
+#include <LVUI/HierarchyViewport.h>
+#include <LVUI/TableMerge.h>
 #include <iostream>
 struct Injected final {
     explicit Injected(int value):value(value){}
@@ -18,8 +20,17 @@ struct Injected final {
     int value;
 };
 int main() {
-    auto native_color=lvui::native::color<iiColorManager::Rgba>("#ff000080");
-    if(native_color!=iiColorManager::Rgba{1,0,0,128/255.})return 100;
+    auto merge_source=std::make_shared<lvui::TableMemory>(
+        std::vector<lvui::TableColumn>{{.key="a"},{.key="b"}},
+        std::vector<lvui::TableRow>{{.key="r",.cells={{.text="A"},{.text="B"}}}});
+    lvui::TableMemoryMergeEditor merge_editor(merge_source);
+    auto merged=merge_editor.apply({.revision=0,.action=lvui::TableMergeAction::merge,
+                                    .range={.row=0,.column=0,.row_count=1,.column_count=2}});
+    if(!merged||*merged!=1)return 205;
+    auto merge_snapshot=merge_source->snapshot();
+    if(!merge_snapshot||(*merge_snapshot)->merges.size()!=1||(*merge_snapshot)->rows[0].cells[1].text!="B")return 206;
+    auto native_color=lvui::native::color<lvui::native::EncodedSrgb>("#ff000080");
+    if(native_color!=lvui::native::EncodedSrgb{1,0,0,128/255.})return 100;
     ii::core::Observable<int> source{2};
     lvui::native::Bindings bindings;
     int shown = 0;
@@ -38,22 +49,6 @@ int main() {
     auto first=rows.find("1");
     if(!rows.apply(lvui::native::collection_frame(std::vector{2,1},key),mount)||rows.find("1")!=first||first->state.get().index!=1)return 5;
     if(!rows.close())return 6;
-    auto virtual_frame=lvui::native::virtual_collection_frame(std::vector{1,2,3,4,5},key,{.item_height=40,.overscan=0},{.width=100,.height=40,.y=80});
-    if(virtual_frame.collection.items.size()!=1||virtual_frame.collection.items[0].value!=3||virtual_frame.content_height!=200)return 7;
-    auto indexed=lvui::native::virtual_collection_source(std::vector{1,2,3},key);
-    lvui::native::VirtualMeasurements<int> measurements;
-    auto measured=measurements.plan(indexed,{.item_height=40,.measure_height=true},{.width=100,.height=70});
-    measurements.report(measured.measurement_generation,{{"1",100,10},{"2",100,60}});
-    auto actual=measurements.plan(indexed,{.item_height=40,.measure_height=true},{.width=100,.height=70});
-    if(actual.cells[1].y!=10||actual.content_height!=110)return 8;
-    measurements.close();
-    lvui::native::CollectionNavigation navigation;
-    navigation.configure({.mode=lvui::native::CollectionSelectionMode::multiple});
-    auto moved=navigation.command(*indexed,lvui::native::CollectionCommand::end);
-    if(!moved.handled||navigation.state.get().current_key!="3")return 9;
-    navigation.command(*indexed,lvui::native::CollectionCommand::previous,{}, {.range=true});
-    if(navigation.state.get().selected_keys!=std::vector<std::string>{"2","3"})return 10;
-    navigation.close();
     auto owner=std::make_shared<int>(0);auto callbacks=std::make_shared<lvui::native::Bindings>();
     ii::core::Observable<int> amount{2};
     auto action=lvui::native::returned_callback(owner,callbacks,[&](lvui::native::ReadContext& context){

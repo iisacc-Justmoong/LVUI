@@ -2,7 +2,13 @@ import vm NativeOwnedEventListenerModel
 Window {
     VStack {
         EventListener(id: "listener", width: vm.width, height: vm.height,
-                      onInput: vm.input, onResized: vm.resized)
+                      onInput: vm.input, onResized: vm.resized) {
+            Avatar(id: "listener-avatar", size: .Small)
+        }
         EventListener(id: "listener-bool", width: 200, height: 80, onInput: vm.input_bool)
+        EventListener(id: "listener-content", sizeToContent: true, onInput: vm.input) {
+            Avatar(id: "content-avatar", size: .Small)
+        }
+        Label(id: "magnification", text: vm.magnification)
     }
 }

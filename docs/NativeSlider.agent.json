@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeSlider.md",
-    "sha256": "ee9f6138f51626012690477842c414682ff3cfc749d108147aae54058b2c0898",
-    "bytes": 2308,
-    "line_count": 28,
+    "sha256": "aa933c2daa9b0ccf4e42e82a901d23012018b1b12803f56ddf038c189f0ed3de",
+    "bytes": 20434,
+    "line_count": 247,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -40,52 +40,481 @@
     },
     {
       "id": "b000003",
-      "kind": "paragraph",
+      "kind": "heading",
       "start_line": 3,
-      "end_line": 6,
-      "raw": "`LVUI/Slider.h`는 범위·값·단계와 트랙·채움·손잡이의 기하를 소유하는\nC++ 값 모델이다. Qt, QML, LVRS, 위젯 호스트와 렌더러에 의존하지 않는다.\n기본 범위는 0–1, 값은 0.5, 너비는 320, 높이는 32 논리 px이다. 손잡이\n지름은 18, 트랙 높이는 6, 양 끝 삽입 값은 9이다.\n"
+      "end_line": 3,
+      "raw": "## 접근성 값 설정 계약\n",
+      "level": 2,
+      "title": "접근성 값 설정 계약"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 7,
-      "end_line": 7,
+      "start_line": 4,
+      "end_line": 4,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 8,
-      "end_line": 13,
-      "raw": "값은 범위에 제한하고 단계가 양수면 최소값 기준의 가장 가까운 단계로 맞춘다.\n최소·최대 끝점은 항상 선택할 수 있다. 단계가 0인 연속 슬라이더의 키보드\n증감 단위는 범위의 1/100이다. 범위나 치수가 잘못되면 설정을 거절하고 이전\n상태를 보존한다. 호스트는 포인터의 로컬 좌표를 전달하고 반환된 기하를 그린다.\n설정된 폭과 높이는 손잡이를 담을 수 있어야 하며 트랙은 설정된 높이를 넘지\n않는다. 실제 배치 너비가 양쪽 삽입 값보다 작으면 트랙 길이를 0으로 제한한다.\n"
+      "start_line": 5,
+      "end_line": 12,
+      "raw": "사용자 정의 슬라이더의 운영체제 접근성 값 설정은 iiGUI의 교체 가능한 값 설정\n핸들러에 연결한다. 사용자 조작과 같은 스냅·범위·`onMoved` 규칙을 사용하며,\n비활성화·퇴역된 대상과 범위 밖 요청은 거부한다. 앱의 프로그램 설정 경로는\n기존처럼 사용자 콜백을 호출하지 않는다. 유효한 요청이 값을 바꿀 때만 콜백을\n발행한다. 이 기능은 새 `set_accessibility_value_handler`가 있는 iiGUI 헤더와\n라이브러리를 함께 사용해야 한다. 헤더의 `IIGUI_ACCESSIBILITY_VALUE_HANDLER_API`\n기능 표시가 없으면 새 슬라이더는 이전 헤더를 명확한 컴파일 오류로 거부하며,\n새 헤더와 이전 바이너리의 조합은 필요한 설정 함수가 없어 링크 오류로 구분한다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 14,
-      "end_line": 14,
+      "start_line": 13,
+      "end_line": 13,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 15,
-      "end_line": 21,
-      "raw": "`NativeSlider`는 앱이 제공한 범용 입력·그리기·접근성 호스트에 이 모델을 연결한다.\nLVUI가 포인터 끌기, 키보드와 접근성 증감, 그리기 및 값 변경 콜백을 처리한다.\n포인터 좌표는 호스트가 전달한 해당 표면의 로컬 좌표를 사용하므로 중첩된 콘텐츠의\n위치와 관계없이 같은 범위로 매핑한다.\n입력 설정의 값이 바뀌지 않은 상태에서 다른 설정을 갱신해도 사용자가 조정한\n현재 값은 보존한다. 유효하지 않은 설정을 거절하고, 소유 스레드가 아니거나\n위젯이 퇴역한 뒤의 갱신도 거절한다.\n"
+      "start_line": 14,
+      "end_line": 20,
+      "raw": "Linux의 AT-SPI `Value`는 범위와 현재값을 제공하고 값 설정 요청을 소유자 스레드에\n접수한다. 전달 전에 창·표면 세대와 범위·활성 상태를 다시 확인하므로 접수 후\n상태가 바뀌면 요청은 취소될 수 있다. 실제 증분은 아직 투영되지 않아 미상 값 0으로\n표시한다. 진행 상태는 읽기 전용이다. [iiGUI 접근성 계약](../../iiGUI/docs/AccessibilitySemantics.md)에\n미지원 항목과 플랫폼 검증 범위를 기록한다. 슬라이더 모델·생성 코드·헤드리스\n호스트 검사 5건과 iiGUI 접근성 검사가 통과했으며 실제 Linux 스크린 리더나\ncompositor 실행은 검사하지 않았다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 22,
-      "end_line": 22,
+      "start_line": 21,
+      "end_line": 21,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 23,
-      "end_line": 28,
-      "raw": "기본 선언형 `Slider`는 이 모델과 어댑터를 생성한다. 범위·값·단계·치수·활성\n상태·접근성 이름·트랙/채움/손잡이/초점 색상은 정적이거나 반응형 값일 수 있다.\n`onMoved`는 사용자 조작으로 값이 바뀌었을 때 호출되며 프로그램 설정 변경은\n콜백을 발생시키지 않는다. 앱이 제공하는 범용 호스트는 사용자 정의 슬라이더의\n접근성 범위, 증감 입력과 표면 로컬 좌표를 지원해야 한다. 플랫폼 표시와 실제\n스크린 리더 실행 검증은 아직 남아 있다. 명시적 레거시 생성 경로는 별개이다.\n"
+      "start_line": 22,
+      "end_line": 26,
+      "raw": "앱 측 `NativeSlider::options()`는 현재 구성과 값을 반환한다. `set_value()`는\n사용자가 마지막 외부 입력 이후 조절했더라도 지정한 값을 명시적으로 적용하고\n사용자 이동 콜백은 호출하지 않는다. `set_options()`는 반응형 값이 바뀌지 않은\n경우 사용자의 조절을 보존하므로, 외부 모델이 같은 이전 값으로 되돌리려면\n`set_value()`를 사용한다. 두 경로 모두 기존 범위·스레드·수명 검증을 따른다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 33,
+      "raw": "`LVUI/Slider.h`는 선언 값, 디자인 프리셋과 iiGUI 구현에 전달할 독립 정책을\n제공한다. 범위·값·스냅과 트랙·채움·손잡이의 기하는 iiGUI의 `BasicSlider`가\n소유한다. 앱 생성 코드는 `SliderViewBinding`으로 iiGUI 구현을 조합하며 LVUI\n헤더는 iiSDKCore 외 SDK를 직접 참조하지 않는다. 기본 범위는 0–1, 값은 0.5,\n너비는 320, 높이는 32 논리 px이다. 손잡이 지름은 18, 트랙 높이는 6,\n양 끝 삽입 값은 9이다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 41,
+      "raw": "`SliderSize`와 `apply_slider_size`는 라이브러리가 소유하는 네 크기를 제공한다.\n순서대로 높이·손잡이 지름·트랙 높이·양 끝 삽입 값은 `mini`가 22·12·4·8,\n`small`이 24·14·6·8, `regular`가 32·18·6·9, `large`가 44·22·8·11 논리 px이다.\n범위·현재 값·너비는 크기를 바꾸어도 유지한다. 선언형 뷰에서는\n`<Slider size={.mini} .../>`로 선택하거나 `SliderSize` 또는 0–3의 반응형 정수로\n지정한다. 알 수 없는 값은 거절하며 기존 상태를 유지한다. 개별 치수를 명시한\n경우 해당 치수가 크기 프리셋보다 우선한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 48,
+      "raw": "값은 범위에 제한하고 단계가 양수면 최소값 기준의 가장 가까운 단계로 맞춘다.\n최소·최대 끝점은 항상 선택할 수 있다. 단계가 0인 연속 슬라이더의 키보드\n증감 단위는 범위의 1/100이다. 범위나 치수가 잘못되면 설정을 거절하고 이전\n상태를 보존한다. 호스트는 포인터의 로컬 좌표를 전달하고 반환된 기하를 그린다.\n설정된 폭과 높이는 손잡이를 담을 수 있어야 하며 트랙은 설정된 높이를 넘지\n않는다. 실제 배치 너비가 양쪽 삽입 값보다 작으면 트랙 길이를 0으로 제한한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 54,
+      "raw": "iiGUI의 `BasicNativeSlider`는 포인터 끌기, 키보드와 접근성 증감, 그리기,\n프레임 기반 초점 모션과 값 변경 콜백을 처리한다. 사용자 조작과 입력 값 변경에만\n반응하며 모션이 활성화된 동안에만 프레임을 요청한다. 위젯이 퇴역하면 콜백과\n아이콘 캐시를 해제하고 오래된 갱신은 게시하지 않는다. 포인터 좌표는 해당 표면의\n로컬 좌표를 사용하므로 중첩된 콘텐츠의 위치와 관계없이 같은 범위로 매핑한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "heading",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "### 중심 기준 변형 계약\n",
+      "level": 3,
+      "title": "중심 기준 변형 계약"
+    },
+    {
+      "id": "b000019",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 71,
+      "raw": "[원본 Center biased](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-7350)의\n네 크기와 네 상태는 트랙 중앙에 폭 2px의 표시를 두고 위아래로 트랙보다 각각\n2px 길게 그리며 양 끝은 원본처럼 둥글다. 표시는 공통 `Text/captionColor`를 사용한다. 활성 구간은\n값 범위의 중간과 현재 위치 사이이며 오른쪽에서 왼쪽으로 읽는 배치에서도\n동일한 물리적 중앙을 기준으로 한다. 포인터 값·키보드·접근성 동작과 일반\n슬라이더의 기존 기본값은 변하지 않는다. `type` 변형은 기본, 중심 기준, 틱,\n중심 기준 틱을 제공하고 `showTicks`를 명시하면 이를 우선한다. 틱은 원본처럼\n2px 원형이다. 선택한 `Color.text.caption`은 중앙 표시와 눈금에 전달된다.\n정적·반응형 `type`은 `.default`, `.centerBiased`, `.ticks`,\n`.centerBiasedTicks`, `.filled`, `.minMaxLabels`, `.segmented`를 받는다. C++에서는\n`SliderType`과 `apply_slider_type`을 사용한다. 지원하지 않는 형식은 명확히\n거부한다. 끝점 레이블은 `showMinMax` 입력으로 독립적으로 표시할 수 있다.\n`SliderPalette`, `SliderConfiguration`, `SliderGeometry`의\n필드가 추가되었으므로 C++ 소비자는 새 헤더로 다시 빌드해야 한다.\n비활성 그룹 합성은 별도 과제로 남는다.\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "fenced_code",
+      "start_line": 73,
+      "end_line": 75,
+      "raw": "```text\nSlider(type: .centerBiasedTicks, from: -1, to: 1, value: vm.amount)\n```\n",
+      "language": "text",
+      "code": "Slider(type: .centerBiasedTicks, from: -1, to: 1, value: vm.amount)\n",
+      "closed": true
+    },
+    {
+      "id": "b000023",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "paragraph",
+      "start_line": 77,
+      "end_line": 84,
+      "raw": "중앙 표시의 값과 색상 출처는 16개 원본 변형을 기록한\n`catalog/lvui-slider-center.json`과 생성 헤더에서 온다. 중앙과 양 끝값, 네 크기,\n좌우 반전, 반응형 변경과 잘못된 값의 복구를 창 없는 모델·생성 코드·위젯 검사로\n확인한다. 이 검사는 실제 GPU 픽셀이나 기기 표시의 동등성을 뜻하지 않는다.\n심벌을 포함한 최종 공통 색상 연결까지 Qt·LVRS 주요 경로를 차단한 macOS arm64 구성의 전체 빌드와 헤드리스 회귀\n640건, 별도 설치 패키지 경계 검사 1건이 통과했다. 설치된 C++ 헤더는 별도\n실행 파일을 만들지 않는 구문 분석으로 확인했고 Python 컴파일 경로도 검사했다.\n별도 빌드 디렉터리를 만드는 `LVUI.NativeInstalled`는 제외했다.\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 96,
+      "raw": "기본 트랙은 개명된 원본 LVUI의 `Panel/surfaceSolid`, 활성 채움은\n`Accent/Blue/Default`, 손잡이는 `Text/titleHeaderColor`를 사용한다. 네 크기와\n네 상태의 변수 연결을 대조했다. 트랙과 손잡이는 컴파일 시 선택한 공통 토큰을\n따르고 `trackColor`와 `thumbColor`를 명시하면 해당 입력이 우선한다. 활성 슬라이더에 마우스를 올리거나\n누르거나 키보드 초점을 두면 손잡이보다 반경이 3px 큰 2px 테두리를 표시한다.\n테두리는 배치나 적중 영역을 늘리지 않으며 상위 클립을 따른다. 비활성 상태에는\n각 도형의 불투명도에 0.32를 곱하고 테두리를 숨긴다. 이 방식은 겹치는 도형을\n먼저 합성한 뒤 전체에 0.32를 적용하는 Figma 그룹 불투명도와 완전히 같지는 않다.\n입력 설정의 값이 바뀌지 않은 상태에서 다른 설정을 갱신해도 사용자가 조정한\n현재 값은 보존한다. 유효하지 않은 설정을 거절하고, 소유 스레드가 아니거나\n위젯이 퇴역한 뒤의 갱신도 거절한다.\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "blank",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "paragraph",
+      "start_line": 98,
+      "end_line": 103,
+      "raw": "기본 선언형 `Slider`는 이 모델과 어댑터를 생성한다. 범위·값·단계·치수·활성\n상태·접근성 이름·트랙/채움/손잡이/초점 색상은 정적이거나 반응형 값일 수 있다.\n`onMoved`는 사용자 조작으로 값이 바뀌었을 때 호출되며 프로그램 설정 변경은\n콜백을 발생시키지 않는다. 앱이 제공하는 범용 호스트는 사용자 정의 슬라이더의\n접근성 범위, 증감 입력과 표면 로컬 좌표를 지원해야 한다. 플랫폼 표시와 실제\n스크린 리더 실행 검증은 아직 남아 있다. LVRS 생성 경로는 지원하지 않는다.\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "blank",
+      "start_line": 104,
+      "end_line": 104,
+      "raw": "\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "paragraph",
+      "start_line": 105,
+      "end_line": 112,
+      "raw": "눈금은 `showTicks: true`로 표시하고 `tickCount`로 개수를 지정한다. 기본값은 숨김과\n11개이며 2–512의 정수만 허용한다. 두 입력은 반응형으로 변경할 수 있으며 잘못된\n갱신은 이전 표시를 보존한다. 눈금은 값이나 단계의 스냅 동작을 변경하지 않는다.\n네 크기 모두 트랙 아래에 놓인 지름 2px 원을 범위 양 끝을 포함해 균등하게\n배치한다. 색상은 LVUI의 `Text/captionColor`를 사용한다. 고정된 크기와 3px 간격은\n독립 LVUI Figma의 슬라이더에서 캡처한 `catalog/lvui-slider-ticks.json`을 통해\n생성한다. Figma 기본 시안의 눈금 개수는 11개이며 다른 개수는 LVUI의 확장이다.\n눈금은 상위 클립을 따르며 별도의 입력 영역이나 접근성 개체를 만들지 않는다.\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "blank",
+      "start_line": 113,
+      "end_line": 113,
+      "raw": "\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "heading",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "### 채움형 변형\n",
+      "level": 3,
+      "title": "채움형 변형"
+    },
+    {
+      "id": "b000033",
+      "kind": "blank",
+      "start_line": 115,
+      "end_line": 115,
+      "raw": "\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "paragraph",
+      "start_line": 116,
+      "end_line": 121,
+      "raw": "[LVUI 원본 Filled](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-9777)의\n네 크기와 Idle·Hover·Pressed·Disabled 상태를 확인했다. 외부 높이는 각각\n22·24·32·44px이고 채운 트랙 높이는 12·16·28·44px이다. 트랙은 가용\n컨트롤 폭을 사용하며 값의 이동 범위는 양 끝에서 트랙 반지름만큼 안쪽이다.\n파란 채움은 원본에서 양 끝이 둥근 도형이며 값 위치에서 트랙 반지름만큼 더\n이어진다. 오른쪽에서 왼쪽으로 배치할 때는 입력과 채움 방향을 함께 반전한다.\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "blank",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "paragraph",
+      "start_line": 123,
+      "end_line": 129,
+      "raw": "Hover·Pressed에서 표시하는 손잡이의 지름은 8·8·20·36px이다. 포커스\n테두리는 손잡이보다 지름이 6px 크고 Hover는 1px, Pressed는 2px이다.\nIdle과 Disabled에는 손잡이와 테두리가 없다. 원본의 Regular·Large는 심벌을\n보이고 Mini·Small은 숨긴다. 채움형 심벌은 값이 바뀌어도 최소값 쪽 끝에\n고정되며 오른쪽에서 왼쪽으로 배치하면 그 끝도 반전된다. 공통 배경·채움·손잡이 색상은 각각\n`Panel/surfaceSolid`, `Accent/Blue/Default`, `Text/titleHeaderColor`이다.\nFigma의 비활성 상태는 도형을 먼저 합성한 뒤 전체에 0.32 불투명도를 적용한다.\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "blank",
+      "start_line": 130,
+      "end_line": 130,
+      "raw": "\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "paragraph",
+      "start_line": 131,
+      "end_line": 135,
+      "raw": "구현은 6px 배경 흐림과 밝은 안쪽 가장자리를 iiGUI 재질에 전달하고,\n채움·손잡이·테두리를 상태에 따라 그린다. Figma의 어두운 안쪽 그림자,\n밝은 가장자리의 정확한 흐림, 손잡이의 바깥 그림자와 안쪽 광택은 아직 없다.\n비활성 불투명도도 각 도형에 적용하므로 Figma 그룹 합성과 다르다. 키보드\n초점과 포인터 초점의 구별 및 원본 손잡이 변형 모션도 남아 있다.\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "blank",
+      "start_line": 136,
+      "end_line": 136,
+      "raw": "\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "paragraph",
+      "start_line": 137,
+      "end_line": 144,
+      "raw": "`active: false`는 입력을 비활성화하지 않고 채움만 `Text/disabledColor`로\n전환한다. `inactiveFillColor`를 지정하면 그 색상이 우선하며 두 입력은 정적·\n반응형으로 사용할 수 있다. 채움형의 활성 색상이 반투명하면 Figma처럼 그 아래에\n비활성 채움을 먼저 그린다. 크기와 형식 프리셋 적용 후 명시한 치수·심벌 설정이\n우선한다. C++에서는 `apply_slider_type`과 `apply_slider_size`를 먼저 호출하고\n사용자 지정 값을 나중에 지정한다. 원본 16개 상태의 측정치는\n`catalog/lvui-slider-filled.json`과 생성 헤더에서 온다. 모델·생성 코드·헤드리스\n위젯 검사는 실제 GPU 합성이나 기기 표시의 동등성을 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "blank",
+      "start_line": 145,
+      "end_line": 145,
+      "raw": "\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "heading",
+      "start_line": 146,
+      "end_line": 146,
+      "raw": "### 양 끝 레이블형과 구간형\n",
+      "level": 3,
+      "title": "양 끝 레이블형과 구간형"
+    },
+    {
+      "id": "b000043",
+      "kind": "blank",
+      "start_line": 147,
+      "end_line": 147,
+      "raw": "\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "paragraph",
+      "start_line": 148,
+      "end_line": 154,
+      "raw": "원본은\n[Min-max labels](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-10586)와\n[Segmented](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-11203)이다.\n두 변형은 채움형의 네 크기와 트랙을 공유하며 기본적으로 양 끝 글자를 표시한다.\n두 변형의 기본 심벌은 숨긴다. 구간형은 비활성 상태를 포함해 손잡이를 항상\n표시하고, 트랙 중앙에 양 끝을 포함한 다섯 개의 원형 표시를 둔다. 표시의\n지름은 Mini에서 3px, 나머지 크기에서 4px이며 `Text/captionColor`를 사용한다.\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "blank",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "paragraph",
+      "start_line": 156,
+      "end_line": 162,
+      "raw": "구간 수는 기본 5이며 2–512의 정수로 변경한다. 별도의 `stepSize`를 지정하지\n않으면 값은 최솟값과 최댓값을 포함한 구간 위치로 반올림하고, 키보드와 접근성\n증감도 같은 간격을 사용한다. 명시된 `stepSize`는 자동 간격보다 우선하며\n0도 명시적 설정으로 취급한다. 양 끝 글자·표시 노출과 크기 등 개별 설정은\n변형 프리셋보다 우선한다. 반응형 형식과 구간 수가 유효하지 않을 때는 이전\n유효 상태를 유지한다. 채움형에 기록한 그림자·그룹 불투명도 및 GPU 검증\n제한은 이 두 형식에도 적용된다.\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "blank",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "paragraph",
+      "start_line": 164,
+      "end_line": 170,
+      "raw": "선언형 `segmentCount`는 정적이거나 반응형일 수 있다. 구간형의 표시 개수는\n`tickCount`가 아닌 `segmentCount`를 따르며 `showTicks: false`는 표시만 숨긴다.\nC++에서 양수 `step`은 자동 간격보다 우선한다. 0을 명시적으로 사용해 연속\n입력으로 전환하려면 `automatic_segment_step`을 `false`로 설정한다. 값 범위,\n구간 수 또는 형식을 바꾸면 새 구성에 맞는 가장 가까운 유효 값으로 조정한다.\nFigma 상태 행렬은 `catalog/lvui-slider-labeled-segmented.json`에 보존하며\n구간 크기와 기본 개수는 검증 후 생성 헤더에 반영한다.\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "blank",
+      "start_line": 171,
+      "end_line": 171,
+      "raw": "\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "paragraph",
+      "start_line": 172,
+      "end_line": 176,
+      "raw": "이 두 형식과 채움형을 포함한 LVUI 모델·코드 생성·헤드리스 호스트·반응형 뷰\n검사 5건과 원본 행렬 생성 검사가 통과했다. Qt·LVRS 주요 경로를 차단한 기존\nmacOS arm64 구성의 전체 빌드와 헤드리스 회귀 641건, 별도 설치 패키지 경계\n검사 1건도 통과했다. 별도 빌드 디렉터리를 만드는 `LVUI.NativeInstalled`는\n제외했으며 실제 GPU 합성과 기기 표시는 검사하지 않았다.\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "blank",
+      "start_line": 177,
+      "end_line": 177,
+      "raw": "\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "fenced_code",
+      "start_line": 178,
+      "end_line": 180,
+      "raw": "```text\nSlider(type: .segmented, segmentCount: 5, minimumLabel: \"Low\", maximumLabel: \"High\")\n```\n",
+      "language": "text",
+      "code": "Slider(type: .segmented, segmentCount: 5, minimumLabel: \"Low\", maximumLabel: \"High\")\n",
+      "closed": true
+    },
+    {
+      "id": "b000053",
+      "kind": "blank",
+      "start_line": 181,
+      "end_line": 181,
+      "raw": "\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "heading",
+      "start_line": 182,
+      "end_line": 182,
+      "raw": "## 양 끝 표시\n",
+      "level": 2,
+      "title": "양 끝 표시"
+    },
+    {
+      "id": "b000055",
+      "kind": "blank",
+      "start_line": 183,
+      "end_line": 183,
+      "raw": "\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "paragraph",
+      "start_line": 184,
+      "end_line": 186,
+      "raw": "개명된 [LVUI 양 끝 레이블 원본](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-10586)의\n네 크기와 네 상태에서 양쪽 글자 모두 `Text/bodyColor`에 연결된 것을 확인했다.\n이 토큰은 양 끝 레이블형과 다른 형식에서 직접 켠 양 끝 표시가 함께 사용한다.\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "blank",
+      "start_line": 187,
+      "end_line": 187,
+      "raw": "\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "paragraph",
+      "start_line": 188,
+      "end_line": 200,
+      "raw": "`showMinMax`가 참일 때 `minimumLabel`, `maximumLabel`과 양 끝 아이콘을 표시한다.\n`showLabels`와 `showEndpointIcons`는 각각 글자와 아이콘을 독립적으로 켜며,\n기본 글자는 `0%`와 `100%`, 기본 아이콘은 LVUI가 보존한 Figma 원본 심볼이다.\n빈 글자나 빈 아이콘 이름은 해당 요소를 숨기고, 표시할 요소가 없는 끝에는\n여백을 만들지 않는다. 원본처럼 표시된 끝과 트랙 사이에는 LVUI 8px 간격,\n아이콘과 글자 사이에는 4px 간격을 사용한다. 글자는 본문 색상과 13px 미디엄\n글꼴·13px 줄 높이를 사용하고 공간이 부족하면 말줄임표로 표시한다.\n글자색은 컴파일 시 선택한 공통 `Color.text.body`를 따르며 명시적인 `labelColor`가\n있으면 그 값을 우선한다. `labelColor`는 정적·반응형으로 지정할 수 있고,\nC++에서는 `SliderPalette::label`로 설정한다. 각 색상 채널은 0–1의 유한한\n값이어야 하며 잘못된 갱신은 마지막 유효 상태를 보존한다. 비활성 상태의 글자는\n기존처럼 색상의 알파에 0.32를 곱한다. 이 경로는 실행 중 전역 테마 구독을\n의미하지 않으며 양 끝 아이콘의 원본 색상은 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "blank",
+      "start_line": 201,
+      "end_line": 201,
+      "raw": "\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "paragraph",
+      "start_line": 202,
+      "end_line": 207,
+      "raw": "양 끝 표시가 차지하는 폭을 뺀 영역을 트랙의 실제 조작 범위로 사용한다.\n그리기·눈금·심볼·포인터 좌표는 같은 기하를 공유하고, 레이아웃이 바뀌거나\n반응형 값이 갱신되어도 현재 값·접근성 범위·콜백 계약을 보존한다. 원본 LVRS의\n40px 최소 조작 영역을 우선 보장하되, 실제 폭이 더 작으면 그 폭을 넘지 않는다.\n남은 공간에 들어가지 않는 아이콘은 숨기고 긴 글자는 줄인다. 방향이 오른쪽에서\n왼쪽이면 최소·최대 표시와 값 진행 방향을 함께 뒤집는다.\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "blank",
+      "start_line": 208,
+      "end_line": 208,
+      "raw": "\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "paragraph",
+      "start_line": 209,
+      "end_line": 216,
+      "raw": "`showMinMax`, `showLabels`, `showEndpointIcons`, `minimumLabel`, `maximumLabel`,\n`minimumIconName`, `maximumIconName`, `rightToLeft`는 선언형 정적·반응형 입력이다.\n아이콘 이름은 LVUI 카탈로그에서 해석하며 존재하지 않는 아이콘이나 잘못된 입력은\n기존 상태를 바꾸지 않는다. 18px 아이콘은 끝 영역에 완전히 들어갈 때만 그린다.\n글자 측정 결과는 문자열과 글꼴별로 캐시하며 포인터 입력과 그리기가 같은 폭을\n사용한다. 양 끝 표시는 독립적인 접근성 요소가 아니며 기존 슬라이더의 이름·값·\n범위를 유지한다. 왼쪽·오른쪽 키는 시각적 진행 방향에 맞추고 위·아래 키와\n접근성 증감은 값의 증가·감소를 유지한다.\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "blank",
+      "start_line": 217,
+      "end_line": 217,
+      "raw": "\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "paragraph",
+      "start_line": 218,
+      "end_line": 225,
+      "raw": "`Slider` 값 모델을 네이티브 호스트 없이 직접 사용하는 경우 `endpoint_layout`,\n`geometry`, `set_from_position`에 실제 글자 폭을 `SliderEndpointWidths`로 전달해야\n한다. `NativeSlider`는 호스트의 글꼴로 측정해 전달한다. 40px 최소 조작 영역은\nLVRS의 기존 좁은 폭 처리 규칙을 보존한 것이며, 독립 LVUI Figma 초안의 별도\n최소 폭 변수에서 온 값은 아니다. 아주 좁은 폭에서 두 구현의 배치가 다를 수 있다.\n모델·생성기·헤드리스 호스트·반응형 생성 뷰 검사는 레이블과 아이콘의 조합,\n폭 변경, 양 끝 클릭, 방향 반전, 비활성화 및 실패한 아이콘 갱신의 복구를 다룬다.\n실제 창의 폰트 대체와 픽셀 출력은 이 검사에 포함되지 않는다.\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "blank",
+      "start_line": 226,
+      "end_line": 226,
+      "raw": "\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "paragraph",
+      "start_line": 227,
+      "end_line": 241,
+      "raw": "손잡이 심볼은 `showSymbol: true`로 켜고 `symbolName`으로 LVUI 아이콘 이름을\n선택한다. 기본 심볼은 Figma의 18px `Icon/sun` 원본이며, 원본 벡터의 여덟 채색\n경로는 LVUI `Material/Alert/actionBorder` 색상에 연결된다. 기본 심볼의 원본\n형상과 알파를 보존하고 컴파일 시 선택한 공통 색상을 적용한다. C++에서는\n`SliderPalette::symbol`로 색상을 지정할 수 있다. 원본 LVRS에서 같은 Figma 심벌을\n지칭하는 `sun` 이름도 이 색상을 따르며 다른 아이콘은 원본 색상을 유지한다.\n기본 토큰이 캡처된 색상과 같으면 원본 래스터를 그대로 사용해\n가장자리 픽셀도 보존한다. 비활성 불투명도는 한 번만 곱하며 잘못된 색상은 거절한다.\n실행 중 전역 테마 구독은 별도다. 일반 형식의 아이콘은 손잡이 중심을 따라 움직이고,\n채움형은 최소값 쪽 끝에 고정된다. 아이콘은 네 크기에서 18px을 유지한다. 따라서 작은 손잡이 바깥으로\n나갈 수 있으며 상위 클립을 따른다. 심볼은 입력 영역이나 접근성 범위를 늘리지\n않고 비활성 슬라이더에서 불투명도 0.32를 적용한다. 두 입력은 반응형으로 바꿀\n수 있으며 존재하지 않는 아이콘은 갱신을 거절하고 마지막 유효 화면을 보존한다.\n기본 자산과 LVUI 디자인·원본 아이콘 카탈로그의 이름을 선택할 수 있다. 임의의\n외부 아이콘 공급자를 슬라이더에 직접 주입하는 기능은 아직 제공하지 않는다.\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "blank",
+      "start_line": 242,
+      "end_line": 242,
+      "raw": "\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "paragraph",
+      "start_line": 243,
+      "end_line": 247,
+      "raw": "Figma의 0.12초 포인터 상태 전환은 손잡이의 바깥 테두리 불투명도에 적용한다.\n다시 진입하면 현재 표시값에서 반대 방향으로 이어지며, 호스트의 축소 모션·비활성화\n설정과 속도를 따른다. 프레임 공급이 없거나 비활성화되면 최종 상태로 즉시 정착한다.\n곡선은 LVUI의 out-cubic 이징으로 근사한다. MinMaxLabels·Segmented 유형은\n아직 이 네이티브 슬라이더에서 제공하지 않는다.\n"
     }
   ],
   "outline": [
@@ -96,27 +525,194 @@
       "title": "LVUI 독립 슬라이더",
       "anchor": "lvui-독립-슬라이더",
       "start_line": 1
+    },
+    {
+      "block_id": "b000003",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "접근성 값 설정 계약",
+      "anchor": "접근성-값-설정-계약",
+      "start_line": 3
+    },
+    {
+      "block_id": "b000018",
+      "parent_id": "b000003",
+      "level": 3,
+      "title": "중심 기준 변형 계약",
+      "anchor": "중심-기준-변형-계약",
+      "start_line": 55
+    },
+    {
+      "block_id": "b000032",
+      "parent_id": "b000003",
+      "level": 3,
+      "title": "채움형 변형",
+      "anchor": "채움형-변형",
+      "start_line": 114
+    },
+    {
+      "block_id": "b000042",
+      "parent_id": "b000003",
+      "level": 3,
+      "title": "양 끝 레이블형과 구간형",
+      "anchor": "양-끝-레이블형과-구간형",
+      "start_line": 146
+    },
+    {
+      "block_id": "b000054",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "양 끝 표시",
+      "anchor": "양-끝-표시",
+      "start_line": 182
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000003",
-        "line": 4,
-        "text": "C++ 값 모델이다. Qt, QML, LVRS, 위젯 호스트와 렌더러에 의존하지 않는다.",
+        "block_id": "b000005",
+        "line": 8,
+        "text": "기존처럼 사용자 콜백을 호출하지 않는다. 유효한 요청이 값을 바꿀 때만 콜백을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 10,
+        "text": "라이브러리를 함께 사용해야 한다. 헤더의 `IIGUI_ACCESSIBILITY_VALUE_HANDLER_API`",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000009",
-        "line": 27,
+        "line": 24,
+        "text": "사용자 이동 콜백은 호출하지 않는다. `set_options()`는 반응형 값이 바뀌지 않은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 31,
+        "text": "헤더는 iiSDKCore 외 SDK를 직접 참조하지 않는다. 기본 범위는 0–1, 값은 0.5,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 53,
+        "text": "아이콘 캐시를 해제하고 오래된 갱신은 게시하지 않는다. 포인터 좌표는 해당 표면의",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000020",
+        "line": 62,
+        "text": "슬라이더의 기존 기본값은 변하지 않는다. `type` 변형은 기본, 중심 기준, 틱,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000020",
+        "line": 70,
+        "text": "필드가 추가되었으므로 C++ 소비자는 새 헤더로 다시 빌드해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000024",
+        "line": 80,
+        "text": "확인한다. 이 검사는 실제 GPU 픽셀이나 기기 표시의 동등성을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000028",
+        "line": 102,
         "text": "접근성 범위, 증감 입력과 표면 로컬 좌표를 지원해야 한다. 플랫폼 표시와 실제",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000028",
+        "line": 103,
+        "text": "스크린 리더 실행 검증은 아직 남아 있다. LVRS 생성 경로는 지원하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000030",
+        "line": 107,
+        "text": "갱신은 이전 표시를 보존한다. 눈금은 값이나 단계의 스냅 동작을 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000040",
+        "line": 144,
+        "text": "위젯 검사는 실제 GPU 합성이나 기기 표시의 동등성을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000066",
+        "line": 241,
+        "text": "외부 아이콘 공급자를 슬라이더에 직접 주입하는 기능은 아직 제공하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000068",
+        "line": 247,
+        "text": "아직 이 네이티브 슬라이더에서 제공하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "iiGUI 접근성 계약",
+        "target": "../../iiGUI/docs/AccessibilitySemantics.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000020",
+        "label": "원본 Center biased",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-7350",
+        "kind": "external",
+        "line": 57
+      },
+      {
+        "block_id": "b000034",
+        "label": "LVUI 원본 Filled",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-9777",
+        "kind": "external",
+        "line": 116
+      },
+      {
+        "block_id": "b000044",
+        "label": "Min-max labels",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-10586",
+        "kind": "external",
+        "line": 149
+      },
+      {
+        "block_id": "b000044",
+        "label": "Segmented",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-11203",
+        "kind": "external",
+        "line": 150
+      },
+      {
+        "block_id": "b000056",
+        "label": "LVUI 양 끝 레이블 원본",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-10586",
+        "kind": "external",
+        "line": 184
+      }
+    ],
     "tables": []
   },
   "provenance": {

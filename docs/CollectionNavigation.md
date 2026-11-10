@@ -1,12 +1,12 @@
 # 네이티브 가상 목록의 탐색과 선택
 
-`CollectionNavigation`은 표시 위젯과 독립적인 C++ 뷰 상태이다. 화면 밖 항목의 키를 포함한
+`ii::gui::BasicCollectionNavigation`은 표시 위젯과 독립적인 C++ 뷰 상태이다. 화면 밖 항목의 키를 포함한
 논리적 포커스·선택·범위 기준점을 보관한다. 생성·파일 저장·문서 편집 상태를 소유하지 않는다.
 행이 퇴역해도 이 상태를 유지하므로 탐색을 위해 전체 모델의 위젯을 생성할 필요가 없다.
 
 ```lvui
 import vm ResultsModel
-import nav lvui.native.CollectionNavigation
+import nav CollectionNavigation
 Window {
     VStack {
         Label(text: nav.state.current_key)
@@ -86,7 +86,7 @@ iiGUI는 콘텐츠 세대 안쪽으로 전달하기 전에 상위 입력 처리�
 탭·메뉴의 자체 탐색을 목록 방향키로 대체하지 않는다. 버튼 내부에서 방향 이동을 시작하면
 그 버튼이 속한 논리 행을 기준으로 이동하되 Enter는 원래 버튼 동작으로 남긴다.
 
-키 이동은 키 기반 공개 요청을 `VirtualViewport`에 전달한다. 창의 실제 너비·높이가
+키 이동은 키 기반 공개 요청을 `ii::gui::BasicVirtualViewport`에 전달한다. 창의 실제 너비·높이가
 들어오기 전에는 요청을 완료했다고 처리하지 않는다. 모델에서 목표 키를 찾은 뒤 필요한
 표시 범위를 만들고, 해당 행이 보이도록 오프셋을 보정한다. 사용자의 새 스크롤은 이전
 프로그램 요청보다 우선한다. C++의 `nav.set_current(key)`도 같은 경로를 사용한다.
@@ -111,9 +111,10 @@ iiGUI는 콘텐츠 세대 안쪽으로 전달하기 전에 상위 입력 처리�
 미리 파괴되지 않게 한다. 활성화가 끝나면 관찰과 프레임을 해제한다. 차용한 탐색 객체를
 자식 뷰 퇴역 때문에 임의로 닫지 않는다.
 
-코어 모델은 `NativeCollectionNavigation.h`와 iiSDKCore 계약에만 의존한다. 선택적
-`NativeCollectionWidgets.h` 어댑터와 생성된 뷰는 iiGUI 헤더·호스트를 사용한다.
-`LVUI::Native`의 코어 탐색 소비자에 iiGUI나 Qt 의존성을 강제하지 않는다.
+앱은 `LVUI/NativeCollectionNavigation.h`와 `iiGUI/CollectionNavigation.h`를 조합해
+`using CollectionNavigation = lvui::native::CollectionNavigationBinding<ii::gui::BasicCollectionNavigation>;`으로
+C++ 타입을 제공한다. LVUI의 계약은 iiSDKCore 외 SDK에 직접 의존하지 않는다. 생성된
+뷰는 앱이 조합한 탐색 객체와 iiGUI 호스트를 사용한다.
 
 ## 검증 범위
 

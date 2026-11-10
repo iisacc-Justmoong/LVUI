@@ -17,10 +17,11 @@ void components(){for(auto view:{"Label()","PushButton()","InputField()","CheckB
 }}
 void framework(){auto code=compile("import vm Model\nWindow { VStack(opacity: vm.alpha) { Label(opacity: 0.4) } }","iiGUI");check(code.find("set_opacity(value)")!=code.npos&&code.find("set_opacity(0.4)")!=code.npos&&code.find("lvrs::")==code.npos,"Common opacity requires an LVRS runtime");}
 void delegate(){
-    auto code=compile("import vm Model\nWindow { HierarchyList(opacity: vm.alpha) }");
-    check(code.find("set_opacity(value)")!=code.npos, "Hierarchy opacity lost native binding");
-    auto unsupported=lvui::compile_native("import vm Model\nWindow { HierarchyList(itemDelegate: HierarchyItem()) }");
-    check(!unsupported&&unsupported.error().line>0, "Unsupported hierarchy delegate lacked a diagnostic");
+    auto code=compile("import vm Model\nWindow { HierarchyList(opacity: vm.alpha, itemRow: \"item\", itemDelegate: Label(text: item.entry.label, opacity: 0.4)) }");
+    check(code.find("set_opacity(value)")!=code.npos&&code.find("set_opacity(0.4)")!=code.npos&&
+          code.find("HierarchyRowViewFactory")!=code.npos,"Hierarchy or custom row opacity lost its independent binding");
+    auto invalid=lvui::compile_native("Window { HierarchyList(itemDelegate: [Label(), Label()]) }");
+    check(!invalid&&invalid.error().line>0,"An invalid hierarchy delegate lacked a diagnostic");
 }
 void diagnostics(){for(auto source:{"Window { Label(opacity: -0.1) }","Window { Label(opacity: 1.1) }","Window { Label(opacity: true) }","Window { Label(opacity: \"half\") }","Window(opacity: 0.5) {}","let alpha: String = \"half\"\nWindow { Label(opacity: alpha) }"}){auto result=lvui::compile_native(source,{.framework="iiGUI"});check(!result&&result.error().line>0,"Invalid opacity escaped its source diagnostic");}}
 }

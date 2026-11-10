@@ -1,0 +1,276 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:d65d4019e11ccbfacbc92001d4b14c19fb42096d97dea93abf11de1cb54e74b1",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ProductComponentCoverage.md",
+    "sha256": "43659ced07762d00cce2ae982268187e5370d64827cccca018bd83a7fbf55fa2",
+    "bytes": 2743,
+    "line_count": 23,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "Society·Dreamscapes 컴포넌트 적용 범위",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Society·Dreamscapes 컴포넌트 적용 범위\n",
+      "level": 1,
+      "title": "Society·Dreamscapes 컴포넌트 적용 범위"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "2026-11-07 현재 `Product/Society/App/Society`와\n`Product/Dreamscapes/src/App`의 QML을 정적 조사했다. 이 조사는 렉시컬 검색이며\n동적 생성·런타임 분기와 화면의 모든 동작을 증명하지 않는다. 두 경로에서 각각\nLVRS 별칭을 붙인 타입은 33종과 37종이다. 이름만을 대상으로 한 AOT 확인에서\n`IconButton`과 `Tab`은 필수 아이콘 인수를 주지 않았기 때문에 거절된다. 나머지\n이름의 수용은 각 속성이나 앱 화면이 이미 이전 가능하다는 뜻이 아니다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "table",
+      "start_line": 10,
+      "end_line": 19,
+      "raw": "| 실제 사용 | 이번에 연결한 범위 | 남은 차이 |\n| --- | --- | --- |\n| 두 앱의 일반 레이블 | 줄바꿈 측정, 한 줄 끝 말줄임, 정렬과 반응형 갱신 | 앞·중간 말줄임 및 세부 글자 단위 줄바꿈 선택 |\n| 두 앱의 일반 텍스트 편집 | [TextEditor](NativeTextEditor.md)의 편집·IME·높이 측정·스크롤 연결 | 64 KiB, 파일·서식 텍스트와 플랫폼별 입력 검증 |\n| Society 계정 버튼 등의 내용 합성 | `AbstractButton { Avatar() }`의 입력·접근성·퇴역 | 여러 제품별 배경 재정의, 이중 클릭 등은 별도 공통 계약 필요 |\n| 두 앱의 모바일 탐색 | [모바일 탭 재질·배지·선택 모션](MobileTabEffects.md), 접근성·부분 갱신 | 실제 모바일 플랫폼의 재질 합성과 입력 검증, 나머지 제품별 탭 변형 |\n| 두 앱의 Card | 내용 슬롯·상태와 [단일 선택 및 이중 열기](NativeCardOpen.md) | 제품의 문서·파일 액션 어댑터와 실제 플랫폼 다중 클릭 검증 |\n| 두 앱의 ListItem | [탐색 값](ListItemValue.md), [상세 메타데이터](ListItemDetail.md), 표시·접근성 | 상세 항목의 기존 아이콘과 여러 줄 말줄임 등 나머지 시각 차이 |\n| 두 앱의 Sheet | [모바일·데스크톱 시트](NativeSheet.md), 동일 상태 재전달 중 드래그 유지 | 드래그 복귀 애니메이션·안전 영역 자동 관찰 |\n| Dreamscapes 편집기 캔버스·타임라인 | [표시 영역 질의·펜 입력](NativeEditorCanvas.md), [가시 구간·스크럽·클립 이벤트·드래그 자동 스크롤·이미지 타일](NativeEditorTimeline.md), LVUI `NativeView` 부착 | 기존 문서 엔진·오디오·브러시 어댑터, 곡선 보간·편집, 앱의 썸네일·파형 생성 및 실제 제품 검증 |\n",
+      "columns": [
+        "실제 사용",
+        "이번에 연결한 범위",
+        "남은 차이"
+      ],
+      "rows": [
+        [
+          "두 앱의 일반 레이블",
+          "줄바꿈 측정, 한 줄 끝 말줄임, 정렬과 반응형 갱신",
+          "앞·중간 말줄임 및 세부 글자 단위 줄바꿈 선택"
+        ],
+        [
+          "두 앱의 일반 텍스트 편집",
+          "[TextEditor](NativeTextEditor.md)의 편집·IME·높이 측정·스크롤 연결",
+          "64 KiB, 파일·서식 텍스트와 플랫폼별 입력 검증"
+        ],
+        [
+          "Society 계정 버튼 등의 내용 합성",
+          "`AbstractButton { Avatar() }`의 입력·접근성·퇴역",
+          "여러 제품별 배경 재정의, 이중 클릭 등은 별도 공통 계약 필요"
+        ],
+        [
+          "두 앱의 모바일 탐색",
+          "[모바일 탭 재질·배지·선택 모션](MobileTabEffects.md), 접근성·부분 갱신",
+          "실제 모바일 플랫폼의 재질 합성과 입력 검증, 나머지 제품별 탭 변형"
+        ],
+        [
+          "두 앱의 Card",
+          "내용 슬롯·상태와 [단일 선택 및 이중 열기](NativeCardOpen.md)",
+          "제품의 문서·파일 액션 어댑터와 실제 플랫폼 다중 클릭 검증"
+        ],
+        [
+          "두 앱의 ListItem",
+          "[탐색 값](ListItemValue.md), [상세 메타데이터](ListItemDetail.md), 표시·접근성",
+          "상세 항목의 기존 아이콘과 여러 줄 말줄임 등 나머지 시각 차이"
+        ],
+        [
+          "두 앱의 Sheet",
+          "[모바일·데스크톱 시트](NativeSheet.md), 동일 상태 재전달 중 드래그 유지",
+          "드래그 복귀 애니메이션·안전 영역 자동 관찰"
+        ],
+        [
+          "Dreamscapes 편집기 캔버스·타임라인",
+          "[표시 영역 질의·펜 입력](NativeEditorCanvas.md), [가시 구간·스크럽·클립 이벤트·드래그 자동 스크롤·이미지 타일](NativeEditorTimeline.md), LVUI `NativeView` 부착",
+          "기존 문서 엔진·오디오·브러시 어댑터, 곡선 보간·편집, 앱의 썸네일·파형 생성 및 실제 제품 검증"
+        ]
+      ]
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 23,
+      "raw": "앱 QML은 수정하지 않았다. 앱 재실행, 설치본, 모바일 기기나 다른 운영체제의\n실행 결과는 이 문서의 증거에 포함되지 않는다. 앱에 있던 임의 배경 오버라이드를\n그대로 옮기는 대신 LVUI 공통 컴포넌트와 토큰으로 재구성해야 한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Society·Dreamscapes 컴포넌트 적용 범위",
+      "anchor": "societydreamscapes-컴포넌트-적용-범위",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "동적 생성·런타임 분기와 화면의 모든 동작을 증명하지 않는다. 두 경로에서 각각",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000003",
+        "line": 7,
+        "text": "`IconButton`과 `Tab`은 필수 아이콘 인수를 주지 않았기 때문에 거절된다. 나머지",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 23,
+        "text": "그대로 옮기는 대신 LVUI 공통 컴포넌트와 토큰으로 재구성해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "TextEditor",
+        "target": "NativeTextEditor.md",
+        "kind": "relative",
+        "line": 13
+      },
+      {
+        "block_id": "b000005",
+        "label": "모바일 탭 재질·배지·선택 모션",
+        "target": "MobileTabEffects.md",
+        "kind": "relative",
+        "line": 15
+      },
+      {
+        "block_id": "b000005",
+        "label": "단일 선택 및 이중 열기",
+        "target": "NativeCardOpen.md",
+        "kind": "relative",
+        "line": 16
+      },
+      {
+        "block_id": "b000005",
+        "label": "탐색 값",
+        "target": "ListItemValue.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000005",
+        "label": "상세 메타데이터",
+        "target": "ListItemDetail.md",
+        "kind": "relative",
+        "line": 17
+      },
+      {
+        "block_id": "b000005",
+        "label": "모바일·데스크톱 시트",
+        "target": "NativeSheet.md",
+        "kind": "relative",
+        "line": 18
+      },
+      {
+        "block_id": "b000005",
+        "label": "표시 영역 질의·펜 입력",
+        "target": "NativeEditorCanvas.md",
+        "kind": "relative",
+        "line": 19
+      },
+      {
+        "block_id": "b000005",
+        "label": "가시 구간·스크럽·클립 이벤트·드래그 자동 스크롤·이미지 타일",
+        "target": "NativeEditorTimeline.md",
+        "kind": "relative",
+        "line": 19
+      }
+    ],
+    "tables": [
+      {
+        "block_id": "b000005",
+        "columns": [
+          "실제 사용",
+          "이번에 연결한 범위",
+          "남은 차이"
+        ],
+        "rows": [
+          [
+            "두 앱의 일반 레이블",
+            "줄바꿈 측정, 한 줄 끝 말줄임, 정렬과 반응형 갱신",
+            "앞·중간 말줄임 및 세부 글자 단위 줄바꿈 선택"
+          ],
+          [
+            "두 앱의 일반 텍스트 편집",
+            "[TextEditor](NativeTextEditor.md)의 편집·IME·높이 측정·스크롤 연결",
+            "64 KiB, 파일·서식 텍스트와 플랫폼별 입력 검증"
+          ],
+          [
+            "Society 계정 버튼 등의 내용 합성",
+            "`AbstractButton { Avatar() }`의 입력·접근성·퇴역",
+            "여러 제품별 배경 재정의, 이중 클릭 등은 별도 공통 계약 필요"
+          ],
+          [
+            "두 앱의 모바일 탐색",
+            "[모바일 탭 재질·배지·선택 모션](MobileTabEffects.md), 접근성·부분 갱신",
+            "실제 모바일 플랫폼의 재질 합성과 입력 검증, 나머지 제품별 탭 변형"
+          ],
+          [
+            "두 앱의 Card",
+            "내용 슬롯·상태와 [단일 선택 및 이중 열기](NativeCardOpen.md)",
+            "제품의 문서·파일 액션 어댑터와 실제 플랫폼 다중 클릭 검증"
+          ],
+          [
+            "두 앱의 ListItem",
+            "[탐색 값](ListItemValue.md), [상세 메타데이터](ListItemDetail.md), 표시·접근성",
+            "상세 항목의 기존 아이콘과 여러 줄 말줄임 등 나머지 시각 차이"
+          ],
+          [
+            "두 앱의 Sheet",
+            "[모바일·데스크톱 시트](NativeSheet.md), 동일 상태 재전달 중 드래그 유지",
+            "드래그 복귀 애니메이션·안전 영역 자동 관찰"
+          ],
+          [
+            "Dreamscapes 편집기 캔버스·타임라인",
+            "[표시 영역 질의·펜 입력](NativeEditorCanvas.md), [가시 구간·스크럽·클립 이벤트·드래그 자동 스크롤·이미지 타일](NativeEditorTimeline.md), LVUI `NativeView` 부착",
+            "기존 문서 엔진·오디오·브러시 어댑터, 곡선 보간·편집, 앱의 썸네일·파형 생성 및 실제 제품 검증"
+          ]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

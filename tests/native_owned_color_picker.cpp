@@ -1,5 +1,22 @@
 #include <LVUI/ColorSelectionSurface.h>
 #include <LVUI/NativeColorPicker.h>
+#include <iiGUI/NativeColorPickerView.h>
+#include <iiGUI/ColorPickerLayout.h>
+#include <iiGUI/NativeColorSurfaceView.h>
+#include <iiGUI/NativeColorChannelView.h>
+#include <iiGUI/NativeColorPickerValuesView.h>
+#include <iiGUI/ColorChannelSurface.h>
+#include <iiGUI/NativeInputFieldView.h>
+#include <iiGUI/NativeButtonView.h>
+#include <iiGUI/SvgImageCache.h>
+using ColorPickerTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using ColorPickerTestLayout=lvui::ColorPickerLayoutBinding<ii::gui::BasicColorPickerLayout>;
+using ColorPickerTestRamp=lvui::ColorChannelSurfaceBinding<ii::gui::BasicColorChannelSurface>;
+using ColorPickerTestSurface=lvui::native::ColorSurfaceBinding<ii::gui::BasicColorSurface,ii::gui::BasicNativeColorSurface>;
+using ColorPickerTestChannel=lvui::native::ColorChannelBinding<ii::gui::BasicNativeColorChannel,ColorPickerTestRamp,ColorPickerTestSurface,ColorPickerTestField>;
+using ColorPickerTestValues=lvui::native::ColorPickerValuesBinding<ii::gui::BasicNativeColorPickerValues,ColorPickerTestField>;
+using ColorPickerTestButton=lvui::native::ButtonBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
+using ColorPickerTestView=lvui::native::ColorPickerBinding<ii::gui::BasicNativeColorPicker,ColorPickerTestLayout,ColorPickerTestSurface,ColorPickerTestChannel,ColorPickerTestValues,ColorPickerTestButton,ii::gui::RasterImage,ii::gui::WidgetColor>;
 #include <iiGUI/WidgetState.h>
 
 #include <cmath>
@@ -34,12 +51,12 @@ int main() {
     auto source = std::make_shared<lvui::ColorSelectionSurface>(editor);
     auto session = std::make_shared<lvui::ColorPickerSession>(picker, source, source);
     lvui::native::ColorPickerInput input; input.session = session; input.configuration.recent_colors = {blue};
-    std::optional<lvui::native::NativeColorPicker> view;
+    std::optional<ColorPickerTestView> view;
     std::vector<WidgetColor> edits, accepts; unsigned canceled = 0, eyedropper = 0;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto container = builder.vstack({}, "column", {.spacing = 0, .alignment = StackAlignment::leading});
         if (!container) return std::unexpected(container.error());
-        auto value = lvui::native::NativeColorPicker::create(builder, *container, "picker", input,
+        auto value = ColorPickerTestView::create(builder, *container, "picker", input,
             {.edited = [&](WidgetColor color) { edits.push_back(color); },
              .accepted = [&](WidgetColor color) { accepts.push_back(color); },
              .canceled = [&] { ++canceled; }, .eyedropper_requested = [&] { ++eyedropper; }});
@@ -53,11 +70,18 @@ int main() {
         good(field.focus()); good(tree->input({.kind = WidgetInputKind::key_down, .key = WidgetKey::select_all}));
         good(tree->input({.kind = WidgetInputKind::text, .text = std::move(value)}));
     };
-    replace(view->hex_field(), "00FF00"); good(view->apply_button().activate());
-    require(editor->snapshot().color == green && !picker->active() && accepts.size() == 1 &&
-            near(accepts.front().green, 1) && edits.size() == 1 &&
-            take(view->options()).configuration.recent_colors.front() == green,
-            "Apply did not commit the focused field and remember its accepted color");
+    replace(view->hex_field(), "00FF00");
+    const auto apply_before=take(view->apply_button().snapshot());
+    const auto apply_interaction=take(view->apply_button().interaction());
+    good(view->apply_button().activate());
+    if(!(editor->snapshot().color == green && !picker->active() && accepts.size() == 1 &&
+         near(accepts.front().green, 1) && edits.size() == 1 &&
+         take(view->options()).configuration.recent_colors.front() == green)){
+        throw std::runtime_error("Apply did not commit the focused field and remember its accepted color: visible="+
+            std::to_string(apply_before.visible)+", logical_visible="+std::to_string(apply_interaction.visible)+
+            ", enabled="+std::to_string(apply_interaction.enabled)+", blocked="+std::to_string(apply_interaction.input_blocked)+
+            ", accepts="+std::to_string(accepts.size())+", edits="+std::to_string(edits.size()));
+    }
     good(view->recent(1).activate());
     require(editor->snapshot().color == blue && picker->active() && edits.size() == 2,
             "Recent color did not enter the shared edit session");
@@ -82,7 +106,7 @@ int main() {
     const auto before_stage = picker->configuration();
     auto staged = changed; staged.configuration.mode = lvui::ColorPickerMode::rgb; staged.configuration.width = 320;
     auto failed_stage = host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
-        auto candidate = lvui::native::NativeColorPicker::create(builder, {}, "candidate", staged);
+        auto candidate = ColorPickerTestView::create(builder, {}, "candidate", staged);
         if (!candidate) return std::unexpected(candidate.error());
         return ii::core::fail(ii::core::ErrorCode::failed, "Intentional candidate failure");
     });
@@ -100,7 +124,7 @@ int main() {
                             lvui::ColorPickerMode::rgb, lvui::ColorPickerMode::cmyk, lvui::ColorPickerMode::wheel}) {
         auto candidate = take(view->options()); candidate.configuration.mode = mode; candidate.configuration.width = 320;
         good(view->set_options(candidate));
-        const auto expected = lvui::color_picker_layout(candidate.configuration);
+        const auto expected = ColorPickerTestLayout::compute(candidate.configuration);
         require(expected && near(take(view->root().snapshot()).size.height, expected->height) &&
                 take(view->rail().interaction()).visible == bool(expected->rail_kind),
                 "A picker mode failed to apply its own geometry");

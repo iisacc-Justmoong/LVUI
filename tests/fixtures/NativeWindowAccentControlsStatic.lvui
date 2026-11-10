@@ -1,0 +1,24 @@
+let AccentNestedSlider(): View = Slider(id: "nestedSlider", width: 80, value: 0.5)
+Window(accent: .purple) {
+    VStack {
+        HStack {
+            InputField(id: "field", text: "Sample", width: 100)
+            RadioButton(id: "radio", checked: true, motionEnabled: false)
+            CheckBox(id: "check", checked: true, motionEnabled: false)
+            ToggleSwitch(id: "toggle", checked: true, motionEnabled: false)
+        }
+        HStack {
+            Slider(id: "slider", width: 80, value: 0.5)
+            AccentNestedSlider()
+            Stepper(id: "stepper", width: 22, height: 22)
+            Tab(id: "tab", text: "Tab", iconName: "generaladd", selected: true)
+        }
+        HStack {
+            DropdownButton(id: "dropdown", text: "Actions", width: 110)
+            MenuItem(id: "menuItem", label: "Selected", state: .selected, itemWidth: 120)
+            ComboBox(id: "combo", text: "Mode", width: 90)
+            Link(id: "link", text: "Details", href: "/details", width: 80)
+        }
+        Menu(id: "simplePopup", targetId: "link", selectedIndex: 0, items: ["Simple", "Second"])
+    }
+}

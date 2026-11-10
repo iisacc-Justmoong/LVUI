@@ -231,9 +231,9 @@ struct Parser final {
         else if (node.tag!="view" && node.tag!="div" && node.tag!="section" && node.tag!="main")
             error(tag_at,"Unsupported tag '"+node.tag+"'");
         if (node.tag == "h1") {
-            node.style.font_size = float(default_number("--lvrs-theme-typography-title-text-title", 8, 256));
+            node.style.font_size = float(default_number("--lvui-theme-typography-title-text-title", 8, 256));
             node.style.font_weight =
-                unsigned(default_number("--lvrs-theme-typography-weight-bold", 100, 900, true));
+                unsigned(default_number("--lvui-theme-typography-weight-bold", 100, 900, true));
         }
         std::unordered_set<std::string> attributes;
         for (;;) {
@@ -302,19 +302,19 @@ ParseResult parse(std::string_view source, const StyleTokenOptions& options) {
         if (!parser.starts("<")) parser.error(parser.position,"Expected one root element");
         auto root=parser.element(1); parser.trivia();
         if (!root.style.background) {
-            const auto c = *default_style_tokens().color("--lvrs-theme-colors-panel-window", options);
+            const auto c = *default_style_tokens().color("--lvui-theme-colors-panel-window", options);
             root.style.background = Color{float(c.red), float(c.green), float(c.blue), float(c.alpha)};
         }
         if (!root.style.color) {
-            const auto c = *default_style_tokens().color("--lvrs-theme-colors-text-body-color", options);
+            const auto c = *default_style_tokens().color("--lvui-theme-colors-text-body-color", options);
             root.style.color = Color{float(c.red), float(c.green), float(c.blue), float(c.alpha)};
         }
         if (!root.style.font_size)
             root.style.font_size =
-                float(parser.default_number("--lvrs-theme-typography-body-text-body", 8, 256));
+                float(parser.default_number("--lvui-theme-typography-body-text-body", 8, 256));
         if (!root.style.font_weight)
             root.style.font_weight =
-                unsigned(parser.default_number("--lvrs-theme-typography-weight-medium", 100, 900, true));
+                unsigned(parser.default_number("--lvui-theme-typography-weight-medium", 100, 900, true));
         if (parser.position!=source.size()) parser.error(parser.position,"Expected exactly one root element");
         return Document(std::move(root));
     } catch (Diagnostic& diagnostic) { return std::unexpected(std::move(diagnostic)); }

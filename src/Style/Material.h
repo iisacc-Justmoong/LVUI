@@ -1,5 +1,6 @@
 #pragma once
 #include <LVUI/Motion.h>
+#include <LVUI/MaterialRadialDefaults.generated.h>
 #include <LVUI/StyleTokens.h>
 #include <algorithm>
 #include <array>
@@ -58,7 +59,7 @@ enum class MaterialBackdrop { none, content, previous_layers };
             ++cursor;bool exponent_negative=false;
             if(cursor!=end&&(*cursor=='+'||*cursor=='-')){exponent_negative=*cursor=='-';++cursor;}
             if(cursor==end||!digit(*cursor))return std::nullopt;
-            while(cursor!=end&&digit(*cursor)){exponent=std::min(100000,exponent*10+(*cursor-'0'));++cursor;}
+            while(cursor!=end&&digit(*cursor)){exponent=(std::min)(100000,exponent*10+(*cursor-'0'));++cursor;}
             if(exponent_negative)exponent=-exponent;
         }
         if(first_nonzero<0)return 0.;
@@ -114,85 +115,19 @@ struct ResolvedMaterial final {
     double blur_radius,radius,inner_highlight_opacity,inner_highlight_offset_y,border_width,
         intense_opacity,faint_opacity,shadow_radius,shadow_offset_y,shadow_opacity,width,height;
 };
+// Premultiplied contributions of the variable center and the fixed Figma
+// edge colors after the ordered radial fields have been composited.
+struct MaterialGradientWeights final { double primary=0,edge=0,alpha=0; };
 
-class Material final {
-public:
-    using TimePoint=std::chrono::steady_clock::time_point;
-    [[nodiscard]] const MaterialConfiguration& configuration()const noexcept{return configuration_;}
-    [[nodiscard]] bool animating()const noexcept{return colors_.active();}
-    [[nodiscard]] static bool validate(const MaterialConfiguration& c)noexcept {
-        const auto range=[](double n,double low,double high){return std::isfinite(n)&&n>=low&&n<=high;};
-        const auto color=[&](const std::optional<StyleColor>& v){return !v||(range(v->red,0,1)&&range(v->green,0,1)&&range(v->blue,0,1)&&range(v->alpha,0,1));};
-        const auto optional=[&](std::optional<double> v,double low,double high){return !v||range(*v,low,high);};
-        return unsigned(c.kind)<=unsigned(MaterialKind::window)&&(!c.density||unsigned(*c.density)<=unsigned(MaterialDensity::dense75))&&
-            unsigned(c.backdrop)<=unsigned(MaterialBackdrop::previous_layers)&&color(c.primary_color)&&color(c.color)&&
-            color(c.border_color)&&color(c.backdrop_base_color)&&optional(c.tint_opacity,0,1)&&optional(c.blur_radius,0,64)&&
-            optional(c.radius,0,8192)&&optional(c.inner_highlight_opacity,0,1)&&optional(c.inner_highlight_offset_y,-8192,8192)&&
-            optional(c.border_width,0,8192)&&optional(c.intense_opacity,0,1)&&optional(c.faint_opacity,0,1)&&
-            optional(c.shadow_radius,0,64)&&optional(c.shadow_offset_y,-8192,8192)&&optional(c.shadow_opacity,0,1)&&
-            optional(c.width,0,8192)&&optional(c.height,0,8192)&&valid_material_outline(c.outline_path)&&valid_motion(c.motion);
-    }
-    [[nodiscard]] static ResolvedMaterial resolve(const MaterialConfiguration& c)noexcept {
-        const bool window=c.kind==MaterialKind::window;
-        const auto density=c.density.value_or(window?MaterialDensity::dense75:MaterialDensity::glass25);
-        const bool dense=density==MaterialDensity::dense75;
-        auto tint=c.color.value_or(window?StyleColor{11./255,11./255,11./255,1}:StyleColor{20./255,20./255,20./255,1});
-        tint.alpha*=c.tint_opacity.value_or(window?.5:(dense?.75:.25));
-        return {density,c.backdrop,c.primary_color.value_or(StyleColor{.0812049285,.5099760294,1,1}),tint,
-            c.border_color.value_or(StyleColor{1,1,1,dense?.12:.22}),c.backdrop_base_color.value_or(StyleColor{0,0,0,0}),
-            c.blur_enabled?c.blur_radius.value_or(dense?64:16):0,c.radius.value_or(window?16:12),
-            c.inner_highlight_opacity.value_or(dense?.06:.14),c.inner_highlight_offset_y.value_or(1),c.border_width.value_or(1),
-            c.intense_opacity.value_or(.40),c.faint_opacity.value_or(.11),c.shadow_radius.value_or(window?48:24),
-            c.shadow_offset_y.value_or(window?16:8),c.shadow_opacity.value_or(window?.30:.22),
-            c.width.value_or(window?500:(c.kind==MaterialKind::panel?380:0)),
-            c.height.value_or(window?272:(c.kind==MaterialKind::panel?204:0))};
-    }
-    [[nodiscard]] ResolvedMaterial resolved()const noexcept{return resolve(configuration_);}
-    bool set_configuration(MaterialConfiguration next,TimePoint now) {
-        if(!validate(next))return false;
-        const auto style=resolve(next);auto colors=colors_;
-        const MotionTransition<8>::Value target{style.primary.red,style.primary.green,style.primary.blue,style.primary.alpha,
-            style.tint.red,style.tint.green,style.tint.blue,style.tint.alpha};
-        if(!initialized_){if(!colors.reset(target))return false;}
-        else if(!colors.retarget(target,next.motion,next.enabled&&next.motion_enabled,now))return false;
-        configuration_=std::move(next);colors_=std::move(colors);initialized_=true;return true;
-    }
-    [[nodiscard]] bool advance(TimePoint now)noexcept{return colors_.advance(now);}
-    void finish_animation()noexcept{colors_.settle();}
-    [[nodiscard]] StyleColor displayed_primary()const noexcept{return channels(0);}
-    [[nodiscard]] StyleColor displayed_tint()const noexcept{return channels(4);}
-
-    // Analytic source-over coverage of the eight authored elliptical gradients.
-    // Positions are in logical pixels so edge- and centre-relative accents follow resize.
-    [[nodiscard]] double gradient_alpha(double x,double y,double width,double height)const noexcept {
-        if(!std::isfinite(x)||!std::isfinite(y)||!std::isfinite(width)||!std::isfinite(height)||width<=0||height<=0)return 0;
-        const auto s=resolved();
-        struct Field{double x,y,rx,ry,strength;};
-        const std::array<Field,8> fields{{
-            {width/2-129,height/2-28,200,200,s.intense_opacity},
-            {width/2+136,height/2+62,180,180,s.faint_opacity},
-            {48,32,200,200,s.intense_opacity},{width-64,40,260,150,s.faint_opacity},
-            {0,height/2,140,300,s.faint_opacity},{width,height/2,160,300,s.intense_opacity},
-            {width/2,height,380,150,s.faint_opacity},{72,height-40,180,180,s.intense_opacity}}};
-        const auto accent_alpha=displayed_primary().alpha;
-        double remaining=1;
-        for(const auto& f:fields){
-            const double d=std::hypot((x-f.x)/f.rx,(y-f.y)/f.ry);
-            double coverage=0;
-            if(d<.38)coverage=1-d*(.45/.38);
-            else if(d<.72)coverage=.55-(d-.38)*(.42/.34);
-            else if(d<1)coverage=.13-(d-.72)*(.13/.28);
-            remaining*=1-accent_alpha*f.strength*coverage;
-        }
-        return std::clamp(1-remaining,0.,1.);
-    }
-private:
-    [[nodiscard]] StyleColor channels(std::size_t offset)const noexcept{
-        const auto& v=colors_.value();const auto c=[&](std::size_t i){return std::clamp(v[offset+i],0.,1.);};
-        return {c(0),c(1),c(2),c(3)};
-    }
-    MaterialConfiguration configuration_;
-    MotionTransition<8> colors_;
-    bool initialized_=false;
+// Design values and authoring validation are injected into the iiGUI material model.
+struct MaterialModelPolicy final {
+    using Configuration=MaterialConfiguration;using Resolved=ResolvedMaterial;using Kind=MaterialKind;using Density=MaterialDensity;
+    using Backdrop=MaterialBackdrop;using Weights=MaterialGradientWeights;using Color=StyleColor;
+    inline static constexpr auto fields=material_radial_defaults::fields;
+    inline static constexpr auto first_position=material_radial_defaults::first_position,second_position=material_radial_defaults::second_position;
+    inline static constexpr auto first_opacity=material_radial_defaults::first_opacity,second_opacity=material_radial_defaults::second_opacity;
+    [[nodiscard]] static Color default_tint()noexcept{return figma_defaults::panel_window;}
+    [[nodiscard]] static Color default_primary()noexcept{return figma_defaults::accent_blue_default;}
+    [[nodiscard]] static bool valid_extra(const Configuration& value)noexcept {return valid_material_outline(value.outline_path)&&valid_motion(value.motion);}
 };
 } // namespace lvui

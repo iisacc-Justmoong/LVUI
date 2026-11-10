@@ -6,10 +6,21 @@
 갱신할 수 있다. 이 모듈의 사용은 Qt, QML 또는 LVRS를 요구하지 않는다.
 
 기본 정책은 360ms의 OutBack 곡선과 1.45의 오버슈트이다. 앱은 `lvui::Motion` 값에서
-지속 시간, 선형 또는 OutBack 곡선, 오버슈트와 `reduced_motion`을 지정할 수 있다.
+지속 시간, 선형·OutBack·OutCubic·CSS ease-out 곡선, 오버슈트와 `reduced_motion`을 지정할 수 있다.
 지속 시간은 0–24시간이고 오버슈트는 0–10의 유한수이다. 0ms, 모션 비활성화,
 `reduced_motion`은 현재 목표에 즉시 도달한다. 시스템 접근성 설정의 조회와 앱의
 반응형 스냅샷 갱신은 호스트의 책임이다.
+
+## CSS ease-out 근사
+
+Figma의 [`EASE_OUT` 정의](https://developers.figma.com/docs/rest-api/file-property-types/)
+는 CSS ease-out과 유사하다고 설명하지만 같은 제어점을 보장하지 않는다.
+LVUI는 [CSS 표준 ease-out](https://www.w3.org/TR/css-easing-1/)의
+`cubic-bezier(0, 0, 0.58, 1)`을 선택 가능한 보간으로 제공한다. 입력 시각의
+x좌표를 단조 방식으로 풀고 y좌표를 보간값으로 사용한다. 유효성 검증·중간
+재목표·축소 모션과 정확한 종료 시각은 기존 `MotionTransition` 계약을 따른다.
+1/4·1/2·3/4 지점과 종료값은 독립된 표준 곡선 표본으로 확인한다.
+이는 Figma 실제 런타임 곡선이나 GPU 화면의 동등성을 증명하지 않는다.
 
 새 목표를 받으면 마지막으로 표시한 위치에서 출발한다. 이전보다 이른 프레임은
 애니메이션을 뒤로 돌리지 않으며, 완료한 프레임 뒤에는 추가 프레임을 요청하지 않는다.
@@ -18,15 +29,25 @@
 못하면 독립 진행 표시기는 목표에 즉시 정착하고 프레임 접수 오류를 보고한다.
 독립 스위치는 프레임 접수가 불가능하면 목표에 즉시 정착하여 입력을 계속 처리한다.
 
+## 팝오버
+
+`Popover`의 전환은 범용 iiGUI 팝업에 독립 크기·불투명도 채널을 전달한다.
+선언형 `motionEnabled`는 개별 팝오버의 전환을 제어하며, 창에 공유된 iiGUI
+`MotionPreferences`의 속도와 축소 모션 설정도 따른다. 이 입력은 위에서 설명한
+`lvui::Motion` 값과는 별개이다. 프레임 소스가 없으면 팝오버는 즉시 표시·종료한다.
+전환 시간, 재질과 종료 중 입력 처리의 상세 계약은 [독립 팝오버](NativePopover.md)를
+따른다.
+
 ## 진행 표시기
 
 `ProgressBar`의 `motionEnabled` 기본값은 `true`이다. `motion`은 앱의 C++ 백엔드가
 공급하는 `lvui::Motion` 값 또는 공유·약한 핸들이며, 관찰 가능한 값으로 제공하면
 정책 변경에 반응한다. 일반 포인터 내부의 변경을 자동으로 감지하지 않는다.
-최초 생성은 초기값을 즉시 그린다. 이후 변경은 유지 중인 위젯에서 새 프레임을
-요청하고, 각 프레임에 LVUI가 계산한 보간 결과를 범용 그리기 경계로 전달한다.
-직접 C++ API의 `set_configuration`은 즉시 반영하며, 애니메이션이 필요한 호스트는
-`set_animated_configuration`과 `advance`에 시각을 주입한다.
+최초 생성은 초기값을 즉시 그린다. 이후 변경은 유지 중인 iiGUI 위젯이 필요한
+동안만 프레임을 요청하고 보간·그리기를 처리한다. `ii::gui::ProgressModel`의
+`set_configuration`은 즉시 반영하며, 직접 모델을 구동할 때는
+`set_animated_configuration`과 `advance`에 시각을 주입한다. 앱의 `lvui::Motion`
+입력은 정책 값으로 전달되며 진행 표시기의 계산은 iiGUI에 있다.
 
 단위 검사는 정방향·역방향 시각, 중간 재목표, 축소 모션, 잘못된 값과 완주를 다룬다.
 창을 만들지 않는 호스트 검사는 주입한 프레임 루프에서 진행 상태의 보간, 중간

@@ -1,0 +1,67 @@
+import class SessionRecord
+import model SessionQueryBackend
+
+let Details(item: SessionRecord): View = VStack {
+    Label(id: "object", text: item.title)
+    Label(id: "recordQuery", text: query(item.readPort, item.readRequest(model.trigger)))
+    PushButton(id: "recordCommand", text: "Record query", onClick: {
+        query(item.commandPort, item.commandRequest())
+    })
+}
+let Forwarded(action: () -> Void): View = PushButton(id: "forwarded", text: "Forwarded", onClick: action)
+let Overridden: View = PushButton(id: "overridden", text: "Overridden")
+
+Window {
+    let step: Int = 1
+    var count: Int = 0
+    var inferred = model.number
+    @Static let originalTitle: String = model.sessionTitle
+    let objectSummary: String = model.sessionTitle + "!"
+    let doubled: Int = count * 2
+    let queried: Int = query(model.queries(), model.readRequest())
+    var counterLabel: View { Label(id: "count", text: count) }
+
+    VStack {
+        counterLabel()
+        Forwarded(action: { count = count + step })
+        Overridden(onClick: { count = count + step })
+        PushButton(id: "namedAction", text: "Named", onClick: { count = count + step })
+        PushButton(id: "variableAction", text: "Variable", onClick: { count = count + step })
+        Label(id: "double", text: doubled)
+        Label(id: "inferred", text: inferred)
+        Label(id: "query", text: queried)
+        Details(item: model.record())
+        Label(id: "localObject", text: model.sessionTitle)
+        Label(id: "objectSummary", text: objectSummary)
+        Label(id: "originalObject", text: originalTitle)
+        Label(id: "objectCount", text: model.sessionCount)
+        Label(id: "numericObject", text: model.numericValue)
+        PushButton(id: "numericIncrement", text: "Numeric object", onClick: model.incrementNumeric)
+        PushButton(id: "numericFraction", text: "Invalid fraction", onClick: model.setNumeric(1.5))
+        PushButton(id: "objectIncrement", text: "Object", onClick: model.incrementSession)
+        PushButton(id: "invalidField", text: "Invalid object field", onClick: model.invalidSessionField("wrong"))
+        PushButton(id: "renameObject", text: "Rename object", onClick: model.renameSession)
+        PushButton(id: "increment", text: "+", onClick: {
+            count = count + step
+            count = doubled + step
+        })
+        PushButton(id: "queryCommand", text: "Query", onClick: {
+            query(model.commandPort, model.commandRequest())
+        })
+        PushButton(id: "invalidNumber", text: "Invalid", onClick: {
+            inferred = 1.5
+        })
+        if (model.visible) {
+            VStack {
+                var local: Int = 100
+                Label(id: "localCount", text: local)
+                PushButton(id: "localIncrement", text: "Local", onClick: {
+                    local = local + step
+                })
+                PushButton(id: "parentIncrement", text: "Parent", onClick: {
+                    count = count + step
+                })
+            }
+        }
+    }
+}

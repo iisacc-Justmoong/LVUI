@@ -1,5 +1,5 @@
 # Map the organized authored files to the stable public LVUI include namespace.
-foreach(_area IN ITEMS Compiler Language Style Editing Color Collections Overlays Navigation Media Layout Runtime Controls)
+foreach(_area IN ITEMS Compiler Language Style Editing Color Collections Overlays Navigation Media Layout Runtime Controls Python)
     file(GLOB _headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/${_area}/*.h")
     foreach(_header IN LISTS _headers)
         get_filename_component(_name "${_header}" NAME)

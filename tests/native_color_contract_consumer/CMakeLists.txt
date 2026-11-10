@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.31)
+project(LVUIColorContractConsumer LANGUAGES CXX)
+find_package(LVUI CONFIG REQUIRED COMPONENTS Native Color)
+add_executable(color_contract main.cpp)
+target_compile_features(color_contract PRIVATE cxx_std_23)
+target_link_libraries(color_contract PRIVATE LVUI::Color)
+enable_testing()
+add_test(NAME LVUI.ColorContract.Consumer COMMAND color_contract)

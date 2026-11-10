@@ -1,0 +1,5 @@
+import app NativeApplicationBackend
+import window WindowCloseFixtureBackend
+Application(onCloseRequested: app.can_close) {
+    Window(onCloseRequested: window.can_close) { Label(text: "Main") }
+}

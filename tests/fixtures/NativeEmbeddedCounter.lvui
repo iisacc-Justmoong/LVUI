@@ -1,0 +1,5 @@
+VStack(id: "counter") {
+    var count: Int = 0
+    Label(id: "value", text: count)
+    PushButton(id: "increment", text: "+", onClick: { count = count + 1 })
+}

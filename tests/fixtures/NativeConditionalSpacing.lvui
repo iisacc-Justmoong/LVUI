@@ -1,0 +1,16 @@
+import vm NativeConditionalSpacingModel
+Window {
+    VStack(spacing: 10) {
+        VStack(id: "flow", spacing: 10) {
+            PushButton(id: "before", text: "Before", height: 20)
+            if (vm.visible) { PushButton(id: "conditional", text: "Conditional", height: vm.height) }
+            PushButton(id: "after", text: "After", height: 20)
+        }
+        VStack(id: "elseFlow", spacing: 10) {
+            PushButton(id: "elseBefore", text: "Before", height: 20)
+            if (vm.primary) { PushButton(id: "primary", text: "Primary", height: 20) }
+            else { PushButton(id: "alternate", text: "Alternate", height: vm.alternate_height) }
+            PushButton(id: "elseAfter", text: "After", height: 20)
+        }
+    }
+}

@@ -11,6 +11,7 @@
 
 namespace lvui {
 namespace {
+#include "StyleTokenAliases.generated.inc"
 std::string_view trim(std::string_view value) {
     const auto start = value.find_first_not_of(" \t\r\n");
     return start == value.npos ? std::string_view{}
@@ -25,6 +26,31 @@ template <class T> StyleTokenResult<T> typed(StyleTokenResult<StyleTokenValue> v
     if (auto result = std::get_if<T>(&*value))
         return *result;
     return failure(StyleTokenErrorCode::wrong_type, "Style token has the wrong type");
+}
+const StyleTokenCollection *unique_collection(std::span<const StyleTokenCollection> values,std::string_view key) {
+    const StyleTokenCollection *found=nullptr;
+    for(const auto& item:values){
+        bool matches=item.id==key||item.name==key||item.key==key;
+        if(!matches)matches=std::ranges::any_of(builtin_collection_aliases,[&](const auto& alias){
+            return alias.id==item.id&&alias.key==item.key&&alias.alias==key;});
+        if(!matches)continue;
+        if(found)return nullptr;
+        found=&item;
+    }
+    return found;
+}
+const StyleTokenMode *unique_mode(const StyleTokenCollection& collection,std::string_view key) {
+    const StyleTokenMode *found=nullptr;
+    for(const auto& item:collection.modes){
+        bool matches=item.id==key||item.name==key;
+        if(!matches)matches=std::ranges::any_of(builtin_mode_aliases,[&](const auto& alias){
+            return alias.collection_id==collection.id&&alias.collection_key==collection.key&&
+                   alias.mode_id==item.id&&alias.alias==key;});
+        if(!matches)continue;
+        if(found)return nullptr;
+        found=&item;
+    }
+    return found;
 }
 } // namespace
 StyleTokenType style_token_type(const StyleTokenValue &value) noexcept {
@@ -75,6 +101,8 @@ StyleTokenCatalog::StyleTokenCatalog(std::vector<StyleTokenCollection> collectio
         add(t.css_name, i);
         add(t.selector, i);
         add(t.name, i);
+        for(const auto& alias:builtin_token_aliases)
+            if(alias.id==t.id&&alias.key==t.key)add(std::string(alias.alias),i);
         const auto c = std::ranges::find(collections_, t.collection_id, &StyleTokenCollection::id);
         if (c != collections_.end())
             add(c->name + "/" + t.name, i);
@@ -118,16 +146,12 @@ StyleTokenResult<StyleTokenValue> StyleTokenCatalog::resolve_impl(const StyleTok
     if (collection == collections_.end())
         return failure(StyleTokenErrorCode::invalid_value, "Unknown style collection " + token.collection_id);
     std::string mode = collection->default_mode_id;
-    auto chosen = options.modes.find(collection->id);
-    if (chosen == options.modes.end())
-        chosen = options.modes.find(collection->name);
-    if (chosen != options.modes.end()) {
-        const auto m = std::ranges::find_if(collection->modes, [&](const auto &item) {
-            return item.id == chosen->second || item.name == chosen->second;
-        });
-        if (m == collection->modes.end())
+    for (const auto &[key, selected] : options.modes) {
+        if (unique_collection(collections_,key)!=&*collection)continue;
+        const auto m=unique_mode(*collection,selected);
+        if (!m)
             return failure(StyleTokenErrorCode::unknown_mode,
-                           "Unknown mode for " + collection->name + ": " + chosen->second);
+                           "Unknown mode for " + collection->name + ": " + selected);
         mode = m->id;
     }
     const auto value = std::ranges::find(token.values, mode, &StyleTokenModeValue::mode_id);
@@ -196,13 +220,11 @@ StyleTokenResult<void> StyleTokenCatalog::validate_options(const StyleTokenOptio
     }
     std::map<std::string, std::string, std::less<>> modes;
     for (const auto &[key, mode] : options.modes) {
-        const auto c = std::ranges::find_if(
-            collections_, [&](const auto &item) { return item.name == key || item.id == key; });
-        if (c == collections_.end())
+        const auto c=unique_collection(collections_,key);
+        if (!c)
             return failure(StyleTokenErrorCode::unknown_mode, "Unknown style collection " + key);
-        const auto m = std::ranges::find_if(
-            c->modes, [&](const auto &item) { return item.name == mode || item.id == mode; });
-        if (m == c->modes.end())
+        const auto m=unique_mode(*c,mode);
+        if (!m)
             return failure(StyleTokenErrorCode::unknown_mode,
                            "Unknown style collection/mode " + key + "/" + mode);
         const auto [found, inserted] = modes.emplace(c->id, m->id);

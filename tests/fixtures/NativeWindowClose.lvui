@@ -1,0 +1,11 @@
+Application(onCloseRequested: app.can_close) {
+    import app NativeApplicationBackend
+    Window(onCloseRequested: window.can_close, onOpened: window.opened) {
+        import window WindowCloseFixtureBackend
+        Label(text: "First window")
+    }
+    Window(id: "tools", onCloseRequested: window.can_close, onOpened: window.opened) {
+        import window WindowCloseFixtureBackend
+        Label(text: "Second window")
+    }
+}

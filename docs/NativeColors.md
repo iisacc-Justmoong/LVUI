@@ -1,24 +1,30 @@
 # 네이티브 반응형 Color
 
-Color 입력·일반 let/var·Static 스냅샷을 C++ 값과 Core Observable로 연결한다.
-공통 RGBA 값 검증·HEX 해석·encoded 공간 합성은 iiColorManager::Values를 사용하며
-Picker 공유 라이브러리나 GUI를 LVUI::Native의 의존성으로 추가하지 않는다.
+Color 입력·일반 const/var·Static 스냅샷을 C++ 값과 Core Observable로 연결한다.
+LVUI는 encoded sRGB 값의 유효성 검사·텍스트 해석·합성을 직접 소유한다. 이 값 경계는
+다른 SDK의 헤더나 링크 없이 사용할 수 있다. 다른 색상 객체와의 연결은 앱이 선택하며,
+명시적 `encoded_srgb` 표식과 정규화된 부동소수점 채널을 가진 값만 받아들인다.
+선택적인 기존 Picker 계산 어댑터는 앱의 별도 예제이며 iiColorManager를 명시적으로
+조합한다. `LVUI::Color` 패키지 자체는 iiColorManager를 요구하지 않는다.
 
 직접 C++ 위젯 경계의 Color는 기존 WidgetColor이며,
-iiColorManager Rgba와 명시적으로 encoded sRGB 계약을 제공한 값 사이의 채널을 검증한다.
+명시적으로 encoded sRGB 계약을 제공한 값 사이의 채널을 검증한다.
 이 값 계약은 네 개의 정규화된 부동소수점 채널을 요구하며 float·double 사이의 명시적인
 변환을 지원한다. RGB 바이트 구조를 정규화된 색상으로 잘못 해석하지 않는다.
 선형광 GPU Color는 자동으로 encoded 값으로 받아들이지 않는다.
+`color_channels`와 `parse_color_text`의 반환 값은 `lvui::native::EncodedSrgb`이다.
+이전의 iiColorManager 반환 타입을 직접 지정한 소비자는 해당 타입으로 변경하거나
+`color<사용자_타입>(값)`으로 명시 변환해야 한다.
 채널 생성에서는 `Color(vm.red, .2, .3, 1)`과 같은 선행 소수점 수치도 허용하며,
 `Color.primary`와 문맥상 `.primary` 선택자를 수치로 재해석하지 않는다.
 
 ```lvui
 import vm ColorModel
 var selected: Color = Color.primary
-let current: Color = vm.ink
-@Static let initial: Color = current
-let sample: (Double) -> Color = vm.sample
-let Swatch(ink: Color = .primary): View = VStack(backgroundColor: ink) {
+const current: Color = vm.ink
+@Static const initial: Color = current
+const sample: (Double) -> Color = vm.sample
+const Swatch(ink: Color = .primary): View = VStack(backgroundColor: ink) {
     Label(text: "Color", color: ink)
 }
 Window {
@@ -29,6 +35,18 @@ Window {
     }
 }
 ```
+
+## 패널 배경과 테두리
+
+정적 및 반응형 스택의 배경·테두리 그리기는 `iiGUI/PanelPainter.h`가 담당한다.
+앱이 encoded sRGB 값과 반경·선 두께를 전달하며 iiGUI가 선형광 변환과 도형을
+생성한다. 동일한 값과 크기에서는 마지막 그리기 결과를 재사용하고, 유효하지 않은
+입력은 이전 결과를 유지한다. `NativeWidgetColors.h`는 주입된 페인터와 대상에 변경을
+전달하는 바인딩만 제공하므로 iiGUI를 직접 포함하지 않는다. 정적 패널은 생성 코드에
+이 반응형 바인딩 헤더를 포함하지 않는다. 직접 C++ 소비자는 기존
+`lvui::native::WidgetPanelColors`와 `PanelColorPainter` 대신 iiGUI의 `PanelColors`와
+`PanelPainter`를 사용한다. macOS arm64의 헤드리스 생성 뷰와 독립 설치 소비자를
+검사했으며 실제 창·GPU 및 다른 운영체제는 검증하지 않았다.
 
 ## 값·입력과 갱신
 
@@ -73,6 +91,14 @@ Label 갱신은 색상만 바꾸고 텍스트·글꼴·기하·정체성을 유�
 거부한다. 동적 창 appearance 계약은 전체 완료 감사의 남은 범위이다.
 
 ## 검증
+
+2026-11-07 macOS arm64에서 LVUI 색상 SDK 탐색을 끈 구성의 빌드와 별도 설치
+소비자 두 건을 확인했다. 색상·반응형 검사 11건, 생성 스칼라 입력 한 건과 생성
+콜백 계약 한 건도 통과했다. 값 전용 독립 검사는 다른 SDK 헤더를 포함하지 않는다.
+ColorManager 없이 생성한 다중 창 앱 진입 소스는 iPhoneOS 대상으로 컴파일했다.
+ColorManager 탐색을 끈 iiGUI·LVUI 헤드리스 조합 검사 19건은 생성 위젯의 색상·
+스칼라 상태 갱신, 선택 의존성, 실패 복구와 뷰 수명도 확인했다.
+이는 남아 있는 Core 및 선택 어댑터의 의존성이나 다른 OS의 실행을 검증하지 않는다.
 
 `tests/colors.cpp`는 타입 입력·가변 상태·스냅샷·채널·정의 환경·View 목록·진단을
 검사한다. `tests/native_colors.cpp`는 값·범위·선택적 의존성·실패 복구·함수·종료·스레드

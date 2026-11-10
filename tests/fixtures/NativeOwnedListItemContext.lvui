@@ -1,0 +1,54 @@
+import vm NativeOwnedListItemContextModel
+let Inspector(title: String, checked: Bool, edit: () -> Void, step: () -> Void, action: () -> Void,
+              number: () -> Void, segment: () -> Void, text: () -> Void): View = VStack(spacing: 1) {
+    Label(id: "context-label", text: title)
+    Label(id: "context-checked", text: checked)
+    PushButton(id: "context-edit", text: "Select", onClick: edit)
+    PushButton(id: "context-step", text: "Step", onClick: step)
+    PushButton(id: "context-action", text: "Action", onClick: action)
+    PushButton(id: "context-number", text: "Number", onClick: number)
+    PushButton(id: "context-segment", text: "Segment", onClick: segment)
+    PushButton(id: "context-text", text: "Text", onClick: text)
+}
+let Row(content: View): View = ListItem(id: "first", type: .Toggle, label: vm.label, checked: vm.checked,
+    quantity: vm.quantity, minimumQuantity: 0, maximumQuantity: 10, footerComponent: content, onEdited: vm.edited,
+    onActionEvent: vm.actionEvent)
+Window {
+    VStack(alignment: .leading) {
+        Row(content: Inspector(title: listItem.label, checked: listItem.checked,
+            edit: listItem.editValue("checked", true), step: listItem.stepQuantity(1), action: listItem.triggerAction("primary"),
+            number: listItem.editValue("quantity", 5), segment: listItem.editValue("segmentIndex", 1),
+            text: listItem.editValue("inputText1", "Hello")))
+        ListItem(id: "second", type: .Navigation, label: "Second",
+            footerComponent: Label(id: "second-label", text: listItem.label))
+        ListItem(id: "payload-row", type: .ActionGroup, label: "Payload", checked: true,
+            footerComponent: PushButton(id: "payload-action", text: "Send", onClick: callback(listItem.triggerAction("primary", vm.payload_value))),
+            onActionEvent: vm.actionEvent)
+        ListItem(id: "slots", type: .Navigation, label: "Slots",
+            leadingComponent: Label(id: "slot-leading", text: listItem.label),
+            trailingComponent: Label(id: "slot-trailing", text: listItem.label),
+            footerComponent: Label(id: "slot-footer", text: listItem.label))
+        ListItem(id: "preview-row", type: .Resource, label: "Preview",
+            previewComponent: Label(id: "slot-preview", text: listItem.label))
+        ListItem(id: "builtin", type: .Checkable, label: "Builtin", checked: false, footerComponent: VStack {
+            Label(id: "builtin-checked", text: listItem.checked)
+            if (listItem.checked) { Label(id: "builtin-active", text: listItem.label) }
+        })
+        ListItem(id: "loop", type: .Navigation, label: vm.label, footerComponent: VStack {
+            for (entry in vm.entries, key: entry.key, id: "context-rows") {
+                Label(id: "context-repeat", text: listItem.label)
+            }
+        })
+        ListItem(id: "outer", type: .Navigation, label: "Outer", footerComponent: VStack {
+            Label(id: "outer-before", text: listItem.label)
+            ListItem(id: "inner", type: .Navigation, label: "Inner",
+                footerComponent: Label(id: "inner-label", text: listItem.label))
+            Label(id: "outer-after", text: listItem.label)
+        })
+        List(id: "context-list", model: vm.source, height: 100, rowHeight: 50, overscan: 0, footerVisible: false,
+             itemRow: "row", itemDelegate: ListItem(type: .Navigation, label: row.entry.label, footerComponent: VStack {
+                 Label(id: "delegate-owner", text: listItem.label)
+                 Label(id: "delegate-row", text: row.entry.label)
+             }))
+    }
+}

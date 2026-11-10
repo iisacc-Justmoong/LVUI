@@ -1,0 +1,8 @@
+import vm NativeHierarchyListCountViewModel
+let Badge(text: String): View = Label(id: "badge", text: text)
+Window {
+    Hierarchy(id: "panel", controller: vm.controller, modelRevision: vm.revision,
+              width: 220, height: 80, rowHeight: 20, overscan: 0,
+              toolbarVisible: false, footerVisible: false,
+              countView: Badge(text: vm.badge))
+}

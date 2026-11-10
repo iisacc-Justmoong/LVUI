@@ -62,7 +62,7 @@ HierarchyItem의 countView는 인라인 View·기존 View 값·타입 지정 Vie
 ```lvui
 import class Row lvrs.HierarchyItem
 import vm Backend
-let Controls(row: Row, caption: String = "Select"): View = HStack {
+const Controls(row: Row, caption: String = "Select"): View = HStack {
     Label(text: vm.describe(row))
     PushButton(row.activate, text: caption)
 }
@@ -94,7 +94,7 @@ HierarchyList의 수동 행과 전체 delegate 정책은 별도 남은 계약으
 ```lvui
 import class Entry lvrs.HierarchyDelegateContext
 import vm Backend
-let Layer(entry: Entry): View = HierarchyItem(
+const Layer(entry: Entry): View = HierarchyItem(
     label: vm.title(entry), baseLeftPadding: 4, iconSize: 0)
 Window {
     HierarchyList(controller: vm.tree, itemDelegate: Layer)

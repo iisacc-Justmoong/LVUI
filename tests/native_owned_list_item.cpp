@@ -1,10 +1,17 @@
 #include <LVUI/NativeListItem.h>
+#include <iiGUI/NativeListItemView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
 #include <optional>
 #include <stdexcept>
 #include <thread>
+#include <type_traits>
+
+using LVUIListItem=lvui::native::ListItemBinding<ii::gui::BasicListItem,ii::gui::BasicListItemDrawing,ii::gui::BasicNativeListItem,
+    ii::gui::CachedSvgDecoder,ii::gui::SrgbColorConverter,ii::gui::ListItemDrawingPort>;
+using LVUIListItemInput=lvui::native::ListItemInputValue<ii::gui::RasterImage>;
 
 namespace {
 void require(bool condition, const char* message) { if (!condition) throw std::runtime_error(message); }
@@ -30,13 +37,13 @@ int main() {
     using namespace lvui; using namespace ii::gui;
     auto tree = std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {400,120}));
-    native::ListItemInput input; input.configuration.variant = ListItemVariant::navigation;
+    LVUIListItemInput input; input.configuration.variant = ListItemVariant::navigation;
     input.configuration.label = "Camera"; input.configuration.description = "Shared camera";
-    std::optional<native::NativeListItem> item; unsigned activations = 0; bool remove_on_click = false;
+    std::optional<LVUIListItem> item; unsigned activations = 0; bool remove_on_click = false;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading});
         if (!column) return std::unexpected(column.error());
-        auto value = native::NativeListItem::create(builder, *column, "item", input, {.activated=[&] {
+        auto value = LVUIListItem::create(builder, *column, "item", input, {.activated=[&] {
             ++activations; if (remove_on_click) good(host.clear_content());
         }});
         if (!value) return std::unexpected(value.error()); item = *value; return {};

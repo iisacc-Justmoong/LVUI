@@ -22,8 +22,7 @@ int main(int argc, char** argv) {
     input.read(source.data(), static_cast<std::streamsize>(source.size()));
     source.resize(static_cast<std::size_t>(input.gcount()));
     if (input.bad()) { std::cerr << "Unable to read the LVUI source\n"; return 2; }
-    const auto first=source.find_first_not_of(" \t\r\n");
-    auto result = first!=source.npos&&source[first]=='<'?lvui::parse_native_markup(source):lvui::parse_view(source);
+    auto result = lvui::parse_view(source);
     if (!result) {
         const auto& error = result.error();
         std::cerr << argv[1] << ':' << error.line << ':' << error.column << ": " << error.message << '\n';

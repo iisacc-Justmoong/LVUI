@@ -1,4 +1,7 @@
 #include <LVUI/NativeTextBoundary.h>
+#include <iiGUI/TextInputModel.h>
+namespace lvui {using TextInput=TextInputBinding<ii::gui::BasicTextInput>;}
+#include <iiGUI/TextBoundary.h>
 #include <stdexcept>
 #include <string>
 
@@ -11,7 +14,7 @@ template<class T> T take(lvui::TextInputResult<T> result) {
 }
 int main() {
     const std::string family = "👨‍👩‍👧‍👦";
-    auto text = take(lvui::TextInput::create(lvui::native::native_text_boundary,"한" + family + "e\xcc\x81Z"));
+    auto text = take(lvui::TextInput::create(lvui::native::native_text_boundary<ii::gui::TextIndex>,"한" + family + "e\xcc\x81Z"));
     require(text.length() == 15,"Native boundary returned an incorrect UTF-16 length");
     take(text.set_selection(12,12));
     require(take(text.erase(-1)) && text.text() == "한e\xcc\x81Z",

@@ -7,7 +7,9 @@
 
 2026-10-22에 추가한 C++23 컴포넌트 언어 프런트엔드이다.
 `LVUI/Language.h`와 `lvui-check`는 실제로 빌드·실행되며, 예약어와 컴포넌트 구문을 검사한다.
-기존 HTML 형태의 `lvui::parse`와 `Document` 계약은 유지한다.
+`lvui::parse`와 `Document`는 기존 소비자를 위한 별도 레거시 API이며 LVUI 소스
+문법이 아니다. `lvui-check`와 네이티브 컴파일은 HTML 태그를 받지 않는다.
+현재 문법은 [즉시 선언형 View](ImmediateDeclaration.md)를 따른다.
 
 ## 예약어의 근거
 
@@ -25,7 +27,9 @@ C++ QML 등록 타입 33개를 대조했다. 루트·인라인 상속과 CMake �
 모든 원본을 조사 파일에 남기고 예약어는 한 번만 등록한다.
 
 `InteractionMotion`, `SpringBehavior`, `StateColorBehavior`는 시각 변환·동작 보조 예약어이다.
-`View`, `Color`, `Metric`, `import`, `let`, `var`, `true`, `false`를 포함하면 전체 예약어는 **118개**이다.
+`View`, `Color`, `Metric`, `import`, `const`, `var`, `true`, `false`를 포함하면 당시의
+전체 예약어는 **118개**였다. 현재 목록에는 LVUI의 독립 `ScrollView` 등 후속
+예약어가 추가되어 있으며 현행 수와 이름은 `catalog/lvui-keywords.json`을 따른다.
 `Theme`, `Motion`, 모델·서비스·상태 등 비시각 객체 38개 선언은 시각 예약어에서 제외한다.
 전체 이름과 원본 위치는 [예약어 목록](ReservedWords.md)에 있다.
 
@@ -64,7 +68,7 @@ if (document) {
 
 ```text
 import vm CounterBackend
-let title: String = "Counter"
+const title: String = "Counter"
 var value: Int = 6
 
 ApplicationWindow(title: title) {
@@ -88,13 +92,14 @@ ApplicationWindow(title: title) {
 - 값은 UTF-8 문자열, 유한 숫자·음수, 불리언, `.blue` 같은 열거 표기, 점으로 연결한 참조,
   위치 인자를 사용하는 호출과 목록이다. 문자열 escape는 `\\`, `\"`, `\'`, `\n`, `\r`, `\t`이다.
 - `vm.method`와 `vm.method()`는 각각 참조와 호출 AST로 구분한다. 파싱으로 메서드를 실행하지 않는다.
-- `let`·`var`는 스칼라·참조·목록·호출 초기화 구문을 보관한다. 타입 표기도 보관하며 전체 타입 검사는 별도 과제이다.
+- `const`·`var`는 스칼라·참조·목록·호출 초기화 구문을 보관한다. 타입 표기도 보관하며 전체 타입 검사는 별도 과제이다.
 - import 바인딩·변수·컴포넌트 입력 이름에 예약어를 쓰면 오류이다. 같은 스코프의 바인딩 중복도 거부한다.
-- 문장 사이에는 줄바꿈을 사용한다. `//`·`/* ... */` 주석과 CRLF를 지원하며 세미콜론은 허용하지 않는다.
+- View 본문에서는 속성과 자식을 쉼표 또는 줄바꿈으로 구분한다. 최상위 선언은
+  줄바꿈으로 구분한다. `//`·`/* ... */` 주석과 CRLF를 지원하며 세미콜론은 허용하지 않는다.
 - 입력은 최대 1 MiB, 소스 토큰은 65,536개, `View`는 4,096개이며 뷰·표현식 깊이는 64단계이다.
 
 `View()` 자체는 구체적인 시각 컴포넌트 생성자가 아니다.
-`let panel: View = VStack { ... }`와 추론한 시각 초기값은
+`const panel: View = VStack { ... }`와 추론한 시각 초기값은
 [고정 View 값](ViewValues.md)으로 구성한다. 메서드·지역 값·import는
 [지역 스코프](LocalScopes.md)를 따르며 재사용 시 사용 위치별 ID를 갖는다.
 명시적인 스칼라·백엔드·View 매개변수와 이름별 슬롯은 [재사용 구성](Components.md)을 따른다.

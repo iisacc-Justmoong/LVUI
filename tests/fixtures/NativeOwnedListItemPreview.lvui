@@ -1,0 +1,10 @@
+import vm NativeOwnedListItemPreviewModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "preview", type: vm.kind, label: "Clip", previewSource: vm.preview,
+                 showPreview: vm.show_preview, moreItems: ["Duplicate"], segments: vm.versions,
+                 segmentIndex: vm.version, onMenuItemTriggered: vm.menu,
+                 onSegmentIndexChanged: vm.versionChanged, onActionValuesTriggered: vm.actionValues,
+                 onActionEvent: vm.actionEvent)
+    }
+}

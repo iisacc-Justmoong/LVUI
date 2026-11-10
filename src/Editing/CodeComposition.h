@@ -2,6 +2,7 @@
 
 #include <LVUI/CodeViewport.h>
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <limits>
@@ -74,11 +75,11 @@ public:
             result += *part; return {};
         };
         if (at < range_.location) {
-            const auto stop = std::min(end, range_.location);
+            const auto stop = (std::min)(end, range_.location);
             if (auto part = append_base(at, stop - at); !part) return std::unexpected(part.error()); at = stop;
         }
         if (at < end && at < inserted_end) {
-            const auto stop = std::min(end, inserted_end);
+            const auto stop = (std::min)(end, inserted_end);
             auto first = inserted_byte(at - range_.location), last = inserted_byte(stop - range_.location);
             if (!first) return std::unexpected(first.error()); if (!last) return std::unexpected(last.error());
             if (*last - *first > maximum_bytes - result.size()) return error(CodeDocumentErrorCode::too_large, "Code range exceeds its read budget");
@@ -118,32 +119,42 @@ public:
             const auto size = code_document_detail::scalar_bytes(static_cast<unsigned char>(text[at]));
             units += size == 4 ? 2 : 1; if (text[at] == '\n') line_offsets.push_back(units); at += size;
         }
-        if (units > std::numeric_limits<std::size_t>::max() - (base->length() - range.length) ||
-            text.size() > std::numeric_limits<std::size_t>::max() - (base->byte_size() - *removed_bytes))
+        if (units > (std::numeric_limits<std::size_t>::max)() - (base->length() - range.length) ||
+            text.size() > (std::numeric_limits<std::size_t>::max)() - (base->byte_size() - *removed_bytes))
             return error(CodeDocumentErrorCode::too_large, "Composition size overflow");
         if (selection.location > units || selection.length > units - selection.location)
             return error(CodeDocumentErrorCode::out_of_range, "Composition selection exceeds its text");
         auto first_line = code_line_at(*base, range.location), last_line = code_line_at(*base, range.location + range.length);
         if (!first_line) return std::unexpected(first_line.error()); if (!last_line) return std::unexpected(last_line.error());
-        if (*last_line < *first_line || line_offsets.size() > std::numeric_limits<std::size_t>::max() - base->line_count())
+        if (*last_line < *first_line || line_offsets.size() > (std::numeric_limits<std::size_t>::max)() - base->line_count())
             return error(CodeDocumentErrorCode::invalid, "Invalid code source line index");
         const auto bytes = base->byte_size() - *removed_bytes + text.size();
         auto view = std::make_shared<const code_composition_detail::View>(std::move(base), range, std::move(text), units, bytes,
             *first_line, *last_line, std::move(line_offsets));
         auto first = view->inserted_byte(selection.location), last = view->inserted_byte(selection.location + selection.length);
         if (!first) return std::unexpected(first.error()); if (!last) return std::unexpected(last.error());
-        return CodeComposition(std::move(view), selection);
+        const auto anchor=range.location+selection.location;
+        return CodeComposition(std::move(view),anchor,anchor+selection.length);
     }
     [[nodiscard]] std::shared_ptr<const CodeDocumentView> view() const { return view_; }
     [[nodiscard]] const std::string& text() const noexcept { return view_->inserted(); }
     [[nodiscard]] CodeDocumentRange base_range() const noexcept { return view_->original_range(); }
     [[nodiscard]] CodeDocumentRange marked() const noexcept { return {base_range().location, view_->inserted_units()}; }
-    [[nodiscard]] CodeDocumentRange selection() const noexcept { return {base_range().location + selection_.location, selection_.length}; }
+    [[nodiscard]] CodeDocumentRange selection() const noexcept {
+        const auto first=(std::min)(anchor_,caret_),last=(std::max)(anchor_,caret_);return {first,last-first};
+    }
+    [[nodiscard]] std::size_t selection_anchor() const noexcept { return anchor_; }
+    [[nodiscard]] std::size_t selection_caret() const noexcept { return caret_; }
+    [[nodiscard]] CodeDocumentResult<bool> set_input_selection(std::size_t anchor,std::size_t caret) {
+        auto first=view_->read({anchor,0},0);if(!first)return std::unexpected(first.error());
+        auto last=view_->read({caret,0},0);if(!last)return std::unexpected(last.error());
+        const bool changed=anchor!=anchor_||caret!=caret_;anchor_=anchor;caret_=caret;return changed;
+    }
 private:
-    CodeComposition(std::shared_ptr<const code_composition_detail::View> view, CodeDocumentRange selection)
-        : view_(std::move(view)), selection_(selection) {}
+    CodeComposition(std::shared_ptr<const code_composition_detail::View> view,std::size_t anchor,std::size_t caret)
+        : view_(std::move(view)),anchor_(anchor),caret_(caret) {}
     std::shared_ptr<const code_composition_detail::View> view_;
-    CodeDocumentRange selection_;
+    std::size_t anchor_,caret_;
 };
 
 } // namespace lvui

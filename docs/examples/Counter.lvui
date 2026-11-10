@@ -1,6 +1,6 @@
 import counter CounterBackend
 
-ApplicationWindow(title: "Counter", accentColor: .blue) {
+ApplicationWindow(title: "Counter", accent: .blue) {
     VStack(spacing: 16) {
         Label(text: "Counter")
         Label(text: counter.value)
@@ -8,12 +8,12 @@ ApplicationWindow(title: "Counter", accentColor: .blue) {
         HStack(spacing: 12) {
             PushButton(counter.decrement) {
                 text: "−"
-                type: .borderless
+                tone: .borderless
             }
 
             PushButton(counter.increment) {
                 text: "+"
-                type: .borderless
+                tone: .borderless
             }
         }
     }

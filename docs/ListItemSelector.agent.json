@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/ListItemSelector.md",
-    "sha256": "fc7c4823c784dc730fbc0d70b82b5113a160c8fb791facada41124b8ec43a321",
-    "bytes": 788,
+    "sha256": "4730e37ca723b35bfe53e3a964d41490aebf19e8d2b112b085cdbb8dc1f26822",
+    "bytes": 881,
     "line_count": 11,
     "encoding": "utf-8",
     "language": "ko"
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 7,
-      "raw": "`ListItemSelector`는 UI와 독립된 옵션 목록, 현재 인덱스, 표시 문구와 활성 정책을\n제공한다. `choose()`는 사용 가능한 다른 옵션만 선택하고, `navigate()`는 방향으로\n이동하면서 비활성 옵션을 건너뛰며 끝에서 멈춘다. 빈 목록은 기본 문구를 표시하고\n선택 이벤트를 발생시키지 않는다. 옵션은 최대 400개이며 텍스트 길이와 UTF-8을\n검증한다. 설정이 유효하지 않으면 기존 상태를 유지한다.\n"
+      "raw": "LVUI는 옵션과 선언 설정, `ListItemSelectorModelPolicy`를 제공한다.\n선택 상태·이동·유효성 검사는 iiGUI의 `BasicListItemSelector`가 소유한다. `choose()`는 사용 가능한 다른 옵션만 선택하고, `navigate()`는 방향으로\n이동하면서 비활성 옵션을 건너뛰며 끝에서 멈춘다. 빈 목록은 기본 문구를 표시하고\n선택 이벤트를 발생시키지 않는다. 옵션은 최대 400개이며 텍스트 길이와 UTF-8을\n검증한다. 설정이 유효하지 않으면 기존 상태를 유지한다.\n"
     },
     {
       "id": "b000004",
@@ -57,7 +57,7 @@
       "kind": "paragraph",
       "start_line": 9,
       "end_line": 11,
-      "raw": "이 모델은 독립 [선택기 화면](NativeOwnedListItemSelector.md)과 목록 항목의 선언형\n선택 유형에 연결된다.\n`LVUI.OwnedListItem.Selector`는 빈 목록, 비활성 옵션, 이동, 경계와 잘못된 입력을 검증한다.\n"
+      "raw": "이 모델은 독립 [선택기 화면](NativeOwnedListItemSelector.md)과 목록 항목의 선언형\n선택 유형에 연결된다.\n`LVUI.ListItemSelector.ModelIntegration`은 LVUI 값과 iiGUI 모델의 빈 목록, 비활성 옵션, 이동, 경계와 잘못된 입력을 검증한다.\n"
     }
   ],
   "outline": [

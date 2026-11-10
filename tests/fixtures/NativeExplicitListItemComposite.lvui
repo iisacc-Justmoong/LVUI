@@ -1,0 +1,3 @@
+Window {
+    ListItemComposite(id: "explicit", type: .Toggle, label: "Composite", checked: true)
+}

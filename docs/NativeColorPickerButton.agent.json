@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeColorPickerButton.md",
-    "sha256": "f2710fffd7a8cd7ab06a84f412e03a1ec9d76c09bdb3a9b5e2275b3d47bd6acd",
-    "bytes": 2179,
-    "line_count": 26,
+    "sha256": "2e88a1cc7ce5513b6662dd36f706acba81b90ab4f1d9406e6cd2665b0af6b6d9",
+    "bytes": 2995,
+    "line_count": 37,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,36 +42,64 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 8,
-      "raw": "`ColorPickerButton`의 크기, 색상, 상태별 배경과 원형 배치는\n`LVUI/ColorPickerButton.h`의 C++ 모델이 소유한다. `NativeColorPickerButton`은 범용\n동작 표면과 메모리 이미지 디코더에 모델 결과를 전달한다. 시각 언어에 사용한 색상환\n이미지만 LVUI의 `resources/images/color-picker-hue-ring.png`에 보관하며, 빌드 시\n검증해 내장하므로 실행 중 레거시 모듈이나 리소스 경로를 찾지 않는다. 이 자산의\nSHA-256은 `75e39c9111d53f25e87fb1bd44eb7048074721bcb22a2d337d4e11927c94c427`이다.\n"
+      "end_line": 9,
+      "raw": "`ColorPickerButton`의 크기·색상·상태별 배경·원형 배치와 위젯 호스트는\n`iiGUI/ColorPickerButtonModel.h`와 `iiGUI/NativeColorPickerButtonView.h`가 소유한다.\nLVUI는 Core 외 SDK를 직접 참조하지 않는 디자인 값과 `ColorPickerButtonBinding`을\n제공하며 생성된 앱에서 iiGUI 모델·호스트를 조합한다. 시각 언어에 사용한 색상환\n이미지만 LVUI의 `resources/images/color-picker-hue-ring.png`에 보관하며, 빌드 시\n검증해 내장하므로 실행 중 레거시 모듈이나 리소스 경로를 찾지 않는다. 이 자산의\nSHA-256은 `75e39c9111d53f25e87fb1bd44eb7048074721bcb22a2d337d4e11927c94c427`이다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 9,
-      "end_line": 9,
+      "start_line": 10,
+      "end_line": 10,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 10,
-      "end_line": 23,
-      "raw": "기본 색은 보라색, 버튼 크기는 28, 패딩과 사각 반경은 4이다. 색상환의 중앙에 현재\n색상 원을 두며 비활성 상태는 전체 불투명도를 0.32로 낮춘다. `ColorSource`는 앱이\n교체 가능한 색상과 리비전 공급 경계다. 같은 리비전 동안 색상은 안정적이어야 하며\n읽는 도중 리비전이 반복해서 바뀌면 이전 표시를 유지하고 오류를 돌려준다.\n기본 선언형 `ColorPickerButton`은 `currentColor`에 관측 가능한 색상을 전달하거나\n`model`에 `std::shared_ptr<const lvui::ColorSource>`를 전달할 수 있다. 둘은 동시에\n지정하지 않는다. 공급자 내부 값이 바뀌면 앱이 관측 가능한 `modelRevision`도\n발행해야 다시 읽는다. 공급자 교체와 리비전은 반응형으로 연결되며 널 공급자,\n잘못된 색상과 불안정한 읽기는 오류로 기록하고 마지막 정상 표시를 유지한다.\n앱과 여러 컴포넌트가 색상 편집 및 취소 상태를 공유하려면 독립적인\n[`ColorSelection`](ColorSelection.md)을 공급자로 사용할 수 있다.\n`buttonSize`는 `.Small`·`.Medium`·`.Large`와 8~256의 수치 또는 반응형 값을 받는다.\n`showHueRing`, `enabled`, `circular`, `padding`, `cornerRadius`, `borderOpacity`,\n색상별 스타일, 접근성 이름과 누름·해제·취소·클릭 콜백을 설정할 수 있다.\n"
+      "start_line": 11,
+      "end_line": 27,
+      "raw": "기본 색은 보라색, 버튼 크기는 28, 패딩과 사각 반경은 4이다. 색상환의 중앙에 현재\n색상 원을 두며 비활성 상태는 전체 불투명도를 0.32로 낮춘다. `ColorSource`는 앱이\n교체 가능한 색상과 리비전 공급 경계다. 같은 리비전 동안 색상은 안정적이어야 하며\n읽는 도중 리비전이 반복해서 바뀌면 이전 표시를 유지하고 오류를 돌려준다.\n기본 선언형 `ColorPickerButton`은 `currentColor`에 관측 가능한 색상을 전달하거나\n`model`에 `std::shared_ptr<const lvui::ColorSource>`를 전달할 수 있다. 둘은 동시에\n지정하지 않는다. 공급자 내부 값이 바뀌면 앱이 관측 가능한 `modelRevision`도\n발행해야 다시 읽는다. 공급자 교체와 리비전은 반응형으로 연결되며 널 공급자,\n잘못된 색상과 불안정한 읽기는 오류로 기록하고 마지막 정상 표시를 유지한다.\n앱과 여러 컴포넌트가 색상 편집 및 취소 상태를 공유하려면 독립적인\n[`ColorSelection`](ColorSelection.md)을 공급자로 사용할 수 있다.\n`buttonSize`는 `.Small`·`.Medium`·`.Large`와 8~256의 수치 또는 반응형 값을 받는다.\n`showHueRing`, `enabled`, `circular`, `padding`, `cornerRadius`, `borderOpacity`,\n색상별 스타일, 접근성 이름과 누름·해제·취소·클릭 콜백을 설정할 수 있다.\n기본 포커스 테두리는 정적 또는 반응형 [창 강조색](NativeWindow.md)을 따르며\n`focusColor`가 지정되면 그 값을 사용한다. 현재 색상 견본과 색상 공급자의 값은\n창 강조색과 독립적이다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 24,
-      "end_line": 24,
+      "start_line": 28,
+      "end_line": 28,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 25,
-      "end_line": 26,
+      "start_line": 29,
+      "end_line": 30,
       "raw": "실제 플랫폼 그리기·보조 기술 검증과 색상 전환 모션은 남아 있다. 색상 버튼은 피커나\n팝오버를 자동 생성하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 34,
+      "raw": "버튼이 퇴역하면 콜백과 색상 공급자 참조를 해제한다. 공급자 조회 중 퇴역하면\n그 결과는 게시하지 않는다. macOS arm64에서 독립 iiGUI 설치 소비자와 LVUI\n색상 공급자·생성 코드·윈도우 강조색을 창 없이 검사했다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 37,
+      "raw": "색상환 래스터는 살아 있는 버튼 사이에서 공유하고 마지막 버튼이 퇴역하면\n해제한다. 공유와 해제를 macOS arm64 헤드리스 검사로 확인했다.\n"
     }
   ],
   "outline": [
@@ -88,15 +116,22 @@
     "directive_candidates": [
       {
         "block_id": "b000005",
-        "line": 16,
+        "line": 17,
         "text": "지정하지 않는다. 공급자 내부 값이 바뀌면 앱이 관측 가능한 `modelRevision`도",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000007",
-        "line": 26,
+        "line": 30,
         "text": "팝오버를 자동 생성하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 33,
+        "text": "그 결과는 게시하지 않는다. macOS arm64에서 독립 iiGUI 설치 소비자와 LVUI",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -108,7 +143,14 @@
         "label": "`ColorSelection`",
         "target": "ColorSelection.md",
         "kind": "relative",
-        "line": 20
+        "line": 21
+      },
+      {
+        "block_id": "b000005",
+        "label": "창 강조색",
+        "target": "NativeWindow.md",
+        "kind": "relative",
+        "line": 25
       }
     ],
     "tables": []

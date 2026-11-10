@@ -25,7 +25,7 @@ struct ListError final { ListErrorCode code; std::string message; };
 template<class T>using ListResult=std::expected<T,ListError>;
 struct ListEntry final {
     std::string key,label,description,icon_name;
-    bool enabled=true,selectable=true;
+    bool enabled=true,selectable=true,editable=true,draggable=true;
     friend bool operator==(const ListEntry&,const ListEntry&)=default;
 };
 struct ListSnapshot final { std::vector<ListEntry> entries; std::uint64_t revision=0; };
@@ -113,7 +113,7 @@ public:
             }
         }
         if(entries==snapshot_->entries)return snapshot_->revision;
-        if(snapshot_->revision==std::numeric_limits<std::uint64_t>::max())return error(ListErrorCode::exhausted,"List revision exhausted");
+        if(snapshot_->revision==(std::numeric_limits<std::uint64_t>::max)())return error(ListErrorCode::exhausted,"List revision exhausted");
         auto candidate=std::make_shared<const ListSnapshot>(ListSnapshot{std::move(entries),snapshot_->revision+1});
         if(auto valid=ListIndex::create(candidate);!valid)return std::unexpected(valid.error());
         snapshot_=std::move(candidate);return snapshot_->revision;
@@ -151,7 +151,7 @@ public:
             if(!item.enabled||!item.selectable)return error(ListErrorCode::invalid,"List item cannot be selected");
         }
         if(selected_==key)return false;
-        if(revision_==std::numeric_limits<std::uint64_t>::max())return error(ListErrorCode::exhausted,"List view revision exhausted");
+        if(revision_==(std::numeric_limits<std::uint64_t>::max)())return error(ListErrorCode::exhausted,"List view revision exhausted");
         selected_=std::string(key);++revision_;return true;
     }
     [[nodiscard]] ListResult<bool> refresh(){
@@ -164,7 +164,7 @@ public:
         bool clear=false;if(!selected_.empty()){
             auto position=next->find(selected_);clear=!position || !next->snapshot()->entries[*position].enabled || !next->snapshot()->entries[*position].selectable;
         }
-        if(clear&&revision_==std::numeric_limits<std::uint64_t>::max())return error(ListErrorCode::exhausted,"List view revision exhausted");
+        if(clear&&revision_==(std::numeric_limits<std::uint64_t>::max)())return error(ListErrorCode::exhausted,"List view revision exhausted");
         index_=std::move(*next);if(clear){selected_.clear();++revision_;}return true;
     }
 private:

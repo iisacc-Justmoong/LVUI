@@ -1,6 +1,8 @@
 # LVUI 페이지 라우터
 
-기본 C++ AOT의 `PageRouter`는 LVUI의 경로 해석, 이력과 페이지 게시 계약을 연결한다.
+기본 C++ AOT의 `PageRouter`는 LVUI의 경로 해석·이력·페이지 선언을
+`iiGUI/NativePageRouterView.h`의 게시 호스트와 앱에서 연결한다. LVUI의
+`PageRouterBinding`과 페이지 팩터리 계약은 Core 외 SDK를 직접 참조하지 않는다.
 Qt·QML·LVRS 타입이나 팩터리를 사용하지 않는다. 경로의 문법과 제한은
 [경로 계약](NativeRoutes.md), 후보·이력의 제한은 [탐색 이력](NativeNavigationHistory.md)을
 따른다.
@@ -23,8 +25,8 @@ Window {
 게시된 `PageRouter`는 같은 생성 범위의 `NavigationContext`에 자신을 등록하므로
 명시적 대상이 없는 `Link`가 이를 사용할 수 있다. 링크의 명시적 대상은 이 기본값보다
 우선한다. 여러 라우터가 같은 범위를 공유하면 마지막으로 게시된 라우터가 기본 대상이다.
-페이지는 `NativeNavigationPage::build`를 구현하거나 `FunctionalNavigationPage`에
-팩터리를 제공한다. 팩터리는 `WidgetBuilder`, 현재 `NavigationEntry` 및 하위 링크에
+페이지는 앱의 위젯 빌더 타입을 주입한 `NativeNavigationPageValue<Builder>::build`를
+구현하거나 `FunctionalNavigationPageValue<Builder>`에 팩터리를 제공한다. 팩터리는 `WidgetBuilder`, 현재 `NavigationEntry` 및 하위 링크에
 전달할 수 있는 컨텍스트를 받고 루트 View 하나를 만들어야 한다. 앱이 소유한 객체를
 팩터리에서 참조한다면 그 객체의 수명은 앱이 보장한다. 화면이 게시된 뒤 앱은 예를
 들어 `router->set_root("/")`로 첫 화면을 연다.
@@ -49,3 +51,7 @@ false를 반환한다. 직접 지정한 페이지는 경로보다 우선하고 �
 재진입을 거부한다. 페이지 생성과 외부 콜백의 임의 부수 효과를 되돌리는 기능은 없다.
 현재 생성 경로는 LVUI 페이지 팩터리를 사용하며 레거시 LVRS 페이지 타입과 자동 호환되지
 않는다. 실제 기기·창·GPU·접근성 검증은 호스트 상태 검사와 구분한다.
+
+macOS arm64에서 독립 iiGUI 호스트·설치 소비자와 LVUI의 후보 실패 복구,
+게시 지연·퇴역 및 생성 코드 검사를 창 없이 통과했다. 실제 창·GPU·접근성은
+검사하지 않았다.

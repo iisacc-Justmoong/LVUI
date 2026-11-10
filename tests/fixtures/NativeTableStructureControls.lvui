@@ -1,0 +1,7 @@
+import vm NativeOwnedTableModel
+Window {
+    Table(id: "table", model: vm.controller, accessibilityText: vm.tableText, structureEditor: vm.structure, structureFactory: vm.factory,
+          structureControlsVisible: vm.showStructure, addRowControlsVisible: true, addColumnControlsVisible: true,
+          deleteContextMenuEnabled: true, selectOnContextClick: true, structureGutterWidth: 20, structureGutterHeight: 20,
+          width: 220, height: 160, onStructureChanged: vm.structured)
+}

@@ -5,23 +5,27 @@
 상태: 2026-10-20에 채택한 언어 설계이다.
 2026-10-22의 `parse_view`는 스칼라·참조·목록·호출 초기값의 선언 구문과 예약어 충돌을 검사한다.
 타입 검사·저장·반응형 실행은 [현재 프런트엔드 범위](ComponentLanguage.md)와 구분한다.
+뷰 활성화별 현재 저장·이벤트 대입·Object 값과 계산형 View 프로퍼티는
+[뷰 세션](ViewSessions.md)을 따른다.
 
 <a id="declaration-syntax"></a>
 
 ## 선언 구문
 
-`let`은 상수, `var`는 변경 가능한 변수를 선언한다.
+`const`는 상수, `var`는 변경 가능한 변수를 선언한다.
+기존 `let` 선언은 전환 기간의 호환 별칭으로 같은 읽기 전용 의미를 유지한다.
+새 선언과 예제는 `const`를 사용한다.
 채택한 타입·초기값 지정 선언 형식은 다음과 같다.
 
 ```text
-let name: Type = initializer
+const name: Type = initializer
 var name: Type = initializer
 ```
 
 이름은 선언 키워드 뒤에 온다. 콜론 뒤에 타입을, 등호 뒤에 초기값을 지정한다.
 
 ```text
-let constant: Int = 6
+const constant: Int = 6
 var variable: Int = 6
 ```
 
@@ -37,17 +41,23 @@ var variable: Int = 6
 
 ## 선언 어노테이션
 
-선언 앞에 `@Observable`과 `@Static`을 붙일 수 있다. 예시는 다음과 같다.
+선언 앞에 `@State`, `@Bindable`, `@Observable`과 `@Static`을 붙일 수 있다.
+예시는 다음과 같다.
 
 ```text
+@State @Bindable var draft: String = "Draft"
 @Observable var value: Int = 6
-@Static let initialValue: Int = 6
+@Static const initialValue: Int = 6
 ```
 
 값은 [기본 반응형 모델](ReactiveState.md)을 따른다. `@Observable`은 관찰을 명시하지만
 관찰 기능을 활성화하기 위한 필수 조건은 아니다. `@Static`은 해당 선언에 설정된 수명 동안
 초기값을 고정한다. 채택한 의미·예제와 남은 적용 대상·조합 규칙은
 [DeclarationAnnotations.md](DeclarationAnnotations.md)에 기술한다.
+
+일반 값의 기본 의미는 `@State`와 `@Bindable`이다. 두 이름을 붙여도 같은 의미이다.
+읽기 전용 선언은 기본 반응성을 유지하지만
+이름을 재대입하거나 원본을 수정할 권한은 얻지 않는다.
 
 <a id="no-semicolons"></a>
 
@@ -65,17 +75,17 @@ LVUI는 문장이나 선언을 끝내는 세미콜론을 사용하지 않는다.
 
 ## 상태와 백엔드 연동
 
-`let`과 `var`는 선언한 값의 재대입 가능 여부를 지정한다.
+`const`와 `var`는 선언한 값의 재대입 가능 여부를 지정한다.
 뷰에서 사용하는 일반 LVUI `var`를 포함하여 값은 기본적으로 반응형이다.
 상태 변경을 의존 바인딩에 전달하기 위한 어노테이션은 필요하지 않다.
 `@Static`은 설정된 수명 동안 고정되는 값을 선택한다.
 
 이 기본 동작은 ViewModel 인스턴스를 생성하거나 선언의 소유자 수명을 더 길게 정하지 않는다.
-구체적인 상태 저장소·정체성·수명 규칙은 추가 명세가 필요하다.
+지역 `var`는 해당 뷰 활성화의 상태 저장소를 소유하고, 독립 활성화는 독립 값을 갖는다.
 ViewModel도 같은 일반 값 모델을 따르며 [기본 바인딩](ViewModelQueries.md#default-viewmodel-binding)을 제공한다.
-`let`과 C++ constness의 기존 재대입·쓰기 제한은 유지된다.
+`const`와 C++ constness의 기존 재대입·쓰기 제한은 유지된다.
 
-권장 MVVM 패턴에서는 공유 화면 상태를 ViewModel에 둔다.
+공유 화면 상태와 그 변경 규칙은 import한 C++ ViewModel에 둔다.
 지역 변수가 이 원본 상태를 중복해서 보관하지 않도록 한다.
 ViewModel은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 값을 송수신하며,
 가져온 백엔드의 소유권은 계속 [스코프 기반 import](TypeImports.md)를 따른다.
@@ -87,7 +97,7 @@ ViewModel은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 값을 송수�
 - 타입 추론, 전체 타입 집합, 초기화 요구사항.
 - 컴포넌트 본문 내 선언 스코프와 평가 시점.
 - 대입 표현식과 여러 줄 표현식 구문.
-- 변경 가능한 C++ 객체·C++ constness와 `let`의 관계를 포함한 참조 값 의미.
+- 변경 가능한 C++ 객체·C++ constness와 `const`의 관계를 포함한 참조 값 의미.
 
 채택한 규칙은 상수와 변수의 구분, 예시의 타입·초기값 구문,
 접두 어노테이션, 세미콜론 종결자 생략을 확정한다.

@@ -1,0 +1,10 @@
+Application(onCloseRequested: vm.can_close, onOpenFiles: vm.open_files) {
+    import vm NativeApplicationBackend
+    Window(onClosed: vm.scene_closed) {
+        VStack {
+            PushButton(onClick: openWindow("tools"))
+            PushButton(onClick: quitApplication())
+        }
+    }
+    Window(id: "tools", initiallyOpen: false) { Label(text: vm.title) }
+}

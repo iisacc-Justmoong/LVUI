@@ -1,0 +1,20 @@
+Application(onStart: vm.started, onReady: vm.ready, onStop: vm.stopped, onOpenFiles: vm.open_files) {
+    import vm NativeApplicationBackend
+    Window(id: "main") {
+        VStack {
+            PushButton(id: "open", text: "Open", onClick: openWindow("tools"))
+            PushButton(id: "close", text: "Close", onClick: closeWindow("tools"))
+            Label(id: "shared", text: vm.title)
+        }
+    }
+    Window(id: "tools", initiallyOpen: false, onOpened: window.opened, onClosed: window.closed) {
+        import window NativeWindowBackend
+        VStack {
+            PushButton(id: "close_self", text: "Close", onClick: closeWindow("tools"))
+            PushButton(id: "open_main", text: "Open main", onClick: openWindow("main"))
+            Label(id: "shared", text: vm.title)
+            Label(id: "local", text: window.title)
+        }
+    }
+    Window(id: "palette") { Label(text: "Palette") }
+}

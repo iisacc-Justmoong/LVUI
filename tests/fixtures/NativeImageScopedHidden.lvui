@@ -1,0 +1,7 @@
+Window {
+    VStack {
+        Image(id: "empty", source: "", width: 20, height: 10)
+        Card(id: "folder", type: .Folder, previewSource: "unused.svg", width: 100, height: 80)
+        ListItem(id: "hidden", type: .Media, previewSource: "unused.svg", showPreview: false, width: 300)
+    }
+}

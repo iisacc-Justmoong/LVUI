@@ -1,0 +1,11 @@
+import vm NativeOwnedListItemCustomPreviewModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: vm.kind, label: "Clip", previewSize: vm.size, showPreview: vm.shown,
+                 previewIconName: "missing-custom-preview-icon",
+                 previewComponent: PushButton(id: "preview", text: vm.label, onClick: vm.previewClicked),
+                 footerComponent: PushButton(id: "footer", text: "Extra", height: 30, onClick: vm.footerClicked))
+        ListItem(id: "natural", type: .Resource, label: "Natural",
+                 previewComponent: PushButton(id: "naturalPreview", text: "Preview", width: 75, height: 55))
+    }
+}

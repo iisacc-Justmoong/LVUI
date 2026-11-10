@@ -1,4 +1,5 @@
 #include <LVUI/NativeListItemComposite.h>
+#include "list_item_composite_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <functional>

@@ -7,6 +7,13 @@
 #include <stdexcept>
 #include <string_view>
 
+namespace lvui::native {
+using ButtonInput=ButtonInputValue<ii::gui::RasterImage>;
+using NativeButton=ButtonBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
+using DropdownInput=DropdownInputValue<ii::gui::RasterImage>;
+using NativeDropdownButton=DropdownBinding<ii::gui::BasicButton,ii::gui::BasicDropdownButton,
+    ii::gui::BasicNativeDropdownButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
+}
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
@@ -42,10 +49,10 @@ int main(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{300,200}));std::shared_ptr<View::Scope> scope;
     good(host.set_content([&](auto& builder){return View::build(builder,{},[](auto&){},&scope);}));
-    auto builtin=find(tree,"/builtin"),menu=find(tree,"/builtin_menu"),custom=find(tree,"/custom"),custom_menu=find(tree,"/custom_menu");
+    auto builtin=find(tree,"/builtin"),migrated=find(tree,"/migrated"),menu=find(tree,"/builtin_menu"),custom=find(tree,"/custom"),custom_menu=find(tree,"/custom_menu");
     auto frame=take(tree->drawing_snapshot({300,200}));
     auto original=image_in(frame,take(custom.snapshot()).bounds),original_menu=image_in(frame,take(custom_menu.snapshot()).bounds);
-    require(image_in(frame,take(builtin.snapshot()).bounds)&&image_in(frame,take(menu.snapshot()).bounds)&&original&&original_menu,
+    require(image_in(frame,take(builtin.snapshot()).bounds)&&image_in(frame,take(migrated.snapshot()).bounds)&&image_in(frame,take(menu.snapshot()).bounds)&&original&&original_menu,
             "Built-in or custom named icons did not draw");
     require(take(builtin.snapshot()).accessibility_name=="Add","Named icon accessibility was lost");
     auto graph=scope->native_lifetime.lock();require(bool(graph),"Named icon binding graph is unavailable");

@@ -1,0 +1,177 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:cf5002fc41502e36267d5314bb617a24886c9fc938d458adbd0dd02ae2e72109",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeTableCardComposition.md",
+    "sha256": "427d64b0768fa1d52d8c40c8a9b4f0bb18ae6a5ea17a52a611dc3e68cb48d044",
+    "bytes": 2067,
+    "line_count": 27,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "표 열·카드 콘텐츠 구성 명세",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 표 열·카드 콘텐츠 구성 명세\n",
+      "level": 1,
+      "title": "표 열·카드 콘텐츠 구성 명세"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "이 명세의 사용 사례는 Society 파일 목록의 열 머리글과 셀, Environment·Tools의\n카드 콘텐츠, 모델 목록의 카드 행이다. 앱의 텍스트나 스타일을 SDK에 고정하지 않고,\n앱 View와 ViewModel이 데이터를 제공하며 LVUI가 구성과 수명을 소유한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "## 카드\n",
+      "level": 2,
+      "title": "카드"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 15,
+      "raw": "`Card`는 전체 콘텐츠, 파일 미리보기 및 아이콘에 각각 단일 View를 받을 수 있다.\n전체 콘텐츠는 기존 `contentItem`과 같이 카드 내부를 채우며 기본 콘텐츠를 대체한다.\n미리보기와 아이콘은 카드 모델이 계산한 각 영역을 차지하고 해당 기본 이미지만\n대체한다. 전체 콘텐츠와 부분 콘텐츠는 중복 지정할 수 없다. 각 슬롯은 카드의\n크기·표시·활성 상태를 따르며 카드 삭제 시 함께 퇴역한다. 슬롯 안의 상호작용은\n카드 표면이나 메뉴·액션을 중복 실행하지 않는다. 입력 갱신은 기존 유효 상태와\n슬롯의 지역 상태를 유지하고, 실패한 최초 생성은 기존 부모 세대를 보존한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "## 표\n",
+      "level": 2,
+      "title": "표"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 19,
+      "end_line": 27,
+      "raw": "표와 독립 머리글은 모든 열의 대리자와 `columnViews`의 열 키별 View를 지원한다.\n키별 View는 공통 대리자보다 우선하며 둘 다 없는 위치는 기본 렌더링을 사용한다.\n문맥은 행·열 키와 인덱스, 문자열·유형, 선택·활성·정렬 상태, 셀 크기와 병합\n범위를 제공한다. 보이는 항목만 생성하고 같은 키가 보이는 동안 세션을 유지한다.\n실패한 스크롤 후보는 기존 표시 범위와 위치를 복원한다. 비상호작용 View는 표의\n기존 포인터 처리를 허용하며 사용자 버튼은 자기 이벤트를 소유한다. 앱은 이 버튼의\n선택·정렬 동작을 ViewModel에 연결한다. 기본 편집기와 가상 접근성 요소는 표가\n계속 소유한다. 구문과 제약은 [표 호스트](NativeOwnedTable.md),\n[독립 머리글](NativeOwnedTableHeader.md), [카드](NativeOwnedCard.md)를 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "표 열·카드 콘텐츠 구성 명세",
+      "anchor": "표-열카드-콘텐츠-구성-명세",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "카드",
+      "anchor": "카드",
+      "start_line": 7
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "표",
+      "anchor": "표",
+      "start_line": 17
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 14,
+        "text": "카드 표면이나 메뉴·액션을 중복 실행하지 않는다. 입력 갱신은 기존 유효 상태와",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "표 호스트",
+        "target": "NativeOwnedTable.md",
+        "kind": "relative",
+        "line": 26
+      },
+      {
+        "block_id": "b000011",
+        "label": "독립 머리글",
+        "target": "NativeOwnedTableHeader.md",
+        "kind": "relative",
+        "line": 27
+      },
+      {
+        "block_id": "b000011",
+        "label": "카드",
+        "target": "NativeOwnedCard.md",
+        "kind": "relative",
+        "line": 27
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,32 @@
+import class NativeMenuBundleEntry
+import vm NativeMenuBundlesModel
+let Bundle(data: NativeMenuBundleEntry): [View] = [
+    ContextMenuItem(id: "bundleFirst", label: data.label, visible: data.visible, itemHeight: data.height,
+                    hasChildItems: false, keepOpen: true, onClick: data.clicked),
+    ContextMenuDivider(id: "bundleDivider", visible: data.visible),
+    ContextMenuItem(id: "bundleSecond", label: data.label, visible: data.visible, itemHeight: data.height,
+                    hasChildItems: false, keepOpen: true, onClick: data.clicked)
+]
+let Empty(): [View] = []
+let More(data: NativeMenuBundleEntry): [View] = [
+    ContextMenuItem(id: "groupParent", label: "More") {
+        Menu(id: "groupSubmenu") { MenuItem(id: "groupLeaf", label: data.label, hasChildItems: false, onClick: data.clicked) }
+    },
+    ContextMenuDivider(id: "groupDivider"),
+    ContextMenuItem(id: "groupPeer", label: "Other", hasChildItems: false, keepOpen: true)
+]
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", itemSpacing: vm.spacing, onItemTriggered: vm.on_triggered) {
+            ContextMenuItem(id: "before", label: "Before", hasChildItems: false, keepOpen: true)
+            if (vm.show) { Bundle(data: vm.a) } else { Empty() }
+            for (entry in vm.rows, key: entry.id, id: "rows") { Bundle(data: entry) }
+            for (entry in vm.conditional_rows, key: entry.id, id: "conditionalRows") {
+                if (entry.show) { Bundle(data: entry) } else { Empty() }
+            }
+            if (vm.more) { More(data: vm.c) }
+            ContextMenuItem(id: "after", label: "After", hasChildItems: false, keepOpen: true)
+        }
+    }
+}

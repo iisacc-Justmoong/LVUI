@@ -1,0 +1,11 @@
+{
+  "locale": "en",
+  "strings": {
+    "window.title": "Localized counter",
+    "counter.heading": "Current count",
+    "counter.increment": "Add one",
+    "counter.replace": "Change heading",
+    "counter.replacement": "Updated heading",
+    "language.korean": "Korean"
+  }
+}

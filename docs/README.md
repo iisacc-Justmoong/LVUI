@@ -1,7 +1,26 @@
 # LVUI documentation
 
+- [Declarative language and graphics framework responsibility](GraphicsBoundary.md)
+- [GPU scene composition and platform boundaries](../../iiGUI/docs/GpuSceneComposition.md)
 - [Getting started: native applications, state, lists and tables](GettingStarted.md)
+- [뷰 세션의 값, 객체, 이벤트와 타입 지정 쿼리](ViewSessions.md)
+- [View declarations and imported C++ view models](ViewOnlyArchitecture.md)
+- [앱 문자열 저장소와 실행 중 현지화](Localization.md)
+- [앱 Scene, 창 수명과 렌더 트리](Scenes.md)
+- [독립 View의 네이티브 컴파일과 런타임 부착](NativeEmbeddedViews.md)
+- [Declarative application entry and single-window lifetime](NativeApplication.md)
 - [LVRS native implementation migration roadmap](NativeMigrationRoadmap.md)
+- [Society and Dreamscapes product migration plan](SocietyDreamscapesMigrationPlan.md)
+- [Native plain-text editor](NativeTextEditor.md)
+- [Native mobile navigation](NativeMobileNavigation.md)
+- [Mobile tab materials, badges and motion](MobileTabEffects.md)
+- [File card selection and opening](NativeCardOpen.md)
+- [Navigation list item values](ListItemValue.md)
+- [Detailed file list metadata](ListItemDetail.md)
+- [Editor canvas query and input](NativeEditorCanvas.md)
+- [Editor timeline query and input](NativeEditorTimeline.md)
+- [Native label presentation](NativeLabel.md)
+- [Society and Dreamscapes component coverage](ProductComponentCoverage.md)
 - [LVUI-owned components and LVRS independence status](LVUIIndependence.md)
 - [LVUI-owned native motion and frame injection](NativeMotion.md)
 - [LVUI-owned image layout and host adapter](NativeImage.md)
@@ -10,6 +29,7 @@
 - [LVUI-owned toggle state, gesture and motion](NativeToggleSwitch.md)
 - [LVUI-owned checkbox state and drawing](NativeCheckBox.md)
 - [LVUI-owned radio groups and motion](NativeRadioButton.md)
+- [Table merge data and revision-checked editing](TableMerge.md)
 - [LVUI-owned materials and custom outlines](NativeMaterials.md)
 - [LVUI-owned links and navigation interface](NativeLinks.md)
 - [LVUI-owned route matching and resolver](NativeRoutes.md)
@@ -49,7 +69,7 @@
 - [Complete Color and Metric member catalog](StyleTokenMembers.md)
 
 
-- [Current LVRS self-rendered native implementation](LVRSNative.md)
+- [Historical LVRS native code generation](LVRSNative.md)
 
 This directory separates the current implementation contract from the selected
 LVUI language and runtime design, including the native widget and acceleration
@@ -68,25 +88,27 @@ metadata-only import and per-click instance model is retired.
 
 | Document | Scope | Status |
 |---|---|---|
+| [NativeApplication.md](NativeApplication.md) | `Application` root, Scene and window scopes, generated entry and failure contract | AOT and headless multi-window coverage; target-platform execution is separate |
 | [NativeWidgetRuntime.md](NativeWidgetRuntime.md) | Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment | Implemented macOS path; Core remains independent of GUI/DSL |
 | [CoreWidgetVerification.md](CoreWidgetVerification.md) | Core entrypoint, C++ widget lifetime, native LVRS appearance and installed consumer | Verification of the Core-owned application path |
 | [CompilationModel.md](CompilationModel.md) | AOT native widget compilation, Metal/DirectX/Vulkan acceleration and delivery to iiGUI | Self-rendered iiGUI C++ widgets; platform execution coverage audited separately |
 | [NativeAOT.md](NativeAOT.md) | Initial C++ generation, supported inputs, scoped callbacks and CMake | Initial AOT subset; later bindings, components, functions and ownership are linked above |
 | [EmbeddedPages.md](EmbeddedPages.md) | Independent view-body scopes in an existing builder and LVRS PageRouter AOT | Code generation and compilation verified; actual execution deferred |
 | [NativeAOTVerification.md](NativeAOTVerification.md) | Earlier Hello World, AppKit tests, binary and relocated installed-consumer checks | Historical macOS arm64 evidence; not full current-widget execution proof |
-| [Language.md](Language.md) | HTML-shaped LVUI 0.1 syntax, styles, layout and diagnostics | Current implementation contract |
+| [Language.md](Language.md) | Earlier HTML-shaped `parse`/`Document` API | Legacy C++ API; not current `.lvui` syntax |
 | [ComponentLanguage.md](ComponentLanguage.md) | Native C++23 tokenizer, reserved identifiers, typed child View AST and lvui-check | Implemented front end; feeds the separate native AOT generator |
 | [ReservedWords.md](ReservedWords.md) | All 107 visual LVRS component keywords, three modifiers and six core words with source evidence | Generated from the audited source snapshot; verified against the actual parser |
 | [Verification.md](Verification.md) | Earlier source inventory, front-end tests, CLI diagnostics and staged installed consumer | Historical front-end evidence; see NativeAOTVerification for native execution |
 | [DeclarativeSyntax.md](DeclarativeSyntax.md) | Common `View` type, `{}` child-view arguments, component declarations, imported instance names, bound actions and properties | Selected design; draft grammar |
 | [MethodReferences.md](MethodReferences.md) | Method references versus immediate calls, typed callback inputs and component-owned event semantics | Typed event and result-valued inputs implemented; remaining general protocols are audited separately |
 | [ReactiveState.md](ReactiveState.md) | Reactive values by default, the static exception and the supplied [increment/reset counter](examples/ReactiveCounter.lvui) | Scalar native tracking and static snapshots implemented; complete input/lifecycle coverage remains pending |
-| [VariableDeclarations.md](VariableDeclarations.md) | `let` constants, `var` variables, typed initializers and no-semicolon syntax | Selected declaration rules; full type system remains open |
+| [VariableDeclarations.md](VariableDeclarations.md) | `const` constants, `var` variables, typed initializers and no-semicolon syntax | Selected declaration rules; full type system remains open |
 | [DeclarationAnnotations.md](DeclarationAnnotations.md) | `@Observable` and `@Static` prefix annotations; default VM binding | Selected meanings; targets, combinations and static lifetime ownership remain open |
 | [TypeImports.md](TypeImports.md) | Scoped imports that create and own C++ backend instances with public-member access | Selected ownership and access semantics |
 | [InvocationLifecycle.md](InvocationLifecycle.md) | Use tracking, scope teardown, asynchronous work and deterministic destruction | Selected lifecycle semantics |
 | [RuntimeContracts.md](RuntimeContracts.md) | C++ access, bridge information, property observation, Core integration and resource ownership | Required design capabilities; concrete APIs remain open |
-| [ViewModelQueries.md](ViewModelQueries.md) | Default VM binding, Core query value exchange, notifications, execution domains and teardown | Selected binding/communication design; LVUI adapters remain unimplemented |
+| [ViewModelQueries.md](ViewModelQueries.md) | Default VM binding, Core query value exchange, notifications, execution domains and teardown | Typed request and stream connections implemented; automatic ordinary-field observation remains open |
+| [QueryConnections.md](QueryConnections.md) | Typed QueryStream-to-View connections, UI delivery, bounds and lifecycle | Native AOT and host-owned query registry |
 | [CounterExample.md](CounterExample.md) | An application window with an observable counter and increment/decrement buttons; [source](examples/Counter.lvui) | Hypothetical scoped-backend example |
 
 The existing filenames `TypeImports.md` and `InvocationLifecycle.md` are retained
@@ -95,10 +117,11 @@ instance ownership.
 
 ## Selected rules
 
-1. LVUI describes views through declarative component-shaped syntax. MVVM is
-   the recommended application pattern, with ViewModel state rules inspired
-   by SwiftUI. ViewModels are bindable by default; views use their public state
-   directly without a binding annotation or wrapper declaration.
+1. LVUI declares views, layout, styles, and bindings. Application objects,
+   methods, and domain rules belong to imported C++ view models, with
+   SwiftUI-inspired ownership and state observation. Existing local objects and
+   executable event blocks still compile and need migration; compiler enforcement
+   is not implemented. See [view-only architecture](ViewOnlyArchitecture.md).
 2. An imported C++ object's public members are accessible without `@export`.
    C++ accessibility and constness apply; private and protected members are
    not exposed by import. Native observation support implements the default
@@ -124,8 +147,8 @@ instance ownership.
    the view requires an explicit transfer to a longer-lived owner.
 10. ViewModels send and receive values through iiSDKCore object-query contracts.
     Queries support reads, writes, commands, responses and change notifications.
-11. `let` declares a constant, and `var` declares a mutable variable. Typed,
-    initialized declarations use `let name: Type = initializer` or
+11. `const` declares a constant, and `var` declares a mutable variable. Typed,
+    initialized declarations use `const name: Type = initializer` or
     `var name: Type = initializer`, such as `var variable: Int = 6`.
     LVUI does not use semicolon terminators.
 12. Declarations can be prefixed by `@Observable` or `@Static`.
@@ -147,7 +170,7 @@ instance ownership.
 15. Values use state-change tracking and binding by default, including ordinary
     LVUI variables. `Label(text: vm.value)` follows source changes without an
     observation annotation. `@Static` explicitly fixes a value for its lifetime.
-    This does not relax `let`, read-only or C++ constness restrictions.
+    This does not relax `const`, read-only or C++ constness restrictions.
 16. `View` is the common type for everything displayed visually in LVUI,
     including visual controls, layout containers and composed views. A view can
     take other views as child arguments through `{}`; those children can in turn
@@ -156,9 +179,10 @@ instance ownership.
 
 ## Implementation boundary
 
-The package implements two C++23 front ends: `parse`/`Document` for the existing
-[HTML-shaped grammar](Language.md), and `tokenize`/`parse_view`/`ViewDocument` for
-the [component grammar](ComponentLanguage.md). The latter uses the LVUI-owned
+The package retains the `parse`/`Document` C++ API for its separate
+[legacy grammar](Language.md). Current `.lvui` source uses
+`tokenize`/`parse_view`/`ViewDocument` and the [component grammar](ComponentLanguage.md).
+The current front end uses the LVUI-owned
 reserved-word catalog and owns typed child Views, inputs, scalar declarations and
 import syntax. The native `lvui-check` tool validates component source files.
 The language and native-binding targets depend on iiSDKCore Contracts; the
@@ -225,12 +249,14 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/ActivationWork.md`](ActivationWork.md) | [JSON](ActivationWork.agent.json) |
 | [`docs/AppSurfaces.md`](AppSurfaces.md) | [JSON](AppSurfaces.agent.json) |
 | [`docs/BackendConstruction.md`](BackendConstruction.md) | [JSON](BackendConstruction.agent.json) |
+| [`docs/BuildLayout.md`](BuildLayout.md) | [JSON](BuildLayout.agent.json) |
 | [`docs/CallableFields.md`](CallableFields.md) | [JSON](CallableFields.agent.json) |
 | [`docs/CallableInputs.md`](CallableInputs.md) | [JSON](CallableInputs.agent.json) |
 | [`docs/CallbackValues.md`](CallbackValues.md) | [JSON](CallbackValues.agent.json) |
 | [`docs/CodeDocument.md`](CodeDocument.md) | [JSON](CodeDocument.agent.json) |
 | [`docs/CollectionNavigation.md`](CollectionNavigation.md) | [JSON](CollectionNavigation.agent.json) |
 | [`docs/ColorSelection.md`](ColorSelection.md) | [JSON](ColorSelection.agent.json) |
+| [`docs/ColorSurfaceRasterReuse.md`](ColorSurfaceRasterReuse.md) | [JSON](ColorSurfaceRasterReuse.agent.json) |
 | [`docs/CompilationModel.md`](CompilationModel.md) | [JSON](CompilationModel.agent.json) |
 | [`docs/Completion.md`](Completion.md) | [JSON](Completion.agent.json) |
 | [`docs/ComponentLanguage.md`](ComponentLanguage.md) | [JSON](ComponentLanguage.agent.json) |
@@ -240,35 +266,47 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/CounterExample.md`](CounterExample.md) | [JSON](CounterExample.agent.json) |
 | [`docs/DeclarationAnnotations.md`](DeclarationAnnotations.md) | [JSON](DeclarationAnnotations.agent.json) |
 | [`docs/DeclarativeSyntax.md`](DeclarativeSyntax.md) | [JSON](DeclarativeSyntax.agent.json) |
+| [`docs/DesignIconCatalog.md`](DesignIconCatalog.md) | [JSON](DesignIconCatalog.agent.json) |
+| [`docs/DynamicLinking.md`](DynamicLinking.md) | [JSON](DynamicLinking.agent.json) |
 | [`docs/EditorAppearance.md`](EditorAppearance.md) | [JSON](EditorAppearance.agent.json) |
 | [`docs/EmbeddedPages.md`](EmbeddedPages.md) | [JSON](EmbeddedPages.agent.json) |
 | [`docs/Expressions.md`](Expressions.md) | [JSON](Expressions.agent.json) |
 | [`docs/FactoryCaptures.md`](FactoryCaptures.md) | [JSON](FactoryCaptures.agent.json) |
+| [`docs/FigmaComponentContracts.md`](FigmaComponentContracts.md) | [JSON](FigmaComponentContracts.agent.json) |
 | [`docs/FunctionValues.md`](FunctionValues.md) | [JSON](FunctionValues.agent.json) |
 | [`docs/FunctionVariables.md`](FunctionVariables.md) | [JSON](FunctionVariables.agent.json) |
 | [`docs/GettingStarted.md`](GettingStarted.md) | [JSON](GettingStarted.agent.json) |
+| [`docs/GraphicsBoundary.md`](GraphicsBoundary.md) | [JSON](GraphicsBoundary.agent.json) |
 | [`docs/HierarchyDrag.md`](HierarchyDrag.md) | [JSON](HierarchyDrag.agent.json) |
+| [`docs/ImmediateDeclaration.md`](ImmediateDeclaration.md) | [JSON](ImmediateDeclaration.agent.json) |
 | [`docs/IndependenceWorkSnapshot-2026-10-29.md`](IndependenceWorkSnapshot-2026-10-29.md) | [JSON](IndependenceWorkSnapshot-2026-10-29.agent.json) |
 | [`docs/InferredValues.md`](InferredValues.md) | [JSON](InferredValues.agent.json) |
 | [`docs/InvocationLifecycle.md`](InvocationLifecycle.md) | [JSON](InvocationLifecycle.agent.json) |
 | [`docs/KeywordRegistry.md`](KeywordRegistry.md) | [JSON](KeywordRegistry.agent.json) |
 | [`docs/LVRSNative.md`](LVRSNative.md) | [JSON](LVRSNative.agent.json) |
 | [`docs/LVUIIndependence.md`](LVUIIndependence.md) | [JSON](LVUIIndependence.agent.json) |
+| [`docs/LVUI_LVRS_Replacement_Audit_2026-11-01.md`](LVUI_LVRS_Replacement_Audit_2026-11-01.md) | [JSON](LVUI_LVRS_Replacement_Audit_2026-11-01.agent.json) |
 | [`docs/Language.md`](Language.md) | [JSON](Language.agent.json) |
+| [`docs/ListItemDetail.md`](ListItemDetail.md) | [JSON](ListItemDetail.agent.json) |
 | [`docs/ListItemQuantity.md`](ListItemQuantity.md) | [JSON](ListItemQuantity.agent.json) |
 | [`docs/ListItemSelector.md`](ListItemSelector.md) | [JSON](ListItemSelector.agent.json) |
+| [`docs/ListItemValue.md`](ListItemValue.md) | [JSON](ListItemValue.agent.json) |
 | [`docs/LocalScopes.md`](LocalScopes.md) | [JSON](LocalScopes.agent.json) |
+| [`docs/Localization.md`](Localization.md) | [JSON](Localization.agent.json) |
 | [`docs/MeasuredCollections.md`](MeasuredCollections.md) | [JSON](MeasuredCollections.agent.json) |
 | [`docs/MethodQueries.md`](MethodQueries.md) | [JSON](MethodQueries.agent.json) |
 | [`docs/MethodReferences.md`](MethodReferences.md) | [JSON](MethodReferences.agent.json) |
+| [`docs/MobileTabEffects.md`](MobileTabEffects.md) | [JSON](MobileTabEffects.agent.json) |
 | [`docs/NativeAOT.md`](NativeAOT.md) | [JSON](NativeAOT.agent.json) |
 | [`docs/NativeAOTVerification.md`](NativeAOTVerification.md) | [JSON](NativeAOTVerification.agent.json) |
 | [`docs/NativeAlert.md`](NativeAlert.md) | [JSON](NativeAlert.agent.json) |
 | [`docs/NativeAlertButton.md`](NativeAlertButton.md) | [JSON](NativeAlertButton.agent.json) |
 | [`docs/NativeAppCard.md`](NativeAppCard.md) | [JSON](NativeAppCard.agent.json) |
 | [`docs/NativeAppHeader.md`](NativeAppHeader.md) | [JSON](NativeAppHeader.agent.json) |
+| [`docs/NativeApplication.md`](NativeApplication.md) | [JSON](NativeApplication.agent.json) |
 | [`docs/NativeBindings.md`](NativeBindings.md) | [JSON](NativeBindings.agent.json) |
 | [`docs/NativeButton.md`](NativeButton.md) | [JSON](NativeButton.agent.json) |
+| [`docs/NativeCardOpen.md`](NativeCardOpen.md) | [JSON](NativeCardOpen.agent.json) |
 | [`docs/NativeCheckBox.md`](NativeCheckBox.md) | [JSON](NativeCheckBox.agent.json) |
 | [`docs/NativeCodeEditor.md`](NativeCodeEditor.md) | [JSON](NativeCodeEditor.agent.json) |
 | [`docs/NativeColorChannel.md`](NativeColorChannel.md) | [JSON](NativeColorChannel.agent.json) |
@@ -277,10 +315,14 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativeColorSurface.md`](NativeColorSurface.md) | [JSON](NativeColorSurface.agent.json) |
 | [`docs/NativeColors.md`](NativeColors.md) | [JSON](NativeColors.agent.json) |
 | [`docs/NativeComboBox.md`](NativeComboBox.md) | [JSON](NativeComboBox.agent.json) |
+| [`docs/NativeCompilerCoverage.md`](NativeCompilerCoverage.md) | [JSON](NativeCompilerCoverage.agent.json) |
 | [`docs/NativeCoreValues.md`](NativeCoreValues.md) | [JSON](NativeCoreValues.agent.json) |
 | [`docs/NativeDivider.md`](NativeDivider.md) | [JSON](NativeDivider.agent.json) |
 | [`docs/NativeDocument.md`](NativeDocument.md) | [JSON](NativeDocument.agent.json) |
 | [`docs/NativeDropdownButton.md`](NativeDropdownButton.md) | [JSON](NativeDropdownButton.agent.json) |
+| [`docs/NativeEditorCanvas.md`](NativeEditorCanvas.md) | [JSON](NativeEditorCanvas.agent.json) |
+| [`docs/NativeEditorTimeline.md`](NativeEditorTimeline.md) | [JSON](NativeEditorTimeline.agent.json) |
+| [`docs/NativeEmbeddedViews.md`](NativeEmbeddedViews.md) | [JSON](NativeEmbeddedViews.agent.json) |
 | [`docs/NativeEventListener.md`](NativeEventListener.md) | [JSON](NativeEventListener.agent.json) |
 | [`docs/NativeFonts.md`](NativeFonts.md) | [JSON](NativeFonts.agent.json) |
 | [`docs/NativeHelpButton.md`](NativeHelpButton.md) | [JSON](NativeHelpButton.agent.json) |
@@ -289,8 +331,10 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativeHistory.md`](NativeHistory.md) | [JSON](NativeHistory.agent.json) |
 | [`docs/NativeIcons.md`](NativeIcons.md) | [JSON](NativeIcons.agent.json) |
 | [`docs/NativeImage.md`](NativeImage.md) | [JSON](NativeImage.agent.json) |
+| [`docs/NativeImageLoading.md`](NativeImageLoading.md) | [JSON](NativeImageLoading.agent.json) |
 | [`docs/NativeImages.md`](NativeImages.md) | [JSON](NativeImages.agent.json) |
 | [`docs/NativeInputField.md`](NativeInputField.md) | [JSON](NativeInputField.agent.json) |
+| [`docs/NativeLabel.md`](NativeLabel.md) | [JSON](NativeLabel.agent.json) |
 | [`docs/NativeLayout.md`](NativeLayout.md) | [JSON](NativeLayout.agent.json) |
 | [`docs/NativeLinks.md`](NativeLinks.md) | [JSON](NativeLinks.agent.json) |
 | [`docs/NativeMarkup.md`](NativeMarkup.md) | [JSON](NativeMarkup.agent.json) |
@@ -298,6 +342,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativeMedia.md`](NativeMedia.md) | [JSON](NativeMedia.agent.json) |
 | [`docs/NativeMenu.md`](NativeMenu.md) | [JSON](NativeMenu.agent.json) |
 | [`docs/NativeMigrationRoadmap.md`](NativeMigrationRoadmap.md) | [JSON](NativeMigrationRoadmap.agent.json) |
+| [`docs/NativeMobileNavigation.md`](NativeMobileNavigation.md) | [JSON](NativeMobileNavigation.agent.json) |
 | [`docs/NativeModal.md`](NativeModal.md) | [JSON](NativeModal.agent.json) |
 | [`docs/NativeModelSources.md`](NativeModelSources.md) | [JSON](NativeModelSources.agent.json) |
 | [`docs/NativeMotion.md`](NativeMotion.md) | [JSON](NativeMotion.agent.json) |
@@ -321,6 +366,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativePageRouter.md`](NativePageRouter.md) | [JSON](NativePageRouter.agent.json) |
 | [`docs/NativePlatform.md`](NativePlatform.md) | [JSON](NativePlatform.agent.json) |
 | [`docs/NativePopover.md`](NativePopover.md) | [JSON](NativePopover.agent.json) |
+| [`docs/NativePopupOpen.md`](NativePopupOpen.md) | [JSON](NativePopupOpen.agent.json) |
 | [`docs/NativeProgress.md`](NativeProgress.md) | [JSON](NativeProgress.agent.json) |
 | [`docs/NativeRadioButton.md`](NativeRadioButton.md) | [JSON](NativeRadioButton.agent.json) |
 | [`docs/NativeReadiness.md`](NativeReadiness.md) | [JSON](NativeReadiness.agent.json) |
@@ -328,11 +374,15 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/NativeRendering.md`](NativeRendering.md) | [JSON](NativeRendering.agent.json) |
 | [`docs/NativeRouteModels.md`](NativeRouteModels.md) | [JSON](NativeRouteModels.agent.json) |
 | [`docs/NativeRoutes.md`](NativeRoutes.md) | [JSON](NativeRoutes.agent.json) |
+| [`docs/NativeScrollView.md`](NativeScrollView.md) | [JSON](NativeScrollView.agent.json) |
+| [`docs/NativeSearchField.md`](NativeSearchField.md) | [JSON](NativeSearchField.agent.json) |
 | [`docs/NativeSegmentedControl.md`](NativeSegmentedControl.md) | [JSON](NativeSegmentedControl.agent.json) |
 | [`docs/NativeSheet.md`](NativeSheet.md) | [JSON](NativeSheet.agent.json) |
 | [`docs/NativeSlider.md`](NativeSlider.md) | [JSON](NativeSlider.agent.json) |
 | [`docs/NativeStepper.md`](NativeStepper.md) | [JSON](NativeStepper.agent.json) |
+| [`docs/NativeTableCardComposition.md`](NativeTableCardComposition.md) | [JSON](NativeTableCardComposition.agent.json) |
 | [`docs/NativeTabs.md`](NativeTabs.md) | [JSON](NativeTabs.agent.json) |
+| [`docs/NativeTextEditor.md`](NativeTextEditor.md) | [JSON](NativeTextEditor.agent.json) |
 | [`docs/NativeToggleSwitch.md`](NativeToggleSwitch.md) | [JSON](NativeToggleSwitch.agent.json) |
 | [`docs/NativeTooltip.md`](NativeTooltip.md) | [JSON](NativeTooltip.agent.json) |
 | [`docs/NativeTooltipModel.md`](NativeTooltipModel.md) | [JSON](NativeTooltipModel.agent.json) |
@@ -344,6 +394,9 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/OwnedHierarchyModel.md`](OwnedHierarchyModel.md) | [JSON](OwnedHierarchyModel.agent.json) |
 | [`docs/OwnedListModel.md`](OwnedListModel.md) | [JSON](OwnedListModel.agent.json) |
 | [`docs/OwnedTableModel.md`](OwnedTableModel.md) | [JSON](OwnedTableModel.agent.json) |
+| [`docs/ProductComponentCoverage.md`](ProductComponentCoverage.md) | [JSON](ProductComponentCoverage.agent.json) |
+| [`docs/PythonAPI.md`](PythonAPI.md) | [JSON](PythonAPI.agent.json) |
+| [`docs/QueryConnections.md`](QueryConnections.md) | [JSON](QueryConnections.agent.json) |
 | [`docs/ReactiveState.md`](ReactiveState.md) | [JSON](ReactiveState.agent.json) |
 | [`docs/ReadonlyMembers.md`](ReadonlyMembers.md) | [JSON](ReadonlyMembers.agent.json) |
 | [`docs/Repetition.md`](Repetition.md) | [JSON](Repetition.agent.json) |
@@ -351,6 +404,8 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/ReturnedCallbacks.md`](ReturnedCallbacks.md) | [JSON](ReturnedCallbacks.agent.json) |
 | [`docs/RuntimeContracts.md`](RuntimeContracts.md) | [JSON](RuntimeContracts.agent.json) |
 | [`docs/ScalarInputs.md`](ScalarInputs.md) | [JSON](ScalarInputs.agent.json) |
+| [`docs/Scenes.md`](Scenes.md) | [JSON](Scenes.agent.json) |
+| [`docs/SocietyDreamscapesMigrationPlan.md`](SocietyDreamscapesMigrationPlan.md) | [JSON](SocietyDreamscapesMigrationPlan.agent.json) |
 | [`docs/SourceLayout.md`](SourceLayout.md) | [JSON](SourceLayout.agent.json) |
 | [`docs/StyleProfiles.md`](StyleProfiles.md) | [JSON](StyleProfiles.agent.json) |
 | [`docs/StyleTokenMembers.md`](StyleTokenMembers.md) | [JSON](StyleTokenMembers.agent.json) |
@@ -358,6 +413,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/StyleTypes.md`](StyleTypes.md) | [JSON](StyleTypes.agent.json) |
 | [`docs/TableClipboard.md`](TableClipboard.md) | [JSON](TableClipboard.agent.json) |
 | [`docs/TableEditing.md`](TableEditing.md) | [JSON](TableEditing.agent.json) |
+| [`docs/TableMerge.md`](TableMerge.md) | [JSON](TableMerge.agent.json) |
 | [`docs/TableSorting.md`](TableSorting.md) | [JSON](TableSorting.agent.json) |
 | [`docs/TableStructure.md`](TableStructure.md) | [JSON](TableStructure.agent.json) |
 | [`docs/TextInput.md`](TextInput.md) | [JSON](TextInput.agent.json) |
@@ -366,7 +422,9 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/VariableDeclarations.md`](VariableDeclarations.md) | [JSON](VariableDeclarations.agent.json) |
 | [`docs/Verification.md`](Verification.md) | [JSON](Verification.agent.json) |
 | [`docs/ViewModelQueries.md`](ViewModelQueries.md) | [JSON](ViewModelQueries.agent.json) |
+| [`docs/ViewOnlyArchitecture.md`](ViewOnlyArchitecture.md) | [JSON](ViewOnlyArchitecture.agent.json) |
 | [`docs/ViewSequences.md`](ViewSequences.md) | [JSON](ViewSequences.agent.json) |
+| [`docs/ViewSessions.md`](ViewSessions.md) | [JSON](ViewSessions.agent.json) |
 | [`docs/ViewValues.md`](ViewValues.md) | [JSON](ViewValues.agent.json) |
 | [`docs/WindowsValidation.md`](WindowsValidation.md) | [JSON](WindowsValidation.agent.json) |
 | [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |

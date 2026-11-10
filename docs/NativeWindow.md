@@ -24,6 +24,22 @@ Window(title: state.title, width: state.width, minimumWidth: state.minimumWidth,
 | backgroundColor | 기존 Color 값·iiColorManager 공유 값과 동일한 색상 계약 |
 | fontFamily | 비어 있지 않은 UTF-8 String, NUL 없음, 최대 4096바이트 |
 | accent | `blue`, `purple`, `rose`, `red`, `orange`, `yellow`, `green`, `gray`, `brown`, `cyan`, `teal`, `white` |
+| onOpened, onClosed | `Application` 직계 창의 게시·해제 콜백. 창 지역 및 앱 스코프 참조 가능 |
+| id, initiallyOpen | `Application` 직계 창의 정적 식별자와 초기 열림 여부. 닫힌 상태로 시작하려면 이름 있는 보조 창이어야 함 |
+
+창별 콜백의 실행 순서, 실패 처리와 지원 범위는
+[애플리케이션 창 수명 이벤트](NativeApplication.md#창별-수명-이벤트-명세)를 따른다.
+독립 `Window` 루트는 이 두 입력을 받지 않는다.
+이름 있는 창의 열기·닫기와 재열기 동작은
+[보조 창 명세](NativeApplication.md#이름이-있는-보조-창-명세)를 따른다.
+
+`AppBootstrapWindow`와 `AppShell`은 지원되는 창 입력과 콘텐츠를 기존
+`ApplicationWindow` 경로로 생성한다. `AppBootstrapWindow`는 기본적으로 열리고,
+`AppShell`은 기본적으로 닫힌다. `visible`은 정적 Bool이며 `Application`의 창에서는
+`initiallyOpen`으로 변환한다. 닫힌 초기 상태는 이름 있는 보조 창에만 사용할 수 있다.
+독립 `AppShell` 루트는 `visible: true`가 필요하다. `visible`과 `initiallyOpen`의
+동시 지정과 반응형 `visible`은 진단한다. 이는 창 입력의 지원 범위를 넓히지 않으며
+레거시 창의 내장 탐색이나 플랫폼별 속성까지 제공한다는 의미는 아니다.
 
 네이티브 C++ 속성의 최종 타입도 생성 팩터리를 컴파일할 때 검사한다. title·fontFamily에
 숫자를 문자열로 바꾸어 넣지 않는다. `accent`는 정적 선언에서 `.purple` 또는
@@ -42,7 +58,43 @@ Window(accent: vm.accent) {
 `PushButton`, `LabelButton`, `IconButton` 기본 팔레트에 반영된다. 재사용 View 안의
 버튼도 같은 값을 사용한다. 버튼에서 명시한 `primaryColor`, `hoverColor`,
 `pressedColor` 또는 `normalPressedColor`는 창 기본값보다 우선한다.
-나머지 독립 위젯에 강조색을 일괄 상속하는 기능은 아직 지원하지 않는다.
+`MaterialSurface`, `PanelMaterial`, `WindowMaterial`도 창의 정적·반응형 강조색을
+따르며, 재질의 명시적인 `primaryColor`가 우선한다. 재사용 View 안에서도 같다.
+`InputField`의 포커스·선택, `RadioButton`·`CheckBox`·`ToggleSwitch`의 선택,
+`Slider`의 채움·포커스, `Stepper`와 `Tab`의 강조 표현에도 적용한다. `DropdownButton`과
+메뉴 버튼의 기본·호버·누름, `MenuItem`과 `ContextMenuItem`의 선택·누름·포커스,
+`ComboBox`의 포커스, `Link`의 텍스트·포커스에도 적용한다. 직접 선언한 항목뿐 아니라
+메뉴의 정적 `items` 문자열 목록에서 생성한 항목에도 같은 색상을 사용한다. 각 컨트롤에서 직접 지정한
+색상은 창의 기본색보다 우선하며, 선택과 포커스의 재정의는 각각 독립적이다.
+`ProgressBar`의 채움, `AlertButton`과 복합 `Alert`의 primary 톤,
+`ColorPickerButton`의 포커스도 창 색상을 따른다. 독립 `ToolbarButton`에는 primary,
+누름과 포커스 기본색을 적용한다. 이들의 `fillColor`, `primaryColor`, `pressedColor`,
+`focusColor`를 직접 지정하면 해당 값이 우선한다. 색상 버튼의 현재 견본과
+destructive 색은 별도의 의미를 가지므로 창 강조색으로 바꾸지 않는다. 강조색 갱신은
+진행 목표·진행 중인 보간, 선택한 색과 버튼 이벤트를 유지한다. 열린 `Alert`는
+닫지 않으며 기존 액션 위젯과 포커스도 유지한다. 열린 경고창의 창 없는 검사는
+내장 콘텐츠 호스트에서 승인된 강조색 Observable을 직접 바꾸어 수행한다.
+`ToggleSwitch`는 색상을 지정하지 않은 활성·호버·누름 상태에 창 팔레트의 각 상태를
+사용한다.
+
+`HierarchyItem`, `HierarchyList`, `Hierarchy`의 활성·드래그 행과 포커스,
+`ListItem`과 `List`의 선택·누름·포커스, `Table`, `TableRow`, `TableCellItem`의
+선택 영역과 현재 셀 테두리, `TableHeader` 포커스도 창 강조색을 따른다. 계층의
+활성·드래그, 목록 선택, 표 선택은 각각 기본 강조색 알파의 0.24, 0.16, 0.30,
+31/255를 사용한다. `HierarchyToolbar`와 `ListFooter`의 primary·누름·포커스,
+`ListToolbar`의 포커스에도 적용하며 패널 안의 기본 도구 모음과 푸터도 같다.
+각 입력의 `rowBackgroundColorActive`, `rowBackgroundColorDrag`, `selectedColor`,
+`selectedRowColor`, `selectionColor`, `currentCellBorderColor`, `currentBorderColor`,
+`primaryColor`, `pressedColor`, `focusColor` 등 명시적인 값이 해당 기본값보다 우선한다.
+선택·스크롤·포커스, 편집 초안과 조합, 열린 표 구조 메뉴와 진행 중인 크기 조절은
+색상만 바뀌면 유지한다. 복합 `ListItem`의 토글·체크·스테퍼, 선택기와 선택 메뉴,
+세그먼트, 입력 필드, 액션과 더보기 메뉴도 창 강조색을 따른다. 선택된 세그먼트는
+선택 토큰을, 메뉴 항목은 기본 강조색을 사용한다. 색상 갱신은 열린 선택기·중첩
+더보기 메뉴와 입력 조합, 선택 및 포커스를 유지한다. 사용자가 제공한 별도의 View는
+해당 View의 스타일 계약을 따르며 다른 독립 위젯 전체로의 상속은 별도다.
+이 계층·목록 색상은 기존 LVUI의 투명도 계약을 유지한다. LVRS QML의
+`Theme.accentMuted` 또는 `Theme.primary`와 픽셀이 동일하다는 뜻은 아니며,
+원본과의 시각적 일치는 별도로 대조해야 한다.
 `backgroundColor`는 별도 입력이며 강조색 변경으로 덮지 않는다. 카탈로그가 보유한
 색상과 스타일 프로필 재정의를 사용하고, gray·white는 LVUI에 보관한 기본값을 사용한다.
 
@@ -50,6 +102,10 @@ Window(accent: vm.accent) {
 활성화하지 않은 백엔드를 이 메서드에서 생성하거나 호출하지 않는다. 반응형 입력은
 스코프의 생성 정책·초기 설정과 값 초기화가 끝난 뒤 평가한다. 정적 초기 크기와 최소 크기는
 항상 유효한 관계를 유지하며, 동적 실제 크기·최소 크기는 활성화 시 다시 검증한다.
+`appearance()`에는 LVUI 스타일 토큰에서 계산한 크기별 글꼴 굵기 규칙이 포함된다.
+명시적인 위젯 글꼴 굵기가 우선하며, 창 appearance를 교체하면 iiGUI가 하위 콘텐츠와
+팝업의 텍스트 측정 캐시를 갱신한다. 이 규칙은 컴파일 시 정해진다.
+생성된 창에는 iiGUI 0.5.0 이상의 헤더와 같은 ABI로 빌드된 라이브러리가 필요하다.
 입력이 전부 상수이면 기존 리터럴 생성과 LVUI 런타임 헤더 없는 출력을 유지한다.
 
 ## 유지된 창에 적용
@@ -58,7 +114,7 @@ Window(accent: vm.accent) {
 계산하는 백엔드 메서드를 다시 실행하지 않는다. 동적 Window는 이 값들을 한 효과로
 `ii::gui::WindowProperties`로 계산한다.
 기존 `WidgetAppearance`를 복제한 뒤 명시한 동적 색상·폰트·강조색을 적용한다.
-창 적용이 성공한 후에만 버튼의 강조색을 발행하므로 거절된 창 설정이 버튼 팔레트만
+창 적용이 성공한 후에만 버튼·재질과 위에서 열거한 컨트롤의 강조색을 발행하므로 거절된 창 설정이 팔레트만
 앞서 바꾸지 않는다. 이 값은 소스·AST·호스트 포인터를 보유하지 않는다.
 
 iiGUI의 `WindowPropertiesTarget`은 루트 위젯 상태를 가리키는 약한 실행 영역 전용
@@ -107,8 +163,17 @@ ConfigureNotify가 소유한다. iPadOS의 기본 scene 크기는 OS가 소유�
 검사 항목은 다음과 같다. 실행 통과 여부는 현재 빌드 로그와 검증 기록을 기준으로 한다.
 
 - `LVUI.Window.*`: 동적 입력·강조색·상수 출력·소스 진단이다.
-- `LVUI.Window.AccentGenerated`: 생성 C++의 창·버튼 색상, 중첩 View, 명시 스타일 우선,
+- `LVUI.Window.AccentGenerated`: 생성 C++의 창·버튼·재질 색상, 중첩 View, 명시 스타일 우선,
   잘못된 입력과 창 적용 거부 후 복구를 창 없는 위젯 트리에서 검사한다.
+- `LVUI.Window.AccentControls`: 입력·선택·메뉴·링크 컨트롤의 정적·반응형 색상,
+  중첩 View와 명시 색상, 호버·누름, 한글 조합·선택·실행 취소, 사용자 선택값
+  보존과 창 적용 거부 후 복구를 창 없는 위젯 트리에서 검사한다. 열린 메뉴 검사는
+  별도 헤드리스 콘텐츠에 창이 승인한 강조색 Observable을 직접 전달하며, 메뉴의
+  키보드 포커스와 활성화 영역의 종료도 검사한다.
+- `LVUI.Window.AccentCollections`: 독립 행과 가상 목록·계층·표의 정적·반응형
+  선택색, 명시 색상, 도구 모음·표 머리글 포커스, 문서 리비전과 창 설정 거부 후
+  복구를 검사한다. 가상 행 검사는 게시된 헤드리스 콘텐츠에서 승인된 강조색을 직접
+  갱신하며 실제 운영체제 창을 열지 않는다.
 - `LVUI.NativeWindowValidation`: 실제 생성 C++에서 유효 타입과 부적합 타입을 검사한다.
 - `iiGUI.native_window.*`: 창 없는 실제 위젯 상태와 동일한 루트 구성 경로로 준비·승인,
   변경 필드, 편집 보존, 잘못된 값·네이티브 거부 후 복구, 실행 영역, 종료, 내부 뷰 차단,

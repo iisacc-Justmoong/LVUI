@@ -1,4 +1,4 @@
-#include <LVUI/NativeHierarchyList.h>
+#include "hierarchy_list_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
@@ -22,7 +22,42 @@ void good(ii::core::Result<void> value) {
 }
 }
 
+void variable_rows() {
+    using namespace ii::gui;
+    auto model=std::make_shared<lvui::HierarchyMemory>(std::vector<lvui::HierarchyEntry>{
+        {.key="a",.label="A"},{.key="b",.label="B"},{.key="c",.label="C"},
+        {.key="d",.label="D"},{.key="e",.label="E"},{.key="f",.label="F"},
+        {.key="g",.label="G"},{.key="h",.label="H"}});
+    auto controller=std::make_shared<lvui::HierarchyController>(model);
+    require(take(controller->set_row_extent("a",40.))&&take(controller->set_row_extent("b",10.))&&
+            take(controller->set_row_extent("c",30.)),"Variable row setup failed");
+    lvui::native::HierarchyListInput input;input.controller=controller;input.width=200;input.height=60;input.overscan=0;
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"host",{240,100}));std::optional<HierarchyListTestView> list;
+    good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
+        auto value=HierarchyListTestView::create(builder,{},"varied",input);
+        if(!value)return std::unexpected(value.error());list=*value;return {};
+    }));
+    (void)take(tree->drawing_snapshot({240,100}));
+    auto a=take(list->row("a")),b=take(list->row("b")),c=take(list->row("c"));
+    require(take(a.options()).configuration.height==40&&take(b.options()).configuration.height==10&&
+            take(c.options()).configuration.height==30,"Native hierarchy did not apply each row height");
+    auto identity=take(b.root().placement()).scope.lock();good(list->root().set_scroll_offset(45));
+    require(take(controller->set_row_extent("a",60.)),"A row resize failed");
+    ++input.view_revision;good(list->set_options(input));
+    const auto resized_offset=take(list->root().snapshot()).scroll_offset;
+    if(resized_offset!=65)throw std::runtime_error("Row resize offset is "+std::to_string(resized_offset)+", expected 65");
+    require(take(take(list->row("b")).root().placement()).scope.lock()==identity,"Row resize recreated its visible anchor");
+    require(take(model->snapshot())->revision==0,"Row resize edited the document");
+    require(take(controller->set_row_extent("a",std::nullopt)),"A row height override could not be cleared");
+    ++input.view_revision;good(list->set_options(input));
+    require(take(list->root().snapshot()).scroll_offset==25&&take(model->snapshot())->revision==0,
+            "Clearing a row height did not preserve the visible anchor");
+    good(host.clear_content());tree->close();
+}
+
 int main() {
+    variable_rows();
     using namespace ii::gui;
     std::vector<lvui::HierarchyEntry> entries{{.key="0", .label="Item 0"}, {.key="0a", .parent="0", .label="Child"}};
     for (int i = 1; i < 1000; ++i) entries.push_back({.key=std::to_string(i), .label="Item " + std::to_string(i)});
@@ -31,14 +66,16 @@ int main() {
     lvui::native::HierarchyListInput input; input.controller = controller; input.width = 240; input.height = 100;
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {300, 180}));
-    std::optional<lvui::native::NativeHierarchyList> list; std::vector<std::string> activated, expanded; bool remove_on_activate = false;
+    std::optional<HierarchyListTestView> list; std::vector<std::string> activated, expanded; bool remove_on_activate = false;
+    auto callback_owner=std::make_shared<int>(1);std::weak_ptr<int> callback_lifetime=callback_owner;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading}); if (!column) return std::unexpected(column.error());
-        auto value = lvui::native::NativeHierarchyList::create(builder, *column, "list", input,
-            {.activated = [&](const auto& event) { activated.push_back(event.key); if (remove_on_activate) good(host.clear_content()); },
+        auto value = HierarchyListTestView::create(builder, *column, "list", input,
+            {.activated = [&,held=callback_owner](const auto& event) { activated.push_back(event.key); if (remove_on_activate) good(host.clear_content()); },
              .expansion_changed = [&](std::string key, bool value) { expanded.push_back(key + (value ? "+" : "-")); }});
         if (!value) return std::unexpected(value.error()); list = *value; return {};
     }));
+    callback_owner.reset();
     (void)take(tree->drawing_snapshot({300, 180}));
     (void)take(list->root().snapshot());
     auto mounted = take(list->mounted_keys());
@@ -93,5 +130,6 @@ int main() {
     worker.join(); require(rejected, "Hierarchy list accepted a foreign-thread update");
     remove_on_activate = true; auto last = take(list->row(visible_key)); good(last.row().activate());
     require(!list->set_options(input), "Hierarchy list survived removal during activation");
+    require(callback_lifetime.expired(), "Hierarchy list retained callback after reentrant retirement");
     tree->close();
 }

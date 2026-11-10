@@ -19,7 +19,7 @@ template<class T> std::string collection_key(const T& value){
     return result;
 }
 struct CollectionOptions final {
-    std::size_t first=0,count=std::numeric_limits<std::size_t>::max();
+    std::size_t first=0,count=(std::numeric_limits<std::size_t>::max)();
     double spacing=0;
     bool horizontal=false;
     bool sparse=false; // Mounted positions may skip invisible zero-height rows.
@@ -62,7 +62,7 @@ auto collection_frame(const Range& values,Key key,CollectionOptions options={}){
         if(index>=options.first&&result.items.size()<options.count)
             result.items.push_back({std::move(identity),value_copy(value),index});
     }
-    result.options.first=std::min(options.first,result.total);
+    result.options.first=(std::min)(options.first,result.total);
     result.options.count=result.items.size();
     return result;
 }

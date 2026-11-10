@@ -2,6 +2,7 @@
 
 #include <LVUI/StyleTokens.h>
 #include <array>
+#include <cmath>
 #include <optional>
 #include <string_view>
 
@@ -9,6 +10,26 @@ namespace lvui {
 
 // Accent selections belong to LVUI and do not require an application UI toolkit.
 enum class WindowAccent { blue, purple, rose, red, orange, yellow, green, gray, brown, cyan, teal, white };
+
+// A resolved palette can be passed to a composite without coupling it to a
+// window or to the lifetime of a reactive binding.
+struct WindowAccentPalette final {
+    StyleColor primary{figma_defaults::accent_blue_default};
+    StyleColor hover{figma_defaults::accent_blue_hover};
+    StyleColor pressed{figma_defaults::accent_blue_pressed};
+    StyleColor subtle{figma_defaults::accent_blue_subtle};
+    StyleColor selected{figma_defaults::accent_blue_selected};
+    friend bool operator==(const WindowAccentPalette&, const WindowAccentPalette&) = default;
+};
+
+[[nodiscard]] inline bool valid_window_accent_palette(const WindowAccentPalette& value) noexcept {
+    const auto valid = [](StyleColor color) {
+        const auto channel = [](double c) { return std::isfinite(c) && c >= 0 && c <= 1; };
+        return channel(color.red) && channel(color.green) && channel(color.blue) && channel(color.alpha);
+    };
+    return valid(value.primary) && valid(value.hover) && valid(value.pressed) &&
+           valid(value.subtle) && valid(value.selected);
+}
 
 inline constexpr std::array<std::string_view, 12> window_accent_names{
     "blue", "purple", "rose", "red", "orange", "yellow", "green", "gray", "brown", "cyan", "teal", "white"};
@@ -26,17 +47,17 @@ inline constexpr std::array<std::string_view, 12> window_accent_names{
 // Design snapshot fallback for accents without a corresponding style token.
 [[nodiscard]] constexpr std::optional<StyleColor> fallback_window_accent(WindowAccent value) noexcept {
     constexpr std::array<StyleColor, 12> colors{{
-        {.08120492845773697, .5099760293960571, 1, 1},
-        {.5275065302848816, .291259765625, 1, 1},
-        {.975510835647583, .26653972268104553, .4437825083732605, 1},
-        {1, .2760854959487915, .2760854959487915, 1},
-        {1, .47672274708747864, .15144230425357819, 1},
-        {1, .8303598165512085, .15179912745952606, 1},
-        {0, .9058823585510254, .12156862765550613, 1},
+        {figma_defaults::accent_blue_default},
+        {figma_defaults::accent_purple_default},
+        {figma_defaults::accent_rose_default},
+        {figma_defaults::accent_red_default},
+        {figma_defaults::accent_orange_default},
+        {figma_defaults::accent_yellow_default},
+        {figma_defaults::accent_green_default},
         {140.0 / 255, 140.0 / 255, 140.0 / 255, 1},
-        {.2616060674190521, .13824503123760223, .09279626607894897, 1},
-        {.12926307320594788, .8258525729179382, 1, 1},
-        {0, .7790151238441467, .8655723929405212, 1},
+        {figma_defaults::accent_brown_default},
+        {figma_defaults::accent_cyan_default},
+        {figma_defaults::accent_teal_default},
         {1, 1, 1, 1},
     }};
     if (!valid_window_accent(value)) return std::nullopt;

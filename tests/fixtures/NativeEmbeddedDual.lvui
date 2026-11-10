@@ -1,0 +1,5 @@
+import vm NativeEmbeddedHostBackend
+HStack {
+    NativeView(id: "left", source: vm.source, width: 200, height: 100)
+    NativeView(id: "right", source: vm.source, width: 200, height: 100)
+}

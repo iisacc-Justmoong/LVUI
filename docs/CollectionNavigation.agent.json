@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/CollectionNavigation.md",
-    "sha256": "0e92848b74757043132c90d5eef9bb00ab410f96145cd956177bd348629f50b1",
-    "bytes": 10550,
-    "line_count": 153,
+    "sha256": "1ffd37131ab263dfa013ae64bb56c118fbfe96d4fe7c63451c045498f311e6f0",
+    "bytes": 10663,
+    "line_count": 154,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 5,
-      "raw": "`CollectionNavigation`은 표시 위젯과 독립적인 C++ 뷰 상태이다. 화면 밖 항목의 키를 포함한\n논리적 포커스·선택·범위 기준점을 보관한다. 생성·파일 저장·문서 편집 상태를 소유하지 않는다.\n행이 퇴역해도 이 상태를 유지하므로 탐색을 위해 전체 모델의 위젯을 생성할 필요가 없다.\n"
+      "raw": "`ii::gui::BasicCollectionNavigation`은 표시 위젯과 독립적인 C++ 뷰 상태이다. 화면 밖 항목의 키를 포함한\n논리적 포커스·선택·범위 기준점을 보관한다. 생성·파일 저장·문서 편집 상태를 소유하지 않는다.\n행이 퇴역해도 이 상태를 유지하므로 탐색을 위해 전체 모델의 위젯을 생성할 필요가 없다.\n"
     },
     {
       "id": "b000004",
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 26,
-      "raw": "```lvui\nimport vm ResultsModel\nimport nav lvui.native.CollectionNavigation\nWindow {\n    VStack {\n        Label(text: nav.state.current_key)\n        for (item in vm.items, key: item.id, itemHeight: 100, itemWidth: 150,\n             navigation: nav, selectionMode: .multiple,\n             navigationFilter: item.enabled,\n             onCurrentChanged: vm.focusChanged,\n             onSelectionChanged: vm.selectionChanged,\n             onActivate: vm.openResult) {\n            VStack {\n                Label(text: item.title)\n                CheckBox(checked: nav.is_selected(item.id))\n            }\n        }\n    }\n}\n```\n",
+      "raw": "```lvui\nimport vm ResultsModel\nimport nav CollectionNavigation\nWindow {\n    VStack {\n        Label(text: nav.state.current_key)\n        for (item in vm.items, key: item.id, itemHeight: 100, itemWidth: 150,\n             navigation: nav, selectionMode: .multiple,\n             navigationFilter: item.enabled,\n             onCurrentChanged: vm.focusChanged,\n             onSelectionChanged: vm.selectionChanged,\n             onActivate: vm.openResult) {\n            VStack {\n                Label(text: item.title)\n                CheckBox(checked: nav.is_selected(item.id))\n            }\n        }\n    }\n}\n```\n",
       "language": "lvui",
-      "code": "import vm ResultsModel\nimport nav lvui.native.CollectionNavigation\nWindow {\n    VStack {\n        Label(text: nav.state.current_key)\n        for (item in vm.items, key: item.id, itemHeight: 100, itemWidth: 150,\n             navigation: nav, selectionMode: .multiple,\n             navigationFilter: item.enabled,\n             onCurrentChanged: vm.focusChanged,\n             onSelectionChanged: vm.selectionChanged,\n             onActivate: vm.openResult) {\n            VStack {\n                Label(text: item.title)\n                CheckBox(checked: nav.is_selected(item.id))\n            }\n        }\n    }\n}\n",
+      "code": "import vm ResultsModel\nimport nav CollectionNavigation\nWindow {\n    VStack {\n        Label(text: nav.state.current_key)\n        for (item in vm.items, key: item.id, itemHeight: 100, itemWidth: 150,\n             navigation: nav, selectionMode: .multiple,\n             navigationFilter: item.enabled,\n             onCurrentChanged: vm.focusChanged,\n             onSelectionChanged: vm.selectionChanged,\n             onActivate: vm.openResult) {\n            VStack {\n                Label(text: item.title)\n                CheckBox(checked: nav.is_selected(item.id))\n            }\n        }\n    }\n}\n",
       "closed": true
     },
     {
@@ -347,7 +347,7 @@
       "kind": "paragraph",
       "start_line": 89,
       "end_line": 92,
-      "raw": "키 이동은 키 기반 공개 요청을 `VirtualViewport`에 전달한다. 창의 실제 너비·높이가\n들어오기 전에는 요청을 완료했다고 처리하지 않는다. 모델에서 목표 키를 찾은 뒤 필요한\n표시 범위를 만들고, 해당 행이 보이도록 오프셋을 보정한다. 사용자의 새 스크롤은 이전\n프로그램 요청보다 우선한다. C++의 `nav.set_current(key)`도 같은 경로를 사용한다.\n"
+      "raw": "키 이동은 키 기반 공개 요청을 `ii::gui::BasicVirtualViewport`에 전달한다. 창의 실제 너비·높이가\n들어오기 전에는 요청을 완료했다고 처리하지 않는다. 모델에서 목표 키를 찾은 뒤 필요한\n표시 범위를 만들고, 해당 행이 보이도록 오프셋을 보정한다. 사용자의 새 스크롤은 이전\n프로그램 요청보다 우선한다. C++의 `nav.set_current(key)`도 같은 경로를 사용한다.\n"
     },
     {
       "id": "b000034",
@@ -418,21 +418,21 @@
       "id": "b000043",
       "kind": "paragraph",
       "start_line": 114,
-      "end_line": 116,
-      "raw": "코어 모델은 `NativeCollectionNavigation.h`와 iiSDKCore 계약에만 의존한다. 선택적\n`NativeCollectionWidgets.h` 어댑터와 생성된 뷰는 iiGUI 헤더·호스트를 사용한다.\n`LVUI::Native`의 코어 탐색 소비자에 iiGUI나 Qt 의존성을 강제하지 않는다.\n"
+      "end_line": 117,
+      "raw": "앱은 `LVUI/NativeCollectionNavigation.h`와 `iiGUI/CollectionNavigation.h`를 조합해\n`using CollectionNavigation = lvui::native::CollectionNavigationBinding<ii::gui::BasicCollectionNavigation>;`으로\nC++ 타입을 제공한다. LVUI의 계약은 iiSDKCore 외 SDK에 직접 의존하지 않는다. 생성된\n뷰는 앱이 조합한 탐색 객체와 iiGUI 호스트를 사용한다.\n"
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 117,
-      "end_line": 117,
+      "start_line": 118,
+      "end_line": 118,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "heading",
-      "start_line": 118,
-      "end_line": 118,
+      "start_line": 119,
+      "end_line": 119,
       "raw": "## 검증 범위\n",
       "level": 2,
       "title": "검증 범위"
@@ -440,43 +440,43 @@
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 119,
-      "end_line": 119,
+      "start_line": 120,
+      "end_line": 120,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 120,
-      "end_line": 124,
+      "start_line": 121,
+      "end_line": 125,
       "raw": "`LVUI.NativeCollectionNavigation.*`와 `LVUI.NativeVirtualCollection.reveal`은 논리 탐색·\n선택·필터·상태 수명·공개 요청을 검사한다. `iiGUI.ancestor_input.*`는 중첩 키의 전달과\n텍스트·조정 입력 보존을, `iiGUI.native_navigated_repetition.*`는 실제 생성 C++의 화면 밖\n이동·선택·C++ 알림·초기 포커스·포인터·콜백 중 퇴역을 검사한다. 실제 OS 창·접근성·IME·\n플랫폼의 전체 동작과 [전체 완료 기준](Completion.md)은 별도의 검증 대상이다.\n"
     },
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 125,
-      "end_line": 125,
+      "start_line": 126,
+      "end_line": 126,
       "raw": "\n"
     },
     {
       "id": "b000049",
       "kind": "paragraph",
-      "start_line": 126,
-      "end_line": 128,
+      "start_line": 127,
+      "end_line": 129,
       "raw": "가변 높이와 조건부 행을 결합한 생성 뷰에서는 측정 피드백 이후에도 공개한 키가 보이는지\n검사한다. 현재 표시 항목을 유지한 채 범위 밖에서만 모델 순서가 바뀌는 경우에도 새 원본\n스냅샷을 다음 키 명령에 사용한다. 재배치 때문에 기존 가시 행을 다시 만들지는 않는다.\n"
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 129,
-      "end_line": 129,
+      "start_line": 130,
+      "end_line": 130,
       "raw": "\n"
     },
     {
       "id": "b000051",
       "kind": "heading",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 131,
+      "end_line": 131,
       "raw": "## 2026-10-26 검증 기록\n",
       "level": 2,
       "title": "2026-10-26 검증 기록"
@@ -484,29 +484,29 @@
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 131,
-      "end_line": 131,
+      "start_line": 132,
+      "end_line": 132,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 132,
-      "end_line": 132,
+      "start_line": 133,
+      "end_line": 133,
       "raw": "macOS arm64의 이 변경에서 확인한 결과이다. 각 검사는 겹치므로 수량을 합산하지 않는다.\n"
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 133,
-      "end_line": 133,
+      "start_line": 134,
+      "end_line": 134,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "table",
-      "start_line": 134,
-      "end_line": 141,
+      "start_line": 135,
+      "end_line": 142,
       "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 137/137 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 60/60 통과 |\n| iiGUI 창 없는 회귀·생성 C++ 통합 | 45/45 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 45/45 통과 |\n| 설치·경로 이동 독립 소비자 | 코어 실행·컴파일러 소비자 2/2 통과, 탐색 헤더·구문 포함 |\n| 실제 LVRS 생성 팩토리 | 일반·공유·고정 가상화·가변 높이·탐색의 오브젝트 컴파일 통과, 실행하지 않음 |\n",
       "columns": [
         "범위",
@@ -542,29 +542,29 @@
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 142,
-      "end_line": 142,
+      "start_line": 143,
+      "end_line": 143,
       "raw": "\n"
     },
     {
       "id": "b000057",
       "kind": "paragraph",
-      "start_line": 143,
-      "end_line": 147,
+      "start_line": 144,
+      "end_line": 148,
       "raw": "1,000개 중 끝 항목으로 이동하여 필요한 행만 활성화하는지, 비활성 항목을 건너뛰고\n범위·추가 선택을 유지하는지 검사했다. 초기 C++ 포커스·필터로 숨긴 선택·화면 밖 재정렬·\n실제 입력 컨트롤의 키 보존·가변 높이 측정과 조건부 행의 결합·콜백 중 종료도 검사했다.\n선택은 생성·파일 상태와 분리한 뷰 상태이며, 탐색 중 원본 모델·파일 리비전이 바뀌지 않는\n검사가 포함된다. 제품별 알림을 연결한 메서드의 변경 발행은 해당 메서드 계약을 따른다.\n"
     },
     {
       "id": "b000058",
       "kind": "blank",
-      "start_line": 148,
-      "end_line": 148,
+      "start_line": 149,
+      "end_line": 149,
       "raw": "\n"
     },
     {
       "id": "b000059",
       "kind": "paragraph",
-      "start_line": 149,
-      "end_line": 153,
+      "start_line": 150,
+      "end_line": 154,
       "raw": "검사한 `lvui-compile`과 탐색 위젯 검사 실행 파일은 Qt 동적 의존성이 없다. 후자에는\nLVUI 파서·컴파일러 실행 심볼이 없다. Dreamscapes 관측 기준선의 QML 81개 파일은\n변경하지 않았다. 이 결과는 실제 제품 프레임 지연이나 모든 플랫폼의 완료를 의미하지\n않는다. 원시 로그·소스 해시·범위는\n`build/lvui-completion/collection-navigation-verification-20261026.json`에 기록한다.\n"
     }
   ],
@@ -615,7 +615,7 @@
       "level": 2,
       "title": "검증 범위",
       "anchor": "검증-범위",
-      "start_line": 118
+      "start_line": 119
     },
     {
       "block_id": "b000051",
@@ -623,7 +623,7 @@
       "level": 2,
       "title": "2026-10-26 검증 기록",
       "anchor": "2026-10-26-검증-기록",
-      "start_line": 130
+      "start_line": 131
     }
   ],
   "indexes": {
@@ -687,13 +687,13 @@
       {
         "block_id": "b000043",
         "line": 116,
-        "text": "`LVUI::Native`의 코어 탐색 소비자에 iiGUI나 Qt 의존성을 강제하지 않는다.",
+        "text": "C++ 타입을 제공한다. LVUI의 계약은 iiSDKCore 외 SDK에 직접 의존하지 않는다. 생성된",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000053",
-        "line": 132,
+        "line": 133,
         "text": "macOS arm64의 이 변경에서 확인한 결과이다. 각 검사는 겹치므로 수량을 합산하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -706,7 +706,7 @@
         "label": "전체 완료 기준",
         "target": "Completion.md",
         "kind": "relative",
-        "line": 124
+        "line": 125
       }
     ],
     "tables": [

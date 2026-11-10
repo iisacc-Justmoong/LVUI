@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedListPanel.md",
-    "sha256": "fcaee17d886f4d5980e60afd0dd7c91d24ff3dfe6a8c41a515333136f3cbb92b",
-    "bytes": 2211,
-    "line_count": 34,
+    "sha256": "e68da30e25da3f597841301d313dc2c37679f86d6a67b2a4f3cf8565e7c57ffe",
+    "bytes": 6294,
+    "line_count": 90,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,35 +42,35 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 7,
-      "raw": "`NativeListPanel`은 [일반 목록 화면](NativeOwnedListView.md), 목록 도구 모음과 푸터를\nLVUI가 소유한 영역 배치로 조합한다. 기본 크기는 170×140이고 도구 모음은 숨김,\n푸터는 표시 상태다. `ListPanelInput`은 각 구성요소의 설정을 받으며 크기가 작을 때\n도구 모음과 푸터를 남은 범위 안에 배치한다. 잘못된 후보 설정은 가능한 범위에서\n이전 화면을 유지한다. 외부 데이터 소스에 이미 게시된 변경은 되돌리지 않는다.\n"
+      "end_line": 8,
+      "raw": "`iiGUI/NativeListPanelView.h`는 주입된 [일반 목록 화면](NativeOwnedListView.md),\n목록 도구 모음과 푸터를 iiGUI의 공통 영역 배치로 조합한다. LVUI는\n`ListPanelBinding`과 설정 값을 제공하며 생성된 앱이 실제 구현을 조합한다. 기본 크기는 170×140이고 도구 모음은 숨김,\n푸터는 표시 상태다. `ListPanelInput`은 각 구성요소의 설정을 받으며 크기가 작을 때\n도구 모음과 푸터를 남은 범위 안에 배치한다. 잘못된 후보 설정은 가능한 범위에서\n이전 화면을 유지한다. 외부 데이터 소스에 이미 게시된 변경은 되돌리지 않는다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 8,
-      "end_line": 8,
+      "start_line": 9,
+      "end_line": 9,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 9,
-      "end_line": 13,
-      "raw": "기본 LVUI `List` 선언은 이 패널을 직접 생성한다. `controller`로 앱의\n`std::shared_ptr<lvui::ListController>`를 전달하거나, `model`로 `ListSource`를\n전달해 별도 화면 컨트롤러를 만들 수 있다. 둘을 함께 지정할 수 없다. 모두 생략하면\n패널은 빈 `ListMemory`를 소유한다. `model` 포인터 자체는 생성 시 정해지며, 같은\n소스의 데이터 변경은 `modelRevision`으로 알린다.\n"
+      "start_line": 10,
+      "end_line": 16,
+      "raw": "기본 LVUI `List` 선언은 이 패널을 직접 생성한다. `controller`로 앱의\n`std::shared_ptr<lvui::ListController>`를 전달하거나, `model`로 `ListSource`를\n전달해 별도 화면 컨트롤러를 만들 수 있다. 둘을 함께 지정할 수 없다. 모두 생략하면\n패널은 빈 `ListMemory`를 소유한다. `model` 포인터 자체는 생성 시 정해지며, 같은\n소스의 데이터 변경은 `modelRevision`으로 알린다. 외부에서 컨트롤러 선택만 바꾸면\n관측 가능한 `viewRevision`을 변경해 행을 갱신한다. 이때 문서 리비전과 사용자\n활성화 이벤트는 바뀌지 않는다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 14,
-      "end_line": 14,
+      "start_line": 17,
+      "end_line": 17,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "fenced_code",
-      "start_line": 15,
-      "end_line": 24,
+      "start_line": 18,
+      "end_line": 27,
       "raw": "```lvui\nimport vm CollectionModel\nWindow {\n    List(controller: vm.controller, modelRevision: vm.revision,\n         width: vm.width, height: 140, toolbarVisible: true,\n         toolbarIcon1: \"home\", footerVisible: true,\n         onItemActivated: vm.selectItem, onToolbarIconTriggered: vm.toolAction,\n         onFooterButtonTriggered: vm.footerAction)\n}\n```\n",
       "language": "lvui",
       "code": "import vm CollectionModel\nWindow {\n    List(controller: vm.controller, modelRevision: vm.revision,\n         width: vm.width, height: 140, toolbarVisible: true,\n         toolbarIcon1: \"home\", footerVisible: true,\n         onItemActivated: vm.selectItem, onToolbarIconTriggered: vm.toolAction,\n         onFooterButtonTriggered: vm.footerAction)\n}\n",
@@ -79,30 +79,179 @@
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 25,
-      "end_line": 25,
+      "start_line": 28,
+      "end_line": 28,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 26,
-      "end_line": 29,
-      "raw": "모델 리비전, 크기, 행 높이와 색상, 아이콘 공급자, 도구 아이콘, 푸터 슬롯과 표시\n상태는 반응형으로 갱신된다. 항목 활성화는 인덱스와 `ListEntry`, 도구 버튼은 인덱스와\n아이콘 이름, 푸터는 인덱스와 `ListFooterSlot`을 전달한다. 선택과 스크롤은 데이터\n소스를 수정하지 않는다. 지원하지 않는 자식 뷰와 편집 속성은 컴파일 시 진단한다.\n"
+      "start_line": 29,
+      "end_line": 32,
+      "raw": "`itemDelegate`는 행마다 생성할 단일 View다. 선택적으로 `itemRow`에 유효한 식별자를\n문자열로 지정하면 해당 View 안에서 그 이름으로 원본 데이터와 화면 상태를 읽는다.\n같은 이름의 외부 변수는 이 View 안에서만 가려진다. `itemRow` 없이도 외부 스코프의\n값을 사용하는 View를 지정할 수 있다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 30,
-      "end_line": 30,
+      "start_line": 33,
+      "end_line": 33,
       "raw": "\n"
     },
     {
       "id": "b000011",
+      "kind": "fenced_code",
+      "start_line": 34,
+      "end_line": 37,
+      "raw": "```lvui\nList(controller: vm.controller, modelRevision: vm.revision, viewRevision: vm.viewRevision,\n     itemRow: \"item\", itemDelegate: PushButton(text: item.entry.label, onClick: item.trigger))\n```\n",
+      "language": "lvui",
+      "code": "List(controller: vm.controller, modelRevision: vm.revision, viewRevision: vm.viewRevision,\n     itemRow: \"item\", itemDelegate: PushButton(text: item.entry.label, onClick: item.trigger))\n",
+      "closed": true
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
       "kind": "paragraph",
-      "start_line": 31,
-      "end_line": 34,
-      "raw": "`LVUI.OwnedList.PanelLayout`, `LVUI.OwnedList.PanelHost`, `LVUI.OwnedList.Codegen`과\n`LVUI.OwnedList.Generated`는 배치, 가상 행 유지, 반응형 설정, 이벤트와 수명을\n헤드리스 환경에서 검사한다. 사용자 행 대리자, 삽입·삭제·이름 변경 UI, 더 다양한 행\n유형, 실제 플랫폼 화면과 접근성 검증은 남아 있다.\n"
+      "start_line": 39,
+      "end_line": 40,
+      "raw": "이름 편집이 필요한 목록에는 `editor`와 `editable`을 명시한다. 둘을 제공해도\n`entry.editable`이 꺼진 항목은 편집할 수 없다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "fenced_code",
+      "start_line": 42,
+      "end_line": 47,
+      "raw": "```lvui\nList(controller: vm.controller, modelRevision: vm.revision,\n     editor: vm.editor, editable: vm.canEdit,\n     onItemEdited: vm.itemEdited, onItemSubmitted: vm.itemSubmitted,\n     onItemRejected: vm.itemRejected)\n```\n",
+      "language": "lvui",
+      "code": "List(controller: vm.controller, modelRevision: vm.revision,\n     editor: vm.editor, editable: vm.canEdit,\n     onItemEdited: vm.itemEdited, onItemSubmitted: vm.itemSubmitted,\n     onItemRejected: vm.itemRejected)\n",
+      "closed": true
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 49,
+      "end_line": 54,
+      "raw": "`onItemEdited`는 인덱스, 원본 항목, 필드 이름 `\"label\"`, 초안을 전달한다.\n`onItemSubmitted`는 인덱스, 원본 항목, 확정된 텍스트를 전달하고,\n`onItemRejected`는 같은 값에 `ListError`를 더해 전달한다. 편집 결과를 관찰하는\n소스는 변경을 게시한 뒤 `modelRevision`을 갱신해야 한다. `editable`이 `true`이거나\n동적인 경우 `editor`가 없으면 컴파일 오류이며 활성화 상태와 편집기는 반응형으로 갱신된다.\n키보드·포인터와 취소·충돌 계약은 [일반 목록 화면](NativeOwnedListView.md)을 따른다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 56,
+      "end_line": 59,
+      "raw": "행 정렬도 같은 편집기에 명시적으로 연결한다. `onItemMoved`는 이동한 키, 이전\n인덱스, 새 인덱스와 그 뒤에 오는 항목의 키를 순서대로 전달한다. 마지막에 놓으면\n마지막 인자는 빈 문자열이다. `reorderable`을 `true` 또는 동적으로 지정할 때는\n`editor`가 필요하다. 앱이 소유한 원본·편집기와 문서 이력은 앱이 연결해야 한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "fenced_code",
+      "start_line": 61,
+      "end_line": 64,
+      "raw": "```lvui\nList(controller: vm.controller, modelRevision: vm.revision,\n     editor: vm.editor, reorderable: vm.canReorder, onItemMoved: vm.itemMoved)\n```\n",
+      "language": "lvui",
+      "code": "List(controller: vm.controller, modelRevision: vm.revision,\n     editor: vm.editor, reorderable: vm.canReorder, onItemMoved: vm.itemMoved)\n",
+      "closed": true
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 66,
+      "end_line": 69,
+      "raw": "`itemRow`는 `itemDelegate`와 함께 사용해야 한다. View와 관찰 컨텍스트의 유지·폐기,\n입력 전달, 사용자 View의 가변 행 높이와 C++ 팩터리의 계약은 [일반 목록 화면](NativeOwnedListView.md)을\n따른다. C++의 조합된 패널 `create`도 마지막 인자로 같은 `ListRowViewFactoryValue<Builder>`를\n받으며 팩터리는 생성 시 고정된다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 71,
+      "end_line": 78,
+      "raw": "모델 리비전, 크기, 행 높이와 색상, 아이콘 공급자, 도구 아이콘, 푸터 슬롯과 표시\n상태는 반응형으로 갱신된다. 항목 활성화는 인덱스와 `ListEntry`, 도구 버튼은 인덱스와\n아이콘 이름, 푸터는 인덱스와 `ListFooterSlot`을 전달한다. 선택과 스크롤은 데이터\n소스를 수정하지 않는다. 지원하지 않는 자식 뷰와 속성은 컴파일 시 진단한다.\n`scrollable: false`는 휠·트랙패드·터치와 행 드래그 가장자리 자동 스크롤을 끄며,\n현재 오프셋과 프로그래밍에 의한 이동은 유지한다. 동적 값으로 바꿀 수 있다.\n기본 추가·삭제 푸터 버튼도 원본 LVRS처럼 명령만 알린다. 실제 삽입·삭제와\nUndo/Redo는 앱이 `ListEditor` 또는 자체 문서 명령에 연결해야 한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 80,
+      "end_line": 86,
+      "raw": "`LVUI.OwnedList.PanelLayout`, `LVUI.OwnedList.PanelHost`, `LVUI.OwnedList.Codegen`과\n`LVUI.OwnedList.Generated`는 배치, 가상 행 유지, 반응형 설정, 이벤트와 수명을\n헤드리스 환경에서 검사한다. `LVUI.OwnedList.RowDelegateGenerated`는 행별 반응형\n입력, 행 명령과 반응형 높이, 외부 선택과 재정렬, 행 이름 없는 View와 폐기를 검사한다.\n`LVUI.OwnedList.EditingGenerated`는 선언형 편집 이벤트·충돌과 반응형 설정을 검사한다.\n`LVUI.OwnedList.DragGenerated`는 선언형 이동 이벤트와 반응형 비활성화를 검사한다.\n더 다양한 행 유형, 실제 플랫폼 화면과 접근성 검증은 남아 있다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 87,
+      "end_line": 87,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "계층 패널과 공유하는 `iiGUI/PanelLayout.h`가 영역을 계산하며, LVUI는 설정과 Core 단독 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "패널 퇴역 시 진행 중인 갱신이 끝나면 자식 핸들·컨트롤러·입력을 해제한다. 갱신 중 퇴역으로 위젯이 닫히면 닫힘 오류가 반환될 수 있다. macOS arm64의 iiGUI 독립 설치 소비자와 LVUI 패널 생성·헤드리스 검사를 통과했다. 일반 목록 호스트도 iiGUI가 소유한다.\n"
     }
   ],
   "outline": [
@@ -118,9 +267,37 @@
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000009",
-        "line": 29,
-        "text": "소스를 수정하지 않는다. 지원하지 않는 자식 뷰와 편집 속성은 컴파일 시 진단한다.",
+        "block_id": "b000017",
+        "line": 52,
+        "text": "소스는 변경을 게시한 뒤 `modelRevision`을 갱신해야 한다. `editable`이 `true`이거나",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 59,
+        "text": "`editor`가 필요하다. 앱이 소유한 원본·편집기와 문서 이력은 앱이 연결해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 66,
+        "text": "`itemRow`는 `itemDelegate`와 함께 사용해야 한다. View와 관찰 컨텍스트의 유지·폐기,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 74,
+        "text": "소스를 수정하지 않는다. 지원하지 않는 자식 뷰와 속성은 컴파일 시 진단한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 78,
+        "text": "Undo/Redo는 앱이 `ListEditor` 또는 자체 문서 명령에 연결해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -133,6 +310,20 @@
         "target": "NativeOwnedListView.md",
         "kind": "relative",
         "line": 3
+      },
+      {
+        "block_id": "b000017",
+        "label": "일반 목록 화면",
+        "target": "NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 54
+      },
+      {
+        "block_id": "b000023",
+        "label": "일반 목록 화면",
+        "target": "NativeOwnedListView.md",
+        "kind": "relative",
+        "line": 67
       }
     ],
     "tables": []

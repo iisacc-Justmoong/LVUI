@@ -1,0 +1,9 @@
+import vm NativeMobileNavigationModel
+Window {
+    VStack {
+        MobileNavigationBar(id: "navigation", model: vm.items, search: vm.searchItem,
+                            currentIndex: vm.current, autoSelect: vm.automatic, width: vm.width,
+                            bottomSafeInset: vm.inset, platformStyle: vm.platform,
+                            onActivated: vm.activate, onSearchRequested: vm.search)
+    }
+}

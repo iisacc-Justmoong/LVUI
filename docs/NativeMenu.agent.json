@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeMenu.md",
-    "sha256": "36f883a820e775c8a04489cfadd1158f9a18e418c39ee8c91a0ff5e10682032f",
-    "bytes": 4021,
-    "line_count": 44,
+    "sha256": "3a8b3fcaf5fe1eb799ef76d8017103da453fc8cb6ece391a5ef498a5464f5ee0",
+    "bytes": 16712,
+    "line_count": 189,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,50 +42,210 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 7,
-      "raw": "`Menu`는 메뉴 항목의 고유 키, 라벨, 단축키, 아이콘 이름, 표시·활성 상태와\n항목 종류를 표준 C++로 보유한다. 구분선과 비활성·숨김 항목은 키보드 선택에서\n건너뛰며 처음·마지막·이전·다음 이동을 지원한다. 목록 교체 시 선택한 항목이\n남아 있으면 키로 동일 항목을 유지한다. 개수·입력 문자열·전체 바이트 한도를\n검사하고 잘못된 후보가 기존 상태를 변경하지 않는다.\n"
+      "end_line": 11,
+      "raw": "개별 메뉴 항목의 상태 우선순위, 크기, 단축키와 화살표 방향 및 기하는\n`iiGUI/MenuItemModel.h`가 계산한다. LVUI의 `MenuItemModelPolicy`는 색상과\n선언 값을 제공하며 Core 외 SDK를 참조하지 않는다. 항목의 입력·그리기와\n위젯 수명은 `iiGUI/NativeMenuItemView.h`가 소유한다. 생성된 앱은\n`MenuItemBinding`을 통해 모델·호스트·아이콘 디코더를 조합한다. 퇴역 시 콜백과\n아이콘 자원을 해제하고 아이콘 조회 중 퇴역하면 해당 갱신을 취소한다. 메뉴 전체의 선택·활성화·배치는 `iiGUI/MenuModel.h`가 소유하고 입력·그리기·\n수명은 `iiGUI/NativeMenuView.h`가 관리한다. `MenuBinding`은 Core 외 SDK를\n직접 참조하지 않으며 생성된 앱에서 모델과 호스트를 조합한다. macOS arm64에서 독립 설치 소비자와\nLVUI의 중첩·스크롤·목록 메뉴 결합을 창 없이 검사했다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 8,
-      "end_line": 8,
+      "start_line": 12,
+      "end_line": 12,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 9,
-      "end_line": 13,
-      "raw": "호출 전 `prepare_activation`은 현재 열린 세대와 모델 리비전을 담은 계획을 만든다.\n앱의 항목 콜백이 메뉴를 닫거나 다시 열거나 목록·선택을 바꾸면 이전 계획은 더 이상\n메뉴를 닫을 수 없다. 하위 메뉴 항목은 기본적으로 부모를 유지하며 일반 항목의\n자동 닫기는 메뉴 또는 항목 정책으로 지정한다. 이벤트 콜백과 팝업 호스트는 이\n모델이 소유하지 않는다.\n"
+      "start_line": 13,
+      "end_line": 18,
+      "raw": "`iiGUI/MenuModel.h`는 메뉴 항목의 고유 키, 라벨, 단축키, 아이콘 이름, 표시·활성\n상태와 항목 종류를 표준 C++로 보유한다. LVUI의 `MenuModelPolicy`가 디자인 값을\n제공하고 앱에서 모델과 정책을 조합한다. 구분선과 비활성·숨김 항목은 키보드 선택에서\n건너뛰며 처음·마지막·이전·다음 이동을 지원한다. 목록 교체 시 선택한 항목이\n남아 있으면 키로 동일 항목을 유지한다. 개수·입력 문자열·전체 바이트 한도를\n검사하고 잘못된 후보가 기존 상태를 변경하지 않는다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 14,
-      "end_line": 14,
+      "start_line": 19,
+      "end_line": 19,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 15,
-      "end_line": 36,
-      "raw": "기본 항목 폭 141, 간격 2, 컴팩트 항목 높이 18과 일반 항목 높이 24는 디자인 값을\n기준으로 LVUI에서 새로 정의했다. `NativeMenu`는 범용 팝업·스택 경계를 사용해\n직접 자식 항목을 등록하고 메뉴 배경, 선택, 키보드 이동과 실행 순서를 소유한다.\n개별 항목 높이를 설정하면 메뉴 전체 높이에도 반영된다.\n화면보다 긴 메뉴는 내용 영역을 화면 안에 자르고 스크롤한다. 키보드 포커스가 화면 밖\n항목으로 이동하면 해당 항목을 보이도록 스크롤 위치를 조정한다.\n메뉴 표면은 기본 불투명 바탕 위에 채색 레이어를 합성한다. `menuOpacity`는 전체\n팝업의 투명도가 아닌 채색 레이어의 강도이며 기본값은 0.12이다. `baseColor`,\n`backgroundColor`, `borderColor`로 각 레이어를 바꿀 수 있다.\n앱은 팝업 핸들을 기존 위젯의 문맥 메뉴로 연결하고 일반 외부 클릭과 외부 문맥\n메뉴 요청의 닫기 정책을 각각 지정할 수 있다. 기본 선언형 `Menu`와 `ContextMenu`도\n이 구현을 사용하며 `targetId`, 정적 문자열 `items`, 직접 자식 항목과 구분선, 반응형 선택과\n디자인 값, 열림·닫힘·취소·항목 실행 콜백을 지원한다. `keepOpen`이 참이면 항목을\n실행해도 메뉴를 유지하며 거짓이면 메뉴의 기본 정책을 따른다. `closeOnTrigger`는\n해당 항목의 정책을 명시적으로 지정하고 `keepOpen`과 함께 사용할 수 없다.\n구분선은 선택 순서의 인덱스에는 포함되지만 키보드 선택에서는 건너뛴다. 표시나\n크기를 바꾸면 팝업 크기가 함께 변경된다. 변경 결과가 팝업 크기 제한을 넘으면\n자식과 메뉴를 기존 유효 상태로 되돌리고 반응형 오류를 전달한다. `MenuItem` 안에\n하나의 직접 `Menu` 또는 `ContextMenu`를 두어 하위 메뉴를 구성할 수 있다. 오른쪽\n키는 하위 메뉴를 열고 첫 항목에 포커스를 넘기며, 왼쪽 키는 현재 하위 메뉴를 닫고\n부모 항목으로 돌아간다. 마지막 동작은 열린 조상 메뉴를 닫는다. 콜백이 메뉴를\n다시 열면 이전 동작의 닫기 계획은 새 메뉴에 적용되지 않는다.\n"
+      "start_line": 20,
+      "end_line": 24,
+      "raw": "호출 전 `prepare_activation`은 현재 열린 세대와 모델 리비전을 담은 계획을 만든다.\n앱의 항목 콜백이 메뉴를 닫거나 다시 열거나 목록·선택을 바꾸면 이전 계획은 더 이상\n메뉴를 닫을 수 없다. 하위 메뉴 항목은 기본적으로 부모를 유지하며 일반 항목의\n자동 닫기는 메뉴 또는 항목 정책으로 지정한다. 이벤트 콜백과 팝업 호스트는 이\n모델이 소유하지 않는다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 37,
-      "end_line": 37,
+      "start_line": 25,
+      "end_line": 25,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 38,
-      "end_line": 44,
-      "raw": "조건·반복 자식, 포인터를 통한 하위 메뉴 전환과 실제 플랫폼·보조 기술 검증은\n추가 구현 또는 검증이 필요하다. 헤드리스 검사는 실제 플랫폼 실행과 구분한다.\n`MenuItem`은 별도로 기본·선택·비활성 상태와 라벨·아이콘 슬롯·단축키·방향 표시의\n공간을 계산한다. `NativeMenuItem`은 자체 디자인과 범용 호스트를 연결하며 이름\n아이콘, 방향 표시, 포인터·키보드 이벤트와 메뉴 항목 접근성 역할을 제공한다.\n기본 선언형 `MenuItem`과 `ContextMenuItem`은 이 어댑터를 사용한다. 항목의 닫기\n정책은 메뉴 안에서 지정할 수 있으며 메뉴 밖에서는 진단한다.\n"
+      "start_line": 26,
+      "end_line": 57,
+      "raw": "기본 항목 폭 141, 간격 2, 컴팩트 항목 높이 18과 일반 항목 높이 24는 디자인 값을\n기준으로 디자인 값을 정의했다. iiGUI의 `BasicNativeMenu`는 범용 팝업·스택 경계를 사용해\n직접 자식 항목을 등록하고 메뉴 배경, 선택, 키보드 이동과 실행 순서를 소유한다.\n개별 항목 높이를 설정하면 메뉴 전체 높이에도 반영된다.\n화면보다 긴 메뉴는 내용 영역을 화면 안에 자르고 스크롤한다. 키보드 포커스가 화면 밖\n항목으로 이동하면 해당 항목을 보이도록 스크롤 위치를 조정한다.\n메뉴 표면은 기본 불투명 바탕 위에 채색 레이어를 합성한다. `menuOpacity`는 전체\n팝업의 투명도가 아닌 채색 레이어의 강도이며 기본값은 0.12이다. `baseColor`,\n`backgroundColor`, `borderColor`로 각 레이어를 바꿀 수 있다.\n앱은 팝업 핸들을 기존 위젯의 문맥 메뉴로 연결하고 일반 외부 클릭과 외부 문맥\n메뉴 요청의 닫기 정책을 각각 지정할 수 있다. 기본 선언형 `Menu`와 `ContextMenu`도\n이 구현을 사용하며 `targetId`, 정적 문자열 `items`, 직접 자식 항목과 구분선, 반응형 선택과\n디자인 값, 열림·닫힘·취소·항목 실행 콜백을 지원한다. `keepOpen`이 참이면 항목을\n실행해도 메뉴를 유지하며 거짓이면 메뉴의 기본 정책을 따른다. `closeOnTrigger`는\n해당 항목의 정책을 명시적으로 지정하고 `keepOpen`과 함께 사용할 수 없다.\n직접 자리에 항목이나 구분선 하나로 확장되는 재사용 `View`를 두거나 그 항목에\n지역 선언을 둘 수 있다. 등록 포트는 메뉴의 수명을 약하게 참조하며, 중첩 스코프에서도\n원래 메뉴에만 항목을 등록한다.\n구분선은 선택 순서의 인덱스에는 포함되지만 키보드 선택에서는 건너뛴다. 표시나\n크기를 바꾸면 팝업 크기가 함께 변경된다. 변경 결과가 팝업 크기 제한을 넘으면\n자식과 메뉴를 기존 유효 상태로 되돌리고 반응형 오류를 전달한다. `MenuItem` 안에\n하나의 직접 `Menu` 또는 `ContextMenu`를 두어 하위 메뉴를 구성할 수 있다. 오른쪽\n키는 하위 메뉴를 열고 첫 항목에 포커스를 넘기며, 왼쪽 키는 현재 하위 메뉴를 닫고\n부모 항목으로 돌아간다. 마지막 동작은 열린 조상 메뉴를 닫는다. 콜백이 메뉴를\n다시 열면 이전 동작의 닫기 계획은 새 메뉴에 적용되지 않는다.\n연결된 하위 메뉴가 없는 항목은 `showChevron`과 `hasChildItems`가 모두 참일 때만\n하위 메뉴로 취급한다. 따라서 기본 `hasChildItems`를 유지하고 화살표만 숨긴 일반\n명령도 실행 후 자동으로 닫힌다. 실제 하위 메뉴가 연결된 항목은 화살표를 숨겨도\n부모를 유지한다. `keepOpen`과 `closeOnTrigger`는 위 기본 동작보다 우선한다.\n하위 메뉴를 연결할 때 부모 메뉴의 항목 상태도 갱신한다. 갱신이 오류를 반환하거나\n예외를 던지면 해당 연결을 되돌리며, 그 사이 재진입한 더 새로운 상태는 보존한다.\n항목이 이미 폐기됐거나 새로운 상태에 밀렸다면 외부 팝업 조회를 호출하지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 66,
+      "raw": "마우스나 펜을 누르지 않고 항목 위로 이동하면 그 항목이 선택된다. 하위 메뉴가\n있으면 클릭 콜백이나 항목 실행 콜백 없이 열고, 다른 항목 또는 비활성 항목·구분선으로\n이동하면 기존 하위 메뉴를 닫는다. 하위 메뉴 안으로 이동할 때는 열린 조상 메뉴를\n유지한다. 터치 이동과 버튼을 누른 드래그는 메뉴를 열거나 전환하지 않는다. 전환은\n즉시 이루어지며 지연 열기나 대각선 포인터 경로 예측은 제공하지 않는다. 메뉴 밖으로\n이동한 것만으로 전체 메뉴를 닫지는 않고 기존의 바깥 클릭·취소 정책을 따른다.\n하위 메뉴를 닫는 콜백이 메뉴를 다시 열거나 새 입력·상태 변경을 일으키면 이전 포인터\n전환을 중단한다. 포인터로 선택한 항목에서도 기존 키보드 이동을 계속할 수 있다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 68,
+      "end_line": 71,
+      "raw": "사용자 정의 `MenuItemPort`는 기존 콜백 외에 `submenu_open`과 `close_submenu`를 제공하면\n형제 하위 메뉴의 포인터 전환에 참여한다. `MenuPopupPort`의 `close`는 기존 어댑터와의\n호환을 위해 선택 사항이지만 열린 팝업을 형제 항목으로 전환하려면 필요하다. 없는\n경우 열린 팝업을 임의로 버리지 않고 `unsupported`를 반환한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 85,
+      "raw": "메뉴의 직접 자리에 재사용 가능한 `[View]` 묶음을 넣으면 그 안의 항목과 구분선을\n주변 항목 사이에 선언한 순서대로 등록한다. 빈 묶음도 허용하며, 같은 묶음을 여러\n번 사용하면 각각 독립적인 위젯 정체성을 갖는다. 묶음에 전달한 반응형 값과 각 항목의\n표시·활성 상태 및 콜백은 일반 메뉴 항목과 같은 수명과 동작을 따른다. 직접 묶음의\n최종 구성 요소는 메뉴 항목과 구분선이어야 한다. 조건 분기나 반복 행의 루트에도 같은\n묶음을 사용할 수 있으며 묶음 안에 조건과 키 기반 반복을 배치할 수 있다. 묶음이 다시\n조건이나 반복에 들어가는 구성도 지원한다. 각 동적 부분은 선언 순서의 별도 슬롯을\n차지하고, 주변 항목이나 다른 반복 행을 다시 만들지 않고 변경된다.\n이 동적 섹션의 후보 게시와 키별 행 수명은 탭 묶음과 공통 구현을 사용한다.\n`NativeSection.h`의 조합 계약은 전달된 항목의 그룹 타입을 사용하며 iiGUI에 직접 의존하지 않는다.\nmacOS 접근성 그룹 계산은 중간 스택과 콘텐츠 호스트를 통과하므로 중첩 메뉴 항목도\n가장 가까운 메뉴에 포함된다. 경계와 플랫폼별 제한은\n[iiGUI 접근성 의미 정보](../../iiGUI/docs/AccessibilitySemantics.md)를 따른다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "fenced_code",
+      "start_line": 87,
+      "end_line": 94,
+      "raw": "```lvui\nconst Actions(title: String): [View] = [\n    MenuItem(label: title, hasChildItems: false),\n    MenuDivider(),\n    MenuItem(label: \"Export\", hasChildItems: false)\n]\nMenu { Actions(title: vm.actionTitle) }\n```\n",
+      "language": "lvui",
+      "code": "const Actions(title: String): [View] = [\n    MenuItem(label: title, hasChildItems: false),\n    MenuDivider(),\n    MenuItem(label: \"Export\", hasChildItems: false)\n]\nMenu { Actions(title: vm.actionTitle) }\n",
+      "closed": true
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 96,
+      "end_line": 104,
+      "raw": "선언형 `Menu`와 `ContextMenu`의 직접 자리에 `if`·`else if`·`else`를 사용할 수\n있다. 각 선택 분기는 `MenuItem`·`ContextMenuItem`·구분선 또는 이들로 구성된\n재사용 `[View]` 묶음을 생성한다. 항목의 지역\n`import`·`const`는 선택한 분기의 수명에 속한다. 선택한 항목에는 직접 하위 메뉴도\n둘 수 있다. 선택 분기의 콘텐츠를 별도 세대로\n준비하고 메뉴 항목 등록과 함께 게시하므로, 잘못된 후보는 기존 분기와 선택·크기를\n보존한다. 선택하지 않은 조건의 변경은 현재 분기를 다시 생성하지 않는다. 조건이\n거짓이거나 항목이 숨겨지면 빈 슬롯과 그 간격이 사라진다. 제거한 항목의 선택과\n포커스도 정리하며, 구분선은 키보드 탐색에서 건너뛴다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 106,
+      "end_line": 115,
+      "raw": "메뉴의 직접 자리에 키를 지정한 `for`도 사용할 수 있다. 각 행의 루트는\n`MenuItem`·`ContextMenuItem`·`MenuDivider`·`ContextMenuDivider` 하나 또는 이들로\n확장되는 재사용 `[View]` 묶음이며, 항목에는 직접 하위 메뉴를 둘 수 있다. 메뉴\n앞뒤의 정적 항목·조건부 섹션과 선언 순서를\n유지한다. 각 행의 표시와 활성화 상태, 항목 높이와 콜백도 반응한다. 키가 같은 행은\n삽입과 재정렬 뒤에도 위젯과 선택을 유지하고, 제거한 행은 퇴역한다. `id`, `first`,\n`count`를 지정할 수 있으며 내부 방향과 간격은 메뉴의 `itemSpacing`을 따른다.\n메뉴가 받아들이지 못한 간격을 행에 적용하지 않는다. 중복 키나 과도하게 큰 후보는\n현재 항목과 크기를 보존하고 반응형 오류를 보고한다.\n반복 섹션은 최대 4,096개 행과 항목, 키당 1,024바이트를 허용한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "fenced_code",
+      "start_line": 117,
+      "end_line": 124,
+      "raw": "```lvui\nContextMenu(id: \"actions\", targetId: \"anchor\") {\n    for (item in vm.actions, key: item.id, id: \"actionRows\") {\n        ContextMenuItem(label: item.label, enabled: item.enabled,\n                        hasChildItems: false, onClick: item.run)\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "ContextMenu(id: \"actions\", targetId: \"anchor\") {\n    for (item in vm.actions, key: item.id, id: \"actionRows\") {\n        ContextMenuItem(label: item.label, enabled: item.enabled,\n                        hasChildItems: false, onClick: item.run)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 126,
+      "end_line": 131,
+      "raw": "반복 행의 루트에는 `if`·`else if`·`else`를 둘 수도 있다. 각 분기는 항목이나\n구분선 또는 이들의 재사용 묶음을 생성하며, 거짓 분기가 없으면 해당\n행의 간격이 사라진다. 분기 교체는\n같은 키의 다른 행과 그 선택을 보존한다. 잘못된 새 분기가 거부되면 기존 분기가\n유지된다. 반복 행에 또 다른 키 기반 반복을 둘 수 있다. 자동 가상화와 별도\n`spacing`·`horizontal` 입력은 아직 지원하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 132,
+      "end_line": 132,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 133,
+      "end_line": 159,
+      "raw": "C++ 조합에서는 메뉴 콘텐츠의 직접 `content_host`를 `register_section()`에 등록하고,\n반환한 `MenuSectionPort`에 표시 순서의 `MenuItemPort` 목록을 전달한다. 구분선은\n`menu_divider_port()`로 변환한다. 새로운 목록은 호스트의 `set_content` 또는\n`set_keyed_content`의 commit 함수에서 전달해야 하며, 실제 후보에 포함된 항목을 빠짐없이\n전달하는 책임은 호출자에게 있다. 키별 반복 호스트의 내부 간격도 메뉴의 현재\n`item_spacing`과 맞춰야 한다. 새 항목의 소속·중복·메뉴 크기와 연결을 검사하고,\n같은 키의 살아 있는 위젯은 선택과 정체성을 유지한다. 연결 실패는 새 항목의 연결을\n각각 해제하려 시도하고 기존 메뉴를 보존한다. 사용자 정의 어댑터가 해제를 거부하거나\n외부에 이미 발행한 부작용까지 되돌리지는 못한다. 호스트가 별도로 비워져 항목이나 구분선이 퇴역해도\n메뉴에서 해당 등록을 제거한다. 기존 직접 자식 어댑터의 `widget` 함수는 선택 사항이며,\n동적 섹션의 어댑터는 소유 관계 검사를 위해 이를 제공해야 한다.\n동적 섹션 안에서 여러 항목을 하나의 세로 스택에 담는 어댑터는 각 `MenuItemPort`의\n`layout_groups`에 해당 스택을 지정할 수 있다. 각 스택은 해당 항목의 조상이면서\n섹션 안에 있어야 하고 중복되거나 이미 게시된 항목에서 바뀌면 거절된다. 메뉴는\n그룹의 스택 설정을 소유해 간격을 `item_spacing`, 정렬을 늘이기로 맞추고 패딩 등\n다른 스택 설정은 기본값으로 되돌린다. 고정 크기나 flex를 가진 그룹은 거절하며,\n게시 후 앱이 이 크기와 flex를 직접 바꾸지 않아야 한다. 빈 스택이 공간을 차지하지 않아야\n한다면 스택에 `set_collapse_when_empty(true)`도 설정한다. `MenuCapture`는 후보\n그룹과 항목을 모아 소유 스레드에서 한 번 게시한다. 공유 소유되는 캡처의 `slot()`은\n선언 위치를 유지하는 하위 섹션 포트를 돌려준다. 게시 전 변경은 후보에만 반영되고,\n게시 후 변경은 전체 후보가 상위 섹션에서 승인된 경우에만 확정된다. 항목 추가와\n슬롯 생성은 게시 전에만 가능하며, 총 4,096개 항목과 최대 64개 그룹 계층을 허용한다.\n캡처가 폐기된 뒤 포트는 실패한다. 게시 중 재진입과 다른 스레드의 접근도 거절한다.\n`MenuRepeatedRows::Row::add_group()`은 아직 게시하지 않은 행에서만 사용할 수 있다.\n간격 갱신 중에는 검증해 둔 그룹 정체성을 사용하므로, 그룹마다 배치를 조회해 다른\n그룹이 이전 간격으로 남은 중간 상태를 관찰자에게 발행하지 않는다. 후보를 검사하는\n동안 콜백이 메뉴를 다시 바꾸면 그 새 상태를 보존하고 이전 후보를 취소한다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 160,
+      "end_line": 160,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 161,
+      "end_line": 184,
+      "raw": "`LVUI.OwnedMenu.Sections`는 독립 C++ 조합의 조건부 교체·키 재정렬·표시·구분선,\n포인터와 키보드, 후보 실패·콜백 정리·외부 위젯 거부를 창 없이 검사한다.\n`LVUI.OwnedMenu.Conditional`은 실제 `.lvui` 생성 화면의 분기·하위 메뉴·항목 조작,\n숨김, 잘못된 분기 보존과 복구를 확인한다. `LVUI.OwnedMenu.Repeated`는 실제 선언에서\n반복 항목과 구분선의 삽입·재정렬·범위·선택·표시·키보드·간격·후보 실패 복구를\n검사한다. `LVUI.OwnedMenu.Sequence`는 여러 항목과 빈 묶음, 재사용 정체성,\n순서·키보드·반응형 값·표시·수명을 창 없이 검사한다. `LVUI.OwnedMenu.Bundles`는\n조건·반복의 여러 항목, 빈 분기, 숨김, 재정렬, 하위 메뉴, 간격 오류와 후보 복구를\n검사한다. `LVUI.OwnedMenu.DynamicBundle`과 `LVUI.OwnedMenu.NestedComposition`은\n묶음 내부와 조건·반복 내부의 중첩 조건·반복, 행별 반응형 값, 중첩 행 재정렬과\n수명 정리를 검사한다. 이동 설치된 컴파일러 소비자도 중첩 구성을 생성·컴파일·링크한다.\n선택한 분기의 중괄호에는 지역 import·값·View 묶음을 둘 수 있으며, 조건식은 그\n분기 바깥의 값을 읽는다. 세부 수명은 [조건부 View](ConditionalViews.md)를 따른다.\n반응형 오류는 해당 콘텐츠가 소유한\n바인딩 그래프에 기록되며 [최상위 활성화의 진단](NativeBindings.md)에서 자식 그래프의\n오류도 조회할 수 있다.\n실제 플랫폼·보조 기술 검증도 별도이며 헤드리스 검사로 대체하지 않는다.\n`LVUI.OwnedMenu.RepeatedRows`는\n행의 준비·게시·퇴역, 예외와 재진입, 소유 스레드 및 다른 메뉴의 행 거부를 검사한다.\n`MenuItem`은 별도로 기본·선택·비활성 상태와 라벨·아이콘 슬롯·단축키·방향 표시의\n공간을 계산한다. iiGUI의 `BasicNativeMenuItem`은 디자인 정책과 범용 호스트를 연결하며 이름\n아이콘, 방향 표시, 포인터·키보드 이벤트와 메뉴 항목 접근성 역할을 제공한다.\n기본 선언형 `MenuItem`과 `ContextMenuItem`은 이 어댑터를 사용한다. 항목의 닫기\n정책은 메뉴 안에서 지정할 수 있으며 메뉴 밖에서는 진단한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 185,
+      "end_line": 185,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 186,
+      "end_line": 189,
+      "raw": "메뉴가 폐기될 때 콜백·상위 메뉴·항목 및 섹션 포트는 해제된다. 항목 포트 호출이\n진행 중인 경우 그 호출이 끝난 뒤 해제하며, 도중에 폐기된 갱신은 게시하지 않는다.\nmacOS arm64에서 이 수명 계약과 표·복합 목록·중첩·반복 메뉴, 독립 설치 소비자를\n헤드리스로 검사했다. 실제 플랫폼 창과 GPU 동작은 검사하지 않았다.\n"
     }
   ],
   "outline": [
@@ -102,21 +262,127 @@
     "directive_candidates": [
       {
         "block_id": "b000003",
-        "line": 7,
-        "text": "검사하고 잘못된 후보가 기존 상태를 변경하지 않는다.",
+        "line": 5,
+        "text": "선언 값을 제공하며 Core 외 SDK를 참조하지 않는다. 항목의 입력·그리기와",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000005",
-        "line": 13,
+        "line": 18,
+        "text": "검사하고 잘못된 후보가 기존 상태를 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 24,
         "text": "모델이 소유하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 57,
+        "text": "항목이 이미 폐기됐거나 새로운 상태에 밀렸다면 외부 팝업 조회를 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 62,
+        "text": "유지한다. 터치 이동과 버튼을 누른 드래그는 메뉴를 열거나 전환하지 않는다. 전환은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 63,
+        "text": "즉시 이루어지며 지연 열기나 대각선 포인터 경로 예측은 제공하지 않는다. 메뉴 밖으로",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 82,
+        "text": "`NativeSection.h`의 조합 계약은 전달된 항목의 그룹 타입을 사용하며 iiGUI에 직접 의존하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 102,
+        "text": "보존한다. 선택하지 않은 조건의 변경은 현재 분기를 다시 생성하지 않는다. 조건이",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 113,
+        "text": "메뉴가 받아들이지 못한 간격을 행에 적용하지 않는다. 중복 키나 과도하게 큰 후보는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 131,
+        "text": "`spacing`·`horizontal` 입력은 아직 지원하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 143,
+        "text": "동적 섹션의 어댑터는 소유 관계 검사를 위해 이를 제공해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 158,
+        "text": "그룹이 이전 간격으로 남은 중간 상태를 관찰자에게 발행하지 않는다. 후보를 검사하는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 177,
+        "text": "실제 플랫폼·보조 기술 검증도 별도이며 헤드리스 검사로 대체하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 187,
+        "text": "진행 중인 경우 그 호출이 끝난 뒤 해제하며, 도중에 폐기된 갱신은 게시하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000015",
+        "label": "iiGUI 접근성 의미 정보",
+        "target": "../../iiGUI/docs/AccessibilitySemantics.md",
+        "kind": "relative",
+        "line": 85
+      },
+      {
+        "block_id": "b000029",
+        "label": "조건부 View",
+        "target": "ConditionalViews.md",
+        "kind": "relative",
+        "line": 173
+      },
+      {
+        "block_id": "b000029",
+        "label": "최상위 활성화의 진단",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 175
+      }
+    ],
     "tables": []
   },
   "provenance": {

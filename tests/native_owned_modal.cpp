@@ -1,4 +1,8 @@
 #include <LVUI/NativeModal.h>
+#include <iiGUI/NativeModalView.h>
+#include <iiGUI/ModalPresentation.h>
+#include <iiGUI/AlertButtonModel.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -6,6 +10,20 @@
 #include <stdexcept>
 #include <thread>
 #include <vector>
+#include <type_traits>
+
+namespace lvui::native {
+using ModalInput=ModalInputValue<ii::gui::RasterImage>;
+using ModalModel=ii::gui::BasicModal<ModalHostModelPolicy>;
+using ButtonModel=ii::gui::BasicButton<ButtonHostModelPolicy>;
+using AlertButtonModel=ii::gui::BasicAlertButton<AlertButtonModelPolicy<ButtonModel>>;
+using NativeButton=ButtonBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
+using NativeModal=ModalBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::BasicAlertButton,
+    ii::gui::BasicModal,ii::gui::BasicNativeModal,ii::gui::CachedSvgDecoder,ii::gui::Widget,ii::gui::WidgetBuilder,ii::gui::ModalPresentation>;
+}
+static_assert(std::is_same_v<lvui::native::NativeModal,
+    ii::gui::BasicNativeModal<lvui::native::ModalHostPolicy<lvui::native::ModalModel,lvui::native::NativeButton,
+    lvui::native::AlertButtonModel,ii::gui::CachedSvgDecoder,ii::gui::Widget,ii::gui::WidgetBuilder,ii::gui::ModalPresentation>>>);
 
 namespace {
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }

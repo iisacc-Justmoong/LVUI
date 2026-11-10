@@ -1,4 +1,4 @@
-#include <LVUI/NativeHierarchyList.h>
+#include "hierarchy_list_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
@@ -45,7 +45,38 @@ struct RetireEditor final : lvui::HierarchyEditor {
     }
 };
 }
+void variable_drag(){
+    using namespace ii::gui;
+    auto source=std::make_shared<lvui::HierarchyMemory>(std::vector<lvui::HierarchyEntry>{
+        {.key="a",.label="A"},{.key="b",.label="B"},{.key="c",.label="C"},
+        {.key="d",.label="D"},{.key="e",.label="E"},{.key="f",.label="F"}});
+    auto controller=std::make_shared<lvui::HierarchyController>(source);
+    require(take(controller->set_row_extent("a",40.))&&take(controller->set_row_extent("b",10.))&&
+            take(controller->set_row_extent("c",40.)),"Variable drag row setup failed");
+    lvui::native::HierarchyListInput input;input.controller=controller;input.editor=source;
+    input.editable=true;input.width=200;input.height=100;
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"host",{240,140}));std::vector<std::string> activated,moved;
+    good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
+        auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});
+        if(!column)return std::unexpected(column.error());
+        auto list=HierarchyListTestView::create(builder,*column,"varied",input,
+            {.activated=[&](const auto& event){activated.push_back(event.key);},.moved=[&](const auto& plan){moved.push_back(plan.key);}});
+        return list?ii::core::Result<void>{}:std::unexpected(list.error());
+    }));
+    (void)take(tree->drawing_snapshot({240,140}));
+    const auto send=[&](WidgetInputKind kind,double y){good(tree->input({.kind=kind,.x=10,.y=y,.buttons=1}));};
+    send(WidgetInputKind::pointer_down,45);send(WidgetInputKind::pointer_up,45);
+    require(activated==std::vector<std::string>{"b"}&&take(source->snapshot())->revision==0,
+            "Variable row click chose the wrong entry or edited the source");
+    send(WidgetInputKind::pointer_down,45);send(WidgetInputKind::pointer_move,80);send(WidgetInputKind::pointer_up,80);
+    auto snapshot=take(source->snapshot());
+    require(snapshot->revision==1&&keys(*snapshot)==std::vector<std::string>({"a","c","b","d","e","f"})&&
+            moved==std::vector<std::string>{"b"},"Variable row drag chose the wrong source or drop target");
+    good(host.clear_content());tree->close();
+}
 int main() {
+    variable_drag();
     using namespace ii::gui;
     auto source = std::make_shared<lvui::HierarchyMemory>(std::vector<lvui::HierarchyEntry>{
         {.key="a", .label="A"}, {.key="a1", .parent="a", .label="A child"},
@@ -55,17 +86,33 @@ int main() {
     input.editable = true; input.width = 200; input.height = 100;
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {240, 140}));
-    std::optional<lvui::native::NativeHierarchyList> list; std::vector<std::string> activated, moved;
+    std::optional<HierarchyListTestView> list; std::vector<std::string> activated, moved;
+    lvui::native::HierarchyRowViewFactoryValue<ii::gui::WidgetBuilder> row_view;
+#ifdef LVUI_TEST_HIERARCHY_ROW_DELEGATE
+    int custom_actions=0;
+    row_view=[&](WidgetBuilder& builder,std::shared_ptr<const lvui::native::HierarchyRowContext> row)->ii::core::Result<void>{
+        auto content=builder.absolute_stack({},"delegate",{200,20});if(!content)return std::unexpected(content.error());
+        auto label=builder.label(*content,"delegate-label",{.text=row->get().entry.label});if(!label)return std::unexpected(label.error());
+        if(auto positioned=label->set_frame({0,0,100,20});!positioned)return positioned;
+        auto button=builder.button(*content,"delegate-action",{.text="Action"},[&]{++custom_actions;});if(!button)return std::unexpected(button.error());
+        return button->set_frame({100,0,50,20});
+    };
+#endif
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading});
         if (!column) return std::unexpected(column.error());
-        auto value = lvui::native::NativeHierarchyList::create(builder, *column, "tree", input,
+        auto value = HierarchyListTestView::create(builder, *column, "tree", input,
             {.activated = [&](const auto& event) { activated.push_back(event.key); },
-             .moved = [&](const auto& plan) { moved.push_back(plan.key); }});
+             .moved = [&](const auto& plan) { moved.push_back(plan.key); }}, {}, row_view);
         if (!value) return std::unexpected(value.error()); list = *value; return {};
     }));
     (void)take(list->root().snapshot());
     const auto send = [&](WidgetInputKind kind, double x, double y) { return tree->input({.kind=kind, .x=x, .y=y, .buttons=1}); };
+#ifdef LVUI_TEST_HIERARCHY_ROW_DELEGATE
+    good(send(WidgetInputKind::pointer_down,125,10));good(send(WidgetInputKind::pointer_up,125,10));
+    require(custom_actions==1&&activated.empty()&&take(source->snapshot())->revision==0,
+            "An editable hierarchy intercepted a custom row's button");
+#endif
     good(send(WidgetInputKind::pointer_down, 10, 10)); good(send(WidgetInputKind::pointer_up, 10, 10));
     require(activated == std::vector<std::string>{"a"} && take(source->snapshot())->revision == 0,
             "A click in an editable hierarchy did not activate without editing");
@@ -106,9 +153,9 @@ int main() {
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading});
         if (!column) return std::unexpected(column.error());
-        auto value = lvui::native::NativeHierarchyList::create(builder, *column, "large", input,
+        auto value = HierarchyListTestView::create(builder, *column, "large", input,
             {.activated = [&](const auto& event) { activated.push_back(event.key); },
-             .moved = [&](const auto& plan) { moved.push_back(plan.key); }});
+             .moved = [&](const auto& plan) { moved.push_back(plan.key); }}, {}, row_view);
         if (!value) return std::unexpected(value.error()); list = *value; return {};
     }));
     (void)take(list->root().snapshot());
@@ -124,6 +171,8 @@ int main() {
     require(!send(WidgetInputKind::pointer_up, 10, 38) && take(large->snapshot())->revision == 1 && moved.size() == 1 &&
             !take(take(list->row("1")).options()).configuration.drag_preview,
             "A rejected move changed the source or left its preview active");
+#ifndef LVUI_TEST_HIERARCHY_ROW_DELEGATE
+    // A custom row intentionally does not resolve the default row icon.
     auto invalid_refresh = std::make_shared<InvalidRefreshEditor>(); invalid_refresh->source = large;
     input.editor = invalid_refresh; good(list->set_options(input));
     good(send(WidgetInputKind::pointer_down, 10, 10)); good(send(WidgetInputKind::pointer_move, 10, 38));
@@ -132,11 +181,15 @@ int main() {
             "A committed move was hidden when refreshing its new view failed");
     auto repaired = take(large->snapshot())->entries; repaired.front().icon_name.clear();
     input.source_revision = std::int64_t(take(large->replace(repaired, 3)));
+    constexpr std::uint64_t expected_retired_revision=5;constexpr std::size_t expected_moved_count=2;
+#else
+    constexpr std::uint64_t expected_retired_revision=2;constexpr std::size_t expected_moved_count=1;
+#endif
     auto retiring = std::make_shared<RetireEditor>(); retiring->source = large; retiring->host = host;
     input.editor = retiring; good(list->set_options(input)); good(list->root().set_scroll_offset(0));
     good(send(WidgetInputKind::pointer_down, 10, 10)); good(send(WidgetInputKind::pointer_move, 10, 38));
     good(send(WidgetInputKind::pointer_up, 10, 38));
-    require(take(large->snapshot())->revision == 5 && moved.size() == 2 && !list->set_options(input),
+    require(take(large->snapshot())->revision == expected_retired_revision && moved.size() == expected_moved_count && !list->set_options(input),
             "A retiring editor delivered a stale callback or retained the widget");
     tree->close();
 }

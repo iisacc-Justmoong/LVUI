@@ -3,7 +3,7 @@ let Piece(title: String): View = VStack { LabelButton(id: "pieceButton", text: t
 Window {
     VStack {
         LabelSegmentedControl(id: "group", forceBorderlessTone: vm.force, spacing: vm.spacing,
-                              enabled: vm.enabled, shapeStyle: vm.shape) {
+                              enabled: vm.enabled, shapeStyle: vm.shape, method: vm.method, methods: [vm.after]) {
             LabelButton(id: "first", text: "One", tone: vm.tone, onClick: vm.clicked)
             LabelButton(id: "second", text: "Two", onClick: vm.clicked)
             VStack(id: "nested") { LabelButton(id: "nestedButton", text: "Nested", onClick: vm.clicked) }
@@ -13,7 +13,7 @@ Window {
             for (item in vm.items, key: item.id, id: "rows", horizontal: true) {
                 LabelButton(id: "repeated", text: item.label, onClick: vm.clicked)
             }
-            LabelSegmentedControl(id: "inner", forceBorderlessTone: vm.innerForce) {
+            LabelSegmentedControl(id: "inner", forceBorderlessTone: vm.innerForce, methods: vm.methods) {
                 LabelButton(id: "innerButton", text: "Inner", onClick: vm.clicked)
             }
         }

@@ -1,4 +1,6 @@
 #include <LVUI/NativeToolbarButton.h>
+#include <iiGUI/NativeToolbarButtonView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 
 #include <cstdint>
@@ -8,7 +10,16 @@
 #include <stdexcept>
 #include <string>
 #include <thread>
+#include <type_traits>
 #include <vector>
+
+namespace lvui::native {
+using ToolbarButtonInput=ToolbarButtonInputValue<ii::gui::RasterImage>;
+using ToolbarButtonModel=ii::gui::BasicToolbarButton<ToolbarButtonModelPolicy>;
+using NativeToolbarButton=ToolbarButtonBinding<ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+}
+static_assert(std::is_same_v<lvui::native::NativeToolbarButton,
+    ii::gui::BasicNativeToolbarButton<lvui::native::ToolbarButtonHostPolicy<lvui::native::ToolbarButtonModel,ii::gui::CachedSvgDecoder>>>);
 
 namespace {
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }

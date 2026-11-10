@@ -1,0 +1,11 @@
+import vm NativeOwnedListItemCustomLeadingModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "item", type: vm.kind, label: "Library", iconName: "missing-custom-leading-icon",
+                 iconSize: vm.size, showLeadingIcon: vm.shown,
+                 leadingComponent: PushButton(id: "leading", text: vm.label, onClick: vm.leadingClicked),
+                 footerComponent: PushButton(id: "footer", text: "More", height: 30, onClick: vm.footerClicked))
+        ListItem(id: "natural", type: .Navigation, label: "Natural",
+                 leadingComponent: PushButton(id: "naturalLeading", text: "Lead", width: 65, height: 50))
+    }
+}

@@ -1,0 +1,12 @@
+#pragma once
+#include <LVUI/NativeTableHeader.h>
+#include <iiGUI/NativeTableHeaderView.h>
+#include <iiGUI/TableHeaderModel.h>
+#include <iiGUI/TableViewport.h>
+#include <iiGUI/TableHeaderPresentation.h>
+#include <iiGUI/TableViewGroup.h>
+#include <iiGUI/SvgImageCache.h>
+using TableHeaderTestModel=lvui::TableHeaderModelBinding<ii::gui::BasicTableHeader,lvui::TableViewportBinding<ii::gui::BasicTableViewportSource>>;
+using TableHeaderTestPresentation=lvui::native::TableHeaderPresentationBinding<ii::gui::BasicTableHeaderPresentation,ii::gui::CachedSvgDecoder>;
+using TableHeaderTestGroup=lvui::native::TableViewGroupBinding<ii::gui::BasicNativeTableViewGroup,ii::gui::WidgetBuilder,ii::gui::Rect>;
+using TableHeaderTestView=lvui::native::TableHeaderBinding<ii::gui::BasicNativeTableHeader,TableHeaderTestModel,TableHeaderTestPresentation,TableHeaderTestGroup,ii::gui::WidgetBuilder,ii::gui::Rect,lvui::TableViewportBinding<ii::gui::BasicTableViewportSource>>;

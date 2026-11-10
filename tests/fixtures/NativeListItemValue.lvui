@@ -1,0 +1,10 @@
+import vm NativeListItemValueModel
+Window {
+    VStack {
+        ListItem(id: "simple", type: .Navigation, label: "Storage", description: "Used",
+                 value: vm.value, showValue: vm.show, showTrailingIcon: vm.trailing, onClick: vm.activate)
+        ListItem(id: "composite", type: .Navigation, label: "Storage", description: "Used",
+                 iconName: "nodesfolder", showLeadingIcon: true, value: vm.value,
+                 showValue: vm.show, showTrailingIcon: vm.trailing, onClick: vm.activate)
+    }
+}

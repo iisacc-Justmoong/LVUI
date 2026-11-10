@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeAlert.md",
-    "sha256": "f4a2056ec9c0a2e7f9e4dd1a52a5c24cb84712b3c7d956fc6d33dbfafb6003c7",
-    "bytes": 3861,
-    "line_count": 51,
+    "sha256": "fc7a157f37261adc4df5762c2cda293af7e9f6a4d692509399a30fc0f18000f8",
+    "bytes": 6185,
+    "line_count": 77,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,36 +42,36 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 6,
-      "raw": "`LVUI/Alert.h`는 경고창의 콘텐츠·액션·색상·기하를 호스트와 독립적인 표준 C++\n값으로 관리한다. 제목과 설명 높이는 글꼴 서비스를 가진 호스트가 측정하여 전달한다.\n기본 폭은 가용 폭에서 좌우 24를 뺀 값과 선호 폭 500의 작은 값이며, 좁은 창에서는\n280 미만으로 줄어든다. 카드의 기본 반경은 36과 짧은 변의 40% 중 작은 값이다.\n"
+      "end_line": 5,
+      "raw": "복합 경고창의 기본 primary 액션은 정적 또는 반응형\n[창 강조색](NativeWindow.md)을 따르며 `primaryColor`를 명시하면 그 값을 사용한다.\n열린 상태에서 창 색상을 바꾸어도 액션과 포커스를 유지한다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 7,
-      "end_line": 7,
+      "start_line": 6,
+      "end_line": 6,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 8,
-      "end_line": 13,
-      "raw": "액션 개수가 자동이면 세 번째 또는 두 번째 문구의 존재에 따라 세 개 또는 두 개를\n표시하고, 그 외에는 한 개를 표시한다. 비어 있는 표시 문구는 `Button`이다. 한 개는\n단독, 두 개는 보조·기본 순서로 가로 배치하며 높이는 56이다. 세 개는 기본·보조·\n추가 순서로 세로 배치하고 높이는 56·56·44이다. 세 개 액션의 보조 문구는 기본적으로\ndestructive 색을 사용하며 이 정책과 각 액션의 활성 상태를 지정할 수 있다. 액션\n메서드와 닫기 정책은 호스트 어댑터가 연결한다.\n"
+      "start_line": 7,
+      "end_line": 10,
+      "raw": "`LVUI/Alert.h`는 경고창의 콘텐츠·액션·색상 입력 값을 관리한다. 상태와 기하는\n`iiGUI/AlertModel.h`의 독립 모델이 계산한다. 제목과 설명 높이는 글꼴 서비스를 가진 호스트가 측정하여 전달한다.\n기본 폭은 가용 폭에서 좌우 24를 뺀 값과 선호 폭 500의 작은 값이며, 좁은 창에서는\n280 미만으로 줄어든다. 카드의 기본 반경은 36과 짧은 변의 40% 중 작은 값이다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 14,
-      "end_line": 14,
+      "start_line": 11,
+      "end_line": 11,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 15,
+      "start_line": 12,
       "end_line": 17,
-      "raw": "`layout()`은 뷰포트 기준 중앙 프레임과 프레임 내부 좌표를 계산하고,\n`layout_for_width()`는 이미 호스트가 할당한 폭을 사용한다. 유효하지 않은 설정은\n이전 값을 유지한다. 레거시 코드나 타입을 사용하지 않는다.\n"
+      "raw": "액션 개수가 자동이면 세 번째 또는 두 번째 문구의 존재에 따라 세 개 또는 두 개를\n표시하고, 그 외에는 한 개를 표시한다. 비어 있는 표시 문구는 `Button`이다. 한 개는\n단독, 두 개는 보조·기본 순서로 가로 배치하며 높이는 56이다. 세 개는 기본·보조·\n추가 순서로 세로 배치하고 높이는 56·56·44이다. 세 개 액션의 보조 문구는 기본적으로\ndestructive 색을 사용하며 이 정책과 각 액션의 활성 상태를 지정할 수 있다. 액션\n메서드와 닫기 정책은 호스트 어댑터가 연결한다.\n"
     },
     {
       "id": "b000008",
@@ -84,53 +84,95 @@
       "id": "b000009",
       "kind": "paragraph",
       "start_line": 19,
-      "end_line": 24,
-      "raw": "`LVUI/NativeAlert.h`는 범용 팝업, 글꼴 측정, 이미지와 LVUI 경고 버튼을 연결한다.\n제목과 설명은 할당된 폭으로 줄바꿈하여 카드 높이를 결정한다. 크기 변경 시 내용을\n다시 측정하고, 그릴 수 없는 후보 설정은 이전 화면으로 되돌린다. 버튼은 닫힌 동안에도\n유지하며 액션은 자동으로 창을 닫지 않는다. 메서드가 창을 닫거나 다시 열면 이전\n열림의 후속 클릭을 전달하지 않는다. 취소는 닫힘 이후에 알리며 새로 열린 창에 오래된\n취소가 전달되지 않도록 호스트의 팝업 세대를 확인한다.\n"
+      "end_line": 21,
+      "raw": "`layout()`은 뷰포트 기준 중앙 프레임과 프레임 내부 좌표를 계산하고,\n`layout_for_width()`는 이미 호스트가 할당한 폭을 사용한다. 유효하지 않은 설정은\n이전 값을 유지한다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 25,
-      "end_line": 25,
+      "start_line": 22,
+      "end_line": 22,
       "raw": "\n"
     },
     {
       "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 31,
+      "raw": "`iiGUI/NativeAlertView.h`의 `AlertView`와 정책 기반 `BasicNativeAlert`가 팝업 트리,\n입력, 글꼴 측정과 수명을 소유한다. `LVUI/NativeAlert.h`는 디자인 토큰, 아이콘 선택과 콜백을 연결하는 독립\n정책과 바인딩이다. 앱이 iiGUI 모델·호스트·표현기와 디코더를 명시적으로 조합하며\n바인딩은 iiSDKCore 외 SDK를 직접 참조하지 않는다.\n제목과 설명은 할당된 폭과 전달된 글꼴·줄 높이로 줄바꿈하여 카드 높이를 결정한다. 크기 변경 시 내용을\n다시 측정하고, 그릴 수 없는 후보 설정은 이전 화면으로 되돌린다. 버튼은 닫힌 동안에도\n유지하며 액션은 자동으로 창을 닫지 않는다. 메서드가 창을 닫거나 다시 열면 이전\n열림의 후속 클릭을 전달하지 않는다. 취소는 닫힘 이후에 알리며 새로 열린 창에 오래된\n취소가 전달되지 않도록 호스트의 팝업 세대를 확인한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
       "kind": "fenced_code",
-      "start_line": 26,
-      "end_line": 34,
+      "start_line": 33,
+      "end_line": 41,
       "raw": "```lvui\nimport vm DialogBackend\nWindow {\n    Alert(id: \"confirmation\", title: vm.title, message: vm.message,\n          buttonCount: 2, primaryText: \"Apply\", secondaryText: \"Cancel\",\n          motionEnabled: false, button1Method: vm.apply,\n          onPrimaryClicked: vm.applied, onDismissed: vm.dismissed)\n}\n```\n",
       "language": "lvui",
       "code": "import vm DialogBackend\nWindow {\n    Alert(id: \"confirmation\", title: vm.title, message: vm.message,\n          buttonCount: 2, primaryText: \"Apply\", secondaryText: \"Cancel\",\n          motionEnabled: false, button1Method: vm.apply,\n          onPrimaryClicked: vm.applied, onDismissed: vm.dismissed)\n}\n",
       "closed": true
     },
     {
-      "id": "b000012",
-      "kind": "blank",
-      "start_line": 35,
-      "end_line": 35,
-      "raw": "\n"
-    },
-    {
-      "id": "b000013",
-      "kind": "paragraph",
-      "start_line": 36,
-      "end_line": 42,
-      "raw": "`button1Method/2Method/3Method`는 인자 없는 메서드 또는\n`const lvui::native::AlertButtonEvent&`를 받는 메서드이다. 해당 메서드가 먼저 실행되고\n정상적으로 같은 창이 열린 상태를 유지하면 대응하는 클릭 콜백이 실행된다.\n제목·액션·활성 상태·기본 폭·색상·모션 설정 등 지원되는 입력은 관측 가능한 값으로\n갱신할 수 있다. `description`은 `message`의 별칭이고 `button1Text` 등은 액션 문구의\n별칭이므로 각각 동시에 지정할 수 없다. `open: true`는 최상위 마운트 직후 한 번 열고,\n반응형 `open`과 콘텐츠 팩터리 안의 초기 개방은 아직 지원하지 않는다.\n"
-    },
-    {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 43,
-      "end_line": 43,
+      "start_line": 42,
+      "end_line": 42,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 44,
-      "end_line": 51,
+      "start_line": 43,
+      "end_line": 52,
+      "raw": "`button1Method/2Method/3Method`는 인자 없는 메서드 또는\n`const lvui::native::ButtonEventValue<Widget>&`를 받는 메서드이다. 해당 메서드가 먼저 실행되고\n정상적으로 같은 창이 열린 상태를 유지하면 대응하는 클릭 콜백이 실행된다.\n제목·액션·활성 상태·기본 폭·색상·모션 설정 등 지원되는 입력은 관측 가능한 값으로\n갱신할 수 있다. `description`은 `message`의 별칭이고 `button1Text` 등은 액션 문구의\n별칭이므로 각각 동시에 지정할 수 없다. `open`은 Bool 상수 또는 관측 가능한 Bool을\n받으며 게시된 세대에서만 열리고 이후 값에 따라 정상적으로 열리거나 닫힌다. 내장 뷰와\n콘텐츠 팩터리 안의 초기 개방도 지원한다. 직접 닫기·취소는 앱의 Bool을 자동으로\n바꾸지 않는다. 앱은 필요에 따라 닫힘·취소 콜백에서 상태를 갱신한다.\n[열림 바인딩](NativePopupOpen.md)의 오류와 수명 계약을 따른다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 54,
+      "end_line": 61,
       "raw": "`iconSource`는 앱이 공급하는 불변 래스터이고 `iconName`과 `iconResolver`는 LVUI\n아이콘 공급자를 사용한다. 기본 아이콘은 LVUI가 작성한 설정·문서 디자인이며 액션이\n세 개이면 문서 디자인을 사용한다. `imageSource: \"\"`는 기본 이미지를 숨긴다.\n실제 화면의 확대 비율과 픽셀 단위 시각 검증은 남아 있다.\n유리와 그림자는 기본적으로 꺼져 있고 명시적으로 켤 수 있다. 지원은 호스트 GPU에\n따라 다르며 실제 플랫폼에서 검증하지 않았다. 공유 `motion` 객체, 아이콘·그림자의\n일부 세부 파라미터, 생성 후 앱 글꼴 변경의 자동 재측정 및 운영체제 접근성 검증도\n아직 남아 있다. 헤드리스 검사는 실제 창이나 GPU를 실행하지 않는다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 72,
+      "raw": "`lvui::Alert` 계산 모델은 제거되었다. 독립 C++ 앱은 `ii::gui::AlertModel`을\n사용하거나 기존 LVUI 입력을 조합할 때 `lvui::native::AlertModel`을 사용한다.\n액션의 안쪽 여백·간격·높이와 둥근 반경 비율은 입력 메트릭으로 조정할 수 있으며\n생성 코드는 공통 디자인 토큰에서 간격과 높이를 공급한다. 기본 액션 문구도\n`fallback_action`으로 지정할 수 있다. iiGUI 모델과 LVUI 생성·호스트 및 독립 설치\n소비자는 macOS arm64 헤드리스 검사에서 통과했다. 실제 창·GPU와 다른 운영체제는\n검사하지 않았다. 입력이 같고 아이콘 공급자 리비전이 같으면 화면을 다시 갱신하지 않는다.\n명시적 갱신 중 공급자 리비전이 바뀌면 안정된 값을 제한된 횟수 내에서 다시 확인하며,\n실패하면 기존 설정을 유지한다. 재진입과 퇴역 시 오래된 요청은 적용하지 않고 자원을 해제한다.\n스타일은 입력 준비 시 계산해 크기 변경 중 반복 생성하지 않는다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 74,
+      "end_line": 77,
+      "raw": "`iiGUI/AlertPresentation.h`는 아이콘 기하, 제목·설명 표현과 액션 입력 구성을\n담당한다. 보이지 않는 액션도 세 슬롯 안에서 준비할 수 있으며 범위를 벗어난\n인덱스는 거부한다. Core 단독 바인딩과 macOS arm64 독립 설치 소비자·생성 및\n호스트 검사는 창 없이 통과했다.\n"
     }
   ],
   "outline": [
@@ -146,36 +188,58 @@
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000007",
-        "line": 17,
-        "text": "이전 값을 유지한다. 레거시 코드나 타입을 사용하지 않는다.",
+        "block_id": "b000011",
+        "line": 26,
+        "text": "바인딩은 iiSDKCore 외 SDK를 직접 참조하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000009",
-        "line": 23,
+        "block_id": "b000011",
+        "line": 30,
         "text": "열림의 후속 클릭을 전달하지 않는다. 취소는 닫힘 이후에 알리며 새로 열린 창에 오래된",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000013",
-        "line": 42,
-        "text": "반응형 `open`과 콘텐츠 팩터리 안의 초기 개방은 아직 지원하지 않는다.",
+        "block_id": "b000017",
+        "line": 61,
+        "text": "아직 남아 있다. 헤드리스 검사는 실제 창이나 GPU를 실행하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000015",
-        "line": 51,
-        "text": "아직 남아 있다. 헤드리스 검사는 실제 창이나 GPU를 실행하지 않는다.",
+        "block_id": "b000019",
+        "line": 69,
+        "text": "검사하지 않았다. 입력이 같고 아이콘 공급자 리비전이 같으면 화면을 다시 갱신하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 72,
+        "text": "스타일은 입력 준비 시 계산해 크기 변경 중 반복 생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "창 강조색",
+        "target": "NativeWindow.md",
+        "kind": "relative",
+        "line": 4
+      },
+      {
+        "block_id": "b000015",
+        "label": "열림 바인딩",
+        "target": "NativePopupOpen.md",
+        "kind": "relative",
+        "line": 52
+      }
+    ],
     "tables": []
   },
   "provenance": {

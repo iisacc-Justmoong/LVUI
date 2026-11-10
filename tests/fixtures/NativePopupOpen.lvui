@@ -1,0 +1,30 @@
+import vm NativePopupOpenModel
+Window {
+    VStack {
+        Modal(id: "modal", open: vm.modalOpen, title: vm.title, motionEnabled: false,
+              onOpened: vm.modalOpened, onClosed: vm.modalClosed) {
+            VStack {
+                InputField(id: "draft", text: "Draft")
+                Modal(id: "nested", open: vm.nestedOpen, motionEnabled: false,
+                      onOpened: vm.nestedOpened, onClosed: vm.nestedClosed) {
+                    Label(id: "nestedBody", text: "Nested")
+                }
+            }
+        }
+        Alert(id: "alert", open: vm.alertOpen, motionEnabled: false, showIcon: false,
+              onOpened: vm.alertOpened, onClosed: vm.alertClosed)
+        Alert(id: "blocked", open: vm.blockedOpen, visible: vm.blockedVisible, motionEnabled: false, showIcon: false)
+        Sheet(id: "sheet", open: vm.sheetOpen, motionEnabled: false,
+              onOpened: vm.sheetOpened, onClosed: vm.sheetClosed) {
+            InputField(id: "sheetInput", text: "Sheet draft")
+        }
+        VStack {
+            let scopedFlag: Bool = vm.scopedOpen
+            Alert(id: "scoped", open: scopedFlag, motionEnabled: false, showIcon: false)
+        }
+        if (vm.showConditional) {
+            Alert(id: "conditional", open: true, motionEnabled: false, showIcon: false,
+                  onOpened: vm.conditionalOpened)
+        }
+    }
+}

@@ -1,0 +1,39 @@
+# 독립 View의 네이티브 컴파일과 런타임 부착
+
+`.lvui` 문서의 최상위에 `Window` 또는 `Application` 없이 단일 View를 선언할 수
+있다. 컴파일러는 이 View를 AOT C++로 생성하며, 생성된 `build`는 전달받은 iiGUI
+위젯 빌더와 부모에 View 트리를 구성한다. View의 상태·객체·반응형 바인딩은 각
+부착 세대가 소유하고 분리할 때 퇴역한다. 기존 Window 및 Application 루트와
+출력 API도 유지한다.
+
+조건과 반복이 최상위인 경우에는 교체 가능한 콘텐츠 호스트가 루트를 유지한다.
+View 시퀀스는 여러 형제의 단일 소유자로 간격이 0인 수직 스택을 사용한다. `Scene`은 계속 Application의
+직계 자식이다. 실행 중 `.lvui` 텍스트를 해석하거나 컴파일러를 배포 앱에 넣지
+않는다.
+
+앱은 `iiGUI/CompiledViewSource.h`의 `ii::gui::compiled_view_source`와 생성 타입을 사용해 View를 기존
+iiGUI `NativeViewSource` 계약으로 감쌀 수 있다. 원천은 여러 번 부착할 수 있으며
+각 부착은 독립적인 View 세션이다. `NativeView`의 후보 생성 실패 시 이전 콘텐츠를
+보존하는 계약과 교체·퇴역 규칙을 그대로 따른다. 백엔드 주입이 필요한 앱은 빌더
+콜백을 전달해 생성 타입의 `build`와 `BackendFactories`를 호출한다.
+
+예를 들어 다음 View는 창을 선언하지 않으며, 각 부착마다 독립된 카운터를 가진다.
+
+```lvui
+VStack {
+    var count: Int = 0
+    Label(text: count)
+    PushButton(text: "+", onClick: { count = count + 1 })
+}
+```
+
+생성된 타입이 `Counter`라면 `ii::gui::compiled_view_source<Counter>()`를
+`NativeView`의 `source` 입력에 전달한다. 스코프나 백엔드를 구성하려면
+`compiled_view_source([](ii::gui::WidgetBuilder& b) { return Counter::build(b, ...); })`의
+콜백 오버로드를 사용한다. 빈 콜백은 거부하며 콜백 예외는 부착 실패로 변환한다.
+생성된 View와 여러 부착의 수명은 `LVUI.NativeView.Embedded`에서 검사한다.
+아직 생성할 수 없는 타입과 기존 fixture는 [네이티브 컴파일 지원 범위](NativeCompilerCoverage.md)에 정리한다.
+
+뷰 원천 팩터리와 호스트 수명은 iiGUI가 소유한다. LVUI 설치본에 종속적인
+호스트 헤더는 없으며 앱이 iiGUI와 LVUI를 명시적으로 조합한다. macOS arm64에서
+독립 설치 소비자와 생성된 중첩 뷰·교체·실패·세션 퇴역을 창 없이 검사했다.

@@ -1,0 +1,7 @@
+import vm NativeSocietyMobileNavigationModel
+Window {
+    VStack {
+        MobileTabBar(id: "tabs", model: vm.items, currentIndex: vm.current, autoSelect: false,
+                     bottomSafeInset: vm.inset, onActivated: vm.activate)
+    }
+}

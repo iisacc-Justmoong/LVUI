@@ -6,11 +6,14 @@
 
 ## LVUI 독립 구현
 
-기본 네이티브 생성 경로의 `ProgressBar`는 `LVUI/ProgressBar.h`의 독립 상태와
-도형 계산을 사용한다. 앱에 생성하는 호스트 접착 코드가 사각형 세 개를 그리며,
-상태 변경은 기존 위젯을 유지하고 다시 그리기를 요청한다. 기본 크기는 100×6이고
-시작값과 현재값의 정규화 구간을 채운다. 직접 C++ API는 역방향 범위, 유효하지 않은
-값의 원자적 거부, 0 크기, 작은 크기의 반경과 테두리를 처리한다.
+기본 네이티브 생성 경로의 `ProgressBar`는 `iiGUI/ProgressIndicator.h`의
+`ii::gui::ProgressIndicator`를 생성하고 선언·바인딩 값과 LVUI 디자인 토큰을
+전달한다. iiGUI가 상태와 기하, 접근성, track·fill·outline, 모션을 담당한다.
+상태 변경은 기존 위젯을 유지하고 필요한 영역의 다시 그리기를 요청한다. 기본
+크기는 100×6이고 시작값과 현재값의 정규화 구간을 채운다. 직접 C++ API는
+역방향 범위, 유효하지 않은 값의 원자적 거부, 0 크기, 작은 크기의 반경과
+테두리를 처리한다. 생성 코드는 `iiGUI/ProgressIndicator.h`를 포함한 iiGUI
+패키지가 필요하며 이전 패키지에는 필요한 헤더를 진단한다.
 
 독립 경로는 `minimumValue`, `maximumValue` 또는 `endValue`, `startValue`,
 `currentValue`, `width`, `height`, `largeHeight`, `regularHeight`, `size`,
@@ -18,9 +21,14 @@
 `displayedProgress`를 지원한다. 각각 상수 또는 C++ 반응형 값으로 지정할 수 있다.
 정방향·역방향 범위를 처리하며, 두 maximum 이름을 동시에 지정하면 진단한다.
 표시 시작과 길이는 화면에 맞게 0–1 범위로 제한한다.
+기본 채움색은 정적 또는 반응형 [창 강조색](NativeWindow.md)을 따르며 직접 지정한
+`fillColor`가 우선한다. 강조색만 바뀌면 목표값과 진행 중인 보간의 시간은 유지한다.
 
-독립 경로의 `stateModel`은 LVUI의 `ProgressState` 스냅샷 또는
-`ProgressStateSource` 인터페이스를 사용한다. 앱이 `ii::core::Observable`로 스냅샷을
+독립 경로의 `stateModel`은 iiGUI의 `ii::gui::ProgressState` 스냅샷 또는
+`ii::gui::ProgressStateSource` 인터페이스를 사용한다. 기존 C++ 코드의
+`lvui::ProgressState`, `ProgressSize`, `ProgressShape`와 모델 직접 참조는
+`ii::gui`의 대응 타입으로 바꾸어야 한다. scoped 선언에는
+`import state ii.gui.ProgressState`를 사용한다. 앱이 `ii::core::Observable`로 스냅샷을
 제공하면 상태 변경과 반응형 키 변경을 함께 관찰한다. 네 개의 `...StateKey`는 기본
 키를 바꾸며 앞뒤 공백을 제거한다. 비어 있는 키는 기본 키로, 존재하지 않는 값이나
 비어 있는 선택적 스냅샷은 직접 입력값으로 대체한다. 소스 값이 유한하지 않거나
@@ -28,9 +36,9 @@
 별개이다. 객체 포인터를 공급하는 앱은 내부 변경을 관찰 가능한 스냅샷 변경으로
 전달해야 하며, 포인터 내부의 일반 C++ 변경은 자동 감지되지 않는다.
 
-동적 값은 하나의 LVUI 구성 후보로 계산·검증한 뒤 기존 위젯에 반영한다. 잘못된
+동적 값은 하나의 iiGUI 구성 후보로 계산·검증한 뒤 기존 위젯에 반영한다. 잘못된
 색상이나 크기는 이전 상태를 유지하며, 정상 값으로 복구할 수 있다. 기본 독립 경로는
-`motionEnabled`와 LVUI `Motion` 값을 받아 보간하며, 프레임 시각은 호스트에서
+`motionEnabled`와 앱의 모션 정책 값을 받아 iiGUI가 보간하며, 프레임 시각은 호스트에서
 주입한다. 프레임 소스가 없는 상태에서 애니메이션을 시작하면 목표에 정착하고 오류를
 보고한다. 자세한 정책과 직접 C++ API는 [네이티브 모션](NativeMotion.md)을 따른다.
 아래 레거시 경로의 전체 동작 대체 여부는 [독립 구현 현황](LVUIIndependence.md)에서 관리한다.

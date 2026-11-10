@@ -23,13 +23,13 @@ Window {
 LVUI 소스·AST·표현식 문자열을 순회하거나 해석하지 않는다. `LVUI::Native`의 컬렉션 상태는
 iiSDKCore 계약에만 의존하며, 생성한 UI가 iiGUI의 키 기반 콘텐츠 API를 연결한다.
 
-일반 목록 값도 선언할 수 있다. `let` 목록은 원본 의존성을 따르는 읽기 전용 C++ 값,
-`var` 목록은 Core Observable 저장소, `@Static let` 목록은 활성화 당시 스냅샷을 사용한다.
+일반 목록 값도 선언할 수 있다. `const` 목록은 원본 의존성을 따르는 읽기 전용 C++ 값,
+`var` 목록은 Core Observable 저장소, `@Static const` 목록은 활성화 당시 스냅샷을 사용한다.
 
 ```lvui
-let labels = ["A", "B", "C"]
-let liveValues = [vm.first, vm.second]
-@Static let initialValues = [vm.first, vm.second]
+const labels = ["A", "B", "C"]
+const liveValues = [vm.first, vm.second]
+@Static const initialValues = [vm.first, vm.second]
 var choices = ["One", "Two"]
 ```
 
@@ -90,8 +90,9 @@ for (item in vm.items, key: item.id, index: ordinal,
 필요한 방향·간격은 반복 입력으로 지정한다. 기본 LVRS 컨트롤의 크기·스타일은 바꾸지 않는다.
 
 본문은 루트 View 하나를 가지며 여러 자식과 지역 선언은 `VStack` 같은 본문 View에 둔다.
-중첩 반복과 조건부 구성은 같은 스코프 계약을 따른다. `TabBar`·메뉴 같은 타입 제한 자식
-입력에 일반 콘텐츠 호스트를 삽입하여 제약을 우회하지 않는다.
+중첩 반복과 조건부 구성은 같은 스코프 계약을 따른다. `TabBar` 같은 타입 제한 자식
+입력에 일반 콘텐츠 호스트를 삽입하여 제약을 우회하지 않는다. 메뉴의 직접 반복은
+[별도 메뉴 섹션 계약](NativeMenu.md)으로 항목을 등록하며 루트 타입과 옵션이 더 제한된다.
 
 ## 자동 네이티브 가상화
 
@@ -109,9 +110,10 @@ Window {
 }
 ```
 
-표시 범위를 QML이나 제품 백엔드에서 매번 계산하지 않는다. AOT 출력은 iiGUI의
-`ScrollView`, 키별 콘텐츠와 C++ `VirtualViewport`·`VirtualCollectionSource<T>`·
-`virtual_collection_frame`을 연결한다. `LVUI::Native`에는 iiGUI 의존성을 추가하지 않는다.
+표시 범위를 제품 백엔드에서 매번 계산하지 않는다. AOT 출력은 iiGUI의 `ScrollView`,
+`BasicVirtualViewport`, `BasicVirtualCollectionPlanner`, `BasicVirtualMeasurements`와
+LVUI의 키별 원천 계약을 연결한다. 행 배치와 측정 인덱스는 iiGUI가 소유하고,
+`LVUI::Native`에는 iiGUI 의존성을 추가하지 않는다.
 
 | 입력 | 의미 |
 |---|---|
@@ -243,3 +245,5 @@ macOS arm64의 현재 작업 트리에서 다음 검사를 마쳤다. 각 범위
 `build/lvui-completion/virtual-collection-verification-20261026.json`에서 추적한다.
 고정 크기 자동 가상화의 통과를 가변 행 실측·화면 밖 탐색·비동기 퇴역·나머지 LVRS 타입·
 실제 창·다른 플랫폼의 완료로 확대하지 않는다. 전체 완료 기준은 계속 유효하다.
+
+반복 목록의 포인터·키보드 입력 연결과 선택 알림 수명은 `iiGUI/CollectionWidgetNavigation.h`가 담당한다. LVUI는 독립적인 `CollectionWidgetNavigationBinding`을 제공하고 생성된 앱이 iiGUI 호스트를 주입한다. 목록 자체 입력을 내부 컨트롤로 오인하지 않으며 별도 자식 컨트롤은 계속 우선한다. 폐기 중인 선택 알림이나 접근 허가 호출은 이후 처리를 중단하고 구독과 콜백을 해제한다. macOS arm64에서 생성된 목록의 선택·포커스·측정·입력·수명과 독립 소비자를 창 없이 검사했다.

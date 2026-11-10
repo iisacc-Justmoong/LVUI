@@ -1,0 +1,9 @@
+#pragma once
+#include "tooltip_presentation_test_binding.h"
+#include <LVUI/NativeTooltip.h>
+#include <iiGUI/TooltipScheduler.h>
+#include <iiGUI/NativeTooltipTargetView.h>
+#include <iiGUI/NativeTooltipView.h>
+using TooltipTestScheduler=ii::gui::TooltipScheduler;
+using TooltipTestTarget=lvui::native::TooltipTargetBinding<ii::gui::BasicNativeTooltipTarget,ii::gui::MotionPreferences,TooltipTestModel,TooltipTestController,TooltipTestPresentation,TooltipTestScheduler>;
+using TooltipTestFacade=lvui::native::TooltipBinding<ii::gui::BasicNativeTooltip,ii::gui::MotionPreferences,TooltipTestModel,TooltipTestController,TooltipTestPresentation,TooltipTestScheduler,TooltipTestTarget>;

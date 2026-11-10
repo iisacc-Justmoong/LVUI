@@ -1,0 +1,73 @@
+import class NativeRepeatedMenuEntry
+import vm NativeRepeatedMenuModel
+let ReusableAction(backend: NativeRepeatedMenuEntry): View = ContextMenuItem(id: "customItem", label: state.label,
+                                                                            hasChildItems: false, keepOpen: true, onClick: backend.clicked) {
+    import state NativeMenuBranchLocal
+}
+let ReusableSubmenu(backend: NativeRepeatedMenuEntry): View = ContextMenuItem(id: "customParent", label: state.label, keepOpen: true) {
+    import state NativeMenuBranchLocal
+    Menu(id: "customSubmenu") { MenuItem(id: "customLeaf", label: backend.label, hasChildItems: false, onClick: backend.clicked) }
+}
+let ReusableStaticAction(backend: NativeRepeatedMenuEntry): View = ContextMenuItem(id: "staticCustomItem", label: state.label,
+                                                                                  hasChildItems: false, keepOpen: true, onClick: backend.clicked) {
+    import state NativeMenuBranchLocal
+}
+let ReusableStaticDivider(): View = ContextMenuDivider(id: "staticCustomDivider") {
+    import state NativeMenuBranchLocal
+}
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", itemSpacing: vm.spacing, onItemTriggered: vm.on_triggered) {
+            ContextMenuItem(id: "first", label: "First", hasChildItems: false, keepOpen: true)
+            for (item in vm.items, key: item.id, index: ordinal, id: "rows", first: vm.first, count: vm.count) {
+                ContextMenuItem(id: "row", label: item.label, visible: item.visible, enabled: item.enabled,
+                                itemHeight: item.height, hasChildItems: false, keepOpen: true, onClick: item.clicked)
+            }
+            for (separator in vm.separators, key: separator.id, id: "separators") {
+                ContextMenuDivider(id: "separatorRow", visible: separator.visible)
+            }
+            for (item in vm.nested, key: item.id, id: "nestedRows") {
+                ContextMenuItem(id: "nestedRow", label: item.label, keepOpen: true) {
+                    Menu(id: "submenu") { MenuItem(id: "leaf", label: item.label, hasChildItems: false, onClick: item.clicked) }
+                }
+            }
+            for (item in vm.conditional, key: item.id, id: "conditionalRows") {
+                if (item.show) {
+                    let caption: String = item.label
+                    ContextMenuItem(id: "conditionItem", label: caption, itemHeight: item.height, hasChildItems: false, keepOpen: true)
+                } else if (item.alternate) {
+                    ContextMenuDivider(id: "conditionAlternate")
+                } else {
+                    ContextMenuDivider(id: "conditionDivider")
+                }
+            }
+            for (item in vm.optional, key: item.id, id: "optionalRows") {
+                if (item.show) { ContextMenuItem(id: "optionalItem", label: item.label, hasChildItems: false, keepOpen: true) }
+            }
+            for (item in vm.custom, key: item.id, id: "customRows") {
+                if (item.show) { ReusableAction(backend: item) }
+            }
+            for (item in vm.custom_nested, key: item.id, id: "customNestedRows") {
+                if (item.show) { ReusableSubmenu(backend: item) }
+            }
+            for (item in vm.custom_direct, key: item.id, id: "customDirectRows") {
+                ReusableAction(backend: item)
+            }
+            for (item in vm.custom_direct_nested, key: item.id, id: "customDirectNestedRows") {
+                ReusableSubmenu(backend: item)
+            }
+            if (vm.direct_show) {
+                ContextMenuItem(id: "directLocal", label: heading, hasChildItems: false, keepOpen: true, onClick: vm.direct_clicked) {
+                    import state NativeMenuBranchLocal
+                    let heading: String = state.label
+                }
+            }
+            if (vm.direct_custom) { ReusableAction(backend: vm.x) }
+            ReusableStaticAction(backend: vm.x)
+            ReusableStaticDivider()
+            ContextMenuDivider(id: "separator")
+            ContextMenuItem(id: "last", label: "Last", hasChildItems: false, keepOpen: true)
+        }
+    }
+}

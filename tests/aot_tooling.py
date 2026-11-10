@@ -1,5 +1,6 @@
 """AOT command-line/build artifact contract; no Python in generated apps."""
 from pathlib import Path
+from workspace_support import checked_workspace, provider
 import os
 import subprocess
 import sys
@@ -7,14 +8,14 @@ import tempfile
 import unittest
 
 compiler = Path(sys.argv.pop(1)).resolve()
-build_root = Path(sys.argv.pop(1)).resolve()
+workspace_root = checked_workspace(Path(sys.argv.pop(1)))
 runner = Path(sys.argv.pop(1)).resolve()
 
 
 class AotToolingTests(unittest.TestCase):
     def test_shared_profile_compiles_views_and_native_styles(self):
         profile = self.root / 'shared theme.lvui'
-        profile.write_text('let window: Color = Color("#141719")\nlet inspectorWidth: Metric = 352\n', encoding='utf-8')
+        provider.write_text(profile, 'let window: Color = Color("#141719")\nlet inspectorWidth: Metric = 352\n', encoding='utf-8')
         source = 'Window { VStack(width: Metric.inspectorWidth, backgroundColor: .window) {} }'
         view = self.invoke(source, '--style-file', str(profile))
         self.assertEqual(view.returncode, 0, view.stderr)
@@ -28,16 +29,16 @@ class AotToolingTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('namespace Example::Style', output.read_text())
         self.assertIn('inspectorWidth = 352;', output.read_text())
-        profile.write_text('let inspectorWidth: Metric = 400\n', encoding='utf-8')
+        provider.write_text(profile, 'let inspectorWidth: Metric = 400\n', encoding='utf-8')
         regenerated = self.invoke(source, '--style-file', str(profile))
         self.assertEqual(regenerated.returncode, 0, regenerated.stderr)
         self.assertIn('.extent = {400, 0}', regenerated.stdout)
 
     def test_invalid_profile_preserves_previous_artifact(self):
         profile = self.root / 'invalid theme.lvui'
-        profile.write_text('let width: Metric = Color.primary', encoding='utf-8')
+        provider.write_text(profile, 'let width: Metric = Color.primary', encoding='utf-8')
         output = self.root / 'previous generated.h'
-        output.write_text('previous valid artifact', encoding='utf-8')
+        provider.write_text(output, 'previous valid artifact', encoding='utf-8')
         result = subprocess.run(['cmake', f'-DLVUI_AOT_COMPILER={compiler}', f'-DLVUI_AOT_SOURCE={profile}',
                                  f'-DLVUI_AOT_OUTPUT={output}', '-DLVUI_AOT_EMIT_STYLES=ON', '-P', str(runner)],
                                 capture_output=True, text=True)
@@ -83,7 +84,9 @@ class AotToolingTests(unittest.TestCase):
         source = 'ApplicationWindow { CheckBox(checked: true) }'
         native = self.invoke(source, '--framework', 'iiGUI')
         self.assertEqual(native.returncode, 0, native.stderr)
-        self.assertIn('lvui::native::NativeCheckBox::create(', native.stdout)
+        self.assertIn('#include <iiGUI/NativeCheckBoxView.h>', native.stdout)
+        self.assertIn('lvui::native::CheckBoxBinding<ii::gui::BasicCheckBox, ii::gui::BasicNativeCheckBox, ii::gui::CachedSvgDecoder>::create(', native.stdout)
+        self.assertNotIn('lvui::native::NativeCheckBox::create(', native.stdout)
         self.assertNotIn('lvrs::', native.stdout)
         self.assertNotIn('LVRS/Widgets.h', native.stdout)
         for framework in ('LVRS', 'unknown'):
@@ -93,9 +96,9 @@ class AotToolingTests(unittest.TestCase):
             self.assertIn('iiGUI', rejected.stderr)
 
     def test_cmake_rejects_legacy_framework_without_replacing_output(self):
-        self.source.write_text('Window { Label() }', encoding='utf-8')
+        provider.write_text(self.source, 'Window { Label() }', encoding='utf-8')
         output = self.root / 'existing.generated.h'
-        output.write_text('existing valid generated code', encoding='utf-8')
+        provider.write_text(output, 'existing valid generated code', encoding='utf-8')
         result = subprocess.run(
             ['cmake', f'-DLVUI_AOT_COMPILER={compiler}', f'-DLVUI_AOT_SOURCE={self.source}',
              f'-DLVUI_AOT_OUTPUT={output}', '-DLVUI_AOT_FRAMEWORK=LVRS', '-P', str(runner)],
@@ -105,7 +108,7 @@ class AotToolingTests(unittest.TestCase):
         self.assertEqual(output.read_text(encoding='utf-8'), 'existing valid generated code')
 
         configure = self.root / 'unsupported-framework.cmake'
-        configure.write_text(
+        provider.write_text(configure,
             f'include([==[{runner.parent / "LVUIAot.cmake"}]==])\n'
             f'lvui_generate(NAME Example SOURCE [==[{self.source}]==] '
             'OUTPUT_VARIABLE result FRAMEWORK LVRS)\n',
@@ -114,13 +117,13 @@ class AotToolingTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('iiGUI', result.stderr)
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='aot tooling ', dir=build_root)
+        self.temp = provider.TemporaryDirectory(prefix='aot tooling ', dir=workspace_root)
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.source = self.root / 'a view.lvui'
 
     def invoke(self, source, *arguments):
-        self.source.write_text(source, encoding='utf-8')
+        provider.write_text(self.source, source, encoding='utf-8')
         return subprocess.run([str(compiler), *arguments, str(self.source)], capture_output=True, text=True)
 
     def test_success_emits_only_cpp_and_deterministic_escaped_unicode(self):
@@ -155,9 +158,9 @@ class AotToolingTests(unittest.TestCase):
         self.assertIn('1 MiB', result.stderr)
 
     def test_failed_build_generation_preserves_previous_output(self):
-        self.source.write_text('ApplicationWindow { Label(text: false) }', encoding='utf-8')
+        provider.write_text(self.source, 'ApplicationWindow { Label(text: false) }', encoding='utf-8')
         output = self.root / 'existing generated.h'
-        output.write_text('previous valid artifact', encoding='utf-8')
+        provider.write_text(output, 'previous valid artifact', encoding='utf-8')
         result = subprocess.run(['cmake', f'-DLVUI_AOT_COMPILER={compiler}', f'-DLVUI_AOT_SOURCE={self.source}',
                                  f'-DLVUI_AOT_OUTPUT={output}', '-DLVUI_AOT_NAME=Hello', '-P', str(runner)],
                                 capture_output=True, text=True)
@@ -169,7 +172,7 @@ class AotToolingTests(unittest.TestCase):
             with self.subTest(styles=styles):
                 initial = 'let gap: Metric = 8' if styles else 'Window { Label(text: "First") }'
                 changed = 'let gap: Metric = 16' if styles else 'Window { Label(text: "Second") }'
-                self.source.write_text(initial, encoding='utf-8')
+                provider.write_text(self.source, initial, encoding='utf-8')
                 output = self.root / 'stable generated.h'
                 arguments = ['cmake', f'-DLVUI_AOT_COMPILER={compiler}',
                              f'-DLVUI_AOT_SOURCE={self.source}', f'-DLVUI_AOT_OUTPUT={output}']
@@ -186,7 +189,7 @@ class AotToolingTests(unittest.TestCase):
                 self.assertEqual(output.read_bytes(), previous)
                 self.assertEqual(output.stat().st_mtime_ns, sentinel,
                                  'Identical native output triggered dependent C++ rebuilds')
-                self.source.write_text(changed, encoding='utf-8')
+                provider.write_text(self.source, changed, encoding='utf-8')
                 result = subprocess.run(arguments, capture_output=True, text=True)
                 self.assertEqual(result.returncode, 0, result.stderr)
                 self.assertNotEqual(output.read_bytes(), previous)

@@ -1,0 +1,2 @@
+let Items: [View] = [Label(id: "one", text: "One"), Label(id: "two", text: "Two")]
+Items()

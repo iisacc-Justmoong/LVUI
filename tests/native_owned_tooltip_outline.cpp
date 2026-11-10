@@ -1,3 +1,4 @@
+#include "tooltip_model_test_binding.h"
 #include <LVUI/TooltipOutline.h>
 #include <iiGUI/Image.h>
 #include <algorithm>
@@ -10,11 +11,11 @@ namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
 void raster(){
-    lvui::Tooltip tooltip;auto config=tooltip.configuration();
+    TooltipTestModel tooltip;auto config=tooltip.configuration();
     for(auto side:{lvui::TooltipPlacement::above,lvui::TooltipPlacement::below,lvui::TooltipPlacement::left,lvui::TooltipPlacement::right}){
         config.preferred=side;require(tooltip.set_configuration(config),"Tooltip direction rejected");
         auto layout=tooltip.layout({0,0,300,200},{150,100},{100,30});require(layout&&layout->placement==side,"Tooltip did not fit its preferred direction");
-        auto path=lvui::tooltip_outline(*layout);require(bool(path),"Tooltip outline missing");
+        auto path=TooltipTestOutline::build(*layout);require(bool(path),"Tooltip outline missing");
         const auto width=static_cast<std::uint32_t>(std::ceil(layout->frame.width)),height=static_cast<std::uint32_t>(std::ceil(layout->frame.height));
         const auto svg="<svg xmlns='http://www.w3.org/2000/svg' width='"+std::to_string(layout->frame.width)+"' height='"+
             std::to_string(layout->frame.height)+"' viewBox='0 0 "+std::to_string(layout->frame.width)+" "+

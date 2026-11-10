@@ -1,0 +1,17 @@
+Application(onStart: vm.started, onReady: vm.ready, onStop: vm.stopped,
+            onActive: vm.activated, onInactive: vm.inactivated, onOpenFiles: vm.open_files) {
+    import vm NativeApplicationBackend
+    var counter: Int = 1
+    ApplicationWindow(title: "Application fixture", width: 640, height: 400,
+                      onOpened: vm.scene_opened, onClosed: vm.scene_closed) {
+        import window NativeWindowBackend
+        VStack {
+            var nested: Int = 1
+            VStack {
+                var deeper: Int = 2
+                Label(id: "app_label", text: vm.title)
+            }
+            Label(id: "window_label", text: window.title)
+        }
+    }
+}

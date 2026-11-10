@@ -1,0 +1,6 @@
+import vm NativeEmbeddedBranchBackend
+if (vm.shown) {
+    Label(id: "branch-on", text: "Shown")
+} else {
+    Label(id: "branch-off", text: "Hidden")
+}

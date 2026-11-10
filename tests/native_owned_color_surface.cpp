@@ -1,5 +1,6 @@
 #include <LVUI/ColorSelectionSurface.h>
 #include <LVUI/NativeColorSurface.h>
+#include <iiGUI/NativeColorSurfaceView.h>
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
@@ -12,6 +13,7 @@
 #include <utility>
 #include <vector>
 
+namespace lvui::native { using NativeColorSurface=ColorSurfaceBinding<ii::gui::BasicColorSurface,ii::gui::BasicNativeColorSurface>; }
 namespace {
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }
 template<class T>T take(ii::core::Result<T> value) {
@@ -96,7 +98,8 @@ int main() {
             selection->snapshot().color == lvui::StyleColor{0, 1, 0, 1},
             "An old gesture overwrote an external color or delivered a callback");
     proxy->malformed = true;
-    require(!surface->set_options(input) && take(surface->root().snapshot()).accessibility_description == "#00FF00FF",
+    auto malformed_input=input;++malformed_input.source_revision;
+    require(!surface->set_options(malformed_input) && take(surface->root().snapshot()).accessibility_description == "#00FF00FF",
             "A malformed source frame replaced the visible surface");
     proxy->malformed = false;
 

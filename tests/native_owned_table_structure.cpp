@@ -1,4 +1,5 @@
 #include <LVUI/NativeTable.h>
+#include "table_host_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <functional>
@@ -7,6 +8,7 @@
 #include <stdexcept>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -21,6 +23,9 @@ template<class T> T take(lvui::TableResult<T> value) {
 void good(ii::core::Result<void> value) {
     if (!value) { if (value.error().cause) std::rethrow_exception(value.error().cause); throw std::runtime_error(value.error().message); }
 }
+std::size_t images(const ii::gui::CanvasFrame& drawing) {
+    auto count=drawing.images.size();for(const auto& layer:drawing.overlays)count+=layer.images.size();return count;
+}
 class PublishingEditor final : public lvui::TableStructureEditor {
 public:
     std::shared_ptr<lvui::TableStructureEditor> editor; std::function<void()> changed;
@@ -28,14 +33,54 @@ public:
         auto result = editor->apply(edit); if (result && changed) changed(); return result;
     }
 };
+class ReentrantIcons final : public lvui::IconSource {
+public:
+    mutable std::function<void()> on_resolve; std::uint64_t version=1;
+    [[nodiscard]] lvui::IconResult<std::shared_ptr<const lvui::IconAsset>> resolve(std::string_view name)const override {
+        if(auto callback=std::exchange(on_resolve,{}))callback();
+        if(name!="generalchevronDown")return std::unexpected(lvui::IconError{lvui::IconErrorCode::not_found,"fixture icon missing"});
+        return std::make_shared<const lvui::IconAsset>(lvui::IconAsset{R"(<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"><rect width="18" height="18"/></svg>)"});
+    }
+    [[nodiscard]] std::uint64_t revision()const noexcept override{return version;}
+};
+}
+void palette_during_resize() {
+    using namespace ii::gui;
+    auto source = std::make_shared<lvui::TableMemory>(
+        std::vector<lvui::TableColumn>{{.key="a", .width=80}},
+        std::vector<lvui::TableRow>{{.key="r", .cells={{.text="A"}}}});
+    lvui::native::TableInput input;
+    input.controller = std::make_shared<lvui::TableController>(source);
+    input.structure_editor = std::make_shared<lvui::TableMemoryStructureEditor>(source);
+    input.column_resize_enabled = true; input.appearance.width = 160; input.appearance.height = 100;
+    auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
+    auto host = take(tree->content_host({}, "host", {180, 120}));
+    std::optional<lvui::native::NativeTable> table;
+    good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
+        auto result = lvui::native::NativeTable::create(builder, {}, "table", input);
+        if (!result) return std::unexpected(result.error()); table = *result; return {};
+    }));
+    (void)take(table->frame());
+    const auto send = [&](WidgetInputKind kind, double x) { good(tree->input({.kind=kind, .x=x, .y=10, .buttons=1})); };
+    send(WidgetInputKind::pointer_down, 78); send(WidgetInputKind::pointer_move, 108);
+    input.appearance.palette.current = lvui::figma_defaults::accent_purple_default;
+    good(table->set_options(input));
+    require(take(source->snapshot())->revision == 0, "Palette update changed table data during resize");
+    send(WidgetInputKind::pointer_up, 108);
+    require(take(source->snapshot())->revision == 1 && take(source->snapshot())->columns[0].width == 110,
+            "Palette update canceled an in-progress table resize");
+    good(host.clear_content()); tree->close();
 }
 int main() {
+    palette_during_resize();
     using namespace ii::gui;
     auto source = std::make_shared<lvui::TableMemory>(std::vector<lvui::TableColumn>{{.key="a", .width=80}, {.key="b", .width=80}},
         std::vector<lvui::TableRow>{{.key="r0", .cells={{.text="A"}, {.text="B"}}}, {.key="r1", .cells={{.text="C"}, {.text="D"}}}});
     auto editor = std::make_shared<lvui::TableMemoryStructureEditor>(source);
     lvui::native::TableInput input; input.controller = std::make_shared<lvui::TableController>(source); input.structure_editor = editor;
     input.column_resize_enabled = input.row_resize_enabled = true; input.appearance.width = 200; input.appearance.height = 100;
+    input.header_presentation.default_leading_icon="";
+    input.header_presentation.column_appearance={{.column="b",.leading_icon="generalchevronDown"}};
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {240, 130})); std::optional<lvui::native::NativeTable> table;
     int changes = 0, column_changes = 0, row_changes = 0; std::size_t last_index = 99; double last_size = 0;
@@ -49,6 +94,11 @@ int main() {
     }));
     (void)take(table->frame());
     const auto send = [&](WidgetInputKind kind, double x, double y) { return tree->input({.kind=kind, .x=x, .y=y, .buttons=1}); };
+#if defined(IIGUI_POINTER_CANCEL_API)
+    good(send(WidgetInputKind::pointer_down, 78, 10)); good(send(WidgetInputKind::pointer_move, 108, 10));
+    good(send(WidgetInputKind::pointer_cancel, 108, 10)); good(send(WidgetInputKind::pointer_up, 108, 10));
+    require(take(source->snapshot())->revision == 0 && changes == 0, "Pointer cancellation committed a table resize");
+#endif
     good(send(WidgetInputKind::pointer_down, 78, 10)); good(send(WidgetInputKind::pointer_move, 108, 10));
     require(take(source->snapshot())->revision == 0 && take(source->snapshot())->columns[0].width == 80,
             "Column resize preview changed document data");
@@ -87,5 +137,18 @@ int main() {
     bool wrong_thread = false; std::thread worker([&] { auto result = table->apply_structure({.revision=5});
         wrong_thread = !result && result.error().code == ii::core::ErrorCode::wrong_executor; });
     worker.join(); require(wrong_thread, "Table structure host accepted a foreign thread");
-    good(host.clear_content()); require(!table->apply_structure({.revision=5}), "A retired table accepted a structure edit"); tree->close();
+    auto icons=std::make_shared<ReentrantIcons>();input.header_icon_source=icons;
+    input.structure_editor=editor;input.source_revision=5;good(table->set_options(input));
+    require(images(take(tree->drawing_snapshot({240,130})))==1,"Resizing discarded the column header style");
+    auto winner=input;winner.source_revision=6;winner.appearance.width=205;
+    winner.header_presentation.column_appearance.push_back({.column="future",.leading_icon=""});
+    ++icons->version;icons->on_resolve=[&]{good(table->set_options(winner));};
+    require(take(table->apply_structure({.revision=5,.operations={lvui::TableRemoveColumns{{"b"}}}}))==6&&
+            images(take(tree->drawing_snapshot({240,130})))==0&&take(table->root().snapshot()).size.width==205&&
+            take(table->frame())->source_revision==6,"Reentrant icon resolution during column removal lost the newer table or left a stale icon");
+    lvui::TableInsertColumns restore{.index=1,.columns={{.key="b",.width=80}},
+        .cells={{{.text="B"}},{{.text="Y"}},{{.text="D"}}}};
+    require(take(table->apply_structure({.revision=6,.operations={restore}}))==7&&
+            images(take(tree->drawing_snapshot({240,130})))==1,"Reinserting a column did not restore its keyed header style");
+    good(host.clear_content()); require(!table->apply_structure({.revision=7}), "A retired table accepted a structure edit"); tree->close();
 }

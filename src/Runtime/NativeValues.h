@@ -7,8 +7,13 @@
 #include <cmath>
 #include <concepts>
 #include <cstddef>
+#include <exception>
+#include <functional>
 #include <limits>
+#include <optional>
 #include <ranges>
+#include <utility>
+#include <vector>
 
 namespace lvui::native {
 template<class T> concept Numeric = std::is_arithmetic_v<std::remove_cvref_t<T>> &&
@@ -17,6 +22,11 @@ template<class T> concept String = std::convertible_to<T, std::string_view>;
 template<String T> std::string_view string_view(const T& value) {
     if constexpr (std::is_pointer_v<T>) if (!value) throw std::invalid_argument("String cannot be null");
     return std::string_view(value);
+}
+inline std::string_view string_view(const ii::core::Value& value) {
+    const auto text = value.get<std::string>();
+    if (!text) throw std::invalid_argument("Core string input requires a text Value");
+    return text->get();
 }
 template<Numeric T> double number(T value) {
     const double result = static_cast<double>(value);
@@ -74,6 +84,24 @@ template<EncodedColor A,EncodedColor B> bool equal(const A& a,const B& b){return
 template<Numeric A, Numeric B> bool less(A a, B b) { return number(a) < number(b); }
 template<String A, String B> bool less(const A& a, const B& b) { return lvui::native::string_view(a) < lvui::native::string_view(b); }
 template<class T> auto value_copy(T&& value) { return detail::snapshot(std::forward<T>(value)); }
+// Inferred LVUI variables retain their actual value type. Numeric assignment
+// must not silently truncate a fraction or overflow that type.
+template<class Source, class Value>
+auto inferred_assignment([[maybe_unused]] Source& source, Value&& value) {
+    using Target = std::remove_cvref_t<decltype(source.get())>;
+    if constexpr (std::integral<Target> && !std::same_as<Target, bool>) {
+        const auto number = integer(std::forward<Value>(value));
+        if (!std::in_range<Target>(number)) throw std::out_of_range("Inferred integer assignment is out of range");
+        return static_cast<Target>(number);
+    } else if constexpr (std::same_as<Target, bool>) {
+        return truth(std::forward<Value>(value));
+    } else if constexpr (std::floating_point<Target>) {
+        const auto number = lvui::native::number(std::forward<Value>(value));
+        if (std::abs(number) > std::numeric_limits<Target>::max())
+            throw std::out_of_range("Inferred floating assignment is out of range");
+        return static_cast<Target>(number);
+    } else return value_copy(std::forward<Value>(value));
+}
 template<EncodedColor To,class T> auto widget_value(T&& value){
     if constexpr(EncodedColor<std::remove_cvref_t<T>>)return color<To>(value);
     else return value_copy(std::forward<T>(value));
@@ -99,6 +127,56 @@ template<class First,class... Rest> auto list(First&& first,Rest&&... rest){
     }else{
         static_assert((std::same_as<T,detail::StoredValue<Rest>>&&...),"List elements require compatible native value types");
         return std::vector<T>{value_copy(std::forward<First>(first)),value_copy(std::forward<Rest>(rest))...};
+    }
+}
+namespace detail {
+struct ScriptRetired final {};
+template<class Scope> struct ScriptLifetimeCheck final {
+    const std::shared_ptr<Scope>& scope;
+    int exceptions = std::uncaught_exceptions();
+    ~ScriptLifetimeCheck() noexcept(false) {
+        if (std::uncaught_exceptions() == exceptions && (!scope || !scope->active()))
+            throw ScriptRetired{};
+    }
+};
+}
+// Event expressions can call C++ that retires their owner. Stop before any
+// subsequent operand or enclosing call while preserving the result category.
+template<class Scope, class Function>
+decltype(auto) script_value(const std::shared_ptr<Scope>& scope, Function&& function) {
+    if (!scope || !scope->active()) throw detail::ScriptRetired{};
+    detail::ScriptLifetimeCheck check{scope};
+    return std::invoke(std::forward<Function>(function));
+}
+// A requested event iteration owns a stable sequence, including when its
+// source is a borrowed range. The caller decides whether its scope is active.
+template<std::ranges::input_range Range, class Active>
+auto script_snapshot(Range&& source, Active&& active) {
+    using Item = std::ranges::range_value_t<Range>;
+    using Items = std::vector<Item>;
+    using Result = std::optional<Items>;
+    static_assert(std::ranges::sized_range<Range>,
+                  "LVUI event iteration requires a sized collection");
+    static_assert(std::constructible_from<Item, std::ranges::range_reference_t<Range>>,
+                  "LVUI event iteration requires copyable collection items");
+    if (!active()) return Result{};
+    if constexpr (std::same_as<std::remove_cvref_t<Range>, Items> &&
+                  !std::is_lvalue_reference_v<Range> &&
+                  !std::is_const_v<std::remove_reference_t<Range>>) {
+        return Result(std::in_place, std::forward<Range>(source));
+    } else {
+        Items result;
+        if constexpr (std::ranges::sized_range<Range>) {
+            const auto count = std::ranges::size(source);
+            if (!active()) return Result{};
+            result.reserve(count);
+        }
+        for (auto&& item : source) {
+            if (!active()) return Result{};
+            result.emplace_back(item);
+            if (!active()) return Result{};
+        }
+        return Result(std::in_place, std::move(result));
     }
 }
 template<class Then, class Else> auto choose(bool test, Then then_value, Else else_value) {
@@ -249,17 +327,27 @@ template<class Function> decltype(auto) invoke(ii::core::Observable<std::uint64_
     } publish{revision};
     return function();
 }
-template<class Function>void batch(Bindings& bindings,Function function){
+template<class Function>decltype(auto) batch(Bindings& bindings,Function&& function){
     const auto check=[](const auto& result){if(!result){if(result.error().cause)std::rethrow_exception(result.error().cause);throw std::runtime_error(result.error().message);}};
-    check(bindings.begin_batch());std::exception_ptr failure;
-    try{function();}catch(...){failure=std::current_exception();}
-    auto ended=bindings.end_batch();if(failure)std::rethrow_exception(failure);
-    if(!ended&&ended.error().code==ii::core::ErrorCode::closed&&!bindings.available())return;
-    check(ended);
+    check(bindings.begin_batch());
+    struct Finish final {
+        Bindings& bindings;
+        int exceptions=std::uncaught_exceptions();
+        ~Finish() noexcept(false){
+            // Never replace the callback's original exception with a flush error.
+            if(std::uncaught_exceptions()>exceptions){try{(void)bindings.end_batch();}catch(...){}return;}
+            auto ended=bindings.end_callback_batch();
+            if(!ended&&ended.error().code==ii::core::ErrorCode::closed&&!bindings.available())return;
+            if(!ended){if(ended.error().cause)std::rethrow_exception(ended.error().cause);throw std::runtime_error(ended.error().message);}
+        }
+    } finish{bindings};
+    return std::invoke(std::forward<Function>(function));
 }
 namespace detail {
 template<class>struct StandardFunction:std::false_type{};
 template<class Signature>struct StandardFunction<std::function<Signature>>:std::true_type{};
+template<class>struct CoreResult:std::false_type{};
+template<class T>struct CoreResult<std::expected<T,ii::core::Error>>:std::true_type{};
 #if defined(__cpp_lib_move_only_function)
 template<class Signature>struct StandardFunction<std::move_only_function<Signature>>:std::true_type{};
 #endif
@@ -286,7 +374,7 @@ template<class Expected,class Actual>decltype(auto) callback_argument(Actual&& v
     }else if constexpr(std::floating_point<Expected>){
         static_assert(Numeric<T>,"Callback numeric input requires a numeric event payload");
         const auto checked=number(value);
-        if(checked>std::numeric_limits<Expected>::max()||checked<std::numeric_limits<Expected>::lowest())throw std::out_of_range("Callback numeric input outside declared type range");
+        if(checked>(std::numeric_limits<Expected>::max)()||checked<std::numeric_limits<Expected>::lowest())throw std::out_of_range("Callback numeric input outside declared type range");
         return static_cast<Expected>(checked);
     }else{
         static_assert(std::same_as<Expected,T>,"Callback event does not match its declared C++ type");return std::forward<Actual>(value);
@@ -339,13 +427,46 @@ auto scoped_function(const std::shared_ptr<Scope>& scope, const std::shared_ptr<
         auto owner = weak_scope.lock();
         if (!owner) return rejected();
         if constexpr (requires { owner->active(); }) if (!owner->active()) return rejected();
-        if constexpr(std::same_as<Result,void>)(void)std::invoke(function,owner,std::forward<decltype(arguments)>(arguments)...);
-        else return std::invoke(function,owner,std::forward<decltype(arguments)>(arguments)...);
+        if constexpr(detail::CoreResult<Result>::value && std::movable<Result>){
+            std::optional<Result> returned;
+            try {
+                batch(*active,[&]{returned.emplace(std::invoke(function,owner,std::forward<decltype(arguments)>(arguments)...));});
+            } catch (...) {
+                // The input's explicit error takes precedence; failed bindings
+                // remain available through the activation's diagnostics.
+                if(returned && !*returned)return std::move(*returned);
+                throw;
+            }
+            return std::move(*returned);
+        }else{
+            return batch(*active,[&]() -> Result {
+                if constexpr(std::same_as<Result,void>)(void)std::invoke(function,owner,std::forward<decltype(arguments)>(arguments)...);
+                else return std::invoke(function,owner,std::forward<decltype(arguments)>(arguments)...);
+            });
+        }
     };
 }
 template<class Scope,class Function>
 auto callback(const std::shared_ptr<Scope>& scope,const std::shared_ptr<Bindings>& activation,Function function){
     return scoped_function<void>(scope,activation,std::move(function));
+}
+// User edits update a writable source within its activation transaction.
+// Read-only sources are intentionally untouched.
+template<class Value,class Scope,class Select>
+auto automatic_binding(const std::shared_ptr<Scope>& scope,const std::shared_ptr<Bindings>& activation,
+                       Select select) {
+    return callback(scope,activation,
+        [select=std::move(select)](const auto& owner,Value value) mutable {
+            auto&& source=std::invoke(select,owner);
+            if constexpr(ObservableSource<std::remove_reference_t<decltype(source)>> &&
+                         requires { source.set(value); }) {
+                auto result=assign_value(source,inferred_assignment(source,value));
+                if(!result){
+                    if(result.error().cause)std::rethrow_exception(result.error().cause);
+                    throw std::runtime_error(result.error().message);
+                }
+            }
+        });
 }
 namespace detail {
 template<class Scope,class Factory>
@@ -366,6 +487,22 @@ auto callable_source(const std::shared_ptr<Scope>& scope,const std::shared_ptr<B
     if(!source){if(source.error().cause)std::rethrow_exception(source.error().cause);throw std::runtime_error(source.error().message);}
     return *source;
 }
+inline bool settle_callback(const std::shared_ptr<Bindings>& graph){
+    if(!graph||!graph->available())return false;
+    auto settled=graph->settle_derived();
+    // Failed binding evaluations keep their previous value and expose their
+    // diagnostic through failures(); unrelated callbacks remain usable.
+    if(!settled&&settled.error().code==ii::core::ErrorCode::closed&&!graph->available())return false;
+    return graph->available();
+}
+// A window command may read derived values owned by several lexical scopes.
+// Refresh ancestors first so a reentrant event observes their current values.
+template<class Scope> bool settle_scope_chain(const std::shared_ptr<Scope>& scope) {
+    if (!scope) return false;
+    if constexpr (requires { scope->parent; })
+        if (!settle_scope_chain(scope->parent)) return false;
+    return settle_callback(scope->native_lifetime.lock());
+}
 }
 // The graph closes its source even when external values retain the source's
 // identity. An admitted call owns its current handler until it returns.
@@ -373,7 +510,8 @@ template<class Scope,class Factory,class Invoke>
 auto returned_callback(const std::shared_ptr<Scope>& scope,const std::shared_ptr<Bindings>& activation,
                        Factory factory,Invoke invoke_handler){
     auto source=detail::callable_source(scope,activation,std::move(factory));
-    return callback(scope,activation,[source,invoke_handler=std::move(invoke_handler)](const auto& owner_scope,auto&&... arguments)mutable{
+    return callback(scope,activation,[source,weak=std::weak_ptr(activation),invoke_handler=std::move(invoke_handler)](const auto& owner_scope,auto&&... arguments)mutable{
+        if(!detail::settle_callback(weak.lock()))return;
         auto admitted=source->get();
         detail::require_callable(*admitted);
         (void)std::invoke(invoke_handler,owner_scope,*admitted,std::forward<decltype(arguments)>(arguments)...);
@@ -385,7 +523,8 @@ template<class Result,class Scope,class Factory,class Invoke>
 auto returned_function(const std::shared_ptr<Scope>& scope,const std::shared_ptr<Bindings>& activation,
                        Factory factory,Invoke invoke_handler){
     auto source=detail::callable_source(scope,activation,std::move(factory));
-    return scoped_function<Result>(scope,activation,[source,invoke_handler=std::move(invoke_handler)](const auto& owner_scope,auto&&... arguments)mutable -> Result{
+    return scoped_function<Result>(scope,activation,[source,weak=std::weak_ptr(activation),invoke_handler=std::move(invoke_handler)](const auto& owner_scope,auto&&... arguments)mutable -> Result{
+        if(!detail::settle_callback(weak.lock()))throw std::logic_error("Native function owner retired");
         auto admitted=source->get();detail::require_callable(*admitted);
         return std::invoke(invoke_handler,owner_scope,*admitted,std::forward<decltype(arguments)>(arguments)...);
     });
@@ -488,7 +627,11 @@ auto make_callback_value(const std::shared_ptr<Scope>& scope,const std::shared_p
     using Action=typename CallbackValue<Signature>::Action;
     auto source=detail::callable_source(scope,activation,std::move(factory));
     auto invoke=std::make_shared<Invoke>(std::move(invoke_handler));
-    auto action=scoped_function<Result>(scope,activation,[source,invoke](const auto& owner,auto&&... arguments) -> Result{
+    auto action=scoped_function<Result>(scope,activation,[source,invoke,weak=std::weak_ptr(activation)](const auto& owner,auto&&... arguments) -> Result{
+        if(!detail::settle_callback(weak.lock())){
+            if constexpr(std::same_as<Result,void>)return;
+            else throw std::logic_error("Native function owner retired");
+        }
         auto admitted=source->get();
         detail::require_callable(*admitted);
         return detail::function_result<Result>([&]() -> decltype(auto){return std::invoke(*invoke,owner,*admitted,std::forward<decltype(arguments)>(arguments)...);});
@@ -501,6 +644,7 @@ auto make_callback_value(const std::shared_ptr<Scope>& scope,const std::shared_p
     auto snapshot=[weak_scope=std::weak_ptr(scope),weak_graph=std::weak_ptr(activation),source,invoke]() -> std::shared_ptr<Action>{
         auto graph=weak_graph.lock();if(!graph||!graph->available())throw std::logic_error("Native function snapshot owner retired");
         auto owner=weak_scope.lock();if(!owner)throw std::logic_error("Native function snapshot receiver retired");
+        if(!detail::settle_callback(graph))throw std::logic_error("Native function snapshot owner retired");
         // A borrowed handler is protected by scoped_function's admitted owner,
         // not by retaining the factory source's aliasing shared_ptr forever.
         auto selected=[&]{

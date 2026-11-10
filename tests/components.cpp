@@ -36,7 +36,9 @@ void slots() {
     check(code.find("scope->parent->backend_0.title") != code.npos,
           "A named View slot lost its caller environment");
     auto typed = compile("let Box(content: View): View = TabBar { content() }\nWindow { Box(content: Tab(iconName: \"generaladd\", text: \"One\")) }", "iiGUI");
-    check(typed.find("lvui::native::NativeTab::create(") != typed.npos, "An inline named View slot lost its concrete child type");
+    check(typed.find("lvui::native::TabBinding<ii::gui::BasicTab, ii::gui::BasicNativeTab") != typed.npos &&
+          typed.find("::create(widgets, *node_0") != typed.npos,
+          "An inline named View slot lost its concrete child type or parent");
     check(!lvui::compile_native("let Box(content: View): View = TabBar { content() }\nWindow { Box(content: Label()) }", {.framework="iiGUI"}),
           "A named View slot bypassed the receiving widget's child type");
 }

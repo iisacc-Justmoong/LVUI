@@ -1,4 +1,4 @@
-#include <LVUI/NativeTooltipScheduler.h>
+#include <iiGUI/TooltipScheduler.h>
 #include <iiSDKCore/Runtime/EventLoop.h>
 #include <limits>
 #include <memory>
@@ -11,7 +11,7 @@ void require(bool value,const char* message){if(!value)throw std::runtime_error(
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
 void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value.error().message);}
 void cancellation_and_errors(){
-    ii::runtime::EventLoop loop;auto scheduler=take(lvui::native::NativeTooltipScheduler::create(loop.sender()));
+    ii::runtime::EventLoop loop;auto scheduler=take(ii::gui::TooltipScheduler::create(loop.sender()));
     require(!scheduler.schedule(0),"Scheduler accepted a deadline without a wake receiver");int calls=0;
     good(scheduler.set_wake([&](std::int64_t now)->ii::core::Result<void>{require(now>=0,"Negative scheduler time");++calls;return {};}));
     good(scheduler.schedule(0));good(scheduler.schedule(0));(void)loop.poll();require(calls==1,"Replacing a deadline delivered an obsolete wake");
@@ -29,7 +29,7 @@ void cancellation_and_errors(){
 }
 void reentry_and_capacity(){
     {
-        ii::runtime::EventLoop loop(1);auto scheduler=take(lvui::native::NativeTooltipScheduler::create(loop.sender()));int calls=0;
+        ii::runtime::EventLoop loop(1);auto scheduler=take(ii::gui::TooltipScheduler::create(loop.sender()));int calls=0;
         good(scheduler.set_wake([&](std::int64_t)->ii::core::Result<void>{++calls;return {};}));good(scheduler.schedule(60000));
         auto receiver=scheduler.set_wake([](std::int64_t)->ii::core::Result<void>{return {};});
         require(!receiver&&receiver.error().code==ii::core::ErrorCode::busy,"A pending deadline changed its wake receiver");
@@ -37,7 +37,7 @@ void reentry_and_capacity(){
         good(scheduler.schedule(std::nullopt));good(scheduler.schedule(0));(void)loop.poll();require(calls==1,"Scheduler did not recover after capacity was released");
     }
     {
-        ii::runtime::EventLoop loop(2);auto scheduler=take(lvui::native::NativeTooltipScheduler::create(loop.sender()));
+        ii::runtime::EventLoop loop(2);auto scheduler=take(ii::gui::TooltipScheduler::create(loop.sender()));
         auto weak=scheduler.weak_schedule();int calls=0;
         good(scheduler.set_wake([&](std::int64_t)->ii::core::Result<void>{++calls;if(calls==1)return weak(0);return {};}));
         good(scheduler.schedule(0));(void)loop.poll();if(calls==1)(void)loop.poll();
@@ -48,7 +48,7 @@ void reentry_and_capacity(){
 void foreign_delivery_and_lifetime(){
     ii::runtime::EventLoop loop;std::function<ii::core::Result<void>(std::optional<std::int64_t>)> weak;int calls=0;
     {
-        auto scheduler=take(lvui::native::NativeTooltipScheduler::create(loop.sender()));weak=scheduler.weak_schedule();
+        auto scheduler=take(ii::gui::TooltipScheduler::create(loop.sender()));weak=scheduler.weak_schedule();
         good(scheduler.set_wake([&](std::int64_t)->ii::core::Result<void>{++calls;return {};}));good(scheduler.schedule(0));
         std::thread other([&]{(void)loop.poll();});other.join();auto failure=take(scheduler.last_failure());
         require(failure&&failure->code==ii::core::ErrorCode::wrong_executor&&calls==0,"A foreign delivery reached UI state");

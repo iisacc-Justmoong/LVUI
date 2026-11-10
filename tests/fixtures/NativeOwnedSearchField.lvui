@@ -1,0 +1,9 @@
+import vm NativeOwnedSearchFieldModel
+Window {
+    VStack {
+        SearchField(id: "search", text: vm.query, placeholder: vm.placeholder, width: vm.width,
+                    enabled: vm.enabled, readOnly: vm.readOnly, clearButtonVisible: vm.clearVisible, surface: vm.surface,
+                    accessibilityName: "Search sizes", clearAccessibilityName: "Clear search",
+                    onEdited: vm.edited, onSubmit: vm.submit)
+    }
+}

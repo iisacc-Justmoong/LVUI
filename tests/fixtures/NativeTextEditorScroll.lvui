@@ -1,0 +1,8 @@
+import vm NativeTextEditorModel
+Window {
+    VStack {
+        ScrollView(id: "viewport", width: 200, height: 80) {
+            TextEditor(id: "editor", text: vm.text, width: 180, height: 220, onEdited: vm.edited)
+        }
+    }
+}

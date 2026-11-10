@@ -1,0 +1,9 @@
+import vm NativeImageLoaderViewsModel
+Window {
+    VStack {
+        Image(id: "literal", source: "fixture.svg", imageLoader: vm.loader, width: 20, height: 10)
+        Image(id: "supplied", source: vm.pixels, imageLoader: vm.loader, width: 20, height: 10)
+        ListItem(id: "hidden", type: .Media, previewSource: "https://example.test/hidden", imageLoader: vm.loader, showPreview: vm.show, width: 300)
+        Card(id: "folder", type: .Folder, previewSource: "https://example.test/unused", imageLoader: vm.loader, width: 100, height: 80)
+    }
+}

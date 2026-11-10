@@ -3,6 +3,7 @@
 #include <LVUI/Text.h>
 
 #include <algorithm>
+#include <cmath>
 #include <cstdint>
 #include <cstddef>
 #include <expected>
@@ -161,7 +162,7 @@ public:
         std::scoped_lock lock(mutex_);
         if (snapshot_->revision != expected) return error(HierarchyErrorCode::stale, "Hierarchy changed before replacement");
         if (snapshot_->entries == candidate->entries) return snapshot_->revision;
-        if (snapshot_->revision == std::numeric_limits<std::uint64_t>::max()) return error(HierarchyErrorCode::exhausted, "Hierarchy revision exhausted");
+        if (snapshot_->revision == (std::numeric_limits<std::uint64_t>::max)()) return error(HierarchyErrorCode::exhausted, "Hierarchy revision exhausted");
         candidate->revision = snapshot_->revision + 1; snapshot_ = std::move(candidate); return snapshot_->revision;
     }
     [[nodiscard]] HierarchyResult<std::uint64_t> move(const HierarchyMove& request) override {
@@ -169,7 +170,7 @@ public:
         auto index = HierarchyIndex::create(snapshot_); if (!index) return std::unexpected(index.error());
         auto plan = index->plan(request); if (!plan) return std::unexpected(plan.error());
         if (plan->unchanged) return snapshot_->revision;
-        if (snapshot_->revision == std::numeric_limits<std::uint64_t>::max()) return error(HierarchyErrorCode::exhausted, "Hierarchy revision exhausted");
+        if (snapshot_->revision == (std::numeric_limits<std::uint64_t>::max)()) return error(HierarchyErrorCode::exhausted, "Hierarchy revision exhausted");
         auto entries = snapshot_->entries;
         std::vector<HierarchyEntry> moving(entries.begin() + plan->first, entries.begin() + plan->last);
         moving.front().parent = plan->new_parent;
@@ -191,6 +192,7 @@ struct HierarchyVisibleEntry final {
     HierarchyEntry entry;
     std::size_t source_index = 0, depth = 0, child_count = 0;
     bool expanded = false, selected = false;
+    std::optional<double> row_extent;
 };
 struct HierarchyProjection final {
     std::vector<HierarchyVisibleEntry> entries;
@@ -209,7 +211,7 @@ public:
         const auto found = index_->find(key); if (!found) return error(HierarchyErrorCode::not_found, "Hierarchy entry was not found");
         if (!index_->items()[*found].children) return error(HierarchyErrorCode::invalid, "A leaf cannot be expanded");
         const bool current = expanded_.contains(std::string(key)); if (current == expanded) return false;
-        if (revision_ == std::numeric_limits<std::uint64_t>::max()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
+        if (revision_ == (std::numeric_limits<std::uint64_t>::max)()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
         if (expanded) expanded_.emplace(key); else expanded_.erase(std::string(key));
         ++revision_; return true;
     }
@@ -221,8 +223,23 @@ public:
             if (!entry.enabled || !entry.selectable) return error(HierarchyErrorCode::invalid, "Hierarchy entry cannot be selected");
         }
         if (selected_ == key) return false;
-        if (revision_ == std::numeric_limits<std::uint64_t>::max()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
+        if (revision_ == (std::numeric_limits<std::uint64_t>::max)()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
         selected_ = key; ++revision_; return true;
+    }
+    // Row sizes belong to a view, not to its document or backing source.
+    // A missing extent restores the list's default height for this key.
+    [[nodiscard]] HierarchyResult<bool> set_row_extent(std::string_view key, std::optional<double> extent) {
+        if (auto ready = refresh(); !ready) return std::unexpected(ready.error());
+        if (!index_->find(key)) return error(HierarchyErrorCode::not_found, "Hierarchy entry was not found");
+        if (extent && (!std::isfinite(*extent) || *extent < 1 || *extent > 8192))
+            return error(HierarchyErrorCode::invalid, "Invalid hierarchy row extent");
+        const auto found = row_extents_.find(std::string(key));
+        if ((!extent && found == row_extents_.end()) ||
+            (extent && found != row_extents_.end() && found->second == *extent)) return false;
+        if (revision_ == (std::numeric_limits<std::uint64_t>::max)()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
+        if (extent) row_extents_.insert_or_assign(std::string(key), *extent);
+        else row_extents_.erase(found);
+        ++revision_; return true;
     }
     [[nodiscard]] HierarchyResult<HierarchyProjection> projection() {
         if (auto ready = refresh(); !ready) return std::unexpected(ready.error());
@@ -230,7 +247,9 @@ public:
         const auto& entries = index_->snapshot().entries; const auto& items = index_->items();
         for (std::size_t i = 0; i < entries.size();) {
             const auto& entry = entries[i]; const bool expanded = expanded_.contains(entry.key);
-            result.entries.push_back({entry, i, items[i].depth, items[i].children, expanded, selected_ == entry.key});
+            const auto extent = row_extents_.find(entry.key);
+            result.entries.push_back({entry, i, items[i].depth, items[i].children, expanded, selected_ == entry.key,
+                                      extent == row_extents_.end() ? std::nullopt : std::optional(extent->second)});
             i = expanded ? i + 1 : items[i].end;
         }
         return result;
@@ -255,10 +274,12 @@ private:
         auto next = HierarchyIndex::create(*snapshot); if (!next) return std::unexpected(next.error());
         bool pruned = !selected_.empty() && !next->find(selected_);
         for (const auto& key : expanded_) if (!next->find(key)) { pruned = true; break; }
-        if (pruned && revision_ == std::numeric_limits<std::uint64_t>::max()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
+        if (!pruned) for (const auto& [key, extent] : row_extents_) if (!next->find(key)) { pruned = true; break; }
+        if (pruned && revision_ == (std::numeric_limits<std::uint64_t>::max)()) return error(HierarchyErrorCode::exhausted, "Hierarchy view revision exhausted");
         if (pruned) {
             if (!selected_.empty() && !next->find(selected_)) selected_.clear();
-            std::erase_if(expanded_, [&](const auto& key) { return !next->find(key); }); ++revision_;
+            std::erase_if(expanded_, [&](const auto& key) { return !next->find(key); });
+            std::erase_if(row_extents_, [&](const auto& item) { return !next->find(item.first); }); ++revision_;
         }
         index_ = std::move(*next); index_snapshot_ = std::move(*snapshot); return {};
     }
@@ -269,6 +290,7 @@ private:
     std::shared_ptr<const HierarchySnapshot> index_snapshot_;
     std::optional<HierarchyIndex> index_;
     std::unordered_set<std::string> expanded_;
+    std::unordered_map<std::string, double> row_extents_;
     std::string selected_;
     const std::thread::id owner_ = std::this_thread::get_id();
     std::uint64_t revision_ = 0;

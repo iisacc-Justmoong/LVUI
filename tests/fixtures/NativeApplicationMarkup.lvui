@@ -1,0 +1,5 @@
+import vm NativeApplicationBackend
+Application(onStart: vm.started, onReady: vm.ready, onStop: vm.stopped,
+            onActive: vm.activated, onInactive: vm.inactivated, onOpenFiles: vm.open_files) {
+    Window(title: "Markup application") { Label(text: "Native") }
+}

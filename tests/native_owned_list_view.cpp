@@ -1,4 +1,4 @@
-#include <LVUI/NativeListView.h>
+#include "list_view_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -23,13 +23,15 @@ int main(){
     auto source=take(ListMemory::create(entries));auto controller=std::make_shared<ListController>(take(ListController::create(source)));
     native::ListViewInput input;input.controller=controller;input.width=240;input.height=100;input.row_height=36;
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto host=take(tree->content_host({},"host",{300,160}));std::optional<native::NativeListView> view;
+    auto host=take(tree->content_host({},"host",{300,160}));std::optional<ListViewTestView> view;
     std::vector<std::string> activated;bool retire=false;
+    auto callback_owner=std::make_shared<int>(1);std::weak_ptr<int> callback_lifetime=callback_owner;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});if(!column)return std::unexpected(column.error());
-        auto result=native::NativeListView::create(builder,*column,"list",input,{.activated=[&](const auto& item){activated.push_back(item.entry.key);if(retire)good(host.clear_content());}});
+        auto result=ListViewTestView::create(builder,*column,"list",input,{.activated=[&,held=callback_owner](const auto& item){activated.push_back(item.entry.key);if(retire)good(host.clear_content());}});
         if(!result)return std::unexpected(result.error());view=*result;return {};
     }));
+    callback_owner.reset();
     (void)take(tree->drawing_snapshot({300,160}));(void)take(view->root().snapshot());
     auto drawing=take(tree->drawing_snapshot({300,160}));auto mounted=take(view->mounted_keys());
     if(mounted.empty()||mounted.size()>5||mounted.front()!="0"||!text_present(drawing,"Item 0")||!text_present(drawing,"Detail 0")){
@@ -63,7 +65,8 @@ int main(){
     bool wrong=false;std::thread worker([&]{auto result=view->set_options(input);wrong=!result&&result.error().code==ii::core::ErrorCode::wrong_executor;});
     worker.join();require(wrong,"Flat list accepted a foreign-thread update");
     retire=true;auto current=take(controller->selection());good(take(view->row(current)).activate());
-    require(!view->set_options(input),"Flat list survived removal during its callback");tree->close();
+    require(!view->set_options(input),"Flat list survived removal during its callback");
+    require(callback_lifetime.expired(),"Flat list retained callback after reentrant retirement");tree->close();
 
     std::string long_text;for(int i=0;i<6000;++i)long_text+="한";
     std::vector<ListEntry> long_entries;for(int i=0;i<40;++i)long_entries.push_back({.key=std::to_string(i),.label=long_text,.description=long_text});
@@ -71,10 +74,10 @@ int main(){
     native::ListViewInput long_input;long_input.controller=std::make_shared<ListController>(take(ListController::create(long_source)));
     long_input.width=200;long_input.height=720;long_input.row_height=36;
     auto next=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});auto next_host=take(next->content_host({},"host",{240,760}));
-    std::optional<native::NativeListView> long_view;
+    std::optional<ListViewTestView> long_view;
     good(next_host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});if(!column)return std::unexpected(column.error());
-        auto result=native::NativeListView::create(builder,*column,"long",long_input);if(!result)return std::unexpected(result.error());long_view=*result;return {};
+        auto result=ListViewTestView::create(builder,*column,"long",long_input);if(!result)return std::unexpected(result.error());long_view=*result;return {};
     }));
     (void)take(long_view->root().snapshot());auto bounded=take(next->drawing_snapshot({240,760}));std::size_t runs=0;
     const auto check=[&](const auto& values){for(const auto& text:values){require(text.text.size()<=8192&&valid_accessibility_text(text.text),"List drawing exceeded its UTF-8 text budget");++runs;}};
@@ -86,15 +89,23 @@ int main(){
     auto keys_source=take(ListMemory::create({{.key="a",.label="A"},{.key="b",.label="B",.enabled=false},{.key="c",.label="C"}}));
     auto keys_controller=std::make_shared<ListController>(take(ListController::create(keys_source)));native::ListViewInput keys_input;keys_input.controller=keys_controller;
     auto keyboard_tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto keyboard_host=take(keyboard_tree->content_host({},"host",{240,160}));std::optional<native::NativeListView> keyboard_view;
+    auto keyboard_host=take(keyboard_tree->content_host({},"host",{240,160}));std::optional<ListViewTestView> keyboard_view;
     good(keyboard_host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});if(!column)return std::unexpected(column.error());
-        auto result=native::NativeListView::create(builder,*column,"keys",keys_input);if(!result)return std::unexpected(result.error());keyboard_view=*result;return {};
+        auto result=ListViewTestView::create(builder,*column,"keys",keys_input);if(!result)return std::unexpected(result.error());keyboard_view=*result;return {};
     }));
     (void)take(keyboard_view->root().snapshot());good(take(keyboard_view->row("a")).focus());
     good(keyboard_tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::down}));
     require(take(keys_controller->selection())=="a","Keyboard navigation skipped the first row with no selection");
     good(keyboard_tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::down}));
     require(take(keys_controller->selection())=="c"&&take(keys_source->snapshot())->revision==0,"Keyboard navigation did not skip a disabled row");
+    auto updated=take(keys_source->snapshot())->entries[0];updated.label="Updated A";
+    (void)take(keys_source->apply({.revision=0,.kind=ListEditKind::replace,.key="a",.item=updated}));
+    require(take(keys_controller->refresh()),"Shared keyboard controller did not refresh");
+    good(keyboard_tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::up}));
+    require(take(keys_controller->selection())=="c"&&take(take(keyboard_view->row("a")).action_options()).accessibility_name=="Updated A",
+        "A stale navigation event was delivered after the shared controller refreshed");
+    good(keyboard_tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::up}));
+    require(take(keys_controller->selection())=="a","Navigation failed after the list refreshed");
     good(keyboard_host.clear_content());keyboard_tree->close();
 }

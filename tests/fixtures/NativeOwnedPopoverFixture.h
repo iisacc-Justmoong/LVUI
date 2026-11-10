@@ -5,7 +5,7 @@
 #include <string>
 struct NativeOwnedPopoverModel final {
     ii::core::Observable<double> width{180},padding{8},opacity{.25};
-    ii::core::Observable<bool> modal{false};
+    ii::core::Observable<bool> modal{false},blur{true},motion{true};
     ii::core::Observable<ii::gui::WidgetColor> color{{.2,.2,.2,1}};
     ii::core::Observable<std::string> text{"Details"};
     int opens=0,closes=0,cancels=0;

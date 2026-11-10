@@ -1,0 +1,74 @@
+#pragma once
+#include <LVUI/NativeListItemComposite.h>
+#include <iiGUI/SrgbColor.h>
+#include <iiGUI/SvgImageCache.h>
+#include <iiGUI/NativeCheckBoxView.h>
+#include <iiGUI/NativeToggleSwitchView.h>
+#include <iiGUI/NativeListItemView.h>
+#include <iiGUI/NativeListFooterView.h>
+#include <iiGUI/NativeListItemSelectorView.h>
+#include <iiGUI/NativeComboBoxView.h>
+#include <iiGUI/NativeMenuView.h>
+#include <iiGUI/NativeMenuItemView.h>
+#include <iiGUI/ListItemSegmentsModel.h>
+#include <iiGUI/NativeListItemSegmentsView.h>
+#include <iiGUI/NativeInputFieldView.h>
+#include <iiGUI/NativeTextLayout.h>
+#include <iiGUI/NativeStepperView.h>
+#include <iiGUI/NativeListItemCompositeView.h>
+#include <iiGUI/ListItemDetailActionsLayout.h>
+#include <iiGUI/ListItemDetailControlsLayout.h>
+#include <iiGUI/ListItemTaskLayout.h>
+#include <iiGUI/ListItemPreviewRowLayout.h>
+#include <iiGUI/ListItemFormLayout.h>
+#include <iiGUI/ListItemQuantityLayout.h>
+#include <iiGUI/ListItemMenuModel.h>
+namespace detail_list_composite {
+using namespace lvui;
+using namespace lvui::native;
+using NativeInputField=InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using NativeComboBox=ComboBoxBinding<ii::gui::BasicComboBox,ii::gui::BasicNativeComboBox,ii::gui::Widget>;
+using MenuItemPort=MenuItemPortValue<ii::gui::Widget,ii::gui::WidgetSnapshot>;
+using MenuSectionPort=MenuSectionPortValue<ii::gui::Widget,ii::gui::WidgetSnapshot>;
+using NativeMenuItem=MenuItemBinding<ii::gui::BasicMenuItem,ii::gui::BasicNativeMenuItem,ii::gui::CachedSvgDecoder,ii::gui::Widget,ii::gui::WidgetSnapshot>;
+using NativeMenu=MenuBinding<ii::gui::BasicMenu,ii::gui::BasicNativeMenu,ii::gui::Widget,ii::gui::WidgetSnapshot>;
+using ListItemSelector=ii::gui::BasicListItemSelector<ListItemSelectorModelPolicy>;
+using NativeListItemSelector=ListItemSelectorBinding<ii::gui::BasicListItemSelector,ii::gui::BasicNativeListItemSelector,NativeComboBox,NativeMenu,NativeMenuItem,ii::gui::RasterImage>;
+using SegmentButtonEvent=ButtonEventValue<ii::gui::Widget>;
+using SegmentButtonMethod=ButtonMethodValue<SegmentButtonEvent>;
+using SegmentButtonRegistry=ButtonMethodRegistryValue<SegmentButtonEvent>;
+using SegmentButton=ButtonBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
+using SegmentGroup=SegmentedControlBinding<ii::gui::BasicSegmentedControl,ii::gui::BasicNativeSegmentedControl,SegmentButtonMethod,SegmentButtonRegistry,ButtonMethodInvoker>;
+using ListItemSegments=ii::gui::BasicListItemSegments<ListItemSegmentsModelPolicy>;
+using NativeListItemSegments=ListItemSegmentsBinding<ii::gui::BasicListItemSegments,ii::gui::BasicNativeListItemSegments,SegmentButton,SegmentGroup,ii::gui::RasterImage>;
+using ToolbarButtonInput=ToolbarButtonInputValue<ii::gui::RasterImage>;
+using NativeToolbarButton=ToolbarButtonBinding<ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+using NativeStepper=StepperBinding<ii::gui::BasicButton,ii::gui::BasicStepper,ii::gui::BasicNativeStepper,ii::gui::Widget>;
+using NativeListFooter=ListFooterBinding<ii::gui::BasicListFooter,ii::gui::BasicNativeListFooter,ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+using ListItemModel=ListItemModelBinding<ii::gui::BasicListItem>;
+using ListItemDrawing=ListItemDrawingBinding<ii::gui::BasicListItemDrawing,ListItemModel,ii::gui::SrgbColorConverter>;
+using NativeListItem=ListItemBinding<ii::gui::BasicListItem,ii::gui::BasicListItemDrawing,ii::gui::BasicNativeListItem,ii::gui::CachedSvgDecoder,ii::gui::SrgbColorConverter,ii::gui::ListItemDrawingPort>;
+using CompositeCheckBox=CheckBoxBinding<ii::gui::BasicCheckBox,ii::gui::BasicNativeCheckBox,ii::gui::CachedSvgDecoder>;
+using CompositeToggleSwitch=ToggleSwitchBinding<ii::gui::BasicToggleSwitch,ii::gui::BasicNativeToggleSwitch>;
+using IconCache=NativeIconCache<ii::gui::CachedSvgDecoder>;
+using ListItemDetailActions=lvui::ListItemDetailActionsBinding<ii::gui::BasicListItemDetailActions>;
+using ListItemDetailControls=lvui::ListItemDetailControlsBinding<ii::gui::BasicListItemDetailControls>;
+using ListItemTask=lvui::ListItemTaskBinding<ii::gui::BasicListItemTask>;
+using ListItemPreviewRow=lvui::ListItemPreviewRowBinding<ii::gui::BasicListItemPreviewRow>;
+using ListItemForm=lvui::ListItemFormBinding<ii::gui::BasicListItemForm>;
+using ListItemQuantity=lvui::ListItemQuantityBinding<ii::gui::BasicListItemQuantity>;
+using ListItemMenu=lvui::ListItemMenuBinding<ii::gui::BasicListItemMenu>;
+using Components=ii::gui::ListItemCompositeComponents<NativeInputField,NativeComboBox,NativeMenuItem,NativeMenu,ListItemSelector,NativeListItemSelector,ListItemSegments,NativeListItemSegments,NativeToolbarButton,NativeStepper,NativeListFooter,ListItemModel,ListItemDrawing,NativeListItem,CompositeCheckBox,CompositeToggleSwitch,MenuItemPort,MenuSectionPort,IconCache,ToolbarButtonInput,ListItemDetailActions,ListItemDetailControls,ListItemTask,ListItemPreviewRow,ListItemForm,ListItemQuantity,ListItemMenu>;
+using Input=lvui::native::ListItemCompositeInputValue<ii::gui::RasterImage>;
+using Context=lvui::native::ListItemContextValue<ii::gui::RasterImage>;
+using ViewFactory=lvui::native::ListItemContextViewFactoryValue<ii::gui::WidgetBuilder,ii::gui::RasterImage>;
+using Views=lvui::native::NativeListItemCompositeViewsValue<ii::gui::WidgetBuilder,ii::gui::WidgetFactory,ii::gui::RasterImage>;
+using NativeListItemComposite=lvui::native::ListItemCompositeBinding<ii::gui::BasicNativeListItemComposite,ii::gui::RasterImage,ii::gui::WidgetBuilder,ii::gui::WidgetFactory,Components>;
+} // namespace detail_list_composite
+namespace lvui::native {
+using NativeListItemComposite=detail_list_composite::NativeListItemComposite;
+using ListItemCompositeInput=detail_list_composite::Input;
+using ListItemContext=detail_list_composite::Context;
+using ListItemContextViewFactory=detail_list_composite::ViewFactory;
+using NativeListItemCompositeViews=detail_list_composite::Views;
+}

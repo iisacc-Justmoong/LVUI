@@ -49,4 +49,16 @@ void isolation(){
     // Reads made by the independently triggered graph do not belong to this query.
     check(bool(binding),"Reentrant graph query failed");auto before=calls;unrelated.set(8);check(calls==before,"An independent graph contaminated an outer method's read set");
 }
-int main(int argc,char** argv){try{std::string name=argc>1?argv[1]:"private";if(name=="private")private_reads();else if(name=="failures")failures();else if(name=="canonical")canonical();else if(name=="reentry")reentry();else if(name=="initial")initial();else if(name=="isolation")isolation();else throw std::runtime_error("Unknown native method test");std::cout<<"Native methods "<<name<<" passed\n";}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}
+void callable_objects(){
+    struct Invoke {int* value;void invoke(int n){*value=n;}};
+    struct Trigger {int* value;void trigger(){*value=9;}};
+    struct Preferred {int* value;void operator()(int){*value=1;}void invoke(int){*value=2;}void trigger(int){*value=3;}};
+    int value=0;Invoke invoke{&value};Trigger trigger{&value};Preferred preferred{&value};
+    auto a=lvui::native::Methods::callable([&](auto&)->Invoke&{return invoke;});
+    auto b=lvui::native::Methods::callable([&](auto&)->Trigger&{return trigger;});
+    auto c=lvui::native::Methods::callable([&](auto&)->Preferred&{return preferred;});
+    a(7);check(value==7,"invoke object did not receive its event");
+    b();check(value==9,"trigger object was not called");
+    c(0);check(value==1,"Callable precedence did not preserve operator()");
+}
+int main(int argc,char** argv){try{std::string name=argc>1?argv[1]:"private";if(name=="private")private_reads();else if(name=="failures")failures();else if(name=="canonical")canonical();else if(name=="reentry")reentry();else if(name=="initial")initial();else if(name=="isolation")isolation();else if(name=="callable_objects")callable_objects();else throw std::runtime_error("Unknown native method test");std::cout<<"Native methods "<<name<<" passed\n";}catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

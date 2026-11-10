@@ -1,0 +1,3 @@
+Window {
+    Image(id: "literal", source: "fixture.svg", width: 20, height: 10)
+}

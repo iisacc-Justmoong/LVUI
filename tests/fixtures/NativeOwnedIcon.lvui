@@ -1,0 +1,7 @@
+import vm NativeOwnedIconModel
+Window {
+    HStack {
+        Image(id: "symbol", iconName: vm.name, iconSize: vm.size, iconSource: vm.source,
+              iconRevision: vm.revision, accessibilityName: vm.label)
+    }
+}

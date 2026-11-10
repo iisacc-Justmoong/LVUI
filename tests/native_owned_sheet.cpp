@@ -1,4 +1,4 @@
-#include <LVUI/NativeSheet.h>
+#include <iiGUI/NativeSheetView.h>
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -20,8 +20,8 @@ int main() {
     using namespace ii::gui;
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {800, 600}));
-    std::optional<lvui::native::NativeSheet> sheet;
-    lvui::native::SheetInput input;
+    std::optional<ii::gui::NativeSheet> sheet;
+    ii::gui::SheetInput input;
     input.mobile_platform = false;
     input.configuration.title = "Export";
     input.configuration.description = "Save your file";
@@ -29,7 +29,7 @@ int main() {
     int made = 0, opened = 0, closed = 0;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto root = builder.vstack({}, "root"); if (!root) return std::unexpected(root.error());
-        auto created = lvui::native::NativeSheet::create(builder, *root, "sheet", input,
+        auto created = ii::gui::NativeSheet::create(builder, *root, "sheet", input,
             {.opened = [&] { ++opened; }, .closed = [&] { ++closed; }},
             [&](WidgetBuilder& child, Widget parent) -> ii::core::Result<void> {
                 ++made;
@@ -53,8 +53,8 @@ int main() {
     good(root.close_popup()); good(root.open_at(0, 0));
     require(made == 1 && take(take(root.popup_content("row0")).snapshot()).id == row_id &&
             take(viewport.snapshot()).scroll_offset == 0, "Sheet did not retain its body or reset scrolling");
-    auto mobile = input; mobile.configuration.presentation = lvui::SheetPresentation::mobile;
-    mobile.configuration.detent = lvui::SheetDetent::medium; mobile.configuration.bottom_safe_inset = 34;
+    auto mobile = input; mobile.configuration.presentation = ii::gui::SheetPresentation::mobile;
+    mobile.configuration.detent = ii::gui::SheetDetent::medium; mobile.configuration.bottom_safe_inset = 34;
     good(sheet->set_options(mobile));
     auto mobile_frame = take(root.snapshot()).bounds;
     require(mobile_frame.width == 800 && mobile_frame.height == 342 && mobile_frame.y == 258 && made == 1,
@@ -66,6 +66,9 @@ int main() {
     good(tree->input({.kind = WidgetInputKind::pointer_down, .x = x, .y = y}));
     good(tree->input({.kind = WidgetInputKind::pointer_move, .x = x, .y = y + 20}));
     require(take(root.snapshot()).bounds.y == mobile_frame.y + 20, "Sheet did not follow its captured drag");
+    good(sheet->set_options(mobile));
+    good(tree->input({.kind = WidgetInputKind::pointer_move, .x = x, .y = y + 25}));
+    require(take(root.snapshot()).bounds.y == mobile_frame.y + 25, "An unchanged Sheet update interrupted its active drag");
     good(tree->input({.kind = WidgetInputKind::pointer_up, .x = x, .y = y + 20}));
     require(take(root.snapshot()).opened && take(root.snapshot()).bounds.y == mobile_frame.y,
             "Short Sheet drag did not restore the surface");

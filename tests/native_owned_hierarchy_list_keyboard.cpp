@@ -1,4 +1,4 @@
-#include <LVUI/NativeHierarchyList.h>
+#include "hierarchy_list_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -19,7 +19,37 @@ void good(ii::core::Result<void> value) {
     if (!value) { if (value.error().cause) std::rethrow_exception(value.error().cause); throw std::runtime_error(value.error().message); }
 }
 }
+void variable_keyboard(){
+    using namespace ii::gui;
+    std::vector<lvui::HierarchyEntry> entries;
+    for(int i=0;i<12;++i)entries.push_back({.key=std::to_string(i),.label="Row"});
+    auto source=std::make_shared<lvui::HierarchyMemory>(entries);
+    auto controller=std::make_shared<lvui::HierarchyController>(source);
+    require(take(controller->set_row_extent("0",40.))&&take(controller->set_row_extent("1",10.))&&
+            take(controller->set_row_extent("2",30.)),"Variable keyboard row setup failed");
+    lvui::native::HierarchyListInput input;input.controller=controller;input.width=200;input.height=60;
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"host",{240,100}));std::optional<HierarchyListTestView> list;
+    good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
+        auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading});
+        if(!column)return std::unexpected(column.error());
+        auto value=HierarchyListTestView::create(builder,*column,"varied",input);
+        if(!value)return std::unexpected(value.error());list=*value;return {};
+    }));
+    (void)take(tree->drawing_snapshot({240,100}));good(take(list->row("0")).row().focus());
+    const auto key=[&](WidgetKey value){good(tree->input({.kind=WidgetInputKind::key_down,.key=value}));};
+    key(WidgetKey::page_down);require(take(controller->selected_key())=="2","Page down ignored variable row geometry");
+    key(WidgetKey::page_down);require(take(controller->selected_key())=="4","Second page down ignored variable row geometry");
+    key(WidgetKey::page_up);require(take(controller->selected_key())=="1","Page up ignored variable row geometry");
+    require(take(controller->set_row_extent("0",100.)),"Oversized row setup failed");
+    ++input.view_revision;good(list->set_options(input));good(list->root().set_scroll_offset(0));
+    good(take(list->row("0")).row().focus());key(WidgetKey::page_down);
+    require(take(controller->selected_key())=="1"&&take(source->snapshot())->revision==0,
+            "Page navigation was trapped in a tall row or edited the document");
+    good(host.clear_content());tree->close();
+}
 int main() {
+    variable_keyboard();
     using namespace ii::gui;
     std::vector<lvui::HierarchyEntry> entries;
     for (int i = 0; i < 30; ++i) entries.push_back({.key=std::to_string(i), .label="Item " + std::to_string(i), .id=i,
@@ -29,12 +59,19 @@ int main() {
     lvui::native::HierarchyListInput input; input.controller = controller; input.width = 200; input.height = 60;
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {240, 100}));
-    std::optional<lvui::native::NativeHierarchyList> list; std::vector<std::string> events;
+    std::optional<HierarchyListTestView> list; std::vector<std::string> events;
+    lvui::native::HierarchyRowViewFactoryValue<ii::gui::WidgetBuilder> row_view;
+#ifdef LVUI_TEST_HIERARCHY_ROW_DELEGATE
+    row_view=[](WidgetBuilder& builder,std::shared_ptr<const lvui::native::HierarchyRowContext> row)->ii::core::Result<void>{
+        auto label=builder.label({},"delegate-label",{.text=row->get().entry.label});
+        return label?ii::core::Result<void>{}:std::unexpected(label.error());
+    };
+#endif
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading});
         if (!column) return std::unexpected(column.error());
-        auto view = lvui::native::NativeHierarchyList::create(builder, *column, "tree", input,
-            {.activated = [&](const auto& event) { events.push_back(event.key); }});
+        auto view = HierarchyListTestView::create(builder, *column, "tree", input,
+            {.activated = [&](const auto& event) { events.push_back(event.key); }}, {}, row_view);
         if (!view) return std::unexpected(view.error()); list = *view; return {};
     }));
     (void)take(list->root().snapshot()); good(take(list->row("0")).row().focus());
@@ -71,8 +108,8 @@ int main() {
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing=0, .alignment=StackAlignment::leading});
         if (!column) return std::unexpected(column.error());
-        auto view = lvui::native::NativeHierarchyList::create(builder, *column, "nested", input,
-            {.activated = [&](const auto& event) { events.push_back(event.key); }});
+        auto view = HierarchyListTestView::create(builder, *column, "nested", input,
+            {.activated = [&](const auto& event) { events.push_back(event.key); }}, {}, row_view);
         if (!view) return std::unexpected(view.error()); list = *view; return {};
     }));
     (void)take(list->root().snapshot()); good(take(list->row("p")).row().focus());

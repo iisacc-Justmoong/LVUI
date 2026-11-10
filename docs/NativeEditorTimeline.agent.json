@@ -1,0 +1,163 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:45703aa3badbce312a6b6c1131b61c66692322b1813f5733226b75421e443760",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeEditorTimeline.md",
+    "sha256": "52737ddf0af6e55dc6e095d9a3b4738f9492264611d456a9f5bc44eca282ab34",
+    "bytes": 2727,
+    "line_count": 28,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 편집 타임라인",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 편집 타임라인\n",
+      "level": 1,
+      "title": "네이티브 편집 타임라인"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`iiGUI/NativeEditorTimelineView.h`의 타임라인은 원본 문서, 미디어와 작업 내역을 소유하지 않는다. 앱이 제공하는\n원천에 표시 중인 반열린 프레임 구간과 세로 구간을 질의하고 트랙·클립·키의\n안정적인 ID 및 위치를 받는다. 앱은 원천에 결과 수를 제한해야 하며 뷰도 최대\n결과 수와 ID, 좌표를 검증한다. 보이는 결과만 그려 장시간 문서에서 모든 프레임을\n순회하지 않는다. 눈금과 트랙 헤더의 배치는 Dreamscapes의 Figma 타임라인을 따른다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 16,
+      "raw": "재생 위치 변경은 질의를 다시 일으키거나 클립 장면을 다시 만들지 않고 별도 재생선만 갱신한다. 확대·스크롤로\n필요한 구간이 바뀌거나 문서 리비전이 바뀌면 원천을 다시 질의한다. 눈금의\n스크럽, 클립 이동·양 끝 자르기와 키 이동은 시작·이동·완료·취소 이벤트를 앱에\n보낸다. 앱이 실제 명령, 스냅, 잠금, undo 및 재생 오디오를 결정한다. 뷰가\n비활성화되거나 퇴역하면 미완료 동작은 취소된다. 클립이나 키를 드래그하며\n좌우 경계에 접근하면 그동안에만 프레임을 요청해 스크롤과 표시 범위를 갱신한다.\n수평 휠은 스크롤하고 Control·Command 휠이나 터치 핀치는 포인터 아래의 프레임을\n유지하며 확대한다. 바뀐 표시 영역은 앱의 뷰모델에도 알린다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 21,
+      "raw": "원천은 가시 트랙의 프레임 범위에 썸네일·오디오 파형·곡선 등의 불변 이미지\n타일을 함께 제공할 수 있다. 뷰는 이미지의 참조와 잘림을 유지하며 재생선만\n움직일 때 이미지 생성이나 클립 장면 재작성을 요구하지 않는다. 이미지 생성과\n비동기 완료 알림은 원천이 담당한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 26,
+      "raw": "이 구성은 `NativeViewSource`를 통해 LVUI `NativeView`에 넣는다. 자체 타이머나\n상시 폴링을 시작하지 않는다. 플레이백 중 프레임 변경은 앱의 프레임 시계가\n전달한다. 할당 크기는 앱이 옵션으로 전달한다. 곡선 보간과 편집, 앱의 파형·썸네일 생성과 기존 앱의\n문서 어댑터는 이 계약만으로 구현되지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "`LVUI/NativeEditorTimeline.h`의 `editor_timeline_palette`는 디자인 토큰만 제공하며 앱이 이를 iiGUI 타임라인 옵션에 주입한다. 색상 변경은 표시 장면만 갱신하고 문서를 재질의하지 않는다. 유효하지 않은 색상은 이전 값을 보존한다. macOS arm64에서 토큰 연결, 가시 영역 질의, 입력·취소, 드래그 프레임 중단, 생성 코드와 격리된 소비자를 창 없이 검사했다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 편집 타임라인",
+      "anchor": "네이티브-편집-타임라인",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 3,
+        "text": "`iiGUI/NativeEditorTimelineView.h`의 타임라인은 원본 문서, 미디어와 작업 내역을 소유하지 않는다. 앱이 제공하는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000003",
+        "line": 7,
+        "text": "순회하지 않는다. 눈금과 트랙 헤더의 배치는 Dreamscapes의 Figma 타임라인을 따른다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 20,
+        "text": "움직일 때 이미지 생성이나 클립 장면 재작성을 요구하지 않는다. 이미지 생성과",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 24,
+        "text": "상시 폴링을 시작하지 않는다. 플레이백 중 프레임 변경은 앱의 프레임 시계가",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 28,
+        "text": "`LVUI/NativeEditorTimeline.h`의 `editor_timeline_palette`는 디자인 토큰만 제공하며 앱이 이를 iiGUI 타임라인 옵션에 주입한다. 색상 변경은 표시 장면만 갱신하고 문서를 재질의하지 않는다. 유효하지 않은 색상은 이전 값을 보존한다. macOS arm64에서 토큰 연결, 가시 영역 질의, 입력·취소, 드래그 프레임 중단, 생성 코드와 격리된 소비자를 창 없이 검사했다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

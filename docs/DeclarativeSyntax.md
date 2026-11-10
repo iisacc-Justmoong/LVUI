@@ -2,6 +2,10 @@
 
 # 선언적 뷰와 인스턴스 연결 동작
 
+> 현재의 객체·동작 소유 경계는 [뷰 전용 아키텍처](ViewOnlyArchitecture.md)를 따른다.
+> 이 문서의 과거 지역 상태 예시는 기존 컴파일러 동작을 설명하며, 도메인 객체와
+> 메서드 본문을 LVUI에 작성하는 권장 계약이 아니다.
+
 상태: 2026-10-20에 채택하고 2026-10-22에 `View` 타입과 자식 뷰 인자 규칙을 추가한 설계이다.
 예제는 제공된 스코프 소유권 제안을 따른다.
 전체 문법은 아직 초안이다. `parse_view`가 구현한 예약어·자식 뷰·입력 구문과
@@ -60,7 +64,7 @@ LVUI는 `View`에 해당하는 컴포넌트 이름, 괄호로 감싼 입력,
 ```text
 import document DocumentBackend
 
-ApplicationWindow(accentColor: .blue) {
+ApplicationWindow(accent: .blue) {
     VStack() {
         AppControlBar(backend: document)
         AppBodyView(backend: document)
@@ -68,7 +72,7 @@ ApplicationWindow(accentColor: .blue) {
 
         PushButton(document.save) {
             text: "Save"
-            type: .borderless
+            tone: .borderless
             enabled: document.canSave
         }
     }
@@ -84,18 +88,18 @@ import 형식은 `import bindingName CppObjectName`이다.
 private·protected 멤버는 C++ 접근 제한을 유지한다.
 
 import 피연산자 순서는 확정하였다.
-소문자 `accentColor`와 점 접두 값 표기는 아직 설계용 표기이며,
-전체 파싱·타입 해석 규칙은 추가 명세가 필요하다.
+창의 강조색은 `accent`, 버튼 외형은 `tone` 입력으로 지정한다.
+이 문서의 사용자 정의 View 이름은 설명을 위한 예시이다.
 
 <a id="constants-variables-and-statement-endings"></a>
 
 ## 상수·변수와 문장 종결
 
-`let`은 상수, `var`는 변경 가능한 변수를 선언한다.
+`const`는 상수, `var`는 변경 가능한 변수를 선언한다.
 타입·초기값을 지정하는 선언은 콜론 뒤에 타입, 등호 뒤에 초기값을 둔다.
 
 ```text
-let constant: Int = 6
+const constant: Int = 6
 var variable: Int = 6
 ```
 
@@ -110,7 +114,7 @@ LVUI는 세미콜론 종결자를 사용하지 않는다.
 
 ```text
 @Observable var value: Int = 6
-@Static let initialValue: Int = 6
+@Static const initialValue: Int = 6
 ```
 
 값은 [기본적으로 반응형](ReactiveState.md)이다.
@@ -124,8 +128,9 @@ LVUI는 세미콜론 종결자를 사용하지 않는다.
 ## 메서드 참조와 호출
 
 `vm.increment`는 기존 VM에 연결된 메서드를 참조한다.
-`vm.increment()`는 해당 표현식을 평가할 때 명시적으로 호출한다.
-메서드 호출 결과는 자체 타입이 있는 값이며 지연 호출로 암묵적으로 변환하지 않는다.
+일반 값 입력의 `vm.increment()`는 해당 표현식을 평가할 때 명시적으로 호출한다.
+이벤트 입력의 `onClick: vm.increment()`는 이벤트가 일어났을 때 호출한다.
+이벤트 입력 밖에서의 호출 결과는 자체 타입이 있는 값이다.
 
 컴포넌트 인터페이스는 입력이 callable을 받는지 선언하고,
 구현은 해당 콜백의 호출 시점을 결정한다.
@@ -141,23 +146,23 @@ LVUI 언어는 멤버 표현식이나 모든 첫 번째 인자에 클릭 의미�
 |---|---|
 | `View` | 시각적으로 표시되는 모든 요소의 공통 타입이다. |
 | `ParentView(...) { ChildView(...) }` | 바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다. |
-| `let constant: Int = 6` | `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다. |
+| `const constant: Int = 6` | `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다. |
 | `var variable: Int = 6` | `6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다. |
 | `vm.increment` | 기존 VM에 연결된 메서드를 호출하지 않고 참조한다. |
 | `vm.increment()` | 표현식을 평가할 때 메서드를 명시적으로 호출한다. |
 | `import document DocumentBackend` | 이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다. |
-| `ApplicationWindow(accentColor: .blue) { ... }` | 애플리케이션 창과 강조색 구성을 선언한다. |
+| `ApplicationWindow(accent: .blue) { ... }` | 애플리케이션 창과 강조색 구성을 선언한다. |
 | `VStack() { ... }` | 자식 뷰의 세로 구성을 선언한다. |
 | `AppBodyView(backend: document)` | 기존 백엔드 인스턴스의 차용 참조를 전달한다. |
 | `Footer(status: document.status)` | 푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다. |
 | `PushButton(document.save)` | 연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다. |
 | `enabled: document.canSave` | 접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다. |
-| `type: .borderless` | 버튼 외형을 설정한다. |
+| `tone: .borderless` | 버튼 외형을 설정한다. |
 
 이름이 붙은 애플리케이션 뷰는 예제이다.
 등록된 LVRS 시각 이름은 [실제 예약어 목록](ReservedWords.md)을 따른다.
 애플리케이션 전용 뷰는 [타입 매개변수 재사용 구성](Components.md)의
-`let Name(...): View = ...`로 선언할 수 있다. 스칼라 입력·부모 백엔드 차용·이름별 View
+`const Name(...): View = ...`로 선언할 수 있다. 스칼라 입력·부모 백엔드 차용·이름별 View
 슬롯은 현재 구현 범위이며, 전체 컴포넌트별 공개 입력 스키마와 동적 구성은 별도 완료 기준이다.
 
 <a id="event-connection-and-property-binding"></a>
@@ -181,7 +186,7 @@ AOT·네이티브 연동은 의존성 추적과 변경 정보를 제공해야 �
 읽기 전용 멤버는 읽기 전용 계약을 유지한다.
 [기본 ViewModel 바인딩](ViewModelQueries.md#default-viewmodel-binding)을 참조한다.
 
-[증가·초기화 예제](examples/ReactiveCounter.lvui)는 `Column { ... }`과 `Label(text: vm.value)`를 사용한다.
+[증가·초기화 예제](examples/ReactiveCounter.lvui)는 `VStack() { ... }`과 `Label(text: vm.value)`를 사용한다.
 `vm.value`가 바뀌면 기본 바인딩을 통해 해당 레이블을 갱신한다.
 `@Static`은 해당 수명 동안 고정되는 값을 명시적으로 선택한다.
 일반 LVUI 변수도 같은 기본 반응형 모델을 따르며 VM 멤버에만 한정되지 않는다.
@@ -216,7 +221,7 @@ VM은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 값을 송수신한다
 ## 미정 사항
 
 - 채택한 선언·세미콜론 생략 규칙 외의 전체 문법, 줄 경계, 여러 줄 이어쓰기, 주석, 식별자 규칙.
-- 제공된 `Column { ... }` 예제 외의 전체 빈 괄호 생략 규칙과 사용자 정의 컴포넌트 선언 방식.
+- 다양한 재사용 View 구성과 빈 괄호 생략 규칙의 전체 범위.
 - `View`의 구체적인 타입 표현·값 또는 참조 의미와 컴포넌트별 자식 인자 스키마.
 - 열거형·토큰·이름 지정 입력 구문.
 - 중복 속성 처리와 괄호 입력·중괄호 본문 속성 사이의 관계.
@@ -224,7 +229,7 @@ VM은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 값을 송수신한다
 - 레이아웃 크기·넘침·테마 상속·컴포넌트 지역 상태.
 - 동적 목록 정체성·조건부 뷰 활성화·상태 보존.
 - 메서드 인자·오버로드 선택·명시적 이벤트 처리 블록.
-- 현재 [HTML 형태의 언어](Language.md)와의 호환 또는 마이그레이션.
+- 별도 C++ API로 보존한 [레거시 문서 파서](Language.md) 소비자의 마이그레이션.
 
 채택한 예제에는 `view` 키워드와 명시적 `onClick` 속성이 필수적이지 않다.
 해당 구문은 아직 정하지 않았다.

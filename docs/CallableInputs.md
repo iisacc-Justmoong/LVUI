@@ -6,8 +6,8 @@
 
 ```lvui
 import document Model
-let Action(run: () -> Void): View = PushButton(run)
-let Entry(edit: (String) -> Void = document.record): View = InputField(onEdited: edit)
+const Action(run: () -> Void): View = PushButton(run)
+const Entry(edit: (String) -> Void = document.record): View = InputField(onEdited: edit)
 Window {
     VStack {
         Action(run: document.save)

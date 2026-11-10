@@ -1,0 +1,367 @@
+{
+  "schema": 1,
+  "reference": "LVUI Slider/Filled",
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=879-9777",
+  "capturedOn": "2026-11-04",
+  "sourceVariables": [
+    {
+      "id": "VariableID:215:9618",
+      "name": "Panel/surfaceSolid",
+      "values": {
+        "44:0": {
+          "r": 0.14418363571166992,
+          "g": 0.1475532352924347,
+          "b": 0.1475532352924347,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:44:462",
+      "name": "Text/disabledColor",
+      "values": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.30000001192092896
+        }
+      }
+    },
+    {
+      "id": "VariableID:1305:76",
+      "name": "Accent/Blue/Default",
+      "values": {
+        "44:0": {
+          "r": 0.1557759940624237,
+          "g": 0.5030806064605713,
+          "b": 0.8999999761581421,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "VariableID:44:458",
+      "name": "Text/titleHeaderColor",
+      "values": {
+        "44:0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.8999999761581421
+        }
+      }
+    }
+  ],
+  "trackEffects": [
+    {
+      "type": "BACKGROUND_BLUR",
+      "visible": true,
+      "radius": 6,
+      "boundVariables": {},
+      "blurType": "NORMAL"
+    },
+    {
+      "type": "INNER_SHADOW",
+      "visible": true,
+      "radius": 1,
+      "boundVariables": {},
+      "color": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.11999999731779099
+      },
+      "offset": {
+        "x": 0,
+        "y": 0.6499999761581421
+      },
+      "spread": 0,
+      "blendMode": "NORMAL"
+    },
+    {
+      "type": "INNER_SHADOW",
+      "visible": true,
+      "radius": 0.6000000238418579,
+      "boundVariables": {},
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.054999999701976776
+      },
+      "offset": {
+        "x": 0,
+        "y": -0.5
+      },
+      "spread": 0,
+      "blendMode": "NORMAL"
+    }
+  ],
+  "variants": [
+    {
+      "node": "879:8993",
+      "size": "Mini",
+      "state": "Idle",
+      "height": 22,
+      "trackHeight": 12,
+      "rangeInset": 6,
+      "sampleFillWidth": 166,
+      "symbolVisible": false,
+      "opacity": 1,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9042",
+      "size": "Mini",
+      "state": "Hover",
+      "height": 22,
+      "trackHeight": 12,
+      "rangeInset": 6,
+      "sampleFillWidth": 166,
+      "symbolVisible": false,
+      "opacity": 1,
+      "thumbDiameter": 8,
+      "ringDiameter": 14,
+      "ringStroke": 1
+    },
+    {
+      "node": "879:9091",
+      "size": "Mini",
+      "state": "Pressed",
+      "height": 22,
+      "trackHeight": 12,
+      "rangeInset": 6,
+      "sampleFillWidth": 166,
+      "symbolVisible": false,
+      "opacity": 1,
+      "thumbDiameter": 8,
+      "ringDiameter": 14,
+      "ringStroke": 2
+    },
+    {
+      "node": "879:9140",
+      "size": "Mini",
+      "state": "Disabled",
+      "height": 22,
+      "trackHeight": 12,
+      "rangeInset": 6,
+      "sampleFillWidth": 166,
+      "symbolVisible": false,
+      "opacity": 0.3199999928474426,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9189",
+      "size": "Small",
+      "state": "Idle",
+      "height": 24,
+      "trackHeight": 16,
+      "rangeInset": 8,
+      "sampleFillWidth": 168,
+      "symbolVisible": false,
+      "opacity": 1,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9238",
+      "size": "Small",
+      "state": "Hover",
+      "height": 24,
+      "trackHeight": 16,
+      "rangeInset": 8,
+      "sampleFillWidth": 168,
+      "symbolVisible": false,
+      "opacity": 1,
+      "thumbDiameter": 8,
+      "ringDiameter": 14,
+      "ringStroke": 1
+    },
+    {
+      "node": "879:9287",
+      "size": "Small",
+      "state": "Pressed",
+      "height": 24,
+      "trackHeight": 16,
+      "rangeInset": 8,
+      "sampleFillWidth": 168,
+      "symbolVisible": false,
+      "opacity": 1,
+      "thumbDiameter": 8,
+      "ringDiameter": 14,
+      "ringStroke": 2
+    },
+    {
+      "node": "879:9336",
+      "size": "Small",
+      "state": "Disabled",
+      "height": 24,
+      "trackHeight": 16,
+      "rangeInset": 8,
+      "sampleFillWidth": 168,
+      "symbolVisible": false,
+      "opacity": 0.3199999928474426,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9385",
+      "size": "Regular",
+      "state": "Idle",
+      "height": 32,
+      "trackHeight": 28,
+      "rangeInset": 14,
+      "sampleFillWidth": 174,
+      "symbolVisible": true,
+      "opacity": 1,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9434",
+      "size": "Regular",
+      "state": "Hover",
+      "height": 32,
+      "trackHeight": 28,
+      "rangeInset": 14,
+      "sampleFillWidth": 174,
+      "symbolVisible": true,
+      "opacity": 1,
+      "thumbDiameter": 20,
+      "ringDiameter": 26,
+      "ringStroke": 1
+    },
+    {
+      "node": "879:9483",
+      "size": "Regular",
+      "state": "Pressed",
+      "height": 32,
+      "trackHeight": 28,
+      "rangeInset": 14,
+      "sampleFillWidth": 174,
+      "symbolVisible": true,
+      "opacity": 1,
+      "thumbDiameter": 20,
+      "ringDiameter": 26,
+      "ringStroke": 2
+    },
+    {
+      "node": "879:9532",
+      "size": "Regular",
+      "state": "Disabled",
+      "height": 32,
+      "trackHeight": 28,
+      "rangeInset": 14,
+      "sampleFillWidth": 174,
+      "symbolVisible": true,
+      "opacity": 0.3199999928474426,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9581",
+      "size": "Large",
+      "state": "Idle",
+      "height": 44,
+      "trackHeight": 44,
+      "rangeInset": 22,
+      "sampleFillWidth": 182,
+      "symbolVisible": true,
+      "opacity": 1,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    },
+    {
+      "node": "879:9630",
+      "size": "Large",
+      "state": "Hover",
+      "height": 44,
+      "trackHeight": 44,
+      "rangeInset": 22,
+      "sampleFillWidth": 182,
+      "symbolVisible": true,
+      "opacity": 1,
+      "thumbDiameter": 36,
+      "ringDiameter": 42,
+      "ringStroke": 1
+    },
+    {
+      "node": "879:9679",
+      "size": "Large",
+      "state": "Pressed",
+      "height": 44,
+      "trackHeight": 44,
+      "rangeInset": 22,
+      "sampleFillWidth": 182,
+      "symbolVisible": true,
+      "opacity": 1,
+      "thumbDiameter": 36,
+      "ringDiameter": 42,
+      "ringStroke": 2
+    },
+    {
+      "node": "879:9728",
+      "size": "Large",
+      "state": "Disabled",
+      "height": 44,
+      "trackHeight": 44,
+      "rangeInset": 22,
+      "sampleFillWidth": 182,
+      "symbolVisible": true,
+      "opacity": 0.3199999928474426,
+      "thumbDiameter": null,
+      "ringDiameter": null,
+      "ringStroke": null
+    }
+  ],
+  "sampleWidth": 320,
+  "thumbEffects": [
+    {
+      "type": "DROP_SHADOW",
+      "visible": true,
+      "radius": 3,
+      "boundVariables": {},
+      "color": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 0.30000001192092896
+      },
+      "offset": {
+        "x": 0,
+        "y": 1
+      },
+      "spread": 0,
+      "blendMode": "NORMAL",
+      "showShadowBehindNode": true
+    },
+    {
+      "type": "INNER_SHADOW",
+      "visible": true,
+      "radius": 0,
+      "boundVariables": {},
+      "color": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 0.15000000596046448
+      },
+      "offset": {
+        "x": 0,
+        "y": 1
+      },
+      "spread": 0,
+      "blendMode": "NORMAL"
+    }
+  ]
+}

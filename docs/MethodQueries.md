@@ -7,8 +7,8 @@
 ```lvui
 import class Domain.Item
 import vm Model
-let current = vm.selected
-let Details(item: Item): View = Label(text: item.format(vm.amount))
+const current = vm.selected
+const Details(item: Item): View = Label(text: item.format(vm.amount))
 Window { VStack {
     Label(text: vm.format(vm.amount))
     Label(text: current.format(vm.amount))

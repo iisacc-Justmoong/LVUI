@@ -1,0 +1,4 @@
+import vm NativeApplicationBackend
+Application(onCloseRequested: vm.can_close) {
+    Window { PushButton(text: "Close", onClick: quitApplication()) }
+}

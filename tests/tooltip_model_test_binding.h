@@ -1,0 +1,9 @@
+#pragma once
+#include <LVUI/TooltipController.h>
+#include <iiGUI/TooltipModel.h>
+#include <iiGUI/TooltipController.h>
+#include <LVUI/TooltipOutline.h>
+#include <iiGUI/TooltipOutline.h>
+using TooltipTestModel=lvui::TooltipModelBinding<ii::gui::BasicTooltip>;
+using TooltipTestController=lvui::TooltipControllerBinding<ii::gui::BasicTooltipController,TooltipTestModel>;
+using TooltipTestOutline=lvui::TooltipOutlineBinding<ii::gui::BasicTooltipOutline>;

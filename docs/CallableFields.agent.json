@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/CallableFields.md",
-    "sha256": "0d583338dfa5c98228de5b6e2919433deafd5d724366eacbe5c878682a9ceed0",
-    "bytes": 7083,
+    "sha256": "70b9086c4b9983ee85309351a11818e6bd32281dc4da2f26b70b96496015b9c2",
+    "bytes": 7093,
     "line_count": 104,
     "encoding": "utf-8",
     "language": "ko"
@@ -74,9 +74,9 @@
       "kind": "fenced_code",
       "start_line": 18,
       "end_line": 27,
-      "raw": "```lvui\nimport vm Model\nlet render: (Int) -> String = vm.format\n@Static let original: (Int) -> String = render\nlet Actions(run: () -> Void = vm.run): View = PushButton(run)\nWindow { VStack {\n    Label(text: render(4))\n    Actions()\n} }\n```\n",
+      "raw": "```lvui\nimport vm Model\nconst render: (Int) -> String = vm.format\n@Static const original: (Int) -> String = render\nconst Actions(run: () -> Void = vm.run): View = PushButton(run)\nWindow { VStack {\n    Label(text: render(4))\n    Actions()\n} }\n```\n",
       "language": "lvui",
-      "code": "import vm Model\nlet render: (Int) -> String = vm.format\n@Static let original: (Int) -> String = render\nlet Actions(run: () -> Void = vm.run): View = PushButton(run)\nWindow { VStack {\n    Label(text: render(4))\n    Actions()\n} }\n",
+      "code": "import vm Model\nconst render: (Int) -> String = vm.format\n@Static const original: (Int) -> String = render\nconst Actions(run: () -> Void = vm.run): View = PushButton(run)\nWindow { VStack {\n    Label(text: render(4))\n    Actions()\n} }\n",
       "closed": true
     },
     {
@@ -178,7 +178,7 @@
       "kind": "paragraph",
       "start_line": 56,
       "end_line": 58,
-      "raw": "타입 지정 `let`, `@Static let`, `var`, 구성 매개변수·기본값·전달과 이벤트에 같은 선택을\n적용한다. 선언한 인자·반환 타입, 접근 권한·const 접근은 실제 생성 C++로 검사한다.\n읽기 전용 호출은 파일 리비전을 발행하지 않는다.\n"
+      "raw": "타입 지정 `const`, `@Static const`, `var`, 구성 매개변수·기본값·전달과 이벤트에 같은 선택을\n적용한다. 선언한 인자·반환 타입, 접근 권한·const 접근은 실제 생성 C++로 검사한다.\n읽기 전용 호출은 파일 리비전을 발행하지 않는다.\n"
     },
     {
       "id": "b000018",

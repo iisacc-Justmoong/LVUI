@@ -103,7 +103,7 @@ public:
                     if(plan.changes_)plan.result_bytes_=operation==NavigationOperation::pop?retained_bytes_-entries_.back().cost:entries_.front().cost;
                 }
             }else {plan.changes_=!entries_.empty();plan.result_bytes_=0;}
-            if(plan.changes_&&revision_==std::numeric_limits<std::uint64_t>::max())return ii::core::fail(ii::core::ErrorCode::out_of_range,"Navigation revision exhausted");
+            if(plan.changes_&&revision_==(std::numeric_limits<std::uint64_t>::max)())return ii::core::fail(ii::core::ErrorCode::out_of_range,"Navigation revision exhausted");
             return plan;
         }catch(...){return ii::core::fail(ii::core::ErrorCode::failed,"Navigation plan preparation failed",std::current_exception());}
     }

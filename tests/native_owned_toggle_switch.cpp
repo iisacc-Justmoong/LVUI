@@ -6,6 +6,11 @@
 #include <cmath>
 #include <stdexcept>
 #include <thread>
+#include <type_traits>
+
+using ToggleSwitchView=lvui::native::ToggleSwitchBinding<ii::gui::BasicToggleSwitch,ii::gui::BasicNativeToggleSwitch>;
+static_assert(std::is_same_v<ToggleSwitchView,ii::gui::BasicNativeToggleSwitch<
+    lvui::native::ToggleSwitchHostPolicy<ii::gui::BasicToggleSwitch<lvui::native::ToggleSwitchModelPolicy>>>>);
 
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
@@ -126,10 +131,10 @@ void animation(){
 void retirement(){
     auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(state->content_host({},"host",{320,200}));ii::gui::Widget toggle;
-    std::optional<lvui::native::NativeToggleSwitch> component;int callbacks=0;
+    std::optional<ToggleSwitchView> component;int callbacks=0;
     good(host.set_content([&](ii::gui::WidgetBuilder& widgets)->ii::core::Result<void>{
         lvui::ToggleSwitchConfiguration config;config.motion_enabled=false;
-        auto item=lvui::native::NativeToggleSwitch::create(widgets,{},"switch",config,[&](bool){++callbacks;good(host.clear_content());});
+        auto item=ToggleSwitchView::create(widgets,{},"switch",config,[&](bool){++callbacks;good(host.clear_content());});
         if(!item)return std::unexpected(item.error());toggle=item->root();component=*item;return {};
     }));
     bool rejected=false;

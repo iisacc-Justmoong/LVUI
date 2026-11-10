@@ -1,0 +1,16 @@
+import vm NativeOwnedTooltipModel
+Window {
+    VStack {
+        Tooltip(id: "reactive-tip", targetId: "reactive-anchor", text: vm.text,
+                delay: vm.delay, timeout: vm.timeout, hideDelay: 0,
+                preferredPlacement: vm.placement, maximumWidth: vm.width, maximumHeight: 80, scrollContent: vm.scroll,
+                motionEnabled: vm.motion_enabled, animationDuration: vm.animation_duration, motion: vm.motion,
+                contentPadding: vm.padding, anchorX: vm.anchorX, anchorY: 8,
+                automatic: vm.automatic, surfaceColor: vm.surface,
+                surfaceOpacity: vm.opacity, backdrop: vm.backdrop,
+                accessibilityName: vm.name, onOpened: vm.opened, onClosed: vm.closed)
+        Spacer(minLength: 120)
+        PushButton(id: "reactive-anchor", text: "Anchor")
+        Spacer(minLength: 120)
+    }
+}

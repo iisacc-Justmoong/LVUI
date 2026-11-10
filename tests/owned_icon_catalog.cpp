@@ -10,6 +10,14 @@ int main(){
     for(auto name:{"generaladd","home","nodesfolder","projectStructure","procedure","generalchevronDown","generalchevronUp","generalchevronUpDown","generalchevronRight","generalchevronLeft","alertAdjustments","alertFileText","colorEyedropper","addFile","generaldelete","settings"}){
         auto asset=(*builtins)->resolve(name);require(asset&&(*asset)->svg.find("<svg")!=std::string::npos,"A built-in SVG icon is unavailable");
     }
+    for(auto name:{"generaladd","projectStructure","alertAdjustments","alertFileText"}) {
+        auto asset=(*builtins)->resolve(name);
+        require(asset && (*asset)->svg.find("#2373CD")!=std::string::npos,
+                "Built-in blue icon did not resolve the darker Figma role");
+    }
+    auto folder=(*builtins)->resolve("nodesfolder");
+    require(folder && (*folder)->svg.find("#CDAE30")!=std::string::npos,
+            "Built-in yellow icon did not resolve the darker Figma role");
     auto custom=lvui::IconCatalog::create({{"a","<svg/>"},{"b","<svg/>"}});
     require(custom&&(*custom)->size()==2&&(*custom)->revision()==1,"Custom icon catalog was not created");
     auto first=(*custom)->resolve("a"),again=(*custom)->resolve("a");

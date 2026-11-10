@@ -1,4 +1,7 @@
 #include <LVUI/NativeSlider.h>
+#include <iiGUI/NativeSliderView.h>
+#include <iiGUI/SvgImageCache.h>
+using NativeSliderForTest=lvui::native::SliderViewBinding<ii::gui::BasicSlider,ii::gui::BasicNativeSlider,ii::gui::CachedSvgDecoder>;
 #include <iiGUI/WidgetState.h>
 #include <cmath>
 #include <memory>
@@ -12,7 +15,7 @@ void require(bool value,const char* message){if(!value)throw std::runtime_error(
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
 void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value.error().message);}
 void owned_slider(){
-    using namespace ii::gui;std::optional<lvui::native::NativeSlider> slider;bool reenter=false,throw_callback=false;
+    using namespace ii::gui;std::optional<NativeSliderForTest> slider;bool reenter=false,throw_callback=false;
     lvui::SliderConfiguration nested;nested.minimum=0;nested.maximum=10;nested.value=3;nested.step=1;nested.width=120;nested.accessibility_name="Newest";
     detail::WidgetFrameHooks hooks;hooks.accessibility_changed=[&]{if(reenter){reenter=false;good(slider->set_options(nested));}};
     auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();},WidgetAppearance{},hooks);
@@ -20,7 +23,7 @@ void owned_slider(){
     lvui::SliderConfiguration config;config.minimum=0;config.maximum=10;config.value=5;config.step=1;config.width=100;
     good(host.set_content([&](auto& builder)->ii::core::Result<void>{
         auto root=builder.vstack({},"root",{.spacing=0,.alignment=StackAlignment::leading});if(!root)return std::unexpected(root.error());
-        auto created=lvui::native::NativeSlider::create(builder,*root,"slider",config,[&](double value){
+        auto created=NativeSliderForTest::create(builder,*root,"slider",config,[&](double value){
             if(throw_callback)throw std::runtime_error("Slider callback failed");moved.push_back(value);
         });
         if(!created)return std::unexpected(created.error());slider=*created;return {};
@@ -78,7 +81,7 @@ void owned_slider(){
 void nested_coordinates(){
     using namespace ii::gui;
     auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto host=take(tree->content_host({},"host",{640,420}));std::optional<lvui::native::NativeSlider> slider;
+    auto host=take(tree->content_host({},"host",{640,420}));std::optional<NativeSliderForTest> slider;
     good(host.set_content([&](auto& builder)->ii::core::Result<void>{
         auto root=builder.absolute_stack({},"outer",{640,420});if(!root)return std::unexpected(root.error());
         auto child=builder.content_host(*root,"nested",{200,100});if(!child)return std::unexpected(child.error());
@@ -86,7 +89,7 @@ void nested_coordinates(){
         return child->set_content([&](auto& nested)->ii::core::Result<void>{
             auto layout=nested.vstack({},"layout",{.spacing=0,.alignment=StackAlignment::leading});if(!layout)return std::unexpected(layout.error());
             lvui::SliderConfiguration config;config.minimum=0;config.maximum=10;config.value=5;config.step=1;config.width=100;
-            auto created=lvui::native::NativeSlider::create(nested,*layout,"slider",config);if(!created)return std::unexpected(created.error());
+            auto created=NativeSliderForTest::create(nested,*layout,"slider",config);if(!created)return std::unexpected(created.error());
             slider=*created;return {};
         });
     }));

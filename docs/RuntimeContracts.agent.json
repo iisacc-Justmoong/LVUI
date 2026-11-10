@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/RuntimeContracts.md",
-    "sha256": "97894f6c24cd94bdafe22eabebb8e36c2e0323987b31c4be258ca1f65873cd35",
-    "bytes": 12337,
-    "line_count": 175,
+    "sha256": "0f883bcf0f305f6e63b0a36660900affa556c03e1b2a82b8bb038dd76add999b",
+    "bytes": 12649,
+    "line_count": 180,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -296,22 +296,22 @@
       "id": "b000033",
       "kind": "paragraph",
       "start_line": 63,
-      "end_line": 65,
-      "raw": "LVUI는 애플리케이션 패턴으로 MVVM을 권장하며 ViewModel 상태 규칙은 SwiftUI를 참고한다.\nViewModel은 같은 규칙으로 공개 상태·메서드를 import하는 일반 C++ 클래스일 수 있다.\nimport에 LVUI 기반 클래스나 export 어노테이션은 필요하지 않다.\n"
+      "end_line": 66,
+      "raw": "LVUI는 뷰를 선언하며, 앱 상태와 동작을 소유하는 ViewModel은 C++에서 import한다.\nViewModel의 소유·공유·관측은 SwiftUI의 상태 관리 개념을 참고한다.\nViewModel은 공개 상태·메서드를 제공하는 일반 C++ 클래스이다.\nimport에 LVUI 기반 클래스나 export 어노테이션은 필요하지 않다.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 66,
-      "end_line": 66,
+      "start_line": 67,
+      "end_line": 67,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 67,
+      "start_line": 68,
       "end_line": 70,
-      "raw": "ViewModel은 기본 바인딩을 제공한다.\n뷰는 바인딩 어노테이션이나 추가 래퍼 선언 없이 상태를 읽고 쓰기 가능한 멤버의 편집 바인딩을 직접 얻는다.\n생성된 네이티브 어댑터가 바인딩·관찰 연동을 제공한다.\n읽기·편집은 기존 VM 인스턴스를 대상으로 하며 읽기 전용 멤버는 계속 읽기 전용이다.\n"
+      "raw": "컴파일러는 LVUI 객체 리터럴과 이름 붙인 스크립트 본문을 거부한다. 화면의 지역\n변수·상수와 이벤트 입력의 일회성 블록은 계속 사용할 수 있다.\n[뷰 전용 아키텍처](ViewOnlyArchitecture.md)를 따른다.\n"
     },
     {
       "id": "b000036",
@@ -325,7 +325,7 @@
       "kind": "paragraph",
       "start_line": 72,
       "end_line": 75,
-      "raw": "캡슐화는 C++ 클래스 작성자의 책임이다.\n비공개 저장소를 공개 getter·setter·의도 메서드로 제공할 수 있다.\n공개 접근이 모든 상태 필드의 변경 가능성을 강제하지는 않는다.\n기본 반응형 값 모델 안에서도 소스 가시성과 네이티브 변경 알림 지원은 별개의 구현 책임이다.\n"
+      "raw": "ViewModel은 기본 바인딩을 제공한다.\n뷰는 바인딩 어노테이션이나 추가 래퍼 선언 없이 상태를 읽고 쓰기 가능한 멤버의 편집 바인딩을 직접 얻는다.\n생성된 네이티브 어댑터가 바인딩·관찰 연동을 제공한다.\n읽기·편집은 기존 VM 인스턴스를 대상으로 하며 읽기 전용 멤버는 계속 읽기 전용이다.\n"
     },
     {
       "id": "b000038",
@@ -336,68 +336,68 @@
     },
     {
       "id": "b000039",
-      "kind": "html",
+      "kind": "paragraph",
       "start_line": 77,
-      "end_line": 77,
-      "raw": "<a id=\"properties-and-actions\"></a>\n"
+      "end_line": 80,
+      "raw": "캡슐화는 C++ 클래스 작성자의 책임이다.\n비공개 저장소를 공개 getter·setter·의도 메서드로 제공할 수 있다.\n공개 접근이 모든 상태 필드의 변경 가능성을 강제하지는 않는다.\n기본 반응형 값 모델 안에서도 소스 가시성과 네이티브 변경 알림 지원은 별개의 구현 책임이다.\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 78,
-      "end_line": 78,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "\n"
     },
     {
       "id": "b000041",
+      "kind": "html",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "<a id=\"properties-and-actions\"></a>\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 83,
+      "end_line": 83,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
       "kind": "heading",
-      "start_line": 79,
-      "end_line": 79,
+      "start_line": 84,
+      "end_line": 84,
       "raw": "## 속성과 동작\n",
       "level": 2,
       "title": "속성과 동작"
     },
     {
-      "id": "b000042",
-      "kind": "blank",
-      "start_line": 80,
-      "end_line": 80,
-      "raw": "\n"
-    },
-    {
-      "id": "b000043",
-      "kind": "paragraph",
-      "start_line": 81,
-      "end_line": 85,
-      "raw": "뷰에서 사용하는 비정적 값은 [기본 반응형 모델](ReactiveState.md)을 따른다.\n`enabled: document.canSave` 같은 바인딩은 관련 원본 변경을 따라야 한다.\nAOT·네이티브 브리지에는 멤버 접근 외에 읽기 추적과 변경 정보가 필요하다.\n런타임은 각 의존성을 소유 원본에 연결하고 소유자 종료 경계에서 제거한다.\n이 기능은 관찰을 선택적으로 활성화하는 것이 아니라 언어 기본 동작을 구현한다.\n"
-    },
-    {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 86,
-      "end_line": 86,
+      "start_line": 85,
+      "end_line": 85,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "paragraph",
-      "start_line": 87,
-      "end_line": 96,
-      "raw": "`document.save`는 연결된 메서드 참조이며 `document.save()`는 평가 시 명시적으로 호출한다.\n`PushButton(document.save)`는 예제 컴포넌트의 콜백 입력 계약에 따라 해당 참조를 전달한다.\n클릭 시 호출은 버튼 구현이 정의하며 언어가 이름으로 이벤트를 추론하지 않는다.\n`Footer(status: document.status)`는 기본적으로 값과 그 변경에 바인딩된다.\n멤버를 읽거나 메서드 참조를 재평가하는 것만으로 명령을 암묵적으로 실행해서는 안 된다.\n명시적 호출은 호출 의미를 유지하며 결과를 수신 매개변수 타입에 따라 검사한다.\n[MethodReferences.md](MethodReferences.md)를 참조한다.\n일반 LVUI 변수를 포함하여 값 바인딩과 변경 추적이 기본 동작이다.\n`@Observable`은 해당 의도를 명시할 수 있으며 `@Static`은 고정 값 예외를 설정한다.\n구체적인 바인딩 투영·의존성 추적 API·허용 표현식 언어는 추가 구현 규칙이 필요하다.\n"
+      "start_line": 86,
+      "end_line": 90,
+      "raw": "뷰에서 사용하는 비정적 값은 [기본 반응형 모델](ReactiveState.md)을 따른다.\n`enabled: document.canSave` 같은 바인딩은 관련 원본 변경을 따라야 한다.\nAOT·네이티브 브리지에는 멤버 접근 외에 읽기 추적과 변경 정보가 필요하다.\n런타임은 각 의존성을 소유 원본에 연결하고 소유자 종료 경계에서 제거한다.\n이 기능은 관찰을 선택적으로 활성화하는 것이 아니라 언어 기본 동작을 구현한다.\n"
     },
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 97,
-      "end_line": 97,
+      "start_line": 91,
+      "end_line": 91,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 98,
+      "start_line": 92,
       "end_line": 101,
-      "raw": "[선언 어노테이션](DeclarationAnnotations.md)은 `@Static`도 제공한다.\n초기화된 값은 설정된 수명 동안 바뀔 수 없다.\n어댑터는 C++ 저장소가 우연히 변경을 허용한다는 이유로 쓰기 가능하게 취급하지 않고 고정 값 계약을 유지해야 한다.\n정확한 수명 소유자와 정적 참조 의미는 추가 설계가 필요하다.\n"
+      "raw": "`document.save`는 연결된 메서드 참조이며 `document.save()`는 평가 시 명시적으로 호출한다.\n`PushButton(document.save)`는 예제 컴포넌트의 콜백 입력 계약에 따라 해당 참조를 전달한다.\n클릭 시 호출은 버튼 구현이 정의하며 언어가 이름으로 이벤트를 추론하지 않는다.\n`Footer(status: document.status)`는 기본적으로 값과 그 변경에 바인딩된다.\n멤버를 읽거나 메서드 참조를 재평가하는 것만으로 명령을 암묵적으로 실행해서는 안 된다.\n명시적 호출은 호출 의미를 유지하며 결과를 수신 매개변수 타입에 따라 검사한다.\n[MethodReferences.md](MethodReferences.md)를 참조한다.\n일반 LVUI 변수를 포함하여 값 바인딩과 변경 추적이 기본 동작이다.\n`@Observable`은 해당 의도를 명시할 수 있으며 `@Static`은 고정 값 예외를 설정한다.\n구체적인 바인딩 투영·의존성 추적 API·허용 표현식 언어는 추가 구현 규칙이 필요하다.\n"
     },
     {
       "id": "b000048",
@@ -408,111 +408,125 @@
     },
     {
       "id": "b000049",
-      "kind": "html",
+      "kind": "paragraph",
       "start_line": 103,
-      "end_line": 103,
-      "raw": "<a id=\"viewmodel-object-queries\"></a>\n"
+      "end_line": 106,
+      "raw": "[선언 어노테이션](DeclarationAnnotations.md)은 `@Static`도 제공한다.\n초기화된 값은 설정된 수명 동안 바뀔 수 없다.\n어댑터는 C++ 저장소가 우연히 변경을 허용한다는 이유로 쓰기 가능하게 취급하지 않고 고정 값 계약을 유지해야 한다.\n정확한 수명 소유자와 정적 참조 의미는 추가 설계가 필요하다.\n"
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 104,
-      "end_line": 104,
+      "start_line": 107,
+      "end_line": 107,
       "raw": "\n"
     },
     {
       "id": "b000051",
+      "kind": "html",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "<a id=\"viewmodel-object-queries\"></a>\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
       "kind": "heading",
-      "start_line": 105,
-      "end_line": 105,
+      "start_line": 110,
+      "end_line": 110,
       "raw": "## ViewModel 객체 쿼리\n",
       "level": 2,
       "title": "ViewModel 객체 쿼리"
     },
     {
-      "id": "b000052",
-      "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
-      "raw": "\n"
-    },
-    {
-      "id": "b000053",
-      "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 109,
-      "raw": "ViewModel은 iiSDKCore 객체 쿼리 값 교환에 참여한다.\n수신 객체 소유 계약을 통해 읽기·쓰기·명령을 받고 선택한 값을 반환하며 변경 쿼리로 소비자에게 알린다.\nVM은 다른 객체의 쿼리 포트를 사용하여 Model·Service 객체와 통신할 수 있다.\n"
-    },
-    {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 110,
-      "end_line": 110,
+      "start_line": 111,
+      "end_line": 111,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 111,
-      "end_line": 113,
-      "raw": "뷰의 멤버·동작 표기는 계속 어댑터에 노출되는 표면 구문이다.\n공개 접근성, 쿼리 전송, 변경 관찰은 별개의 책임이다.\nCore 계약과 채택한 LVUI 연동 규칙은 [ViewModelQueries.md](ViewModelQueries.md)를 참조한다.\n"
+      "start_line": 112,
+      "end_line": 114,
+      "raw": "ViewModel은 iiSDKCore 객체 쿼리 값 교환에 참여한다.\n수신 객체 소유 계약을 통해 읽기·쓰기·명령을 받고 선택한 값을 반환하며 변경 쿼리로 소비자에게 알린다.\nVM은 다른 객체의 쿼리 포트를 사용하여 Model·Service 객체와 통신할 수 있다.\n"
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 114,
-      "end_line": 114,
+      "start_line": 115,
+      "end_line": 115,
       "raw": "\n"
     },
     {
       "id": "b000057",
-      "kind": "html",
-      "start_line": 115,
-      "end_line": 115,
-      "raw": "<a id=\"existing-core-building-blocks\"></a>\n"
+      "kind": "paragraph",
+      "start_line": 116,
+      "end_line": 118,
+      "raw": "뷰의 멤버·동작 표기는 계속 어댑터에 노출되는 표면 구문이다.\n공개 접근성, 쿼리 전송, 변경 관찰은 별개의 책임이다.\nCore 계약과 채택한 LVUI 연동 규칙은 [ViewModelQueries.md](ViewModelQueries.md)를 참조한다.\n"
     },
     {
       "id": "b000058",
       "kind": "blank",
-      "start_line": 116,
-      "end_line": 116,
+      "start_line": 119,
+      "end_line": 119,
       "raw": "\n"
     },
     {
       "id": "b000059",
-      "kind": "heading",
-      "start_line": 117,
-      "end_line": 117,
-      "raw": "## 기존 Core 구성 요소\n",
-      "level": 2,
-      "title": "기존 Core 구성 요소"
+      "kind": "html",
+      "start_line": 120,
+      "end_line": 120,
+      "raw": "<a id=\"existing-core-building-blocks\"></a>\n"
     },
     {
       "id": "b000060",
-      "kind": "blank",
-      "start_line": 118,
-      "end_line": 118,
-      "raw": "\n"
-    },
-    {
-      "id": "b000061",
-      "kind": "paragraph",
-      "start_line": 119,
-      "end_line": 120,
-      "raw": "다음은 이번 문서 개정에서 검토한 현재 워크스페이스 소스 참조이다.\n연동 후보이며 구현된 LVUI 어댑터가 아니다.\n"
-    },
-    {
-      "id": "b000062",
       "kind": "blank",
       "start_line": 121,
       "end_line": 121,
       "raw": "\n"
     },
     {
-      "id": "b000063",
-      "kind": "table",
+      "id": "b000061",
+      "kind": "heading",
       "start_line": 122,
-      "end_line": 129,
+      "end_line": 122,
+      "raw": "## 기존 Core 구성 요소\n",
+      "level": 2,
+      "title": "기존 Core 구성 요소"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 125,
+      "raw": "다음은 이번 문서 개정에서 검토한 현재 워크스페이스 소스 참조이다.\n연동 후보이며 구현된 LVUI 어댑터가 아니다.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "table",
+      "start_line": 127,
+      "end_line": 134,
       "raw": "| Core 기능 | 관련 기존 계약 |\n|---|---|\n| `SDK/iiSDKCore/src/Runtime/Query.h` | 인스턴스 소유 타입 지정 요청·응답 포트이다. `send`는 동기적이며 큐의 완료 콜백은 수신 영역에서 실행한다. 취소 후 완료를 보장하지 않는다. |\n| `SDK/iiSDKCore/src/Runtime/TaskScope.h` | 소유 콜백·캡처를 추적한다. 종료 시 대기 작업을 취소하고 활성 작업이 끝난 뒤 자원을 회수한다. 송신자는 소유자의 생존을 유지하지 않는다. |\n| `SDK/iiSDKCore/src/Runtime/TaskScope.cpp` | 자신의 활성 작업 안에서 종료하거나 대기가 실행을 막는 문맥을 감지한다. LVUI 어댑터는 무조건 블로킹 종료를 호출하지 않고 안전한 종료를 조정해야 한다. |\n| `SDK/iiSDKCore/src/Runtime/ObjectProperties.h` | 인스턴스별 속성 정의·정책·경로와 리비전이 있는 변경 기록을 제공한다. 임의의 C++ 멤버 쓰기를 자동 관찰하지 않는다. |\n| `SDK/iiSDKCore/src/Plugin/Plugin.h` | 생성·파괴를 짝짓고 호출 거부·대기 작업 취소·활성 호출 대기·인스턴스 파괴의 종료 순서를 정의한다. |\n| `SDK/iiSDKCore/src/Runtime/Runtime.h` | 작업 사이에서 상주 작업자와 고정 작업 슬롯을 재사용한다. 뷰 백엔드마다 런타임이나 작업자 풀을 만들 필요는 없다. |\n",
       "columns": [
         "Core 기능",
@@ -546,189 +560,189 @@
       ]
     },
     {
-      "id": "b000064",
-      "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
-      "raw": "\n"
-    },
-    {
-      "id": "b000065",
-      "kind": "paragraph",
-      "start_line": 131,
-      "end_line": 133,
-      "raw": "플러그인 계약은 수명 관리의 참고 사례이다.\n가져온 백엔드가 모두 동적으로 로드하는 플러그인이어야 한다는 뜻은 아니다.\nCore 기본 요소를 재사용하더라도 뷰 바인딩·종료 어댑터는 여전히 필요하다.\n"
-    },
-    {
       "id": "b000066",
       "kind": "blank",
-      "start_line": 134,
-      "end_line": 134,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "\n"
     },
     {
       "id": "b000067",
       "kind": "paragraph",
-      "start_line": 135,
-      "end_line": 136,
-      "raw": "`ObjectProperties`는 관찰·상태 연동 후보이며 자동 C++ 선언 탐색 기능이나\n공개 멤버 접근을 위한 필수 수동 허용 목록은 아니다.\n"
+      "start_line": 136,
+      "end_line": 138,
+      "raw": "플러그인 계약은 수명 관리의 참고 사례이다.\n가져온 백엔드가 모두 동적으로 로드하는 플러그인이어야 한다는 뜻은 아니다.\nCore 기본 요소를 재사용하더라도 뷰 바인딩·종료 어댑터는 여전히 필요하다.\n"
     },
     {
       "id": "b000068",
       "kind": "blank",
-      "start_line": 137,
-      "end_line": 137,
+      "start_line": 139,
+      "end_line": 139,
       "raw": "\n"
     },
     {
       "id": "b000069",
       "kind": "paragraph",
-      "start_line": 138,
-      "end_line": 139,
-      "raw": "의존성 방향은 애플리케이션·UI 연동에서 Core 쪽으로 유지한다.\nCore는 구체적인 애플리케이션 백엔드나 LVUI 언어에 의존해서는 안 된다.\n"
+      "start_line": 140,
+      "end_line": 141,
+      "raw": "`ObjectProperties`는 관찰·상태 연동 후보이며 자동 C++ 선언 탐색 기능이나\n공개 멤버 접근을 위한 필수 수동 허용 목록은 아니다.\n"
     },
     {
       "id": "b000070",
-      "kind": "blank",
-      "start_line": 140,
-      "end_line": 140,
-      "raw": "\n"
-    },
-    {
-      "id": "b000071",
-      "kind": "html",
-      "start_line": 141,
-      "end_line": 141,
-      "raw": "<a id=\"resource-ownership-and-performance\"></a>\n"
-    },
-    {
-      "id": "b000072",
       "kind": "blank",
       "start_line": 142,
       "end_line": 142,
       "raw": "\n"
     },
     {
-      "id": "b000073",
-      "kind": "heading",
+      "id": "b000071",
+      "kind": "paragraph",
       "start_line": 143,
-      "end_line": 143,
-      "raw": "## 자원 소유권과 성능\n",
-      "level": 2,
-      "title": "자원 소유권과 성능"
+      "end_line": 144,
+      "raw": "의존성 방향은 애플리케이션·UI 연동에서 Core 쪽으로 유지한다.\nCore는 구체적인 애플리케이션 백엔드나 LVUI 언어에 의존해서는 안 된다.\n"
     },
     {
-      "id": "b000074",
+      "id": "b000072",
       "kind": "blank",
-      "start_line": 144,
-      "end_line": 144,
+      "start_line": 145,
+      "end_line": 145,
       "raw": "\n"
     },
     {
-      "id": "b000075",
-      "kind": "paragraph",
-      "start_line": 145,
+      "id": "b000073",
+      "kind": "html",
+      "start_line": 146,
       "end_line": 146,
-      "raw": "백엔드는 사용이 종료되고 파괴될 때 소유한 버퍼·핸들·타이머·작업 예약·기타 자원을 반환한다.\n공유 실행기나 서비스에는 별도 소유자가 있으며 백엔드 하나가 제거됐다는 이유만으로 종료하지 않는다.\n"
+      "raw": "<a id=\"resource-ownership-and-performance\"></a>\n"
     },
     {
-      "id": "b000076",
+      "id": "b000074",
       "kind": "blank",
       "start_line": 147,
       "end_line": 147,
       "raw": "\n"
     },
     {
+      "id": "b000075",
+      "kind": "heading",
+      "start_line": 148,
+      "end_line": 148,
+      "raw": "## 자원 소유권과 성능\n",
+      "level": 2,
+      "title": "자원 소유권과 성능"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 149,
+      "end_line": 149,
+      "raw": "\n"
+    },
+    {
       "id": "b000077",
       "kind": "paragraph",
-      "start_line": 148,
-      "end_line": 150,
-      "raw": "자원을 여전히 참조하는 네이티브·GPU 작업은 활성 사용으로 계산한다.\n해당 사용이 끝나기 전에는 저장소를 해제하지 않는다.\n할당자의 캐시 때문에 프로세스 RSS와 인스턴스 소유 예약의 논리적 해제량이 다를 수 있다.\n"
+      "start_line": 150,
+      "end_line": 151,
+      "raw": "백엔드는 사용이 종료되고 파괴될 때 소유한 버퍼·핸들·타이머·작업 예약·기타 자원을 반환한다.\n공유 실행기나 서비스에는 별도 소유자가 있으며 백엔드 하나가 제거됐다는 이유만으로 종료하지 않는다.\n"
     },
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 151,
-      "end_line": 151,
+      "start_line": 152,
+      "end_line": 152,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "paragraph",
-      "start_line": 152,
-      "end_line": 153,
-      "raw": "파괴 후 메모리 저장소를 재사용할 수 있지만 새 import 활성화마다 객체 정체성과 상태는 새로 부여한다.\n저장소를 재사용했다는 이유로 늦은 전달이 새 객체에 연결되어서는 안 된다.\n"
+      "start_line": 153,
+      "end_line": 155,
+      "raw": "자원을 여전히 참조하는 네이티브·GPU 작업은 활성 사용으로 계산한다.\n해당 사용이 끝나기 전에는 저장소를 해제하지 않는다.\n할당자의 캐시 때문에 프로세스 RSS와 인스턴스 소유 예약의 논리적 해제량이 다를 수 있다.\n"
     },
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 154,
-      "end_line": 154,
+      "start_line": 156,
+      "end_line": 156,
       "raw": "\n"
     },
     {
       "id": "b000081",
       "kind": "paragraph",
-      "start_line": 155,
-      "end_line": 159,
-      "raw": "클릭 사이에 백엔드를 유지하면 매 동작마다 생성·파괴를 반복하지 않는다.\n이것이 레이턴시 보장을 뜻하지는 않는다.\n스코프 활성화·메서드·속성 갱신·종료는 여전히 측정해야 한다.\n생성자·소멸자의 작업량은 한정되어야 하며,\n비용이 큰 작업은 UI 진행을 막지 않는 적절한 실행 영역을 사용해야 한다.\n"
+      "start_line": 157,
+      "end_line": 158,
+      "raw": "파괴 후 메모리 저장소를 재사용할 수 있지만 새 import 활성화마다 객체 정체성과 상태는 새로 부여한다.\n저장소를 재사용했다는 이유로 늦은 전달이 새 객체에 연결되어서는 안 된다.\n"
     },
     {
       "id": "b000082",
       "kind": "blank",
-      "start_line": 160,
-      "end_line": 160,
+      "start_line": 159,
+      "end_line": 159,
       "raw": "\n"
     },
     {
       "id": "b000083",
       "kind": "paragraph",
-      "start_line": 161,
-      "end_line": 161,
-      "raw": "이 문서는 새 메모리 풀, 전역 백엔드 캐시, 뷰별 작업자 풀을 채택하지 않는다.\n"
+      "start_line": 160,
+      "end_line": 164,
+      "raw": "클릭 사이에 백엔드를 유지하면 매 동작마다 생성·파괴를 반복하지 않는다.\n이것이 레이턴시 보장을 뜻하지는 않는다.\n스코프 활성화·메서드·속성 갱신·종료는 여전히 측정해야 한다.\n생성자·소멸자의 작업량은 한정되어야 하며,\n비용이 큰 작업은 UI 진행을 막지 않는 적절한 실행 영역을 사용해야 한다.\n"
     },
     {
       "id": "b000084",
       "kind": "blank",
-      "start_line": 162,
-      "end_line": 162,
+      "start_line": 165,
+      "end_line": 165,
       "raw": "\n"
     },
     {
       "id": "b000085",
-      "kind": "html",
-      "start_line": 163,
-      "end_line": 163,
-      "raw": "<a id=\"open-questions\"></a>\n"
+      "kind": "paragraph",
+      "start_line": 166,
+      "end_line": 166,
+      "raw": "이 문서는 새 메모리 풀, 전역 백엔드 캐시, 뷰별 작업자 풀을 채택하지 않는다.\n"
     },
     {
       "id": "b000086",
       "kind": "blank",
-      "start_line": 164,
-      "end_line": 164,
+      "start_line": 167,
+      "end_line": 167,
       "raw": "\n"
     },
     {
       "id": "b000087",
+      "kind": "html",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000088",
+      "kind": "blank",
+      "start_line": 169,
+      "end_line": 169,
+      "raw": "\n"
+    },
+    {
+      "id": "b000089",
       "kind": "heading",
-      "start_line": 165,
-      "end_line": 165,
+      "start_line": 170,
+      "end_line": 170,
       "raw": "## 미정 사항\n",
       "level": 2,
       "title": "미정 사항"
     },
     {
-      "id": "b000088",
+      "id": "b000090",
       "kind": "blank",
-      "start_line": 166,
-      "end_line": 166,
+      "start_line": 171,
+      "end_line": 171,
       "raw": "\n"
     },
     {
-      "id": "b000089",
+      "id": "b000091",
       "kind": "list",
-      "start_line": 167,
-      "end_line": 175,
+      "start_line": 172,
+      "end_line": 180,
       "raw": "- C++ 선언 탐색·브리지 정보 스키마·호환성 규칙.\n- 현재 C++23/Cocoa 경로를 넘어서는 컴파일러 백엔드·네이티브 어댑터·디스크립터 형식.\n- 현재 위젯 마운트를 넘어서는 다른 OS 입력·접근성 어댑터와 추가 가속 표면의 연동.\n- 생성자 주입과 초기화 실패 처리.\n- 관찰 가능한 속성·결과 전달 API.\n- 공개 멤버·타입 지정 쿼리·값 바인딩 사이의 생성된 매핑.\n- 컴포넌트 입력 스키마·callable 호환성·네이티브 콜백 표현.\n- 실행 영역 귀속·호출 접수·스케줄링·취소 인터페이스.\n- 비블로킹 종료 조정과 정리 오류 보고.\n",
       "items": [
         {
@@ -813,44 +827,44 @@
       "start_line": 61
     },
     {
-      "block_id": "b000041",
+      "block_id": "b000043",
       "parent_id": "b000003",
       "level": 2,
       "title": "속성과 동작",
       "anchor": "속성과-동작",
-      "start_line": 79
+      "start_line": 84
     },
     {
-      "block_id": "b000051",
+      "block_id": "b000053",
       "parent_id": "b000003",
       "level": 2,
       "title": "ViewModel 객체 쿼리",
       "anchor": "viewmodel-객체-쿼리",
-      "start_line": 105
+      "start_line": 110
     },
     {
-      "block_id": "b000059",
+      "block_id": "b000061",
       "parent_id": "b000003",
       "level": 2,
       "title": "기존 Core 구성 요소",
       "anchor": "기존-core-구성-요소",
-      "start_line": 117
+      "start_line": 122
     },
     {
-      "block_id": "b000073",
+      "block_id": "b000075",
       "parent_id": "b000003",
       "level": 2,
       "title": "자원 소유권과 성능",
       "anchor": "자원-소유권과-성능",
-      "start_line": 143
+      "start_line": 148
     },
     {
-      "block_id": "b000087",
+      "block_id": "b000089",
       "parent_id": "b000003",
       "level": 2,
       "title": "미정 사항",
       "anchor": "미정-사항",
-      "start_line": 165
+      "start_line": 170
     }
   ],
   "indexes": {
@@ -884,106 +898,106 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000045",
-        "line": 89,
+        "block_id": "b000047",
+        "line": 94,
         "text": "클릭 시 호출은 버튼 구현이 정의하며 언어가 이름으로 이벤트를 추론하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000045",
-        "line": 91,
+        "block_id": "b000047",
+        "line": 96,
         "text": "멤버를 읽거나 메서드 참조를 재평가하는 것만으로 명령을 암묵적으로 실행해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000047",
-        "line": 100,
+        "block_id": "b000049",
+        "line": 105,
         "text": "어댑터는 C++ 저장소가 우연히 변경을 허용한다는 이유로 쓰기 가능하게 취급하지 않고 고정 값 계약을 유지해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000063",
-        "line": 124,
+        "block_id": "b000065",
+        "line": 129,
         "text": "| `SDK/iiSDKCore/src/Runtime/Query.h` | 인스턴스 소유 타입 지정 요청·응답 포트이다. `send`는 동기적이며 큐의 완료 콜백은 수신 영역에서 실행한다. 취소 후 완료를 보장하지 않는다. |",
         "basis": "lexical_match",
         "context": "table"
       },
       {
-        "block_id": "b000063",
-        "line": 125,
+        "block_id": "b000065",
+        "line": 130,
         "text": "| `SDK/iiSDKCore/src/Runtime/TaskScope.h` | 소유 콜백·캡처를 추적한다. 종료 시 대기 작업을 취소하고 활성 작업이 끝난 뒤 자원을 회수한다. 송신자는 소유자의 생존을 유지하지 않는다. |",
         "basis": "lexical_match",
         "context": "table"
       },
       {
-        "block_id": "b000063",
-        "line": 126,
+        "block_id": "b000065",
+        "line": 131,
         "text": "| `SDK/iiSDKCore/src/Runtime/TaskScope.cpp` | 자신의 활성 작업 안에서 종료하거나 대기가 실행을 막는 문맥을 감지한다. LVUI 어댑터는 무조건 블로킹 종료를 호출하지 않고 안전한 종료를 조정해야 한다. |",
         "basis": "lexical_match",
         "context": "table"
       },
       {
-        "block_id": "b000063",
-        "line": 127,
+        "block_id": "b000065",
+        "line": 132,
         "text": "| `SDK/iiSDKCore/src/Runtime/ObjectProperties.h` | 인스턴스별 속성 정의·정책·경로와 리비전이 있는 변경 기록을 제공한다. 임의의 C++ 멤버 쓰기를 자동 관찰하지 않는다. |",
         "basis": "lexical_match",
         "context": "table"
       },
       {
-        "block_id": "b000067",
-        "line": 136,
+        "block_id": "b000069",
+        "line": 141,
         "text": "공개 멤버 접근을 위한 필수 수동 허용 목록은 아니다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000069",
-        "line": 139,
+        "block_id": "b000071",
+        "line": 144,
         "text": "Core는 구체적인 애플리케이션 백엔드나 LVUI 언어에 의존해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000075",
-        "line": 146,
+        "block_id": "b000077",
+        "line": 151,
         "text": "공유 실행기나 서비스에는 별도 소유자가 있으며 백엔드 하나가 제거됐다는 이유만으로 종료하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000077",
-        "line": 149,
+        "block_id": "b000079",
+        "line": 154,
         "text": "해당 사용이 끝나기 전에는 저장소를 해제하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000081",
-        "line": 155,
+        "block_id": "b000083",
+        "line": 160,
         "text": "클릭 사이에 백엔드를 유지하면 매 동작마다 생성·파괴를 반복하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000081",
-        "line": 157,
+        "block_id": "b000083",
+        "line": 162,
         "text": "스코프 활성화·메서드·속성 갱신·종료는 여전히 측정해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000081",
-        "line": 159,
+        "block_id": "b000083",
+        "line": 164,
         "text": "비용이 큰 작업은 UI 진행을 막지 않는 적절한 실행 영역을 사용해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000083",
-        "line": 161,
+        "block_id": "b000085",
+        "line": 166,
         "text": "이 문서는 새 메모리 풀, 전역 백엔드 캐시, 뷰별 작업자 풀을 채택하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -1013,32 +1027,39 @@
         "line": 20
       },
       {
-        "block_id": "b000043",
-        "label": "기본 반응형 모델",
-        "target": "ReactiveState.md",
+        "block_id": "b000035",
+        "label": "뷰 전용 아키텍처",
+        "target": "ViewOnlyArchitecture.md",
         "kind": "relative",
-        "line": 81
+        "line": 70
       },
       {
         "block_id": "b000045",
-        "label": "MethodReferences.md",
-        "target": "MethodReferences.md",
+        "label": "기본 반응형 모델",
+        "target": "ReactiveState.md",
         "kind": "relative",
-        "line": 93
+        "line": 86
       },
       {
         "block_id": "b000047",
-        "label": "선언 어노테이션",
-        "target": "DeclarationAnnotations.md",
+        "label": "MethodReferences.md",
+        "target": "MethodReferences.md",
         "kind": "relative",
         "line": 98
       },
       {
-        "block_id": "b000055",
+        "block_id": "b000049",
+        "label": "선언 어노테이션",
+        "target": "DeclarationAnnotations.md",
+        "kind": "relative",
+        "line": 103
+      },
+      {
+        "block_id": "b000057",
         "label": "ViewModelQueries.md",
         "target": "ViewModelQueries.md",
         "kind": "relative",
-        "line": 113
+        "line": 118
       }
     ],
     "tables": [
@@ -1084,7 +1105,7 @@
         ]
       },
       {
-        "block_id": "b000063",
+        "block_id": "b000065",
         "columns": [
           "Core 기능",
           "관련 기존 계약"

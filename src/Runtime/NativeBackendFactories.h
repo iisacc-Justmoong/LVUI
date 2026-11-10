@@ -12,6 +12,8 @@
 #include <type_traits>
 
 namespace lvui::native {
+class QueryConnections;
+class AppStrings;
 struct BackendRequest final {std::string_view type,binding;BackendActivation activation{};};
 template<class T>concept OwnedBackend = std::is_object_v<T> && !std::is_array_v<T>;
 template<class T,class F>concept BackendFactory = OwnedBackend<T> && (requires(F& factory){
@@ -39,13 +41,23 @@ public:
             if constexpr(requires{{std::invoke(*owned,request)}->std::same_as<T>;})return std::invoke(*owned,request);
             else return std::invoke(*owned);
         }));
-        return BackendFactories(std::move(next),activation_);
+        return BackendFactories(std::move(next),activation_,queries_,strings_);
     }
     template<class F>requires std::same_as<std::invoke_result_t<F&>,BackendActivation>
     [[nodiscard]] BackendFactories with_activation(F factory)const{
         auto owned=std::make_shared<F>(std::move(factory));
-        return BackendFactories(entries_,[owned]{return std::invoke(*owned);});
+        return BackendFactories(entries_,[owned]{return std::invoke(*owned);},queries_,strings_);
     }
+    [[nodiscard]] BackendFactories with_query_connections(std::shared_ptr<QueryConnections> connections)const{
+        if(!connections)throw std::invalid_argument("Query connections cannot be null");
+        return BackendFactories(entries_,activation_,std::move(connections),strings_);
+    }
+    [[nodiscard]] std::shared_ptr<QueryConnections> query_connections()const noexcept{return queries_;}
+    [[nodiscard]] BackendFactories with_app_strings(std::shared_ptr<AppStrings> strings)const{
+        if(!strings)throw std::invalid_argument("App string storage cannot be null");
+        return BackendFactories(entries_,activation_,queries_,std::move(strings));
+    }
+    [[nodiscard]] std::shared_ptr<AppStrings> app_strings()const noexcept{return strings_;}
     [[nodiscard]] BackendActivation activate()const{return activation_?activation_():BackendActivation{};}
     template<OwnedBackend T>[[nodiscard]] T create(std::string_view name={},std::string_view binding={},BackendActivation activation={})const{
         if(entries_)if(auto found=entries_->find(std::type_index(typeid(std::type_identity<T>)));found!=entries_->end())
@@ -55,8 +67,11 @@ public:
     }
     [[nodiscard]] std::size_t size()const noexcept{return entries_?entries_->size():0;}
 private:
-    explicit BackendFactories(std::shared_ptr<const Entries> entries,std::function<BackendActivation()> activation={}):entries_(std::move(entries)),activation_(std::move(activation)){}
+    explicit BackendFactories(std::shared_ptr<const Entries> entries,std::function<BackendActivation()> activation={},std::shared_ptr<QueryConnections> queries={},std::shared_ptr<AppStrings> strings={})
+        :entries_(std::move(entries)),activation_(std::move(activation)),queries_(std::move(queries)),strings_(std::move(strings)){}
     std::shared_ptr<const Entries> entries_;
     std::function<BackendActivation()> activation_;
+    std::shared_ptr<QueryConnections> queries_;
+    std::shared_ptr<AppStrings> strings_;
 };
 } // namespace lvui::native

@@ -1,4 +1,4 @@
-#include <LVUI/NativeEventListener.h>
+#include <iiGUI/NativeEventListenerView.h>
 #include "NativeOwnedEventListener.generated.h"
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
@@ -15,14 +15,14 @@ template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_
 void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value.error().message);}
 void events(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,480}));std::optional<lvui::native::NativeEventListener> listener;
+    auto outer=take(tree->content_host({},"outer",{640,480}));std::optional<ii::gui::NativeEventListener> listener;
     std::vector<ii::gui::WidgetInput> events;std::vector<ii::gui::Rect> sizes;bool rejected_reentry=false;
-    lvui::native::EventListenerCallbacks callbacks;
+    ii::gui::EventListenerCallbacks callbacks;
     callbacks.input=[&](const auto& event)->ii::core::Result<bool>{events.push_back(event);auto nested=listener->dispatch(event);
         rejected_reentry=!nested&&nested.error().code==ii::core::ErrorCode::busy;return true;};
     callbacks.resized=[&](ii::gui::Rect value){sizes.push_back(value);};
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{auto stack=builder.vstack({},"layout",{.spacing=0,.alignment=ii::gui::StackAlignment::leading});
-        if(!stack)return std::unexpected(stack.error());auto created=lvui::native::NativeEventListener::create(builder,*stack,"listener",{320,180},callbacks);
+        if(!stack)return std::unexpected(stack.error());auto created=ii::gui::NativeEventListener::create(builder,*stack,"listener",{320,180},callbacks);
         if(!created)return std::unexpected(created.error());listener=*created;return {};}));
     auto bounds=take(listener->root().snapshot()).bounds;require(!sizes.empty(),"Published listener did not report its initial layout");
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_down,.x=bounds.x+5,.y=bounds.y+5}));
@@ -30,11 +30,27 @@ void events(){
         "Listener lost the input event or reentry protection");
     good(listener->set_options({400,240}));(void)take(listener->root().snapshot());
     require(sizes.size()>=2,"Listener did not report a changed extent");
-    auto invalid=listener->set_options({0,240});require(!invalid&&listener->root().snapshot(),"Invalid extent retired the listener");
+    good(listener->set_options({0,240}));
+    auto invalid=listener->set_options({-1,240});require(!invalid&&listener->root().snapshot(),"Invalid extent retired the listener");
     int replacement=0;good(listener->set_callbacks({.input=[&](const auto&)->ii::core::Result<bool>{++replacement;return false;}}));
     auto dispatched=listener->dispatch({.kind=ii::gui::WidgetInputKind::pointer_move});require(dispatched&&!*dispatched&&replacement==1,
         "Listener callback replacement failed");
-    auto bad=ii::gui::WidgetInput{};bad.x=std::numeric_limits<double>::quiet_NaN();require(!listener->dispatch(bad)&&replacement==1,
+    int expected_replacement=1;
+#if defined(IIGUI_KEY_CANCEL_API)
+    auto canceled=listener->dispatch({.kind=ii::gui::WidgetInputKind::key_cancel,.key=ii::gui::WidgetKey::space});
+    require(canceled&&!*canceled&&replacement==2,"Listener rejected a canceled keyboard gesture");++expected_replacement;
+#endif
+#if defined(IIGUI_TEXT_SELECTION_API)
+    auto selection=listener->dispatch({.kind=ii::gui::WidgetInputKind::text_selection,.replacement_range=ii::gui::TextRange{1,0}});
+    ++expected_replacement;
+    require(selection&&!*selection&&replacement==expected_replacement,"Listener rejected a text-service selection");
+#endif
+#if defined(IIGUI_POINTER_CANCEL_API)
+    auto pointer_cancel=listener->dispatch({.kind=ii::gui::WidgetInputKind::pointer_cancel,.device=ii::gui::PointerDevice::touch});
+    ++expected_replacement;
+    require(pointer_cancel&&!*pointer_cancel&&replacement==expected_replacement,"Listener rejected a pointer-only cancellation");
+#endif
+    auto bad=ii::gui::WidgetInput{};bad.x=std::numeric_limits<double>::quiet_NaN();require(!listener->dispatch(bad)&&replacement==expected_replacement,
         "Invalid input reached the callback");
     good(listener->set_callbacks({.input=[](const auto&)->ii::core::Result<bool>{throw std::runtime_error("Callback failed");}}));
     auto failed=listener->dispatch({});require(!failed&&failed.error().cause,"Listener did not preserve a callback exception");
@@ -42,11 +58,37 @@ void events(){
     require(take(listener->dispatch({})),"In-flight listener did not finish after retirement");
     require(!listener->dispatch({.kind=ii::gui::WidgetInputKind::pointer_down}),"Retired listener accepted input");tree->close();
 }
+#if defined(IIGUI_KEY_CANCEL_API)
+void keyboard_cancellation(){
+    using namespace ii::gui;
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"host",{200,100}));
+    std::optional<ii::gui::NativeEventListener> listener;Widget button;
+    int cancellations=0,activations=0,notices=0;
+    good(host.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto result=ii::gui::NativeEventListener::create(builder,{},"listener",{200,100},
+            {.input=[&](const WidgetInput& event)->ii::core::Result<bool>{
+                if(event.kind==WidgetInputKind::key_cancel){++notices;return true;}return false;
+            }});
+        if(!result)return std::unexpected(result.error());listener=*result;
+        auto child=builder.action_surface(listener->root(),"button",{.accessibility_name="Button",.width=60,.height=30},[&]{++activations;});
+        if(!child)return std::unexpected(child.error());button=*child;
+        return button.set_control_events({.canceled=[&]{++cancellations;}});
+    }));
+    (void)take(tree->drawing_snapshot({200,100}));good(button.focus());
+    good(tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::space}));
+    good(tree->input({.kind=WidgetInputKind::key_cancel,.key=WidgetKey::space}));
+    good(tree->input({.kind=WidgetInputKind::key_up,.key=WidgetKey::space}));
+    require(notices==1&&cancellations==1&&activations==0&&!take(button.snapshot()).pressed,
+            "EventListener intercepted a terminal key cancellation");
+    tree->close();
+}
+#endif
 void reentrant_updates(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,480}));std::optional<lvui::native::NativeEventListener> listener;
+    auto outer=take(tree->content_host({},"outer",{640,480}));std::optional<ii::gui::NativeEventListener> listener;
     bool update_options=false,update_callbacks=false;int selected=0;
-    lvui::native::EventListenerCallbacks callbacks;
+    ii::gui::EventListenerCallbacks callbacks;
     callbacks.resized=[&](ii::gui::Rect){
         if(update_options){update_options=false;good(listener->set_options({500,300}));}
         if(update_callbacks){update_callbacks=false;good(listener->set_callbacks({.input=[&](const auto&)->ii::core::Result<bool>{selected=2;return true;}}));}
@@ -54,7 +96,7 @@ void reentrant_updates(){
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
         auto stack=builder.vstack({},"layout",{.spacing=0,.alignment=ii::gui::StackAlignment::leading});
         if(!stack)return std::unexpected(stack.error());
-        auto created=lvui::native::NativeEventListener::create(builder,*stack,"listener",{320,180},callbacks);
+        auto created=ii::gui::NativeEventListener::create(builder,*stack,"listener",{320,180},callbacks);
         if(!created)return std::unexpected(created.error());listener=*created;return {};
     }));
     (void)take(listener->root().snapshot());
@@ -72,6 +114,145 @@ void reentrant_updates(){
     });other.join();
     require(rejected_options&&rejected_callbacks&&rejected_dispatch,"A foreign thread accessed listener state");tree->close();
 }
+void host_reentrant_input(){
+    using K=ii::gui::WidgetInputKind;
+    auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto outer=take(tree->content_host({},"outer",{640,480}));
+    std::optional<ii::gui::NativeEventListener> listener;
+    std::vector<ii::gui::WidgetInput> events;
+    bool reenter=true, in_move=false, nested_callback=false;
+    ii::gui::Rect bounds;
+    ii::gui::EventListenerCallbacks callbacks;
+    callbacks.input=[&](const ii::gui::WidgetInput& event)->ii::core::Result<bool>{
+        if(in_move)nested_callback=true;
+        events.push_back(event);
+        if(event.kind==K::pointer_move&&reenter){
+            reenter=false;in_move=true;
+            good(tree->input({.kind=K::pointer_move,.x=bounds.x+20,.y=bounds.y+5,
+                              .device=ii::gui::PointerDevice::pen,.pressure=.4,.timestamp=2,.buttons=1}));
+            good(tree->input({.kind=K::pointer_move,.x=bounds.x+30,.y=bounds.y+5,
+                              .device=ii::gui::PointerDevice::pen,.pressure=.8,.timestamp=3,.buttons=1}));
+            // Hiding a captured listener synchronously produces focus_lost.
+            good(listener->root().set_visible(false));
+            in_move=false;
+        }
+        return true;
+    };
+    good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto created=ii::gui::NativeEventListener::create(builder,{},"listener",{320,180},callbacks);
+        if(!created)return std::unexpected(created.error());listener=*created;return {};
+    }));
+    bounds=take(listener->root().snapshot()).bounds;
+    good(tree->input({.kind=K::pointer_down,.x=bounds.x+5,.y=bounds.y+5,.buttons=1}));
+    good(tree->input({.kind=K::pointer_move,.x=bounds.x+10,.y=bounds.y+5,.buttons=1}));
+    require(!nested_callback&&events.size()==5&&events[0].kind==K::pointer_down&&
+            events[1].kind==K::pointer_move&&events[2].pressure==.4&&events[2].timestamp==2&&
+            events[3].pressure==.8&&events[3].timestamp==3&&events[4].kind==K::focus_lost,
+            "Nested native input or capture cancellation was lost, reordered, or called recursively");
+    good(listener->root().set_visible(true));
+    good(tree->input({.kind=K::pointer_down,.x=bounds.x+5,.y=bounds.y+5,.buttons=1}));
+    good(tree->input({.kind=K::pointer_up,.x=bounds.x+5,.y=bounds.y+5}));
+    require(events.size()==7&&events.back().kind==K::pointer_up,
+            "Listener did not recover after reentrant capture cancellation");
+    tree->close();
+}
+void host_reentrant_release(){
+    using K=ii::gui::WidgetInputKind;
+    auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto outer=take(tree->content_host({},"outer",{640,480}));
+    std::optional<ii::gui::NativeEventListener> listener;
+    ii::gui::Rect bounds;std::vector<K> events;
+    good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto created=ii::gui::NativeEventListener::create(builder,{},"listener",{320,180},
+            {.input=[&](const ii::gui::WidgetInput& event)->ii::core::Result<bool>{
+                events.push_back(event.kind);
+                if(event.kind==K::pointer_down)
+                    good(tree->input({.kind=K::pointer_up,.x=bounds.x+1000,.y=bounds.y+900}));
+                return true;
+            }});
+        if(!created)return std::unexpected(created.error());listener=*created;return {};
+    }));
+    bounds=take(listener->root().snapshot()).bounds;
+    good(tree->input({.kind=K::pointer_down,.x=bounds.x+5,.y=bounds.y+5,.buttons=1}));
+    good(tree->input({.kind=K::pointer_move,.x=bounds.x+1000,.y=bounds.y+900}));
+    require(events.size()>=2&&events[0]==K::pointer_down&&events[1]==K::pointer_up&&
+            std::ranges::find(events,K::pointer_move)==events.end(),
+            "A nested release left the listener capturing later pointer motion");
+    tree->close();
+}
+void host_input_retirement_and_bounds(){
+    using K=ii::gui::WidgetInputKind;
+    auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto outer=take(tree->content_host({},"outer",{640,480}));
+    std::optional<ii::gui::NativeEventListener> listener;
+    ii::gui::Rect bounds;
+    int old_calls=0,new_calls=0,cancels=0;
+    bool replace=false,flood=false,retire=false;
+    ii::gui::EventListenerCallbacks callbacks;
+    callbacks.input=[&](const ii::gui::WidgetInput& event)->ii::core::Result<bool>{
+        ++old_calls;
+        if(event.kind==K::pointer_move&&replace){
+            replace=false;
+            good(tree->input({.kind=K::pointer_move,.x=bounds.x+20,.y=bounds.y+5,.buttons=1}));
+            good(listener->set_callbacks({.input=[&](const auto&)->ii::core::Result<bool>{++new_calls;return true;}}));
+        }else if(event.kind==K::pointer_move&&flood){
+            flood=false;
+            for(int i=0;i<300;++i)
+                good(tree->input({.kind=K::pointer_move,.x=bounds.x+20,.y=bounds.y+5,.buttons=1}));
+        }else if(event.kind==K::pointer_move&&retire){
+            retire=false;
+            good(tree->input({.kind=K::pointer_move,.x=bounds.x+20,.y=bounds.y+5,.buttons=1}));
+            good(outer.clear_content());
+        }else if(event.kind==K::focus_lost)++cancels;
+        return true;
+    };
+    auto mount=[&]{good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto created=ii::gui::NativeEventListener::create(builder,{},"listener",{320,180},callbacks);
+        if(!created)return std::unexpected(created.error());listener=*created;return {};
+    }));bounds=take(listener->root().snapshot()).bounds;};
+    auto down=[&]{good(tree->input({.kind=K::pointer_down,.x=bounds.x+5,.y=bounds.y+5,.buttons=1}));};
+    auto move=[&]{good(tree->input({.kind=K::pointer_move,.x=bounds.x+10,.y=bounds.y+5,.buttons=1}));};
+    mount();down();replace=true;move();
+    require(old_calls==2&&new_calls==0,"An input queued for an old callback reached a replacement");
+    move();require(new_calls==1,"Replacement callback did not receive later input");
+    good(outer.clear_content());
+    old_calls=0;mount();down();flood=true;move();
+    require(old_calls==3&&cancels==1,"Input overflow did not cancel the active gesture once");
+    good(outer.clear_content());
+    old_calls=0;mount();down();retire=true;move();
+    require(old_calls==2&&!listener->root().snapshot(),"Retired listener delivered queued input");
+    tree->close();
+}
+void content_sizing(){
+    using namespace ii::gui;
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto outer=take(tree->content_host({},"content-sized-host",{240,160}));
+    std::optional<ii::gui::NativeEventListener> listener;Widget child;int presses=0;
+    good(outer.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
+        auto root=take(builder.vstack({},"root",{.spacing=0,.alignment=StackAlignment::leading}));
+        listener=take(ii::gui::NativeEventListener::create(builder,root,"content-sized",
+            {.width=0,.height=0,.size_to_content=true},
+            {.input=[&](const WidgetInput& value)->ii::core::Result<bool>{
+                if(value.kind==WidgetInputKind::pointer_down)++presses;
+                return true;}}));
+        child=take(builder.absolute_stack(listener->root(),"child",{64,40}));return {};
+    }));
+    auto bounds=take(listener->root().snapshot()).bounds;
+    require(bounds.width==64&&bounds.height==40,"Listener did not follow its child's natural size");
+    good(tree->input({.kind=WidgetInputKind::pointer_down,.x=bounds.x+5,.y=bounds.y+5,.buttons=1}));
+    good(tree->input({.kind=WidgetInputKind::pointer_up,.x=bounds.x+5,.y=bounds.y+5}));
+    require(presses==1,"Content-sized listener lost pointer input");
+    good(child.set_extent({80,50}));bounds=take(listener->root().snapshot()).bounds;
+    require(bounds.width==80&&bounds.height==50,"Listener did not follow the resized child");
+    good(listener->set_options({.width=100,.height=0,.size_to_content=true}));
+    bounds=take(listener->root().snapshot()).bounds;
+    require(bounds.width==100&&bounds.height==50,"Explicit listener axis did not override content sizing");
+    require(!listener->set_options({.width=1,.height=1,.size_to_content=false})&&
+            take(listener->root().snapshot()).bounds==bounds,"Changing a live sizing mode partially committed");
+    good(child.set_visible(false));const auto implicit=take(listener->root().snapshot()).implicit_size;
+    require(implicit.width==100&&implicit.height==0,"Hidden content contributed to intrinsic listener size");
+    good(outer.clear_content());tree->close();
+}
 void generated(){
     using View=lvui_generated::NativeOwnedEventListener;
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
@@ -79,15 +260,34 @@ void generated(){
     good(outer.set_content([&](auto& builder){return View::build(builder,{}, {},&scope);}));
     auto nodes=take(tree->snapshots());auto found=std::ranges::find_if(nodes,[](const auto& node){return node.id.ends_with("/listener");});
     require(found!=nodes.end(),"Generated listener missing");auto listener=take(tree->find(found->id));auto bounds=take(listener.snapshot()).bounds;
+    auto avatar=std::ranges::find_if(nodes,[](const auto& node){return node.id.ends_with("/listener-avatar");});
+    require(avatar!=nodes.end()&&avatar->visible&&avatar->size.width==24&&avatar->size.height==24,
+        "EventListener did not retain its child Avatar at its natural size");
     require(!scope->backend_0.layouts.empty(),"Generated listener lost its layout callback");
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_down,.x=bounds.x+5,.y=bounds.y+5}));
     require(scope->backend_0.events.size()==1&&scope->backend_0.events.back().kind==ii::gui::WidgetInputKind::pointer_down,
         "Generated listener lost its input callback");
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_up,.x=bounds.x+5,.y=bounds.y+5}));
+#if defined(IIGUI_POINTER_CANCEL_API)
+    good(tree->input({.kind=ii::gui::WidgetInputKind::scroll,.x=bounds.x+5,.y=bounds.y+5,
+        .scroll_y=-std::log(2.)*ii::gui::pinch_scroll_units,.control=true,.precise_scroll=true,.device=ii::gui::PointerDevice::touch}));
+    require(std::abs(scope->backend_0.magnification.get()-2.)<.001,"Generated ViewModel did not receive pinch magnification");
+    auto scaled=take(tree->snapshots());
+    auto label=std::ranges::find_if(scaled,[](const auto& node){return node.id.ends_with("/magnification");});
+    require(label!=scaled.end()&&label->text=="2","Pinch did not update the generated reactive label");
+#endif
     nodes=take(tree->snapshots());auto alternate=std::ranges::find_if(nodes,[](const auto& node){return node.id.ends_with("/listener-bool");});
     require(alternate!=nodes.end(),"Generated Bool listener missing");auto bool_listener=take(tree->find(alternate->id));auto alternate_bounds=take(bool_listener.snapshot()).bounds;
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_down,.x=alternate_bounds.x+5,.y=alternate_bounds.y+5}));
     require(scope->backend_0.bool_count==1,"Bool input result was not accepted");
+    good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_up,.x=alternate_bounds.x+5,.y=alternate_bounds.y+5}));
+    nodes=take(tree->snapshots());auto sized=std::ranges::find_if(nodes,[](const auto& node){return node.id.ends_with("/listener-content");});
+    require(sized!=nodes.end()&&sized->bounds.width==24&&sized->bounds.height==24,
+            "Generated listener did not use the Avatar's intrinsic size");
+    good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_down,.x=sized->bounds.x+5,.y=sized->bounds.y+5}));
+    require(scope->backend_0.events.back().kind==ii::gui::WidgetInputKind::pointer_down,
+            "Generated content-sized listener lost its input callback");
+    good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_up,.x=sized->bounds.x+5,.y=sized->bounds.y+5}));
     auto graph=scope->native_lifetime.lock();require(bool(graph),"Generated listener binding graph missing");
     scope->backend_0.width.set(400);(void)take(listener.snapshot());require(take(graph->failures()).empty(),"Valid listener size failed");
     scope->backend_0.width.set(-1);require(!take(graph->failures()).empty()&&listener.snapshot(),"Invalid size changed the live listener");
@@ -96,4 +296,8 @@ void generated(){
     require(weak.expired()&&!listener.snapshot(),"Retired listener retained its generated scope");tree->close();
 }
 }
-int main(){events();reentrant_updates();generated();}
+int main(){events();
+#if defined(IIGUI_KEY_CANCEL_API)
+keyboard_cancellation();
+#endif
+reentrant_updates();host_reentrant_input();host_reentrant_release();host_input_retirement_and_bounds();content_sizing();generated();}

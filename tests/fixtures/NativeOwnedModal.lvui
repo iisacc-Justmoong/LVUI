@@ -7,7 +7,7 @@ Window {
               motionEnabled: false, onPrimaryClicked: vm.saved, onOpened: vm.opened,
               onClosed: vm.closed, onCanceled: vm.canceled) {
             VStack {
-                InputField(id: "editor", text: vm.text, onEdited: vm.edited)
+                InputField(id: "editor", text: vm.text, fontSize: vm.childFontSize, onEdited: vm.edited)
                 Modal(id: "nested", title: "Nested", showIcon: false, motionEnabled: false) {
                     Label(id: "nestedLabel", text: "Nested body")
                 }

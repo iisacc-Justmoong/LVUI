@@ -1,15 +1,15 @@
 # 읽기 전용 C++ 멤버와 네이티브 값
 
 일반 LVUI 값은 반응형이며 읽기 전용 접근을 스냅샷과 동일하게 취급하지 않는다.
-`let current = backend.selected`가 읽기 전용 객체를 가리키더라도 그 객체의 Observable
+`const current = backend.selected`가 읽기 전용 객체를 가리키더라도 그 객체의 Observable
 멤버는 생산자의 변경을 계속 관측한다. `const_cast`, 문자열 필드 검색, 전역 버스나
 프레임별 폴링으로 이를 구현하지 않는다.
 
 ```text
 import model ReviewModel
-let current = model.selected
-let alias = current
-@Static let initialTitle: String = current.title
+const current = model.selected
+const alias = current
+@Static const initialTitle: String = current.title
 Window {
     VStack {
         Label(text: current.title)
@@ -36,7 +36,7 @@ Window {
 - 일반 member 경로와 `(model.selected).metrics.count` 형태의 member AST 모두 같은
   `member(context, object, selector)` 및 `read_source()` 경로로 생성한다.
 - private 멤버·private 조상·없는 멤버는 생성된 C++의 정상 접근 제어로 거부한다.
-- 동등 비교가 없는 C++ 구조체도 네이티브 let·추론한 var의 값으로 사용할 수 있다.
+- 동등 비교가 없는 C++ 구조체도 네이티브 const·추론한 var의 값으로 사용할 수 있다.
   Core Observable 값은 복사 생성과 예외 없는 이동 대입을 제공해야 한다. 비교 가능한
   값은 기존 no-op 규칙을 따르며, 비교가 없는 값은 각 set을 명시적인 발행으로 처리한다.
 - 일반 public 멤버의 직접 수정은 자동으로 가로채지 않는다. 소유자가 제공하는
@@ -70,7 +70,7 @@ ReadContext는 읽은 shared_ptr과 멤버 경로에서 만난 shared_ptr의 소
 - `LVUI.NativeReadonlyValidation`: 실제 생성 팩터리에서 값·포인터·shared_ptr·참조를
   컴파일하고 private 멤버·조상·없는 멤버·잘못된 객체를 거부한다.
 - `iiGUI.native_readonly.*`: 생성 C++를 실제 창 없는 위젯 상태에 연결하여 별칭·지역
-  스코프·스칼라 Static·선택·참조·구조체 let/var·널 복구·퇴역·조건부 재활성화·member
+  스코프·스칼라 Static·선택·참조·구조체 const/var·널 복구·퇴역·조건부 재활성화·member
   AST와 입력·포커스·파일 상태 보존을 실행한다.
 - `iiGUI.layout_package`와 `LVUI.NativeInstalled`: 재배치한 설치 패키지의 공개 const
   관측·비교 없는 값·AOT 팩터리를 컴파일·링크하고 제한된 소비자를 실행한다.

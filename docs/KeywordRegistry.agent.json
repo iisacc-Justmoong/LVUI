@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/KeywordRegistry.md",
-    "sha256": "1898dfa205c364918a6a55c1983fc06bc09ab9970afb44c2f1a80b186e9b94c6",
-    "bytes": 1127,
-    "line_count": 20,
+    "sha256": "4ddbe5f0fd42a21ac4367131872811c25c8ef49917827e2c589a7547a627ad02",
+    "bytes": 1482,
+    "line_count": 24,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -73,21 +73,21 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 14,
-      "end_line": 17,
-      "raw": "생성기는 스키마·이름·분류·정렬·중복을 검증한 뒤 `src/Language/Keywords.def`를 만든다.\n공개 `Keyword::source_file`과 `source_line`은 LVUI 목록의 실제 항목 위치이다.\n예약된 이름은 파서의 어휘 계약을 의미한다. 이름이 등록된 사실만으로 해당\n컴포넌트의 속성, 동작, 접근성 또는 플랫폼 구현이 완성된 것은 아니다.\n"
+      "end_line": 21,
+      "raw": "생성기는 스키마·이름·분류·정렬·중복을 검증한 뒤 `src/Language/Keywords.def`를 만든다.\n공개 `Keyword::source_file`과 `source_line`은 LVUI 목록의 실제 항목 위치이다.\n예약된 이름은 파서의 어휘 계약을 의미한다. 이름이 등록된 사실만으로 해당\n컴포넌트의 속성, 동작, 접근성 또는 플랫폼 구현이 완성된 것은 아니다.\n`ScrollView`는 LVUI가 추가한 네이티브 레이아웃 예약어이며 실제 지원 범위는\n[스크롤 뷰 계약](NativeScrollView.md)을 따른다.\n`Scene`은 앱의 네이티브 창 장면을 선언하는 예약어이며 임의의 View 안에서는\n사용할 수 없다. 장면의 소유권과 입력은 [Scene 계약](Scenes.md)을 따른다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 18,
-      "end_line": 18,
+      "start_line": 22,
+      "end_line": 22,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 19,
-      "end_line": 20,
+      "start_line": 23,
+      "end_line": 24,
       "raw": "[기존 소스 조사](ReservedWords.md)는 이 목록을 시작할 때의 역사적 자료이다.\n그 조사 도구는 현재 목록과 문서를 덮어쓰지 않으며 기본 빌드에도 필요하지 않다.\n"
     }
   ],
@@ -112,11 +112,25 @@
     ],
     "links": [
       {
+        "block_id": "b000007",
+        "label": "스크롤 뷰 계약",
+        "target": "NativeScrollView.md",
+        "kind": "relative",
+        "line": 19
+      },
+      {
+        "block_id": "b000007",
+        "label": "Scene 계약",
+        "target": "Scenes.md",
+        "kind": "relative",
+        "line": 21
+      },
+      {
         "block_id": "b000009",
         "label": "기존 소스 조사",
         "target": "ReservedWords.md",
         "kind": "relative",
-        "line": 19
+        "line": 23
       }
     ],
     "tables": []

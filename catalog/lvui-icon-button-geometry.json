@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=44-595",
+  "reference": "PushButton / IconButton, borderless, default",
+  "componentKey": "eb9f4a11f452b013362e1d0484cd2067a80466a2",
+  "verifiedVariantCount": 25,
+  "width": 22,
+  "height": 22,
+  "iconWidth": 18,
+  "iconHeight": 18,
+  "paddingLeft": 2,
+  "paddingRight": 2,
+  "paddingTop": 2,
+  "paddingBottom": 2,
+  "cornerRadius": 8
+}

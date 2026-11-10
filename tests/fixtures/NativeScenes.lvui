@@ -1,0 +1,31 @@
+Application {
+    import app NativeApplicationBackend
+    Scene(id: "main", title: "Workspace", onOpened: app.scene_opened, onClosed: app.scene_closed) {
+        var count: Int = 0
+        var target: String = "legacy"
+        VStack(id: "sceneContent") {
+            Label(id: "count", text: count)
+            PushButton(id: "increment", text: "+", onClick: { count = count + 1 })
+            PushButton(id: "open", text: "Open", onClick: {
+                count = count + 1
+                target = "tools"
+                openScene(target)
+                target = "legacy"
+            })
+            PushButton(id: "close", text: "Close", onClick: { closeScene("tools") })
+            PushButton(id: "openNamed", text: "Open named", onClick: { openScene("tools") })
+            PushButton(id: "openDocument", text: "Open document callback", onClick: { openScene("tools") })
+        }
+    }
+    Scene(id: "tools", title: "Tools", initiallyOpen: false,
+          onOpened: window.opened, onClosed: window.closed) {
+        import window NativeWindowBackend
+        var local: Int = 10
+        VStack {
+            Label(id: "local", text: local)
+            PushButton(id: "localIncrement", text: "+", onClick: { local = local + 1 })
+            PushButton(id: "closeSelf", text: "Close", onClick: closeScene("tools"))
+        }
+    }
+    Window(id: "legacy") { Label(text: "Legacy") }
+}

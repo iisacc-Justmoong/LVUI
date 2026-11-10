@@ -71,5 +71,13 @@ Window { VStack {
     if(!object||object->find("object_input<::Domain::Record>")==object->npos||object->find("NativeObjectInputs.h")==object->npos)return 101;
     auto method=lvui::compile_native("import vm Model\nWindow { Label(text: vm.selected.format(2)) }");
     if(!method||method->find("Methods::query(context")==method->npos)return 102;
+    auto hierarchy=lvui::compile_native("import vm Model\nWindow { HierarchyList(controller: vm.controller, viewRevision: vm.revision) }");
+    if(!hierarchy||hierarchy->find("value.view_revision")==hierarchy->npos)return 103;
+    auto table=lvui::compile_native("import vm Model\nWindow { Table(mergeEditor: vm.merge, onMergeChanged: vm.changed) }");
+    if(!table||table->find("value.merge_editor")==table->npos||table->find("const lvui::TableMergeEdit& value")==table->npos)return 104;
+    auto menu=lvui::compile_native("let Actions(): [View] = [MenuItem(), MenuDivider(), MenuItem()]\nWindow { Menu { Actions() } }");
+    if(!menu||menu->find("divider_port(")==menu->npos||menu->find("MenuItemBinding<")==menu->npos)return 105;
+    auto bundles=lvui::compile_native("import vm Model\nlet Actions(): [View] = [MenuItem(), MenuDivider(), MenuItem()]\nWindow { Menu { if (vm.show) { Actions() }\nfor (item in vm.items, key: item.id) { Actions() } } }");
+    if(!bundles||bundles->find("lvui_generated::detail_menu::MenuCapture")==bundles->npos||bundles->find("->add_group(")==bundles->npos)return 106;
     std::cout << "Relocated LVUI component compiler consumer passed\n";
 }

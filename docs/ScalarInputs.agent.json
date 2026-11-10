@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/ScalarInputs.md",
-    "sha256": "2b814687630775c81515ea226120db6431e101ea2faaff8f15dad8e21c3bf469",
-    "bytes": 7013,
+    "sha256": "c6c8aff84b30787c3aa0695c375f2ae873e977eacff41f50ccefde951b80f032",
+    "bytes": 7019,
     "line_count": 99,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 8,
       "end_line": 18,
-      "raw": "```lvui\nimport vm Model\nlet Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: title)\n    Label(text: subtitle)\n    @Static let initial: String = title\n    Label(text: initial)\n}\nWindow { Heading(title: vm.compute(vm.count)) }\n```\n",
+      "raw": "```lvui\nimport vm Model\nconst Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: title)\n    Label(text: subtitle)\n    @Static const initial: String = title\n    Label(text: initial)\n}\nWindow { Heading(title: vm.compute(vm.count)) }\n```\n",
       "language": "lvui",
-      "code": "import vm Model\nlet Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: title)\n    Label(text: subtitle)\n    @Static let initial: String = title\n    Label(text: initial)\n}\nWindow { Heading(title: vm.compute(vm.count)) }\n",
+      "code": "import vm Model\nconst Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: title)\n    Label(text: subtitle)\n    @Static const initial: String = title\n    Label(text: initial)\n}\nWindow { Heading(title: vm.compute(vm.count)) }\n",
       "closed": true
     },
     {
@@ -104,7 +104,7 @@
       "kind": "list",
       "start_line": 29,
       "end_line": 39,
-      "raw": "- `String`, `Bool`, `Int`, `Float`, `Double`, `Metric`, `Color`를 정규화한 읽기 전용\n  입력으로 보관한다. 문자열은 소유하는 값이며 `Color`는 공유 색상 계약을 사용한다.\n- 상수 인자는 빌드 시 결정하는 기존 경로를 유지한다. 동적 입력을 창의 정적 생성\n  옵션으로 암묵적으로 변환하지 않는다.\n- 명시한 식은 모든 매개변수 이름을 연결하기 전에 호출자 환경에서 포획한다. 앞선\n  매개변수나 자식의 import가 같은 이름을 사용해도 원래 C++ 수신자를 유지한다.\n- 기본값은 정의 환경과 앞서 연결한 입력값을 사용한다. 앞선 입력에 포함한 원래 계산식을\n  다시 펼치지 않는다. 자식 구성·이름이 있는 슬롯·순서가 있는 `[View]`도 같은 값을 읽는다.\n- 앞선 함수 입력의 호출 결과를 기본값으로 사용하면 입력 함수의 현재 버전과 호출 인자를\n  추적한다. 함수 팩터리·실제 호출·결과 입력은 각각의 의존 계약을 유지한다.\n- 구성 내부 `@Static let`은 현재 입력을 한 번 읽어 고정한다. 일반 소비자는 변경을 따른다.\n",
+      "raw": "- `String`, `Bool`, `Int`, `Float`, `Double`, `Metric`, `Color`를 정규화한 읽기 전용\n  입력으로 보관한다. 문자열은 소유하는 값이며 `Color`는 공유 색상 계약을 사용한다.\n- 상수 인자는 빌드 시 결정하는 기존 경로를 유지한다. 동적 입력을 창의 정적 생성\n  옵션으로 암묵적으로 변환하지 않는다.\n- 명시한 식은 모든 매개변수 이름을 연결하기 전에 호출자 환경에서 포획한다. 앞선\n  매개변수나 자식의 import가 같은 이름을 사용해도 원래 C++ 수신자를 유지한다.\n- 기본값은 정의 환경과 앞서 연결한 입력값을 사용한다. 앞선 입력에 포함한 원래 계산식을\n  다시 펼치지 않는다. 자식 구성·이름이 있는 슬롯·순서가 있는 `[View]`도 같은 값을 읽는다.\n- 앞선 함수 입력의 호출 결과를 기본값으로 사용하면 입력 함수의 현재 버전과 호출 인자를\n  추적한다. 함수 팩터리·실제 호출·결과 입력은 각각의 의존 계약을 유지한다.\n- 구성 내부 `@Static const`는 현재 입력을 한 번 읽어 고정한다. 일반 소비자는 변경을 따른다.\n",
       "items": [
         {
           "marker": "-",
@@ -133,7 +133,7 @@
         },
         {
           "marker": "-",
-          "text": "구성 내부 `@Static let`은 현재 입력을 한 번 읽어 고정한다. 일반 소비자는 변경을 따른다.",
+          "text": "구성 내부 `@Static const`는 현재 입력을 한 번 읽어 고정한다. 일반 소비자는 변경을 따른다.",
           "checked": null
         }
       ]

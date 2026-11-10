@@ -1,4 +1,7 @@
 #include <LVUI/NativeAlert.h>
+#include <iiGUI/NativeAlertView.h>
+#include <iiGUI/AlertPresentation.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 
 #include <cmath>
@@ -8,6 +11,14 @@
 #include <thread>
 #include <vector>
 
+namespace lvui::native {
+using AlertInput=AlertInputValue<ii::gui::RasterImage>;
+using AlertButtonEvent=ButtonEventValue<ii::gui::Widget>;
+using NativeAlertCallbacks=NativeAlertCallbacksValue<ii::gui::Widget>;
+using NativeAlert=AlertBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::BasicAlertButton,
+    ii::gui::BasicNativeAlertButton,ii::gui::BasicAlert,ii::gui::BasicNativeAlert,ii::gui::CachedSvgDecoder,
+    ii::gui::Widget,ii::gui::AlertPresentation>;
+}
 namespace {
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }
 template<class T>T take(ii::core::Result<T> value) {
@@ -17,6 +28,35 @@ template<class T>T take(ii::core::Result<T> value) {
 void good(ii::core::Result<void> value) {
     if (!value) { if (value.error().cause) std::rethrow_exception(value.error().cause); throw std::runtime_error(value.error().message); }
 }
+struct ReentrantIcon final:lvui::IconSource {
+    mutable std::function<void()> during;mutable unsigned calls=0;std::uint64_t version=1;
+    std::shared_ptr<const lvui::IconAsset> asset=std::make_shared<const lvui::IconAsset>(lvui::IconAsset{
+        "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2 2'><rect width='2' height='2'/></svg>"});
+    lvui::IconResult<std::shared_ptr<const lvui::IconAsset>> resolve(std::string_view)const override {
+        ++calls;if(during){auto callback=during;during={};callback();}return asset;
+    }
+    std::uint64_t revision()const noexcept override{return version;}
+};
+void asset_lifecycle(){
+    auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"reentrant-host",{800,600}));
+    lvui::native::AlertInput original;original.configuration.show_icon=false;original.configuration.motion_enabled=false;
+    std::optional<lvui::native::NativeAlert> alert;
+    good(host.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto value=lvui::native::NativeAlert::create(builder,{},"alert",original);
+        if(!value)return std::unexpected(value.error());alert=*value;return {};
+    }));
+    auto source=std::make_shared<ReentrantIcon>();std::weak_ptr<ReentrantIcon> weak=source;
+    auto pending=original;pending.configuration.show_icon=true;pending.icon_name="custom";pending.icon_source=source;
+    source->during=[&]{good(alert->set_options(original));};
+    good(alert->set_options(pending));require(take(alert->options())==original,"Reentrant original options did not cancel the older icon request");
+    good(alert->set_options(pending));const auto calls=source->calls;++source->version;
+    good(alert->set_options(pending));require(source->calls==calls+1,"Alert ignored a changed icon source revision");
+    ++source->version;source->during=[&]{good(host.clear_content());alert.reset();};
+    auto retiring=pending;retiring.icon_revision=1;auto* active=&*alert;good(active->set_options(retiring));
+    pending.icon_source.reset();retiring.icon_source.reset();source.reset();
+    require(weak.expired(),"Retired LVUI alert retained an in-flight icon source");tree->close();
+}
 std::shared_ptr<const ii::gui::RasterImage> image(const ii::gui::CanvasFrame& frame) {
     for (const auto& item : frame.images) if (item.image) return item.image;
     for (const auto& layer : frame.overlays) for (const auto& item : layer.images) if (item.image) return item.image;
@@ -25,6 +65,7 @@ std::shared_ptr<const ii::gui::RasterImage> image(const ii::gui::CanvasFrame& fr
 }
 
 int main() {
+    asset_lifecycle();
     using namespace ii::gui;
     std::optional<lvui::native::NativeAlert> alert;
     bool reenter = false;
@@ -89,6 +130,12 @@ int main() {
     require(p3.id == old_primary && p3.bounds.y < s3.bounds.y && s3.bounds.y < t3.bounds.y &&
             p3.bounds.height == 56 && t3.bounds.height == 44 && !s3.enabled,
             "Alert update lost retained actions or the vertical layout");
+    auto metric_update=updated;metric_update.configuration.metrics.action_height=60;
+    metric_update.configuration.metrics.tertiary_action_height=38;
+    good(alert->set_options(metric_update));
+    require(take(primary.snapshot()).bounds.height==60&&take(tertiary.snapshot()).bounds.height==38,
+            "Alert host did not apply custom action heights");
+    good(alert->set_options(updated));
     good(secondary.activate()); require(events.size() == 2, "Disabled alert action was delivered");
     auto invalid = updated; invalid.configuration.maximum_width = 0;
     require(!alert->set_options(invalid) && take(alert->options()).configuration == updated.configuration,

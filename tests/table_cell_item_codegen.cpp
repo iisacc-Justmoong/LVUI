@@ -5,7 +5,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { TableCellItem(text: vm.text, valueType: \"int\", valueValidator: vm.validator, inputable: true, onInputEdited: vm.edited, onInputSubmitted: vm.submitted, onInputRejected: vm.rejected) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto part:{"#include <LVUI/NativeTableCellItem.h>","lvui::native::NativeTableCellItem::create(","lvui::native::TableCellItemInput",
+    for(auto part:{"#include <LVUI/NativeTableCellItem.h>","lvui_generated::detail_table_cell::NativeTableCellItem::create(","lvui::native::TableCellItemInput",
                    "component.set_options(value)","std::string value, std::string valueType"})
         if(code->find(part)==code->npos)throw std::runtime_error(std::string("Independent table cell lost ")+part);
     if(code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)

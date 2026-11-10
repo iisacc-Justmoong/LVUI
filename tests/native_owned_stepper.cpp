@@ -1,12 +1,21 @@
 #include <LVUI/NativeStepper.h>
+#include <iiGUI/NativeStepperView.h>
 #include <iiGUI/WidgetState.h>
 #include <memory>
 #include <optional>
 #include <stdexcept>
 #include <string>
 #include <thread>
+#include <type_traits>
 #include <vector>
 
+namespace lvui::native {
+using ButtonModel=ii::gui::BasicButton<ButtonHostModelPolicy>;
+using StepperModel=ii::gui::BasicStepper<StepperModelPolicy<ButtonModel>>;
+using NativeStepper=StepperBinding<ii::gui::BasicButton,ii::gui::BasicStepper,ii::gui::BasicNativeStepper,ii::gui::Widget>;
+}
+static_assert(std::is_same_v<lvui::native::NativeStepper,
+    ii::gui::BasicNativeStepper<lvui::native::StepperHostPolicy<lvui::native::StepperModel,ii::gui::Widget>>>);
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
@@ -24,8 +33,35 @@ void retire_during_click(){
     good(tree->input({.kind=WidgetInputKind::increment,.target=id}));
     require(stepped==0&&!stepper->root().snapshot(),"Retired Stepper delivered a stale adjustment");tree->close();
 }
+void method_reentry(){
+    using namespace ii::gui;
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"methods",{100,60}));std::optional<lvui::native::NativeStepper> stepper;
+    std::vector<std::string> events;int steps=0;bool disable_on_click=false;lvui::StepperConfiguration options;
+    good(host.set_content([&](auto& builder)->ii::core::Result<void>{
+        stepper=take(lvui::native::NativeStepper::create(builder,{},"stepper",options,
+            {.stepped=[&](int){++steps;},.clicked=[&]{events.emplace_back("clicked");if(disable_on_click)good(stepper->root().set_enabled(false));}}));
+        return {};
+    }));
+    auto id=take(stepper->root().snapshot()).id;
+    good(stepper->set_method([&](const auto&){events.emplace_back("first");options.corner_radius=7;good(stepper->set_options(options));}));
+    good(stepper->set_methods({[&](const auto&){events.emplace_back("second");}}));
+    good(tree->input({.kind=WidgetInputKind::increment,.target=id}));
+    require(events==std::vector<std::string>{"first","second","clicked"}&&steps==0,
+        "A Stepper update interrupted the method snapshot or delivered a stale adjustment");
+    events.clear();good(stepper->set_method([&](const auto&){events.emplace_back("same");good(stepper->set_options(options));}));
+    good(stepper->set_methods({}));good(tree->input({.kind=WidgetInputKind::increment,.target=id}));
+    require(events==std::vector<std::string>{"same","clicked"}&&steps==1,
+        "An unchanged Stepper update interrupted an adjustment");
+    events.clear();disable_on_click=true;good(stepper->set_method([&](const auto&){events.emplace_back("method");}));good(stepper->set_methods({}));
+    good(tree->input({.kind=WidgetInputKind::increment,.target=id}));
+    require(events==std::vector<std::string>{"method","clicked"}&&steps==1,
+        "A disabled Stepper delivered a stale adjustment");
+    good(host.clear_content());tree->close();
+}
 }
 int main(){
+    method_reentry();
     using namespace ii::gui;
     auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{300,120}));std::optional<lvui::native::NativeStepper> stepper;

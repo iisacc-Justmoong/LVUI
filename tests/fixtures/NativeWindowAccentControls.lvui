@@ -1,0 +1,41 @@
+import vm NativeWindowAccentControlsModel
+let AccentNestedSlider(): View = Slider(id: "nestedSlider", width: 80, value: 0.5)
+Window(accent: vm.accent, width: vm.width) {
+    VStack {
+        HStack {
+            InputField(id: "field", text: "Sample", width: 100, onEdited: vm.edited)
+            RadioButton(id: "radio", checked: true, motionEnabled: false, onToggled: vm.toggled)
+            CheckBox(id: "check", checked: true, motionEnabled: false, onToggled: vm.toggled)
+            ToggleSwitch(id: "toggle", checked: true, motionEnabled: false, onToggled: vm.toggled)
+        }
+        HStack {
+            Slider(id: "slider", width: 80, value: 0.5, onMoved: vm.moved)
+            AccentNestedSlider()
+            Stepper(id: "stepper", width: 22, height: 22, onStepped: vm.stepped)
+            Tab(id: "tab", text: "Tab", iconName: "generaladd", selected: true, onClick: vm.selected)
+        }
+        HStack {
+            DropdownButton(id: "dropdown", text: "Actions", width: 110)
+            MenuItem(id: "menuItem", label: "Selected", state: .selected, itemWidth: 120)
+            ComboBox(id: "combo", text: "Mode", width: 90)
+            Link(id: "link", text: "Details", href: "/details", width: 80)
+        }
+        HStack {
+            InputField(id: "customField", text: "Sample", width: 100, focusColor: "#ff0000", selectionColor: "#00ff00")
+            RadioButton(id: "customRadio", checked: true, onColor: "#ff0000", motionEnabled: false)
+            CheckBox(id: "customCheck", checked: true, checkedColor: "#ff0000", motionEnabled: false)
+            ToggleSwitch(id: "customToggle", checked: true, onColor: "#ff0000", onColorHover: "#ff0000", onColorPressed: "#ff0000", motionEnabled: false)
+            Slider(id: "customSlider", width: 80, value: 0.5, fillColor: "#ff0000", focusColor: "#00ff00")
+            Stepper(id: "customStepper", width: 22, height: 22, primaryColor: "#ff0000", hoverColor: "#ff0000", pressedColor: "#ff0000")
+        }
+        HStack {
+            DropdownButton(id: "customDropdown", text: "Actions", width: 110, primaryColor: "#ff0000", hoverColor: "#ff0000", pressedColor: "#ff0000")
+            ComboBox(id: "customCombo", text: "Mode", width: 90, focusColor: "#ff0000")
+            Link(id: "customLink", text: "Details", href: "/details", width: 80, linkColor: "#ff0000")
+        }
+        ContextMenu(id: "popup", targetId: "link", selectedIndex: 0, onOpened: vm.opened, onClosed: vm.closed) {
+            ContextMenuItem(id: "popupItem", label: "Selected", hasChildItems: false)
+        }
+        Menu(id: "simplePopup", targetId: "link", selectedIndex: 0, items: ["Simple", "Second"], onOpened: vm.opened, onClosed: vm.closed)
+    }
+}

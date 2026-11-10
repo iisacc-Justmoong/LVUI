@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/OwnedHierarchyModel.md",
-    "sha256": "e3351dfbda858ce158325c7e5893362cc4dfb0e51977c876b5961164ff4daefd",
-    "bytes": 4271,
-    "line_count": 48,
+    "sha256": "41321b0590d73b8d109dda26e37f5acda14d96c4227905c7cd5e5f9871a20b6d",
+    "bytes": 5747,
+    "line_count": 62,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -98,50 +98,64 @@
       "id": "b000011",
       "kind": "paragraph",
       "start_line": 23,
-      "end_line": 26,
-      "raw": "`HierarchyController`는 소유 스레드에서 펼침과 선택을 관리하고 보이는 행을 투영한다.\n접힌 자손의 선택은 유지하며 항목이 소스에서 제거되면 화면 상태에서 정리한다. 이 조작은\n소스 편집 인터페이스를 호출하거나 문서 리비전을 변경하지 않는다. 소스의 새 불변\n스냅샷이 도착하면 인덱스를 갱신하고 살아 있는 키의 화면 상태를 유지한다.\n"
+      "end_line": 30,
+      "raw": "`HierarchyController`는 소유 스레드에서 펼침·선택·키별 행 높이를 관리하고 보이는 행을 투영한다.\n접힌 자손의 선택은 유지하며 항목이 소스에서 제거되면 화면 상태에서 정리한다. 이 조작은\n소스 편집 인터페이스를 호출하거나 문서 리비전을 변경하지 않는다. 소스의 새 불변\n스냅샷이 도착하면 인덱스를 갱신하고 살아 있는 키의 화면 상태를 유지한다.\n`set_row_extent(key, height)`는 1–8192의 유한한 높이를 뷰 상태에 지정하며,\n`std::nullopt`는 해당 키를 기본 높이로 되돌린다. 잘못된 값과 존재하지 않는 키는\n상태를 변경하지 않는다. 바뀐 값만 뷰 리비전을 증가시키고 동일 값은 변경을 발행하지\n않는다. 숨긴 행의 값도 키가 남는 동안 보존하고 소스에서 키가 제거되면 정리한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 27,
-      "end_line": 27,
+      "start_line": 31,
+      "end_line": 31,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 28,
-      "end_line": 34,
-      "raw": "`HierarchyViewportSource`는 보이는 투영을 한 번 복사하고 키 색인을 소유한다.\n이후 스크롤마다 전체 계층을 다시 만들지 않고 보이는 행과 지정한 여유 범위만\n계산한다. 내용이 바뀌어도 키와 행 내부 위치를 기준으로 스크롤을 유지하고, 사용자가\n새로 스크롤한 경우에는 이전 기준점을 적용하지 않는다. 키를 지정해 시작·끝·중앙 또는\n최소 이동으로 행을 보이게 할 수 있다. 투영 리비전과 뷰 리비전을 결과에 함께 전달한다.\n행 높이는 현재 고정이며 [독립 계층 목록](NativeOwnedHierarchyList.md)이 이 계산을\n스크롤 호스트와 연결한다. 가변 행 높이는 별도 작업이다.\n"
+      "start_line": 32,
+      "end_line": 43,
+      "raw": "`ii::gui::BasicHierarchyViewportSource`는 보이는 투영을 한 번 복사하고 키 색인을 소유한다.\n이후 스크롤마다 전체 계층을 다시 만들지 않고 보이는 행과 지정한 여유 범위만\n계산한다. 내용이 바뀌어도 키와 행 내부 위치를 기준으로 스크롤을 유지하고, 사용자가\n새로 스크롤한 경우에는 이전 기준점을 적용하지 않는다. 키를 지정해 시작·끝·중앙 또는\n최소 이동으로 행을 보이게 할 수 있다. 투영 리비전과 뷰 리비전을 결과에 함께 전달한다.\n행이 짧아지면 내부 기준점을 그 행의 끝 안쪽으로 제한하며, 먼 스크롤 위치에서도\n부동소수점 반올림 때문에 다음 행으로 넘어가지 않도록 절대 좌표를 제한한다.\n기본 높이와 각 키의 선택적 높이를 함께 사용한다. 누적 크기 색인과 이진 검색으로\n가변 행의 위치를 찾아 보이는 범위만 만든다. `content_extent`, `row_offset`,\n`row_extent`, `row_at`은 기본 높이를 명시적으로 받으며 잘못된 높이·인덱스나 내용\n끝 이상의 위치는 빈 결과다. [독립 계층 목록](NativeOwnedHierarchyList.md)이 이\n계산을 스크롤 호스트와 연결한다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 35,
-      "end_line": 35,
+      "start_line": 44,
+      "end_line": 44,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 36,
-      "end_line": 40,
-      "raw": "`LVUI.OwnedHierarchy.Model`은 구조 검증, 모든 항목 쌍의 이동, 자손 보존, 오래된\n요청, 편집 불변 스냅샷과 화면 상태의 문서 비변경을 검사한다. 이 문서는 독립 모델의\n현재 범위다. `LVUI.OwnedHierarchy.Viewport`는 제한된 표시 범위, 삽입 후 기준점,\n사용자 이동과 공개 키 찾기, 불변 스냅샷을 검사한다. 계층 목록은 고정 높이 가상\n행을 제공하며 드래그 입력과 플랫폼 접근성 연결은 아직 별도로 구현해야 한다.\n"
+      "start_line": 45,
+      "end_line": 52,
+      "raw": "`LVUI.OwnedHierarchy.Model`은 구조 검증, 모든 항목 쌍의 이동, 자손 보존, 오래된\n요청, 편집 불변 스냅샷과 화면 상태의 문서 비변경을 검사한다. 이 문서는 독립 모델의\n현재 범위다. `LVUI.OwnedHierarchy.Viewport`는 제한된 표시 범위, 삽입 후 기준점,\n사용자 이동과 공개 키 찾기, 불변 스냅샷을 검사한다. 여러 기본 높이·가변 행·\n스크롤 위치를 순차 배치의 결과와 비교하며 크기 변경 후 기준점을 확인한다. 계층\n목록은 드래그 입력을 제공한다. 플랫폼 접근성 연결의 실제 검증은 별도로 남아 있다.\n`LVUI.NativeInstalled`는 이동 설치한 공개 헤더로 가변 높이 투영을 컴파일하고,\n같은 설치본의 컴파일러가 `viewRevision`을 생성하는지도 검사한다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 41,
-      "end_line": 41,
+      "start_line": 53,
+      "end_line": 53,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 42,
-      "end_line": 48,
+      "start_line": 54,
+      "end_line": 60,
       "raw": "`HierarchyItem.h`는 행의 기본 200×20 크기, 8단위 들여쓰기와 좌우 여백, 18단위\n아이콘, 16단위 접기 표시, 카운트 위치 및 상태별 색상을 독립적으로 계산한다. 선택,\n비활성, 드래그, 누름과 호버의 우선순위를 관리하고 자식이 없는 행은 펼치지 않는다.\n폭이 좁아도 음수 크기를 만들지 않으며 잘못된 옵션은 기존 상태를 보존한다. 이는 행의\n순수 모델과 이를 사용하는 [독립 행 위젯과 선언형 경로](NativeOwnedHierarchyItem.md)를\n제공한다. `HierarchyItemProjection.h`는 소스의 보이는 행과 앱이 지정한 시각 설정을\n결합하며 원본 문서나 리비전을 바꾸지 않는다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "계층 표시 범위와 드래그 판정은 각각 `iiGUI/HierarchyViewport.h`, `iiGUI/HierarchyDrag.h`가 담당한다. LVUI는 투영·요청·결과와 바인딩을 제공하며 앱이 구현을 주입한다.\n"
     }
   ],
   "outline": [
@@ -185,16 +199,16 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000013",
-        "line": 31,
-        "text": "새로 스크롤한 경우에는 이전 기준점을 적용하지 않는다. 키를 지정해 시작·끝·중앙 또는",
+        "block_id": "b000011",
+        "line": 29,
+        "text": "상태를 변경하지 않는다. 바뀐 값만 뷰 리비전을 증가시키고 동일 값은 변경을 발행하지",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000015",
-        "line": 40,
-        "text": "행을 제공하며 드래그 입력과 플랫폼 접근성 연결은 아직 별도로 구현해야 한다.",
+        "block_id": "b000013",
+        "line": 35,
+        "text": "새로 스크롤한 경우에는 이전 기준점을 적용하지 않는다. 키를 지정해 시작·끝·중앙 또는",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -213,14 +227,14 @@
         "label": "독립 계층 목록",
         "target": "NativeOwnedHierarchyList.md",
         "kind": "relative",
-        "line": 33
+        "line": 42
       },
       {
         "block_id": "b000017",
         "label": "독립 행 위젯과 선언형 경로",
         "target": "NativeOwnedHierarchyItem.md",
         "kind": "relative",
-        "line": 46
+        "line": 58
       }
     ],
     "tables": []

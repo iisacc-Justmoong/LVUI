@@ -1,4 +1,9 @@
 #include <LVUI/NativeHierarchyItem.h>
+#include <iiGUI/NativeHierarchyItemView.h>
+#include <iiGUI/HierarchyItemModel.h>
+#include <iiGUI/SvgImageCache.h>
+using HierarchyItemTestInput=lvui::native::HierarchyItemInputValue<ii::gui::RasterImage>;
+using HierarchyItemTestView=lvui::native::HierarchyItemBinding<ii::gui::BasicNativeHierarchyItem,ii::gui::BasicHierarchyItem,ii::gui::CachedSvgDecoder>;
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
@@ -25,14 +30,14 @@ int main() {
     using namespace ii::gui;
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
     auto host = take(tree->content_host({}, "host", {400, 100}));
-    lvui::native::HierarchyItemInput input; auto& config = input.configuration;
+    HierarchyItemTestInput input; auto& config = input.configuration;
     config.key = "camera"; config.label = "Camera"; config.icon_name = "home";
     config.depth = 1; config.count = 12; config.has_children = true;
-    std::optional<lvui::native::NativeHierarchyItem> item; unsigned activations = 0; std::vector<bool> expanded;
+    std::optional<HierarchyItemTestView> item; unsigned activations = 0; std::vector<bool> expanded;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto column = builder.vstack({}, "column", {.spacing = 0, .alignment = StackAlignment::leading});
         if (!column) return std::unexpected(column.error());
-        auto value = lvui::native::NativeHierarchyItem::create(builder, *column, "item", input,
+        auto value = HierarchyItemTestView::create(builder, *column, "item", input,
             {.activated = [&] { ++activations; }, .expansion_changed = [&](bool value) {
                 expanded.push_back(value); if (item) good(item->set_options(take(item->options())));
             }});
@@ -83,7 +88,7 @@ int main() {
 
     input.configuration.enabled = true; input.configuration.has_children = true; unsigned after_retirement = 0;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
-        auto value = lvui::native::NativeHierarchyItem::create(builder, {}, "self-removing", input,
+        auto value = HierarchyItemTestView::create(builder, {}, "self-removing", input,
             {.activated = [&] { ++after_retirement; }, .expansion_changed = [&](bool) { good(host.clear_content()); }});
         if (!value) return std::unexpected(value.error()); item = *value; return {};
     }));
@@ -91,12 +96,12 @@ int main() {
     require(after_retirement == 0 && !item->row().snapshot(), "Retired hierarchy row received a stale activation callback");
 
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
-        auto value=lvui::native::NativeHierarchyItem::create(builder,{},"stable",input);
+        auto value=HierarchyItemTestView::create(builder,{},"stable",input);
         if(!value)return std::unexpected(value.error());item=*value;return {};
     }));
     auto stable=item->root();
     auto rejected_count=host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
-        auto value=lvui::native::NativeHierarchyItem::create(builder,{},"candidate",input,{},
+        auto value=HierarchyItemTestView::create(builder,{},"candidate",input,{},
             [](WidgetBuilder&) -> ii::core::Result<void> {return ii::core::fail(ii::core::ErrorCode::failed,"Count View rejected");});
         if(!value)return std::unexpected(value.error());return {};
     });

@@ -6,11 +6,11 @@ LVUI의 일반 선언은 C++ 초기화 식의 실제 타입으로 값과 함수�
 
 ```lvui
 import vm Backend
-let count = vm.count
-let action = vm.run
-let render = vm.makeFormatter()
-let alias = render
-@Static let frozen = alias
+const count = vm.count
+const action = vm.run
+const render = vm.makeFormatter()
+const alias = render
+@Static const frozen = alias
 var manual = alias
 Window { VStack {
     PushButton(onClick: action)
@@ -20,9 +20,9 @@ Window { VStack {
 
 ## 저장소와 호출 규칙
 
-- 일반 `let`은 기존 Bindings 그래프에서 C++ 의존 읽기를 추적한다. 함수의 선택 버전이
+- 일반 `const`는 기존 Bindings 그래프에서 C++ 의존 읽기를 추적한다. 함수의 선택 버전이
   바뀌면 함수 별칭과 호출 결과를 사용하는 뷰도 갱신한다.
-- `@Static let`은 초기 값 또는 함수의 초기 선택 버전을 고정한다. 함수 실행 결과나
+- `@Static const`는 초기 값 또는 함수의 초기 선택 버전을 고정한다. 함수 실행 결과나
   함수 내부 상태를 복제하지 않는다. 선택된 수신자의 수명·실행 영역 검사는 유지한다.
 - `var`는 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 원래 원천이 바뀌어도
   자동으로 다른 버전을 선택하지 않는다. 함수의 네이티브 팩터리 교체도 지원한다.
@@ -55,7 +55,7 @@ auto replaced = view.set_manual_native([] {
 기존 LVUI 정규화에 따라 문자열은 `std::string`, 정수는 `Int`로 연결한다.
 
 오버로드 집합이나 범용 호출 연산자는 하나의 서명이 결정되지 않을 수 있다. 이 경우
-`let render: (Int) -> String = vm.render`처럼 명시적 서명을 사용한다. 임의의 C++ 함수
+`const render: (Int) -> String = vm.render`처럼 명시적 서명을 사용한다. 임의의 C++ 함수
 타입을 모두 자동 추론한다고 주장하지 않는다. 잘못된 인자 수, Void의 표시 값 사용,
 일반 값의 함수 호출은 생성 C++의 검사에서 거부한다.
 

@@ -3,6 +3,8 @@
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
 #include <cmath>
+#include <limits>
+#include <optional>
 #include <stdexcept>
 #include <vector>
 
@@ -25,6 +27,81 @@ std::vector<ii::gui::ImageRun> runs(const ii::gui::CanvasFrame& drawing) {
     auto result = drawing.images;
     for (const auto& layer : drawing.overlays) result.insert(result.end(), layer.images.begin(), layer.images.end());
     return result;
+}
+
+void relative_padding() {
+    auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(state->content_host({},"relative-padding",{200,200}));
+    std::optional<ii::gui::NativeImage> image;
+    ii::gui::ImageInput input;
+    input.image=take(ii::gui::rgba_image(2,2,std::vector<std::uint8_t>(16,255)));
+    input.configuration.width=input.configuration.height=40;
+    input.relative_padding=.25;
+    input.tint=ii::gui::WidgetColor{.5,.25,1,.75};
+    good(host.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto stack=builder.vstack({},"layout",{.spacing=0,.alignment=ii::gui::StackAlignment::leading});
+        if(!stack)return std::unexpected(stack.error());
+        auto created=ii::gui::NativeImage::create(builder,*stack,"image",input);
+        if(!created)return std::unexpected(created.error());image=*created;return {};
+    }));
+    auto drawing=runs(take(state->drawing_snapshot({200,200})));
+    require(drawing.size()==1&&near(drawing[0].bounds.width,20)&&drawing[0].tint&&
+        near(drawing[0].tint->red,.21404114)&&near(drawing[0].tint->green,.0508761)&&
+        near(drawing[0].tint->blue,1)&&near(drawing[0].tint->alpha,.75),
+        "Relative image padding or encoded tint was not applied");
+    good(image->root().set_extent({80,80}));
+    drawing=runs(take(state->drawing_snapshot({200,200})));
+    require(drawing.size()==1&&near(drawing[0].bounds.width,40),"Relative image padding did not follow allocation");
+    for(auto invalid : {-.01,.51,std::numeric_limits<double>::quiet_NaN()}) {
+        auto candidate=input;candidate.relative_padding=invalid;
+        const auto result=image->set_options(candidate);
+        const auto after=runs(take(state->drawing_snapshot({200,200})));
+        require(!result&&after.size()==1&&near(after[0].bounds.width,40),
+                "Invalid relative padding changed the active image");
+    }
+    auto invalid_tint=input;invalid_tint.tint=ii::gui::WidgetColor{2,0,0,1};
+    require(!image->set_options(invalid_tint)&&runs(take(state->drawing_snapshot({200,200})))==drawing,
+        "Invalid image tint changed the active image");
+    good(host.clear_content());state->close();
+}
+
+void layout_raster_source() {
+    auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(state->content_host({},"raster-source",{200,200}));
+    auto pixels=take(ii::gui::rgba_image(4,2,std::vector<std::uint8_t>(32,255)));
+    std::vector<ii::gui::Size> extents;double backing=0;bool fail=false,empty=false;
+    ii::gui::ImageInput input;input.configuration.width=input.configuration.height=40;
+    input.configuration.fit=ii::gui::ImageFit::contain;input.configuration.allow_empty=false;
+    input.raster_source=[&](ii::gui::Size extent,double scale)->ii::core::Result<std::shared_ptr<const ii::gui::RasterImage>> {
+        extents.push_back(extent);backing=scale;
+        if(fail)return ii::core::fail(ii::core::ErrorCode::failed,"Raster source failed");
+        return empty?std::shared_ptr<const ii::gui::RasterImage>{}:pixels;
+    };
+    std::optional<ii::gui::NativeImage> image;
+    good(host.set_content([&](auto& builder)->ii::core::Result<void>{
+        auto stack=builder.vstack({},"layout",{.spacing=0,.alignment=ii::gui::StackAlignment::leading});
+        if(!stack)return std::unexpected(stack.error());
+        auto created=ii::gui::NativeImage::create(builder,*stack,"image",input);
+        if(!created)return std::unexpected(created.error());image=*created;return {};
+    }));
+    auto before=take(image->root().snapshot());auto drawing=runs(take(state->drawing_snapshot({200,200})));
+    require(drawing.size()==1&&drawing[0].image==pixels&&!extents.empty()&&
+        near(extents.back().width,40)&&near(extents.back().height,40)&&near(backing,1)&&
+        near(drawing[0].bounds.width,40)&&near(drawing[0].bounds.height,20),
+        "Raster source did not receive the allocated extent or preserve contain geometry");
+    good(image->root().set_extent({80,40}));drawing=runs(take(state->drawing_snapshot({200,200})));
+    require(drawing.size()==1&&drawing[0].image==pixels&&near(extents.back().width,80)&&
+        near(extents.back().height,40)&&near(drawing[0].bounds.width,80),
+        "Raster source did not follow a host resize");
+    auto conflict=input;conflict.image=pixels;conflict.configuration.width=30;
+    require(!image->set_options(conflict)&&near(take(image->root().snapshot()).size.width,80),
+        "Conflicting image sources replaced the valid image state");
+    fail=true;require(!state->drawing_snapshot({200,200}),"Raster source failure was swallowed");fail=false;
+    empty=true;require(!state->drawing_snapshot({200,200}),"A required raster source returned an empty image");empty=false;
+    drawing=runs(take(state->drawing_snapshot({200,200})));
+    require(drawing.size()==1&&drawing[0].image==pixels&&take(image->root().snapshot()).id==before.id,
+        "Image did not recover after a raster source failure");
+    good(host.clear_content());state->close();
 }
 
 void advanced() {
@@ -128,4 +205,6 @@ int main() {
     require(weak.expired() && !widget.snapshot(), "Retired image retained its scope or widget");
     state->close();
     advanced();
+    relative_padding();
+    layout_raster_source();
 }

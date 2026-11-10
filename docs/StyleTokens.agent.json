@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/StyleTokens.md",
-    "sha256": "d0bf7dd2260bdd092eaf4b88328b927ca926e2e5da820018c6b99f2404e38f29",
-    "bytes": 14387,
-    "line_count": 178,
+    "sha256": "22912f1e72fd8b2f1faea634fc8f83206f87360e7263049d2d70544764d55d8b",
+    "bytes": 18686,
+    "line_count": 237,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,49 +42,49 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 3,
-      "raw": "LVUI는 [LVRS 원본 Figma](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVRS)의 변수를 기본 스타일 카탈로그로 제공한다. 원본 변수 이름, Figma ID/key, 컬렉션, 모드, 타입, 설명, scope, 게시 숨김 여부, CSS 이름과 별칭을 보존한다. 빌드나 앱 실행 중 Figma 접속은 필요하지 않다.\n"
+      "end_line": 9,
+      "raw": "공통 디자인의 현재 기준은 기존 라이브러리를 사용자가 개명한\n[LVUI Figma 라이브러리](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI)이다.\n카탈로그는 이전에 별도로 만든 동명 파일에서 캡처한 ID와 값을 보존하면서 현재 기준\n라이브러리의 대응 ID와 key도 조회할 수 있어야 한다. 현재 기준에서 달라진 별칭\n대상은 별도로 기록하고 현재 대상에 맞춘다. 두 파일의 식별자는 서로\n다르며 한 파일의 ID를 다른 파일의 ID로 취급하지 않는다. 정식 CSS 이름은\n`--lvui-`로 시작한다. 빌드나 앱 실행 중 Figma 접속은 필요하지 않다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 4,
-      "end_line": 4,
+      "start_line": 10,
+      "end_line": 10,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 5,
-      "end_line": 8,
+      "start_line": 11,
+      "end_line": 14,
       "raw": "이 스냅샷은 LVUI가 소유하는 시각값이다. 기본 코드 생성 경로는 값으로 `WidgetAppearance`를\n구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS`\n생성 경로는 제거되었다. 기능 이식과 독립 패키지의 현재 검증 상태는\n[독립 구현 현황](LVUIIndependence.md)을 따른다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 9,
-      "end_line": 9,
+      "start_line": 15,
+      "end_line": 15,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 10,
-      "end_line": 10,
+      "start_line": 16,
+      "end_line": 16,
       "raw": "색상과 수치는 [Color·Metric 값 타입](StyleTypes.md)으로 선택한다. `Color.primary`, `Metric.space8` 또는 문맥상의 `.primary`, `.space8`을 사용할 수 있다. [전체 멤버 목록](StyleTokenMembers.md)은 원본 스냅샷에서 자동 생성한다. 아래 `token()`·`var()` 형식도 같은 값을 참조하는 호환 API이다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 11,
-      "end_line": 11,
+      "start_line": 17,
+      "end_line": 17,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "heading",
-      "start_line": 12,
-      "end_line": 12,
+      "start_line": 18,
+      "end_line": 18,
       "raw": "## 원본과 범위\n",
       "level": 2,
       "title": "원본과 범위"
@@ -92,30 +92,86 @@
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 13,
-      "end_line": 13,
+      "start_line": 19,
+      "end_line": 19,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 14,
-      "end_line": 14,
-      "raw": "2026-10-25에 읽은 **208개 변수, 5개 컬렉션**을 LVUI가 소유하는 `catalog/lvui-style-tokens.json`에 저장했다. 기존 시각 언어의 출처와 호환 식별자는 데이터에 보존한다. `tools/update_style_tokens.py`가 이를 검증하여 `src/Style/StyleTokens.generated.inc`를 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하며 Python도 필요하지 않다.\n"
+      "start_line": 20,
+      "end_line": 28,
+      "raw": "2026-11-02에 별도 LVUI 파일에서 읽은 `catalog/lvui-style-tokens.json`에는\n**242개 변수, 5개 컬렉션**이 있다. 2026-11-03 현재 기준 라이브러리와 대응되는\n233개 변수의 별칭을 해석한 값은 SDK 스냅샷과 일치한다. 과거 `Action/primary`,\n`Action/success`, `Action/warning`, `Action/danger` 네 변수는 현재 기준 파일에서\n없어졌으나 기존 코드의 호환 이름으로 유지한다. 검색 필드의 색상·치수 다섯 변수는\n기준 파일에 추가했다. 이들의 두 파일 ID와 key가 같은 SDK 토큰을 가리키는지\n검증한다. 다섯 변수를 기준 LVUI 라이브러리에 게시했고 Congregation 파일에서\n다섯 key가 조회됨을 확인했다. Figma 원본의 검색 아이콘 색과 새 토큰은 8비트 변환에 따른 미세한 차이가\n있으며 기존 아이콘을 수정하거나 새 변수에 연결하지 않았다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 15,
-      "end_line": 15,
+      "start_line": 29,
+      "end_line": 29,
       "raw": "\n"
     },
     {
       "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 36,
+      "raw": "`colorReadback`은 별도 파일의 직접 색상 145개와 개명된 기준 라이브러리에서\n추가 확인한 재질 색상 1개를 기본 위젯 색으로 식별하며,\n이전 원본 색상 재확인의 날짜와 ID는 `provenance`에 보존한다. 기존 변수의 Figma\n변수 ID·key, 컬렉션·모드 ID와 `--lvrs-` CSS 이름은 호환 조회 별칭으로 유지한다.\n현재 기준 파일의 새 ID·key도 별도 출처 식별자로 연결한다. 이전 설명은\n`legacyDescription`에 남는다. `catalog/lvrs-style-tokens.json`은 과거 별도\n스냅샷이며 기본 생성기는 이를 읽지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 37,
+      "end_line": 37,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "`tools/update_style_tokens.py`는 카탈로그와 네이티브 위젯의 `figma_defaults`를 같은 스냅샷에서 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하고 기본 SVG 임베딩에 Python을 사용한다. Figma나 LVRS 런타임에는 의존하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 40,
+      "end_line": 47,
+      "raw": "입력 필드에서 변수에 연결되지 않은 그라데이션·효과와 고정 기하는 현재 공통\nFigma 원본에서 읽은 `catalog/lvui-search-field-material.json`,\n`catalog/lvui-text-field-disabled-material.json`,\n`catalog/lvui-text-field-inline-material.json`,\n`catalog/lvui-text-field-cylinder-geometry.json`에 보존한다. 활성 배경은 원본이\n실제로 연결한 `Panel/surfaceSolid`와 각 컴포넌트의 불투명도를 사용한다. 같은\n생성기가 공통 변수와 스냅샷을 검증해 네이티브 재질 상수를 만들며, 지원하지\n않는 변수 연결·그라데이션 방향·효과 구성은 조용히 무시하지 않고 거절한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 48,
+      "end_line": 48,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 49,
+      "end_line": 53,
+      "raw": "이전 식별자는 공개 토큰 구조체의 레이아웃을 바꾸지 않는 별도 생성 테이블로\n해석한다. 변수·컬렉션의 현재 ID와 key가 모두 일치해야 이전 별칭을 적용하므로,\n다른 파일에서 우연히 같은 ID를 쓰는 별도 카탈로그에 별칭을 주입하지 않는다.\n컬렉션과 모드에 대한 조회가 모호하거나 같은 토큰을 두 이름으로 중복 설정하면\n오류를 반환한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
       "kind": "table",
-      "start_line": 16,
-      "end_line": 22,
-      "raw": "| 컬렉션 | 변수 수 | 기본 모드 |\n|---|---:|---|\n| Theme Colors | 115 | Dark |\n| Material | 20 | Dark |\n| ColorPicker | 5 | Dark |\n| Theme Typography | 20 | Value |\n| Theme Metrics | 48 | Dark |\n",
+      "start_line": 55,
+      "end_line": 61,
+      "raw": "| 컬렉션 | 변수 수 | 기본 모드 |\n|---|---:|---|\n| Theme Colors | 145 | Dark |\n| Material | 20 | Dark |\n| ColorPicker | 5 | Dark |\n| Theme Typography | 20 | Value |\n| Theme Metrics | 52 | Dark |\n",
       "columns": [
         "컬렉션",
         "변수 수",
@@ -124,7 +180,7 @@
       "rows": [
         [
           "Theme Colors",
-          "115",
+          "145",
           "Dark"
         ],
         [
@@ -144,67 +200,67 @@
         ],
         [
           "Theme Metrics",
-          "48",
+          "52",
           "Dark"
         ]
       ]
     },
     {
-      "id": "b000014",
+      "id": "b000022",
       "kind": "blank",
-      "start_line": 23,
-      "end_line": 23,
+      "start_line": 62,
+      "end_line": 62,
       "raw": "\n"
     },
     {
-      "id": "b000015",
+      "id": "b000023",
       "kind": "paragraph",
-      "start_line": 24,
-      "end_line": 24,
-      "raw": "타입은 Color 138개, Number 67개, String 3개이다. 별칭 변수 6개를 값으로 펼치지 않고 보존한다. `Action/primary`와 `ColorPicker/Previous color` 같은 연쇄 별칭도 해석한다. 공개 API는 이후 Boolean 변수도 받을 수 있다. 현재 원본에 Light 모드는 없으며 존재하지 않는 모드 요청은 오류이다.\n"
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "타입은 Color 168개, Number 71개, String 3개이다. 이 중 29개는 Figma의 `Icon/Accent/.../Darker` 상태별 아이콘 토큰이다. 별칭 변수 6개를 값으로 펼치지 않고 보존한다. 현재 원본처럼 `ColorPicker/Previous color`와 호환용 `Action/primary`는 각각 `Accent/Blue/Default`를 직접 참조한다. 따라서 `Action/primary`만 변경해도 이전 색 토큰은 바뀌지 않는다. 이는 이전 별도 파일의 연쇄 별칭 동작과 다른 점이다. 공개 API는 이후 Boolean 변수도 받을 수 있다. 현재 원본에 Light 모드는 없으며 존재하지 않는 모드 요청은 오류이다.\n"
     },
     {
-      "id": "b000016",
+      "id": "b000024",
       "kind": "blank",
-      "start_line": 25,
-      "end_line": 25,
+      "start_line": 64,
+      "end_line": 64,
       "raw": "\n"
     },
     {
-      "id": "b000017",
+      "id": "b000025",
       "kind": "heading",
-      "start_line": 26,
-      "end_line": 26,
+      "start_line": 65,
+      "end_line": 65,
       "raw": "## 기본값\n",
       "level": 2,
       "title": "기본값"
     },
     {
-      "id": "b000018",
+      "id": "b000026",
       "kind": "blank",
-      "start_line": 27,
-      "end_line": 27,
+      "start_line": 66,
+      "end_line": 66,
       "raw": "\n"
     },
     {
-      "id": "b000019",
+      "id": "b000027",
       "kind": "paragraph",
-      "start_line": 28,
-      "end_line": 28,
+      "start_line": 67,
+      "end_line": 67,
       "raw": "옵션 없이 사용하는 `parse()`와 `compile_native()`에 카탈로그가 연결된다. 명시적인 컴포넌트 입력과 인라인 스타일이 기본값보다 우선한다.\n"
     },
     {
-      "id": "b000020",
+      "id": "b000028",
       "kind": "blank",
-      "start_line": 29,
-      "end_line": 29,
+      "start_line": 68,
+      "end_line": 68,
       "raw": "\n"
     },
     {
-      "id": "b000021",
+      "id": "b000029",
       "kind": "table",
-      "start_line": 30,
-      "end_line": 39,
+      "start_line": 69,
+      "end_line": 78,
       "raw": "| 대상 | 기본 토큰 |\n|---|---|\n| 파서 루트 / AOT 창 배경 | Theme Colors / Panel/window |\n| 파서 기본 텍스트 | Text/bodyColor, Body/textBody, Weight/Medium |\n| 파서 h1 | Title/textTitle, Weight/Bold |\n| AOT 글꼴 | Theme Typography / Font/fontBody = Pretendard |\n| AOT 스택 간격·패딩 | Theme Metrics / Space/8, Space/0 |\n| AOT 버튼 높이·수평 패딩·반경 | Size/22, Space/8, Radius/8 |\n| AOT 기본 액션·상태 색상 | Action/primary, Accent/Blue/Hover, Accent/Blue/Pressed |\n| AOT 비활성 배경 | Panel/subSurface |\n",
       "columns": [
         "대상",
@@ -246,31 +302,31 @@
       ]
     },
     {
-      "id": "b000022",
+      "id": "b000030",
       "kind": "blank",
-      "start_line": 40,
-      "end_line": 40,
+      "start_line": 79,
+      "end_line": 79,
       "raw": "\n"
     },
     {
-      "id": "b000023",
+      "id": "b000031",
       "kind": "paragraph",
-      "start_line": 41,
-      "end_line": 41,
+      "start_line": 80,
+      "end_line": 80,
       "raw": "AOT Label의 기본 역할은 기존 description을 유지한다. 크기·줄 높이·굵기·색상은 다음 토큰 조합으로 결정한다.\n"
     },
     {
-      "id": "b000024",
+      "id": "b000032",
       "kind": "blank",
-      "start_line": 42,
-      "end_line": 42,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "\n"
     },
     {
-      "id": "b000025",
+      "id": "b000033",
       "kind": "table",
-      "start_line": 43,
-      "end_line": 51,
+      "start_line": 82,
+      "end_line": 90,
       "raw": "| 역할 | 크기 / 줄 높이 | 굵기 | 색상 |\n|---|---:|---:|---|\n| title | 26 / 26 | 700 | titleHeaderColor |\n| title2 | 22 / 22 | 700 | titleHeaderColor |\n| header | 17 / 17 | 600 | titleHeaderColor |\n| header2 | 15 / 15 | 600 | titleHeaderColor |\n| body | 13 / 13 | 500 | bodyColor |\n| description | 12 / 12 | 600 | descriptionColor |\n| caption / disabled | 11 / 11 | 400 | captionColor / disabledColor |\n",
       "columns": [
         "역할",
@@ -324,419 +380,447 @@
       ]
     },
     {
-      "id": "b000026",
-      "kind": "blank",
-      "start_line": 52,
-      "end_line": 52,
-      "raw": "\n"
-    },
-    {
-      "id": "b000027",
-      "kind": "paragraph",
-      "start_line": 53,
-      "end_line": 53,
-      "raw": "이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 창 배경은 Panel/window를 사용한다. 창의 `accent`는 LVUI 자체 색상 선택 타입으로 기본 호스트와 기본 버튼에 적용하며, 상세 범위는 [Window 계약](NativeWindow.md)을 따른다.\n"
-    },
-    {
-      "id": "b000028",
-      "kind": "blank",
-      "start_line": 54,
-      "end_line": 54,
-      "raw": "\n"
-    },
-    {
-      "id": "b000029",
-      "kind": "paragraph",
-      "start_line": 55,
-      "end_line": 55,
-      "raw": "현재 네이티브 글꼴이 지원하는 굵기는 400/500/600/700이다. 다른 굵기는 코드 생성이나 초기 파서 단계에서 진단을 반환한다.\n"
-    },
-    {
-      "id": "b000030",
-      "kind": "blank",
-      "start_line": 56,
-      "end_line": 56,
-      "raw": "\n"
-    },
-    {
-      "id": "b000031",
-      "kind": "paragraph",
-      "start_line": 57,
-      "end_line": 57,
-      "raw": "다른 컴포넌트도 공개 입력에 `token()`을 전달하여 같은 카탈로그를 사용할 수 있다. 모든 LVRS 컴포넌트의 개별 내부 상태나 효과를 이번 작업에서 다시 구현한 것은 아니다. Tracking/Normal을 비롯한 전체 변수는 조회 가능하며, 해당 값을 받는 컴포넌트의 지원 입력과 타입·범위 검증을 따른다.\n"
-    },
-    {
-      "id": "b000032",
-      "kind": "blank",
-      "start_line": 58,
-      "end_line": 58,
-      "raw": "\n"
-    },
-    {
-      "id": "b000033",
-      "kind": "heading",
-      "start_line": 59,
-      "end_line": 59,
-      "raw": "## 인라인 스타일과 컴포넌트 문법\n",
-      "level": 2,
-      "title": "인라인 스타일과 컴포넌트 문법"
-    },
-    {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 60,
-      "end_line": 60,
+      "start_line": 91,
+      "end_line": 91,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 61,
-      "end_line": 61,
-      "raw": "원본 `codeSyntax.WEB`의 CSS 이름을 그대로 사용한다.\n"
+      "start_line": 92,
+      "end_line": 92,
+      "raw": "이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 창 배경은 Panel/window를 사용한다. 창의 `accent`는 LVUI 자체 색상 선택 타입으로 기본 호스트와 기본 버튼에 적용하며, 상세 범위는 [Window 계약](NativeWindow.md)을 따른다.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 62,
-      "end_line": 62,
+      "start_line": 93,
+      "end_line": 93,
       "raw": "\n"
     },
     {
       "id": "b000037",
-      "kind": "fenced_code",
-      "start_line": 63,
-      "end_line": 70,
-      "raw": "```html\n<ApplicationWindow title=\"LVUI\"\n    style=\"background:var(--lvrs-theme-colors-panel-window);font-family:var(--lvrs-theme-typography-font-font-body)\">\n  <div style=\"padding:var(--lvrs-theme-metrics-space-24);gap:var(--lvrs-theme-metrics-space-8)\">\n    <span style=\"font-size:var(--lvrs-theme-typography-body-text-body);font-weight:var(--lvrs-theme-typography-weight-medium);color:var(--lvrs-theme-colors-text-body-color)\">Native LVUI</span>\n  </div>\n</ApplicationWindow>\n```\n",
-      "language": "html",
-      "code": "<ApplicationWindow title=\"LVUI\"\n    style=\"background:var(--lvrs-theme-colors-panel-window);font-family:var(--lvrs-theme-typography-font-font-body)\">\n  <div style=\"padding:var(--lvrs-theme-metrics-space-24);gap:var(--lvrs-theme-metrics-space-8)\">\n    <span style=\"font-size:var(--lvrs-theme-typography-body-text-body);font-weight:var(--lvrs-theme-typography-weight-medium);color:var(--lvrs-theme-colors-text-body-color)\">Native LVUI</span>\n  </div>\n</ApplicationWindow>\n",
-      "closed": true
+      "kind": "paragraph",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "현재 네이티브 글꼴이 지원하는 굵기는 400/500/600/700이다. 다른 굵기는 코드 생성이나 초기 파서 단계에서 진단을 반환한다.\n"
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 71,
-      "end_line": 71,
+      "start_line": 95,
+      "end_line": 95,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "paragraph",
-      "start_line": 72,
-      "end_line": 72,
-      "raw": "네이티브 마크업의 `background`/`background-color`, `border-color`, `border-width`, `border-radius`는 스택의 네이티브 그리기에 연결된다. `font-family`는 창의 appearance 입력이다. 일반 스택에 배경과 보더를 자동으로 추가하지 않으며, `border-width`를 지정할 때는 `border-color`가 필요하다. 속성을 받지 않는 컴포넌트에 지정하면 진단을 반환한다.\n"
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "다른 컴포넌트도 공개 입력에 `token()`을 전달하여 같은 카탈로그를 사용할 수 있다. 모든 LVRS 컴포넌트의 개별 내부 상태나 효과를 이번 작업에서 다시 구현한 것은 아니다. Tracking/Normal을 비롯한 전체 변수는 조회 가능하며, 해당 값을 받는 컴포넌트의 지원 입력과 타입·범위 검증을 따른다.\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 73,
-      "end_line": 73,
+      "start_line": 97,
+      "end_line": 97,
       "raw": "\n"
     },
     {
       "id": "b000041",
-      "kind": "paragraph",
-      "start_line": 74,
-      "end_line": 74,
-      "raw": "`var(--missing, 8px)`와 중첩 fallback을 지원한다. fallback은 이름이 없을 때만 사용하며 잘못된 타입·설정·순환을 숨기지 않는다. 토큰 표현은 전체 속성 값이어야 한다. CSS cascade, 사용자 정의 변수 선언, `calc()`와 문자열 보간은 제공하지 않는다. Number와 Metric은 길이 입력에서 논리 픽셀로 해석한다.\n"
+      "kind": "heading",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "## 컴포넌트의 스타일 입력\n",
+      "level": 2,
+      "title": "컴포넌트의 스타일 입력"
     },
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 75,
-      "end_line": 75,
+      "start_line": 99,
+      "end_line": 99,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 76,
-      "end_line": 76,
-      "raw": "초기 HTML 파서 `parse(\"<main>…</main>\")`도 기존 지원 속성에서 같은 토큰을 해석한다. 기존 `Style` 구조체와 렌더링 ABI는 유지한다. 네이티브 AOT 마크업의 모든 속성을 초기 파서에도 추가한 것은 아니다.\n"
+      "start_line": 100,
+      "end_line": 103,
+      "raw": "각 변수의 정식 LVUI CSS 이름을 사용한다. SDK의 별도 파일 스냅샷은\n`codeSyntax.WEB`에 `Color`·`Metric` 선택자를 기록한다. 현재 기준 라이브러리에\n새로 게시한 검색 필드 변수 다섯 개의 `codeSyntax.WEB`은 같은 CSS 이름을\n`var(...)`로 감싼 형식이다. 두 파일의 메타데이터를 같은 것으로 가정하지 않는다.\n"
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 77,
-      "end_line": 77,
+      "start_line": 104,
+      "end_line": 104,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "fenced_code",
-      "start_line": 78,
-      "end_line": 87,
-      "raw": "```text\nlet ink = token(\"Theme Colors/Text/bodyColor\")\nApplicationWindow {\n    VStack(spacing: token(\"--lvrs-theme-metrics-space-8\")) {\n        Label(text: \"LVRS defaults\", style: .title)\n        Label(text: \"Native\", color: ink,\n              fontSize: token(\"Theme Typography/Body/textBody\"))\n    }\n}\n```\n",
+      "start_line": 105,
+      "end_line": 113,
+      "raw": "```text\nApplicationWindow(title: \"LVUI\", backgroundColor: Color.window,\n                  fontFamily: token(\"--lvui-theme-typography-font-font-body\")) {\n    VStack(padding: Metric.space24, gap: Metric.space8) {\n        Label(text: \"Native LVUI\", fontSize: Metric.textBody,\n              fontWeight: Metric.weightMedium, color: Color.text.body)\n    }\n}\n```\n",
       "language": "text",
-      "code": "let ink = token(\"Theme Colors/Text/bodyColor\")\nApplicationWindow {\n    VStack(spacing: token(\"--lvrs-theme-metrics-space-8\")) {\n        Label(text: \"LVRS defaults\", style: .title)\n        Label(text: \"Native\", color: ink,\n              fontSize: token(\"Theme Typography/Body/textBody\"))\n    }\n}\n",
+      "code": "ApplicationWindow(title: \"LVUI\", backgroundColor: Color.window,\n                  fontFamily: token(\"--lvui-theme-typography-font-font-body\")) {\n    VStack(padding: Metric.space24, gap: Metric.space8) {\n        Label(text: \"Native LVUI\", fontSize: Metric.textBody,\n              fontWeight: Metric.weightMedium, color: Color.text.body)\n    }\n}\n",
       "closed": true
     },
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 88,
-      "end_line": 88,
+      "start_line": 114,
+      "end_line": 114,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 89,
-      "end_line": 89,
-      "raw": "`token()`은 빌드 시점에 이름 하나를 받는다. CSS 이름, `컬렉션/변수명`, Figma ID/key로 조회한다. 단독 변수명은 유일할 때만 사용할 수 있다. 장기 사용에는 CSS 이름 또는 ID를 권장한다. Color도 불변 `let`에 보관할 수 있으며 현재 변경 가능한 Color `var`는 지원하지 않는다. 기존 Number/String/Bool의 반응형 상태 기능은 유지한다.\n"
+      "start_line": 115,
+      "end_line": 118,
+      "raw": "스택의 `backgroundColor`, `borderColor`, `borderWidth`, `cornerRadius`는 네이티브\n그리기에 연결된다. `fontFamily`는 창의 appearance 입력이다. 일반 스택에 배경과\n보더를 자동으로 추가하지 않으며, `borderWidth`를 지정할 때는 `borderColor`가\n필요하다. 속성을 받지 않는 컴포넌트에 지정하면 진단을 반환한다.\n"
     },
     {
       "id": "b000048",
-      "kind": "blank",
-      "start_line": 90,
-      "end_line": 90,
-      "raw": "\n"
-    },
-    {
-      "id": "b000049",
-      "kind": "paragraph",
-      "start_line": 91,
-      "end_line": 93,
-      "raw": "생성 헤더에는 확정된 스타일 C++ 숫자·문자열·WidgetColor가 들어간다. 실행 중에는\n토큰 카탈로그 조회, Figma API와 소스 인터프리터가 필요하지 않다. 독립 컴포넌트는\n필요한 LVUI 자체 헤더를 생성 코드에서 포함할 수 있다.\n"
-    },
-    {
-      "id": "b000050",
-      "kind": "blank",
-      "start_line": 94,
-      "end_line": 94,
-      "raw": "\n"
-    },
-    {
-      "id": "b000051",
-      "kind": "heading",
-      "start_line": 95,
-      "end_line": 95,
-      "raw": "## C++ API와 앱별 설정\n",
-      "level": 2,
-      "title": "C++ API와 앱별 설정"
-    },
-    {
-      "id": "b000052",
-      "kind": "blank",
-      "start_line": 96,
-      "end_line": 96,
-      "raw": "\n"
-    },
-    {
-      "id": "b000053",
-      "kind": "fenced_code",
-      "start_line": 97,
-      "end_line": 112,
-      "raw": "```cpp\n#include <LVUI/Compiler.h>\n#include <LVUI/StyleTokens.h>\n\nconst auto& catalog = lvui::default_style_tokens();\nauto spacing = catalog.number(\"--lvrs-theme-metrics-space-8\");\nauto edge = catalog.color(\"--lvrs-material-surface-dense-edge\");\nauto font = catalog.string(\"Theme Typography/Font/fontBody\");\n\nlvui::NativeCompileOptions options;\noptions.style_tokens.modes[\"Theme Colors\"] = \"Dark\";\noptions.style_tokens.overrides[\"--lvrs-theme-metrics-space-8\"] = 10.0;\noptions.style_tokens.overrides[\"--lvrs-theme-colors-action-primary\"] =\n    lvui::StyleColor{0.2, 0.4, 0.8, 1.0};\nauto result = lvui::compile_native(source, options);\n```\n",
-      "language": "cpp",
-      "code": "#include <LVUI/Compiler.h>\n#include <LVUI/StyleTokens.h>\n\nconst auto& catalog = lvui::default_style_tokens();\nauto spacing = catalog.number(\"--lvrs-theme-metrics-space-8\");\nauto edge = catalog.color(\"--lvrs-material-surface-dense-edge\");\nauto font = catalog.string(\"Theme Typography/Font/fontBody\");\n\nlvui::NativeCompileOptions options;\noptions.style_tokens.modes[\"Theme Colors\"] = \"Dark\";\noptions.style_tokens.overrides[\"--lvrs-theme-metrics-space-8\"] = 10.0;\noptions.style_tokens.overrides[\"--lvrs-theme-colors-action-primary\"] =\n    lvui::StyleColor{0.2, 0.4, 0.8, 1.0};\nauto result = lvui::compile_native(source, options);\n",
-      "closed": true
-    },
-    {
-      "id": "b000054",
-      "kind": "blank",
-      "start_line": 113,
-      "end_line": 113,
-      "raw": "\n"
-    },
-    {
-      "id": "b000055",
-      "kind": "paragraph",
-      "start_line": 114,
-      "end_line": 114,
-      "raw": "`collections()`와 `tokens()`는 읽기 전용 span을 제공하며 `find()`로 메타데이터를 조회한다. `resolve()`는 `std::expected<StyleTokenValue, StyleTokenError>`를 반환한다. `number()`, `color()`, `string()`, `boolean()`은 타입을 강제 변환하지 않는다. `validate()`는 선택한 모드에서 전체 카탈로그와 설정을 검사한다.\n"
-    },
-    {
-      "id": "b000056",
-      "kind": "blank",
-      "start_line": 115,
-      "end_line": 115,
-      "raw": "\n"
-    },
-    {
-      "id": "b000057",
-      "kind": "paragraph",
-      "start_line": 116,
-      "end_line": 116,
-      "raw": "`StyleTokenOptions`는 호출별 값이다. 기본 카탈로그를 변경하지 않으므로 앱·문서·컴파일 사이에 값이 유출되지 않는다. 별칭 대상을 바꾸면 그 대상을 참조하는 별칭도 새 값을 받고, 별칭 자체를 바꾸면 그 지점부터 새 값을 사용한다. 같은 토큰을 CSS 이름과 ID 등으로 중복 지정하면 오류이다.\n"
-    },
-    {
-      "id": "b000058",
-      "kind": "blank",
-      "start_line": 117,
-      "end_line": 117,
-      "raw": "\n"
-    },
-    {
-      "id": "b000059",
-      "kind": "paragraph",
-      "start_line": 118,
-      "end_line": 118,
-      "raw": "컬렉션과 모드는 이름 또는 ID로 선택한다. 알 수 없는 이름, 충돌 모드, 타입 불일치, 누락 별칭과 순환은 오류이다. 별칭 깊이는 최대 64개 토큰이다. Number는 유한값, RGBA는 채널별 0..1, String은 유효한 UTF-8·NUL 없음·4096바이트 이하를 요구한다. 글자 크기·길이 등 의미상의 범위는 사용하는 속성에서 추가 검사한다.\n"
-    },
-    {
-      "id": "b000060",
       "kind": "blank",
       "start_line": 119,
       "end_line": 119,
       "raw": "\n"
     },
     {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 120,
+      "end_line": 121,
+      "raw": "토큰 선택은 카탈로그와 설정을 타입 검사한다. Number와 Metric은 길이 입력에서\n논리 픽셀로 해석한다. LVUI View는 CSS 스타일 문자열을 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "초기 문서 파서는 기존 소비자를 위한 별도 레거시 API이며 LVUI AOT 소스 문법이 아니다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "fenced_code",
+      "start_line": 125,
+      "end_line": 134,
+      "raw": "```text\nconst ink = token(\"Theme Colors/Text/bodyColor\")\nApplicationWindow {\n    VStack(spacing: token(\"--lvui-theme-metrics-space-8\")) {\n        Label(text: \"LVRS defaults\", style: .title)\n        Label(text: \"Native\", color: ink,\n              fontSize: token(\"Theme Typography/Body/textBody\"))\n    }\n}\n```\n",
+      "language": "text",
+      "code": "const ink = token(\"Theme Colors/Text/bodyColor\")\nApplicationWindow {\n    VStack(spacing: token(\"--lvui-theme-metrics-space-8\")) {\n        Label(text: \"LVRS defaults\", style: .title)\n        Label(text: \"Native\", color: ink,\n              fontSize: token(\"Theme Typography/Body/textBody\"))\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 135,
+      "end_line": 135,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 136,
+      "end_line": 136,
+      "raw": "`token()`은 빌드 시점에 이름 하나를 받는다. CSS 이름, `컬렉션/변수명`, Figma ID/key로 조회한다. 단독 변수명은 유일할 때만 사용할 수 있다. 장기 사용에는 CSS 이름 또는 ID를 권장한다. Color도 불변 `const`에 보관할 수 있으며 현재 변경 가능한 Color `var`는 지원하지 않는다. 기존 Number/String/Bool의 반응형 상태 기능은 유지한다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 137,
+      "end_line": 137,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 138,
+      "end_line": 140,
+      "raw": "생성 헤더에는 확정된 스타일 C++ 숫자·문자열·WidgetColor가 들어간다. 실행 중에는\n토큰 카탈로그 조회, Figma API와 소스 인터프리터가 필요하지 않다. 독립 컴포넌트는\n필요한 LVUI 자체 헤더를 생성 코드에서 포함할 수 있다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 141,
+      "end_line": 141,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "heading",
+      "start_line": 142,
+      "end_line": 142,
+      "raw": "## C++ API와 앱별 설정\n",
+      "level": 2,
+      "title": "C++ API와 앱별 설정"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 143,
+      "end_line": 143,
+      "raw": "\n"
+    },
+    {
       "id": "b000061",
       "kind": "fenced_code",
-      "start_line": 120,
-      "end_line": 124,
+      "start_line": 144,
+      "end_line": 159,
+      "raw": "```cpp\n#include <LVUI/Compiler.h>\n#include <LVUI/StyleTokens.h>\n\nconst auto& catalog = lvui::default_style_tokens();\nauto spacing = catalog.number(\"--lvui-theme-metrics-space-8\");\nauto edge = catalog.color(\"--lvui-material-surface-dense-edge\");\nauto font = catalog.string(\"Theme Typography/Font/fontBody\");\n\nlvui::NativeCompileOptions options;\noptions.style_tokens.modes[\"Theme Colors\"] = \"Dark\";\noptions.style_tokens.overrides[\"--lvui-theme-metrics-space-8\"] = 10.0;\noptions.style_tokens.overrides[\"--lvui-theme-colors-action-primary\"] =\n    lvui::StyleColor{0.2, 0.4, 0.8, 1.0};\nauto result = lvui::compile_native(source, options);\n```\n",
+      "language": "cpp",
+      "code": "#include <LVUI/Compiler.h>\n#include <LVUI/StyleTokens.h>\n\nconst auto& catalog = lvui::default_style_tokens();\nauto spacing = catalog.number(\"--lvui-theme-metrics-space-8\");\nauto edge = catalog.color(\"--lvui-material-surface-dense-edge\");\nauto font = catalog.string(\"Theme Typography/Font/fontBody\");\n\nlvui::NativeCompileOptions options;\noptions.style_tokens.modes[\"Theme Colors\"] = \"Dark\";\noptions.style_tokens.overrides[\"--lvui-theme-metrics-space-8\"] = 10.0;\noptions.style_tokens.overrides[\"--lvui-theme-colors-action-primary\"] =\n    lvui::StyleColor{0.2, 0.4, 0.8, 1.0};\nauto result = lvui::compile_native(source, options);\n",
+      "closed": true
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 160,
+      "end_line": 160,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 161,
+      "end_line": 161,
+      "raw": "`collections()`와 `tokens()`는 읽기 전용 span을 제공하며 `find()`로 메타데이터를 조회한다. `resolve()`는 `std::expected<StyleTokenValue, StyleTokenError>`를 반환한다. `number()`, `color()`, `string()`, `boolean()`은 타입을 강제 변환하지 않는다. `validate()`는 선택한 모드에서 전체 카탈로그와 설정을 검사한다.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 162,
+      "end_line": 162,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "컴파일 시 선택한 `Color.text.body`는 기본 Avatar 심벌에, `Color.surfaceRaised`는 원형 배경에 전달된다. 명시된 배경색이 있으면 이를 우선한다. 심벌 색상은 사진에는 적용하지 않으며 실행 중 전역 테마 구독은 아직 제공하지 않는다.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 164,
+      "end_line": 164,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 165,
+      "end_line": 165,
+      "raw": "`StyleTokenOptions`는 호출별 값이다. 기본 카탈로그를 변경하지 않으므로 앱·문서·컴파일 사이에 값이 유출되지 않는다. 별칭 대상을 바꾸면 그 대상을 참조하는 별칭도 새 값을 받고, 별칭 자체를 바꾸면 그 지점부터 새 값을 사용한다. 같은 토큰을 CSS 이름과 ID 등으로 중복 지정하면 오류이다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 166,
+      "end_line": 166,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 167,
+      "end_line": 167,
+      "raw": "컬렉션과 모드는 이름 또는 ID로 선택한다. 알 수 없는 이름, 충돌 모드, 타입 불일치, 누락 별칭과 순환은 오류이다. 별칭 깊이는 최대 64개 토큰이다. Number는 유한값, RGBA는 채널별 0..1, String은 유효한 UTF-8·NUL 없음·4096바이트 이하를 요구한다. 글자 크기·길이 등 의미상의 범위는 사용하는 속성에서 추가 검사한다.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "fenced_code",
+      "start_line": 169,
+      "end_line": 173,
       "raw": "```sh\nbuild/lvui-compile \\\n  --style-mode 'Theme Colors=Dark' \\\n  --style-mode 'Theme Typography=Value' example/StyleTokens/App/TokenWindow.lvui\n```\n",
       "language": "sh",
       "code": "build/lvui-compile \\\n  --style-mode 'Theme Colors=Dark' \\\n  --style-mode 'Theme Typography=Value' example/StyleTokens/App/TokenWindow.lvui\n",
       "closed": true
     },
     {
-      "id": "b000062",
-      "kind": "blank",
-      "start_line": 125,
-      "end_line": 125,
-      "raw": "\n"
-    },
-    {
-      "id": "b000063",
-      "kind": "paragraph",
-      "start_line": 126,
-      "end_line": 126,
-      "raw": "CMake는 `lvui_generate(... STYLE_MODES \"Theme Colors=Dark\" \"Theme Typography=Value\")`를 지원한다. 앱별 값 변경은 C++ `NativeCompileOptions::style_tokens.overrides`로 전달한다. 이 설정은 코드 생성 시 확정되며 실행 중 테마 전환 API는 아니다.\n"
-    },
-    {
-      "id": "b000064",
-      "kind": "blank",
-      "start_line": 127,
-      "end_line": 127,
-      "raw": "\n"
-    },
-    {
-      "id": "b000065",
-      "kind": "heading",
-      "start_line": 128,
-      "end_line": 128,
-      "raw": "## 색 공간·알파·단위\n",
-      "level": 2,
-      "title": "색 공간·알파·단위"
-    },
-    {
-      "id": "b000066",
-      "kind": "blank",
-      "start_line": 129,
-      "end_line": 129,
-      "raw": "\n"
-    },
-    {
-      "id": "b000067",
-      "kind": "paragraph",
-      "start_line": 130,
-      "end_line": 130,
-      "raw": "`StyleColor`는 Figma의 encoded sRGB와 독립 알파를 double로 보존한다. 8비트 HEX로 양자화하거나 RGB에 알파를 미리 곱하지 않는다. 초기 HTML 트리의 `Color`는 기존 float 계약을 유지한다. WidgetColor는 encoded sRGB, 저수준 WidgetDrawing은 linear RGB를 받으므로 생성 스택 그리기 코드가 경계에서 한 번 변환한다.\n"
-    },
-    {
-      "id": "b000068",
-      "kind": "blank",
-      "start_line": 131,
-      "end_line": 131,
-      "raw": "\n"
-    },
-    {
-      "id": "b000069",
-      "kind": "paragraph",
-      "start_line": 132,
-      "end_line": 132,
-      "raw": "`--lvrs-material-surface-dense-edge`는 흰색과 약 0.12의 알파이다. 이를 GPU의 linear blending에 전달하는 것과 Figma의 encoded sRGB 합성색을 사용하는 것은 구분해야 한다. 배경이 확정되어 평면 합성색이 필요할 때 명시적으로 다음 함수를 사용한다.\n"
-    },
-    {
-      "id": "b000070",
-      "kind": "blank",
-      "start_line": 133,
-      "end_line": 133,
-      "raw": "\n"
-    },
-    {
-      "id": "b000071",
-      "kind": "fenced_code",
-      "start_line": 134,
-      "end_line": 143,
-      "raw": "```text\nlet edge = composite(token(\"--lvrs-material-surface-dense-edge\"),\n                     token(\"--lvrs-theme-colors-panel-window\"))\nApplicationWindow {\n    VStack(borderColor: edge,\n           borderWidth: token(\"--lvrs-theme-metrics-stroke-1\")) {\n        Label(text: \"Figma sRGB composite\")\n    }\n}\n```\n",
-      "language": "text",
-      "code": "let edge = composite(token(\"--lvrs-material-surface-dense-edge\"),\n                     token(\"--lvrs-theme-colors-panel-window\"))\nApplicationWindow {\n    VStack(borderColor: edge,\n           borderWidth: token(\"--lvrs-theme-metrics-stroke-1\")) {\n        Label(text: \"Figma sRGB composite\")\n    }\n}\n",
-      "closed": true
-    },
-    {
       "id": "b000072",
       "kind": "blank",
-      "start_line": 144,
-      "end_line": 144,
+      "start_line": 174,
+      "end_line": 174,
       "raw": "\n"
     },
     {
       "id": "b000073",
       "kind": "paragraph",
-      "start_line": 145,
-      "end_line": 145,
-      "raw": "C++에서는 `composite_srgb(foreground, background)`를 사용한다. 투명 배경도 straight-alpha로 계산한다. 원본 토큰은 바꾸지 않으며 배경을 추측하여 모든 색상에 적용하지 않는다. 기본 창 배경 위의 위 보더는 8비트 표시값 약 48이다.\n"
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "CMake는 `lvui_generate(... STYLE_MODES \"Theme Colors=Dark\" \"Theme Typography=Value\")`를 지원한다. 앱별 값 변경은 C++ `NativeCompileOptions::style_tokens.overrides`로 전달한다. 이 설정은 코드 생성 시 확정되며 실행 중 테마 전환 API는 아니다.\n"
     },
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 146,
-      "end_line": 146,
+      "start_line": 176,
+      "end_line": 176,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "paragraph",
-      "start_line": 147,
-      "end_line": 147,
-      "raw": "Number는 원본 수치를 유지한다. Opacity/32는 **32**이며 0.32로 바뀌지 않는다. 퍼센트와 논리 픽셀 처리는 사용하는 속성의 계약을 따른다. ColorPicker/Hex와 ColorPicker/Opacity도 원본 String 타입을 유지한다.\n"
+      "start_line": 177,
+      "end_line": 184,
+      "raw": "생성된 창 appearance는 LVUI 카탈로그의 일곱 글꼴 크기와 굵기 쌍도 iiGUI에\n전달한다. 따라서 앱별 타이포그래피 토큰 재정의는 iiGUI의 기존 호환 스냅샷 대신\n생성된 창의 크기별 기본 굵기를 결정한다. 동일 크기는 목록의 마지막 규칙이 이기며,\n위젯에서 명시한 굵기와 compact 메뉴 스타일은 우선한다. 지원 굵기는 현재 iiGUI\n텍스트 경계에 맞춘 400·500·600·700이고 다른 값은 생성 시 진단한다.\n생성된 창은 이 규칙을 지원하는 iiGUI 0.5.0 이상이 필요하며, 이전 헤더를 선택하면\n생성 헤더가 구체적인 오류를 낸다. 새 헤더와 이전 라이브러리를 조합해도 ABI 1\n심볼을 찾지 못해 링크가 실패한다. 패키지는 `LVUI_IIGUI_MIN_VERSION`도 공개한다.\n"
     },
     {
       "id": "b000076",
       "kind": "blank",
-      "start_line": 148,
-      "end_line": 148,
+      "start_line": 185,
+      "end_line": 185,
       "raw": "\n"
     },
     {
       "id": "b000077",
       "kind": "heading",
-      "start_line": 149,
-      "end_line": 149,
-      "raw": "## 원본 갱신과 검증\n",
+      "start_line": 186,
+      "end_line": 186,
+      "raw": "## 색 공간·알파·단위\n",
       "level": 2,
-      "title": "원본 갱신과 검증"
+      "title": "색 공간·알파·단위"
     },
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 150,
-      "end_line": 150,
+      "start_line": 187,
+      "end_line": 187,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "paragraph",
-      "start_line": 151,
-      "end_line": 151,
-      "raw": "Congregation의 로컬 복사본이 아닌 위 LVRS 원본에서 Figma Plugin API `getLocalVariableCollectionsAsync()`와 `getLocalVariablesAsync()`로 읽는다. 다음 항목을 스냅샷에 보존한다.\n"
+      "start_line": 188,
+      "end_line": 188,
+      "raw": "`StyleColor`는 Figma의 encoded sRGB와 독립 알파를 double로 보존한다. 8비트 HEX로 양자화하거나 RGB에 알파를 미리 곱하지 않는다. 초기 HTML 트리의 `Color`는 기존 float 계약을 유지한다. WidgetColor는 encoded sRGB, 저수준 WidgetDrawing은 linear RGB를 받으므로 생성 스택 그리기 코드가 경계에서 한 번 변환한다.\n"
     },
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 152,
-      "end_line": 152,
+      "start_line": 189,
+      "end_line": 189,
       "raw": "\n"
     },
     {
       "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 190,
+      "end_line": 190,
+      "raw": "`--lvui-material-surface-dense-edge`는 흰색과 약 0.12의 알파이다. 이를 GPU의 linear blending에 전달하는 것과 Figma의 encoded sRGB 합성색을 사용하는 것은 구분해야 한다. 배경이 확정되어 평면 합성색이 필요할 때 명시적으로 다음 함수를 사용한다.\n"
+    },
+    {
+      "id": "b000082",
+      "kind": "blank",
+      "start_line": 191,
+      "end_line": 191,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "fenced_code",
+      "start_line": 192,
+      "end_line": 201,
+      "raw": "```text\nconst edge = composite(token(\"--lvui-material-surface-dense-edge\"),\n                     token(\"--lvui-theme-colors-panel-window\"))\nApplicationWindow {\n    VStack(borderColor: edge,\n           borderWidth: token(\"--lvui-theme-metrics-stroke-1\")) {\n        Label(text: \"Figma sRGB composite\")\n    }\n}\n```\n",
+      "language": "text",
+      "code": "const edge = composite(token(\"--lvui-material-surface-dense-edge\"),\n                     token(\"--lvui-theme-colors-panel-window\"))\nApplicationWindow {\n    VStack(borderColor: edge,\n           borderWidth: token(\"--lvui-theme-metrics-stroke-1\")) {\n        Label(text: \"Figma sRGB composite\")\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000084",
+      "kind": "blank",
+      "start_line": 202,
+      "end_line": 202,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "paragraph",
+      "start_line": 203,
+      "end_line": 203,
+      "raw": "C++에서는 `composite_srgb(foreground, background)`를 사용한다. 투명 배경도 straight-alpha로 계산한다. 원본 토큰은 바꾸지 않으며 배경을 추측하여 모든 색상에 적용하지 않는다. 현재 기본 창 배경 위의 위 보더는 8비트 표시값 약 53이다.\n"
+    },
+    {
+      "id": "b000086",
+      "kind": "blank",
+      "start_line": 204,
+      "end_line": 204,
+      "raw": "\n"
+    },
+    {
+      "id": "b000087",
+      "kind": "paragraph",
+      "start_line": 205,
+      "end_line": 205,
+      "raw": "Number는 원본 수치를 유지한다. Opacity/32는 **32**이며 0.32로 바뀌지 않는다. 퍼센트와 논리 픽셀 처리는 사용하는 속성의 계약을 따른다. ColorPicker/Hex와 ColorPicker/Opacity도 원본 String 타입을 유지한다.\n"
+    },
+    {
+      "id": "b000088",
+      "kind": "blank",
+      "start_line": 206,
+      "end_line": 206,
+      "raw": "\n"
+    },
+    {
+      "id": "b000089",
+      "kind": "heading",
+      "start_line": 207,
+      "end_line": 207,
+      "raw": "## 원본 갱신과 검증\n",
+      "level": 2,
+      "title": "원본 갱신과 검증"
+    },
+    {
+      "id": "b000090",
+      "kind": "blank",
+      "start_line": 208,
+      "end_line": 208,
+      "raw": "\n"
+    },
+    {
+      "id": "b000091",
+      "kind": "paragraph",
+      "start_line": 209,
+      "end_line": 209,
+      "raw": "위 독립 LVUI 파일에서 Figma Plugin API `getLocalVariableCollectionsAsync()`와 `getLocalVariablesAsync()`로 읽는다. 다음 항목을 스냅샷에 보존한다.\n"
+    },
+    {
+      "id": "b000092",
+      "kind": "blank",
+      "start_line": 210,
+      "end_line": 210,
+      "raw": "\n"
+    },
+    {
+      "id": "b000093",
       "kind": "list",
-      "start_line": 153,
-      "end_line": 155,
-      "raw": "- 컬렉션: id, key, name, modes, defaultModeId, hiddenFromPublishing, 변수 count.\n- 변수: id, key, name, variableCollectionId를 옮긴 collectionId, resolvedType을 옮긴 type, valuesByMode, scopes, hiddenFromPublishing, codeSyntax, description.\n- source: provider, fileKey, capturedOn. 최상위 schema는 1이다.\n",
+      "start_line": 211,
+      "end_line": 214,
+      "raw": "- 컬렉션: id, key, name, modes, defaultModeId, hiddenFromPublishing, 변수 count.\n- 변수: id, key, name, variableCollectionId를 옮긴 collectionId, resolvedType을 옮긴 type, valuesByMode, scopes, hiddenFromPublishing, codeSyntax, description.\n- source: provider, fileKey, capturedOn. 최상위 schema는 1이다.\n- 각 변수의 `cssName`은 정식 LVUI CSS 이름이며, `legacyAliases`는 이전 변수 ID·key·CSS 이름을 보존한다. 컬렉션과 모드의 이전 ID도 같은 필드에 기록한다. `codeSyntax.WEB`은 Color·Metric의 실제 LVUI 표현이다.\n",
       "items": [
         {
           "marker": "-",
@@ -752,139 +836,144 @@
           "marker": "-",
           "text": "source: provider, fileKey, capturedOn. 최상위 schema는 1이다.",
           "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "각 변수의 `cssName`은 정식 LVUI CSS 이름이며, `legacyAliases`는 이전 변수 ID·key·CSS 이름을 보존한다. 컬렉션과 모드의 이전 ID도 같은 필드에 기록한다. `codeSyntax.WEB`은 Color·Metric의 실제 LVUI 표현이다.",
+          "checked": null
         }
       ]
     },
     {
-      "id": "b000082",
+      "id": "b000094",
       "kind": "blank",
-      "start_line": 156,
-      "end_line": 156,
+      "start_line": 215,
+      "end_line": 215,
       "raw": "\n"
     },
     {
-      "id": "b000083",
+      "id": "b000095",
       "kind": "paragraph",
-      "start_line": 157,
-      "end_line": 157,
-      "raw": "도구의 응답 크기가 제한되면 ID순 변수 목록을 64개 정도로 나누어 읽고 합친다. 모든 컬렉션 count와 전체 합계가 일치해야 한다. `VARIABLE_ALIAS`와 대상 ID를 그대로 저장한다. LVUI의 디자인을 변경하기로 결정한 경우에만 값을 갱신한다. 레거시 LVRS의 변경을 자동으로 추종하지 않는다. 갱신 뒤 다음 명령을 실행한다.\n"
+      "start_line": 216,
+      "end_line": 216,
+      "raw": "도구의 응답 크기가 제한되면 변수 목록을 나누어 읽고 합친다. 모든 컬렉션 count와 전체 합계가 일치해야 한다. `VARIABLE_ALIAS`와 대상 ID를 그대로 저장하고 호환 별칭과 과거 읽기 기록을 유지한다. LVUI의 디자인을 변경하기로 결정한 경우에만 값을 갱신한다. 레거시 LVRS의 변경을 자동으로 추종하지 않는다. 갱신 뒤 다음 명령을 실행한다.\n"
     },
     {
-      "id": "b000084",
+      "id": "b000096",
       "kind": "blank",
-      "start_line": 158,
-      "end_line": 158,
+      "start_line": 217,
+      "end_line": 217,
       "raw": "\n"
     },
     {
-      "id": "b000085",
+      "id": "b000097",
       "kind": "fenced_code",
-      "start_line": 159,
-      "end_line": 164,
+      "start_line": 218,
+      "end_line": 223,
       "raw": "```sh\npython3 -B tools/update_style_tokens.py\npython3 -B tools/update_style_tokens.py --check\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n```\n",
       "language": "sh",
       "code": "python3 -B tools/update_style_tokens.py\npython3 -B tools/update_style_tokens.py --check\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n",
       "closed": true
     },
     {
-      "id": "b000086",
-      "kind": "blank",
-      "start_line": 165,
-      "end_line": 165,
-      "raw": "\n"
-    },
-    {
-      "id": "b000087",
-      "kind": "paragraph",
-      "start_line": 166,
-      "end_line": 166,
-      "raw": "생성기는 누락된 컬렉션·모드·별칭, 타입·RGBA 오류, CSS 이름 충돌과 순환을 거부한다. `--check`는 파일을 수정하지 않고 생성 코드의 드리프트를 검사한다. 테스트 실행에는 Python이 필요하지만 일반 빌드에는 필요하지 않다.\n"
-    },
-    {
-      "id": "b000088",
-      "kind": "blank",
-      "start_line": 167,
-      "end_line": 167,
-      "raw": "\n"
-    },
-    {
-      "id": "b000089",
-      "kind": "paragraph",
-      "start_line": 168,
-      "end_line": 168,
-      "raw": "`tests/style_tokens.cpp`는 전체 수량·타입·조회, 별칭, 다중 모드 카탈로그, 격리된 값 변경, CSS fallback, 색상 합성, 파서 기본값, AOT 적용과 오류를 검증한다. Python 테스트는 생성기 재현성·잘못된 스냅샷·UTF-8 리터럴을 검사한다. 기존 LVUI 테스트도 함께 실행한다.\n"
-    },
-    {
-      "id": "b000090",
-      "kind": "blank",
-      "start_line": 169,
-      "end_line": 169,
-      "raw": "\n"
-    },
-    {
-      "id": "b000091",
-      "kind": "paragraph",
-      "start_line": 170,
-      "end_line": 170,
-      "raw": "[`example/StyleTokens`](../example/StyleTokens/README.md)는 LVUI와 별도로 공급하는 iiGUI 호스트를 사용하여 카탈로그 소비자와 두 종류의 AOT 뷰를 빌드한다. LVRS는 찾거나 링크하지 않는다. 선택적 macOS 네이티브 테스트는 Metal/Vulkan에서 생성된 화면을 띄우고 창 배경·합성 보더 픽셀·Pretendard 글자 크기를 검사한다. 빌드는 저장소 `build/` 아래에 둔다.\n"
-    },
-    {
-      "id": "b000092",
-      "kind": "blank",
-      "start_line": 171,
-      "end_line": 171,
-      "raw": "\n"
-    },
-    {
-      "id": "b000093",
-      "kind": "heading",
-      "start_line": 172,
-      "end_line": 172,
-      "raw": "### 2026-10-25 토큰 초기 구현 검증 기록\n",
-      "level": 3,
-      "title": "2026-10-25 토큰 초기 구현 검증 기록"
-    },
-    {
-      "id": "b000094",
-      "kind": "blank",
-      "start_line": 173,
-      "end_line": 173,
-      "raw": "\n"
-    },
-    {
-      "id": "b000095",
-      "kind": "paragraph",
-      "start_line": 174,
-      "end_line": 174,
-      "raw": "macOS arm64에서 Release 빌드와 LVUI 전체 CTest **56/56**이 통과했다. `build/style-token-prefix`에 설치한 패키지를 별도 소비자가 사용하도록 구성했고, Qt5/Qt6 패키지 탐색을 비활성화한 상태에서 두 문법의 AOT 헤더와 소비자 실행 파일을 빌드했다. 소비자 CTest **4/4**도 통과했다.\n"
-    },
-    {
-      "id": "b000096",
-      "kind": "blank",
-      "start_line": 175,
-      "end_line": 175,
-      "raw": "\n"
-    },
-    {
-      "id": "b000097",
-      "kind": "paragraph",
-      "start_line": 176,
-      "end_line": 176,
-      "raw": "Metal과 Vulkan 모두 실제 GPU와 sRGB attachment를 확인했다. 생성된 LVRS 창에서 배경의 8비트 값 20, 기본 배경 위 sRGB 보더 합성값 약 48, Pretendard 제목 26·본문 13을 검사했다. 생성 헤더에 LVUI 카탈로그 호출이나 소스 파서가 없고, 소비자 및 연결된 Core/FileProvider 라이브러리에 Qt 링크가 없는 것도 확인했다. Windows/Linux의 실제 실행은 이 기록에 포함하지 않는다.\n"
-    },
-    {
       "id": "b000098",
       "kind": "blank",
-      "start_line": 177,
-      "end_line": 177,
+      "start_line": 224,
+      "end_line": 224,
       "raw": "\n"
     },
     {
       "id": "b000099",
       "kind": "paragraph",
-      "start_line": 178,
-      "end_line": 178,
-      "raw": "로그는 `build/style-tokens-build.log`, `build/style-tokens-tests.log`, `build/style-tokens-consumer-build.log`, `build/style-tokens-consumer-tests.log`, `build/style-tokens-dependencies.log`에 있다. 원본 스냅샷 SHA-256은 `7d9b1bfa1c345568afe4fea6ba97f793c415c0008fca59a7c25f4ff7e049bc0b`이다.\n"
+      "start_line": 225,
+      "end_line": 225,
+      "raw": "생성기는 누락된 컬렉션·모드·별칭, 타입·RGBA 오류, CSS 이름 충돌과 순환을 거부한다. `--check`는 파일을 수정하지 않고 카탈로그·기본색·멤버 문서의 드리프트를 검사한다. 위젯의 명시적 색상과 불투명도는 해당 기본값보다 우선한다.\n"
+    },
+    {
+      "id": "b000100",
+      "kind": "blank",
+      "start_line": 226,
+      "end_line": 226,
+      "raw": "\n"
+    },
+    {
+      "id": "b000101",
+      "kind": "paragraph",
+      "start_line": 227,
+      "end_line": 227,
+      "raw": "`tests/style_tokens.cpp`는 전체 수량·타입·조회, 별칭, 다중 모드 카탈로그, 격리된 값 변경, CSS fallback, 색상 합성, 파서 기본값, AOT 적용과 오류를 검증한다. Python 테스트는 생성기 재현성·잘못된 스냅샷·UTF-8 리터럴을 검사한다. 기존 LVUI 테스트도 함께 실행한다.\n"
+    },
+    {
+      "id": "b000102",
+      "kind": "blank",
+      "start_line": 228,
+      "end_line": 228,
+      "raw": "\n"
+    },
+    {
+      "id": "b000103",
+      "kind": "paragraph",
+      "start_line": 229,
+      "end_line": 229,
+      "raw": "[`example/StyleTokens`](../example/StyleTokens/README.md)는 LVUI와 별도로 공급하는 iiGUI 호스트를 사용하여 카탈로그 소비자와 두 종류의 AOT 뷰를 빌드한다. LVRS는 찾거나 링크하지 않는다. 선택적 macOS 네이티브 테스트는 Metal/Vulkan에서 생성된 화면을 띄우고 창 배경·합성 보더 픽셀·Pretendard 글자 크기를 검사한다. 빌드는 저장소 `build/` 아래에 둔다.\n"
+    },
+    {
+      "id": "b000104",
+      "kind": "blank",
+      "start_line": 230,
+      "end_line": 230,
+      "raw": "\n"
+    },
+    {
+      "id": "b000105",
+      "kind": "heading",
+      "start_line": 231,
+      "end_line": 231,
+      "raw": "### 2026-10-25 토큰 초기 구현 검증 기록\n",
+      "level": 3,
+      "title": "2026-10-25 토큰 초기 구현 검증 기록"
+    },
+    {
+      "id": "b000106",
+      "kind": "blank",
+      "start_line": 232,
+      "end_line": 232,
+      "raw": "\n"
+    },
+    {
+      "id": "b000107",
+      "kind": "paragraph",
+      "start_line": 233,
+      "end_line": 233,
+      "raw": "macOS arm64에서 Release 빌드와 LVUI 전체 CTest **56/56**이 통과했다. `build/style-token-prefix`에 설치한 패키지를 별도 소비자가 사용하도록 구성했고, Qt5/Qt6 패키지 탐색을 비활성화한 상태에서 두 문법의 AOT 헤더와 소비자 실행 파일을 빌드했다. 소비자 CTest **4/4**도 통과했다.\n"
+    },
+    {
+      "id": "b000108",
+      "kind": "blank",
+      "start_line": 234,
+      "end_line": 234,
+      "raw": "\n"
+    },
+    {
+      "id": "b000109",
+      "kind": "paragraph",
+      "start_line": 235,
+      "end_line": 235,
+      "raw": "Metal과 Vulkan 모두 실제 GPU와 sRGB attachment를 확인했다. 생성된 LVRS 창에서 배경의 8비트 값 20, 기본 배경 위 sRGB 보더 합성값 약 48, Pretendard 제목 26·본문 13을 검사했다. 생성 헤더에 LVUI 카탈로그 호출이나 소스 파서가 없고, 소비자 및 연결된 Core/FileProvider 라이브러리에 Qt 링크가 없는 것도 확인했다. Windows/Linux의 실제 실행은 이 기록에 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000110",
+      "kind": "blank",
+      "start_line": 236,
+      "end_line": 236,
+      "raw": "\n"
+    },
+    {
+      "id": "b000111",
+      "kind": "paragraph",
+      "start_line": 237,
+      "end_line": 237,
+      "raw": "이 기록의 색상과 검증 결과는 2026-10-25 초기 스냅샷에만 해당하며 2026-10-31 색상 갱신의 플랫폼별 실행 검증을 의미하지 않는다.\n"
     }
   ],
   "outline": [
@@ -902,138 +991,180 @@
       "level": 2,
       "title": "원본과 범위",
       "anchor": "원본과-범위",
-      "start_line": 12
+      "start_line": 18
     },
     {
-      "block_id": "b000017",
+      "block_id": "b000025",
       "parent_id": "b000001",
       "level": 2,
       "title": "기본값",
       "anchor": "기본값",
-      "start_line": 26
+      "start_line": 65
     },
     {
-      "block_id": "b000033",
+      "block_id": "b000041",
       "parent_id": "b000001",
       "level": 2,
-      "title": "인라인 스타일과 컴포넌트 문법",
-      "anchor": "인라인-스타일과-컴포넌트-문법",
-      "start_line": 59
+      "title": "컴포넌트의 스타일 입력",
+      "anchor": "컴포넌트의-스타일-입력",
+      "start_line": 98
     },
     {
-      "block_id": "b000051",
+      "block_id": "b000059",
       "parent_id": "b000001",
       "level": 2,
       "title": "C++ API와 앱별 설정",
       "anchor": "c-api와-앱별-설정",
-      "start_line": 95
-    },
-    {
-      "block_id": "b000065",
-      "parent_id": "b000001",
-      "level": 2,
-      "title": "색 공간·알파·단위",
-      "anchor": "색-공간알파단위",
-      "start_line": 128
+      "start_line": 142
     },
     {
       "block_id": "b000077",
       "parent_id": "b000001",
       "level": 2,
-      "title": "원본 갱신과 검증",
-      "anchor": "원본-갱신과-검증",
-      "start_line": 149
+      "title": "색 공간·알파·단위",
+      "anchor": "색-공간알파단위",
+      "start_line": 186
     },
     {
-      "block_id": "b000093",
-      "parent_id": "b000077",
+      "block_id": "b000089",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "원본 갱신과 검증",
+      "anchor": "원본-갱신과-검증",
+      "start_line": 207
+    },
+    {
+      "block_id": "b000105",
+      "parent_id": "b000089",
       "level": 3,
       "title": "2026-10-25 토큰 초기 구현 검증 기록",
       "anchor": "2026-10-25-토큰-초기-구현-검증-기록",
-      "start_line": 172
+      "start_line": 231
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
+        "block_id": "b000003",
+        "line": 8,
+        "text": "다르며 한 파일의 ID를 다른 파일의 ID로 취급하지 않는다. 정식 CSS 이름은",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
         "block_id": "b000005",
-        "line": 6,
+        "line": 12,
         "text": "구성하며 `ii::gui::lvrs_appearance()`를 호출하지 않는다. 이전 `FRAMEWORK LVRS`",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000041",
-        "line": 74,
-        "text": "`var(--missing, 8px)`와 중첩 fallback을 지원한다. fallback은 이름이 없을 때만 사용하며 잘못된 타입·설정·순환을 숨기지 않는다. 토큰 표현은 전체 속성 값이어야 한다. CSS cascade, 사용자 정의 변수 선언, `calc()`와 문자열 보간은 제공하지 않는다. Number와 Metric은 길이 입력에서 논리 픽셀로 해석한다.",
+        "block_id": "b000015",
+        "line": 38,
+        "text": "`tools/update_style_tokens.py`는 카탈로그와 네이티브 위젯의 `figma_defaults`를 같은 스냅샷에서 생성한다. 일반 빌드는 체크인된 카탈로그를 사용하고 기본 SVG 임베딩에 Python을 사용한다. Figma나 LVRS 런타임에는 의존하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000047",
-        "line": 89,
-        "text": "`token()`은 빌드 시점에 이름 하나를 받는다. CSS 이름, `컬렉션/변수명`, Figma ID/key로 조회한다. 단독 변수명은 유일할 때만 사용할 수 있다. 장기 사용에는 CSS 이름 또는 ID를 권장한다. Color도 불변 `let`에 보관할 수 있으며 현재 변경 가능한 Color `var`는 지원하지 않는다. 기존 Number/String/Bool의 반응형 상태 기능은 유지한다.",
+        "block_id": "b000019",
+        "line": 51,
+        "text": "다른 파일에서 우연히 같은 ID를 쓰는 별도 카탈로그에 별칭을 주입하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 103,
+        "text": "`var(...)`로 감싼 형식이다. 두 파일의 메타데이터를 같은 것으로 가정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000049",
+        "line": 121,
+        "text": "논리 픽셀로 해석한다. LVUI View는 CSS 스타일 문자열을 사용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000055",
-        "line": 114,
+        "line": 136,
+        "text": "`token()`은 빌드 시점에 이름 하나를 받는다. CSS 이름, `컬렉션/변수명`, Figma ID/key로 조회한다. 단독 변수명은 유일할 때만 사용할 수 있다. 장기 사용에는 CSS 이름 또는 ID를 권장한다. Color도 불변 `const`에 보관할 수 있으며 현재 변경 가능한 Color `var`는 지원하지 않는다. 기존 Number/String/Bool의 반응형 상태 기능은 유지한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000063",
+        "line": 161,
         "text": "`collections()`와 `tokens()`는 읽기 전용 span을 제공하며 `find()`로 메타데이터를 조회한다. `resolve()`는 `std::expected<StyleTokenValue, StyleTokenError>`를 반환한다. `number()`, `color()`, `string()`, `boolean()`은 타입을 강제 변환하지 않는다. `validate()`는 선택한 모드에서 전체 카탈로그와 설정을 검사한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000067",
-        "line": 130,
+        "block_id": "b000065",
+        "line": 163,
+        "text": "컴파일 시 선택한 `Color.text.body`는 기본 Avatar 심벌에, `Color.surfaceRaised`는 원형 배경에 전달된다. 명시된 배경색이 있으면 이를 우선한다. 심벌 색상은 사진에는 적용하지 않으며 실행 중 전역 테마 구독은 아직 제공하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000079",
+        "line": 188,
         "text": "`StyleColor`는 Figma의 encoded sRGB와 독립 알파를 double로 보존한다. 8비트 HEX로 양자화하거나 RGB에 알파를 미리 곱하지 않는다. 초기 HTML 트리의 `Color`는 기존 float 계약을 유지한다. WidgetColor는 encoded sRGB, 저수준 WidgetDrawing은 linear RGB를 받으므로 생성 스택 그리기 코드가 경계에서 한 번 변환한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000069",
-        "line": 132,
-        "text": "`--lvrs-material-surface-dense-edge`는 흰색과 약 0.12의 알파이다. 이를 GPU의 linear blending에 전달하는 것과 Figma의 encoded sRGB 합성색을 사용하는 것은 구분해야 한다. 배경이 확정되어 평면 합성색이 필요할 때 명시적으로 다음 함수를 사용한다.",
+        "block_id": "b000081",
+        "line": 190,
+        "text": "`--lvui-material-surface-dense-edge`는 흰색과 약 0.12의 알파이다. 이를 GPU의 linear blending에 전달하는 것과 Figma의 encoded sRGB 합성색을 사용하는 것은 구분해야 한다. 배경이 확정되어 평면 합성색이 필요할 때 명시적으로 다음 함수를 사용한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000073",
-        "line": 145,
-        "text": "C++에서는 `composite_srgb(foreground, background)`를 사용한다. 투명 배경도 straight-alpha로 계산한다. 원본 토큰은 바꾸지 않으며 배경을 추측하여 모든 색상에 적용하지 않는다. 기본 창 배경 위의 위 보더는 8비트 표시값 약 48이다.",
+        "block_id": "b000085",
+        "line": 203,
+        "text": "C++에서는 `composite_srgb(foreground, background)`를 사용한다. 투명 배경도 straight-alpha로 계산한다. 원본 토큰은 바꾸지 않으며 배경을 추측하여 모든 색상에 적용하지 않는다. 현재 기본 창 배경 위의 위 보더는 8비트 표시값 약 53이다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000083",
-        "line": 157,
-        "text": "도구의 응답 크기가 제한되면 ID순 변수 목록을 64개 정도로 나누어 읽고 합친다. 모든 컬렉션 count와 전체 합계가 일치해야 한다. `VARIABLE_ALIAS`와 대상 ID를 그대로 저장한다. LVUI의 디자인을 변경하기로 결정한 경우에만 값을 갱신한다. 레거시 LVRS의 변경을 자동으로 추종하지 않는다. 갱신 뒤 다음 명령을 실행한다.",
+        "block_id": "b000095",
+        "line": 216,
+        "text": "도구의 응답 크기가 제한되면 변수 목록을 나누어 읽고 합친다. 모든 컬렉션 count와 전체 합계가 일치해야 한다. `VARIABLE_ALIAS`와 대상 ID를 그대로 저장하고 호환 별칭과 과거 읽기 기록을 유지한다. LVUI의 디자인을 변경하기로 결정한 경우에만 값을 갱신한다. 레거시 LVRS의 변경을 자동으로 추종하지 않는다. 갱신 뒤 다음 명령을 실행한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000091",
-        "line": 170,
+        "block_id": "b000103",
+        "line": 229,
         "text": "[`example/StyleTokens`](../example/StyleTokens/README.md)는 LVUI와 별도로 공급하는 iiGUI 호스트를 사용하여 카탈로그 소비자와 두 종류의 AOT 뷰를 빌드한다. LVRS는 찾거나 링크하지 않는다. 선택적 macOS 네이티브 테스트는 Metal/Vulkan에서 생성된 화면을 띄우고 창 배경·합성 보더 픽셀·Pretendard 글자 크기를 검사한다. 빌드는 저장소 `build/` 아래에 둔다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000097",
-        "line": 176,
+        "block_id": "b000109",
+        "line": 235,
         "text": "Metal과 Vulkan 모두 실제 GPU와 sRGB attachment를 확인했다. 생성된 LVRS 창에서 배경의 8비트 값 20, 기본 배경 위 sRGB 보더 합성값 약 48, Pretendard 제목 26·본문 13을 검사했다. 생성 헤더에 LVUI 카탈로그 호출이나 소스 파서가 없고, 소비자 및 연결된 Core/FileProvider 라이브러리에 Qt 링크가 없는 것도 확인했다. Windows/Linux의 실제 실행은 이 기록에 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000111",
+        "line": 237,
+        "text": "이 기록의 색상과 검증 결과는 2026-10-25 초기 스냅샷에만 해당하며 2026-10-31 색상 갱신의 플랫폼별 실행 검증을 의미하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [
       {
-        "block_id": "b000061",
+        "block_id": "b000071",
         "language": "sh",
         "code": "build/lvui-compile \\\n  --style-mode 'Theme Colors=Dark' \\\n  --style-mode 'Theme Typography=Value' example/StyleTokens/App/TokenWindow.lvui\n"
       },
       {
-        "block_id": "b000085",
+        "block_id": "b000097",
         "language": "sh",
         "code": "python3 -B tools/update_style_tokens.py\npython3 -B tools/update_style_tokens.py --check\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n"
       }
@@ -1041,50 +1172,50 @@
     "links": [
       {
         "block_id": "b000003",
-        "label": "LVRS 원본 Figma",
-        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVRS",
+        "label": "LVUI Figma 라이브러리",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI",
         "kind": "external",
-        "line": 3
+        "line": 4
       },
       {
         "block_id": "b000005",
         "label": "독립 구현 현황",
         "target": "LVUIIndependence.md",
         "kind": "relative",
-        "line": 8
+        "line": 14
       },
       {
         "block_id": "b000007",
         "label": "Color·Metric 값 타입",
         "target": "StyleTypes.md",
         "kind": "relative",
-        "line": 10
+        "line": 16
       },
       {
         "block_id": "b000007",
         "label": "전체 멤버 목록",
         "target": "StyleTokenMembers.md",
         "kind": "relative",
-        "line": 10
+        "line": 16
       },
       {
-        "block_id": "b000027",
+        "block_id": "b000035",
         "label": "Window 계약",
         "target": "NativeWindow.md",
         "kind": "relative",
-        "line": 53
+        "line": 92
       },
       {
-        "block_id": "b000091",
+        "block_id": "b000103",
         "label": "`example/StyleTokens`",
         "target": "../example/StyleTokens/README.md",
         "kind": "relative",
-        "line": 170
+        "line": 229
       }
     ],
     "tables": [
       {
-        "block_id": "b000013",
+        "block_id": "b000021",
         "columns": [
           "컬렉션",
           "변수 수",
@@ -1093,7 +1224,7 @@
         "rows": [
           [
             "Theme Colors",
-            "115",
+            "145",
             "Dark"
           ],
           [
@@ -1113,13 +1244,13 @@
           ],
           [
             "Theme Metrics",
-            "48",
+            "52",
             "Dark"
           ]
         ]
       },
       {
-        "block_id": "b000021",
+        "block_id": "b000029",
         "columns": [
           "대상",
           "기본 토큰"
@@ -1160,7 +1291,7 @@
         ]
       },
       {
-        "block_id": "b000025",
+        "block_id": "b000033",
         "columns": [
           "역할",
           "크기 / 줄 높이",

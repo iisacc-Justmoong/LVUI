@@ -1,4 +1,5 @@
 #include <LVUI/ListItemQuantity.h>
+#include "list_item_layout_test_binding.h"
 
 #include <limits>
 #include <stdexcept>

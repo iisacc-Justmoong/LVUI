@@ -1,4 +1,6 @@
 #include <LVUI/TableViewport.h>
+#include <iiGUI/TableViewport.h>
+namespace lvui {using TableViewportSource=TableViewportBinding<ii::gui::BasicTableViewportSource>;}
 
 #include <cmath>
 #include <memory>
@@ -47,6 +49,26 @@ int main() {
     request.reveal_row.clear(); request.reveal_column.clear(); request.overscan_rows = 129;
     require(!changed->frame(request), "Unbounded table overscan was accepted");
     require(snapshot->rows.size() == 3 && snapshot->columns.size() == 3, "Table viewport changed an earlier snapshot");
+
+    auto merged=*snapshot;merged.merges={{.row=0,.column=0,.row_count=2,.column_count=2}};
+    auto merge_source=take(TableViewportSource::create(std::make_shared<const TableSnapshot>(merged),{.width=100}));
+    auto merge_frame=take(merge_source->frame({.height=20,.header_height=0,.x=125,.y=29,.overscan_rows=0,.overscan_columns=0}));
+    require(merge_frame.merges.size()==1&&merge_frame.merges[0].range.row==0&&merge_frame.merges[0].range.column==0&&
+            merge_frame.merges[0].x==-125&&merge_frame.merges[0].y==-29&&
+            merge_frame.merges[0].width==260&&merge_frame.merges[0].height==64,
+            "A visible merge lost its anchor outside the two-axis viewport");
+    auto merge_reveal=take(merge_source->frame({.height=20,.header_height=0,.x=125,.y=29,.overscan_rows=0,.overscan_columns=0,
+                                                .reveal_row="r1",.reveal_column="b"}));
+    require(merge_reveal.x==0&&merge_reveal.y==0,"Reveal did not use the complete merged cell geometry");
+    std::vector<TableColumn> distant_columns;std::vector<TableRow> distant_rows;
+    for(int i=0;i<103;++i)distant_columns.push_back({.key="c"+std::to_string(i),.width=i==100?32.:8192.});
+    for(int i=0;i<103;++i){TableRow row;row.key="r"+std::to_string(i);row.cells.resize(103);row.height=i==100?18.:8192.;distant_rows.push_back(std::move(row));}
+    auto distant=take(TableViewportSource::create(std::make_shared<const TableSnapshot>(TableSnapshot{std::move(distant_columns),std::move(distant_rows),0}),{.width=100}));
+    auto clamped=take(distant->frame({.height=20,.header_height=0,.overscan_rows=0,.overscan_columns=0,
+        .anchor={.row="r100",.column="c100",.row_index=100,.column_index=100,.within_y=8192,.within_x=8192}}));
+    require(clamped.anchor.row=="r100"&&clamped.anchor.column=="c100"&&
+            clamped.anchor.within_y<18&&clamped.anchor.within_x<32,
+            "A distant shortened table row or column rounded its anchor into the next cell");
 
     std::vector<TableColumn> flexible{{.key="fixed", .width=100}, {.key="flex1"}, {.key="flex2"}};
     auto fit = take(TableViewportSource::create(std::make_shared<TableSnapshot>(TableSnapshot{flexible, {}, 0}), {.width=300}));

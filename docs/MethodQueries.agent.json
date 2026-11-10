@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/MethodQueries.md",
-    "sha256": "a2583c2f3badb40d75e529babd6aa4d59ec60059cf29589ca14862a96ff34771",
-    "bytes": 11948,
+    "sha256": "d73d69e7d756204f796121459e0ff77869cb07759ecdb1b0b00eea3b75af6d9f",
+    "bytes": 11952,
     "line_count": 155,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 19,
-      "raw": "```lvui\nimport class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet Details(item: Item): View = Label(text: item.format(vm.amount))\nWindow { VStack {\n    Label(text: vm.format(vm.amount))\n    Label(text: current.format(vm.amount))\n    Label(text: (vm.selected).format(vm.amount))\n    Label(text: vm.items[0].format(vm.amount))\n    Details(item: vm.selected)\n} }\n```\n",
+      "raw": "```lvui\nimport class Domain.Item\nimport vm Model\nconst current = vm.selected\nconst Details(item: Item): View = Label(text: item.format(vm.amount))\nWindow { VStack {\n    Label(text: vm.format(vm.amount))\n    Label(text: current.format(vm.amount))\n    Label(text: (vm.selected).format(vm.amount))\n    Label(text: vm.items[0].format(vm.amount))\n    Details(item: vm.selected)\n} }\n```\n",
       "language": "lvui",
-      "code": "import class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet Details(item: Item): View = Label(text: item.format(vm.amount))\nWindow { VStack {\n    Label(text: vm.format(vm.amount))\n    Label(text: current.format(vm.amount))\n    Label(text: (vm.selected).format(vm.amount))\n    Label(text: vm.items[0].format(vm.amount))\n    Details(item: vm.selected)\n} }\n",
+      "code": "import class Domain.Item\nimport vm Model\nconst current = vm.selected\nconst Details(item: Item): View = Label(text: item.format(vm.amount))\nWindow { VStack {\n    Label(text: vm.format(vm.amount))\n    Label(text: current.format(vm.amount))\n    Label(text: (vm.selected).format(vm.amount))\n    Label(text: vm.items[0].format(vm.amount))\n    Details(item: vm.selected)\n} }\n",
       "closed": true
     },
     {

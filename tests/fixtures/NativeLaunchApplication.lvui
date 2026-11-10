@@ -1,0 +1,6 @@
+Application(onStart: vm.started, onLaunchArguments: vm.launch_arguments,
+            onReady: vm.ready, onStop: vm.stopped, onOpenFiles: vm.open_files,
+            onActive: vm.activated) {
+    import vm NativeApplicationBackend
+    Window { Label(id: "launch_label", text: vm.title) }
+}

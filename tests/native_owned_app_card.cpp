@@ -1,4 +1,4 @@
-#include <LVUI/NativeAppCard.h>
+#include <iiGUI/NativeAppCardView.h>
 #include "NativeOwnedAppCard.generated.h"
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
@@ -13,15 +13,15 @@ template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_
 void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value.error().message);}
 void retained_content(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,480}));lvui::AppCardConfiguration config;
-    std::optional<lvui::native::NativeAppCard> card;ii::gui::Widget body;
+    auto outer=take(tree->content_host({},"outer",{640,480}));ii::gui::AppCardOptions config;
+    std::optional<ii::gui::NativeAppCard> card;ii::gui::Widget body;
     good(outer.set_content([&](ii::gui::WidgetBuilder& builder)->ii::core::Result<void>{
-        auto created=lvui::native::NativeAppCard::create(builder,{},"card",config);if(!created)return std::unexpected(created.error());
+        auto created=ii::gui::NativeAppCard::create(builder,{},"card",config);if(!created)return std::unexpected(created.error());
         card=*created;auto child=builder.label(card->content_root(),"body",{.text="Persistent"});if(!child)return std::unexpected(child.error());body=*child;return {};
     }));
     auto before=take(card->root().measure(640));require(before.width>=280,"Card lost its minimum natural width");
     config.title="Title";config.subtitle="Description";config.padding=20;config.spacing=8;
-    config.shape=lvui::AppCardShape::cylinder;config.background={.2,.3,.4,1};good(card->set_options(config));
+    config.shape=ii::gui::CardShape::cylinder;config.background={.2,.3,.4,1};good(card->set_options(config));
     require(take(body.snapshot()).text=="Persistent"&&take(card->root().measure(640)).height>before.height,
         "Changing header or style replaced the card body");
     auto invalid=config;invalid.padding=-1;require(!card->set_options(invalid)&&take(body.snapshot()).text=="Persistent",
@@ -54,10 +54,10 @@ void generated(){
 }
 void reentry_and_exception(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,480}));lvui::AppCardConfiguration config;config.title="Original";
-    std::optional<lvui::native::NativeAppCard> card;ii::gui::Widget button;bool throw_cancel=false,reentered=false;
+    auto outer=take(tree->content_host({},"outer",{640,480}));ii::gui::AppCardOptions config;config.title="Original";
+    std::optional<ii::gui::NativeAppCard> card;ii::gui::Widget button;bool throw_cancel=false,reentered=false;
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
-        auto created=lvui::native::NativeAppCard::create(builder,{},"card",config);if(!created)return std::unexpected(created.error());card=*created;
+        auto created=ii::gui::NativeAppCard::create(builder,{},"card",config);if(!created)return std::unexpected(created.error());card=*created;
         auto child=builder.action_surface(card->content_root(),"action",{.text="Action",.minimum_width=100,.minimum_height=36},{});
         if(!child)return std::unexpected(child.error());button=*child;
         return child->set_control_events({.canceled=[&]{if(throw_cancel)throw std::runtime_error("Cancellation callback failed");

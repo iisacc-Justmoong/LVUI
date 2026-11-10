@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/CounterExample.md",
-    "sha256": "1c6c207ea6a50ecf179ac650f2c723dca13400429a9b57be22dd89b5b0c9015e",
-    "bytes": 5706,
+    "sha256": "5330a3c6e8790e1b8b3cf0509974ca7a2fac69d80fc493bda4fc60bf3c32011f",
+    "bytes": 5719,
     "line_count": 102,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,7 +57,7 @@
       "kind": "paragraph",
       "start_line": 5,
       "end_line": 7,
-      "raw": "상태: 채택한 스코프 기반 백엔드 설계의 가상 뷰 예제이다.\n소스는 [examples/Counter.lvui](examples/Counter.lvui)이다.\n`lvui-check`의 구문 검사 대상으로 검증한다. C++ 백엔드·이벤트·화면을 실행하는 예제는 아니다.\n"
+      "raw": "상태: 채택한 스코프 기반 백엔드 설계의 가상 뷰 예제이다.\n소스는 [examples/Counter.lvui](examples/Counter.lvui)이다.\n`lvui-check`와 네이티브 코드 생성 대상으로 검사한다. C++ 백엔드·이벤트·화면을 실행하는 예제는 아니다.\n"
     },
     {
       "id": "b000006",
@@ -463,7 +463,7 @@
       "kind": "paragraph",
       "start_line": 88,
       "end_line": 89,
-      "raw": "제공된 `Column` 증가·초기화 예제는 [ReactiveState.md](ReactiveState.md)와\n[examples/ReactiveCounter.lvui](examples/ReactiveCounter.lvui)에 별도로 기록한다.\n"
+      "raw": "제공된 `VStack` 증가·초기화 예제는 [ReactiveState.md](ReactiveState.md)와\n[examples/ReactiveCounter.lvui](examples/ReactiveCounter.lvui)에 별도로 기록한다.\n"
     },
     {
       "id": "b000054",

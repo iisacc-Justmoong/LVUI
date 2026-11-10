@@ -3,6 +3,7 @@ Window {
     VStack {
         ComboBox(id: "combo", text: vm.text, arrow: vm.arrow, tone: vm.tone,
                  enabled: vm.enabled, width: vm.width, onClick: vm.clicked,
-                 onPressed: vm.pressed, onReleased: vm.released)
+                 onPressed: vm.pressed, onReleased: vm.released,
+                 method: vm.method, methods: [vm.after, [vm.last]])
     }
 }

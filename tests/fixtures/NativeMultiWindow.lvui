@@ -1,0 +1,17 @@
+Application(onStart: vm.started, onReady: vm.ready, onStop: vm.stopped, onOpenFiles: vm.open_files) {
+    import vm NativeApplicationBackend
+    ApplicationWindow(title: "Canvas", width: 640, height: 400, accent: .red, onOpened: window.opened, onClosed: window.closed) {
+        import window NativeWindowBackend
+        VStack {
+            Label(id: "shared", text: vm.title)
+            Label(id: "local", text: window.title)
+        }
+    }
+    Window(title: vm.title, fontFamily: vm.title, accent: vm.accent, width: 480, height: 360, onOpened: window.opened, onClosed: window.closed) {
+        import window NativeWindowBackend
+        VStack {
+            Label(id: "shared", text: vm.title)
+            Label(id: "local", text: window.title)
+        }
+    }
+}

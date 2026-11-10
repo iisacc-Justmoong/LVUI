@@ -1,4 +1,4 @@
-#include <LVUI/NativeHierarchyPanel.h>
+#include "hierarchy_panel_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
@@ -22,7 +22,7 @@ void good(ii::core::Result<void> value) {
 }
 int main() {
     using namespace lvui; using namespace ii::gui;
-    std::vector<HierarchyEntry> entries{{.key="root",.label="Root"},{.key="child",.parent="root",.label="Child"}};
+    std::vector<HierarchyEntry> entries{{.key="root",.label="Root",.count=7},{.key="child",.parent="root",.label="Child"}};
     for (int i=0;i<100;++i) entries.push_back({.key=std::to_string(i),.label="Item " + std::to_string(i)});
     auto document=std::make_shared<HierarchyMemory>(entries); auto controller=std::make_shared<HierarchyController>(document);
     const ToolbarButtonId tool{std::string("home")}; native::HierarchyPanelInput input;
@@ -30,12 +30,18 @@ int main() {
     input.list.controller=controller; input.toolbar.items={{.id=tool,.icon_name="home"}};
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{300,200}));
-    std::optional<native::NativeHierarchyPanel> panel; int activated=0,tools=0,footer=0;
+    std::optional<HierarchyPanelTestView> panel;std::shared_ptr<const native::HierarchyRowContext> root_context;
+    int activated=0,tools=0,footer=0;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto column=builder.vstack({},"column",{.spacing=0,.alignment=StackAlignment::leading}); if(!column)return std::unexpected(column.error());
-        auto value=native::NativeHierarchyPanel::create(builder,*column,"panel",input,
+        auto value=HierarchyPanelTestView::create(builder,*column,"panel",input,
             {.item_activated=[&](const auto&){++activated;},.toolbar_triggered=[&](const auto&){++tools;},
-             .footer_clicked=[&](std::size_t,const auto&){++footer;}});
+             .footer_clicked=[&](std::size_t,const auto&){++footer;}},
+            [&](WidgetBuilder& content,std::shared_ptr<const native::HierarchyRowContext> row)->ii::core::Result<void>{
+                if(row->get().entry.key=="root")root_context=row;
+                auto label=content.label({},"badge",{.text=std::to_string(row->get().entry.count)});
+                return label?ii::core::Result<void>{}:std::unexpected(label.error());
+            });
         if(!value)return std::unexpected(value.error()); panel=*value; return {};
     }));
     (void)take(tree->drawing_snapshot({300,200}));
@@ -51,9 +57,11 @@ int main() {
     }
     require(keys.size()<=7 && take(footer_view.root().interaction()).visible,
             "Hierarchy panel did not virtualize its list or show the footer");
+    require(root_context&&root_context->get().entry.count==7,"Hierarchy panel did not pass the row context to its count View");
     good(take(list.row("root")).row().activate()); good(take(toolbar.slot(tool)).activate()); good(take(footer_view.slot(0)).activate());
     require(activated==1 && tools==1 && footer==1 && take(document->snapshot())->revision==0,
             "Hierarchy panel lost child events or modified the source during selection");
+    require(root_context->get().selected,"Hierarchy panel did not publish row selection to its count View");
     auto retained=take(list.row("root")).root(); auto next=input; next.appearance.width=200; next.appearance.height=120;
     next.appearance.footer_visible=false; good(panel->set_options(next)); geometry=take(panel->geometry());
     require(geometry.list.height==94 && !take(footer_view.root().interaction()).visible && retained.snapshot(),
@@ -63,5 +71,7 @@ int main() {
             "Invalid hierarchy panel input replaced its committed state");
     bool wrong=false; std::thread worker([&]{auto result=panel->set_options(next);wrong=!result&&result.error().code==ii::core::ErrorCode::wrong_executor;});
     worker.join(); require(wrong,"Hierarchy panel accepted a foreign-thread update");
-    good(host.clear_content()); require(!panel->set_options(next) && !retained.snapshot(),"Retired hierarchy panel accepted an update"); tree->close();
+    good(host.clear_content()); require(!panel->set_options(next) && !retained.snapshot(),"Retired hierarchy panel accepted an update");
+    bool closed=false;try{(void)root_context->get();}catch(const std::logic_error&){closed=true;}
+    require(closed,"Retired hierarchy panel left its row context open");tree->close();
 }

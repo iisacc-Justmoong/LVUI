@@ -1,0 +1,5 @@
+Window {
+    HStack {
+        Image(id: "static-icon", iconName: "brush")
+    }
+}

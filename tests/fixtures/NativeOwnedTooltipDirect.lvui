@@ -1,0 +1,12 @@
+import vm NativeOwnedTooltipModel
+Window {
+    VStack {
+        Tooltip(id: "direct-tip", target: vm.direct_target, availableRect: vm.bounds,
+                text: vm.text, delay: 0, timeout: 0, hideDelay: 0,
+                onOpened: vm.opened, onClosed: vm.closed)
+        Spacer(minLength: 100)
+        PushButton(id: "direct-first", text: "First")
+        PushButton(id: "direct-second", text: "Second")
+        Spacer(minLength: 100)
+    }
+}

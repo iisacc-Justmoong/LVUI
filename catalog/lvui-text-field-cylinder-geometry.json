@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=242-9579",
+  "reference": "TextField/Cylinder",
+  "cornerRadius": 99,
+  "verifiedModes": ["Text", "Search"],
+  "verifiedTextStates": ["Enabled", "Disabled", "Typing", "Dragged", "CursorActive", "KeyboardFocus"]
+}

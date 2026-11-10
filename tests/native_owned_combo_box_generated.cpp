@@ -26,6 +26,8 @@ int main(){
     good(tree->input({.kind=WidgetInputKind::pointer_up,.x=b.x+5,.y=b.y+5}));
     require(scope->backend_0.clicks==1&&scope->backend_0.presses==1&&scope->backend_0.releases==1,
         "Generated ComboBox lost its callbacks");
+    require(scope->backend_0.events==std::vector<std::string>{"pressed","released","method","after","last","clicked"},
+        "Generated ComboBox method order is wrong");
     scope->backend_0.text.set("Updated");scope->backend_0.arrow.set(lvui::StepperArrow::down);
     frame=take(tree->drawing_snapshot({320,160}));require(has_text(frame,"Updated")&&has_text(frame,"⌄"),
         "Reactive ComboBox text or indicator was not applied");

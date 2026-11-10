@@ -24,18 +24,18 @@ HEX는 선택적 `#`과 6자리 RRGGBB 또는 8자리 RRGGBBAA를 받으며, 6�
 같은 취소 기준을 공유한다. 오래된 입력이나 세션 시작 중 외부 변경은 거부한다.
 공급자 수명을 앱이 관리하고 앱이 외부 리비전 갱신을 컨트롤에 알려야 한다.
 
-`ColorPickerLayout`은 여섯 형태의 채널 순서, 평면·레일, 견본, 값, 최근 색상과
+iiGUI의 `BasicColorPickerLayout`은 주입된 디자인 치수로 여섯 형태의 채널 순서, 평면·레일, 견본, 값, 최근 색상과
 액션의 논리 좌표를 계산한다. 폭 320과 패딩 12일 때 각 형태의 높이는 휠 461,
 HS 및 SV 437, 회색 361, RGB 413, CMYK 439이다. 최근 색상이나 액션을 숨기면
 각각 32 또는 34만큼 줄고 평면은 콘텐츠 폭에 맞춰 커진다.
 
-`NativeColorPickerValues`는 이전·현재 색상 비교 견본과 HEX·알파 입력 행을
-제공한다. Enter 또는 포커스 이탈 시 수정한 값만 확정하며, 잘못된 입력은 복원한다.
+iiGUI의 `BasicNativeColorPickerValues`는 이전·현재 색상 비교 견본과 HEX·알파 입력 행을
+제공한다. LVUI는 세션 계약과 Core 전용 바인딩을 전달한다. Enter 또는 포커스 이탈 시 수정한 값만 확정하며, 잘못된 입력은 복원한다.
 입력 중 다른 편집이나 외부 변경이 발생하면 오래된 값을 적용하지 않는다. 여섯 자리
 HEX는 알파를 유지하고 여덟 자리는 알파도 변경한다. 앱이 외부 리비전을 전달해
 표시를 갱신하며 두 필드와 견본은 동일한 편집 세션을 사용한다.
 
-`NativeColorPicker`는 이 모델과 [색상 표면·채널](NativeColorSurface.md), 값 입력,
+iiGUI의 `BasicNativeColorPicker`는 이 모델과 [색상 표면·채널](NativeColorSurface.md), 값 입력,
 최근 색상, 적용·취소와 스포이트 버튼을 직접 조합한다. 부모는 배치와 열기·닫기를
 담당하며 피커는 스스로 닫히지 않는다. 적용과 취소는 포커스된 보류 입력을 먼저
 확정한다. 취소와 Escape는 현재 세션의 기준을 복원하고 색상이 바뀌었다면 편집
@@ -46,7 +46,9 @@ HEX는 알파를 유지하고 여덟 자리는 알파도 변경한다. 앱이 �
 
 기본 선언형 `ColorPicker`는 이 독립 조합을 생성한다. `model`을 생략하면 인스턴스별
 `ColorSelection`과 iiColorManager 기반 `ColorSelectionSurface`를 만들므로 빌드에서
-`LVUI_BUILD_COLOR_ADAPTER=ON`, 소비 프로젝트에서 `LVUI::Color` 링크가 필요하다.
+`LVUI_BUILD_COLOR_ADAPTER=ON`, 소비 프로젝트에서 `LVUI::Color`와 앱 소유
+`ApplicationColorAdapter`의 명시적 링크가 필요하다. 이 예제 어댑터만 iiColorManager를
+찾으며 앱은 이를 자체 공급자로 교체할 수 있다.
 `model`에 `std::shared_ptr<lvui::ColorPickerSession>`을 주입하면 그 구현을 사용하며
 앱은 외부 변경을 관측 가능한 `modelRevision`으로 발행한다. 타입은 `.Wheel`,
 `.HueSaturation`, `.SaturationBrightness`, `.Grayscale`, `.RGB`, `.CMYK` 또는
@@ -70,3 +72,5 @@ Window {
 헤드리스 테스트는 여섯 배치, 표면·채널·값 입력, 적용·취소, 기존 편집을 보존하는
 생성 실패, 동적 옵션과 폐기를 확인한다. iOS 15 대상 헤더 구문은 별도로 확인했으며,
 실제 플랫폼 창·입력기·보조 기술 및 시각적 동등성은 아직 검증하지 않았다.
+
+색상 선택기와 값 입력 행의 퇴역은 편집 콜백과 세션 참조를 해제한다. LVUI는 선언 값과 디자인 치수 및 Core 전용 바인딩을 제공한다.

@@ -4,7 +4,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { DropdownButton(id: \"menu\", text: vm.text, iconMode: vm.iconMode, icon: vm.icon, enabled: vm.enabled, onClick: vm.open) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto token:{"#include <LVUI/NativeDropdownButton.h>","lvui::native::NativeDropdownButton::create(","lvui::native::DropdownInput","component.set_options(value)"})
+    for(auto token:{"#include <LVUI/NativeDropdownButton.h>","lvui::native::DropdownBinding<","lvui::native::DropdownInputValue<ii::gui::RasterImage>","component.set_options(value)"})
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("Generated Dropdown lost ")+token);
     if(code->find("widgets.dropdown_button(")!=code->npos||code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Generated Dropdown depends on a prebuilt or legacy control");

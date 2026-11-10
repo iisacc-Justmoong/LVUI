@@ -1,0 +1,3 @@
+Application(onStart: quitApplication()) {
+    Window { PushButton(text: "Close", onClick: quitApplication()) }
+}

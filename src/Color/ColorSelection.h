@@ -62,7 +62,7 @@ public:
 // token so a late cancel can never overwrite a newer application color.
 class ColorSelection final : public ColorEditing {
 public:
-    explicit ColorSelection(StyleColor initial = {.5275065302848816, .291259765625, 1, 1})
+    explicit ColorSelection(StyleColor initial = {figma_defaults::accent_purple_default})
         : color_(initial) {
         if (!valid_color_value(initial)) throw std::invalid_argument("Invalid initial color");
     }
@@ -106,7 +106,7 @@ private:
             return std::unexpected(ColorSelectionError{ColorSelectionErrorCode::busy,
                                                        "Color edit session is already active"});
         }
-        if (next_token_ == std::numeric_limits<std::uint64_t>::max()) {
+        if (next_token_ == (std::numeric_limits<std::uint64_t>::max)()) {
             return std::unexpected(ColorSelectionError{ColorSelectionErrorCode::exhausted,
                                                        "Color edit token exhausted"});
         }
@@ -194,7 +194,7 @@ private:
 
     // These helpers are called while mutex_ is held.
     [[nodiscard]] ColorSelectionResult<void> revision_available() const {
-        if (revision_.load(std::memory_order_relaxed) == std::numeric_limits<std::uint64_t>::max()) {
+        if (revision_.load(std::memory_order_relaxed) == (std::numeric_limits<std::uint64_t>::max)()) {
             return std::unexpected(ColorSelectionError{ColorSelectionErrorCode::exhausted,
                                                        "Color selection revision exhausted"});
         }

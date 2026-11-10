@@ -36,7 +36,7 @@ public:
         if (!result) return std::unexpected(result.error());
         if (result->revision != current->revision || result->color != current->color ||
             picker_->editor()->revision() != current->revision) return stale();
-        if (!ColorSurface::valid_frame(*result) || result->width != width || result->height != height)
+        if (!valid_color_surface_frame(*result) || result->width != width || result->height != height)
             return invalid("Color surface returned an invalid frame");
         return result;
     }
@@ -56,7 +56,7 @@ public:
 
     [[nodiscard]] ColorSurfaceResult<std::uint64_t> edit(
             ColorSurfaceKind kind, ColorSurfacePoint point, std::uint64_t expected) override {
-        if (!ColorSurface::valid_kind(kind) || !std::isfinite(point.x) || !std::isfinite(point.y) ||
+        if (!valid_color_surface_kind(kind) || !std::isfinite(point.x) || !std::isfinite(point.y) ||
             point.x < 0 || point.x > 1 || point.y < 0 || point.y > 1)
             return invalid("Invalid color surface input");
         auto prepared = prepare(expected); if (!prepared) return std::unexpected(prepared.error());

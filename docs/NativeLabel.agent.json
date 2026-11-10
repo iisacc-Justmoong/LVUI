@@ -1,0 +1,93 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:e98245858ed82f2317aa711f175181ed46a1b3bcfab6215b4a2b0c153147ec32",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeLabel.md",
+    "sha256": "af803f48f15e7905a3d5448616b46bd1e55a118e41ae63c3ffa4a80f0652d4b3",
+    "bytes": 1005,
+    "line_count": 12,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 레이블",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 레이블\n",
+      "level": 1,
+      "title": "네이티브 레이블"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "Society와 Dreamscapes의 레이블은 좁은 너비에서 여러 줄로 표시하거나 한 줄의 끝을\n말줄임으로 생략한다. 기본 레이블은 사용 가능한 너비에서 줄을 바꾸고 내용 높이로\n측정한다. `elideRight: true`는 한 줄 끝 말줄임을 선택하며, `alignment`는 왼쪽·가운데·\n오른쪽 정렬을 지정한다. 텍스트·색상·말줄임·정렬이 모델에서 바뀌면 해당 레이블의\n설정만 갱신하고 부모의 필요한 레이아웃을 무효화한다. 주기적인 재측정은 없다.\nPython API `ii_lvui.compile_native`도 이 선언을 네이티브 C++로 생성한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 12,
+      "raw": "정렬 상수는 `.left`, `.center`, `.right`이다. 반응형 정렬은 0, 1, 2를 사용한다.\n현재 중간이나 앞쪽 말줄임, 서식 있는 텍스트와 별도의 단어·문자 단위 줄바꿈 선택은\n지원하지 않는다. 실제 줄바꿈과 글꼴은 각 운영체제의 네이티브 글자 서비스를 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 레이블",
+      "anchor": "네이티브-레이블",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 12,
+        "text": "지원하지 않는다. 실제 줄바꿈과 글꼴은 각 운영체제의 네이티브 글자 서비스를 따른다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

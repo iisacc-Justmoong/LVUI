@@ -1,0 +1,20 @@
+Application {
+    import vm NativeDynamicWindowsBackend
+    let applicationTarget: String = vm.target
+    Window(id: "main") {
+        let windowTarget: String = applicationTarget
+        VStack {
+            PushButton(id: "open", onClick: openWindow(windowTarget))
+            PushButton(id: "close", onClick: closeWindow(vm.target))
+            PushButton(id: "query", onClick: openWindow(vm.choose()))
+            PushButton(id: "convert", onClick: openWindow(vm.view_target))
+            CheckBox(id: "toggle", onToggled: openWindow(vm.target))
+            if (vm.show_nested) {
+                let nestedTarget: String = windowTarget
+                PushButton(id: "nested", onClick: openWindow(nestedTarget))
+            }
+        }
+    }
+    Window(id: "tools", initiallyOpen: false) { Label(text: "Tools") }
+    Window(id: "palette", initiallyOpen: false) { Label(text: "Palette") }
+}

@@ -1,0 +1,149 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:f52e2edd269542b163e286797df1652b5a8a780363f7ed0ffd967f897c985558",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/DesignIconCatalog.md",
+    "sha256": "5e05b758c93f3cc73b4065abe6d45fb8e0563bda0ade484919113735203dcf40",
+    "bytes": 2785,
+    "line_count": 33,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 디자인 아이콘 카탈로그 계약",
+    "role": "reference",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 디자인 아이콘 카탈로그 계약\n",
+      "level": 1,
+      "title": "LVUI 디자인 아이콘 카탈로그 계약"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 4,
+      "raw": "이 계약은 기존 LVRS 자산 스냅샷을 바꾸지 않고,\nFigma의 LVUI 디자인과 네이티브 앱이 같은 아이콘 형상을 사용하기 위한 것이다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 6,
+      "end_line": 16,
+      "raw": "LVUI는 검증된 Figma 디자인의 SVG를 자체 리소스에 보관하고 빌드 시 임베드한다.\n실행과 설치 소비자는 Figma, LVRS 또는 Qt에 접근하지 않는다. 최초 범위는 저장된\nCongregation Main 화면에 쓰인 100종이며, 각 자산의 원본 노드·바이트 수·해시를\n매니페스트에 기록한다. 각 SVG는 18×18 뷰박스와 독립적인 벡터 콘텐츠를 갖는다.\n이 중 96종은 화면 인스턴스에서 내보냈고, 인스턴스를 내보내지 못한 4종은 연결된\n원본 컴포넌트에서 내보냈다. 매니페스트에 두 노드와 컴포넌트 키를 기록한다.\n원본 컴포넌트의 네 자산은 해당 인스턴스의 개별 색상 변경까지 같다는 증거가 아니다.\n같은 이름의 이전 `authored_icon_svg()`는 기존 원본 바이트를 계속 반환한다.\n현재 목록에는 LVUI Avatar의 기본 사용자 심벌 `avatar-placeholder`도 추가되어\n총 101종이다. 이 자산은 Profile 화면의 Avatar 중첩 인스턴스를 원본 18×18\n크기로 내보낸 결과이며, 해당 노드·컴포넌트 키와 해시를 별도로 기록한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 22,
+      "raw": "새 `design_icon_catalog()`는 디자인 자산을 우선하고 이 목록에 없는 이름은 기존\n`authored_icon_catalog()`에 위임한다. 이름 정규화와 기존 별칭은 두 경로가 공유한다.\n이미지와 리소스는 불변이며 같은 이름·별칭과 동시 조회에서 소유권을 공유한다.\n잘못된 입력과 없는 이름은 기존 오류 계약을 따른다. `design_icon_names()` 및\n`design_icon_svg()`는 이 디자인 목록과 정확한 원본 SVG 바이트를 제공한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 23,
+      "end_line": 23,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 24,
+      "end_line": 28,
+      "raw": "네이티브 래스터 어댑터는 교체 가능한 아이콘 공급자를 받아 동일 자산과 크기의\n결과를 공유하고 기존 미지원 SVG 대체 경로를 보존한다. Congregation의 아이콘\n버튼·그림·타임라인은 디자인 카탈로그를 사용한다. 기본 생성 위젯은 별도 공급자가\n없을 때 기존 기본 아이콘을 우선하고, 나머지는 디자인 목록을 거쳐 호환 목록을\n조회한다. 앱이 지정한 공급자는 조용히 교체하지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 30,
+      "end_line": 33,
+      "raw": "매니페스트의 목록·해시·SVG 안전성, 기존 목록의 바이트 보존, 별칭·동시 접근·오류,\n생성 위젯과 앱의 공급자 연결을 자동 검사한다. Figma와 같은 아이콘 뷰박스 및 대표\n아이콘의 독립 렌더링을 검사하며, 다른 플랫폼 GPU나 실제 앱 창의 시각 동등성을\n이 헤드리스 검사로 주장하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 디자인 아이콘 카탈로그 계약",
+      "anchor": "lvui-디자인-아이콘-카탈로그-계약",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 7,
+        "text": "실행과 설치 소비자는 Figma, LVRS 또는 Qt에 접근하지 않는다. 최초 범위는 저장된",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 28,
+        "text": "조회한다. 앱이 지정한 공급자는 조용히 교체하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 33,
+        "text": "이 헤드리스 검사로 주장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

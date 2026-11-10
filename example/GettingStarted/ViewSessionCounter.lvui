@@ -1,0 +1,18 @@
+Window {
+    const step: Int = 1
+    var count: Int = 0
+
+    var countLabel: View {
+        Label(id: "count", text: count)
+    }
+
+    VStack {
+        countLabel()
+        PushButton(id: "increment", text: "+", onClick: {
+            count = count + step
+        })
+        PushButton(id: "reset", text: "Reset", onClick: {
+            count = 0
+        })
+    }
+}

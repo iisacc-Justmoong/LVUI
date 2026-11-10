@@ -1,4 +1,4 @@
-#include <LVUI/NativeListItemSelector.h>
+#include "native_list_item_selector_composition.h"
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
@@ -17,6 +17,15 @@ int main(){
     using namespace lvui;using namespace ii::gui;
     require(native::list_item_selector(std::vector<std::string>{"One","Two"}).options==std::vector<ListItemOption>({{"One",true},{"Two",true}}),
             "String options did not convert to an independent selector configuration");
+    require(native::list_item_selector(std::vector<std::string>{},ListItemVariant::detail_quantity).placeholder=="Format"&&
+            native::list_item_selector(std::vector<ListItemOption>{},ListItemVariant::detail_settings).placeholder=="Automatic"&&
+            native::list_item_selector(std::vector<std::string>{},ListItemVariant::task).placeholder=="Priority"&&
+            native::list_item_selector(std::vector<std::string>{},ListItemVariant::form).placeholder=="Category"&&
+            native::list_item_unit_selector(std::vector<std::string>{}).placeholder=="Units",
+            "Compound selector placeholders did not follow their variant");
+    ListItemSelectorConfiguration named;named.placeholder="Custom";
+    require(native::list_item_selector(named,ListItemVariant::detail_quantity).placeholder=="Custom"&&
+            native::list_item_unit_selector(named).placeholder=="Custom","An explicit selector placeholder was overwritten");
     native::ListItemSelectorInput input;input.configuration.options={{"Draft",true},{"Unavailable",false},{"Published",true}};
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(tree->content_host({},"host",{300,180}));std::optional<native::NativeListItemSelector> selector;

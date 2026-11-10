@@ -1,0 +1,34 @@
+import vm NativeMenuBundlesModel
+let Dynamic(title: String): [View] = [
+    ContextMenuItem(id: "nestedBefore", label: title, hasChildItems: false, keepOpen: true),
+    if (vm.show) {
+        ContextMenuItem(id: "nestedOptional", label: "Optional", hasChildItems: false, keepOpen: true)
+    } else {
+        ContextMenuDivider(id: "nestedFallback")
+    },
+    for (entry in vm.rows, key: entry.id, id: "nestedRows") {
+        if (entry.show) {
+            ContextMenuItem(id: "nestedItem", label: entry.label, visible: entry.visible,
+                            itemHeight: entry.height, hasChildItems: false, keepOpen: true, onClick: entry.clicked)
+        }
+    },
+    ContextMenuItem(id: "nestedAfter", label: title, hasChildItems: false, keepOpen: true)
+]
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", itemSpacing: vm.spacing, onItemTriggered: vm.on_triggered) {
+            ContextMenuItem(id: "before", label: "Before", hasChildItems: false, keepOpen: true)
+            if (vm.more) { Dynamic(title: vm.title) }
+            for (group in vm.conditional_rows, key: group.id, id: "outerRows") {
+                Dynamic(title: group.label)
+            }
+            for (group in vm.conditional_rows, key: group.id, id: "rawOuter") {
+                for (entry in vm.rows, key: entry.id, id: "rawInner") {
+                    ContextMenuItem(id: "rawItem", label: entry.label, hasChildItems: false, keepOpen: true)
+                }
+            }
+            ContextMenuItem(id: "after", label: "After", hasChildItems: false, keepOpen: true)
+        }
+    }
+}

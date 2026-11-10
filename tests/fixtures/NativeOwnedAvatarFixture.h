@@ -1,5 +1,5 @@
 #pragma once
-#include <LVUI/Avatar.h>
+#include <iiGUI/AvatarModel.h>
 #include <iiGUI/Image.h>
 #include <iiGUI/Appearance.h>
 #include <iiSDKCore/Core/Property/Observable.h>
@@ -7,7 +7,7 @@
 #include <string>
 
 struct NativeOwnedAvatarModel final {
-    ii::core::Observable<lvui::AvatarSize> size{lvui::AvatarSize::medium};
+    ii::core::Observable<ii::gui::AvatarSize> size{ii::gui::AvatarSize::medium};
     ii::core::Observable<std::shared_ptr<const ii::gui::RasterImage>> image{};
     ii::core::Observable<double> width{0},height{0};
     ii::core::Observable<bool> enabled{true};

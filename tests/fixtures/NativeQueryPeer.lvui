@@ -1,0 +1,12 @@
+import vm NativeQueryPeerBackend
+
+Window {
+    var reply: Int = 0
+    VStack {
+        Label(id: "received", text: vm.received)
+        Label(id: "reply", text: reply)
+        PushButton(id: "send", text: "Send", onClick: {
+            reply = query(vm.peer, vm.request())
+        })
+    }
+}

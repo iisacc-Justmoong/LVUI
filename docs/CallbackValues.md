@@ -6,8 +6,8 @@
 
 ```lvui
 import vm Model
-let Leaf(run: () -> Void): View = PushButton(run)
-let Pair(run: () -> Void, again: () -> Void = run): View = VStack {
+const Leaf(run: () -> Void): View = PushButton(run)
+const Pair(run: () -> Void, again: () -> Void = run): View = VStack {
     Leaf(run: run)
     Leaf(run: again)
 }

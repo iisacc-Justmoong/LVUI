@@ -1,0 +1,18 @@
+import vm NativeOwnedScrollModel
+Window {
+  VStack(alignment: .leading) {
+    ScrollView(id: "viewport", width: vm.width, height: vm.height, enabled: vm.enabled) {
+        VStack(spacing: 8, alignment: .stretch) {
+            Label(id: "first", text: "First")
+            Label(text: "Second")
+            Label(text: "Third")
+            Label(text: "Fourth")
+            Label(text: "Fifth")
+            Label(text: "Sixth")
+            Label(text: "Seventh")
+            Label(text: "Eighth")
+            LabelButton(id: "last", text: "Last", onClick: vm.activate)
+        }
+    }
+  }
+}

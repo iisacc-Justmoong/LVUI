@@ -22,6 +22,8 @@ int main(){
     good(tree->input({.kind=WidgetInputKind::pointer_up,.x=snapshot.bounds.x+8,.y=snapshot.bounds.y+3}));
     require(scope->backend_0.steps==std::vector<int>{1}&&scope->backend_0.clicks==1&&scope->backend_0.presses==1&&scope->backend_0.releases==1,
             "Generated Stepper lost its callbacks");
+    require(scope->backend_0.events==std::vector<std::string>{"pressed","released","method","after","last","clicked","stepped"},
+            "Generated Stepper method order is wrong");
     scope->backend_0.arrow.set(lvui::StepperArrow::down);snapshot=take(widget.snapshot());
     require(!snapshot.accessibility_semantics->can_increment&&snapshot.accessibility_semantics->can_decrement,
             "Reactive Stepper direction did not reach accessibility");

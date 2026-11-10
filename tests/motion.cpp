@@ -33,6 +33,19 @@ int main() {
             "Exact duration did not settle after a fractional-second start");
     linear.duration=400ms;
 
+    lvui::Motion out_cubic{.duration=400ms,.curve=lvui::MotionCurve::out_cubic};
+    Transition cubic({0,0});require(bool(cubic.retarget({1,0},out_cubic,true,start)),"OutCubic rejected");
+    require(cubic.advance(start+200ms)&&near(cubic.value()[0],.875),"OutCubic midpoint differs");
+    require(!cubic.advance(start+400ms)&&near(cubic.value()[0],1),"OutCubic did not settle");
+
+    lvui::Motion css_ease_out{.duration=400ms,.curve=lvui::MotionCurve::css_ease_out};
+    Transition css({0,0});
+    require(bool(css.retarget({1,0},css_ease_out,true,start)),"CSS ease-out rejected");
+    require(css.advance(start+100ms)&&near(css.value()[0],.37813813082510966),"CSS ease-out quarter differs");
+    require(css.advance(start+200ms)&&near(css.value()[0],.6846431874274606),"CSS ease-out midpoint differs");
+    require(css.advance(start+300ms)&&near(css.value()[0],.9065353492811752),"CSS ease-out three-quarters differs");
+    require(!css.advance(start+400ms)&&near(css.value()[0],1),"CSS ease-out did not settle");
+
     lvui::Motion out_back{.duration=400ms, .curve=lvui::MotionCurve::out_back, .overshoot=1.45};
     require(bool(transition.retarget({1, .2}, out_back, true, start+500ms)), "OutBack rejected");
     require(transition.advance(start+600ms) && near(transition.value()[0], .78203125), "OutBack curve differs");

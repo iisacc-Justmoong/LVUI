@@ -1,0 +1,7 @@
+Application(onStart: vm.start, onReady: vm.ready, onStop: vm.stop,
+            onActive: vm.active, onInactive: vm.inactive,
+            onForeground: vm.foreground, onBackground: vm.background,
+            onOpenFiles: vm.files, onCloseRequested: vm.can_close) {
+    import vm NativeForegroundBackend
+    Window { Label(text: "Foreground lifecycle") }
+}

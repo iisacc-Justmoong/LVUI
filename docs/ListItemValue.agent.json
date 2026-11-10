@@ -1,0 +1,100 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:334222969b43cdee0df752c189729890d9b61fb821c553b2b881738740c35b94",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/ListItemValue.md",
+    "sha256": "6de8532d761f6ee2cd053500e9e86f2dfee0127402f5efbb883e274853a79eb6",
+    "bytes": 900,
+    "line_count": 11,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "탐색 목록 항목의 값",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 탐색 목록 항목의 값\n",
+      "level": 1,
+      "title": "탐색 목록 항목의 값"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "Society와 Dreamscapes의 탐색 목록 항목은 이름과 설명 외에 오른쪽 값과 이동 아이콘을\n선택적으로 보여준다. `value`는 앱이 제공한 UTF-8 문자열이고 `showValue`는 값 영역을,\n`showTrailingIcon`은 별도의 이동 아이콘을 제어한다. 값이 설정되지 않으면 값 영역을\n확보하지 않는다. 빈 문자열을 명시하면 공간은 유지한다. Figma Navigation 항목의 값\n영역은 기본 72 논리 px이며 행이 좁으면 내용이 겹치지 않도록 양보한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 11,
+      "raw": "값 변경은 해당 항목의 기존 위젯과 선택·포커스를 유지한다. 표시 중인 값은 접근성\n설명에도 전달한다. 앱이 별도의 접근성 설명을 명시하면 그 값을 우선한다. 값과 아이콘\n변경은 알림에 따른 부분 갱신이며 주기적인 목록 재구성은 하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "탐색 목록 항목의 값",
+      "anchor": "탐색-목록-항목의-값",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 6,
+        "text": "확보하지 않는다. 빈 문자열을 명시하면 공간은 유지한다. Figma Navigation 항목의 값",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 11,
+        "text": "변경은 알림에 따른 부분 갱신이며 주기적인 목록 재구성은 하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

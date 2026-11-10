@@ -1,0 +1,9 @@
+import vm CounterViewModel
+
+Window {
+    VStack {
+        Label(id: "value", text: vm.count)
+        PushButton(id: "increment", text: "+", onClick: vm.increment)
+        PushButton(id: "reset", text: "Reset", onClick: vm.reset)
+    }
+}

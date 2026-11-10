@@ -1,0 +1,37 @@
+import vm NativeWindowAccentCollectionsModel
+let NestedSelectedItem(): View = ListItem(id: "nestedItem", label: "Nested", selected: true, width: 110, height: 28)
+Window(accent: vm.accent, width: vm.width) {
+    VStack(alignment: .leading) {
+        HStack(spacing: 6) {
+            HierarchyItem(id: "item", label: "Item", selected: true, width: 120, height: 28)
+            HierarchyItem(id: "fixedItem", label: "Fixed", selected: true, width: 120, height: 28,
+                          rowBackgroundColorActive: "#ff0000", focusColor: "#00ff00")
+            ListItem(id: "listItem", label: "List", selected: true, width: 110, height: 28)
+            ListItem(id: "fixedListItem", label: "Fixed", selected: true, width: 110, height: 28,
+                     selectedColor: "#ff0000", focusColor: "#00ff00")
+            NestedSelectedItem()
+            TableCellItem(id: "cell", text: "Cell", selected: true, current: true, width: 100, height: 28)
+            TableCellItem(id: "fixedCell", text: "Fixed", selected: true, current: true, width: 100, height: 28,
+                          selectionColor: "#ff0000", currentBorderColor: "#00ff00")
+            ListItem(id: "composite", type: .Toggle, label: "Toggle", selected: true, checked: true, width: 150, height: 28)
+        }
+        HStack(spacing: 6, alignment: .top) {
+            HierarchyList(id: "tree", controller: vm.hierarchy, width: 160, height: 100)
+            Hierarchy(id: "treePanel", controller: vm.hierarchy, width: 180, height: 100, toolbarVisible: false)
+            List(id: "list", controller: vm.list, editor: vm.list_editor, editable: true,
+                 width: 160, height: 100, footerVisible: false)
+            Table(id: "table", controller: vm.table, editor: vm.table_editor, editable: true, width: 160, height: 100)
+            ListItem(id: "settings", type: .DetailSettings, label: "Settings", width: 260,
+                     selector: ["Automatic", "Manual"], segments: ["Original", "Edited"], segmentIndex: 1)
+        }
+        HStack(spacing: 6) {
+            TableRow(id: "tableRow", cells: vm.cells, cellWidth: 100, width: 110)
+            TableHeader(id: "tableHeader", columns: ["Column"], width: 120, interactive: true)
+            ListToolbar(id: "listToolbar", icon1: "generaladd", width: 80)
+            HierarchyToolbar(id: "hierarchyTools", buttonItems: vm.tools, activeButtonId: "tool", minimumToolbarWidth: 120, width: 120)
+            ListFooter(id: "footer", button1: vm.footer, width: 120)
+            ListItem(id: "check", type: .Checkable, label: "Check", checked: true, width: 120, height: 28)
+            ListItem(id: "quantity", type: .Stepper, label: "Quantity", width: 150, height: 28)
+        }
+    }
+}

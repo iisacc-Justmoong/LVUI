@@ -4,7 +4,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { ComboBox(id: \"combo\", text: vm.text, arrow: vm.arrow, tone: vm.tone, enabled: vm.enabled, width: vm.width, onClick: vm.clicked) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto token:{"#include <LVUI/NativeComboBox.h>","lvui::native::NativeComboBox::create(","lvui::ComboBoxConfiguration","component.set_options(value)"})
+    for(auto token:{"#include <LVUI/NativeComboBox.h>","iiGUI/NativeComboBoxView.h","lvui::native::ComboBoxBinding<","lvui::ComboBoxConfiguration","component.set_options(value)"})
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("Generated ComboBox lost ")+token);
     if(code->find("widgets.combo_box(")!=code->npos||code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Generated ComboBox depends on a prebuilt or legacy control");

@@ -45,9 +45,16 @@ class Methods final {
         });
     }
     struct InvokeField final {
-        template<class Handler,class... Args>requires std::invocable<Handler,Args...>
+        template<class Handler,class... Args>
+        requires (std::invocable<Handler,Args...> ||
+                  requires(Handler&& handler,Args&&... args){std::forward<Handler>(handler).invoke(std::forward<Args>(args)...);} ||
+                  requires(Handler&& handler,Args&&... args){std::forward<Handler>(handler).trigger(std::forward<Args>(args)...);})
         decltype(auto) operator()(Handler&& handler,Args&&... args)const{
-            return std::invoke(std::forward<Handler>(handler),std::forward<Args>(args)...);
+            if constexpr(std::invocable<Handler,Args...>)
+                return std::invoke(std::forward<Handler>(handler),std::forward<Args>(args)...);
+            else if constexpr(requires{std::forward<Handler>(handler).invoke(std::forward<Args>(args)...);})
+                return std::forward<Handler>(handler).invoke(std::forward<Args>(args)...);
+            else return std::forward<Handler>(handler).trigger(std::forward<Args>(args)...);
         }
     };
     struct NoPublication final {void operator()(ReadContext&)const{}};
@@ -262,6 +269,14 @@ public:
     }
     template<class Function>static decltype(auto) evaluate(ReadContext& context,Function&& function){
         return ii::core::ObservableReadScope::collect([&](ii::core::ObservableRead read){context.track(std::move(read));},std::forward<Function>(function));
+    }
+    // Keep selected shared receivers alive until a synchronous operation has
+    // completed, and copy borrowed text before its private read scope closes.
+    template<class Function>static auto with_context(Function&& function){
+        ReadContext context;
+        if constexpr(std::is_void_v<std::invoke_result_t<Function&,ReadContext&>>)
+            std::invoke(function,context);
+        else return value_copy(std::invoke(function,context));
     }
     template<class Function>static decltype(auto) evaluate(Function&& function){
         ReadContext context;using Result=std::invoke_result_t<Function&>;

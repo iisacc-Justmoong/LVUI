@@ -1,9 +1,9 @@
 # LVUI 독립 계층 행
 
-기본 `HierarchyItem`은 LVUI의 행 모델과 `NativeHierarchyItem`을 사용한다. 앱의
-교체 가능한 아이콘 공급자와 범용 호스트의 입력·텍스트·그리기를 이용하며 Qt,
-QML 또는 LVRS 위젯을 생성하지 않는다. [계층 소스의 보이는 행](OwnedHierarchyModel.md)은
-`hierarchy_item_configuration()`으로 독립 행 설정에 변환할 수 있다.
+기본 `HierarchyItem`의 상태·기하·행 투영과 입력·그리기·위젯 수명은 iiGUI가
+소유한다. LVUI는 디자인 값과 Core 전용 바인딩을 제공하고 앱은 교체 가능한 아이콘
+공급자를 연결한다. Qt, QML 또는 LVRS 위젯을 생성하지 않는다. [계층 소스의 보이는
+행](OwnedHierarchyModel.md)은 주입된 iiGUI 모델로 표시 설정에 투영한다.
 
 행은 기본 200×20, 깊이당 8단위 들여쓰기, 18단위 아이콘, 16단위 접기 표시와
 선택적 개수를 사용한다. 기본·호버·누름·선택·비활성·드래그 미리보기 색상과
@@ -36,7 +36,7 @@ C++ 호스트는 이미 준비한 불변 래스터 아이콘을 직접 공급할
 
 ```lvui
 import vm LayerBackend
-let Badge(text: String): View = Label(text: text)
+const Badge(text: String): View = Label(text: text)
 Window {
     HierarchyItem(label: "Layers", count: vm.count, countWidth: 40,
                   countView: Badge(text: vm.badge), onClick: vm.activate)
@@ -46,11 +46,14 @@ Window {
 개수 View에 암묵적인 행 객체를 주입하지 않는다. 필요한 데이터는 위 예제처럼
 명시적으로 전달해야 한다. `[View]` 시퀀스나 필수 매개변수가 충족되지 않은 View는
 소스 오류로 진단한다. `HierarchyItem`의 컨트롤러 주입과 드래그 제스처, 계층 목록이
-생성하는 행의 사용자 대리자와 개수 View는 아직 지원하지 않는다. 실제 운영체제
+생성하는 행의 직접 편집은 이 단일 행 API에서 제공하지 않는다. 계층 목록의 개수 View,
+사용자 행과 행별 C++ 컨텍스트는 [독립 계층 목록](NativeOwnedHierarchyList.md)을 따른다. 실제 운영체제
 보조 기술과 플랫폼별 렌더링 검증도 남아 있다.
 
-C++ 앱은 `NativeHierarchyItem::create`의 마지막 `ii::gui::WidgetFactory` 인자로
-같은 개수 영역을 제공할 수 있다. 팩터리는 구성 실패를 반환할 수 있으며, 기존
+C++ 앱은 `NativeHierarchyItem::create`의 콜백 다음 `ii::gui::WidgetFactory` 인자로
+같은 개수 영역을 제공할 수 있다. 그 다음 팩터리는 기본 아이콘·라벨·개수를 대신할
+사용자 행 콘텐츠이며, 두 팩터리를 함께 지정할 수 없다. 사용자 콘텐츠에는 행의 선택
+배경과 접기 표시가 유지된다. 팩터리는 구성 실패를 반환할 수 있으며, 기존
 콘텐츠를 교체하는 호스트는 후보 구성이 성공한 뒤에만 새 행을 게시한다.
 
 ```text
@@ -67,3 +70,5 @@ Window {
 전달된 View의 반응형 내용, 표시·숨김, 크기·정체성·수명을 검사한다. 생성 실패와
 수명 경계는 앱이 소유한 트리 밖의
 부수효과까지 되돌리지 않는다.
+
+행 퇴역 시 아이콘 캐시·이미지·콜백을 해제하고, 갱신 중 폐기되거나 더 새 설정이 게시되면 이전 결과를 적용하지 않는다. 계층 목록 자체의 위젯 조합은 아직 LVUI에 남아 있다.

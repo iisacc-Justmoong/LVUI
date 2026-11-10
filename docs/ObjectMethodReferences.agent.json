@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/ObjectMethodReferences.md",
-    "sha256": "01403fd8c68267fe7c6f7ac26da14a5226864e5616600d878e444885b3ff7fd4",
-    "bytes": 10449,
-    "line_count": 145,
+    "sha256": "01556f18e5a61cbd1b80f0ce3836f234b84373b2a640b31af6cbdf4c39f70c3f",
+    "bytes": 10875,
+    "line_count": 150,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 8,
       "end_line": 22,
-      "raw": "```lvui\nimport class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet render: () -> String = vm.selected.describe\nlet Action(item: Item, run: () -> Void = item.act): View = PushButton(run)\nWindow { VStack {\n    Label(text: render())\n    PushButton(current.act)\n    PushButton((vm.selected).act)\n    PushButton(vm.items[0].act)\n    PushButton(vm.current().act)\n    Action(item: vm.selected)\n} }\n```\n",
+      "raw": "```lvui\nimport class Domain.Item\nimport vm Model\nconst current = vm.selected\nconst render: () -> String = vm.selected.describe\nconst Action(item: Item, run: () -> Void = item.act): View = PushButton(run)\nWindow { VStack {\n    Label(text: render())\n    PushButton(current.act)\n    PushButton((vm.selected).act)\n    PushButton(vm.items[0].act)\n    PushButton(vm.current().act)\n    Action(item: vm.selected)\n} }\n```\n",
       "language": "lvui",
-      "code": "import class Domain.Item\nimport vm Model\nlet current = vm.selected\nlet render: () -> String = vm.selected.describe\nlet Action(item: Item, run: () -> Void = item.act): View = PushButton(run)\nWindow { VStack {\n    Label(text: render())\n    PushButton(current.act)\n    PushButton((vm.selected).act)\n    PushButton(vm.items[0].act)\n    PushButton(vm.current().act)\n    Action(item: vm.selected)\n} }\n",
+      "code": "import class Domain.Item\nimport vm Model\nconst current = vm.selected\nconst render: () -> String = vm.selected.describe\nconst Action(item: Item, run: () -> Void = item.act): View = PushButton(run)\nWindow { VStack {\n    Label(text: render())\n    PushButton(current.act)\n    PushButton((vm.selected).act)\n    PushButton(vm.items[0].act)\n    PushButton(vm.current().act)\n    Action(item: vm.selected)\n} }\n",
       "closed": true
     },
     {
@@ -104,7 +104,7 @@
       "kind": "paragraph",
       "start_line": 31,
       "end_line": 34,
-      "raw": "명시적인 함수 선언·입력은 기존 `(인자 타입) -> 결과 타입` 계약을 따른다. `let` 함수 값은\n의존값에 따라 갱신하고, `@Static let`은 해당 활성화의 처음 선택을 고정한다. `var` 함수\n값은 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 참조가 선택하는 객체를 깊은\n복사로 고정하는 계약은 아니다.\n"
+      "raw": "명시적인 함수 선언·입력은 기존 `(인자 타입) -> 결과 타입` 계약을 따른다. `const` 함수 값은\n의존값에 따라 갱신하고, `@Static const`는 해당 활성화의 처음 선택을 고정한다. `var` 함수\n값은 초기 버전을 선택한 뒤 기존 C++ setter로 교체한다. 참조가 선택하는 객체를 깊은\n복사로 고정하는 계약은 아니다.\n"
     },
     {
       "id": "b000012",
@@ -537,7 +537,21 @@
       "id": "b000061",
       "kind": "paragraph",
       "start_line": 144,
-      "end_line": 145,
+      "end_line": 147,
+      "raw": "선택된 호출 가능 필드가 함수 호출 연산자를 제공하지 않으면 같은 인자를 받는\n`invoke` 또는 `trigger` 멤버를 호출할 수 있다. 함수 호출 연산자, `invoke`,\n`trigger` 순으로 선택하며 선택한 원본 객체의 수명과 발행 경계는 그대로 유지한다.\n이는 LVRS 버튼 메서드 객체를 네이티브 C++ 콜백으로 이식하는 공통 경로이다.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 148,
+      "end_line": 148,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 149,
+      "end_line": 150,
       "raw": "자동으로 대화상자를 여는 페이지의 embedded build 거부 경로에서는 생성자 팩토리 인자도\n명시적으로 소비한다. 이 경로는 오류를 반환하는 기존 정책을 유지하며 엄격한 예제 빌드로 검사한다.\n"
     }
   ],

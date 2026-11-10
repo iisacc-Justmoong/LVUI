@@ -1,4 +1,5 @@
 #include <LVUI/NativeComboBox.h>
+#include <iiGUI/NativeComboBoxView.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
 #include <memory>
@@ -7,6 +8,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+namespace lvui::native { using NativeComboBox=ComboBoxBinding<ii::gui::BasicComboBox,ii::gui::BasicNativeComboBox,ii::gui::Widget>; }
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}

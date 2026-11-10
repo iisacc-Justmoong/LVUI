@@ -1,0 +1,30 @@
+import vm NativeTabDynamicModel
+let Dynamic(title: String): [View] = [
+    Tab(id: "nestedBefore", text: title, iconName: "home"),
+    if (vm.show) {
+        Tab(id: "nestedOptional", text: "Optional", iconName: "home")
+    } else {
+        Tab(id: "nestedFallback", text: "Fallback", iconName: "home")
+    },
+    for (entry in vm.rows, key: entry.id, id: "nestedRows") {
+        if (entry.show) {
+            Tab(id: "nestedItem", text: entry.label, visible: entry.visible, iconName: "home", onClick: entry.clicked)
+        }
+    },
+    Tab(id: "nestedAfter", text: title, iconName: "home")
+]
+Window {
+    TabBar(id: "tabs", currentIndex: vm.index, spacing: vm.spacing, onCurrentIndexChanged: vm.changed) {
+        Tab(id: "before", text: "Before", iconName: "home")
+        if (vm.more) { Dynamic(title: vm.title) }
+        for (group in vm.groups, key: group.id, id: "outerRows") {
+            Dynamic(title: group.label)
+        }
+        for (group in vm.groups, key: group.id, id: "rawOuter") {
+            for (entry in vm.rows, key: entry.id, id: "rawInner") {
+                Tab(id: "rawItem", text: entry.label, iconName: "home")
+            }
+        }
+        Tab(id: "after", text: "After", iconName: "home")
+    }
+}

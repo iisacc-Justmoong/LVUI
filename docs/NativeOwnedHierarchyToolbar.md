@@ -3,7 +3,7 @@
 상위 복합 뷰의 게시 중 버튼 콘텐츠 게시가 일시적으로 차단되면 다음 배치에서 다시
 시도해 상위 화면의 게시가 끝난 뒤 버튼을 표시한다.
 
-`HierarchyToolbar`는 LVUI의 도구 버튼과 교체 가능한 항목 목록으로 구성한다. 항목의
+`HierarchyToolbar`는 iiGUI의 도구 버튼과 교체 가능한 항목 목록으로 구성한다. 항목의
 선택과 탐색은 도구 모음의 화면 상태이며 앱 문서를 변경하지 않는다. Qt, QML과 LVRS
 위젯을 생성하지 않는다.
 
@@ -38,12 +38,26 @@ ID다. `onActiveChanged`와 `onButtonTriggered`는 ID와 현재 인덱스가 담
 아이콘, 치수나 중복 항목은 기존 도구 모음을 보존한다. 최대 256개 항목과 1 MiB의
 항목 텍스트를 허용한다.
 
-C++ 앱은 독립 모델 `HierarchyToolbar`, `HierarchyToolbarInput`,
-`NativeHierarchyToolbar`와 명령 인터페이스를 직접 사용할 수 있다. 아이콘 공급자는
+C++ 앱은 `HierarchyToolbarInput`과 명령 인터페이스를 제공하고,
+`HierarchyToolbarModelBinding`, `HierarchyToolbarLayoutBinding`, `HierarchyToolbarBinding`에
+iiGUI의 모델·배치·호스트를 주입해 직접 조합할 수 있다. 아이콘 공급자는
 `iconSource`와 `iconRevision`으로 교체한다. 현재 선언형 경로는 `buttonItems`만
 받으며 직접 자식 버튼 등록과 개별 이름 이벤트·페이로드는 아직 지원하지 않는다.
 실제 운영체제 표시와 보조 기술 동작도 별도 검증이 필요하다.
 
-`LVUI.OwnedHierarchyToolbar.Model`은 ID와 선택 정규화, 탐색, 크기와 잘못된 입력을
-검사한다. 호스트와 생성 코드 검사는 키 기반 버튼 유지, 반응형 선택·실패 복구,
+`LVUI.OwnedHierarchyToolbar.Model`은 ID와 선택 정규화·탐색을 검사하고,
+`LVUI.OwnedHierarchyToolbar.Layout`은 기존 디자인값과 좁은 영역의 iiGUI 배치를 검사한다. 호스트와 생성 코드 검사는 키 기반 버튼 유지, 반응형 선택·실패 복구,
 키보드와 콜백 순서, 수명 경계를 헤드리스 트리에서 확인한다.
+
+계층 도구 모음의 순수 기하 계산은 `iiGUI/HierarchyToolbarLayout.h`가 소유한다.
+앱은 슬롯 내부 여백과 아이콘·텍스트 간격을 설정할 수 있으며, LVUI 생성 코드는
+`Metric.space4` 토큰을 전달한다. `LVUI/HierarchyToolbarLayout.h`에는 입력 값만 남고
+기존 `hierarchy_toolbar_geometry`와 `valid_hierarchy_toolbar_appearance`는 제거되었다.
+직접 소비자는 iiGUI의 `BasicHierarchyToolbarLayout`에 LVUI의
+`HierarchyToolbarLayoutBinding` 정책을 주입한다. 항목 ID 인덱스와 선택·탐색은
+`iiGUI/HierarchyToolbarModel.h`, 키별 버튼·그리기·입력·수명은
+`iiGUI/NativeHierarchyToolbarView.h`가 소유한다. LVUI의 값과 바인딩은 iiSDKCore 외
+SDK를 직접 참조하지 않으며 생성된 앱이 두 모듈을 조합한다. 도구 모음이 퇴역하면
+버튼·아이콘 캐시·콜백을 해제하고 진행 중인 이전 갱신을 게시하지 않는다.
+macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 계층 도구 모음·패널 생성 및
+헤드리스 검사를 통과했다. 실제 운영체제 창과 GPU는 검사하지 않았다.

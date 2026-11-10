@@ -6,8 +6,8 @@ LVUI는 반환 함수를 선택하는 동안 선택된 공유 부모와 임시 �
 
 ```lvui
 import vm Model
-let render: () -> String = vm.selected.makeDescription()
-@Static let original: () -> Void = vm.selected.makeHandler()
+const render: () -> String = vm.selected.makeDescription()
+@Static const original: () -> Void = vm.selected.makeHandler()
 Window { VStack {
     PushButton(vm.temporary().makeHandler())
     PushButton(vm.capture(vm.makeArgument()))

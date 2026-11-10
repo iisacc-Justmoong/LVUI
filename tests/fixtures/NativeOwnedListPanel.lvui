@@ -1,7 +1,7 @@
 import vm NativeOwnedListPanelModel
 Window {
     VStack(alignment: .leading) {
-        List(id: "list", controller: vm.controller, modelRevision: vm.revision, width: vm.width, height: 140,
+        List(id: "list", controller: vm.controller, modelRevision: vm.revision, width: vm.width, height: 140, scrollable: vm.scrollable,
              toolbarVisible: true, toolbarIcon1: "home", footerVisible: vm.footer,
              onItemActivated: vm.selected, onToolbarIconTriggered: vm.tool, onFooterButtonTriggered: vm.footerClicked)
         List(id: "source-list", model: vm.source, modelRevision: vm.revision, height: 80, footerVisible: false)

@@ -35,6 +35,8 @@ int main(){
     auto b=take(drop.snapshot()).bounds;good(tree->input({.kind=WidgetInputKind::pointer_down,.x=b.x+5,.y=b.y+5}));
     good(tree->input({.kind=WidgetInputKind::pointer_up,.x=b.x+5,.y=b.y+5}));
     require(scope->backend_0.clicks==1&&scope->backend_0.presses==1&&scope->backend_0.releases==1,"Generated Dropdown callbacks failed");
+    require(scope->backend_0.events==std::vector<std::string>{"pressed","released","method","after","last","clicked"},
+            "Generated Dropdown method order is wrong");
     good(label.activate());good(icon.activate());good(contained.activate());require(scope->backend_0.clicks==4,"Dropdown variants lost actions");
     scope->backend_0.iconMode.set(true);scope->backend_0.width.set(120);frame=take(tree->drawing_snapshot({400,220}));
     require(take(drop.snapshot()).bounds.width==120&&has_image(frame,image),"Reactive Dropdown icon or width was not applied");

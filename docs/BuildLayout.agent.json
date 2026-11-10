@@ -1,0 +1,156 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:eba81a92e904234fe2158a1f8c13789f0bbaa1b99d78a2b65713f59f131cce9d",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/BuildLayout.md",
+    "sha256": "0ce4ac6e3ce88d03fd9ce3b9f99f8e8dde6623353217b6c7749f181c9f8c9d0e",
+    "bytes": 4833,
+    "line_count": 55,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "빌드와 검증 경로",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 빌드와 검증 경로\n",
+      "level": 1,
+      "title": "빌드와 검증 경로"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "LVUI 모듈과 명령행 컴파일러, 테스트는 저장소의 `build/`에서 빌드한다.\n스타일 및 튜토리얼 예제는 기본적으로 비활성화한다. 설치 패키지는 별도 SDK\nprefix에 두고 컴파일러 입력과 임시 테스트 자료는 `build/`가 아닌 `resources/`에 둔다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 11,
+      "raw": "Windows SDK의 `min`·`max` 매크로가 이미 정의된 C++ 소비자에서도 LVUI 헤더의\n표준 함수 및 극한값 호출이 매크로로 치환되지 않도록 호출을 괄호로 감싼다.\n소비자에게 `NOMINMAX`를 전파하거나 기존 매크로를 해제하지 않는다. Windows\n테스트 빌드에는 대표 헤더의 컴파일 전용 검사와 작성 헤더의 회귀 검사를 포함한다.\n이는 소스 구성 설명이며 Windows 빌드 또는 실행 검증이 완료되었다는 뜻은 아니다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 13,
+      "end_line": 26,
+      "raw": "네이티브 C++ 타입 검증은 `resources/.t/` 아래의 독립 디렉터리를 확보한다.\niiFileProvider로 입력과 보고서를 만들고 구문 검사를 수행한 뒤 작업 공간을 정리한다.\n아이콘 임베딩, AOT 도구, 설치 패키지 경계 검사도 같은 격리를 사용한다. 패키지\n검사는 설치 매니페스트 두 개의 출력 경로를 임시 공간으로 돌리고, 설치 대상이\n절대 경로이거나 prefix를 벗어나는 설정을 미리 거절한다. 수천 개 자산을 외장\n저장소에 복사하고 정리하는 데 필요한 시간을 고려해 이 검사의 제한은 600초다.\n같은 CTest 실행 안에서 패키지 경계 검사와 이동 설치 소비자는 공통 자원 잠금으로\n직렬화해 두 설치 복사가 서로의 저장소 지연을 키우지 않도록 한다. 별도 CTest\n프로세스 사이에는 이 잠금이 적용되지 않는다.\n검사가 직접 생성한 임시 설치 디렉터리를 정리할 때 `ENOTEMPTY`만 최대 네 차례\n정리 시도한다. 외장 볼륨에서 정리 중 생성된 항목을 한 번 더 수거하기 위한\n한정된 처리이며, 권한 오류나 반복 실패는 숨기지 않는다. 기존 사용자 디렉터리나\n공유 설치 경로에는 적용하지 않는다. 정리 성공·재시도 한도·다른 오류 전파는\n`LVUI.PackageWorkspace`가 검사한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 31,
+      "raw": "타입 검증은 선택한 iiGUI 소스를 가리키는 전달 헤더를 LVUI 자체 빌드에 만들고\n`LVUI_IIGUI_HEADER_DIR`에서 iiGUI export 매크로를 찾는다. 따라서 iiGUI의 별도\n빌드나 임시 설치가 유지된다고 가정하지 않는다. 별도 iiGUI 소스 또는 export\n헤더가 없으면 해당 통합 테스트는 선택적으로 생략한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 33,
+      "end_line": 55,
+      "raw": "`LVUI.NativeInstalled`는 검사용 원본과 임시 입력을 `resources/.t/`의 전용 작업\n공간에 두고, 설치·컴파일 산출물은 `build/` 안의 별도 임시 디렉터리에 둔다.\n종료 시 두 작업 공간을 정리하고 기존 설치 매니페스트와 이전 검증 기록을 덮어쓰지\n않는다. 설치 소비자의 전용 빌드 디렉터리도 동일하게 `ENOTEMPTY`만 재시도하고\n그 외 오류는 그대로 보고한다. 이 검사는 GUI 호스트 없이 설치 소비자의 테스트\n실행 파일을 실행한다.\n공유 라이브러리 설치에서는 LVUI 옆의 iiSDKCore 설치 경로와 빌드에서 선택한\nCore 라이브러리 경로를 탐색 경로에 기록한다. 따라서 SDK 표준 배치에서 컴파일러가\n환경 변수 없이 실행되고, LVUI를 다른 위치로 옮긴 소비자도 지정된 Core를 찾을 수\n있다. 설치 소비자 검사는 라이브러리 검색 환경 변수를 제거해 이 경로를 검증한다.\n기존 Core와 호환되지 않는 새 Core가 필요한 설치는 기존 Core를 교체하지 않고\n`LVUI_CORE_PROFILE_HINT`로 형제 `iiSDKCore` 설치 안의 상대 프로필 경로를 지정할 수\n있다. 소비자가 Core를 명시적으로 선택하지 않은 경우 이 프로필을 우선 탐색하며,\n명시적으로 선택한 Core는 덮어쓰지 않는다. 이동 설치 검사도 해당 프로필을 통해\n쿼리 소비자를 구성한다.\n이동한 설치본에서는 메뉴·검색 필드와 눈금 및 심볼 입력을 사용하는 선언형\n슬라이더의 생성 코드를 별도 소비자에서 컴파일·링크한다. 이 화면 자체는 실행하지\n않으며, 눈금과 심볼의 동작은 별도의 헤드리스 위젯 검사에서 확인한다.\n이동 설치 소비자의 제한은 900초이며, 이 시간은 실제 검사가 끝나면 기다리지 않는다.\n몇몇 수동 실행 이력 검사의 경로는 별도로 이전해야 한다.\n다른 작업에서 사용 중인 기존 패키지 경로는 일시적으로 무시 대상인\n`resources/.state/` 자료로 연결해 보존할 수 있다. 복구한 사용자 파일은 무시\n대상인 `resources/.recovery/`에 유지한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "빌드와 검증 경로",
+      "anchor": "빌드와-검증-경로",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 9,
+        "text": "소비자에게 `NOMINMAX`를 전파하거나 기존 매크로를 해제하지 않는다. Windows",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 25,
+        "text": "공유 설치 경로에는 적용하지 않는다. 정리 성공·재시도 한도·다른 오류 전파는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 30,
+        "text": "빌드나 임시 설치가 유지된다고 가정하지 않는다. 별도 iiGUI 소스 또는 export",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 52,
+        "text": "몇몇 수동 실행 이력 검사의 경로는 별도로 이전해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

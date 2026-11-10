@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=307-40",
+  "reference": "TextField/Inline",
+  "cornerRadius": 0,
+  "verifiedModes": [
+    "Text",
+    "Search"
+  ],
+  "verifiedStates": [
+    "Enabled",
+    "Disabled",
+    "Typing",
+    "Dragged",
+    "CursorActive",
+    "KeyboardFocus"
+  ],
+  "enabled": {
+    "fillGradient": {
+      "type": "GRADIENT_LINEAR",
+      "visible": true,
+      "opacity": 1,
+      "blendMode": "NORMAL",
+      "gradientStops": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.05999999865889549
+          },
+          "position": 0,
+          "boundVariables": {}
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "position": 0.5199999809265137,
+          "boundVariables": {}
+        },
+        {
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 0.014999999664723873
+          },
+          "position": 1,
+          "boundVariables": {}
+        }
+      ],
+      "gradientTransform": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ]
+    },
+    "backgroundVariableId": "VariableID:215:9618",
+    "backgroundOpacity": 0.1599999964237213,
+    "strokes": [],
+    "effects": [
+      {
+        "type": "BACKGROUND_BLUR",
+        "visible": true,
+        "radius": 6,
+        "boundVariables": {},
+        "blurType": "NORMAL"
+      },
+      {
+        "type": "INNER_SHADOW",
+        "visible": true,
+        "radius": 1,
+        "boundVariables": {},
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.11999999731779099
+        },
+        "offset": {
+          "x": 0,
+          "y": 0.6499999761581421
+        },
+        "spread": 0,
+        "blendMode": "NORMAL"
+      },
+      {
+        "type": "INNER_SHADOW",
+        "visible": true,
+        "radius": 0.6000000238418579,
+        "boundVariables": {},
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.054999999701976776
+        },
+        "offset": {
+          "x": 0,
+          "y": -0.5
+        },
+        "spread": 0,
+        "blendMode": "NORMAL"
+      }
+    ]
+  },
+  "disabled": {
+    "fillGradient": {
+      "type": "GRADIENT_LINEAR",
+      "visible": true,
+      "opacity": 1,
+      "blendMode": "NORMAL",
+      "gradientStops": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0.05999999865889549
+          },
+          "position": 0,
+          "boundVariables": {}
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0,
+            "a": 0
+          },
+          "position": 0.5199999809265137,
+          "boundVariables": {}
+        },
+        {
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 0.014999999664723873
+          },
+          "position": 1,
+          "boundVariables": {}
+        }
+      ],
+      "gradientTransform": [
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          -1,
+          0,
+          1
+        ]
+      ]
+    },
+    "backgroundVariableId": "VariableID:712:14",
+    "backgroundOpacity": 0.1599999964237213,
+    "strokes": [],
+    "effects": []
+  }
+}

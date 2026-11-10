@@ -1,11 +1,13 @@
 # 재사용 가능한 View 값
 
-`let`의 시각 초기값은 `View`로 명시하거나 추론할 수 있다. 선언은 빌드 시의 구성
+`const`의 시각 초기값은 `View`로 명시하거나 추론할 수 있다. 선언은 빌드 시의 구성
 정의이며, 소스 파싱이나 선언 자체가 위젯·지역 백엔드를 생성하지 않는다.
+계산형 `var name: View { ... }` 프로퍼티도 같은 어휘 포획과 사용 위치별 생성을
+따른다. 저장형 View 재대입과의 차이는 [뷰 세션](ViewSessions.md)을 따른다.
 
 ```lvui
 import document Backend
-let header: View = HStack {
+const header: View = HStack {
     Label(text: document.title)
     PushButton(document.save, text: "Save")
 }
@@ -22,7 +24,7 @@ Window {
 정의 안에 지역 import가 있으면 각 활성화가 독립된 객체를 소유한다. 같은 부모 import를
 참조하면 기존 부모 인스턴스를 빌린다.
 
-`let copied = header`는 같은 구성 정의를 다른 이름에 연결한다. `copied()`를 사용해도
+`const copied = header`는 같은 구성 정의를 다른 이름에 연결한다. `copied()`를 사용해도
 위젯 객체를 공유하지 않는다. 명시한 자식 ID에는 사용 위치별 이름 영역을 부여하여 두
 활성화가 서로 충돌하지 않게 한다. 메뉴·툴팁의 지역 `targetId`도 같은 영역에서 해석한다.
 `TabBar` 같은 타입 제한 자식 입력은 정의가 실제로 구성하는 뷰의 타입으로 검사한다.
@@ -30,7 +32,7 @@ Window {
 창을 값으로 정의한 뒤 루트에서 사용할 수도 있다.
 
 ```lvui
-let app: View = Window(width: 720) { Label(text: "Native app") }
+const app: View = Window(width: 720) { Label(text: "Native app") }
 app()
 ```
 
@@ -38,9 +40,9 @@ app()
 
 ```lvui
 import document Backend
-let heading: View = Label(text: "Untitled")
-let save: View = PushButton(document.save, text: "Save")
-let panel: View = VStack { Label(text: "Default content") }
+const heading: View = Label(text: "Untitled")
+const save: View = PushButton(document.save, text: "Save")
+const panel: View = VStack { Label(text: "Default content") }
 Window {
     import document OtherBackend
     VStack {
@@ -58,7 +60,7 @@ import가 같은 이름을 가려도 전달한 수신자가 바뀌지 않는다.
 컴포넌트의 계약으로 검증한다. 자식 블록은 기본 자식 목록을 대체하며 선언 자체를 삭제하지
 않는다. 창을 값으로 사용한 루트도 이름 있는 입력과 기본 콘텐츠를 받을 수 있다.
 
-명시적인 [타입 매개변수와 이름별 슬롯](Components.md)은 `let Name(...): View` 서명으로
+명시적인 [타입 매개변수와 이름별 슬롯](Components.md)은 `const Name(...): View` 서명으로
 별도 제공한다. 위의 서명 없는 View 값 덮어쓰기와 구분한다. 전달한 자식의
 지역 선언은 `VStack { import ... }`처럼 자체 View 안에 둔다. 호출 본문의 직접 지역 선언,
 이름 없는 호출 입력, 조건부 View 값의 분기 입력 덮어쓰기는 명시적으로 거부한다.

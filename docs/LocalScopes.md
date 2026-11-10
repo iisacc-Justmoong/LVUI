@@ -1,6 +1,6 @@
 # 중첩 뷰의 지역 스코프
 
-뷰 본문의 지역 `let`·`var`·import는 해당 뷰를 구성하는 C++ 활성화에 속한다.
+뷰 본문의 지역 `const`·`var`·import는 해당 뷰를 구성하는 C++ 활성화에 속한다.
 AOT는 이를 별도 스코프와 구성 함수로 생성한다. 부모의 값과 import는 같은 객체를
 빌려 읽고, 지역 import는 자체 객체를 생성한다. 지역 이름은 부모 이름을 가릴 수 있다.
 
@@ -10,7 +10,7 @@ Window {
     VStack {
         VStack {
             import inspector Backend
-            let status: String = document.ready ? "Ready" : "Waiting"
+            const status: String = document.ready ? "Ready" : "Waiting"
             Label(text: status)
             PushButton(inspector.refresh, text: "Refresh")
         }

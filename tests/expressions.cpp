@@ -71,10 +71,27 @@ void annotations() {
     check(document.bindings()[0].annotation == lvui::BindingAnnotation::static_value, "Static annotation lost");
     check(document.bindings()[1].annotation == lvui::BindingAnnotation::observable, "Observable annotation lost");
     check(document.root().children[0].bindings[0].annotation == lvui::BindingAnnotation::observable, "Nested annotation lost");
+    const auto defaults = parsed("@State @Bindable var local: String = \"draft\"\n@Bindable @State let label: String = local\nWindow { Label(text: label) }");
+    check(defaults.bindings().size() == 2 && defaults.bindings()[0].mutable_value && !defaults.bindings()[1].mutable_value &&
+          defaults.bindings()[0].explicit_state && defaults.bindings()[0].explicit_bindable &&
+          defaults.bindings()[1].explicit_state && defaults.bindings()[1].explicit_bindable,
+          "Explicit default markers changed mutability");
+    const auto observed = parsed("@Observable @State @Bindable var n: Int = 1\nWindow { Label(text: n) }");
+    check(observed.bindings()[0].annotation == lvui::BindingAnnotation::observable &&
+          observed.bindings()[0].explicit_state && observed.bindings()[0].explicit_bindable,
+          "Default markers lost an explicit observation annotation");
     invalid("@Static var n = 1\nLabel()", "immutable");
     invalid("@Unknown let n = 1\nLabel()", "Unknown declaration");
     invalid("@Static @Observable let n = 1\nLabel()", "conflicting");
     invalid("@Observable @Observable let n = 1\nLabel()", "conflicting");
+    invalid("@State @State var n = 1\nLabel()", "conflicting");
+    invalid("@Bindable @Bindable var n = 1\nLabel()", "conflicting");
+    invalid("@State @Static let n = 1\nLabel()", "conflicting");
+    invalid("@Bindable @Static let n = 1\nLabel()", "conflicting");
+    invalid("@Static @State let n = 1\nLabel()", "conflicting");
+    invalid("@Static @Bindable let n = 1\nLabel()", "conflicting");
+    invalid("@State let MyPane(): View = Label()\nWindow { MyPane() }", "unannotated");
+    invalid("@Bindable var panel: View { Label() }\nWindow { panel() }", "computed View");
     invalid("@Static import vm Backend\nLabel()", "let or var");
 }
 void diagnostics() {

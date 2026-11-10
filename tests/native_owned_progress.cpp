@@ -3,6 +3,7 @@
 #include "NativeOwnedProgressSource.generated.h"
 #include "NativeOwnedProgressScoped.generated.h"
 #include "NativeOwnedProgressMotion.generated.h"
+#include <LVUI/StyleTokens.h>
 #include <iiGUI/WidgetState.h>
 #include <iiSDKCore/Runtime/FrameLoop.h>
 #include <algorithm>
@@ -22,10 +23,12 @@ void good(ii::core::Result<void> result) { if (!result) throw std::runtime_error
 bool near(double a, double b) { return std::abs(a - b) < 1e-4; }
 std::vector<float> fill_widths(const ii::gui::CanvasFrame& drawing) {
     std::vector<float> widths;
+    const auto color=lvui::figma_defaults::accent_blue_default;
+    const auto linear=[](double value){return value<=.04045?value/12.92:std::pow((value+.055)/1.055,2.4);};
     const auto collect = [&](const auto& panels) {
         for (const auto& panel : panels)
-            if (near(panel.top.red, 0.007349484371406652) && near(panel.top.green, 0.22339124573309738) &&
-                near(panel.top.blue, 1) && near(panel.top.alpha, 1) && panel.stroke_width == 0)
+            if (near(panel.top.red, linear(color.red)) && near(panel.top.green, linear(color.green)) &&
+                near(panel.top.blue, linear(color.blue)) && near(panel.top.alpha, color.alpha) && panel.stroke_width == 0)
                 widths.push_back(panel.bounds.width);
     };
     collect(drawing.panels);
@@ -175,7 +178,12 @@ void motion() {
     ii::runtime::EventLoop events;
     ii::runtime::FrameLoop frames(events);
     ii::gui::detail::WidgetFrameHooks hooks;
+    // Host activity changes immediately; FrameLoop statistics describe its
+    // last scheduler snapshot and may lag a disable requested inside a frame.
+    bool frame_activity = false;
+    std::size_t activity_changes = 0;
     hooks.frames = [&]() -> ii::core::Result<ii::runtime::FrameLoop*> { return &frames; };
+    hooks.activity = [&](bool active) { frame_activity = active; ++activity_changes; };
     auto state = std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task) { task(); },
                                                                ii::gui::WidgetAppearance{}, std::move(hooks));
     auto host = take(state->content_host({}, "host", {640, 480}));
@@ -192,10 +200,13 @@ void motion() {
     auto found = std::ranges::find_if(snapshots, [](const auto& item) { return item.id.ends_with("/motion"); });
     require(found != snapshots.end(), "Animated progress did not mount");
     auto widget = take(state->find(found->id));
+    require(!frame_activity && activity_changes == 0, "Idle progress requested frames");
     scope->backend_0.current.set(100);
+    require(frame_activity, "Changed progress did not request frames");
     const auto anchor = ii::runtime::Clock::now() + 1h;
     (void)frames.step(anchor);
     require(near(width(), 200), "Progress did not settle at its first animation target");
+    require(!frame_activity, "Settled progress retained its frame request");
     scope->backend_0.enabled.set(false);
     scope->backend_0.current.set(0);
     scope->backend_0.enabled.set(true);

@@ -1,0 +1,11 @@
+{
+  "locale": "ko",
+  "strings": {
+    "window.title": "현지화된 카운터",
+    "counter.heading": "현재 숫자",
+    "counter.increment": "1 증가",
+    "counter.replace": "제목 변경",
+    "counter.replacement": "변경된 제목",
+    "language.korean": "한국어"
+  }
+}

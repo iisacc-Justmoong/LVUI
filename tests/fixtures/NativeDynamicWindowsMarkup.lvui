@@ -1,0 +1,6 @@
+import vm NativeDynamicWindowsBackend
+Application(onReady: openWindow(vm.target)) {
+    Window { Label(text: "Main") }
+    Window(id: "tools", initiallyOpen: false) { Label(text: "Tools") }
+    Window(id: "palette", initiallyOpen: false) { Label(text: "Palette") }
+}

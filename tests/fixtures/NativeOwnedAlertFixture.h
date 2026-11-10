@@ -1,5 +1,6 @@
 #pragma once
 #include <LVUI/NativeAlert.h>
+#include <iiGUI/NativeWidgets.h>
 #include <iiSDKCore/Core/Property/Observable.h>
 #include <stdexcept>
 #include <string>
@@ -10,7 +11,7 @@ struct NativeOwnedAlertModel final {
     ii::core::Observable<int> count{2};
     ii::core::Observable<bool> secondaryEnabled{true};
     std::vector<std::string> events;
-    void apply(const lvui::native::AlertButtonEvent& event) {
+    void apply(const lvui::native::ButtonEventValue<ii::gui::Widget>& event) {
         if (event.trigger != "clicked" || !event.source.snapshot()) throw std::runtime_error("Invalid generated alert event");
         events.emplace_back("method");
     }

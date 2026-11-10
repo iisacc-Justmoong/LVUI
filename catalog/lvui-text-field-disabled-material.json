@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=114-174",
+  "reference": "TextField/Disabled",
+  "fillGradient": {
+    "type": "GRADIENT_LINEAR",
+    "visible": true,
+    "opacity": 1,
+    "blendMode": "NORMAL",
+    "gradientStops": [
+      {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0.04500000178813934
+        },
+        "position": 0,
+        "boundVariables": {}
+      },
+      {
+        "color": {
+          "r": 0,
+          "g": 0,
+          "b": 0,
+          "a": 0
+        },
+        "position": 0.5199999809265137,
+        "boundVariables": {}
+      },
+      {
+        "color": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 0.014999999664723873
+        },
+        "position": 1,
+        "boundVariables": {}
+      }
+    ],
+    "gradientTransform": [
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        -1,
+        0,
+        1
+      ]
+    ]
+  },
+  "strokes": [],
+  "effects": []
+}

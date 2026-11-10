@@ -1,4 +1,6 @@
 #include <LVUI/NativeCollectionNavigation.h>
+#include <iiGUI/CollectionNavigation.h>
+namespace lvui::native {using CollectionNavigation=CollectionNavigationBinding<ii::gui::BasicCollectionNavigation>;}
 #include <iostream>
 #include <numeric>
 #include <stdexcept>

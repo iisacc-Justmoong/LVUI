@@ -1,0 +1,48 @@
+import vm NativeDefaultBindingModel
+
+var draft: String = "Local"
+const draftCopy: String = draft
+@State @Bindable var explicitValue: String = "Explicit"
+var selected: Bool = false
+var scratch: String = vm.text
+var inferred = vm.text
+const derived: String = vm.text
+@Static const fixed: String = vm.text
+const ModelEditor(value: String): View = InputField(id: "viaModel", text: value)
+const LocalEditor(value: String): View = InputField(id: "viaLocal", text: value)
+const ModelRelay(value: String): View = ModelEditor(value: value)
+
+Window {
+    VStack {
+        InputField(id: "local", text: draft)
+        Label(id: "localLabel", text: draft)
+        Label(id: "localDerivedLabel", text: draftCopy)
+        InputField(id: "explicit", text: explicitValue)
+        Label(id: "explicitLabel", text: explicitValue)
+        LocalEditor(value: draft)
+        InputField(id: "model", text: vm.text)
+        Label(id: "modelLabel", text: vm.text)
+        ModelRelay(value: vm.text)
+        InputField(id: "scratch", text: scratch)
+        InputField(id: "inferred", text: inferred)
+        InputField(id: "command", text: vm.guarded, onEdited: vm.edited)
+        InputField(id: "derived", text: derived)
+        Label(id: "derivedLabel", text: derived)
+        InputField(id: "fixed", text: fixed)
+        InputField(id: "readonly", text: vm.locked)
+        TextEditor(id: "editor", text: vm.editor)
+        SearchField(id: "search", text: vm.query)
+        CheckBox(id: "localCheck", checked: selected)
+        Label(id: "localCheckLabel", text: selected ? "On" : "Off")
+        CheckBox(id: "modelCheck", checked: vm.checked)
+        CheckBox(id: "commandCheck", checked: vm.guardedCheck, onToggled: vm.toggled)
+        ToggleSwitch(id: "toggle", checked: vm.enabled)
+        RadioButton(id: "radio", checked: vm.radio)
+        Slider(id: "slider", value: vm.level, from: 0, to: 1, stepSize: 0.1)
+        TabBar(id: "tabs", currentIndex: vm.tab, autoSelect: true) {
+            Tab(id: "firstTab", text: "First", iconName: "home")
+            Tab(id: "secondTab", text: "Second", iconName: "generaladd")
+        }
+        ListItemSelector(id: "selector", options: ["One", "Two"], currentIndex: vm.choice)
+    }
+}

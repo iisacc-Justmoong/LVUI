@@ -1,5 +1,5 @@
-let edge: Color = composite(.material.surface.dense.edge, .window)
-let panelGap: Metric = .space12
+const edge: Color = composite(.material.surface.dense.edge, .window)
+const panelGap: Metric = .space12
 ApplicationWindow(title: "LVUI · style tokens", width: 640, height: 420,
                   backgroundColor: Color.window) {
     VStack(id: "panel", width: 400, height: 250,

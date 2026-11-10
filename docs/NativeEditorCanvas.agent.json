@@ -1,0 +1,128 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:9f4eb1960c471fb057b3fc279f9b645c5df8a96aa85e4cde59a08af9e8bb7080",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeEditorCanvas.md",
+    "sha256": "7cb6e5ae0d67db29749caec469559d85a87aed2aac3e414cd8e9bc189495aef1",
+    "bytes": 1917,
+    "line_count": 22,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 편집 캔버스 연결",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 편집 캔버스 연결\n",
+      "level": 1,
+      "title": "네이티브 편집 캔버스 연결"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 9,
+      "raw": "Dreamscapes 편집 문서와 레이어는 앱이 소유한다. `iiGUI/NativeEditorCanvasView.h`의 `NativeEditorCanvas`는 화면\n크기와 문서 좌표의 표시 영역, 변환과 리비전을 원천 질의에 전달하고 반환된\n불변 그리기 스냅샷을 iiGUI 표면에 유지한다. 포인터 입력은 문서 좌표, 펜 압력,\n장치 정보와 함께 앱에 전달한다. 클릭·이동·종료·취소는 서로 구분된다.\n펜 호버와 휠·터치 확대 입력도 해당 문서 좌표와 원래 장치 정보로 전달한다.\n확대·이동·회전·좌우 및 상하 반전을 변환하고, 회전된 화면의 네 모서리를 모두\n포함하는 문서 영역을 질의한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 11,
+      "end_line": 16,
+      "raw": "리비전, 화면 크기 또는 변환이 달라질 때만 원천을 다시 질의한다. 단순 다시\n그리기는 기존 스냅샷을 사용한다. 조회가 실패하면 마지막 정상 화면을 유지한다.\n변경 알림을 받은 앱은 소유 스레드에서 새 리비전을 전달한다. 비활성화·포커스\n상실·포인터 취소·뷰 퇴역은 진행 중인 동작을 취소한다. 이미지·도구·문서 편집,\n비동기 타일 생성과 결과 전달은 앱이 주입한 원천의 책임이다.\n할당 영역이 바뀌면 앱은 새 폭과 높이를 옵션으로 전달한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 17,
+      "end_line": 17,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 18,
+      "end_line": 20,
+      "raw": "이 접점은 `NativeViewSource`의 빌더에서 만들어 LVUI `NativeView`에 부착할 수 있다.\nQt나 다른 SDK의 구현에 의존하지 않는다. 이 계약은 Dreamscapes의 기존 문서 엔진을\n자동 이전하거나 브러시·변형·합성의 완성도를 보장하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 21,
+      "end_line": 21,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "캔버스 호스트와 그리기 스냅샷·입력 수명은 iiGUI에 있으며 LVUI는 선언한 `NativeView`를 앱 제공 원천에 연결한다. macOS arm64에서 가시 영역 질의, 펜·휠, 취소, 생성 코드와 격리된 소비자를 창 없이 검사했다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 편집 캔버스 연결",
+      "anchor": "네이티브-편집-캔버스-연결",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 19,
+        "text": "Qt나 다른 SDK의 구현에 의존하지 않는다. 이 계약은 Dreamscapes의 기존 문서 엔진을",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 20,
+        "text": "자동 이전하거나 브러시·변형·합성의 완성도를 보장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

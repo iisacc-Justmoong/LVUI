@@ -1,0 +1,10 @@
+import vm NativeOwnedListItemTaskModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "task", type: .Task, label: "Retouch", checked: vm.checked,
+                 selector: vm.priorities, selectorIndex: vm.priority, quantity: vm.quantity,
+                 onCheckedChanged: vm.checkedChanged, onSelectorIndexChanged: vm.priorityChanged,
+                 onQuantityChanged: vm.quantityChanged)
+        ListItem(id: "dynamic", type: vm.kind)
+    }
+}

@@ -5,7 +5,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { Stepper(id: \"stepper\", arrow: vm.arrow, tone: vm.tone, enabled: vm.enabled, cornerRadius: vm.radius, onStepped: vm.step, onClick: vm.clicked) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto token:{"#include <LVUI/NativeStepper.h>","lvui::native::NativeStepper::create(","lvui::StepperConfiguration","component.set_options(value)"})
+    for(auto token:{"#include <LVUI/NativeStepper.h>","lvui::native::StepperBinding<","lvui::StepperConfiguration","component.set_options(value)"})
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("Generated Stepper lost ")+token);
     if(code->find("widgets.stepper(")!=code->npos||code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Generated Stepper depends on a prebuilt or legacy control");

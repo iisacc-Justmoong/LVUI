@@ -1,0 +1,114 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:0d0e80b34d7f4f3988a5a8d473e9683145859c5833d8997cac3cfb5a447451b8",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativePopupOpen.md",
+    "sha256": "af5c77a142d479eb18f7f64e001ab8eb844e233b5a1cd2aecc3854ce58757d17",
+    "bytes": 1941,
+    "line_count": 19,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "선언형 팝업 열림 바인딩",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 선언형 팝업 열림 바인딩\n",
+      "level": 1,
+      "title": "선언형 팝업 열림 바인딩"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "`NativePopupOpen.h`의 `bind_popup_open()`은 관측 가능한 Bool과 앱이 전달한\n팝업 핸들을 연결한다. 헤더는 iiSDKCore 외 그래픽 SDK에 직접 의존하지 않는다. 구성 중에는 요청된 값을 수집만 하고, 위젯 세대와 이를 포함한 후보가 모두\n게시된 다음 처음 적용한다. 실패하거나 폐기된 후보는 팝업을 열지 않는다.\n이후 값이 바뀌면 현재 상태와 비교하여 필요한 경우에만 열거나 정상적으로 닫는다.\n같은 값이나 관련 없는 속성의 변경은 열린 콘텐츠를 다시 만들지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "호출자는 게시 콜백을 등록할 수 있는 빌더, 세대 소유 `Bindings`, 현재 열림 상태를\n조회하고 열기·닫기를 수행하는 팝업 핸들, `ReadContext`를 받는 Bool getter를 전달한다. 바인딩 실패는 소유 그래프의 `failures()`에 남고 유효한 다음\n변경으로 복구할 수 있다. 위젯과 그래프의 소유권은 호출자에게 있으며, 세대가\n종료되면 게이트와 구독도 함께 종료된다. 팝업을 사용자가 직접 닫을 때 원본 Bool을\n자동 변경하지는 않는다. 앱은 닫힘 콜백에서 필요에 따라 자신의 상태를 갱신한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 19,
+      "raw": "`Modal`, `Alert`, `Sheet`의 선언형 `open`은 이 접점을 사용한다. 초기 게시의 실패는\n기존 최상위 `mount()` 경로에서도 오류로 반환한다. 팩터리 안의 실패는 해당 활성화의\n바인딩 진단에서 확인한다. 생성된 iiGUI 앱은 게시 완료 후 재진입 계약을 확인한다. 구형 iiGUI 헤더는\n컴파일할 때 거부하고 새 헤더와 구형 라이브러리를 함께 쓰면 링크할 때 거부한다.\n다른 호스트를 직접 조합하는 앱은 같은 게시·수명 계약을 제공해야 한다. 버전 숫자가 같더라도 해당 헤더와 라이브러리는 짝을 이루어야 한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "선언형 팝업 열림 바인딩",
+      "anchor": "선언형-팝업-열림-바인딩",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 4,
+        "text": "팝업 핸들을 연결한다. 헤더는 iiSDKCore 외 그래픽 SDK에 직접 의존하지 않는다. 구성 중에는 요청된 값을 수집만 하고, 위젯 세대와 이를 포함한 후보가 모두",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 19,
+        "text": "다른 호스트를 직접 조합하는 앱은 같은 게시·수명 계약을 제공해야 한다. 버전 숫자가 같더라도 해당 헤더와 라이브러리는 짝을 이루어야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/BackendConstruction.md",
-    "sha256": "05454ee61d4b7bb3f96c0e8ec7aa5f6c73fd121b343aea6a0df045a1c578699e",
-    "bytes": 7882,
-    "line_count": 115,
+    "sha256": "2e1a1b3aee40a8d44e4fcb08403708fccee3b9ce0742560a16b1b3987f2a3bc7",
+    "bytes": 9145,
+    "line_count": 130,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -275,7 +275,7 @@
       "kind": "paragraph",
       "start_line": 66,
       "end_line": 69,
-      "raw": "생성 정책은 가장 먼저 생성되는 스코프 저장소가 보유하여 모든 백엔드보다 나중에 파괴한다.\n함수만이 소유하는 Runtime·서비스도 백엔드의 소멸자 실행 중 살아 있다. 이후 생성자가\n실패하면 앞서 생성된 백엔드를 역순으로 정리하며, iiGUI의 후보 콘텐츠 활성화 실패는 기존\n작동 화면을 보존한다. 생성 오류의 원래 C++ 예외를 숨기지 않는다.\n"
+      "raw": "`QueryConnection`을 사용하는 경우 같은 불변 정책에\n`with_query_connections(connections)`를 추가한다. 정책을 `with<T>()` 또는\n`with_activation()`으로 복사·확장해도 UI EventLoop별 연결 관리자는 유지된다.\n생성과 종료 순서, 큐 포화 처리와 소유권은 [쿼리 연결](QueryConnections.md)을 따른다.\n"
     },
     {
       "id": "b000030",
@@ -286,40 +286,38 @@
     },
     {
       "id": "b000031",
-      "kind": "heading",
+      "kind": "paragraph",
       "start_line": 71,
-      "end_line": 71,
-      "raw": "## 비동기 작업 경계\n",
-      "level": 2,
-      "title": "비동기 작업 경계"
+      "end_line": 73,
+      "raw": "`with_app_strings(strings)`는 앱 범위 번역 저장소를 주입한다. 다른 생성 정책이나\n쿼리 연결을 추가해도 같은 저장소가 유지된다. 주입하지 않은 생성 Application은 자체\n저장소를 만들며, 파일 로딩과 언어 변경은 [현지화 계약](Localization.md)을 따른다.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 74,
+      "end_line": 74,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 73,
-      "end_line": 75,
-      "raw": "이 계약은 실제 iiSDKCore Runtime을 생성자로 전달할 수 있게 한다. 작업마다 전용 스레드나\n전역 런타임을 만드는 기능이 아니다. `LVUI::Native` 자체에는 Core Runtime 링크를 강제하지\n않으며 Runtime을 사용하는 C++ 백엔드·호스트가 해당 의존성을 선택한다.\n"
+      "start_line": 75,
+      "end_line": 79,
+      "raw": "명시적 공급자 없이 이미지 소스를 쓰는 화면은 같은 정책에서\n`std::shared_ptr<ImageServices>`도 활성화마다 한 번 요청한다. 앱은 의도적으로 같은 서비스를 반환해 화면 간 이미지\n캐시를 공유할 수 있으며, 등록이 없거나 빈 포인터를 반환하면 각 화면이 빈 서비스를\n따로 만든다. 자식은 부모 서비스를 상속하고 화면 `configure`는 이를 재정의할 수\n있다. 서비스와 작업 실행기의 수명 및 등록 예제는 [이미지 로딩](NativeImageLoading.md)을 따른다.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 76,
-      "end_line": 76,
+      "start_line": 80,
+      "end_line": 80,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 77,
+      "start_line": 81,
       "end_line": 84,
-      "raw": "생성자 주입만으로 임의 C++ 작업의 캡처와 종료를 추적하지는 않는다. 선택적\n[활성화 작업 컨텍스트](ActivationWork.md)는 `BackendRequest.activation`을 통해 전달한다.\n백엔드 소유 작업은\n기존 Core `TaskScope`·`SerialQueue` 등의 경계에 등록해야 한다. 실행 중 작업을 보존하면서\n뷰 종료를 비동기로 완료하는 등록 작업의 계약은 해당 컨텍스트로 연결한다. 임의 네이티브\n작업·다른 실행 영역까지 포함한 전체 계약은 [수명 명세](InvocationLifecycle.md)와\n[전체 완료 감사](Completion.md)의 검증 대상이다. 실행기가 빌린 참조이면 앱이 해당\n참조의 수명을 보장한다. 정책이 공유 자원을 포획하면 스코프가 그 소유권을 유지한다.\n"
+      "raw": "생성 정책은 가장 먼저 생성되는 스코프 저장소가 보유하여 모든 백엔드보다 나중에 파괴한다.\n함수만이 소유하는 Runtime·서비스도 백엔드의 소멸자 실행 중 살아 있다. 이후 생성자가\n실패하면 앞서 생성된 백엔드를 역순으로 정리하며, iiGUI의 후보 콘텐츠 활성화 실패는 기존\n작동 화면을 보존한다. 생성 오류의 원래 C++ 예외를 숨기지 않는다.\n"
     },
     {
       "id": "b000036",
@@ -333,9 +331,9 @@
       "kind": "heading",
       "start_line": 86,
       "end_line": 86,
-      "raw": "## 검증\n",
+      "raw": "## 비동기 작업 경계\n",
       "level": 2,
-      "title": "검증"
+      "title": "비동기 작업 경계"
     },
     {
       "id": "b000038",
@@ -348,51 +346,95 @@
       "id": "b000039",
       "kind": "paragraph",
       "start_line": 88,
-      "end_line": 92,
-      "raw": "`LVUI.NativeBackendFactories.*`는 기본 생성, 정확한 반환 타입, 이동 전용 팩토리와\n비이동 백엔드, 독립 생성, 정책 교체, 생성 위치별 입력과 오류를 검사한다.\n`iiGUI.native_backend_construction.*`는 실제 AOT C++의 저장소 접두 단계·파생 값·차용·\n지역 활성화·실패 롤백·자원 파괴 순서와 실제 Core Runtime 주입·워커 실행을 검사한다.\nLVRS 생성 팩토리의 오브젝트 컴파일은 실제 창·플랫폼·최종 LVRS 실행과 구분한다.\n"
+      "end_line": 90,
+      "raw": "이 계약은 실제 iiSDKCore Runtime을 생성자로 전달할 수 있게 한다. 작업마다 전용 스레드나\n전역 런타임을 만드는 기능이 아니다. `LVUI::Native` 자체에는 Core Runtime 링크를 강제하지\n않으며 Runtime을 사용하는 C++ 백엔드·호스트가 해당 의존성을 선택한다.\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 93,
-      "end_line": 93,
+      "start_line": 91,
+      "end_line": 91,
       "raw": "\n"
     },
     {
       "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 92,
+      "end_line": 99,
+      "raw": "생성자 주입만으로 임의 C++ 작업의 캡처와 종료를 추적하지는 않는다. 선택적\n[활성화 작업 컨텍스트](ActivationWork.md)는 `BackendRequest.activation`을 통해 전달한다.\n백엔드 소유 작업은\n기존 Core `TaskScope`·`SerialQueue` 등의 경계에 등록해야 한다. 실행 중 작업을 보존하면서\n뷰 종료를 비동기로 완료하는 등록 작업의 계약은 해당 컨텍스트로 연결한다. 임의 네이티브\n작업·다른 실행 영역까지 포함한 전체 계약은 [수명 명세](InvocationLifecycle.md)와\n[전체 완료 감사](Completion.md)의 검증 대상이다. 실행기가 빌린 참조이면 앱이 해당\n참조의 수명을 보장한다. 정책이 공유 자원을 포획하면 스코프가 그 소유권을 유지한다.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
       "kind": "heading",
-      "start_line": 94,
-      "end_line": 94,
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "## 검증\n",
+      "level": 2,
+      "title": "검증"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 107,
+      "raw": "`LVUI.NativeBackendFactories.*`는 기본 생성, 정확한 반환 타입, 이동 전용 팩토리와\n비이동 백엔드, 독립 생성, 정책 교체, 생성 위치별 입력과 오류를 검사한다.\n`iiGUI.native_backend_construction.*`는 실제 AOT C++의 저장소 접두 단계·파생 값·차용·\n지역 활성화·실패 롤백·자원 파괴 순서와 실제 Core Runtime 주입·워커 실행을 검사한다.\nLVRS 생성 팩토리의 오브젝트 컴파일은 실제 창·플랫폼·최종 LVRS 실행과 구분한다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "heading",
+      "start_line": 109,
+      "end_line": 109,
       "raw": "## 2026-10-26 검증 기록\n",
       "level": 2,
       "title": "2026-10-26 검증 기록"
     },
     {
-      "id": "b000042",
+      "id": "b000048",
       "kind": "blank",
-      "start_line": 95,
-      "end_line": 95,
+      "start_line": 110,
+      "end_line": 110,
       "raw": "\n"
     },
     {
-      "id": "b000043",
+      "id": "b000049",
       "kind": "paragraph",
-      "start_line": 96,
-      "end_line": 96,
+      "start_line": 111,
+      "end_line": 111,
       "raw": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 겹치는 검사의 수량은 합산하지 않는다.\n"
     },
     {
-      "id": "b000044",
+      "id": "b000050",
       "kind": "blank",
-      "start_line": 97,
-      "end_line": 97,
+      "start_line": 112,
+      "end_line": 112,
       "raw": "\n"
     },
     {
-      "id": "b000045",
+      "id": "b000051",
       "kind": "table",
-      "start_line": 98,
-      "end_line": 105,
+      "start_line": 113,
+      "end_line": 120,
       "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 144/144 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 67/67 통과 |\n| iiGUI 창 없는 회귀·실제 생성 C++ 연결 | 53/53 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 53/53 통과 |\n| 설치·경로 이동 독립 소비자 | 코어 실행·컴파일러 소비자 2/2 통과, 새 공개 헤더와 생성 경로 포함 |\n| 실제 LVRS 생성 팩토리 | 비이동 백엔드·중첩·차용·생성 입력의 오브젝트 컴파일 통과, 실행하지 않음 |\n",
       "columns": [
         "범위",
@@ -426,31 +468,31 @@
       ]
     },
     {
-      "id": "b000046",
+      "id": "b000052",
       "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
+      "start_line": 121,
+      "end_line": 121,
       "raw": "\n"
     },
     {
-      "id": "b000047",
+      "id": "b000053",
       "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 110,
+      "start_line": 122,
+      "end_line": 125,
       "raw": "이동 전용 생성 함수, const 타입 분리, 이름별 입력, 활성화별 독립 객체, 파생 값·중첩 정책\n상속, 생성 실패 후 기존 화면 보존과 복구, 자원의 파괴 순서를 검사했다. 앱의 기존 Core\nRuntime을 실제 생성자로 전달하고 그 지속 워커에서 작업이 실행되는 것도 확인했다.\n이 검사가 불투명한 임의 비동기 캡처의 전체 종료를 입증하지는 않는다.\n"
     },
     {
-      "id": "b000048",
+      "id": "b000054",
       "kind": "blank",
-      "start_line": 111,
-      "end_line": 111,
+      "start_line": 126,
+      "end_line": 126,
       "raw": "\n"
     },
     {
-      "id": "b000049",
+      "id": "b000055",
       "kind": "paragraph",
-      "start_line": 112,
-      "end_line": 115,
+      "start_line": 127,
+      "end_line": 130,
       "raw": "검사한 생성 위젯 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼이 없다.\nDreamscapes QML 관측 기준선 81개 파일은 변경하지 않았다. 원시 로그·설치 소비자·소스\n해시·실행 경계는 `build/lvui-completion/backend-construction-verification-20261026.json`에\n기록한다. 전체 언어·모듈과 실제 창·플랫폼의 완료는 별도의 감사 대상이다.\n"
     }
   ],
@@ -480,28 +522,28 @@
       "start_line": 47
     },
     {
-      "block_id": "b000031",
+      "block_id": "b000037",
       "parent_id": "b000001",
       "level": 2,
       "title": "비동기 작업 경계",
       "anchor": "비동기-작업-경계",
-      "start_line": 71
+      "start_line": 86
     },
     {
-      "block_id": "b000037",
+      "block_id": "b000043",
       "parent_id": "b000001",
       "level": 2,
       "title": "검증",
       "anchor": "검증",
-      "start_line": 86
+      "start_line": 101
     },
     {
-      "block_id": "b000041",
+      "block_id": "b000047",
       "parent_id": "b000001",
       "level": 2,
       "title": "2026-10-26 검증 기록",
       "anchor": "2026-10-26-검증-기록",
-      "start_line": 94
+      "start_line": 109
     }
   ],
   "indexes": {
@@ -563,15 +605,15 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000035",
-        "line": 80,
+        "block_id": "b000041",
+        "line": 95,
         "text": "기존 Core `TaskScope`·`SerialQueue` 등의 경계에 등록해야 한다. 실행 중 작업을 보존하면서",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000043",
-        "line": 96,
+        "block_id": "b000049",
+        "line": 111,
         "text": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 겹치는 검사의 수량은 합산하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -580,30 +622,51 @@
     "commands": [],
     "links": [
       {
-        "block_id": "b000035",
+        "block_id": "b000029",
+        "label": "쿼리 연결",
+        "target": "QueryConnections.md",
+        "kind": "relative",
+        "line": 69
+      },
+      {
+        "block_id": "b000031",
+        "label": "현지화 계약",
+        "target": "Localization.md",
+        "kind": "relative",
+        "line": 73
+      },
+      {
+        "block_id": "b000033",
+        "label": "이미지 로딩",
+        "target": "NativeImageLoading.md",
+        "kind": "relative",
+        "line": 79
+      },
+      {
+        "block_id": "b000041",
         "label": "활성화 작업 컨텍스트",
         "target": "ActivationWork.md",
         "kind": "relative",
-        "line": 78
+        "line": 93
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000041",
         "label": "수명 명세",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
-        "line": 82
+        "line": 97
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000041",
         "label": "전체 완료 감사",
         "target": "Completion.md",
         "kind": "relative",
-        "line": 83
+        "line": 98
       }
     ],
     "tables": [
       {
-        "block_id": "b000045",
+        "block_id": "b000051",
         "columns": [
           "범위",
           "결과"

@@ -10,10 +10,10 @@ namespace lvui {
 
 struct TablePalette final {
     StyleColor background{.1176470588, .1176470588, .1176470588, 1};
-    StyleColor divider{.1555851549, .1570725590, .1585599482, 1};
+    StyleColor divider{figma_defaults::panel_surface_input};
     StyleColor header_text{1, 1, 1, .6}, cell_text{1, 1, 1, .8};
-    StyleColor selection{.0812049285, .5099760294, 1, 31. / 255.};
-    StyleColor current{.0812049285, .5099760294, 1, 1};
+    StyleColor selection{figma_defaults::with_alpha(figma_defaults::accent_blue_default, 31. / 255.)};
+    StyleColor current{figma_defaults::accent_blue_default};
     friend bool operator==(const TablePalette&, const TablePalette&) = default;
 };
 struct TableAppearance final {

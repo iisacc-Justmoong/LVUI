@@ -1,0 +1,10 @@
+Application {
+    import app NativeApplicationBackend
+    Scene(id: "single", onOpened: app.scene_opened, onClosed: app.scene_closed) {
+        var count: Int = 0
+        VStack {
+            Label(id: "count", text: count)
+            PushButton(id: "increment", text: "+", onClick: { count = count + 1 })
+        }
+    }
+}

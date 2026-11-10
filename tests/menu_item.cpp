@@ -4,7 +4,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { MenuItem(label: vm.label, shortcut: vm.shortcut, iconName: vm.icon, iconSource: vm.source, iconRevision: vm.revision, state: vm.state, selectionDirection: vm.direction, onClick: vm.clicked) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto part:{"#include <LVUI/NativeMenuItem.h>","lvui::native::NativeMenuItem::create(","lvui::native::MenuItemInput","component.set_options(value)"})
+    for(auto part:{"#include <LVUI/NativeMenuItem.h>","iiGUI/NativeMenuItemView.h","lvui::native::MenuItemBinding<","lvui::native::MenuItemInputValue<","component.set_options(value)"})
         if(code->find(part)==code->npos)throw std::runtime_error(std::string("Independent MenuItem lost ")+part);
     if(code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Default MenuItem depends on a legacy implementation");

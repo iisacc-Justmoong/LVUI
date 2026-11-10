@@ -1,5 +1,6 @@
 #pragma once
 #include <LVUI/NativePageRouter.h>
+#include <iiGUI/NativeWidgets.h>
 #include <iiSDKCore/Core/Property/Observable.h>
 #include <memory>
 #include <stdexcept>
@@ -9,11 +10,11 @@ struct NativeOwnedPageRouterModel final {
     ii::core::Observable<double> width{400.0},height{240.0};
     std::shared_ptr<lvui::PageRouter> router;
     NativeOwnedPageRouterModel(){
-        auto home=std::make_shared<lvui::native::FunctionalNavigationPage>([](ii::gui::WidgetBuilder& builder,
+        auto home=std::make_shared<lvui::native::FunctionalNavigationPageValue<ii::gui::WidgetBuilder>>([](ii::gui::WidgetBuilder& builder,
                 const lvui::NavigationEntry&,const std::shared_ptr<lvui::NavigationContext>&)->ii::core::Result<void>{
             auto label=builder.label({},"home",{.text="Home"});if(!label)return std::unexpected(label.error());return {};
         });
-        auto report=std::make_shared<lvui::native::FunctionalNavigationPage>([](ii::gui::WidgetBuilder& builder,
+        auto report=std::make_shared<lvui::native::FunctionalNavigationPageValue<ii::gui::WidgetBuilder>>([](ii::gui::WidgetBuilder& builder,
                 const lvui::NavigationEntry& entry,const std::shared_ptr<lvui::NavigationContext>&)->ii::core::Result<void>{
             auto id=entry.params.find("id");if(!id)return std::unexpected(id.error());
             auto text=id->get().get<std::string>();if(!text)return std::unexpected(text.error());

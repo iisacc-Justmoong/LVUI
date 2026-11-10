@@ -1,4 +1,4 @@
-#include <LVUI/NativePageRouter.h>
+#include "native_page_router_composition.h"
 #include "NativeOwnedPageRouter.generated.h"
 #include <iiGUI/WidgetState.h>
 #include <algorithm>

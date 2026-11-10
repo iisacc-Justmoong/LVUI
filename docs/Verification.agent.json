@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Verification.md",
-    "sha256": "3de788ae30e668747d0d23fd783a3eba7300783df237b9ac26023e9844cfc7b2",
-    "bytes": 4806,
-    "line_count": 70,
+    "sha256": "53d136f20b23f5550a59a2f5c448dd08fa8ddf43cda3db99f0b833fa810fc0dc",
+    "bytes": 10041,
+    "line_count": 142,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -293,45 +293,293 @@
       "id": "b000030",
       "kind": "blank",
       "start_line": 55,
-      "end_line": 56,
-      "raw": "\n\n"
+      "end_line": 55,
+      "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "heading",
-      "start_line": 57,
-      "end_line": 57,
-      "raw": "## Alert·AlertButton AOT 추가 검증 — 2026-10-23\n",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "## 이벤트 스크립트 제어 흐름 검증 — 2026-11-09\n",
       "level": 2,
-      "title": "Alert·AlertButton AOT 추가 검증 — 2026-10-23"
+      "title": "이벤트 스크립트 제어 흐름 검증 — 2026-11-09"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 58,
-      "end_line": 58,
+      "start_line": 57,
+      "end_line": 57,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 59,
-      "end_line": 63,
-      "raw": "`Alert`과 `AlertButton`을 단순 예약어 등록에서 실제 LVRS C++ 생성 경로로 연결했다.\n현재 전체 LVUI 검사 30개가 통과했으며 기록은 `build/alerts-full-tests.xml`이다.\n원본 속성과 별칭 충돌, 정수 액션 개수, 금지 자식, 이미지 입력, shape와 잘못된 메서드 호출을\n진단한다. 생성 코드는 C++23의 종속 `requires`로 ButtonEvent 인자 메서드와 인자 없는\n메서드를 선택하고 부모 스코프 인스턴스를 재사용한다. 런타임 이름 조회를 추가하지 않는다.\n"
+      "start_line": 58,
+      "end_line": 61,
+      "raw": "macOS arm64 C++23에서 파서·AOT·Python API, 기존 조건부 뷰·반복 뷰, 뷰 세션과\n쿼리 연결을 포함한 관련 CTest 34개가 통과했다. 이벤트 스크립트의 `if`·`else if`·\n`else`, 컬렉션 `for`, 중첩 반복의 `break`·`continue`, 재사용 스크립트의 `return`,\n타입이 지정된 C++ 함수와 피연산자·인자의 평가 순서를 검사했다.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 64,
-      "end_line": 64,
+      "start_line": 62,
+      "end_line": 62,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 65,
-      "end_line": 70,
+      "start_line": 63,
+      "end_line": 66,
+      "raw": "생성 C++를 iiGUI의 헤드리스 호스트에 연결하여 이벤트 전 미실행, 원본 변경에도\n유지되는 스냅샷, 쿼리 요청과 조건·인자 평가 중 퇴역, 복사 중 퇴역, 복사 실패의\n오류 보존 및 다음 이벤트에서의 복구를 확인했다. 제품 앱 창, GPU 표시, 다른 운영체제와\n설치 소비자는 이번 변경에서 검증하지 않았다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 68,
+      "end_line": 68,
+      "raw": "## 명시적 스택 배치 검증 — 2026-11-09\n",
+      "level": 2,
+      "title": "명시적 스택 배치 검증 — 2026-11-09"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 70,
+      "end_line": 74,
+      "raw": "macOS arm64 C++23에서 파서·AOT·Python API·배치 값과 생성 C++를 연결한\n헤드리스 검사를 포함한 관련 CTest 13개가 통과했다. `HStack`, `VStack`, `ZStack`의\n중첩과 생성 순서, 가로·세로 좌표 및 겹친 원점을 확인했다. 표준 LVUI에서 선언하지\n않은 `div`와 레거시 변환기의 `div`·`flex-direction`은 명시적인 스택을 안내하며\n거부한다. 사용자가 직접 선언한 같은 이름의 View는 보존한다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "제품 앱 창, GPU 표시, 다른 운영체제와 설치 소비자는 이번 변경에서 검증하지 않았다.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "heading",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "## 태그 없는 이벤트 스크립트 검증 — 2026-11-09\n",
+      "level": 2,
+      "title": "태그 없는 이벤트 스크립트 검증 — 2026-11-09"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 80,
+      "end_line": 81,
+      "raw": "아래는 당시의 검사 기록이다. 이름 붙인 스크립트 본문은 이후 뷰 전용 경계에서\n제거했으며, 현재 계약은 [뷰 전용 아키텍처](ViewOnlyArchitecture.md)를 따른다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 83,
+      "end_line": 87,
+      "raw": "macOS arm64 C++23에서 언어 파서, AOT 컴파일러, Python 브리지, 생성 C++ 검사와\n뷰 세션 검사를 포함한 관련 CTest 18개가 통과했다. 별도의 `<script>` 태그 없이\n이벤트 안에 쓴 상태 대입과 C++ 메서드 호출, 이름 붙인 `Void` 스크립트 호출,\n애플리케이션 종료 요청의 생성과 진단을 검사했다. 반환값이 없는 함수를 화면\n값으로 사용하거나 잘못된 인자 수로 호출하는 경우도 거부한다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 88,
+      "end_line": 88,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 89,
+      "end_line": 92,
+      "raw": "생성 C++를 연결한 헤드리스 검사에서는 이벤트 전에는 실행되지 않으며 대입 후의\n값을 C++에서 읽는 것과, 이벤트 중 뷰가 종료되면 나머지 문장이 실행되지 않고\n스코프가 해제되는 것을 확인했다. 제품 앱은 실행하지 않았고 다른 운영체제와\n설치 패키지는 이번 변경 범위에서 검증하지 않았다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 93,
+      "end_line": 93,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "heading",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "## 즉시 선언형 문법 검증 — 2026-11-09\n",
+      "level": 2,
+      "title": "즉시 선언형 문법 검증 — 2026-11-09"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 96,
+      "end_line": 101,
+      "raw": "macOS arm64 C++23 Release에서 선언형 본문의 쉼표와 줄바꿈, 고정 식별자,\n스택 `gap`, 아이콘 버튼 `label`, 이벤트 호출 및 명시적 콜백 팩토리를 검사했다.\n언어·AOT·토큰 등 12개 검사와 기존 함수 포획·수명 등을 포함한 23개 검사가 각각\n통과했다. 두 범위에는 중복 검사가 있다. 사용자 예시의 `Metric.sideBar`는 기본\n카탈로그에 없으므로 별도 시험 프로파일에서 제공해 같은 구문의 AOT 생성을\n검증했다.\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 107,
+      "raw": "생성 C++를 연결한 헤드리스 검사에서는 클릭 전 미호출, 클릭당 호출, 이벤트 시\n최신 인자, 팩토리 의존값 변경, 재사용 뷰와 종료 후 해제를 확인했다. Python\n브리지와 앱·창 수명 경로를 포함한 관련 검사 8개가 통과했다. 이전 태그 입력으로\n작성된 여덟 앱 구성도 선언형으로 빌드·링크했다. 제품 앱 창, GPU 화면, 다른 OS의\n실행은 확인하지 않았으며 시스템 설치본은 변경하지 않았다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 113,
+      "raw": "설치 패키지 전체 경계 검사 `LVUI.PackageBoundary`는 외장 저장소의 임시 설치\n복사에서 기존 600초 제한에 걸려 완료하지 못했다. 같은 조건의 재시도도 600초\n시간 초과였다. 제한 시간과 검사 항목은 변경하지 않았다. 현재 빌드의 Python\n브리지 검사는 통과했지만, 패키지 전체 설치 검사가\n성공한 것으로 해석하지 않는다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 114,
+      "end_line": 115,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "heading",
+      "start_line": 116,
+      "end_line": 116,
+      "raw": "## Alert·AlertButton AOT 추가 검증 — 2026-10-23\n",
+      "level": 2,
+      "title": "Alert·AlertButton AOT 추가 검증 — 2026-10-23"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 118,
+      "end_line": 122,
+      "raw": "`Alert`과 `AlertButton`을 단순 예약어 등록에서 실제 LVRS C++ 생성 경로로 연결했다.\n현재 전체 LVUI 검사 30개가 통과했으며 기록은 `build/alerts-full-tests.xml`이다.\n원본 속성과 별칭 충돌, 정수 액션 개수, 금지 자식, 이미지 입력, shape와 잘못된 메서드 호출을\n진단한다. 생성 코드는 C++23의 종속 `requires`로 ButtonEvent 인자 메서드와 인자 없는\n메서드를 선택하고 부모 스코프 인스턴스를 재사용한다. 런타임 이름 조회를 추가하지 않는다.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 129,
       "raw": "원본 LVRS와 네이티브 API를 합친 소스 229개를 다시 조사했다. 선언 149개·시각 예약어\n107개·시각 수정자 3개·전체 예약어 116개라는 분류는 유지한다. 새 네이티브 API 네 파일의\n해시를 포함하며 기존 원본 QML 선언을 제거하거나 구현 완료로 바꾸지 않았다.\n`examples/NativeAlertGallery`의 생성 헤더는 실제 C++23 앱으로 빌드되어 여섯 액션 위치와\n독립 버튼, 메서드→클릭 순서, 원본 SVG, 실제 GPU 흐림과 Core 수명을 검사한다.\n전체 이식 상태와 플랫폼 범위는 [LVRS 검증 기록](../../LVRS/docs/native/Verification.md)을 따른다.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 130,
+      "end_line": 130,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "heading",
+      "start_line": 131,
+      "end_line": 131,
+      "raw": "## 뷰 전용 선언 경계 검증 — 2026-11-09\n",
+      "level": 2,
+      "title": "뷰 전용 선언 경계 검증 — 2026-11-09"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 132,
+      "end_line": 132,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 133,
+      "end_line": 137,
+      "raw": "macOS arm64의 기존 `build/`에서 현재 소스로 코드 생성 검사 바이너리를 다시 빌드했다.\n객체 리터럴과 이름 붙인 스크립트 본문 거부, C++ 객체·메서드 import, 지역 상태,\n이벤트 블록, `TableColumn` 뷰, 빈 생성자와 본문 생략을 포함한 언어·세션·컴포넌트·\nAOT·Python 관련 CTest 121개가 통과했다. 둘 다 비어 있는 View의 이름만 사용한 표기와\n필수 입력 누락도 검사한다. 이는 전체 CTest 실행 결과가 아닌 선택한 검사 범위이다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 138,
+      "end_line": 138,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 139,
+      "end_line": 142,
+      "raw": "LVUI에서 검색된 `.lvui` 파일 294개와 제품 View 파일 12개가 파서 검사를 통과했다.\n제품의 별도 스타일 프로파일은 View 파일 수에서 제외했다. Congregation의 iOS arm64\nDebug 빌드는 코드 서명 없이 성공했으며, 제품의 UI 경계·스타일 검사는 창을 열지 않고\n통과했다. 이 결과는 앱 실행, 실제 기기, 다른 플랫폼 또는 설치 소비자 검증이 아니다.\n"
     }
   ],
   "outline": [
@@ -379,9 +627,49 @@
       "block_id": "b000031",
       "parent_id": "b000001",
       "level": 2,
+      "title": "이벤트 스크립트 제어 흐름 검증 — 2026-11-09",
+      "anchor": "이벤트-스크립트-제어-흐름-검증--2026-11-09",
+      "start_line": 56
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "명시적 스택 배치 검증 — 2026-11-09",
+      "anchor": "명시적-스택-배치-검증--2026-11-09",
+      "start_line": 68
+    },
+    {
+      "block_id": "b000043",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "태그 없는 이벤트 스크립트 검증 — 2026-11-09",
+      "anchor": "태그-없는-이벤트-스크립트-검증--2026-11-09",
+      "start_line": 78
+    },
+    {
+      "block_id": "b000051",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "즉시 선언형 문법 검증 — 2026-11-09",
+      "anchor": "즉시-선언형-문법-검증--2026-11-09",
+      "start_line": 94
+    },
+    {
+      "block_id": "b000059",
+      "parent_id": "b000001",
+      "level": 2,
       "title": "Alert·AlertButton AOT 추가 검증 — 2026-10-23",
       "anchor": "alertalertbutton-aot-추가-검증--2026-10-23",
-      "start_line": 57
+      "start_line": 116
+    },
+    {
+      "block_id": "b000065",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "뷰 전용 선언 경계 검증 — 2026-11-09",
+      "anchor": "뷰-전용-선언-경계-검증--2026-11-09",
+      "start_line": 131
     }
   ],
   "indexes": {
@@ -401,16 +689,30 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000033",
-        "line": 61,
+        "block_id": "b000057",
+        "line": 113,
+        "text": "성공한 것으로 해석하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000061",
+        "line": 120,
         "text": "원본 속성과 별칭 충돌, 정수 액션 개수, 금지 자식, 이미지 입력, shape와 잘못된 메서드 호출을",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000033",
-        "line": 63,
+        "block_id": "b000061",
+        "line": 122,
         "text": "메서드를 선택하고 부모 스코프 인스턴스를 재사용한다. 런타임 이름 조회를 추가하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000067",
+        "line": 137,
+        "text": "필수 입력 누락도 검사한다. 이는 전체 CTest 실행 결과가 아닌 선택한 검사 범위이다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -432,11 +734,18 @@
         "line": 22
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000045",
+        "label": "뷰 전용 아키텍처",
+        "target": "ViewOnlyArchitecture.md",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000063",
         "label": "LVRS 검증 기록",
         "target": "../../LVRS/docs/native/Verification.md",
         "kind": "relative",
-        "line": 70
+        "line": 129
       }
     ],
     "tables": []

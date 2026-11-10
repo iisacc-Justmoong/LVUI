@@ -1,6 +1,6 @@
 # 타입 매개변수가 있는 재사용 뷰
 
-`let Name(...): View = ...`는 빌드 시 확장하는 재사용 구성을 정의한다. 새로운 런타임
+`const Name(...): View = ...`는 빌드 시 확장하는 재사용 구성을 정의한다. 새로운 런타임
 함수나 스크립트 객체를 생성하지 않으며, 최종 입력·파생식·콜백은 C++23으로 컴파일한다.
 매개변수가 없는 기존 [View 값](ViewValues.md)의 루트 입력 덮어쓰기와 구분한다.
 
@@ -8,7 +8,7 @@
 import class Domain.Model
 import document Domain.Model
 
-let Status(backend: Model, title: String = "Document"): View = VStack {
+const Status(backend: Model, title: String = "Document"): View = VStack {
     Label(text: title)
     Label(text: backend.title)
     PushButton(backend.increment, text: "Increment")
@@ -25,7 +25,7 @@ Window {
 매개변수는 이름과 타입을 필수로 선언한다. 호출 인자는 이름을 지정하며, 필수 인자 누락·
 중복·알 수 없는 이름·위치 인자·알려진 타입 불일치는 소스 위치와 함께 거부한다.
 서명은 최대 64개 매개변수를 받으며, 기존 구성 확장 깊이 64단계와 위젯 수 4,096개
-제한을 유지한다. `let Name(): View = ...`도 명시적인 빈 서명이다.
+제한을 유지한다. `const Name(): View = ...`도 명시적인 빈 서명이다.
 
 ## 스칼라 입력과 기본값
 
@@ -37,7 +37,7 @@ Color는 [공유 색상 값·네이티브 바인딩](NativeColors.md)을 따르�
 추적한다. 색상 기본값은 정의 환경의 토큰과 앞선 입력을 사용한다.
 
 ```lvui
-let Heading(title: String, subtitle: String = title): View = VStack {
+const Heading(title: String, subtitle: String = title): View = VStack {
     Label(text: title)
     Label(text: subtitle)
 }
@@ -48,7 +48,7 @@ let Heading(title: String, subtitle: String = title): View = VStack {
 먼저 포획하므로, 앞선 매개변수가 같은 이름을 사용해도 뒤에 전달한 식의 수신자가 바뀌지
 않는다. 기본값의 유효성은 해당 구성을 확장할 때 검사한다.
 
-매개변수 자체는 읽기 전용 입력이다. 구성 내부의 `@Static let`은 활성화 당시의 값을
+매개변수 자체는 읽기 전용 입력이다. 구성 내부의 `@Static const`는 활성화 당시의 값을
 고정하며, 일반 파생 선언은 변경을 따른다. 상수로 결정되는 창 입력은 빌드 시 값으로
 사용하고, 동적 제목·크기·테마는 [네이티브 Window 입력](NativeWindow.md)을 따른다.
 
@@ -97,8 +97,8 @@ import 인스턴스나 앞서 차용한 매개변수를 전달하면 원래 인�
 받고 구성 내부에서 `content()`처럼 사용한다.
 
 ```lvui
-let Empty: View = Label(text: "No content")
-let Panel(title: String, content: View = Empty): View = VStack {
+const Empty: View = Label(text: "No content")
+const Panel(title: String, content: View = Empty): View = VStack {
     Label(text: title)
     content()
 }

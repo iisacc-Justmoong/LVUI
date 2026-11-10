@@ -1,5 +1,6 @@
 """Compile real generated factories for native callable field contracts."""
 from pathlib import Path
+from workspace_support import checked_workspace, provider
 import argparse, json, subprocess, tempfile
 
 
@@ -8,7 +9,11 @@ def main():
     for name in ('build', 'compiler', 'core', 'color', 'gui'):
         parser.add_argument('--' + name, type=Path, required=True)
     parser.add_argument('--cxx', required=True)
+    parser.add_argument('--workspace', type=Path, required=True)
+    parser.add_argument('--gui-include', type=Path, required=True)
+    parser.add_argument('--gui-export-include', type=Path, required=True)
     args = parser.parse_args()
+    args.workspace = checked_workspace(args.workspace)
     source = Path(__file__).resolve().parents[1]
     cases = {
         'observable_root': ('struct Backend {ii::core::Observable<std::function<void()>> run{[]{}};};', 'Window { PushButton(vm.run) }', True),
@@ -30,17 +35,17 @@ def main():
     }
     report = {}
     unexpected = []
-    with tempfile.TemporaryDirectory(prefix='native-callable-field-types-', dir=args.build) as temporary:
+    with provider.TemporaryDirectory(prefix='native-callable-field-types-', dir=args.workspace) as temporary:
         root = Path(temporary)
-        includes = [root, source / 'src', args.build / 'lvui-generated-icons', (args.core / '../../../include').resolve(), (args.color / '../../../include').resolve(), args.gui / 'src', args.gui / 'build/install/include']
+        includes = [root, source / 'src', args.build / 'include', args.build / 'lvui-generated-icons', (args.core / '../../../include').resolve(), (args.color / '../../../include').resolve(), args.gui / 'src', args.gui_include, args.gui_export_include]
         for name, (members, body, valid) in cases.items():
-            (root / 'Fixture.h').write_text('#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <memory>\n#include <functional>\n#include <string>\n#include <cstdint>\n' + members + '\n')
-            (root / 'View.lvui').write_text('import vm Backend\n' + body + '\n')
+            provider.write_text(root / 'Fixture.h', '#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <memory>\n#include <functional>\n#include <string>\n#include <cstdint>\n' + members + '\n')
+            provider.write_text(root / 'View.lvui', 'import vm Backend\n' + body + '\n')
             generated = subprocess.run([str(args.compiler), '--name', 'CallableFieldContract', '--include', 'Fixture.h', str(root / 'View.lvui')], text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             if generated.returncode:
                 raise RuntimeError(f'Field generation failed for {name}: {generated.stderr}')
-            (root / 'View.generated.h').write_text(generated.stdout)
-            (root / 'probe.cpp').write_text('#include "View.generated.h"\nauto factory=&lvui_generated::CallableFieldContract::build;\n')
+            provider.write_text(root / 'View.generated.h', generated.stdout)
+            provider.write_text(root / 'probe.cpp', '#include "View.generated.h"\nauto factory=&lvui_generated::CallableFieldContract::build;\n')
             msvc = Path(args.cxx).name.lower() in ('cl', 'cl.exe')
             command = [args.cxx, '/std:c++latest', '/Zs', '/utf-8'] if msvc else [args.cxx, '-std=c++23', '-fsyntax-only']
             for include in includes:
@@ -50,9 +55,9 @@ def main():
             if (compiled.returncode == 0) != valid:
                 unexpected.append(name)
                 print(f'Unexpected callable field contract: {name}\n{compiled.stdout[:6500]}', flush=True)
-    destination = args.build / 'lvui-completion/native-callable-field-type-validation.json'
-    destination.parent.mkdir(exist_ok=True)
-    destination.write_text(json.dumps(report, indent=2) + '\n')
+    destination = args.workspace / 'lvui-completion/native-callable-field-type-validation.json'
+    provider.mkdir(destination.parent, exist_ok=True)
+    provider.write_text(destination, json.dumps(report, indent=2) + '\n')
     if unexpected:
         raise RuntimeError('Callable field mismatches: ' + ', '.join(unexpected))
     print('Callable fields: 11 valid native contracts, 5 rejected')

@@ -1,4 +1,4 @@
-import state lvui.ProgressState
+import state ii.gui.ProgressState
 Window {
     VStack {
         ProgressBar(id: "scoped", width: 200, motionEnabled: false, stateModel: state)

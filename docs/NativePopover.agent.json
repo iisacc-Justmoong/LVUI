@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativePopover.md",
-    "sha256": "15c8fe45220bd82c6f4b070dd54c3255f508e92a56a5a73fca72935f53a9cd00",
-    "bytes": 1911,
-    "line_count": 32,
+    "sha256": "dfe1167c7c1aa9d98c8fbdfa19515a50dfa02ea8c643a022c9c6769ec67aa3de",
+    "bytes": 6465,
+    "line_count": 87,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 6,
-      "raw": "기본 선언형 `Popover`는 `LVUI/Popover.h`의 값 모델과\n`LVUI/NativePopover.h`의 앱 호스트 어댑터로 구성한다. LVUI가 유효한 디자인 값과\n반응형 업데이트를 소유하고 iiGUI의 범용 팝업 경계가 배치, 표면, 입력과 포커스를\n전달한다. LVRS, Qt 또는 QML 구현을 호출하지 않는다.\n"
+      "raw": "기본 선언형 `Popover`는 LVUI가 제공하는 디자인 값과 바인딩을 앱에서\n`iiGUI/PopoverModel.h`, `iiGUI/NativePopoverView.h`와 조합한다. iiGUI가 검증·\n기하·표면·입력·모션·팝업 수명을 소유하며 LVUI 바인딩은 Core 외 SDK를 직접\n참조하지 않는다. LVRS, Qt 또는 QML 구현을 호출하지 않는다.\n"
     },
     {
       "id": "b000004",
@@ -74,7 +74,7 @@
       "kind": "paragraph",
       "start_line": 18,
       "end_line": 23,
-      "raw": "`width`와 `height`의 0은 콘텐츠에 따른 자동 크기이다. 기본 여백은 12, 화면 가장자리\n여백은 8, 반경은 12, 표면 채색 강도는 0.25이다. `surfaceColor`, `modal`, `dim`,\n`focus`, `clip`, `closeOnEscape`, `closeOnPressOutside`, `closeOnContextRequest`,\n`accessibilityName`과 열림·닫힘·취소 콜백을 설정할 수 있다. 문맥 요청 정책을\n생략하면 일반 외부 클릭 정책을 따른다. 콘텐츠는 하나의 직접 View이며 여러 요소는\n스택에 담는다. 별도 팝업은 중첩할 수 있다.\n"
+      "raw": "`width`와 `height`의 0은 콘텐츠에 따른 자동 크기이다. 기본 여백은 12, 화면 가장자리\n여백은 8, 반경은 12, 표면 채색 강도는 0.25이다. `surfaceColor`, `primaryColor`, `blurEnabled`, `motionEnabled`, `modal`, `dim`,\n`focus`, `clip`, `closeOnEscape`, `closeOnPressOutside`, `closeOnContextRequest`,\n`accessibilityName`과 열림·닫힘·취소 콜백을 설정할 수 있다. 문맥 요청 정책을\n생략하면 일반 외부 클릭 정책을 따른다. 콘텐츠는 하나의 직접 View이며 여러 요소는\n스택에 담는다. 별도 팝업은 중첩할 수 있다.\n"
     },
     {
       "id": "b000008",
@@ -87,22 +87,138 @@
       "id": "b000009",
       "kind": "paragraph",
       "start_line": 25,
-      "end_line": 28,
-      "raw": "크기·색상·정책 입력은 반응형으로 변경할 수 있으며 잘못된 후보는 기존 상태와\n콘텐츠를 유지하고 바인딩 오류를 전달한다. 생성된 위젯 핸들의 `open_at`, `open_for`,\n`close_popup`으로 표시 수명을 제어한다. 닫힘 콜백이 새 팝오버를 열었다면 이전\n취소 이벤트는 새 열린 상태에 전달하지 않는다. 팝오버가 제거되면 핸들도 만료된다.\n"
+      "end_line": 27,
+      "raw": "C++ `PopoverConfiguration::placement`는 기본 앵커 배치 또는 창 중앙 배치를\n선택한다. 잘못된 열거값은 거부하며, `NativePopover`가 선택한 배치를 호스트에\n전달한다. 선언형 `Popover`의 배치 입력은 아직 제공하지 않는다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 29,
-      "end_line": 29,
+      "start_line": 28,
+      "end_line": 28,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 30,
+      "start_line": 29,
       "end_line": 32,
-      "raw": "이 경로는 범용 호스트의 팝업 표면에 디자인 값을 전달한다. 흐림·그림자·전환 모션의\n세부 디자인, 플랫폼별 실제 표시와 보조 기술 동작은 별도 구현 또는 검증이 필요하다.\n헤드리스 상태 검사는 창이나 GPU를 실행한 결과가 아니다.\n"
+      "raw": "크기·색상·정책 입력은 반응형으로 변경할 수 있으며 잘못된 후보는 기존 상태와\n콘텐츠를 유지하고 바인딩 오류를 전달한다. 생성된 위젯 핸들의 `open_at`, `open_for`,\n`close_popup`으로 표시 수명을 제어한다. 닫힘 콜백이 새 팝오버를 열었다면 이전\n취소 이벤트는 새 열린 상태에 전달하지 않는다. 팝오버가 제거되면 핸들도 만료된다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 34,
+      "end_line": 42,
+      "raw": "기본 배경은 원본 LVUI의 `Panel/surfaceSolid`와 공통 유리 패널 재질을 사용한다.\n범용 호스트에는 16px 배경 흐림, 공통 방사형 악센트, 1px 유리 테두리,\n0.14 불투명도와 1px 오프셋의 안쪽 광택, 아래로 8px 이동한 24px 그림자와\n그림자 불투명도 0.22를 전달한다. 악센트 래스터는 실제 논리 크기와 배율에 맞추어\n생성한다. 입력이 같으면 래스터를, 기하가 같으면 도형 기여도 계산을 재사용한다.\n`surfaceColor`와 `surfaceOpacity`는 재질 틴트에\n적용하며 반응형으로 갱신할 수 있다. `blurEnabled`를 끄면 불투명 기본 표면으로\n폴백하고 다시 켜면 흐림을 복원한다. C++에서는 같은 설정을\n`PopoverConfiguration::blur_enabled`로 지정한다. iiGUI 재질 모델이 주입된 정책으로 공통 패널 수치를 계산한다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 49,
+      "raw": "공통 재질의 다색 방사형 정지점과 투명도를 채색된 밑그림으로 전달한다.\n블러가 켜진 경우 경계 밖 악센트도 공통 재질의 흐림 입력으로 제공한다.\n흐림을 끈 불투명 폴백에도 악센트와 안쪽 광택을 유지하고 이전 화면은 캡처하지\n않는다. 이 합성은 GPU 재질 경로를 사용한다. 플랫폼별 실제 표시와 보조 기술\n동작은 별도 검증이 필요하다.\n헤드리스 상태 검사는 창이나 GPU를 실행한 결과가 아니다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "## 창 강조색 이식 계약\n",
+      "level": 2,
+      "title": "창 강조색 이식 계약"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 62,
+      "raw": "`primaryColor`를 생략한 선언형 팝오버는 정적·반응형 창 `accent`의 공통 기본색을\n상속한다. 재사용 View의 팝오버도 같은 범위를 따르며, 명시한 `primaryColor`는\n창 값보다 우선한다. 창에 강조색이 없으면 기본 파랑을 사용한다. C++에서는\n`PopoverConfiguration::primary_color`로 지정할 수 있다. 열린 팝오버의 강조색\n변경은 팝오버 인스턴스나 콘텐츠를 교체하지 않고 반영하며, RGB만 바뀌면\n기존 기하 계산을 재사용하고 채색된 래스터는 다시 만든다. 유효하지 않은 색상이나 거부된 창 변경은 마지막\n유효 색상을 보존한다. 관련 단위 및 생성 위젯 검사는 운영체제 창과 GPU를 열지\n않는다. `PopoverConfiguration`에 선택적 색상 필드가 추가되었으므로 이전 헤더로\n컴파일한 C++ 소비자는 새 헤더와 함께 다시 빌드해야 한다. 설치된 Python 컴파일\nAPI에서도 선언형 `primaryColor` 입력이 생성 코드로 이어지는지 검사한다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 64,
+      "end_line": 64,
+      "raw": "## 팝오버 모션\n",
+      "level": 2,
+      "title": "팝오버 모션"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 65,
+      "end_line": 65,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 66,
+      "end_line": 71,
+      "raw": "기존 공통 팝오버의 동작을 기준으로, 열릴 때 불투명도는 160ms 동안 선형으로\n증가하고 크기는 중앙을 기준으로 0.92에서 1까지 420ms `OutBack` 곡선과\n1.45의 오버슈트로 변한다. 닫힐 때는 당시 크기를 유지하고 불투명도만 150ms\n동안 줄인다. 각 시간은 공통 모션 설정의 속도와 축소 모션을 따른다. 닫힘 즉시\n입력을 차단하되 퇴장 프레임이 끝날 때까지 그리기 상태를 유지한다. 닫히는 중\n다시 열리면 현재 표시값에서 연속적으로 이어진다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 72,
+      "end_line": 72,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 73,
+      "end_line": 83,
+      "raw": "선언형 `motionEnabled`와 C++ `motion_enabled`는 기본 활성화이며 각 팝오버에\n개별 적용한다. 실행 중 끄면 진행 중인 전환을 즉시 완료하고 다른 팝오버나 공통\n환경설정은 바꾸지 않는다. 프레임 소스가 없는 호스트에서는 생성과 입력을\n실패시키지 않고 전환을 즉시 완료한다. 명시적으로 끈 팝오버는 프레임 공급기\n오류가 있어도 동작하며, 이후 전환을 켜려 할 때 오류를 전달한다. 프레임 소스\n이외의 오류와 애니메이션을 지원하지 않는 동적 콘텐츠 오류는 호출자에게\n전달하며, 속성 갱신 실패 시 마지막 유효 설정과 콘텐츠를 보존한다. 재질과\n그림자도 콘텐츠와 함께 변환되며 퇴장 중 유지된다. 이 동작은 iiGUI의\n`IIGUI_POPOVER_COMBINED_MATERIAL_MOTION_API`와 새 심볼이 필요하다. 채색된\n밑그림에는 `IIGUI_POPOVER_UNTINTED_UNDERLAY_API`와 해당 심볼이 필요하다. 헤드리스\n검사는 프레임을 모사하며 실제 운영체제 창이나 GPU 표시를 검증하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 84,
+      "end_line": 84,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 85,
+      "end_line": 87,
+      "raw": "팝오버가 폐기되면 콜백·배경 공급자와 그라데이션 캐시를 해제한다. macOS arm64의\n독립 iiGUI 설치 소비자와 LVUI 생성·모션·윈도우 악센트 검사를 창 없이 통과했다.\n구형 표면 API에 대한 호환성 검사는 iiGUI에서 유지한다.\n"
     }
   ],
   "outline": [
@@ -113,6 +229,22 @@
       "title": "LVUI 독립 팝오버",
       "anchor": "lvui-독립-팝오버",
       "start_line": 1
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "창 강조색 이식 계약",
+      "anchor": "창-강조색-이식-계약",
+      "start_line": 51
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "팝오버 모션",
+      "anchor": "팝오버-모션",
+      "start_line": 64
     }
   ],
   "indexes": {
@@ -120,14 +252,35 @@
       {
         "block_id": "b000003",
         "line": 6,
-        "text": "전달한다. LVRS, Qt 또는 QML 구현을 호출하지 않는다.",
+        "text": "참조하지 않는다. LVRS, Qt 또는 QML 구현을 호출하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000009",
-        "line": 28,
+        "line": 27,
+        "text": "전달한다. 선언형 `Popover`의 배치 입력은 아직 제공하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 32,
         "text": "취소 이벤트는 새 열린 상태에 전달하지 않는다. 팝오버가 제거되면 핸들도 만료된다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 61,
+        "text": "컴파일한 C++ 소비자는 새 헤더와 함께 다시 빌드해야 한다. 설치된 Python 컴파일",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 83,
+        "text": "검사는 프레임을 모사하며 실제 운영체제 창이나 GPU 표시를 검증하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }

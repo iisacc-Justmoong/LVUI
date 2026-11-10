@@ -1,0 +1,6 @@
+import vm NativeLabelPresentationModel
+Window {
+    VStack(alignment: .stretch) {
+        Label(id: "description", text: vm.text, elideRight: vm.elide, alignment: vm.alignment)
+    }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/8nSrpI0BbsZlXQiotbClHD/LVUI?node-id=47-3048",
+  "reference": "Slider/Regular/Ticks",
+  "tickNode": "I47:3048;24:593;29:3528",
+  "gapBelowTrack": 3,
+  "tickSize": 2,
+  "defaultCount": 11,
+  "fillVariableId": "VariableID:2:188"
+}

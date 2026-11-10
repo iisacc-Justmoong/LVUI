@@ -5,8 +5,8 @@ LVUI의 `Color`와 `Metric`은 색상과 스타일 수치를 선택하는 내장
 ## 선택과 타입 추론
 
 ```text
-let ink: Color = .primary
-let gap: Metric = .space8
+const ink: Color = .primary
+const gap: Metric = .space8
 
 ApplicationWindow(backgroundColor: Color.window) {
     VStack(spacing: gap, padding: Metric.space24) {
@@ -31,41 +31,44 @@ ApplicationWindow(backgroundColor: Color.window) {
 | `Metric.textBody`, `Metric.textBodyLineHeight` | Theme Typography / Body의 크기·줄 높이 |
 | `Metric.weightMedium` | Theme Typography / Weight/Medium |
 
-접두사를 생략할 타입 문맥이 없는 `let ink = .primary`는 오류이다. `let ink = Color.primary`로 타입을 추론하거나 `let ink: Color = .primary`로 지정한다. 수치 입력은 Number와 Metric을 받으며, Metric을 색상·문자열·Bool로 사용하는 것은 거부한다. 수치 목록 입력에서도 `[Metric.size44, .size56]`처럼 작성할 수 있다.
+접두사를 생략할 타입 문맥이 없는 `const ink = .primary`는 오류이다. `const ink = Color.primary`로 타입을 추론하거나 `const ink: Color = .primary`로 지정한다. 수치 입력은 Number와 Metric을 받으며, Metric을 색상·문자열·Bool로 사용하는 것은 거부한다. 수치 목록 입력에서도 `[Metric.size44, .size56]`처럼 작성할 수 있다.
 
 타입 이름은 예약어이다. 변수나 import 바인딩 이름으로 `Color`·`Metric`을 다시 선언할 수 없다. 멤버는 정적 카탈로그 선택이며 임의 객체의 동적 속성이나 C++ 백엔드 참조로 해석하지 않는다. `Color.primary()`처럼 멤버를 함수로 호출하는 것도 오류이다.
 
 ## 직접 값 생성과 상태
 
 ```text
-let customInk: Color = Color("#12345678")
-let customGap: Metric = Metric(12)
-let otherInk: Color = "#abcdef"
-let otherGap: Metric = 16
+const customInk: Color = Color("#12345678")
+const customGap: Metric = Metric(12)
+const otherInk: Color = "#abcdef"
+const otherGap: Metric = 16
 var distance: Metric = .space8
 ```
 
 `Color()`는 Color 값 또는 기존 HEX 문자열 하나, 또는 유한한 0~1 RGBA 채널 네 개를 받는다. `Metric()`은 유한한 Number/Metric을 하나 받는다. 명시적인 타입 선언에서 해당 리터럴을 바로 사용할 수도 있다. `Metric`은 별도 값 종류로 검사되며 수치 스타일을 생성할 때 double로 내려간다. `Int`·`Float`·`Double` 선언을 통해 명시적으로 수치로 받을 수 있고, Int는 기존 정수 검사를 따른다.
 
 Metric `var`는 기존 Core Observable 수치 바인딩과 생성 setter를 사용한다.
-[네이티브 Color](NativeColors.md)는 `Color` 타입의 재사용 뷰 입력·일반 let/var·Static
-스냅샷·조건식·합성·함수 인자와 결과를 C++ 값과 바인딩으로 연결한다. 색상은 iiColorManager의
-공유 값 계약으로 검증하며, 외부 C++ 속성의 실제 타입은 생성 C++ 컴파일러도 검사한다.
+[네이티브 Color](NativeColors.md)는 `Color` 타입의 재사용 뷰 입력·일반 const/var·Static
+스냅샷·조건식·합성·함수 인자와 결과를 C++ 값과 바인딩으로 연결한다. 색상은 LVUI가
+소유하는 인코딩·범위 계약으로 검증하며, 외부 C++ 속성의 실제 타입은 생성 C++ 컴파일러도 검사한다.
 
 Color는 원본 encoded sRGB와 독립 알파를 유지한다. `composite(.material.surface.dense.edge, .window)`는 두 인자를 Color로 추론한다. Metric도 원본 수치·단위를 유지한다. 예를 들어 `Metric.opacity32`는 32이며 0.32로 자동 정규화하지 않는다. 속성별 크기·범위·글꼴 굵기 검사는 계속 적용된다.
 
-## HTML 형태 문법
+## 선언형 View의 스타일 입력
 
-```html
-<ApplicationWindow style="background:Color.window">
-  <div style="gap:Metric.space8;padding:.space24">
-    <span color={Color.text.body}
-          style="font-size:.textBody;font-weight:Metric.weightMedium">Native LVUI</span>
-  </div>
-</ApplicationWindow>
+```text
+ApplicationWindow(backgroundColor: Color.window) {
+    VStack(gap: Metric.space8, padding: .space24) {
+        Label(text: "Native LVUI", color: Color.text.body,
+              fontSize: .textBody, fontWeight: Metric.weightMedium)
+    }
+}
 ```
 
-인라인 스타일은 속성의 색상·수치 문맥에서 접두사를 생략할 수 있다. 초기 `<main>` 파서도 기존 지원 속성에서 같은 선택을 해석한다. `.5` 같은 숫자 표기를 스타일 멤버로 재해석하지 않는다. String 토큰 3개는 Color/Metric 멤버에 포함하지 않는다. 글꼴 이름 등에는 기존 `token()` 또는 `var()`를 사용한다.
+입력의 색상·수치 문맥에서 접두사를 생략할 수 있다. `.5` 같은 숫자 표기를 스타일
+멤버로 재해석하지 않는다. String 토큰은 Color/Metric 멤버에 포함하지 않는다.
+글꼴 이름 등에는 `token()`을 사용한다. 별도 레거시 문서 파서의 구문은 LVUI의
+네이티브 AOT 입력이 아니다.
 
 ## C++ 카탈로그와 재생성
 

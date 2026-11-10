@@ -11,7 +11,7 @@ OUTPUT = ROOT / 'src/Language/Keywords.def'
 KINDS = {'view', 'modifier', 'type', 'declaration', 'literal'}
 NAME = re.compile(r'[A-Za-z_][A-Za-z0-9_]*\Z')
 CORE = {'View': 'type', 'Color': 'type', 'Metric': 'type', 'import': 'declaration',
-        'let': 'declaration', 'var': 'declaration', 'true': 'literal', 'false': 'literal'}
+        'const': 'declaration', 'var': 'declaration', 'true': 'literal', 'false': 'literal'}
 
 
 def render(source):

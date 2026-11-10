@@ -6,7 +6,7 @@
 int main() {
     auto generated = lvui::compile_native("import vm Model\nWindow { CodeEditor(model: vm.document, editor: vm.document, sourceRevision: vm.revision, width: vm.width, onDocumentEdited: vm.changed, onSelectionChanged: vm.selected) }");
     if (!generated) throw std::runtime_error(generated.error().message);
-    for (auto part : {"#include <LVUI/NativeCodeEditor.h>", "lvui::native::NativeCodeEditor::create(",
+    for (auto part : {"#include <LVUI/NativeCodeEditor.h>", "lvui_generated::detail_code_editor::NativeCodeEditor::create(",
                       "lvui::native::CodeEditorAppearance", "component.set_appearance(value)",
                       "component.sync_source()", "const lvui::CodeDocumentChange& change", "lvui::CodeSelection value"})
         if (generated->find(part) == generated->npos) throw std::runtime_error(std::string("Independent code editor lost ") + part);

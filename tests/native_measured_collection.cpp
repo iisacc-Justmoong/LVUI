@@ -1,10 +1,14 @@
 #include <LVUI/NativeMeasuredCollection.h>
+#include <iiGUI/VirtualMeasurements.h>
 #include <iostream>
 #include <numeric>
 #include <stdexcept>
 #include <thread>
 namespace {
 using namespace lvui::native;
+using VirtualLineIndex=ii::gui::VirtualLineIndex;
+using Planner=VirtualCollectionPlannerBinding<ii::gui::BasicVirtualCollectionPlanner>;
+template<class T>using VirtualMeasurements=VirtualMeasurementsBinding<ii::gui::BasicVirtualMeasurements,T,Planner>;
 void check(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 auto source(std::vector<int> values={0,1,2,3,4,5}){return virtual_collection_source(values,[](int value,std::size_t){return value;});}
 void index(){
@@ -58,6 +62,14 @@ void lifetime(){
     bool rejected=false;std::thread foreign([&]{try{measured.report(frame.measurement_generation,{{"0",320,10}});}catch(const std::logic_error&){rejected=true;}});foreign.join();
     check(rejected,"A foreign thread published UI measurements");
     measured.close();check(!measured.report(frame.measurement_generation,{{"0",320,10}}),"A retired measurement controller accepted a late report");
+    VirtualMeasurements<int> switched;
+    auto old_source=source();auto ambient=std::make_shared<const int>(1);
+    std::weak_ptr<const VirtualCollectionSource<int>> old_source_lifetime=old_source;
+    std::weak_ptr<const int> ambient_lifetime=ambient;
+    auto old_frame=switched.plan(old_source,{.item_height=40,.measure_height=true},{.width=320,.height=70},{},ambient);
+    old_frame.source.reset();old_source.reset();ambient.reset();
+    (void)switched.plan(source({7,8}),{.item_height=40},{.width=320,.height=70});
+    check(old_source_lifetime.expired()&&ambient_lifetime.expired(),"Switching to uniform rows retained the old measured source or ambient state");
 }
 void diagnostics(){
     VirtualMeasurements<int> measured;auto values=source();

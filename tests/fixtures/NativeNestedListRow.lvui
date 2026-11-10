@@ -1,0 +1,6 @@
+import vm NativeOwnedListPanelModel
+Window {
+    List(model: vm.source, itemRow: "outer", footerVisible: false,
+         itemDelegate: List(model: vm.source, itemRow: "inner", footerVisible: false,
+                            itemDelegate: Label(text: outer.entry.label)))
+}

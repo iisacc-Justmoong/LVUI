@@ -1,5 +1,6 @@
+#include "tooltip_presentation_test_binding.h"
 #include <LVUI/NativeTooltipPresentation.h>
-#include <LVUI/NativeTooltipScheduler.h>
+#include <iiGUI/TooltipScheduler.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
 #include <chrono>
@@ -16,28 +17,29 @@ void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value
 void presentation(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto outer=take(tree->content_host({},"outer",{640,480}));std::optional<std::int64_t> deadline;
-    std::shared_ptr<lvui::native::NativeTooltipPresentation> port;std::optional<lvui::TooltipController> controller;
+    std::shared_ptr<TooltipTestPresentation> port;std::optional<TooltipTestController> controller;
     ii::gui::Widget content;bool candidate_rejected=false;int clicks=0;
+    auto scheduler_owner=std::make_shared<int>(1);std::weak_ptr<int> scheduler_lifetime=scheduler_owner;
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
         auto root=builder.absolute_stack({},"layout",{640,480});if(!root)return std::unexpected(root.error());
         auto under=builder.action_surface(*root,"under",{.width=20,.height=20},[&]{++clicks;});
         if(!under)return std::unexpected(under.error());if(auto frame=under->set_frame({190,190,20,20});!frame)return frame;
-        lvui::native::TooltipPresentationStyle invalid;invalid.material.width=20;
-        auto rejected=lvui::native::NativeTooltipPresentation::create(builder,*root,"invalid",invalid,
+        TooltipTestStyle invalid;invalid.material.width=20;
+        auto rejected=TooltipTestPresentation::create(builder,*root,"invalid",invalid,
             [](std::optional<std::int64_t>)->ii::core::Result<void>{return {};});
         if(rejected)return ii::core::fail(ii::core::ErrorCode::failed,"Ignored tooltip material extent was accepted");
-        auto created=lvui::native::NativeTooltipPresentation::create(builder,*root,"tooltip",{},
-            [&](std::optional<std::int64_t> value)->ii::core::Result<void>{deadline=value;return {};});
+        auto created=TooltipTestPresentation::create(builder,*root,"tooltip",{},
+            [&,held=scheduler_owner](std::optional<std::int64_t> value)->ii::core::Result<void>{deadline=value;return {};});
         if(!created)return std::unexpected(created.error());port=*created;content=port->content_root();
         auto label=builder.label(content,"tooltip-label",{.text="Helpful text",.font_size=13,.selectable=false});
         if(!label)return std::unexpected(label.error());
         lvui::TooltipConfiguration config;config.delay=0ms;config.timeout=100ms;
-        auto owner=lvui::TooltipController::create(port,config);if(!owner)return std::unexpected(owner.error());controller=*owner;
+        auto owner=TooltipTestController::create(port,config);if(!owner)return std::unexpected(owner.error());controller=*owner;
         if(auto geometry=controller->set_geometry({{0,0,640,480},{200,200},{100,30}});!geometry)return geometry;
         auto early=controller->open(0);candidate_rejected=!early&&early.error().code==ii::core::ErrorCode::busy&&!deadline;
         return {};
     }));
-    require(candidate_rejected,"An unpublished tooltip was allowed to open or retain a timer");
+    scheduler_owner.reset();require(candidate_rejected,"An unpublished tooltip was allowed to open or retain a timer");
     good(controller->advance(0,{.target_available=true,.target_engaged=true}));
     auto snapshot=take(port->root().snapshot());require(snapshot.opened&&deadline==100,"Published tooltip did not open with its deadline");
     const auto first=take(controller->snapshot());require(first.layout&&snapshot.bounds.width==first.layout->frame.width&&
@@ -63,8 +65,9 @@ void presentation(){
     auto after=take(content.snapshot());require(after.id==before.id&&take(port->root().snapshot()).opened,"Tooltip reposition replaced retained content");
     good(controller->close(10));require(!take(port->root().snapshot()).opened&&!deadline,"Tooltip close left its popup or timer active");
     good(controller->open(11));require(take(port->root().snapshot()).opened&&deadline==111,"Tooltip could not reopen");
-    auto late=controller->weak_tick();std::weak_ptr<lvui::native::NativeTooltipPresentation> weak=port;
+    auto late=controller->weak_tick();std::weak_ptr<TooltipTestPresentation> weak=port;
     good(outer.clear_content());require(!deadline&&!port->root().snapshot(),"Retirement left the popup or timer active");
+    require(scheduler_lifetime.expired(),"Retired tooltip retained its scheduler callback");
     auto result=late(111);require(!result&&result.error().code==ii::core::ErrorCode::closed,"Retired tooltip accepted a late timer");
     controller.reset();port.reset();require(weak.expired(),"Retired tooltip retained its presentation port");tree->close();
 }
@@ -74,15 +77,15 @@ void retire_during_open(){
         if(retire){retire=false;saw_retirement=true;good(outer.clear_content());}
     };
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();},ii::gui::WidgetAppearance{},hooks);
-    outer=take(tree->content_host({},"outer",{640,480}));std::shared_ptr<lvui::native::NativeTooltipPresentation> port;
-    std::optional<lvui::TooltipController> controller;
+    outer=take(tree->content_host({},"outer",{640,480}));std::shared_ptr<TooltipTestPresentation> port;
+    std::optional<TooltipTestController> controller;
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
         auto root=builder.absolute_stack({},"layout",{640,480});if(!root)return std::unexpected(root.error());
-        auto created=lvui::native::NativeTooltipPresentation::create(builder,*root,"tooltip",{},
+        auto created=TooltipTestPresentation::create(builder,*root,"tooltip",{},
             [&](std::optional<std::int64_t> value)->ii::core::Result<void>{deadline=value;return {};});
         if(!created)return std::unexpected(created.error());port=*created;
         lvui::TooltipConfiguration config;config.delay=0ms;config.timeout=100ms;
-        auto owner=lvui::TooltipController::create(port,config);if(!owner)return std::unexpected(owner.error());controller=*owner;
+        auto owner=TooltipTestController::create(port,config);if(!owner)return std::unexpected(owner.error());controller=*owner;
         return controller->set_geometry({{0,0,640,480},{200,200},{100,30}});
     }));
     retire=true;auto result=controller->advance(0,{.target_available=true,.target_engaged=true});
@@ -91,16 +94,16 @@ void retire_during_open(){
     controller.reset();port.reset();tree->close();
 }
 void event_loop_composition(){
-    ii::runtime::EventLoop events;auto scheduler=take(lvui::native::NativeTooltipScheduler::create(events.sender()));
+    ii::runtime::EventLoop events;auto scheduler=take(ii::gui::TooltipScheduler::create(events.sender()));
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,480}));std::shared_ptr<lvui::native::NativeTooltipPresentation> port;
-    std::optional<lvui::TooltipController> controller;
+    auto outer=take(tree->content_host({},"outer",{640,480}));std::shared_ptr<TooltipTestPresentation> port;
+    std::optional<TooltipTestController> controller;
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
         auto root=builder.absolute_stack({},"layout",{640,480});if(!root)return std::unexpected(root.error());
-        auto created=lvui::native::NativeTooltipPresentation::create(builder,*root,"tooltip",{},scheduler.weak_schedule());
+        auto created=TooltipTestPresentation::create(builder,*root,"tooltip",{},scheduler.weak_schedule());
         if(!created)return std::unexpected(created.error());port=*created;
         lvui::TooltipConfiguration config;config.delay=0ms;config.timeout=5000ms;
-        auto owner=lvui::TooltipController::create(port,config);if(!owner)return std::unexpected(owner.error());controller=*owner;
+        auto owner=TooltipTestController::create(port,config);if(!owner)return std::unexpected(owner.error());controller=*owner;
         if(auto wake=scheduler.set_wake(controller->weak_tick());!wake)return wake;
         return controller->set_geometry({{0,0,640,480},{200,200},{100,30}});
     }));

@@ -7,10 +7,10 @@
 ```lvui
 import class Domain.Record
 import vm Model
-let Details(item: Record, again: Record = item): View = VStack {
+const Details(item: Record, again: Record = item): View = VStack {
     Label(text: item.title)
     Label(text: again.title)
-    @Static let initial: String = item.title
+    @Static const initial: String = item.title
     Label(text: initial)
 }
 Window { Details(item: vm.makeRecord(vm.count)) }

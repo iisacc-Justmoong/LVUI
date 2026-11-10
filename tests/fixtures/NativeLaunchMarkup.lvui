@@ -1,0 +1,4 @@
+import vm NativeApplicationBackend
+Application(onStart: vm.started, onLaunchArguments: vm.launch_arguments, onReady: vm.ready, onStop: vm.stopped) {
+    Window { Label(text: vm.title) }
+}

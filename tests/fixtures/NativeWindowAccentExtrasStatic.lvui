@@ -1,0 +1,29 @@
+let NestedProgress(): View = ProgressBar(id: "nestedProgress", width: 80, currentValue: 50, motionEnabled: false)
+Window(accent: .purple) {
+    VStack {
+        HStack {
+            ProgressBar(id: "progress", width: 100, currentValue: 50, motionEnabled: false)
+            ProgressBar(id: "fixedProgress", width: 100, currentValue: 50, fillColor: "#ff0000", motionEnabled: false)
+            NestedProgress()
+        }
+        HStack {
+            AlertButton(id: "alert", text: "Confirm", tone: .primary)
+            AlertButton(id: "fixedAlert", text: "Fixed", tone: .primary, primaryColor: "#ff0000")
+            AlertButton(id: "dangerAlert", text: "Delete", tone: .destructive)
+        }
+        HStack {
+            ColorPickerButton(id: "color", showHueRing: false, currentColor: "#00ff00")
+            ColorPickerButton(id: "fixedColor", showHueRing: false, currentColor: "#00ff00", focusColor: "#ff0000")
+        }
+        HStack {
+            ToolbarButton(id: "tool", text: "Tool", tone: .primary)
+            ToolbarButton(id: "fixedTool", text: "Fixed", tone: .primary, primaryColor: "#ff0000", pressedColor: "#00ff00", focusColor: "#ff0000")
+            ToolbarButton(id: "bareTool", text: "Bare", tone: .borderless)
+            ToolbarButton(id: "fixedBareTool", text: "Fixed bare", tone: .borderless, pressedColor: "#00ff00", focusColor: "#ff0000")
+            ToolbarButton(id: "dangerTool", text: "Delete", tone: .destructive)
+        }
+        Alert(id: "dialog", title: "Confirm", primaryText: "OK", buttonCount: 1, showIcon: false, motionEnabled: false)
+        Alert(id: "fixedDialog", title: "Confirm", primaryText: "OK", buttonCount: 1, showIcon: false,
+              motionEnabled: false, primaryColor: "#ff0000")
+    }
+}

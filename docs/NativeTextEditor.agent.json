@@ -1,0 +1,166 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:0aa159cfe98174d0c90f17c0f90827c6378818b25dfb19f32482a35ebfa1d415",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeTextEditor.md",
+    "sha256": "ebdd69a43aa030c4dd711bcd6574a8eccdd4eb0d655d1ef46b324f3121242572",
+    "bytes": 3351,
+    "line_count": 42,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 여러 줄 텍스트 편집기",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 여러 줄 텍스트 편집기\n",
+      "level": 1,
+      "title": "네이티브 여러 줄 텍스트 편집기"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 15,
+      "raw": "Society의 프로젝트 목표·일정 메모와 Dreamscapes의 생성 프롬프트는 외부 파일을\n연결하지 않는 일반 텍스트를 편집한다. `TextEditor`는 이 사용을 위한 독립적인\n선언형 View와 설정 계약을 제공한다. iiGUI의 `BasicNativeTextEditor`가 입력 필드 조합과 최소 높이 계산을 소유하며, 생성된 앱은 `TextEditorBinding`으로 iiGUI 구현을 연결한다.\n현재 Figma의 TextField 재질과 LVUI 토큰을 공유한다. 입력 영역은 여러 줄, 자동\n줄바꿈, 선택, 입력기 조합, 실행 취소와 외부 모델의 이벤트 기반 갱신을 지원한다.\n호환되는 iiGUI 호스트에서는 포커스와 커서 이동 시 같은 위젯 트리의 일반 스크롤\n조상이 커서 영역을 보이게 한다. 이전 iiGUI 헤더에서는 이 기능이 비활성화된다.\n다른 트리나 팝업에 걸친 스크롤 이동은 아직 제공하지 않는다.\n여러 줄 편집기에서는 휠·트랙패드 스크롤을 내부 표시 범위에 적용한다. 읽기 전용\n텍스트도 스크롤할 수 있으며 원문과 선택은 바꾸지 않는다. 스크롤 한계에서 더 이동할\n수 없는 입력은 상위 스크롤 영역으로 전달한다.\n읽기 전용 여러 줄 텍스트는 처음 생성하거나 외부에서 내용을 교체할 때 커서와 내부\n스크롤을 문서의 시작에 둔다. 같은 값이 다시 전달되는 경우에는 현재 선택을 유지한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 25,
+      "raw": "텍스트·자리표시자·활성화·읽기 전용·너비·높이·최소 높이·여백·글꼴·접근성 이름은\n명시하거나 모델에서 구독할 수 있다. 사용자 편집만 `onEdited`로 전달하며 외부 값\n갱신은 편집 이벤트를 만들지 않는다. `onContentHeightChanged`는 텍스트의 측정된\n높이를 최초 부착과 값 변경 시에만 알리며, 글꼴·문자·줄바꿈 너비의 변화에 반응한다.\n이 값은 안쪽 여백을 제외하며 임시 입력기 조합을 포함한다. 앱은 측정값과 여백,\n최소·최대 높이를 조합해 모델의 높이를 설정할 수 있다. C++에서는 스냅샷의\n`content_height`를 질의할 수도 있다. 현재 입력 엔진에는 UTF-8 64 KiB와\n줄 레이아웃 4096행 한도가 있다. 파일 로딩·저장, 서식 있는 텍스트와 자동 동기화는\n이 계약에 포함되지 않으며 파일 소유권은 앱의 주입된 공급자가 담당한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 27,
+      "end_line": 34,
+      "raw": "```lvui\nimport vm NotesModel\nWindow {\n    TextEditor(text: vm.text, placeholder: vm.placeholder, width: vm.width,\n        height: vm.height, minimumHeight: vm.minimumHeight, onEdited: vm.edited,\n        onContentHeightChanged: vm.measured)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm NotesModel\nWindow {\n    TextEditor(text: vm.text, placeholder: vm.placeholder, width: vm.width,\n        height: vm.height, minimumHeight: vm.minimumHeight, onEdited: vm.edited,\n        onContentHeightChanged: vm.measured)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 36,
+      "end_line": 37,
+      "raw": "`measured(double)`는 새 내용 높이를 받아 화면 모델의 높이를 갱신할 수 있다.\nPython 컴파일러 API인 `ii_lvui.compile_native`도 이 선언을 처리한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 40,
+      "raw": "운영체제 창을 띄운 검증이나 모든 플랫폼에서의 입력기 실기기 검증은 이 문서의\n구현 범위를 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "`LVUI/NativeTextEditor.h`와 설정 계약은 iiSDKCore 외 SDK를 직접 참조하지 않는다. macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 생성·반응형 높이·스크롤 경로를 창 없이 검사했다. 실제 운영체제 창과 GPU는 검사하지 않았다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 여러 줄 텍스트 편집기",
+      "anchor": "네이티브-여러-줄-텍스트-편집기",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 10,
+        "text": "다른 트리나 팝업에 걸친 스크롤 이동은 아직 제공하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 40,
+        "text": "구현 범위를 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 42,
+        "text": "`LVUI/NativeTextEditor.h`와 설정 계약은 iiSDKCore 외 SDK를 직접 참조하지 않는다. macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 생성·반응형 높이·스크롤 경로를 창 없이 검사했다. 실제 운영체제 창과 GPU는 검사하지 않았다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

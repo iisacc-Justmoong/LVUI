@@ -1,0 +1,13 @@
+#pragma once
+#include <LVUI/NativeHierarchyList.h>
+#include <iiGUI/NativeHierarchyListView.h>
+#include <iiGUI/HierarchyViewport.h>
+#include <iiGUI/HierarchyDrag.h>
+#include <iiGUI/NativeHierarchyItemView.h>
+#include <iiGUI/HierarchyItemModel.h>
+#include <iiGUI/SvgImageCache.h>
+using HierarchyListTestItemModel=lvui::HierarchyItemModelBinding<ii::gui::BasicHierarchyItem>;
+using HierarchyListTestItem=lvui::native::HierarchyItemBinding<ii::gui::BasicNativeHierarchyItem,ii::gui::BasicHierarchyItem,ii::gui::CachedSvgDecoder>;
+using HierarchyListTestSource=lvui::HierarchyViewportBinding<ii::gui::BasicHierarchyViewportSource>;
+using HierarchyListTestDrag=lvui::HierarchyDragBinding<ii::gui::BasicHierarchyDrag,HierarchyListTestSource>;
+using HierarchyListTestView=lvui::native::HierarchyListBinding<ii::gui::BasicNativeHierarchyList,HierarchyListTestItemModel,HierarchyListTestItem,ii::gui::RasterImage,ii::gui::CachedSvgDecoder,ii::gui::WidgetBuilder,HierarchyListTestSource,HierarchyListTestDrag>;

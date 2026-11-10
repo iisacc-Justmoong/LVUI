@@ -1,0 +1,4 @@
+import vm NativeOwnedTableActionBackend
+Table(id: "table", model: vm.controller, width: 200, height: 96,
+      cellContext: "cell",
+      columnViews: [TableColumn(key: "a", cell: PushButton(id: "open-cell", text: cell.text, onClick: callback(vm.open(cell.row_key))))])

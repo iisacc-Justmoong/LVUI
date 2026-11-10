@@ -10,13 +10,13 @@
 .lvui + 선택적 C++ 백엔드
        │ lvui_generate / lvui-compile (호스트에서 실행)
        ▼
-생성된 .generated.h + 앱 구성 C++23
+생성된 .generated.h + 선언형 또는 앱 구성 C++23 진입
        │ 앱 빌드
        ▼
 LVUI 네이티브 바인딩 + iiGUI 호스트 + iiSDKCore 런타임
 ```
 
-현재 언어 레지스트리는 시각 이름 109개를 포함한다. 이름이 등록되었다는 사실만으로
+현재 언어 레지스트리는 시각 컴포넌트와 선언형 앱 이름을 포함한다. 이름이 등록되었다는 사실만으로
 모든 속성·운영체제·접근성이 완성되었다고 볼 수는 없다. 구현된 컨트롤과 전환 중인
 경로는 [독립 구현 현황](LVUIIndependence.md), 언어 기능은
 [문서 색인](README.md)을 확인한다. 기본 경로의 대상은 LVUI 자체 컨트롤이고,
@@ -38,16 +38,18 @@ LVUI 네이티브 바인딩 + iiGUI 호스트 + iiSDKCore 런타임
 | 앱 | 파일 | 익히는 내용 |
 |---|---|---|
 | Hello | [Hello.lvui](../example/GettingStarted/App/Hello.lvui) | 창, 수직 배치, 텍스트 역할, Metric·Color, 진행 표시 |
+| Scenes | [Scenes.lvui](../example/GettingStarted/App/Scenes.lvui) | 독립 Scene 상태, 장면 열기·닫기와 네이티브 창 수명 |
 | ReadingList | [ReadingList.lvui](../example/GettingStarted/App/ReadingList.lvui), [백엔드](../example/GettingStarted/App/ReadingListBackend.h) | 텍스트 입력, Observable, 콜백, 재사용 View, 조건 분기와 키 기반 반복 |
 | Inventory | [Inventory.lvui](../example/GettingStarted/App/Inventory.lvui), [백엔드](../example/GettingStarted/App/InventoryBackend.h) | 표 모델·편집 경계, 선택, 정렬, 클립보드, 변경 리비전 |
 
-세 앱은 같은 [애플리케이션 연결 코드](../example/GettingStarted/App/Application.cpp)를
+Hello는 `Application` 루트에서 앱 진입을 생성한다. ReadingList와 Inventory는
+기존 [애플리케이션 연결 코드](../example/GettingStarted/App/Application.cpp)를
 사용한다. 메모리에서만 데이터를 다루므로 창을 닫으면 목록과 표의 변경은 사라진다.
 앱을 실제 제품에 넣을 때는 해당 모델을 파일·서비스 등 앱 소유 저장소로 교체한다.
 
 ## 준비와 빌드
 
-C++23 컴파일러, CMake 3.31 이상, LVUI와 호환되는 iiSDKCore·iiColorManager·iiGUI
+C++23 컴파일러, CMake 3.31 이상, LVUI와 호환되는 iiSDKCore·iiGUI
 패키지가 필요하다. iiGUI의 데스크톱 빌드와 해당 플랫폼 그래픽 의존성을 준비한다.
 예제는 macOS, Windows, Linux 데스크톱 호스트를 대상으로 구성하지만, 플랫폼별 실제
 표시·입력 검증 상태는 각각 별개다. LVUI 저장소 루트에서 `build/`를 사용한다.
@@ -55,8 +57,7 @@ C++23 컴파일러, CMake 3.31 이상, LVUI와 호환되는 iiSDKCore·iiColorMa
 ```sh
 cmake -S . -B build -DLVUI_BUILD_TUTORIAL_EXAMPLES=ON -DBUILD_TESTING=ON \
   -DiiGUI_DIR=/path/to/iiGUI/lib/cmake/iiGUI \
-  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \
-  -DiiColorManager_DIR=/path/to/iiColorManager/lib/cmake/iiColorManager
+  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore
 cmake --build build --target LVUIHello LVUIReadingList LVUIInventory
 ```
 
@@ -66,6 +67,9 @@ cmake --build build --target LVUIHello LVUIReadingList LVUIInventory
 iiGUI 패키지의 원본 리소스 디렉터리에 연결한다. 배포할 때는 링크가 가리키는 파일과
 라이선스를 배포 패키지에 포함해야 한다. 플랫폼에 따라 개발용 심볼릭 링크 생성 권한이
 필요할 수 있다.
+선택적 색상·지역화·이미지 계약은 다른 SDK를 자동으로 연결하지 않는다. 앱이
+예제 어댑터를 선택할 경우에만 그 어댑터의 색상·파일·네트워크·코덱 패키지가 필요하다.
+다른 시각 컴포넌트에는 아직 iiGUI를 직접 사용하는 기존 구현이 남아 있다.
 
 헤드리스 통합 테스트는 인접 `SDK/iiGUI/src/iiGUI/WidgetState.h`를 사용한다. 다른
 위치에 있다면 `-DLVUI_TUTORIAL_IIGUI_SOURCE=/path/to/iiGUI/src`를 지정한다.
@@ -85,27 +89,30 @@ ctest --test-dir build --output-on-failure -R '^LVUI\.Tutorial\.Generated$'
 
 ## 소스에서 화면 만들기
 
-`ApplicationWindow` 안에 `VStack`·`HStack`과 컨트롤을 배치한다. 문자열, 숫자,
+`Application` 안의 `ApplicationWindow`에 `VStack`·`HStack`과 컨트롤을 배치한다. 문자열, 숫자,
 불리언과 스타일 역할을 이름 있는 입력으로 전달한다. ID는 앱이나 테스트가 생성된
 위젯을 찾을 때 사용한다. Hello의 `Color.window`와 `Metric.space12`는 생성 시점에
 선택한 LVUI 스타일 값으로 컴파일되며 실행 중 Figma 접속이 필요하지 않다.
 
 ```lvui
-ApplicationWindow(title: "Hello", width: 640, height: 400) {
-    VStack(spacing: 12, padding: 24) {
-        Label(text: "Hello, LVUI", style: .title)
-        ProgressBar(currentValue: 65, motionEnabled: false)
+Application {
+    ApplicationWindow(title: "Hello", width: 640, height: 400) {
+        VStack(spacing: 12, padding: 24) {
+            Label(text: "Hello, LVUI", style: .title)
+            ProgressBar(currentValue: 65, motionEnabled: false)
+        }
     }
 }
 ```
 
-CMake에서 `lvui_generate(NAME Hello SOURCE App/Hello.lvui OUTPUT_VARIABLE generated)`를
-호출하면 빌드 디렉터리에 `Hello.generated.h`가 생긴다. 앱의 소스와 생성 파일을
-`iisdkcore_add_application`에 전달하고 `LVUI::Native`, `iiGUI::iiGUI`를 링크한다.
-`configure_application`은 생성된 `lvui_generated::Hello`의 창 옵션으로 iiGUI 호스트를
-붙이고 `view_attachment`를 등록한다. iiSDKCore가 제공하는 `main()`과 이벤트 루프가
-앱의 실행·종료를 담당한다. 예제의 [CMake 연결](../example/GettingStarted/CMakeLists.txt)을
-복사해 새 이름과 파일을 등록할 수 있다.
+CMake의 `lvui_add_application(LVUIHello NAME Hello SOURCE App/Hello.lvui)`는
+생성된 뷰와 앱 진입 코드를 iiGUI 호스트 및 iiSDKCore 수명에 연결한다. 수동
+`configure_application`은 필요 없다. 별도의 뷰로 조합하는 기존 `Window` 루트는
+`lvui_generate`와 직접 연결하는 경로를 유지한다. 시작할 때 앱 저장소나 서비스를
+주입해야 하면 `CONFIGURE_SOURCE`로 앱이 작성한 `configure_application` 소스를 전달한다.
+여러 이름 있는 창은 [Scene 계약](Scenes.md)을 따른다. 실패 복구와 추가 입력은
+[앱 수명 계약](NativeApplication.md)을
+따른다. 예제의 [CMake 연결](../example/GettingStarted/CMakeLists.txt)을 참고한다.
 
 명령행에서 파서와 컴파일러를 각각 사용할 수도 있다. `lvui-check`는 구문 확인이고,
 최종 네이티브 C++의 타입·링크 성공까지 보장하지 않는다.
@@ -131,7 +138,7 @@ build/lvui-compile --name Hello example/GettingStarted/App/Hello.lvui
 
 ```lvui
 import vm ReadingListBackend
-let ReadingRow(title: String): View = HStack {
+const ReadingRow(title: String): View = HStack {
     Label(text: title)
 }
 Window {
@@ -146,9 +153,9 @@ Window {
 ```
 
 `vm.add`는 나중에 호출할 메서드 참조이며 `vm.add()`는 즉시 호출하는 표현이다.
-`onEdited`가 받은 문자열을 백엔드에 저장하면 입력과 모델이 동기화된다. `let`으로
+`onEdited`가 받은 문자열을 백엔드에 저장하면 입력과 모델이 동기화된다. `const`으로
 선언한 파생 값은 지원되는 의존성을 추적하고, `var`는 변경 가능한 값이며,
-`@Static let`은 활성화 시점의 값을 고정한다. 반응형 값이 쓰기 권한을 부여하는 것은
+`@Static const`는 활성화 시점의 값을 고정한다. 반응형 값이 쓰기 권한을 부여하는 것은
 아니다. 키 기반 반복에는 위치가 바뀌어도 고유하고 안정적인 ID를 사용한다.
 행의 지역 상태는 행이 퇴역하면 사라지므로 오래 유지할 상태는 상위 모델이 소유한다.
 [상태 바인딩](NativeBindings.md), [재사용 구성](Components.md),
@@ -163,7 +170,9 @@ Window {
 
 개별 계층 행의 `countView`에는 `Label(text: vm.badge)` 같은 단일 View를 전달할 수
 있다. `count`가 음수이면 View를 숨기고 0 이상이면 다시 표시한다. 계층 목록이
-자동으로 생성하는 행의 사용자 대리자는 아직 별도 구현이 필요하다.
+자동으로 생성하는 행은 `countRow: "item"`으로 개수 View에 행 데이터를 전달하거나
+`itemRow: "item", itemDelegate: Label(text: item.entry.label)`로 기본 행 콘텐츠를
+교체할 수 있다. 행 선택·키보드 탐색·드래그와 수명은 목록이 관리한다.
 
 백그라운드 작업의 수명은 일반 콜백이나 `Observable`만으로 자동 보장되지 않는다.
 비동기 작업이 필요하면 [활성화 소유 작업](ActivationWork.md)을 검토하고, 뷰보다
@@ -184,9 +193,10 @@ Inventory는 간단한 `TableMemory`에 열·행을 저장하고 `TableControlle
 
 ## 현재의 제약과 토큰 차이
 
-- `InputField`는 자체 편집·선택·IME 상태를 제공하지만 Android와 Web에서는 필요한
-  텍스트 배치 서비스가 없어 생성할 수 없다. 자동 줄바꿈, 실행 취소·재실행,
-  더블 클릭 단어 선택과 실제 운영체제별 입력기·접근성 검증은 남아 있다.
+- `InputField`는 자체 편집·선택·IME 상태, 여러 줄 자동 줄바꿈, 로컬 실행 취소와
+  더블 클릭 단어 선택을 제공하지만 Android와 Web에서는 필요한 텍스트 배치 서비스가
+  없어 생성할 수 없다. 운영체제의 더블 클릭 설정 자동 연동과 실제 입력기·접근성
+  검증은 남아 있다. 줄바꿈 속성과 제한은 [입력 필드](NativeInputField.md)를 따른다.
 - 스타일 카탈로그의 208개 값은 저장된 Figma 스냅샷이다. 조사 시 LVUI에는 Figma에서
   삭제된 `Action/primary`, `Action/success`, `Action/warning`, `Action/danger` 별칭이
   남아 있고 기본 색상 생성에도 이전 별칭이 사용된다. 최신 Figma 악센트 역할로의

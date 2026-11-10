@@ -1,0 +1,79 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:9fa149458dc63a6fc894317a81f758d44edf4bc6373814175167af2f5f8434af",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeCardOpen.md",
+    "sha256": "ef47832f8cb523fd58b679fc9c6e55e5093aefc1824de6c685fc9e45229f4123",
+    "bytes": 792,
+    "line_count": 9,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "파일 카드의 선택과 열기",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 파일 카드의 선택과 열기\n",
+      "level": 1,
+      "title": "파일 카드의 선택과 열기"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 9,
+      "raw": "Dreamscapes의 저장소 파일 카드는 한 번 누르면 선택하고 두 번 누르면 연다.\n`Card`의 `onClick`과 `onDoubleClicked`는 별개의 이벤트이며, 둘째 동작은 정상적인\n두 번째 포인터 활성화가 완료된 경우에만 전달한다. 취소되거나 카드 밖에서 끝난\n입력, 메뉴·액션 버튼, 키보드 활성화는 이중 누르기를 만들지 않는다. 운영체제가\n탭 횟수를 제공하지 않으면 같은 장치의 인접한 포인터 입력을 시간과 거리로 판정한다.\n선택 여부와 실제 파일 열기는 앱의 뷰모델이 소유하며 카드를 누른 것만으로 파일을\n열지 않는다. 뷰가 퇴역했거나 비활성화되면 이후 콜백은 전달하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "파일 카드의 선택과 열기",
+      "anchor": "파일-카드의-선택과-열기",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 9,
+        "text": "열지 않는다. 뷰가 퇴역했거나 비활성화되면 이후 콜백은 전달하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

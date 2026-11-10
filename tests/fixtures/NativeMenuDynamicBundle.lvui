@@ -1,0 +1,26 @@
+import vm NativeMenuBundlesModel
+let Dynamic(title: String): [View] = [
+    ContextMenuItem(id: "insideBefore", label: title, hasChildItems: false, keepOpen: true),
+    if (vm.show) {
+        ContextMenuItem(id: "optional", label: "Optional", hasChildItems: false, keepOpen: true)
+    } else {
+        ContextMenuDivider(id: "fallback")
+    },
+    for (entry in vm.rows, key: entry.id, id: "insideRows") {
+        if (entry.show) {
+            ContextMenuItem(id: "insideRow", label: entry.label, visible: entry.visible,
+                            itemHeight: entry.height, hasChildItems: false, keepOpen: true, onClick: entry.clicked)
+        }
+    },
+    ContextMenuItem(id: "insideAfter", label: title, hasChildItems: false, keepOpen: true)
+]
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", itemSpacing: vm.spacing, onItemTriggered: vm.on_triggered) {
+            ContextMenuItem(id: "before", label: "Before", hasChildItems: false, keepOpen: true)
+            Dynamic(title: vm.title)
+            ContextMenuItem(id: "after", label: "After", hasChildItems: false, keepOpen: true)
+        }
+    }
+}

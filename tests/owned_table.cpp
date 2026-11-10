@@ -34,7 +34,7 @@ int main() {
             take(memory->snapshot())->revision == 0, "Table selection changed document state or range bounds");
     require(take(view.set_mode(TableSelectionMode::single)) && take(view.range())->first_row == 1 &&
             take(view.range())->first_column == 0, "Switching to single selection did not preserve the current cell");
-    require(take(view.set_mode(TableSelectionMode::none)) && !take(view.selection()) && !view.select({"first", "name"}),
+    require(take(view.set_mode(TableSelectionMode::none)) && take(view.mode()) == TableSelectionMode::none && !take(view.selection()) && !view.select({"first", "name"}),
             "Disabled table selection retained or accepted a selection");
     require(take(view.set_mode(TableSelectionMode::range)) && take(view.select({"first", "value"})) &&
             take(view.select({"second", "name"}, true)), "Table selection did not recover");
@@ -85,7 +85,8 @@ int main() {
             take(blocked.selection())->current.column == "value" && !take(blocked.navigate(TableDirection::down)) &&
             take(blocked_source->snapshot())->revision == 0, "Table navigation did not skip disabled cells");
     bool wrong_thread = false;
-    std::thread wrong([&] { auto result = view.selection(); wrong_thread = !result && result.error().code == TableErrorCode::wrong_thread; });
+    std::thread wrong([&] { auto result = view.selection(); auto mode = view.mode();
+        wrong_thread = !result && result.error().code == TableErrorCode::wrong_thread && !mode && mode.error().code == TableErrorCode::wrong_thread; });
     wrong.join(); require(wrong_thread, "Table controller accepted a foreign thread");
     auto broken = shortened_rows; broken[1].key = broken[0].key;
     require(!memory->replace(shortened_columns, broken, 4), "Duplicate table row keys were accepted");

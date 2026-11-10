@@ -5,7 +5,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { ListItem(type: .Stepper, label: vm.label, quantity: vm.quantity, minimumQuantity: 1, maximumQuantity: 3, stepSize: 0.5, onQuantityChanged: vm.changed, onEdited: vm.edited) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto part:{"#include <LVUI/NativeListItemComposite.h>","lvui::native::NativeListItemComposite::create(","lvui::ListItemVariant::stepper",
+    for(auto part:{"#include <LVUI/NativeListItemComposite.h>","detail_list_composite::NativeListItemComposite::create(","lvui::ListItemVariant::stepper",
                    "value.minimum_quantity", "value.maximum_quantity", "value.step_size", ".quantity_changed =", "component.set_options(value)"})
         if(code->find(part)==code->npos)throw std::runtime_error(std::string("Independent list stepper lost ")+part);
     if(code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)

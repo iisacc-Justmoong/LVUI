@@ -48,7 +48,7 @@ C++ 위젯 생성·속성 설정·메서드 콜백을 호출한다. 런타임은
 ## Core가 만드는 최종 앱
 
 ```cmake
-find_package(iiGUI 0.4 CONFIG REQUIRED)
+find_package(iiGUI 0.5.0 CONFIG REQUIRED)
 lvui_generate(NAME MainView SOURCE MainView.lvui OUTPUT_VARIABLE generated)
 iisdkcore_add_application(MyApp GUI
     SOURCES application.cpp "${generated}"

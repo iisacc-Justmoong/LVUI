@@ -1,12 +1,16 @@
 #include <LVUI/NativeTable.h>
+#include "table_host_test_binding.h"
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
+#include <cmath>
+#include <functional>
 #include <memory>
 #include <optional>
 #include <stdexcept>
 #include <string>
 #include <thread>
+#include <utility>
 #include <vector>
 
 namespace {
@@ -26,6 +30,18 @@ bool has_text(const ii::gui::CanvasFrame& drawing, std::string_view text) {
     for (const auto& layer : drawing.overlays) for (const auto& item : layer.texts) if (item.text == text) return true;
     return false;
 }
+std::vector<ii::gui::ImageRun> images(const ii::gui::CanvasFrame& drawing) {
+    auto result=drawing.images;for(const auto& layer:drawing.overlays)result.insert(result.end(),layer.images.begin(),layer.images.end());return result;
+}
+struct MutableIcons final:lvui::IconSource {
+    std::string red,blue;mutable std::function<void()> on_resolve;mutable std::uint64_t version=1;
+    [[nodiscard]] lvui::IconResult<std::shared_ptr<const lvui::IconAsset>> resolve(std::string_view name)const override {
+        if(auto callback=std::exchange(on_resolve,{}))callback();
+        if(name=="red"||name=="blue")return std::make_shared<const lvui::IconAsset>(lvui::IconAsset{name=="red"?red:blue});
+        return std::unexpected(lvui::IconError{lvui::IconErrorCode::not_found,"fixture icon missing"});
+    }
+    [[nodiscard]] std::uint64_t revision()const noexcept override{return version;}
+};
 }
 int main() {
     using namespace ii::gui;
@@ -57,6 +73,35 @@ int main() {
     require(take(table->frame())->source == initial_geometry, "An unchanged reactive table input rebuilt its indexed geometry");
     auto drawing = take(tree->drawing_snapshot({300, 160}));
     require(has_text(drawing, "Column 0") && has_text(drawing, "0/0"), "Native table did not draw its header and cells");
+    require(valid_canvas(drawing)&&images(drawing).size()==3,"Table did not draw the default leading icons for its visible headers");
+    const std::string red="<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\"><rect width=\"18\" height=\"18\" fill=\"#ff0000\"/></svg>";
+    const std::string blue="<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\"><rect width=\"18\" height=\"18\" fill=\"#0000ff\"/></svg>";
+    auto catalog=lvui::IconCatalog::create({{"red",red},{"blue",blue}});require(bool(catalog),"Table icon fixture failed");
+    auto styled=input;styled.header_icon_source=*catalog;styled.header_presentation.default_leading_icon="";
+    styled.header_presentation.column_appearance={{.column="c0",.padding=3.,.leading_icon="red"},
+                                                   {.column="c1",.trailing_icon="blue"}};
+    good(table->set_options(styled));drawing=take(tree->drawing_snapshot({300,160}));
+    auto runs=images(drawing);require(valid_canvas(drawing)&&runs.size()==2&&runs[0].image!=runs[1].image&&
+        std::abs(runs[0].bounds.x-3)<.01&&take(source->snapshot())->revision==0,
+        "Table did not apply per-column icons without changing document data");
+    good(table->scroll().set_scroll_position(15,0));drawing=take(tree->drawing_snapshot({300,160}));runs=images(drawing);
+    require(valid_canvas(drawing)&&!runs.empty()&&std::abs(runs[0].bounds.x)<.01&&std::abs(runs[0].bounds.width-6)<.01&&
+        std::abs(runs[0].source.x-2.f/3.f)<.01,"Table header did not crop a scrolled icon correctly");
+    good(table->scroll().set_scroll_position(240,0));require(images(take(tree->drawing_snapshot({300,160}))).empty(),
+        "Offscreen table header icons remained visible");
+    good(table->scroll().set_scroll_position(0,0));auto missing=styled;
+    missing.header_presentation.column_appearance.push_back({.column="c7",.leading_icon="missing"});
+    require(!table->set_options(missing)&&images(take(tree->drawing_snapshot({300,160}))).size()==2,
+        "An invalid offscreen header icon replaced the table");
+    auto pending=styled;pending.header_presentation.column_appearance.push_back({.column="future",.leading_icon="red"});
+    good(table->set_options(pending));require(images(take(tree->drawing_snapshot({300,160}))).size()==2,
+        "A pending presentation key changed existing columns");
+    auto mutable_icons=std::make_shared<MutableIcons>();mutable_icons->red=red;mutable_icons->blue=blue;
+    auto older=styled;older.header_icon_source=mutable_icons;auto newer=styled;newer.appearance.width=200;
+    mutable_icons->on_resolve=[&]{good(table->set_options(newer));};good(table->set_options(older));
+    require(take(table->root().snapshot()).size.width==200&&images(take(tree->drawing_snapshot({300,160}))).size()==2,
+        "A reentrant icon source let an older table configuration overwrite the newer one");
+    good(table->set_options(input));
     const auto send = [&](WidgetInputKind kind, double x, double y) { good(tree->input({.kind=kind, .x=x, .y=y, .buttons=1})); };
     send(WidgetInputKind::pointer_down, 40, 34); send(WidgetInputKind::pointer_move, 120, 54); send(WidgetInputKind::pointer_up, 120, 54);
     auto selected = take(controller->range());
@@ -134,5 +179,14 @@ int main() {
     check(long_drawing.texts); for (const auto& layer : long_drawing.overlays) check(layer.texts);
     require(long_runs == 100 && take(long_source->snapshot())->rows.front().cells.front().text == long_text,
             "Drawing long cells lost visible runs or modified their full source text");
-    good(long_host.clear_content()); long_tree->close();
+    auto stale=long_input;stale.header_icon_source=mutable_icons;stale.header_presentation.default_leading_icon="red";
+    mutable_icons->on_resolve=[&]{auto snap=take(long_source->snapshot());auto changed=snap->columns;changed[0].title="New title";
+        (void)take(long_source->replace(changed,snap->rows,snap->revision));};
+    require(!long_table->set_options(stale)&&take(long_table->frame())->source_revision==0,
+        "A source mutation during icon preparation published a stale table snapshot");
+    long_input.source_revision=1;good(long_table->set_options(long_input));
+    require(take(long_table->frame())->source_revision==1&&has_text(take(long_tree->drawing_snapshot({200,2500})),"New title"),
+        "The table did not recover after a source change during icon preparation");
+    ++mutable_icons->version;mutable_icons->on_resolve=[&]{good(long_host.clear_content());};
+    good(long_table->set_options(stale));require(!long_table->root().snapshot(),"An icon callback revived a retired table");long_tree->close();
 }

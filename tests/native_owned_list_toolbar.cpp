@@ -1,11 +1,23 @@
 #include <LVUI/NativeListToolbar.h>
+#include <iiGUI/NativeListToolbarView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 
 #include <memory>
+#include <functional>
 #include <optional>
 #include <stdexcept>
 #include <thread>
+#include <type_traits>
+#include <utility>
 #include <vector>
+
+namespace lvui::native {
+using ListToolbarModel=ii::gui::BasicListToolbar<ListToolbarModelPolicy>;
+using NativeListToolbar=ListToolbarBinding<ii::gui::BasicListToolbar,ii::gui::BasicNativeListToolbar,ii::gui::CachedSvgDecoder>;
+}
+static_assert(std::is_same_v<lvui::native::NativeListToolbar,
+    ii::gui::BasicNativeListToolbar<lvui::native::ListToolbarHostPolicy<lvui::native::ListToolbarModel,ii::gui::CachedSvgDecoder>>>);
 
 namespace {
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }
@@ -16,8 +28,33 @@ template<class T> T take(ii::core::Result<T> value) {
 void good(ii::core::Result<void> value) {
     if (!value) { if (value.error().cause) std::rethrow_exception(value.error().cause); throw std::runtime_error(value.error().message); }
 }
+struct Source final:lvui::IconSource {
+    std::shared_ptr<const lvui::IconAsset> asset;mutable std::function<void()> on_resolve;
+    mutable unsigned calls=0;std::uint64_t version=1;
+    lvui::IconResult<std::shared_ptr<const lvui::IconAsset>> resolve(std::string_view)const override {
+        ++calls;if(auto callback=std::exchange(on_resolve,{}))callback();return asset;
+    }
+    std::uint64_t revision()const noexcept override{return version;}
+};
+void retire_during_resolution(){
+    using namespace ii::gui;
+    auto source=std::make_shared<Source>();auto asset=lvui::design_icon_catalog()->resolve("brush");
+    if(!asset)throw std::runtime_error("Missing test asset");source->asset=*asset;
+    lvui::native::ListToolbarInput input;input.icon_source=source;input.configuration.icons={"home","","generalchevronRight"};
+    auto tree=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
+    auto host=take(tree->content_host({},"retire-host",{200,100}));std::optional<lvui::native::NativeListToolbar> toolbar;
+    good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
+        auto value=lvui::native::NativeListToolbar::create(builder,{},"toolbar",input);if(!value)return std::unexpected(value.error());toolbar=*value;return {};
+    }));
+    auto next=input;++source->version;++next.icon_revision;const auto calls=source->calls;
+    source->on_resolve=[&]{good(host.clear_content());};good(toolbar->set_options(next));
+    require(source->calls==calls+1,"LVUI list toolbar continued icon resolution after retirement");
+    std::weak_ptr<Source> weak=source;input.icon_source.reset();next.icon_source.reset();source.reset();
+    require(weak.expired()&&!toolbar->options(),"LVUI list toolbar retained its source after retirement");tree->close();
+}
 }
 int main() {
+    retire_during_resolution();
     using namespace ii::gui;
     lvui::native::ListToolbarInput input; input.configuration.icons = {"home", "", "generalchevronRight"};
     auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });

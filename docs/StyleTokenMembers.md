@@ -43,6 +43,36 @@
 | `Color.green.selected` | Theme Colors/Accent/Green/Selected |
 | `Color.green.subtle` | Theme Colors/Accent/Green/Subtle |
 | `Color.green.text` | Theme Colors/Accent/Green/Text |
+| `Color.icon.accent.blue.pressed.darker` | Theme Colors/Icon/Accent/Blue/Pressed/Darker |
+| `Color.icon.accent.blue.selected.darker` | Theme Colors/Icon/Accent/Blue/Selected/Darker |
+| `Color.icon.accent.blue.subtle.darker` | Theme Colors/Icon/Accent/Blue/Subtle/Darker |
+| `Color.icon.accent.cyan.pressed.darker` | Theme Colors/Icon/Accent/Cyan/Pressed/Darker |
+| `Color.icon.accent.green.outline.darker` | Theme Colors/Icon/Accent/Green/Outline/Darker |
+| `Color.icon.accent.green.pressed.darker` | Theme Colors/Icon/Accent/Green/Pressed/Darker |
+| `Color.icon.accent.green.selected.darker` | Theme Colors/Icon/Accent/Green/Selected/Darker |
+| `Color.icon.accent.green.subtle.darker` | Theme Colors/Icon/Accent/Green/Subtle/Darker |
+| `Color.icon.accent.orange.pressed.darker` | Theme Colors/Icon/Accent/Orange/Pressed/Darker |
+| `Color.icon.accent.orange.selected.darker` | Theme Colors/Icon/Accent/Orange/Selected/Darker |
+| `Color.icon.accent.orange.subtle.darker` | Theme Colors/Icon/Accent/Orange/Subtle/Darker |
+| `Color.icon.accent.orange.text.darker` | Theme Colors/Icon/Accent/Orange/Text/Darker |
+| `Color.icon.accent.purple.pressed.darker` | Theme Colors/Icon/Accent/Purple/Pressed/Darker |
+| `Color.icon.accent.purple.selected.darker` | Theme Colors/Icon/Accent/Purple/Selected/Darker |
+| `Color.icon.accent.purple.subtle.darker` | Theme Colors/Icon/Accent/Purple/Subtle/Darker |
+| `Color.icon.accent.purple.text.darker` | Theme Colors/Icon/Accent/Purple/Text/Darker |
+| `Color.icon.accent.red.disabled.darker` | Theme Colors/Icon/Accent/Red/Disabled/Darker |
+| `Color.icon.accent.red.pressed.darker` | Theme Colors/Icon/Accent/Red/Pressed/Darker |
+| `Color.icon.accent.red.selected.darker` | Theme Colors/Icon/Accent/Red/Selected/Darker |
+| `Color.icon.accent.red.subtle.darker` | Theme Colors/Icon/Accent/Red/Subtle/Darker |
+| `Color.icon.accent.red.text.darker` | Theme Colors/Icon/Accent/Red/Text/Darker |
+| `Color.icon.accent.rose.pressed.darker` | Theme Colors/Icon/Accent/Rose/Pressed/Darker |
+| `Color.icon.accent.rose.selected.darker` | Theme Colors/Icon/Accent/Rose/Selected/Darker |
+| `Color.icon.accent.rose.subtle.darker` | Theme Colors/Icon/Accent/Rose/Subtle/Darker |
+| `Color.icon.accent.teal.pressed.darker` | Theme Colors/Icon/Accent/Teal/Pressed/Darker |
+| `Color.icon.accent.yellow.pressed.darker` | Theme Colors/Icon/Accent/Yellow/Pressed/Darker |
+| `Color.icon.accent.yellow.selected.darker` | Theme Colors/Icon/Accent/Yellow/Selected/Darker |
+| `Color.icon.accent.yellow.subtle.darker` | Theme Colors/Icon/Accent/Yellow/Subtle/Darker |
+| `Color.icon.accent.yellow.text.darker` | Theme Colors/Icon/Accent/Yellow/Text/Darker |
+| `Color.icon.search` | Theme Colors/Icon/search |
 | `Color.material.alert.actionBorder` | Material/Alert/actionBorder |
 | `Color.material.alert.border` | Material/Alert/border |
 | `Color.material.alert.canvas` | Material/Alert/canvas |
@@ -196,6 +226,10 @@
 | `Metric.textCaptionLineHeight` | Theme Typography/Caption/textCaptionLineHeight |
 | `Metric.textDescription` | Theme Typography/Description/textDescription |
 | `Metric.textDescriptionLineHeight` | Theme Typography/Description/textDescriptionLineHeight |
+| `Metric.textFieldBorderWidth` | Theme Metrics/TextField/borderWidth |
+| `Metric.textFieldIconSize` | Theme Metrics/TextField/iconSize |
+| `Metric.textFieldPaddingHorizontal` | Theme Metrics/TextField/paddingHorizontal |
+| `Metric.textFieldPaddingVertical` | Theme Metrics/TextField/paddingVertical |
 | `Metric.textHeader` | Theme Typography/Header/textHeader |
 | `Metric.textHeaderLineHeight` | Theme Typography/Header/textHeaderLineHeight |
 | `Metric.textSubheader` | Theme Typography/Subheader/textSubheader |

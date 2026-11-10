@@ -1,0 +1,2 @@
+let Badge(text: String): View = Label(id: "badge", text: text)
+Badge(text: "Standalone")

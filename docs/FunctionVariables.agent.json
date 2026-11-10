@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/FunctionVariables.md",
-    "sha256": "0c8e05c34189870bc6467389dcf3f30b68aa28be6974cc054457e57046931bdb",
-    "bytes": 6911,
+    "sha256": "77373368df47223da0f3b93c9779b0636e2f915425610b458f74fadf4dbd595c",
+    "bytes": 6915,
     "line_count": 99,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 9,
       "end_line": 21,
-      "raw": "```lvui\nimport vm Model\nvar format: (Int) -> String = vm.makeFormatter(vm.amount)\nlet alias: (Int) -> String = format\n@Static let pinned: (Int) -> String = format\nWindow {\n    VStack {\n        Label(text: format(vm.count))\n        Label(text: alias(vm.count))\n        Label(text: pinned(vm.count))\n    }\n}\n```\n",
+      "raw": "```lvui\nimport vm Model\nvar format: (Int) -> String = vm.makeFormatter(vm.amount)\nconst alias: (Int) -> String = format\n@Static const pinned: (Int) -> String = format\nWindow {\n    VStack {\n        Label(text: format(vm.count))\n        Label(text: alias(vm.count))\n        Label(text: pinned(vm.count))\n    }\n}\n```\n",
       "language": "lvui",
-      "code": "import vm Model\nvar format: (Int) -> String = vm.makeFormatter(vm.amount)\nlet alias: (Int) -> String = format\n@Static let pinned: (Int) -> String = format\nWindow {\n    VStack {\n        Label(text: format(vm.count))\n        Label(text: alias(vm.count))\n        Label(text: pinned(vm.count))\n    }\n}\n",
+      "code": "import vm Model\nvar format: (Int) -> String = vm.makeFormatter(vm.amount)\nconst alias: (Int) -> String = format\n@Static const pinned: (Int) -> String = format\nWindow {\n    VStack {\n        Label(text: format(vm.count))\n        Label(text: alias(vm.count))\n        Label(text: pinned(vm.count))\n    }\n}\n",
       "closed": true
     },
     {

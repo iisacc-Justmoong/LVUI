@@ -4,19 +4,19 @@
 
 ```text
 // Theme.lvui
-let window: Color = Color("#141719")
-let inspectorWidth: Metric = 352
-let edge: Color = composite(.material.surface.dense.edge, .window)
+const window: Color = Color("#141719")
+const inspectorWidth: Metric = 352
+const edge: Color = composite(.material.surface.dense.edge, .window)
 ```
 
-`let 이름: Color/Metric = 값`만 허용한다. import, var, UI 트리와 다른 타입은 거부한다. 앞서 선언한 이름은 뒤 선언에서 사용할 수 있다. 기본 멤버 이름은 해당 앱의 값을 변경하고, 새 이름은 `Color.이름` 또는 `Metric.이름`을 추가한다. 기본 카탈로그와 다른 컴파일의 값은 바뀌지 않는다. 기존 값 변경을 ID·CSS·경로로 지정했더라도 같은 기본 멤버를 프로필에서 다시 지정하면 해당 설정을 대체한다. 잘못된 기본 옵션은 적용 전에 거부한다.
+`const 이름: Color/Metric = 값`만 허용한다. import, var, UI 트리와 다른 타입은 거부한다. 앞서 선언한 이름은 뒤 선언에서 사용할 수 있다. 기본 멤버 이름은 해당 앱의 값을 변경하고, 새 이름은 `Color.이름` 또는 `Metric.이름`을 추가한다. 기본 카탈로그와 다른 컴파일의 값은 바뀌지 않는다. 기존 값 변경을 ID·CSS·경로로 지정했더라도 같은 기본 멤버를 프로필에서 다시 지정하면 해당 설정을 대체한다. 잘못된 기본 옵션은 적용 전에 거부한다.
 
-```html
-<ApplicationWindow backgroundColor={Color.window}>
-  <div style="width:Metric.inspectorWidth;gap:Metric.space8">
-    <Label text="Inspector" color={Color.text.body}/>
-  </div>
-</ApplicationWindow>
+```lvui
+ApplicationWindow(backgroundColor: Color.window) {
+    VStack(width: Metric.inspectorWidth, spacing: Metric.space8) {
+        Label(text: "Inspector", color: Color.text.body)
+    }
+}
 ```
 
 ## CMake 연결

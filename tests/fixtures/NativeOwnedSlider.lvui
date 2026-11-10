@@ -2,6 +2,12 @@ import vm NativeOwnedSliderModel
 Window {
     VStack {
         Slider(id: "slider", from: 0, to: vm.maximum, value: vm.value,
-               width: vm.width, stepSize: 1, enabled: vm.enabled, onMoved: vm.moved)
+               width: vm.width, size: vm.size, type: vm.type, stepSize: 1, enabled: vm.enabled, active: vm.active,
+               showTicks: vm.showTicks, tickCount: vm.tickCount, segmentCount: vm.segmentCount, focusColor: "#00ff00",
+               showSymbol: vm.showSymbol, symbolName: vm.symbolName,
+               showMinMax: vm.showMinMax, showLabels: vm.showLabels, labelColor: vm.labelColor, inactiveFillColor: vm.inactiveFillColor,
+               showEndpointIcons: vm.showEndpointIcons, minimumLabel: vm.minimumLabel,
+               maximumLabel: vm.maximumLabel, minimumIconName: vm.minimumIconName,
+               maximumIconName: vm.maximumIconName, rightToLeft: vm.rightToLeft, onMoved: vm.moved)
     }
 }

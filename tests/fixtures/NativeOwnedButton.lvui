@@ -2,9 +2,23 @@ import vm NativeOwnedButtonModel
 Window {
     VStack {
         PushButton(id: "save", text: vm.text, enabled: vm.enabled, tone: vm.tone,
-                   height: vm.height, horizontalPadding: vm.padding, accessibilityName: vm.name, onClick: vm.save)
-        IconButton(id: "icon", text: "Tool", icon: vm.icon, onClick: vm.tool)
-        LabelButton(id: "secondary", text: "Other", tone: vm.native_tone)
-        AbstractButton(id: "plain", text: "Plain")
+                   height: vm.height, horizontalPadding: vm.padding, accessibilityName: vm.name,
+                   motionEnabled: vm.motion_enabled, enterKeyActivation: vm.enter_enabled, onClick: vm.save,
+                   onPressed: vm.press, onReleased: vm.release, onCanceled: vm.cancel,
+                   method: vm.method, methods: [vm.after, [vm.last]])
+        IconButton(id: "icon", text: "Tool", icon: vm.icon, motionEnabled: false, onClick: vm.tool)
+        LabelButton(id: "secondary", text: "Other", tone: vm.native_tone,
+                    checked: vm.selected, selectedColor: vm.selected_color)
+        LabelSegmentedControl {
+            LabelButton(id: "segment", text: "Segment", checked: vm.selected,
+                        selectionStyle: vm.selection_style, motionEnabled: false)
+        }
+        LabelButton(id: "default-normal", text: "Default", tone: .default, motionEnabled: false)
+        LabelButton(id: "danger", text: "Delete", tone: .destructive, motionEnabled: false,
+                    dangerHoverColor: vm.danger_hover, dangerPressedColor: vm.danger_pressed)
+        AbstractButton(id: "plain", text: "Plain", methods: vm.methods)
+        AbstractButton(id: "nested", text: "Nested", methods: vm.nested_methods)
+        AbstractButton(id: "invoker", text: "Invoke", method: vm.invoke_target)
+        AbstractButton(id: "trigger", text: "Trigger", methods: [vm.trigger_target])
     }
 }

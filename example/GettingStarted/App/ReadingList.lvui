@@ -1,7 +1,7 @@
 import vm ReadingListBackend
 
 // Reusable View inputs are compiled into native bindings at build time.
-let ReadingRow(title: String): View = HStack(spacing: 8) {
+const ReadingRow(title: String): View = HStack(spacing: 8) {
     Label(text: "•")
     Label(text: title, style: .body)
 }

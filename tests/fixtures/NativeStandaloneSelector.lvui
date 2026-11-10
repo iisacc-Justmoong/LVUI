@@ -1,0 +1,6 @@
+import vm NativeStandaloneSelectorBackend
+VStack {
+    ListItemSelector(id: "selector", options: vm.options, currentIndex: vm.index,
+        enabled: vm.enabled, accessibilityName: "Publishing status", onCurrentIndexChanged: vm.changed)
+    ListItemSelector(id: "static", options: ["One", "Two"], currentIndex: 1)
+}

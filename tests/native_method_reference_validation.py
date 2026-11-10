@@ -1,10 +1,15 @@
 """Compile generated deferred references and check native receiver/signature contracts."""
 from pathlib import Path
+from workspace_support import checked_workspace, provider
 import argparse,json,subprocess,tempfile
 def main():
     parser=argparse.ArgumentParser()
     for name in ('build','compiler','core','color','gui'):parser.add_argument('--'+name,type=Path,required=True)
+    parser.add_argument('--workspace', type=Path, required=True)
+    parser.add_argument('--gui-include', type=Path, required=True)
+    parser.add_argument('--gui-export-include', type=Path, required=True)
     parser.add_argument('--cxx',required=True);args=parser.parse_args();source=Path(__file__).resolve().parents[1]
+    args.workspace = checked_workspace(args.workspace)
     simple='struct Node final {void act()&{}};'
     cases={
         'root_method':('struct Backend final {void act(){}};','Window { PushButton(vm.act) }',True),
@@ -30,19 +35,19 @@ def main():
         'void_receiver':('struct Backend final {void nothing(){}};','Window { PushButton(vm.nothing().act) }',False),
     }
     result={}
-    with tempfile.TemporaryDirectory(prefix='native-method-reference-types-',dir=args.build) as temporary:
-        root=Path(temporary);includes=[root,source/'src',args.build/'lvui-generated-icons',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui/'build/install/include']
+    with provider.TemporaryDirectory(prefix='native-method-reference-types-',dir=args.workspace) as temporary:
+        root=Path(temporary);includes=[root,source/'src',args.build / 'include', args.build / 'lvui-generated-icons',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui_include, args.gui_export_include]
         for name,(members,body,valid) in cases.items():
-            (root/'Fixture.h').write_text('#pragma once\n#include <memory>\n#include <string>\n#include <functional>\n#include <array>\n#include <cstdint>\n'+members+'\n')
-            (root/'View.lvui').write_text('import vm Backend\n'+body+'\n')
+            provider.write_text(root/'Fixture.h', '#pragma once\n#include <memory>\n#include <string>\n#include <functional>\n#include <array>\n#include <cstdint>\n'+members+'\n')
+            provider.write_text(root/'View.lvui', 'import vm Backend\n'+body+'\n')
             generated=subprocess.run([str(args.compiler),'--name','ReferenceContract','--include','Fixture.h',str(root/'View.lvui')],text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             if generated.returncode:raise RuntimeError(f'Reference generation failed for {name}: {generated.stderr}')
-            (root/'View.generated.h').write_text(generated.stdout);(root/'probe.cpp').write_text('#include "View.generated.h"\nauto factory=&lvui_generated::ReferenceContract::build;\n')
+            provider.write_text(root/'View.generated.h', generated.stdout);provider.write_text(root/'probe.cpp', '#include "View.generated.h"\nauto factory=&lvui_generated::ReferenceContract::build;\n')
             msvc=Path(args.cxx).name.lower() in ('cl','cl.exe');command=[args.cxx,'/std:c++latest','/Zs','/utf-8'] if msvc else [args.cxx,'-std=c++23','-fsyntax-only','-Werror=unused-parameter']
             for include in includes:command.extend(['/I' if msvc else '-I',str(include)])
             compiled=subprocess.run([*command,str(root/'probe.cpp')],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
             if (compiled.returncode==0)!=valid:raise RuntimeError(f'Unexpected deferred method contract for {name}: {compiled.stdout}')
             result[name]={'compiled':compiled.returncode==0,'valid':valid}
-    report=args.build/'lvui-completion/native-method-reference-type-validation.json';report.parent.mkdir(exist_ok=True)
-    report.write_text(json.dumps(result,indent=2)+'\n');print('Deferred method references: 12 valid native contracts, 9 rejected')
+    report=args.workspace/'lvui-completion/native-method-reference-type-validation.json';provider.mkdir(report.parent, exist_ok=True)
+    provider.write_text(report, json.dumps(result,indent=2)+'\n');print('Deferred method references: 12 valid native contracts, 9 rejected')
 if __name__=='__main__':main()

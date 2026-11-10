@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedListItemSelector.md",
-    "sha256": "c09eede7ea4cc64602cf5ac80dd612c605cfadce5205cbefdfbddae159c10751",
-    "bytes": 1471,
-    "line_count": 18,
+    "sha256": "7a26cb4fb476afbc59a188108b3af4bf501b4f638864169beb6f34345a7995fb",
+    "bytes": 4139,
+    "line_count": 50,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,36 +42,111 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 7,
-      "raw": "`NativeListItemSelector`는 [옵션 모델](ListItemSelector.md), LVUI의 `NativeComboBox`와\n`NativeMenu`를 조합한다. 옵션은 텍스트와 활성 여부를 가지며 선택 인덱스와 화면\n크기, 표시 여부, 접근성 이름을 C++ 입력으로 제공한다. 위·아래 키는 비활성 옵션을\n건너뛰고 목록 끝에서 멈춘다. 버튼을 누르면 같은 위젯 세대에 속한 메뉴가 열리고,\n사용 가능한 옵션을 선택하면 메뉴를 닫은 뒤 변경 이벤트를 전달한다.\n"
+      "end_line": 8,
+      "raw": "iiGUI의 `ListItemSelectorModel.h`와 `NativeListItemSelectorView.h`가 선택 상태와\n콤보 상자·메뉴 조합을 소유한다. LVUI는 [선언값과 바인딩](ListItemSelector.md)을\n제공하며 생성된 앱이 iiGUI 구현을 명시적으로 조합한다. 옵션은 텍스트와 활성 여부를 가지며 선택 인덱스와 화면\n크기, 표시 여부, 접근성 이름을 C++ 입력으로 제공한다. 위·아래 키는 비활성 옵션을\n건너뛰고 목록 끝에서 멈춘다. 버튼을 누르면 같은 위젯 세대에 속한 메뉴가 열리고,\n사용 가능한 옵션을 선택하면 메뉴를 닫은 뒤 변경 이벤트를 전달한다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 8,
-      "end_line": 8,
+      "start_line": 9,
+      "end_line": 9,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 9,
-      "end_line": 14,
-      "raw": "옵션 목록이나 크기가 바뀌면 새 버튼과 메뉴를 준비해 기존 세대를 교체한다. 잘못된\n옵션은 거부하며 동일한 값을 반응형으로 되돌려 받으면 중복 이벤트를 만들지 않는다.\n선택 콜백 안에서 옵션 목록을 변경하면 콜백이 반환된 뒤 안전하게 화면을 교체한다.\n선택기 및 메뉴를 교체하거나 부모가 제거된 뒤에는 이전 위젯 핸들을 사용할 수 없다.\n긴 메뉴는 키보드 포커스와 포인터 스크롤에 따라 표시 영역을 이동한다. 호스트 접근성\n역할과 실제 플랫폼 표시 동작은 별도의 기기 검증이 필요하다.\n"
+      "start_line": 10,
+      "end_line": 24,
+      "raw": "옵션 목록이나 크기가 바뀌면 새 버튼과 메뉴를 준비해 기존 세대를 교체한다. 잘못된\n옵션은 거부하며 동일한 값을 반응형으로 되돌려 받으면 중복 이벤트를 만들지 않는다.\n선택 콜백 안에서 옵션 목록을 변경하면 콜백이 반환된 뒤 안전하게 화면을 교체한다.\n선택기 및 메뉴를 교체하거나 부모가 제거된 뒤에는 이전 위젯 핸들을 사용할 수 없다.\n`ListItemSelectorInput::accent`는 선택적으로 해결된 `WindowAccentPalette`를 받는다.\n선택기 포커스와 메뉴 항목의 선택·누름·포커스에 적용하며, 색상만 변경하면 열린\n메뉴와 기존 항목, 선택 및 포커스를 유지한다. 유효하지 않은 색상은 거부하고 기존\n입력을 보존한다. 미지정 시 기본 팔레트를 사용한다. 복합 항목 안의 선택기는 부모가\n팔레트를 전달하며, 독립 C++ 사용자는 직접 지정할 수 있다.\n수량·설정·작업·폼 복합 항목에서 선언의 기본 문구는 각각 `Format`, `Automatic`, `Priority`, `Category`이며 단위 선택기는\n`Units`를 사용한다. 문자열 배열을 이 문구와 함께 구성할 수 있고, 앱이 직접 제공한\n설정의 자리표시 문구는 덮어쓰지 않는다. iiGUI 선택 모델의 `validate_options()`는\n옵션 목록의 UTF-8·개수·바이트 제한을 사본 생성 없이 검증한다.\n긴 메뉴는 키보드 포커스와 포인터 스크롤에 따라 표시 영역을 이동한다. 호스트 접근성\n역할과 실제 플랫폼 표시 동작은 별도의 기기 검증이 필요하다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 15,
-      "end_line": 15,
+      "start_line": 25,
+      "end_line": 25,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 16,
-      "end_line": 18,
+      "start_line": 26,
+      "end_line": 28,
       "raw": "`LVUI.OwnedListItem.SelectorHost`는 창을 열지 않는 위젯 트리에서 키보드, 메뉴 선택,\n옵션 변경, 비활성 상태, 소유 스레드와 수명을 검사한다. 선언형 목록 항목에서도\n`.Select`로 사용할 수 있다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "## 독립 선언\n",
+      "level": 2,
+      "title": "독립 선언"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 32,
+      "end_line": 37,
+      "raw": "`.lvui`에서 목록 항목의 내부 구현을 직접 참조하지 않고 선택기를 View로 작성할 수 있다.\n정적 문자열 배열 또는 C++에서 제공한 `std::vector<std::string>`,\n`std::vector<lvui::ListItemOption>`, `lvui::ListItemSelectorConfiguration`을\n`options`로 전달한다. 설정 객체의 옵션·선택·문구·활성 상태를 보존하고,\n명시적으로 지정한 `currentIndex`, `placeholder`, `enabled`가 해당 필드를 대체한다.\n선택 인덱스는 0부터 시작하며 빈 목록의 인덱스는 0이다. 항목은 400개까지 허용한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "fenced_code",
+      "start_line": 39,
+      "end_line": 43,
+      "raw": "```lvui\nimport vm PublishingModel\nListItemSelector(options: vm.options, currentIndex: vm.index,\n    enabled: vm.enabled, onCurrentIndexChanged: vm.changed)\n```\n",
+      "language": "lvui",
+      "code": "import vm PublishingModel\nListItemSelector(options: vm.options, currentIndex: vm.index,\n    enabled: vm.enabled, onCurrentIndexChanged: vm.changed)\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 45,
+      "end_line": 48,
+      "raw": "`width`, `height`, `visible`, `accessibilityName`도 선언할 수 있으며 반응형 입력은\n하나의 설정으로 평가하여 적용한다. 선택 이벤트는 `int` 인덱스를 전달한다. 잘못된\n갱신은 오류로 기록하고 마지막 정상 선택기를 유지한다. `LVUI.NativeView.selector`와\n`LVUI.NativeView.StandaloneSelector`는 C++ 생성 및 위젯 트리의 갱신·퇴역을 검사한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "게시 전 설정을 준비할 수 있으며 퇴역 시 콜백과 하위 위젯 참조를 해제한다. 콜백이 퇴역 후 예외를 던져도 오류 저장소가 그 자원을 붙잡지 않는다. macOS arm64에서 독립 소비자와 생성·복합 목록 경로를 창 없이 검사했다. 실제 운영체제 표시와 GPU는 검사하지 않았다.\n"
     }
   ],
   "outline": [
@@ -82,6 +157,14 @@
       "title": "LVUI 독립 목록 선택기",
       "anchor": "lvui-독립-목록-선택기",
       "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "독립 선언",
+      "anchor": "독립-선언",
+      "start_line": 30
     }
   ],
   "indexes": {
@@ -90,10 +173,10 @@
     "links": [
       {
         "block_id": "b000003",
-        "label": "옵션 모델",
+        "label": "선언값과 바인딩",
         "target": "ListItemSelector.md",
         "kind": "relative",
-        "line": 3
+        "line": 4
       }
     ],
     "tables": []

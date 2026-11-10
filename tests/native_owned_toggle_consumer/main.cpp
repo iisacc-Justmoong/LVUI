@@ -53,9 +53,9 @@
 #include <LVUI/Route.h>
 #include <LVUI/NavigationHistory.h>
 #include <LVUI/Tooltip.h>
-#include <LVUI/TooltipController.h>
+#include "../tooltip_model_test_binding.h"
 #include <LVUI/TooltipOutline.h>
-#include <LVUI/NativeTooltipPresentation.h>
+#include "../tooltip_target_test_binding.h"
 #include <LVUI/NativeTooltipScheduler.h>
 #include <LVUI/NativeTooltipTarget.h>
 #include <LVUI/NativeTooltip.h>
@@ -65,11 +65,11 @@
 #include <LVUI/CodeComposition.h>
 #include <LVUI/CodeEditorController.h>
 #include <LVUI/CodeEditorSession.h>
-#include <LVUI/NativeCodeEditor.h>
-#include <LVUI/NativeHierarchyPanel.h>
+#include "../code_editor_test_binding.h"
+#include "../hierarchy_panel_test_binding.h"
 #include <LVUI/List.h>
 #include <LVUI/ListViewport.h>
-#include <LVUI/NativeListView.h>
+#include "../list_view_test_binding.h"
 #include "NativeOwnedCodeEditor.generated.h"
 
 // Keep the generated factory in the linked consumer; no window is opened.
@@ -111,10 +111,10 @@ auto* volatile list_toolbar_factory = &lvui_generated::NativeOwnedListToolbar::b
 auto* volatile toolbar_button_factory = &lvui_generated::NativeOwnedToolbarButton::build;
 auto* volatile list_footer_factory = &lvui_generated::NativeOwnedListFooter::build;
 auto* volatile hierarchy_toolbar_factory = &lvui_generated::NativeOwnedHierarchyToolbar::build;
-auto* volatile hierarchy_panel_factory = &lvui::native::NativeHierarchyPanel::create;
+auto* volatile hierarchy_panel_factory = &HierarchyPanelTestView::create;
 auto* volatile list_model_factory = &lvui::ListMemory::create;
-auto* volatile list_viewport_factory = &lvui::ListViewportSource::create;
-auto* volatile list_view_factory = &lvui::native::NativeListView::create;
+auto* volatile list_viewport_factory = &ListViewTestSource::create;
+auto* volatile list_view_factory = &ListViewTestView::create;
 auto* volatile generated_list_panel_factory = &lvui_generated::NativeOwnedListPanel::build;
 auto* volatile generated_list_item_factory = &lvui_generated::NativeOwnedListItem::build;
 auto* volatile generated_list_item_composite_factory = &lvui_generated::NativeOwnedListItemComposite::build;
@@ -131,7 +131,7 @@ auto* volatile code_document_factory = &lvui::CodeMemoryDocument::create;
 auto* volatile code_controller_factory = &lvui::CodeEditorController::create;
 auto* volatile code_composition_factory = &lvui::CodeComposition::create;
 auto* volatile code_session_factory = &lvui::CodeEditorSession::create;
-auto* volatile native_code_editor_factory = &lvui::native::NativeCodeEditor::create;
+auto* volatile native_code_editor_factory = &CodeEditorTestView::create;
 auto* volatile generated_code_editor_factory = &lvui_generated::NativeOwnedCodeEditor::build;
 auto* volatile table_factory = &lvui_generated::NativeOwnedTable::build;
 auto* volatile color_button_factory = &lvui_generated::NativeOwnedColorButton::build;
@@ -143,14 +143,14 @@ ii::core::Result<bool> commit_history(lvui::NavigationHistory& history,const lvu
 ii::core::Result<lvui::NavigationPlan> prepare_history(lvui::NavigationHistory& history){return history.prepare(lvui::NavigationOperation::pop);}
 auto* volatile history_factory=&commit_history;
 auto* volatile history_plan_factory=&prepare_history;
-std::optional<lvui::TooltipLayout> tooltip_layout(lvui::Tooltip& tooltip){return tooltip.layout({0,0,200,100},{100,50},{40,20});}
+std::optional<lvui::TooltipLayout> tooltip_layout(TooltipTestModel& tooltip){return tooltip.layout({0,0,200,100},{100,50},{40,20});}
 auto* volatile tooltip_factory=&tooltip_layout;
-auto* volatile tooltip_controller_factory=&lvui::TooltipController::create;
-auto* volatile tooltip_outline_factory=&lvui::tooltip_outline;
-auto* volatile tooltip_presentation_factory=&lvui::native::NativeTooltipPresentation::create;
-auto* volatile tooltip_scheduler_factory=&lvui::native::NativeTooltipScheduler::create;
-auto tooltip_scheduler_port(const lvui::native::NativeTooltipScheduler& scheduler){return scheduler.weak_schedule();}
+auto* volatile tooltip_controller_factory=&TooltipTestController::create;
+auto* volatile tooltip_outline_factory=&TooltipTestOutline::build;
+auto* volatile tooltip_presentation_factory=&TooltipTestPresentation::create;
+auto* volatile tooltip_scheduler_factory=&TooltipTestScheduler::create;
+auto tooltip_scheduler_port(const TooltipTestScheduler& scheduler){return scheduler.weak_schedule();}
 auto* volatile tooltip_scheduler_port_factory=&tooltip_scheduler_port;
-auto* volatile tooltip_target_factory=&lvui::native::NativeTooltipTarget::create;
-auto* volatile tooltip_native_factory=&lvui::native::NativeTooltip::create;
+auto* volatile tooltip_target_factory=&TooltipTestTarget::create;
+auto* volatile tooltip_native_factory=&TooltipTestFacade::create;
 int main(){return toggle_factory&&checkbox_factory&&radio_factory&&material_factory&&link_factory&&methods_factory&&page_router_factory&&card_factory&&header_factory&&listener_factory&&avatar_factory&&tooltip_generated_factory&&tooltip_inline_factory&&slider_generated_factory&&input_field_generated_factory&&stepper_generated_factory&&combo_box_generated_factory&&segmented_generated_factory&&help_generated_factory&&dropdown_generated_factory&&named_icons_factory&&tab_factory&&tab_bar_factory&&menu_item_factory&&menu_factory&&submenu_factory&&popover_factory&&modal_factory&&alert_button_factory&&alert_factory&&sheet_factory&&hierarchy_item_factory&&hierarchy_list_factory&&list_toolbar_factory&&table_factory&&color_button_factory&&color_selection_factory&&route_factory&&history_factory&&history_plan_factory&&tooltip_factory&&tooltip_controller_factory&&tooltip_outline_factory&&tooltip_presentation_factory&&tooltip_scheduler_factory&&tooltip_scheduler_port_factory&&tooltip_target_factory&&tooltip_native_factory?0:1;}

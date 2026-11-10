@@ -1,0 +1,4945 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI",
+  "pages": [
+    {
+      "page": "Alert",
+      "id": "45:2",
+      "components": [
+        {
+          "id": "106:283",
+          "name": "Alert",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "106:282",
+          "properties": {
+            "Show icon#663:0": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Amount": {
+              "type": "VARIANT",
+              "defaultValue": "2",
+              "variantOptions": [
+                "2",
+                "3"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "ApplicationWindow",
+      "id": "997:2",
+      "components": [
+        {
+          "id": "997:3",
+          "name": "ApplicationWindow",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Avatar",
+      "id": "786:213",
+      "components": [
+        {
+          "id": "1530:19",
+          "name": "Avatar",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1530:17",
+          "properties": {
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Large",
+              "variantOptions": [
+                "Medium",
+                "Large",
+                "Small"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Button",
+      "id": "44:486",
+      "components": [
+        {
+          "id": "44:599",
+          "name": "PushButton / LabelButton",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "44:598",
+          "properties": {
+            "Label#653:168": {
+              "type": "TEXT",
+              "defaultValue": "Button"
+            },
+            "Focus visible#1241:40": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "LabelButton",
+              "variantOptions": [
+                "LabelButton"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "disabled",
+                "accent",
+                "default",
+                "borderless",
+                "destructive"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "hover",
+                "press",
+                "release",
+                "focus"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1243:1226",
+          "name": "PushButton / IconButton",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "44:588",
+          "properties": {
+            "Icon#1243:142": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "198:8736",
+              "preferredValues": []
+            },
+            "Focus visible#1243:143": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "IconButton",
+              "variantOptions": [
+                "IconButton"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "borderless",
+                "accent",
+                "destructive",
+                "disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            }
+          }
+        },
+        {
+          "id": "700:337",
+          "name": "DropdownButton",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "44:585",
+          "properties": {
+            "Label#653:190": {
+              "type": "TEXT",
+              "defaultValue": "Open"
+            },
+            "Disclosure icon#653:197": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Icon#653:204": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "198:8736",
+              "preferredValues": []
+            },
+            "Focus visible#1244:72": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "LabelMenuButton",
+              "variantOptions": [
+                "LabelMenuButton",
+                "IconMenuButton"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "borderless",
+                "accent"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "hover",
+                "press",
+                "release",
+                "focus"
+              ]
+            }
+          }
+        },
+        {
+          "id": "44:819",
+          "name": "HelpButton",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1204:766",
+          "name": "_ButtonKeyboardDemo",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1204:683",
+          "properties": {
+            "Step": {
+              "type": "VARIANT",
+              "defaultValue": "none",
+              "variantOptions": [
+                "none",
+                "pushFocus",
+                "pushPress",
+                "pushRelease",
+                "menuFocus",
+                "menuPress",
+                "menuRelease"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Card",
+      "id": "786:212",
+      "components": [
+        {
+          "id": "852:997",
+          "name": "File",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "852:1009",
+          "properties": {
+            "Filename#820:2": {
+              "type": "TEXT",
+              "defaultValue": "Coastal house.png"
+            },
+            "Metadata#820:3": {
+              "type": "TEXT",
+              "defaultValue": "PNG · 1536 × 1024"
+            },
+            "Preview#820:4": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "817:73",
+              "preferredValues": []
+            },
+            "Show menu#820:6": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Details#820:7": {
+              "type": "TEXT",
+              "defaultValue": "Warm limestone, curved walls and a quiet view of the sea."
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Small",
+              "variantOptions": [
+                "Medium",
+                "Small",
+                "Large"
+              ]
+            },
+            "Detail": {
+              "type": "VARIANT",
+              "defaultValue": "Brief",
+              "variantOptions": [
+                "Brief",
+                "Detailed"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "786:414",
+          "name": "Folder",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "786:280",
+          "properties": {
+            "Icon#786:17": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Status#786:18": {
+              "type": "TEXT",
+              "defaultValue": "Shared"
+            },
+            "Show status#786:19": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show menu#786:20": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Title#786:21": {
+              "type": "TEXT",
+              "defaultValue": "Brand assets"
+            },
+            "Description#786:22": {
+              "type": "TEXT",
+              "defaultValue": "Everything for the next release"
+            },
+            "Show description#786:23": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "First item label#786:24": {
+              "type": "TEXT",
+              "defaultValue": "Guidelines"
+            },
+            "First item value#786:25": {
+              "type": "TEXT",
+              "defaultValue": "12 files"
+            },
+            "Second item label#786:26": {
+              "type": "TEXT",
+              "defaultValue": "Photography"
+            },
+            "Second item value#786:27": {
+              "type": "TEXT",
+              "defaultValue": "8 files"
+            },
+            "Third item label#786:28": {
+              "type": "TEXT",
+              "defaultValue": "Templates"
+            },
+            "Third item value#786:29": {
+              "type": "TEXT",
+              "defaultValue": "4 files"
+            },
+            "Footnote#786:30": {
+              "type": "TEXT",
+              "defaultValue": "Updated today"
+            },
+            "Show action#786:31": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Summary#786:32": {
+              "type": "TEXT",
+              "defaultValue": "24 items · 1.8 GB"
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "786:566",
+          "name": "Project",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "786:463",
+          "properties": {
+            "Icon#786:47": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33585",
+              "preferredValues": []
+            },
+            "Status#786:48": {
+              "type": "TEXT",
+              "defaultValue": "In progress"
+            },
+            "Show status#786:49": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show menu#786:50": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Title#786:51": {
+              "type": "TEXT",
+              "defaultValue": "Website launch"
+            },
+            "Description#786:52": {
+              "type": "TEXT",
+              "defaultValue": "Marketing · Q3 release"
+            },
+            "Show description#786:53": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Progress label#786:54": {
+              "type": "TEXT",
+              "defaultValue": "Milestones"
+            },
+            "Progress value#786:55": {
+              "type": "TEXT",
+              "defaultValue": "6 of 8"
+            },
+            "Next label#786:56": {
+              "type": "TEXT",
+              "defaultValue": "Next milestone"
+            },
+            "Next value#786:57": {
+              "type": "TEXT",
+              "defaultValue": "Review"
+            },
+            "Footnote#786:58": {
+              "type": "TEXT",
+              "defaultValue": "75% complete"
+            },
+            "Show action#786:59": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Participants#786:60": {
+              "type": "TEXT",
+              "defaultValue": "3 collaborators · Due Sep 24"
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "786:696",
+          "name": "Device",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "786:596",
+          "properties": {
+            "Icon#786:75": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33183",
+              "preferredValues": []
+            },
+            "Status#786:76": {
+              "type": "TEXT",
+              "defaultValue": "Online"
+            },
+            "Show status#786:77": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show menu#786:78": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Title#786:79": {
+              "type": "TEXT",
+              "defaultValue": "Studio Mac"
+            },
+            "Description#786:80": {
+              "type": "TEXT",
+              "defaultValue": "macOS · Desktop host"
+            },
+            "Show description#786:81": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Capacity label#786:82": {
+              "type": "TEXT",
+              "defaultValue": "Storage"
+            },
+            "Capacity value#786:83": {
+              "type": "TEXT",
+              "defaultValue": "128 / 512 GB"
+            },
+            "Connection label#786:84": {
+              "type": "TEXT",
+              "defaultValue": "Connection"
+            },
+            "Connection value#786:85": {
+              "type": "TEXT",
+              "defaultValue": "Local network"
+            },
+            "Footnote#786:86": {
+              "type": "TEXT",
+              "defaultValue": "384 GB available"
+            },
+            "Show action#786:87": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Last sync#786:88": {
+              "type": "TEXT",
+              "defaultValue": "Last synced just now"
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "786:830",
+          "name": "Model",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "786:724",
+          "properties": {
+            "Icon#786:105": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33826",
+              "preferredValues": []
+            },
+            "Status#786:106": {
+              "type": "TEXT",
+              "defaultValue": "Installed"
+            },
+            "Show status#786:107": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show menu#786:108": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Title#786:109": {
+              "type": "TEXT",
+              "defaultValue": "Studio Portrait"
+            },
+            "Description#786:110": {
+              "type": "TEXT",
+              "defaultValue": "Image generation · Checkpoint"
+            },
+            "Show description#786:111": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Architecture label#786:112": {
+              "type": "TEXT",
+              "defaultValue": "Architecture"
+            },
+            "Architecture value#786:113": {
+              "type": "TEXT",
+              "defaultValue": "SDXL"
+            },
+            "Format label#786:114": {
+              "type": "TEXT",
+              "defaultValue": "Format"
+            },
+            "Format value#786:115": {
+              "type": "TEXT",
+              "defaultValue": "Safetensors"
+            },
+            "Precision label#786:116": {
+              "type": "TEXT",
+              "defaultValue": "Precision"
+            },
+            "Precision value#786:117": {
+              "type": "TEXT",
+              "defaultValue": "FP16"
+            },
+            "Footnote#786:118": {
+              "type": "TEXT",
+              "defaultValue": "6.4 GB on device"
+            },
+            "Show action#786:119": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Compatible apps#786:120": {
+              "type": "TEXT",
+              "defaultValue": "Ready for Dreamscapes"
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "786:966",
+          "name": "Member",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "786:858",
+          "properties": {
+            "Icon#786:137": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32764",
+              "preferredValues": []
+            },
+            "Status#786:138": {
+              "type": "TEXT",
+              "defaultValue": "Available"
+            },
+            "Show status#786:139": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show menu#786:140": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Title#786:141": {
+              "type": "TEXT",
+              "defaultValue": "Maya Chen"
+            },
+            "Description#786:142": {
+              "type": "TEXT",
+              "defaultValue": "Product designer"
+            },
+            "Show description#786:143": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Role label#786:144": {
+              "type": "TEXT",
+              "defaultValue": "Workspace role"
+            },
+            "Role value#786:145": {
+              "type": "TEXT",
+              "defaultValue": "Editor"
+            },
+            "Projects label#786:146": {
+              "type": "TEXT",
+              "defaultValue": "Projects"
+            },
+            "Projects value#786:147": {
+              "type": "TEXT",
+              "defaultValue": "3 active"
+            },
+            "Team label#786:148": {
+              "type": "TEXT",
+              "defaultValue": "Team"
+            },
+            "Team value#786:149": {
+              "type": "TEXT",
+              "defaultValue": "Design"
+            },
+            "Footnote#786:150": {
+              "type": "TEXT",
+              "defaultValue": "Joined Sep 2026"
+            },
+            "Show action#786:151": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Member location#786:152": {
+              "type": "TEXT",
+              "defaultValue": "Seoul · UTC+9"
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "786:1084",
+          "name": "Link",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "786:996",
+          "properties": {
+            "Icon#786:164": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33649",
+              "preferredValues": []
+            },
+            "Status#786:165": {
+              "type": "TEXT",
+              "defaultValue": "Saved"
+            },
+            "Show status#786:166": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show menu#786:167": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Title#786:168": {
+              "type": "TEXT",
+              "defaultValue": "iisacc — Creative tools"
+            },
+            "Description#786:169": {
+              "type": "TEXT",
+              "defaultValue": "A connected suite for creative work."
+            },
+            "Show description#786:170": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Footnote#786:171": {
+              "type": "TEXT",
+              "defaultValue": "Saved today"
+            },
+            "Show action#786:172": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Domain#786:173": {
+              "type": "TEXT",
+              "defaultValue": "iisacc.com"
+            },
+            "Preview title#786:174": {
+              "type": "TEXT",
+              "defaultValue": "Tools for independent creators"
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Selected"
+              ]
+            }
+          }
+        },
+        {
+          "id": "852:993",
+          "name": ".FilePreview",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "852:994",
+          "properties": {
+            "Content": {
+              "type": "VARIANT",
+              "defaultValue": "Architecture",
+              "variantOptions": [
+                "Architecture",
+                "Landscape",
+                "Document"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Checkbox",
+      "id": "44:631",
+      "components": [
+        {
+          "id": "44:724",
+          "name": "Checkbox",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "44:721",
+          "properties": {
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "On",
+              "variantOptions": [
+                "Off",
+                "On"
+              ]
+            },
+            "Available": {
+              "type": "VARIANT",
+              "defaultValue": "True",
+              "variantOptions": [
+                "False",
+                "True"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "ColorPicker",
+      "id": "885:43194",
+      "components": [
+        {
+          "id": "892:62",
+          "name": "ColorPickerButton",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "892:6",
+          "properties": {
+            "Show hue ring#892:1": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Small",
+              "variantOptions": [
+                "Medium",
+                "Small",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Pressed",
+                "Focus",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "885:44522",
+          "name": "ColorPickerPanel",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "885:43344",
+          "properties": {
+            "Title#885:18": {
+              "type": "TEXT",
+              "defaultValue": "Color"
+            },
+            "Show recent colors#885:19": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show actions#885:20": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Wheel",
+              "variantOptions": [
+                "Wheel",
+                "Hue-Saturation",
+                "Saturation-Brightness",
+                "Grayscale",
+                "RGB",
+                "CMYK"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "ComboBox",
+      "id": "254:841",
+      "components": [
+        {
+          "id": "254:889",
+          "name": "ComboBox",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "254:888",
+          "properties": {
+            "Label#653:211": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Tone": {
+              "type": "VARIANT",
+              "defaultValue": "primary",
+              "variantOptions": [
+                "borderless",
+                "primary"
+              ]
+            },
+            "Arrow": {
+              "type": "VARIANT",
+              "defaultValue": "UpDown",
+              "variantOptions": [
+                "UpDown",
+                "Down",
+                "Up"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "ContextMenu",
+      "id": "331:125",
+      "components": [
+        {
+          "id": "331:9332",
+          "name": "ContextMenu",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "331:9283",
+          "name": "ContextMenuDivider",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1238:620",
+          "name": "ContextMenuItem",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "331:9282",
+          "properties": {
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Inactive"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "hover",
+                "press",
+                "release",
+                "focus"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Hierarchy",
+      "id": "180:824",
+      "components": [
+        {
+          "id": "180:1012",
+          "name": "Hierarchy",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1244:31436",
+          "name": "HierarchyItem / False",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "314:9353",
+          "properties": {
+            "isParent#1244:560": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Inactive",
+                "Active"
+              ]
+            },
+            "isFold": {
+              "type": "VARIANT",
+              "defaultValue": "False",
+              "variantOptions": [
+                "False"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "314:93",
+          "name": "HierarchyItem / True",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "180:1004",
+          "properties": {
+            "isParent#314:4": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Inactive",
+                "Active"
+              ]
+            },
+            "isFold": {
+              "type": "VARIANT",
+              "defaultValue": "True",
+              "variantOptions": [
+                "True"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "hover",
+                "press",
+                "release",
+                "focus"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "180:995",
+          "name": "HierarchyList",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "180:1011",
+          "name": "HierarchyToolbar",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Input",
+      "id": "112:605",
+      "components": [
+        {
+          "id": "114:179",
+          "name": "TextField",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "114:176",
+          "properties": {
+            "Text#653:218": {
+              "type": "TEXT",
+              "defaultValue": "Placeholder"
+            },
+            "Password mask#1627:0": {
+              "type": "TEXT",
+              "defaultValue": "••••••••"
+            },
+            "Style": {
+              "type": "VARIANT",
+              "defaultValue": "Rounded",
+              "variantOptions": [
+                "Cylinder",
+                "Rounded",
+                "Inline"
+              ]
+            },
+            "Mode": {
+              "type": "VARIANT",
+              "defaultValue": "Text",
+              "variantOptions": [
+                "Text",
+                "Search",
+                "Password"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Enabled",
+              "variantOptions": [
+                "KeyboardFocus",
+                "CursorActive",
+                "Typing",
+                "Enabled",
+                "Dragged",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "323:9202",
+          "name": "GeneralSearch",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "List",
+      "id": "179:413",
+      "components": [
+        {
+          "id": "203:5161",
+          "name": "SmallList",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "241:9253",
+          "name": "ListItem / Mini",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "190:322",
+          "properties": {
+            "Label#653:0": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#653:3": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#653:6": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "hover",
+                "press",
+                "release",
+                "focus"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:31207",
+          "name": "ListItem / Navigation",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "653:2252",
+          "properties": {
+            "Label#1245:5760": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:5761": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:5762": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:5778": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:5779": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value#1245:5780": {
+              "type": "TEXT",
+              "defaultValue": "Value"
+            },
+            "Show value#1245:5781": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Trailing icon#1245:5782": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33709",
+              "preferredValues": []
+            },
+            "Show trailing icon#1245:5783": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Navigation",
+              "variantOptions": [
+                "Navigation"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:30758",
+          "name": "ListItem / Detail",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "241:9257",
+          "properties": {
+            "Detail title#1245:1859": {
+              "type": "TEXT",
+              "defaultValue": "asasdsadasasdsadasasd Maxinum lines: 2 lines"
+            },
+            "Date#1245:1860": {
+              "type": "TEXT",
+              "defaultValue": "YYYY-MM-dd"
+            },
+            "Folder 1#1245:1861": {
+              "type": "TEXT",
+              "defaultValue": "Only"
+            },
+            "Folder 2#1245:1862": {
+              "type": "TEXT",
+              "defaultValue": "1 Line"
+            },
+            "Tag 1#1245:1863": {
+              "type": "TEXT",
+              "defaultValue": "Only"
+            },
+            "Tag 2#1245:1864": {
+              "type": "TEXT",
+              "defaultValue": "1 Line"
+            },
+            "Bookmark icon#1245:1865": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33300",
+              "preferredValues": []
+            },
+            "Folder 1 icon#1245:1866": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33930",
+              "preferredValues": []
+            },
+            "Folder 2 icon#1245:1867": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33930",
+              "preferredValues": []
+            },
+            "Tag 1 icon#1245:1868": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33470",
+              "preferredValues": []
+            },
+            "Tag 2 icon#1245:1869": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33930",
+              "preferredValues": []
+            },
+            "Show bookmark#1245:1870": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show date#1245:1871": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show folders#1245:1872": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show tags#1245:1873": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Detail",
+              "variantOptions": [
+                "Detail"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:31573",
+          "name": "ListItem / Toggle",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "653:2263",
+          "properties": {
+            "Label#1245:9664": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:9665": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:9666": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:9682": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:9683": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Toggle control#1245:9688": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "111:378",
+              "preferredValues": []
+            },
+            "Show toggle#1245:9689": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Toggle",
+              "variantOptions": [
+                "Toggle"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:31963",
+          "name": "ListItem / Checkable",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "653:2276",
+          "properties": {
+            "Label#1245:13568": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Description#1245:13586": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:13587": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value#1245:13588": {
+              "type": "TEXT",
+              "defaultValue": "Value"
+            },
+            "Show value#1245:13589": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selection control#1245:13594": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:722",
+              "preferredValues": []
+            },
+            "Show selection#1245:13595": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Checkable",
+              "variantOptions": [
+                "Checkable"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:32354",
+          "name": "ListItem / Action",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "653:2590",
+          "properties": {
+            "Label#1245:17472": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:17473": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:17474": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:17490": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:17491": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Primary action#1245:17500": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:17501": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Action",
+              "variantOptions": [
+                "Action"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:32983",
+          "name": "ListItem / ActionGroup",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2599",
+          "properties": {
+            "Label#1245:21376": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:21377": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:21378": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:21394": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:21395": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Primary action#1245:21404": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:21405": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:21406": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:21407": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "More menu#1245:21408": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:585",
+              "preferredValues": []
+            },
+            "Show more menu#1245:21409": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "ActionGroup",
+              "variantOptions": [
+                "ActionGroup"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:33432",
+          "name": "ListItem / Stepper",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2614",
+          "properties": {
+            "Label#1245:25280": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:25281": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:25282": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:25298": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:25299": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Quantity#1245:25314": {
+              "type": "TEXT",
+              "defaultValue": "1"
+            },
+            "Stepper control#1245:25315": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:505",
+              "preferredValues": []
+            },
+            "Show stepper control#1245:25316": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Stepper",
+              "variantOptions": [
+                "Stepper"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:33851",
+          "name": "ListItem / Select",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2626",
+          "properties": {
+            "Label#1245:29184": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:29185": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:29186": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:29202": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:29203": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selector#1245:29221": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:885",
+              "preferredValues": []
+            },
+            "Show selector#1245:29222": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Select",
+              "variantOptions": [
+                "Select"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:34300",
+          "name": "ListItem / InlineEdit",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2637",
+          "properties": {
+            "Label#1245:33088": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:33089": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:33090": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:33106": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:33107": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Primary action#1245:33116": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:33117": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Input 1#1245:33127": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "114:176",
+              "preferredValues": []
+            },
+            "Show input 1#1245:33128": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "InlineEdit",
+              "variantOptions": [
+                "InlineEdit"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:35229",
+          "name": "ListItem / DetailActions",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2648",
+          "properties": {
+            "Label#1245:36992": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:36993": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:36994": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Date#1245:36996": {
+              "type": "TEXT",
+              "defaultValue": "YYYY-MM-dd"
+            },
+            "Bookmark icon#1245:37001": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33300",
+              "preferredValues": []
+            },
+            "Description#1245:37010": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:37011": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Primary action#1245:37020": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:37021": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:37022": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:37023": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "More menu#1245:37024": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:585",
+              "preferredValues": []
+            },
+            "Show more menu#1245:37025": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show bookmark icon#1245:37033": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Metadata 1#1245:37034": {
+              "type": "TEXT",
+              "defaultValue": "Metadata"
+            },
+            "Metadata 2#1245:37035": {
+              "type": "TEXT",
+              "defaultValue": "Status"
+            },
+            "Show metadata#1245:37036": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Status#1245:37037": {
+              "type": "TEXT",
+              "defaultValue": "Draft"
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "DetailActions",
+              "variantOptions": [
+                "DetailActions"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:36128",
+          "name": "ListItem / DetailQuantity",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2673",
+          "properties": {
+            "Label#1245:40896": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Description#1245:40914": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:40915": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Toggle control#1245:40920": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "111:378",
+              "preferredValues": []
+            },
+            "Primary action#1245:40924": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:40925": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Quantity#1245:40930": {
+              "type": "TEXT",
+              "defaultValue": "1"
+            },
+            "Stepper control#1245:40931": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:505",
+              "preferredValues": []
+            },
+            "Show stepper control#1245:40932": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selector#1245:40933": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:885",
+              "preferredValues": []
+            },
+            "Show selector#1245:40934": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Quantity label#1245:40942": {
+              "type": "TEXT",
+              "defaultValue": "Quantity label"
+            },
+            "Unit selector#1245:40943": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:885",
+              "preferredValues": []
+            },
+            "Show unit selector#1245:40944": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show toggle control#1245:40945": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Option label#1245:40946": {
+              "type": "TEXT",
+              "defaultValue": "Apply to all"
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "DetailQuantity",
+              "variantOptions": [
+                "DetailQuantity"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:37207",
+          "name": "ListItem / DetailSettings",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2699",
+          "properties": {
+            "Label#1245:44800": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Leading icon#1245:44801": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show leading icon#1245:44802": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Description#1245:44818": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:44819": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Toggle control#1245:44824": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "111:378",
+              "preferredValues": []
+            },
+            "Primary action#1245:44828": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:44829": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:44830": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:44831": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selector#1245:44837": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:885",
+              "preferredValues": []
+            },
+            "Show selector#1245:44838": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Status#1245:44845": {
+              "type": "TEXT",
+              "defaultValue": "Draft"
+            },
+            "Show toggle control#1245:44849": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Mode label#1245:44851": {
+              "type": "TEXT",
+              "defaultValue": "Mode label"
+            },
+            "Scope label#1245:44852": {
+              "type": "TEXT",
+              "defaultValue": "Scope label"
+            },
+            "Segments#1245:44853": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "206:3905",
+              "preferredValues": []
+            },
+            "Show segments#1245:44854": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "DetailSettings",
+              "variantOptions": [
+                "DetailSettings"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:38076",
+          "name": "ListItem / Resource",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2729",
+          "properties": {
+            "Label#1245:48704": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Date#1245:48708": {
+              "type": "TEXT",
+              "defaultValue": "YYYY-MM-dd"
+            },
+            "Description#1245:48722": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:48723": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Primary action#1245:48732": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:48733": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:48734": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:48735": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "More menu#1245:48736": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:585",
+              "preferredValues": []
+            },
+            "Show more menu#1245:48737": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Metadata 1#1245:48746": {
+              "type": "TEXT",
+              "defaultValue": "Metadata"
+            },
+            "Metadata 2#1245:48747": {
+              "type": "TEXT",
+              "defaultValue": "Status"
+            },
+            "Show metadata#1245:48748": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Status#1245:48749": {
+              "type": "TEXT",
+              "defaultValue": "Draft"
+            },
+            "Preview#1245:48759": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show preview#1245:48760": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Resource",
+              "variantOptions": [
+                "Resource"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:38975",
+          "name": "ListItem / Media",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2751",
+          "properties": {
+            "Label#1245:52608": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Description#1245:52626": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:52627": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Primary action#1245:52636": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:52637": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:52638": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:52639": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Status#1245:52653": {
+              "type": "TEXT",
+              "defaultValue": "Draft"
+            },
+            "Segments#1245:52661": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "206:3905",
+              "preferredValues": []
+            },
+            "Show segments#1245:52662": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Preview#1245:52663": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33205",
+              "preferredValues": []
+            },
+            "Show preview#1245:52664": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Duration#1245:52665": {
+              "type": "TEXT",
+              "defaultValue": "03:42"
+            },
+            "Media detail#1245:52666": {
+              "type": "TEXT",
+              "defaultValue": "WAV · 48 kHz"
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Media",
+              "variantOptions": [
+                "Media"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:39904",
+          "name": "ListItem / Task",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2774",
+          "properties": {
+            "Label#1245:56512": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Date#1245:56516": {
+              "type": "TEXT",
+              "defaultValue": "YYYY-MM-dd"
+            },
+            "Description#1245:56530": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:56531": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selection control#1245:56538": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:722",
+              "preferredValues": []
+            },
+            "Primary action#1245:56540": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:56541": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:56542": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:56543": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Quantity#1245:56546": {
+              "type": "TEXT",
+              "defaultValue": "1"
+            },
+            "Stepper control#1245:56547": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:505",
+              "preferredValues": []
+            },
+            "Show stepper control#1245:56548": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selector#1245:56549": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:885",
+              "preferredValues": []
+            },
+            "Show selector#1245:56550": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Metadata 1#1245:56554": {
+              "type": "TEXT",
+              "defaultValue": "Metadata"
+            },
+            "Metadata 2#1245:56555": {
+              "type": "TEXT",
+              "defaultValue": "Status"
+            },
+            "Show metadata#1245:56556": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Quantity label#1245:56558": {
+              "type": "TEXT",
+              "defaultValue": "Quantity label"
+            },
+            "Show selection control#1245:56571": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Task",
+              "variantOptions": [
+                "Task"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1245:40803",
+          "name": "ListItem / Form",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "741:2800",
+          "properties": {
+            "Label#1245:60416": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Description#1245:60434": {
+              "type": "TEXT",
+              "defaultValue": "Supporting text"
+            },
+            "Show description#1245:60435": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Toggle control#1245:60440": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "111:378",
+              "preferredValues": []
+            },
+            "Primary action#1245:60444": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:591",
+              "preferredValues": []
+            },
+            "Show primary action#1245:60445": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Secondary action#1245:60446": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "44:598",
+              "preferredValues": []
+            },
+            "Show secondary action#1245:60447": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Selector#1245:60453": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "254:885",
+              "preferredValues": []
+            },
+            "Show selector#1245:60454": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Input 1#1245:60455": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "114:176",
+              "preferredValues": []
+            },
+            "Show input 1#1245:60456": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Status#1245:60461": {
+              "type": "TEXT",
+              "defaultValue": "Draft"
+            },
+            "Show toggle control#1245:60465": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Field 1 label#1245:60476": {
+              "type": "TEXT",
+              "defaultValue": "Field 1 label"
+            },
+            "Field 2 label#1245:60477": {
+              "type": "TEXT",
+              "defaultValue": "Field 2 label"
+            },
+            "Input 2#1245:60478": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "114:176",
+              "preferredValues": []
+            },
+            "Show input 2#1245:60479": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Type": {
+              "type": "VARIANT",
+              "defaultValue": "Form",
+              "variantOptions": [
+                "Form"
+              ]
+            },
+            "Kind": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Selected",
+                "Disabled"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "209:9199",
+          "name": "ListFooter",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Menus",
+      "id": "106:285",
+      "components": [
+        {
+          "id": "110:857",
+          "name": "Menu",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "107:498",
+          "name": "MenuItem / Collapsed",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "107:497",
+          "properties": {
+            "Show arrow#1189:0": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show key#1189:4": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Key#1189:8": {
+              "type": "TEXT",
+              "defaultValue": "key"
+            },
+            "Label#1189:12": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Icon#1189:16": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "1189:90",
+              "preferredValues": []
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Inactive",
+              "variantOptions": [
+                "Default",
+                "Inactive",
+                "Selected"
+              ]
+            },
+            "Expansion": {
+              "type": "VARIANT",
+              "defaultValue": "Collapsed",
+              "variantOptions": [
+                "Collapsed"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "default",
+                "hover",
+                "press",
+                "release",
+                "focus"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1244:30524",
+          "name": "MenuItem / Expanded",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1189:94",
+          "properties": {
+            "Show arrow#1244:238": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show key#1244:239": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Key#1244:240": {
+              "type": "TEXT",
+              "defaultValue": "key"
+            },
+            "Label#1244:241": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Icon#1244:242": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "1189:90",
+              "preferredValues": []
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Inactive",
+              "variantOptions": [
+                "Inactive",
+                "Selected",
+                "Default"
+              ]
+            },
+            "Expansion": {
+              "type": "VARIANT",
+              "defaultValue": "Expanded",
+              "variantOptions": [
+                "Expanded"
+              ]
+            },
+            "Interaction state": {
+              "type": "VARIANT",
+              "defaultValue": "default",
+              "variantOptions": [
+                "hover",
+                "press",
+                "release",
+                "focus",
+                "default"
+              ]
+            },
+            "Input": {
+              "type": "VARIANT",
+              "defaultValue": "pointer",
+              "variantOptions": [
+                "pointer",
+                "keyboard"
+              ]
+            }
+          }
+        },
+        {
+          "id": "110:853",
+          "name": "MenuDivider",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1189:90",
+          "name": ".MenuItem / Default icon",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1214:1220",
+          "name": "_RowKeyboardDemo",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1214:828",
+          "properties": {
+            "Focus": {
+              "type": "VARIANT",
+              "defaultValue": "none",
+              "variantOptions": [
+                "none",
+                "menu",
+                "context",
+                "list",
+                "hierarchy"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Popover",
+      "id": "997:23",
+      "components": [
+        {
+          "id": "997:24",
+          "name": "Popover",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Radio",
+      "id": "44:601",
+      "components": [
+        {
+          "id": "44:630",
+          "name": "Radio",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "44:626",
+          "properties": {
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "On",
+              "variantOptions": [
+                "Off",
+                "On"
+              ]
+            },
+            "Available": {
+              "type": "VARIANT",
+              "defaultValue": "True",
+              "variantOptions": [
+                "False",
+                "True"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "SegmentedControl",
+      "id": "188:451",
+      "components": [
+        {
+          "id": "206:3827",
+          "name": "LabelSegementedControl",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "206:3905",
+          "properties": {
+            "Count": {
+              "type": "VARIANT",
+              "defaultValue": "2",
+              "variantOptions": [
+                "5",
+                "6",
+                "7",
+                "4",
+                "3",
+                "2",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15"
+              ]
+            }
+          }
+        },
+        {
+          "id": "206:3912",
+          "name": "IconSegementedControl",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "206:4108",
+          "properties": {
+            "Count": {
+              "type": "VARIANT",
+              "defaultValue": "2",
+              "variantOptions": [
+                "5",
+                "6",
+                "4",
+                "3",
+                "2",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15"
+              ]
+            },
+            "Orientation": {
+              "type": "VARIANT",
+              "defaultValue": "Horizontal",
+              "variantOptions": [
+                "Horizontal",
+                "Vertical"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Sheet",
+      "id": "911:45737",
+      "components": [
+        {
+          "id": "921:14595",
+          "name": "Sheet",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "921:3",
+          "properties": {
+            "Title#921:5": {
+              "type": "TEXT",
+              "defaultValue": "Sheet title"
+            },
+            "Description#921:6": {
+              "type": "TEXT",
+              "defaultValue": "Supporting description"
+            },
+            "Show header#921:7": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Content#921:8": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "920:3",
+              "preferredValues": [
+                {
+                  "type": "COMPONENT",
+                  "key": "61dfdad6ebc733fddba269fce53401c06ce3c388"
+                },
+                {
+                  "type": "COMPONENT",
+                  "key": "567a835c16cc51a98123c0b8e16b8ea248bfab44"
+                },
+                {
+                  "type": "COMPONENT",
+                  "key": "3e983c2b536c1d4dfb6f0d357015159464747ddf"
+                },
+                {
+                  "type": "COMPONENT",
+                  "key": "032613daedb5aae7c61ab75b5f1f8991693b3439"
+                }
+              ]
+            },
+            "Show description#921:9": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Presentation": {
+              "type": "VARIANT",
+              "defaultValue": "Mobile Fit",
+              "variantOptions": [
+                "Mobile Fit",
+                "Mobile Medium",
+                "Mobile Large",
+                "Desktop Center"
+              ]
+            }
+          }
+        },
+        {
+          "id": "920:3",
+          "name": "SheetContent / Placeholder",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "920:6",
+          "name": "Sheet / Action",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {
+            "Label#920:0": {
+              "type": "TEXT",
+              "defaultValue": "Continue"
+            }
+          }
+        },
+        {
+          "id": "922:14",
+          "name": "SheetContent / Export",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "922:30",
+          "name": "SheetContent / Share",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "922:37",
+          "name": "SheetContent / Folder picker",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "922:11",
+          "name": "Sheet / Content row",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {
+            "Label#922:0": {
+              "type": "TEXT",
+              "defaultValue": "Label"
+            },
+            "Value#922:1": {
+              "type": "TEXT",
+              "defaultValue": "Value"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Slider",
+      "id": "852:1406",
+      "components": [
+        {
+          "id": "879:6541",
+          "name": "Slider/Default",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:5757",
+          "properties": {
+            "Minimum label#879:0": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:17": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:34": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show labels#879:51": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:68": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:85": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:102": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:119": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:136": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "879:7350",
+          "name": "Slider/Center biased",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:6566",
+          "properties": {
+            "Minimum label#879:153": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:170": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:187": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show labels#879:204": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:221": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:238": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:255": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:272": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:289": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "879:8159",
+          "name": "Slider/Ticks",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:7375",
+          "properties": {
+            "Minimum label#879:306": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:323": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:340": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show labels#879:357": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:374": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:391": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:408": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:425": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:442": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "879:8968",
+          "name": "Slider/Center biased ticks",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:8184",
+          "properties": {
+            "Minimum label#879:459": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:476": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:493": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show labels#879:510": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:527": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:544": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:561": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:578": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:595": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "879:9777",
+          "name": "Slider/Filled",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:8993",
+          "properties": {
+            "Minimum label#879:612": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:629": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:646": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show labels#879:663": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:680": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:697": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:714": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:731": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:748": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "879:10586",
+          "name": "Slider/Min-max labels",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:9802",
+          "properties": {
+            "Minimum label#879:765": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:782": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:799": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show labels#879:816": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:833": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:850": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:867": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:884": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:901": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "879:11203",
+          "name": "Slider/Segmented",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "879:10611",
+          "properties": {
+            "Minimum label#879:918": {
+              "type": "TEXT",
+              "defaultValue": "0%"
+            },
+            "Maximum label#879:935": {
+              "type": "TEXT",
+              "defaultValue": "100%"
+            },
+            "Show min-max#879:952": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show labels#879:969": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show endpoint icons#879:986": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Minimum icon#879:1003": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Maximum icon#879:1020": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Symbol#879:1037": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:32832",
+              "preferredValues": []
+            },
+            "Show symbol#879:1054": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Size": {
+              "type": "VARIANT",
+              "defaultValue": "Mini",
+              "variantOptions": [
+                "Mini",
+                "Small",
+                "Regular",
+                "Large"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Idle",
+              "variantOptions": [
+                "Idle",
+                "Hover",
+                "Pressed",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "860:4586",
+          "name": ".Slider/Value/Default/Small",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "860:4157",
+          "properties": {
+            "Active#860:0": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#860:14": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#860:28": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#860:42": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "861:4586",
+          "name": ".Slider/Value/Center biased/Small",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "861:4157",
+          "properties": {
+            "Active#861:0": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#861:14": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#861:28": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#861:42": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "861:4752",
+          "name": ".Slider/Value/Filled/Small",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "861:4587",
+          "properties": {
+            "Active#861:56": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#861:62": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#861:68": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#861:74": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "861:4858",
+          "name": ".Slider/Value/Segmented/Small",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "861:4753",
+          "properties": {
+            "Active#861:80": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#861:86": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Focus ring#861:92": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#861:98": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:4586",
+          "name": ".Slider/Value/Default/Mini",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:4157",
+          "properties": {
+            "Active#864:0": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:14": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:28": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:42": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:5016",
+          "name": ".Slider/Value/Default/Regular",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:4587",
+          "properties": {
+            "Active#864:56": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:70": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:84": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:98": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:5446",
+          "name": ".Slider/Value/Default/Large",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:5017",
+          "properties": {
+            "Active#864:112": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:126": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:140": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:154": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:5876",
+          "name": ".Slider/Value/Center biased/Mini",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:5447",
+          "properties": {
+            "Active#864:168": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:182": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:196": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:210": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:6306",
+          "name": ".Slider/Value/Center biased/Regular",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:5877",
+          "properties": {
+            "Active#864:224": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:238": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:252": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:266": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:6736",
+          "name": ".Slider/Value/Center biased/Large",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:6307",
+          "properties": {
+            "Active#864:280": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:294": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:308": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:322": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "10%",
+                "20%",
+                "25%",
+                "30%",
+                "40%",
+                "60%",
+                "70%",
+                "75%",
+                "80%",
+                "90%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:6902",
+          "name": ".Slider/Value/Filled/Mini",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:6737",
+          "properties": {
+            "Active#864:336": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:342": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:348": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:354": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:7068",
+          "name": ".Slider/Value/Filled/Regular",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:6903",
+          "properties": {
+            "Active#864:360": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:366": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:372": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:378": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:7234",
+          "name": ".Slider/Value/Filled/Large",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:7069",
+          "properties": {
+            "Active#864:384": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:390": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Focus ring#864:396": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:402": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:7340",
+          "name": ".Slider/Value/Segmented/Mini",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:7235",
+          "properties": {
+            "Active#864:408": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:414": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Focus ring#864:420": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:426": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:7446",
+          "name": ".Slider/Value/Segmented/Regular",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:7341",
+          "properties": {
+            "Active#864:432": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:438": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Focus ring#864:444": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:450": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        },
+        {
+          "id": "864:7552",
+          "name": ".Slider/Value/Segmented/Large",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "864:7447",
+          "properties": {
+            "Active#864:456": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Show ticks#864:462": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Focus ring#864:468": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Show thumb#864:474": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Value": {
+              "type": "VARIANT",
+              "defaultValue": "50%",
+              "variantOptions": [
+                "50%",
+                "0%",
+                "25%",
+                "75%",
+                "100%"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Stepper",
+      "id": "254:490",
+      "components": [
+        {
+          "id": "254:506",
+          "name": "Stepper",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "254:505",
+          "properties": {
+            "Arrow": {
+              "type": "VARIANT",
+              "defaultValue": "UpDown",
+              "variantOptions": [
+                "Down",
+                "UpDown",
+                "Up"
+              ]
+            },
+            "Tone": {
+              "type": "VARIANT",
+              "defaultValue": "Primary",
+              "variantOptions": [
+                "Borderless",
+                "Primary"
+              ]
+            }
+          }
+        },
+        {
+          "id": "323:9211",
+          "name": "StepperDownBorderless",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "323:9205",
+          "name": "StepperDownPrimary",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "323:9213",
+          "name": "StepperUpBorderless",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "323:9209",
+          "name": "StepperUpDownBorderless",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "323:9203",
+          "name": "StepperUpDownPrimary",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "323:9207",
+          "name": "StepperUpPrimary",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Table",
+      "id": "196:388",
+      "components": [
+        {
+          "id": "203:4366",
+          "name": "Table",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "203:3647",
+          "name": "Header",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {
+            "Column 1 / Leading icon#1632:0": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Column 1 / Show leading icon#1632:1": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Column 1 / Trailing icon#1632:2": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Column 1 / Show trailing icon#1632:3": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Column 2 / Leading icon#1632:4": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Column 2 / Show leading icon#1632:5": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Column 2 / Trailing icon#1632:6": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Column 2 / Show trailing icon#1632:7": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Column 3 / Leading icon#1632:8": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Column 3 / Show leading icon#1632:9": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Column 3 / Trailing icon#1632:10": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:34251",
+              "preferredValues": []
+            },
+            "Column 3 / Show trailing icon#1632:11": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            }
+          }
+        },
+        {
+          "id": "203:3648",
+          "name": "row",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "203:3863",
+          "name": "TableCellItem",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Tabs",
+      "id": "1035:6",
+      "components": [
+        {
+          "id": "1037:23057",
+          "name": "Tab",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1037:2",
+          "properties": {
+            "Label#1037:5": {
+              "type": "TEXT",
+              "defaultValue": "Overview"
+            },
+            "Icon#1037:6": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "207:33930",
+              "preferredValues": []
+            },
+            "Badge#1037:8": {
+              "type": "TEXT",
+              "defaultValue": "12"
+            },
+            "Show badge#1037:9": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Style": {
+              "type": "VARIANT",
+              "defaultValue": "Underline",
+              "variantOptions": [
+                "Underline",
+                "Surface"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Default",
+              "variantOptions": [
+                "Default",
+                "Hover",
+                "Pressed",
+                "Selected",
+                "Focus",
+                "Disabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1038:23194",
+          "name": "TabBar",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1038:11",
+          "properties": {
+            "Style": {
+              "type": "VARIANT",
+              "defaultValue": "Underline",
+              "variantOptions": [
+                "Underline",
+                "Surface"
+              ]
+            },
+            "Layout": {
+              "type": "VARIANT",
+              "defaultValue": "Content",
+              "variantOptions": [
+                "Content",
+                "Equal",
+                "Scrollable"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1039:247",
+          "name": "TabBar/iOS",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1038:23670",
+          "properties": {
+            "Tabs": {
+              "type": "VARIANT",
+              "defaultValue": "3",
+              "variantOptions": [
+                "3",
+                "4",
+                "5"
+              ]
+            },
+            "Presentation": {
+              "type": "VARIANT",
+              "defaultValue": "Expanded",
+              "variantOptions": [
+                "Expanded",
+                "Search",
+                "Minimized"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1045:444",
+          "name": "Tab/iOS",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1045:435",
+          "properties": {
+            "Selected": {
+              "type": "VARIANT",
+              "defaultValue": "True",
+              "variantOptions": [
+                "True",
+                "False"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1044:478",
+          "name": "TabBar/Android",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1041:323",
+          "properties": {
+            "Destinations": {
+              "type": "VARIANT",
+              "defaultValue": "3",
+              "variantOptions": [
+                "3",
+                "4",
+                "5"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1045:584",
+          "name": "Tab/Android",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1045:446",
+          "properties": {
+            "Selected": {
+              "type": "VARIANT",
+              "defaultValue": "True",
+              "variantOptions": [
+                "True",
+                "False"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Enabled",
+              "variantOptions": [
+                "Enabled",
+                "Hovered",
+                "Focused",
+                "Pressed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1072:1250",
+          "name": ".MobileNavigation/Icon/home-1",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1072:1253",
+          "name": ".MobileNavigation/Icon/nodesfolder",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1072:1256",
+          "name": ".MobileNavigation/Icon/toolwindownotifications",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1072:1260",
+          "name": ".MobileNavigation/Icon/loggedInUser",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1072:1267",
+          "name": ".MobileNavigation/Icon/generalsettings",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1072:1270",
+          "name": ".MobileNavigation/Icon/inputFieldSearch",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        },
+        {
+          "id": "1073:1291",
+          "name": "Tab/LVRS Mobile",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1073:1243",
+          "properties": {
+            "Label#1073:0": {
+              "type": "TEXT",
+              "defaultValue": "Home"
+            },
+            "Icon#1073:9": {
+              "type": "INSTANCE_SWAP",
+              "defaultValue": "1072:1250",
+              "preferredValues": []
+            },
+            "Selection visible#1073:18": {
+              "type": "BOOLEAN",
+              "defaultValue": true
+            },
+            "Platform": {
+              "type": "VARIANT",
+              "defaultValue": "iOS",
+              "variantOptions": [
+                "iOS",
+                "Android"
+              ]
+            },
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "Selected",
+              "variantOptions": [
+                "Selected",
+                "Default"
+              ]
+            },
+            "Labels": {
+              "type": "VARIANT",
+              "defaultValue": "Hidden",
+              "variantOptions": [
+                "Hidden",
+                "Visible"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1074:2064",
+          "name": "TabBar/LVRS Mobile",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1074:1260",
+          "properties": {
+            "Search visible#1082:0": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Platform": {
+              "type": "VARIANT",
+              "defaultValue": "iOS",
+              "variantOptions": [
+                "iOS",
+                "Android"
+              ]
+            },
+            "Tabs": {
+              "type": "VARIANT",
+              "defaultValue": "1",
+              "variantOptions": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
+            },
+            "Labels": {
+              "type": "VARIANT",
+              "defaultValue": "Hidden",
+              "variantOptions": [
+                "Hidden",
+                "Visible"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1076:1972",
+          "name": ".MobileNavigation/Elastic motion",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1076:1724",
+          "properties": {
+            "Search visible#1082:21": {
+              "type": "BOOLEAN",
+              "defaultValue": false
+            },
+            "Platform": {
+              "type": "VARIANT",
+              "defaultValue": "iOS",
+              "variantOptions": [
+                "iOS",
+                "Android"
+              ]
+            },
+            "Motion": {
+              "type": "VARIANT",
+              "defaultValue": "Home",
+              "variantOptions": [
+                "Home",
+                "StretchRight",
+                "Library",
+                "StretchLeft"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1049:1295",
+          "name": ".Tabs/Interactive desktop",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "1049:866",
+          "properties": {
+            "Tab": {
+              "type": "VARIANT",
+              "defaultValue": "Overview",
+              "variantOptions": [
+                "Overview",
+                "Activity",
+                "Members",
+                "Settings"
+              ]
+            }
+          }
+        },
+        {
+          "id": "1043:318",
+          "name": ".Tabs/Material Home",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    },
+    {
+      "page": "Toggle",
+      "id": "111:350",
+      "components": [
+        {
+          "id": "111:379",
+          "name": "Toggle",
+          "nodeType": "COMPONENT_SET",
+          "defaultVariantId": "111:378",
+          "properties": {
+            "State": {
+              "type": "VARIANT",
+              "defaultValue": "On",
+              "variantOptions": [
+                "Off",
+                "On"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "page": "Tooltip",
+      "id": "997:12",
+      "components": [
+        {
+          "id": "997:13",
+          "name": "Tooltip",
+          "nodeType": "COMPONENT",
+          "defaultVariantId": null,
+          "properties": {}
+        }
+      ]
+    }
+  ],
+  "references": [
+    {
+      "id": "198:8736",
+      "name": "projectStructure",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:34251",
+      "name": "generalchevronDown",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "817:73",
+      "name": "Content=Architecture",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33205",
+      "name": "nodesfolder",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33585",
+      "name": "generalprojectStructure",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33183",
+      "name": "nodesdesktop",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33826",
+      "name": "dataModel",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:32764",
+      "name": "loggedInUser",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33649",
+      "name": "generalexternalLink",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33709",
+      "name": "generalchevronRight",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33300",
+      "name": "bookmarksbookmark",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33930",
+      "name": "folder@14x14",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:33470",
+      "name": "vcscurrentBranch",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "111:378",
+      "name": "State=On",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "44:722",
+      "name": "State=Off, Available=True",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "44:591",
+      "name": "Type=LabelButton, Kind=accent, Interaction state=default",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "44:598",
+      "name": "Type=LabelButton, Kind=default, Interaction state=default",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "44:585",
+      "name": "Type=LabelMenuButton, Kind=default, Interaction state=default",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "254:505",
+      "name": "Arrow=UpDown, Tone=Primary",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "254:885",
+      "name": "Tone=primary, Arrow=Down",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "114:176",
+      "name": "Style=Rounded, Mode=Text, State=Enabled",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "206:3905",
+      "name": "Count=2",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "1189:90",
+      "name": ".MenuItem / Default icon",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "920:3",
+      "name": "SheetContent / Placeholder",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "207:32832",
+      "name": "sun",
+      "type": "COMPONENT"
+    },
+    {
+      "id": "1072:1250",
+      "name": ".MobileNavigation/Icon/home-1",
+      "type": "COMPONENT"
+    }
+  ]
+}

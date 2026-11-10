@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "reference": "LVUI button prototype transitions",
+  "sources": [
+    "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=44-599",
+    "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=1243-1226"
+  ],
+  "verifiedVariantCount": 50,
+  "enabledVariantCount": 40,
+  "easing": "EASE_OUT",
+  "hoverMilliseconds": 100,
+  "pressMilliseconds": 60,
+  "releaseMilliseconds": 80,
+  "postReleaseMilliseconds": 120
+}

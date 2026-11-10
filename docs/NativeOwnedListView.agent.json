@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedListView.md",
-    "sha256": "d9fabbbb1c200c4a2a6612f1eb29fd217e57594c7dfa471a6b3898c075691eae",
-    "bytes": 2056,
-    "line_count": 23,
+    "sha256": "a986804354cb6bb49e186a483ee204c76f63aba873f8242d803fb84c8d356fc2",
+    "bytes": 9653,
+    "line_count": 101,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,50 +42,176 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 6,
-      "raw": "`NativeListView`는 [독립 평면 목록 모델](OwnedListModel.md)의 스냅샷과 선택 상태를\n범용 iiGUI 스크롤 호스트에 연결한다. 계층 모델과 레거시 위젯을 요구하지 않는다.\n`ListViewInput`에 앱의 `ListController`, 크기, 행 높이와 선택적인 아이콘 공급자를\n전달한다. 소스가 변경되면 관측 가능한 `source_revision`을 바꿔 기존 화면을 갱신한다.\n"
+      "end_line": 7,
+      "raw": "`iiGUI/NativeListView.h`는 주입된 [평면 목록 모델](OwnedListModel.md)의 스냅샷과\n선택 상태로 가상 목록의 입력·편집·드래그·그리기·수명을 관리한다. LVUI는\n`ListViewInput`, `ListViewBinding`과 관찰 가능한 행 계약을 제공한다. 계층 모델과 레거시 위젯을 요구하지 않는다.\n`ListViewInput`에 앱의 `ListController`, 크기, 행 높이와 선택적인 아이콘 공급자를\n전달한다. 소스가 변경되면 관측 가능한 `source_revision`을 바꿔 기존 화면을 갱신한다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 7,
-      "end_line": 7,
+      "start_line": 8,
+      "end_line": 8,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 8,
-      "end_line": 12,
-      "raw": "고정 높이의 보이는 행과 `overscan`만 만들고, 계속 보이는 키의 행은 재사용한다.\n각 행은 [독립 목록 항목](NativeOwnedListItem.md)과 같은 LVUI 배치·그리기 코드를 사용해 배경·선택·포커스·아이콘·레이블을 그리며 높이가 32 이상인 행에는\n설명도 표시한다. 표시와 접근성에 제공하는 레이블 및 설명은 각각 UTF-8 경계를 지킨\n최대 8,192바이트로 제한하고, 원본 스냅샷은 변경하지 않는다. 한 화면의 표시 텍스트\n예산은 4 MiB다. 사용자 지정 아이콘이 잘못되면 가능한 범위에서 기존 화면을 유지한다.\n"
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "보이는 행과 `overscan`만 만들고, 계속 보이는 키의 행은 재사용한다.\n각 행은 [독립 목록 항목](NativeOwnedListItem.md)과 같은 iiGUI 배치·그리기 코드를 사용해 배경·선택·포커스·아이콘·레이블을 그리며 높이가 32 이상인 행에는\n설명도 표시한다. 표시와 접근성에 제공하는 레이블 및 설명은 각각 UTF-8 경계를 지킨\n최대 8,192바이트로 제한하고, 원본 스냅샷은 변경하지 않는다. 한 화면의 표시 텍스트\n예산은 4 MiB다. 사용자 지정 아이콘이 잘못되면 가능한 범위에서 기존 화면을 유지한다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 13,
-      "end_line": 13,
+      "start_line": 14,
+      "end_line": 14,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 14,
-      "end_line": 18,
-      "raw": "행 활성화는 원본 항목과 인덱스를 전달하고 선택만 변경한다. 방향키, Home, End와 페이지\n키는 비활성 또는 선택할 수 없는 행을 건너뛰며 스크롤한다. 사용자 입력 직전에 소스가\n바뀌었다면 이전 행의 이벤트를 버리고 새로운 스냅샷을 표시한다. 삽입과 제거 후에는\n가능하면 보이던 키와 행 내부 위치를 유지한다. 소스나 다른 앱 상태의 변경은 실패한\n화면 갱신이 되돌리지 않는다.\n"
+      "start_line": 15,
+      "end_line": 20,
+      "raw": "행 활성화는 원본 항목과 인덱스를 전달하고 선택만 변경한다. 방향키, Home, End와 페이지\n키는 비활성 또는 선택할 수 없는 행을 건너뛰며 스크롤한다. 사용자 입력 직전에 소스가\n바뀌었다면 이전 행의 이벤트를 버리고 새로운 스냅샷을 표시한다. 다른 화면이 공유\n컨트롤러를 이미 갱신한 경우에도 현재 화면의 스냅샷과 대조한다. 삽입과 제거 후에는\n가능하면 보이던 키와 행 내부 위치를 유지한다. 소스나 다른 앱 상태의 변경은 실패한\n화면 갱신이 되돌리지 않는다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 19,
-      "end_line": 19,
+      "start_line": 21,
+      "end_line": 21,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 20,
-      "end_line": 23,
-      "raw": "`LVUI.OwnedList.Host`는 창을 열지 않는 위젯 트리에서 가상화, 다국어 긴 문자열,\n선택과 키보드, 오래된 입력, 아이콘 오류 복구, 스레드와 수명 경계를 검사한다.\n[목록 패널과 기본 선언](NativeOwnedListPanel.md)은 이 화면을 도구 모음·푸터와\n조합한다. 사용자 행 대리자, 편집 UI와 실제 플랫폼 접근성 검증은 아직 남아 있다.\n"
+      "start_line": 22,
+      "end_line": 26,
+      "raw": "`ListViewInput::scrollable`의 기본값은 `true`다. `false`이면 휠·트랙패드·터치와\n드래그 가장자리 자동 스크롤을 막되 현재 오프셋·논리 범위·선택을 유지한다.\n휠 입력은 스크롤 가능한 바깥 뷰로 전달된다. 명시적 오프셋 변경과 키보드 선택에\n필요한 행 노출은 유지된다. 목록의 `interactive` 또는 `enabled`가 꺼져도 사용자\n스크롤은 동작하지 않는다. 이 설정은 반응형으로 변경할 수 있다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 28,
+      "end_line": 33,
+      "raw": "`NativeListView::create`의 마지막 인자로 `ListRowViewFactory`를 전달하면 보이는 각\n행의 기본 아이콘·레이블 대신 앱이 제공한 하나의 View를 만든다. 팩터리는\n`WidgetBuilder&`와 `shared_ptr<const ListRowContext>`를 받는다. 행의 배경·선택·포커스,\n접근성 이름과 활성화는 목록이 계속 담당한다. 사용자 View는 행 크기로 잘린다.\n표시 전용 부분의 클릭은 행에 전달되고 내부 버튼 등 입력 컨트롤은 자기 입력을 먼저\n받는다. 사용하지 않는 기본 아이콘은 조회하지 않는다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 44,
+      "raw": "`ListRowContext::get()`은 원본 `entry`, `source_index`, `selected`, `enabled`,\n행 `height`와 행의 `trigger` 명령을 읽는다. `observe`, `revision`, `read_dependency`는 iiSDKCore와\nLVUI 반응형 바인딩에 연결된다. 같은 키가 표시 범위에 유지되면 같은 View와\n컨텍스트를 갱신한다. 범위 밖으로 나가거나 목록이 제거되면 둘을 함께 폐기하고\n이후 조회를 거절한다. 행 컨텍스트는 소유 스레드에서만 읽고, `get()`이 돌려준\n참조를 다음 게시 이후까지 보관하지 않는다. 목록의 설정이나 사용자 View가 잘못되어\n후보가 게시되지 않으면 마지막 정상 화면을 가능한 범위에서 유지한다. 이미 외부에\n수행된 부수효과는 되돌리지 않는다.\n선택이 확정된 뒤 한 행의 관찰 콜백이 실패하면 다른 행에도 선택 상태를 전달한 뒤\n오류를 기록한다. 이미 확정된 선택을 되돌리거나 활성화 콜백을 중복 호출하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 51,
+      "raw": "`ListRowContext::trigger()` 또는 `get().trigger->request()`는 해당 행을 선택한 뒤\n목록의 활성화 콜백을 한 번 호출한다. 선언형 View에서는 `item.trigger`를 버튼의\n`onClick`에 전달할 수 있다. 후보 행이 게시되기 전, 행이 가상화로 폐기된 뒤,\n다른 스레드, 비활성 또는 상호작용이 꺼진 행의 요청은 거절한다. 명령을 따로\n보관해도 목록과 행의 수명이 연장되지 않고 같은 키의 새 행을 조작하지 않는다.\n입력 직전에 소스가 바뀐 경우 기존 입력처럼 최신 스냅샷을 반영하고 그 요청은 버린다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 52,
+      "end_line": 52,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 53,
+      "end_line": 61,
+      "raw": "기본 행은 `row_height`를 사용한다. 사용자 View를 제공한 행은 현재 폭에서 측정한\n자연 높이와 `row_height` 중 큰 값으로 배치하며, 값이 바뀌면 가능한 한 첫 표시 행의\n키와 내부 위치를 유지한다. View의 측정 콜백을 덮어쓰지 않고 목록이 소유한 호스트에서\n측정한다. 높이는 최대 8,192이고 초과한 측정값은 오류다. 아직 한 번도 표시되지 않은\n행은 기본 높이로 추정한다. 소스 스냅샷이나 표시 폭이 바뀌면 이전 측정을 사용하지\n않으며, 각 행이 표시될 때 다시 측정하므로 전체 스크롤 길이는 점진적으로 보정된다.\n측정과 스크롤은 문서 리비전을 변경하지 않는다.\n선택할 수 없거나 목록 상호작용이 꺼진 행은 내부 컨트롤에도 입력을 전달하지 않는다.\n`enabled`는 항목과 목록의 활성 상태를 나타내며 `entry.selectable`과 별개다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 75,
+      "raw": "이름 편집은 기본적으로 꺼져 있다. `ListViewInput::editable`을 켜고\n교체 가능한 `ListEditor`를 전달하면 활성·선택 가능하고 `entry.editable`인 행을\n선택한 뒤 Enter 또는 더블 클릭으로 편집할 수 있다. 내부 버튼 등의 입력은 그\n컨트롤이 먼저 처리한다. 입력 중 Enter 또는 포커스 이동은 저장을 요청하고,\nEscape나 행이 화면 밖으로 폐기되는 경우는 초안을 취소한다. 검증 오류나 오래된\n원본 리비전은 저장하지 않으며 편집 중인 내용을 유지한다. 외부 저장소가 사용할\n검증과 이력은 앱이 제공한 `ListEditor`가 담당한다. 다른 행을 선택하는 과정에서\n저장이 거절되면 기존 선택과 초안을 유지하고 편집기로 포커스를 돌린다. 외부에서\n선택을 교체하거나 편집을 비활성화하면 기존 초안은 취소될 수 있다.\n다른 행을 누를 때는 행 활성화 시 편집을 확정하고 새 행으로 포커스와 선택을 옮긴다.\n편집 확정이 키 기반 콘텐츠를 갱신하더라도 진행 중인 행 클릭을 잃지 않는다.\n팔레트 갱신은 활성 편집기의 배경·텍스트·포커스·선택색을 갱신하면서 초안,\n포커스와 조합을 유지한다. 선택색의 알파는 포커스색 알파의 0.38이다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 76,
+      "end_line": 76,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 77,
+      "end_line": 85,
+      "raw": "순서 변경은 기본적으로 꺼져 있다. `ListViewInput::reorderable`을 켜고 같은 원본의\n`ListEditor`를 제공하면 활성·선택 가능하고 `entry.draggable`인 행을 드래그할 수 있다.\n이름 편집과 순서 변경은 각각 별도로 켤 수 있다. 이동 후보는 대상 행의 위나 아래에\n표시되며 포인터가 화면 가장자리에 있으면 이동 이벤트마다 한 행씩 스크롤한다.\n놓을 때만 리비전을 확인해 한 번 적용하고 `moved`에 이동 요청과 이전·새 인덱스를\n전달한다. 실제 위치가 바뀌지 않으면 이동 이벤트를 보내지 않는다.\nEscape, 포커스 상실, 기능 비활성화나 원본 변경은 미완료 이동을 취소한다.\n뷰포트 밖에 놓거나 비활성 행 위에 놓으면 적용하지 않는다. 이름 편집 중에는 드래그하지 않으며,\n드래그 중에는 이름 편집을 시작할 수 없다. 사용자 행 안의 버튼은 입력을 먼저 받는다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 86,
+      "end_line": 86,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 87,
+      "end_line": 89,
+      "raw": "`begin_edit`, `commit_edit`, `cancel_edit`과 `editor`는 소유 스레드에서 이 동작에\n접근한다. 편집 콜백은 원본 항목·인덱스와 초안을 전달하며 거절 콜백은 오류도\n전달한다. 편집 도중 소스가 갱신되더라도 이전 초안으로 최신 내용을 덮어쓰지 않는다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 91,
+      "end_line": 99,
+      "raw": "`LVUI.OwnedList.Host`는 창을 열지 않는 위젯 트리에서 가상화, 다국어 긴 문자열,\n선택과 키보드, 오래된 입력, 아이콘 오류 복구, 스레드와 수명 경계를 검사한다.\n[목록 패널과 기본 선언](NativeOwnedListPanel.md)은 이 화면을 도구 모음·푸터와\n조합한다. `LVUI.OwnedList.RowDelegate`와 `RowDelegateGenerated`는 사용자 행의\n관찰·입력·재정렬·실패 복구·재진입·가변 높이·행 명령·가상화 수명과 생성 코드를 검사한다.\n`LVUI.OwnedList.Editing`과 편집 호스트·생성 코드 검사는 초안, 충돌, 취소, 입력과\n수명을 검사한다. `LVUI.OwnedList.DragHost`와 `DragGenerated`는 가변 높이·자동 스크롤,\n포커스·재진입·중첩 버튼·선언형 이벤트를 검사한다. 자동 삽입·삭제 동작은 제공하지\n않으며 앱이 명령과 이력을 소유한다. 실제 플랫폼 접근성 검증은 아직 남아 있다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "`ListViewBinding`에는 iiGUI의 행 그리기·입력 필드·목록 호스트와 이미지 디코더를 주입한다. LVUI 바인딩은 iiSDKCore 외 SDK를 직접 참조하지 않는다. 퇴역 시 진행 중인 입력과 콜백이 끝난 뒤 원천·행·편집 세션·콜백을 해제한다. macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 생성·편집·드래그·사용자 행을 창 없이 검사했다.\n"
     }
   ],
   "outline": [
@@ -102,15 +228,78 @@
     "directive_candidates": [
       {
         "block_id": "b000003",
-        "line": 4,
-        "text": "범용 iiGUI 스크롤 호스트에 연결한다. 계층 모델과 레거시 위젯을 요구하지 않는다.",
+        "line": 5,
+        "text": "`ListViewInput`, `ListViewBinding`과 관찰 가능한 행 계약을 제공한다. 계층 모델과 레거시 위젯을 요구하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000005",
-        "line": 11,
+        "line": 12,
         "text": "최대 8,192바이트로 제한하고, 원본 스냅샷은 변경하지 않는다. 한 화면의 표시 텍스트",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "스크롤은 동작하지 않는다. 이 설정은 반응형으로 변경할 수 있다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 33,
+        "text": "받는다. 사용하지 않는 기본 아이콘은 조회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 40,
+        "text": "참조를 다음 게시 이후까지 보관하지 않는다. 목록의 설정이나 사용자 View가 잘못되어",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 44,
+        "text": "오류를 기록한다. 이미 확정된 선택을 되돌리거나 활성화 콜백을 중복 호출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000015",
+        "line": 50,
+        "text": "보관해도 목록과 행의 수명이 연장되지 않고 같은 키의 새 행을 조작하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 59,
+        "text": "측정과 스크롤은 문서 리비전을 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 60,
+        "text": "선택할 수 없거나 목록 상호작용이 꺼진 행은 내부 컨트롤에도 입력을 전달하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 84,
+        "text": "뷰포트 밖에 놓거나 비활성 행 위에 놓으면 적용하지 않는다. 이름 편집 중에는 드래그하지 않으며,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 101,
+        "text": "`ListViewBinding`에는 iiGUI의 행 그리기·입력 필드·목록 호스트와 이미지 디코더를 주입한다. LVUI 바인딩은 iiSDKCore 외 SDK를 직접 참조하지 않는다. 퇴역 시 진행 중인 입력과 콜백이 끝난 뒤 원천·행·편집 세션·콜백을 해제한다. macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 생성·편집·드래그·사용자 행을 창 없이 검사했다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -119,7 +308,7 @@
     "links": [
       {
         "block_id": "b000003",
-        "label": "독립 평면 목록 모델",
+        "label": "평면 목록 모델",
         "target": "OwnedListModel.md",
         "kind": "relative",
         "line": 3
@@ -129,14 +318,14 @@
         "label": "독립 목록 항목",
         "target": "NativeOwnedListItem.md",
         "kind": "relative",
-        "line": 9
+        "line": 10
       },
       {
-        "block_id": "b000009",
+        "block_id": "b000025",
         "label": "목록 패널과 기본 선언",
         "target": "NativeOwnedListPanel.md",
         "kind": "relative",
-        "line": 22
+        "line": 93
       }
     ],
     "tables": []

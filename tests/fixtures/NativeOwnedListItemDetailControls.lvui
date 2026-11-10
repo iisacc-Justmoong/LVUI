@@ -1,0 +1,13 @@
+import vm NativeOwnedListItemDetailControlsModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "quantity", type: .DetailQuantity, label: "Export", quantity: vm.quantity,
+                 stepperArrow: vm.arrow, stepperTone: vm.tone,
+                 unitSelector: vm.units, unitIndex: vm.unit_index,
+                 onQuantityChanged: vm.quantityChanged, onUnitIndexChanged: vm.unitChanged)
+        ListItem(id: "settings", type: vm.kind, label: "Settings", description: "Supporting text",
+                 primaryAction: "Apply", secondaryAction: "Reset", selector: vm.formats, segments: vm.segments,
+                 segmentIndex: vm.segment_index, showSegments: vm.show_segments,
+                 onSegmentIndexChanged: vm.segmentChanged)
+    }
+}

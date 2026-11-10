@@ -1,4 +1,6 @@
 #include <LVUI/NativeDropdownButton.h>
+#include <iiGUI/NativeDropdownButtonView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
 #include <memory>
@@ -7,10 +9,24 @@
 #include <string>
 #include <thread>
 #include <vector>
+namespace lvui::native {
+using ButtonModel=ii::gui::BasicButton<ButtonHostModelPolicy>;
+using DropdownInput=DropdownInputValue<ii::gui::RasterImage>;
+using DropdownButtonModel=ii::gui::BasicDropdownButton<DropdownModelPolicy<ButtonModel>>;
+using NativeDropdownButton=DropdownBinding<ii::gui::BasicButton,ii::gui::BasicDropdownButton,ii::gui::BasicNativeDropdownButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
+}
 namespace {
 void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_error(value.error().message);return std::move(*value);}
 void good(ii::core::Result<void> value){if(!value){if(value.error().cause)std::rethrow_exception(value.error().cause);throw std::runtime_error(value.error().message);}}
+struct IconSource final:lvui::IconSource {
+    mutable unsigned calls=0;
+    std::uint64_t revision()const noexcept override{return 1;}
+    lvui::IconResult<std::shared_ptr<const lvui::IconAsset>> resolve(std::string_view)const override{
+        ++calls;return std::make_shared<const lvui::IconAsset>(lvui::IconAsset{
+            "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"2\" height=\"2\"><rect width=\"2\" height=\"2\"/></svg>"});
+    }
+};
 bool has_text(const ii::gui::CanvasFrame& frame,std::string_view text){
     for(const auto& run:frame.texts)if(run.text==text)return true;
     for(const auto& layer:frame.overlays)for(const auto& run:layer.texts)if(run.text==text)return true;
@@ -57,6 +73,9 @@ int main(){
     good(dropdown->set_options(value));
     auto image=take(rgba_image(1,1,std::vector<std::uint8_t>{255,255,255,255}));auto updated=take(icon->options());updated.icon=image;good(icon->set_options(updated));
     require(has_image(take(tree->drawing_snapshot({350,150})),image),"Application icon was not drawn");
+    auto source=std::make_shared<IconSource>();updated.icon.reset();updated.icon_name="dynamic";updated.icon_source=source;
+    good(icon->set_options(updated));const auto lookups=source->calls;++updated.icon_revision;good(icon->set_options(updated));
+    require(source->calls==lookups+1,"Explicit dropdown icon revision did not refresh the LVUI source");
     good(tree->input({.kind=WidgetInputKind::pointer_leave}));
     auto port=dropdown->weak_borderless_tone_port();good(port.apply(true));frame=take(tree->drawing_snapshot({350,150}));
     require(!has_fill(frame,b),"Dropdown did not adopt the temporary parent tone");

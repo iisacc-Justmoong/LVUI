@@ -1,9 +1,13 @@
 # LVUI 독립 스위치
 
-기본 `ToggleSwitch`는 `LVUI/ToggleSwitch.h`에서 상태, 트랙과 손잡이의 배치,
-포인터 드래그 및 프레임 기반 모션을 소유한다. `LVUI/NativeToggleSwitch.h`는
-앱이 공급하는 iiGUI의 범용 동작 표면과 글꼴·그리기·프레임 접점에 이를 연결한다.
-LVUI 모델은 표준 C++이며 Qt, QML 또는 LVRS 구현을 요구하지 않는다.
+`LVUI/ToggleSwitch.h`는 선언 값과 디자인 토큰을 제공한다. 상태, 트랙과 손잡이의
+배치, 포인터 드래그 및 프레임 기반 모션은 `iiGUI/ToggleSwitchModel.h`가 소유한다.
+입력·그리기 호스트와 수명도 `iiGUI/NativeToggleSwitchView.h`가 소유한다.
+`LVUI/NativeToggleSwitch.h`는 iiSDKCore 외 SDK를 직접 참조하지 않는 바인딩이다.
+생성된 앱은 `ToggleSwitchBinding<ii::gui::BasicToggleSwitch, ii::gui::BasicNativeToggleSwitch>`로
+모델과 호스트를 명시적으로 조합한다. 직접 C++ 소비자는 독립
+`ii::gui::ToggleSwitchModel` 또는 같은 바인딩을 사용한다. 모션은 앱이 전달한
+정책을 iiGUI 프레임 시각으로 평가한다.
 
 ```lvui
 import vm EditorBackend
@@ -34,6 +38,8 @@ Window {
 호스트 어댑터의 설정 변경은 UI 소유 스레드에서만 허용하며, 다른 스레드 또는 종료된
 뷰에서는 LVUI 상태를 바꾸기 전에 오류를 반환한다.
 
+동일한 입력은 재적용하지 않으며 포인터가 변하지 않은 드래그는 재그리지 않는다.
+포인터 취소와 포커스 상실은 선택을 확정하지 않고 퇴역 시 콜백을 해제한다.
 모션은 실제 표시 위치에서 재목표하며 비활성화나 축소 모션 정책에서는 즉시 정착한다.
 호스트가 프레임을 제공하지 못하면 상태와 표시를 목표에 즉시 정착한다. 선택 상태는
 애니메이션 종료를 기다리지 않고 접근성에 전달한다. 동작 표면의 스위치 역할을 지원하는

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeLinks.md",
-    "sha256": "75d62d0b3f4b62cfafc2ab8fce4124bf3fe1c73b74ecb3b2db4668e7c9d35ead",
-    "bytes": 5041,
-    "line_count": 74,
+    "sha256": "14d4aca85c221676d2a60e283d4b7004495ba4d17b6bfb81fd977e5bbe2055e2",
+    "bytes": 5645,
+    "line_count": 78,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 8,
-      "raw": "기본 C++ AOT 경로의 `Link`는 LVUI가 작성한 `Link` 상태·배치 모델과\n`NativeLink` 어댑터를 사용한다. 호스트가 제공하는 범용 동작 표면은 포인터·\n키보드 입력과 접근성 링크 역할을 전달하고, 글자·포커스 표시와 상태별 색상은\nLVUI가 계산한다. 생성 코드와 이 경로는 LVRS 타입이나 팩터리를 호출하지 않는다.\n자식 View는 같은 스코프와 위젯 세대에 속하며, 자식이 있으면 텍스트 대체 표시를\n숨긴다. 글자 밑줄은 호스트 텍스트 셰이핑에 전달한다.\n"
+      "raw": "기본 C++ AOT 경로의 `Link`는 iiGUI의 `LinkModel.h`와 `NativeLinkView.h`가\n상태·배치·입력·그리기·수명을 담당한다. LVUI는 디자인 입력과 독립적인\n`LinkBinding` 및 탐색 요청 계약을 제공하며 앱이 iiGUI 구현을 조합한다.\n호스트는 포인터·키보드 입력과 접근성 링크 역할을 전달한다. 생성 코드와 이 경로는 LVRS 타입이나 팩터리를 호출하지 않는다.\n자식 View는 같은 스코프와 위젯 세대에 속하며, 자식이 있으면 텍스트 대체 표시를\n숨긴다. 글자 밑줄은 호스트 텍스트 셰이핑에 전달한다.\n"
     },
     {
       "id": "b000004",
@@ -117,35 +117,35 @@
       "id": "b000013",
       "kind": "paragraph",
       "start_line": 38,
-      "end_line": 42,
-      "raw": "경로·텍스트는 최대 64 KiB의 NUL 없는 UTF-8이고, 매개변수는 최대 4096개 노드,\n깊이 64, 문자열·바이트 총합 1 MiB를 허용한다. 유효하지 않은 반응형 입력은 기존\n설정을 유지하고 바인딩 오류로 보고한다. 앱에서 직접 `trigger_navigation()`을\n호출할 때는 위젯의 시각적 비활성화와 별도로 탐색할 수 있다. 사용자 활성화는 호스트의\n비활성화·포커스 경계를 따른다.\n"
+      "end_line": 44,
+      "raw": "경로·텍스트는 최대 64 KiB의 NUL 없는 UTF-8이고, 매개변수는 최대 4096개 노드,\n깊이 64, 문자열·바이트 총합 1 MiB를 허용한다. 유효하지 않은 반응형 입력은 기존\n설정을 유지하고 바인딩 오류로 보고한다. 앱에서 직접 `trigger_navigation()`을\n호출할 때는 위젯의 시각적 비활성화와 별도로 탐색할 수 있다. 사용자 활성화는 호스트의\n비활성화·포커스 경계를 따른다. 거부된 경로가 남은 동안 다른 콜백이 같은 백엔드의\n리비전을 발행해도 동일한 바인딩 오류가 클릭을 중단하지 않으며, 마지막으로 유효했던\n경로로 탐색한다. 오류의 비교와 명시적 배치에 대한 규칙은 [바인딩 계약](NativeBindings.md)을 따른다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 43,
-      "end_line": 43,
+      "start_line": 45,
+      "end_line": 45,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 44,
-      "end_line": 46,
+      "start_line": 46,
+      "end_line": 48,
       "raw": "일반 C++ 멤버를 앱이 외부에서 바꾼 경우 생성된 범위의 `publish_native_changes()`로\n알린다. 이 동기 게시 중 갱신이 거절되면 예외가 전달되며 바인딩 오류 목록에서도\n원인을 확인할 수 있다. 관찰 가능한 값은 해당 값의 변경을 자동으로 구독한다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 47,
-      "end_line": 47,
+      "start_line": 49,
+      "end_line": 49,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "heading",
-      "start_line": 48,
-      "end_line": 48,
+      "start_line": 50,
+      "end_line": 50,
       "raw": "## 생성 입력과 이벤트\n",
       "level": 2,
       "title": "생성 입력과 이벤트"
@@ -153,57 +153,57 @@
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 49,
-      "end_line": 49,
+      "start_line": 51,
+      "end_line": 51,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "paragraph",
-      "start_line": 50,
-      "end_line": 58,
+      "start_line": 52,
+      "end_line": 60,
       "raw": "지원 입력은 `text`, `href` 또는 별칭 `to`, `params`, `router`, `navigator`,\n`targetComponent`, `replace`, `enabled`, `underline`, `tone`, `linkColor`,\n`hoverColor`, `pressedColor`, `disabledColor`, `horizontalPadding`, `verticalPadding`,\n`minimumHeight`, `cornerRadius`, `width`, `height`, `showFocusRing`,\n`accessibilityName`, `method`, `methods`, `onClick`, `onPressed`, `onReleased`,\n`onCanceled`, `onNavigated`, `onNavigationFailed` 및 공통 가시성·불투명도·flex이다.\n`href`와 `to`를 동시에 지정하면 오류이다. `params`와 탐색 대상은 C++ 백엔드의\n타입 있는 값으로 공급한다. `tone: .disabled`는 입력을 차단하고, 다른 tone에서도\n링크 배경은 투명하다. 색상과 크기 및 경로는 반응형으로 갱신된다.\n"
     },
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 59,
-      "end_line": 59,
+      "start_line": 61,
+      "end_line": 61,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "paragraph",
-      "start_line": 60,
-      "end_line": 65,
+      "start_line": 62,
+      "end_line": 67,
       "raw": "`lvui::LinkEvent`와 `LinkMethod`는 호스트 헤더 없이 `LVUI/Link.h`에서 사용할 수 있다.\n메서드는 `lvui::LinkEvent` 인자 또는 인자 없는 호출을 지원하고 목록은 최대 256개이다.\n사용자 활성화에서는 탐색 결과 알림 다음에 단일 메서드, 메서드 목록, 클릭 콜백을\n순서대로 호출한다. 콜백이 링크 세대를 폐기하면 나머지 콜백은 실행하지 않는다.\n탐색기와 결과 알림의 예외는 오류와 원인으로 전달하며 커밋된 탐색을 자동 재시도하지\n않는다. 상태 전환 콜백에서 링크 설정이 재진입하면 마지막 유효 설정이 유지된다.\n"
     },
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 66,
-      "end_line": 66,
+      "start_line": 68,
+      "end_line": 68,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 67,
-      "end_line": 69,
+      "start_line": 69,
+      "end_line": 71,
       "raw": "LVUI의 상속 모션·플랫폼별 포커스와 모든 버튼 입력 변형, 윈도우 간 기본 탐색기 및\n실제 플랫폼 접근성은 아직 남아 있다. 실제 창·GPU·운영체제 및 기기 실행과 코드·\n호스트 상태 검사는 별도 증거이다.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 70,
-      "end_line": 70,
+      "start_line": 72,
+      "end_line": 72,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "heading",
-      "start_line": 71,
-      "end_line": 71,
+      "start_line": 73,
+      "end_line": 73,
       "raw": "## 레거시 경로\n",
       "level": 2,
       "title": "레거시 경로"
@@ -211,16 +211,30 @@
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 74,
+      "end_line": 74,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 73,
-      "end_line": 74,
+      "start_line": 75,
+      "end_line": 76,
       "raw": "이전 `FRAMEWORK LVRS` 경로는 LVRS `Link`와 탐색 타입을 생성했다. 이 경로는\n제거되었으며, 자체 구현에 없는 기능의 이전과 플랫폼 검증은 계속 진행 중이다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 77,
+      "end_line": 77,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "퇴역 중인 탐색이나 콜백이 끝난 뒤 링크 설정, 페이지, 컨텍스트와 콜백을 해제한다. macOS arm64에서 생성 코드, 탐색 순서, 재진입, 수명과 격리된 설치 소비자를 창 없이 검사했다.\n"
     }
   ],
   "outline": [
@@ -246,7 +260,7 @@
       "level": 2,
       "title": "생성 입력과 이벤트",
       "anchor": "생성-입력과-이벤트",
-      "start_line": 48
+      "start_line": 50
     },
     {
       "block_id": "b000025",
@@ -254,7 +268,7 @@
       "level": 2,
       "title": "레거시 경로",
       "anchor": "레거시-경로",
-      "start_line": 71
+      "start_line": 73
     }
   ],
   "indexes": {
@@ -262,7 +276,7 @@
       {
         "block_id": "b000003",
         "line": 6,
-        "text": "LVUI가 계산한다. 생성 코드와 이 경로는 LVRS 타입이나 팩터리를 호출하지 않는다.",
+        "text": "호스트는 포인터·키보드 입력과 접근성 링크 역할을 전달한다. 생성 코드와 이 경로는 LVRS 타입이나 팩터리를 호출하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
@@ -275,7 +289,7 @@
       },
       {
         "block_id": "b000021",
-        "line": 63,
+        "line": 65,
         "text": "순서대로 호출한다. 콜백이 링크 세대를 폐기하면 나머지 콜백은 실행하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -289,6 +303,13 @@
         "target": "NativePageRouter.md",
         "kind": "relative",
         "line": 35
+      },
+      {
+        "block_id": "b000013",
+        "label": "바인딩 계약",
+        "target": "NativeBindings.md",
+        "kind": "relative",
+        "line": 44
       }
     ],
     "tables": []

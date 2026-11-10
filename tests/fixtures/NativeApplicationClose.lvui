@@ -1,0 +1,10 @@
+let QuitControl(): View = PushButton(id: "quit_nested", text: "Close", onClick: quitApplication())
+Application(onStart: vm.started, onReady: vm.ready, onStop: vm.stopped,
+            onCloseRequested: vm.can_close, onOpenFiles: vm.open_files, onActive: vm.activated) {
+    import vm NativeApplicationBackend
+    Window { VStack {
+        Label(id: "close_label", text: vm.title)
+        PushButton(id: "quit_button", text: "Close", onClick: quitApplication())
+        QuitControl()
+    } }
+}

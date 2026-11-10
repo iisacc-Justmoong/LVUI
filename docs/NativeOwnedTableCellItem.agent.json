@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedTableCellItem.md",
-    "sha256": "6afc24a04e90b7b9d17e44e482e9904caff5291f83526fe8b3d3c0916ff05475",
-    "bytes": 2742,
-    "line_count": 41,
+    "sha256": "00de08ae843939bbc2c8ee36e67eae44cc690e96b30fa422119c313f768877bd",
+    "bytes": 3192,
+    "line_count": 45,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 5,
-      "raw": "`TableCellItem`은 LVUI가 소유한 셀 표시, 선택·현재 상태와 값 검증 모델이다.\n`NativeTableCellItem`은 이 모델과 독립 `NativeInputField`를 범용 iiGUI 위젯에\n연결한다. Qt, QML 또는 LVRS 위젯은 요구하지 않는다. C++ API와 기본 선언형 `TableCellItem`을 모두 사용할 수 있다.\n"
+      "raw": "셀의 값 검증·상태·기하 모델과 그리기·편집 필드 조합·입력·수명은 iiGUI가\n소유한다. LVUI는 디자인 값, 교체 가능한 값 검증 계약과 바인딩을 제공한다. 앱 생성 코드는 두 독립 모듈을 조합한다. Qt, QML 또는 LVRS\n위젯은 요구하지 않는다. C++ API와 기본 선언형 `TableCellItem`을 모두 사용할 수 있다.\n"
     },
     {
       "id": "b000004",
@@ -101,36 +101,50 @@
       "id": "b000011",
       "kind": "paragraph",
       "start_line": 28,
-      "end_line": 33,
-      "raw": "기본 값 형식은 `string`/`text`, `int`/`integer`, `number`/`double`/`float`,\n`bool`/`boolean`이다. 사용자 정의 형식이나 다른 규칙은 `TableCellValueValidator`\n구현을 주입해 교체한다. 숫자는 전체 문자열이 해당 형식이어야 하며 무한대와 NaN을\n허용하지 않는다. 소수점 해석은 시스템 로캘과 무관하다. 외부 값이나 검증 조건이 편집 도중 변경되면 초안은 유지되지만\n오래된 초안의 제출은 거부한다. 앱이 현재 초안과 같은 값을 다시 제공하는 경우는\n정상적인 상태 반영으로 취급한다.\n"
+      "end_line": 35,
+      "raw": "기본 값 형식은 `string`/`text`, `int`/`integer`, `number`/`double`/`float`,\n`bool`/`boolean`이다. 사용자 정의 형식이나 다른 규칙은 `TableCellValueValidator`\n구현을 주입해 교체한다. 숫자는 전체 문자열이 해당 형식이어야 하며 무한대와 NaN을\n허용하지 않는다. 소수점 해석은 시스템 로캘과 무관하다. 외부 값이나 검증 조건이 편집 도중 변경되면 초안은 유지되지만\n오래된 초안의 제출은 거부한다. 앱이 현재 초안과 같은 값을 다시 제공하는 경우는\n정상적인 상태 반영으로 취급한다.\n셀의 색상만 바뀌면 열려 있는 입력기의 색상도 갱신하며, 편집 초안·선택·포커스와\n확정 전 문자 조합은 유지한다. `TableRow`가 재사용하는 셀에도 같은 규칙을 적용한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 34,
-      "end_line": 34,
+      "start_line": 36,
+      "end_line": 36,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 35,
-      "end_line": 38,
+      "start_line": 37,
+      "end_line": 40,
       "raw": "화면의 텍스트와 접근성 이름은 UTF-8 경계를 지켜 최대 8,192바이트로 표시하며\n원본과 편집 값은 보존한다. 잘못된 설정은 마지막 정상 상태를 유지하고, 생성한\n스레드에서만 위젯을 사용한다. 실제 운영체제 문자 입력기와 접근성 검증은 아직 필요하다. [표 행](NativeOwnedTableRow.md)은\n이 셀을 키 기준으로 조합한다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 39,
-      "end_line": 39,
+      "start_line": 41,
+      "end_line": 41,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 40,
-      "end_line": 41,
+      "start_line": 42,
+      "end_line": 43,
       "raw": "`LVUI.OwnedTableCellItem.Model`, `Host`, `Codegen`, `Generated`는 입력 검증, 배치, 초안·충돌·제출·취소와\n수명 경계를 창을 열지 않는 환경에서 검사한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "셀 위젯의 퇴역 시 콜백·초안·검증기 참조를 해제하며, 갱신 중 재진입으로 퇴역한 이전 셀은 새 상태를 게시하지 않는다.\n"
     }
   ],
   "outline": [
@@ -148,7 +162,7 @@
       {
         "block_id": "b000003",
         "line": 5,
-        "text": "연결한다. Qt, QML 또는 LVRS 위젯은 요구하지 않는다. C++ API와 기본 선언형 `TableCellItem`을 모두 사용할 수 있다.",
+        "text": "위젯은 요구하지 않는다. C++ API와 기본 선언형 `TableCellItem`을 모두 사용할 수 있다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
@@ -156,6 +170,13 @@
         "block_id": "b000011",
         "line": 31,
         "text": "허용하지 않는다. 소수점 해석은 시스템 로캘과 무관하다. 외부 값이나 검증 조건이 편집 도중 변경되면 초안은 유지되지만",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 45,
+        "text": "셀 위젯의 퇴역 시 콜백·초안·검증기 참조를 해제하며, 갱신 중 재진입으로 퇴역한 이전 셀은 새 상태를 게시하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -167,7 +188,7 @@
         "label": "표 행",
         "target": "NativeOwnedTableRow.md",
         "kind": "relative",
-        "line": 37
+        "line": 39
       }
     ],
     "tables": []

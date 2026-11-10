@@ -52,14 +52,19 @@ enum class ValueKind {
     member,
     invocation,
     view,
-    internal_argument // Compiler-owned capture; never emitted by a source parser.
+    internal_argument, // Compiler-owned capture; never emitted by a source parser.
+    action, assignment, // Event block and a lexical assignment.
+    object, object_field, // Structured LVUI value and its named field.
+    action_if, // elements: condition, then action, optional else action.
+    action_for, // text: item binding; elements: source, body action.
+    action_break, action_continue, action_return
 };
 struct SourcePosition final { std::size_t offset = 0, line = 1, column = 1; };
 struct View;
 struct Value final {
     ValueKind kind;
     std::string text;
-    std::vector<Value> elements; // Positional call inputs or list elements.
+    std::vector<Value> elements; // Child values, including event statement operands and blocks.
     SourcePosition position{};
     std::shared_ptr<const View> view{};
 };
@@ -84,6 +89,8 @@ struct Binding final {
     BindingAnnotation annotation = BindingAnnotation::none;
     std::optional<std::vector<ComponentParameter>> parameters{};
     std::optional<CallableSignature> callable{};
+    bool explicit_state = false;
+    bool explicit_bindable = false;
 };
 struct BackendImport final {
     std::string name, type;
@@ -107,7 +114,7 @@ struct View final {
     std::optional<Value> condition{}; // One selected child branch; optional second child is else.
     std::size_t lexical_context = 0; // Compiler-owned call-site context for a supplied View slot.
     std::optional<Repetition> repetition{};
-    bool fragment = false; // Compiler-owned transparent [View] composition.
+    bool fragment = false; // Transparent [View] composition or branch-local declaration scope.
 };
 class ViewDocument;
 using ViewParseResult = std::expected<ViewDocument, Diagnostic>;

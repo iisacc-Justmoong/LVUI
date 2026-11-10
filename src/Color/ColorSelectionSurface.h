@@ -8,9 +8,9 @@
 
 namespace lvui {
 
-// LVUI owns editing and session state; this optional adapter uses iiColorManager
-// for color-space calculations and raster samples. Alternative sources need
-// neither this adapter nor iiColorManager's compiled library.
+// Application-owned composition implements this adapter. The Color contract
+// does not link a color SDK. The example implementation uses iiColorManager;
+// applications can instead provide another ColorSurfaceSource.
 class ColorSelectionSurface final : public ColorSurfaceSource, public ColorChannelsSource {
 public:
     explicit ColorSelectionSurface(std::shared_ptr<ColorEditing> selection);

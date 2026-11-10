@@ -1,0 +1,8 @@
+import vm NativeHierarchyListCountViewModel
+let Badge(text: String): View = Label(id: "badge", text: text)
+let Rows(content: View): View = HierarchyList(id: "tree", controller: vm.controller, modelRevision: vm.revision,
+                                             width: 220, height: 40, rowHeight: 20, overscan: 0,
+                                             countView: content)
+Window {
+    Rows(content: Badge(text: vm.badge))
+}

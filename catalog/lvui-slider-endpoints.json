@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "source": "https://www.figma.com/design/8nSrpI0BbsZlXQiotbClHD/LVUI?node-id=53-1225",
+  "reference": "Slider/Endpoints",
+  "minimumLabel": "0%",
+  "maximumLabel": "100%",
+  "minimumControlWidth": 40,
+  "minimumControlWidthSource": "SDK/LVRS/src/qml/components/control/input/Slider.qml:68"
+}

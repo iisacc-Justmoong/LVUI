@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.31)
+project(LVUIImageContractConsumer LANGUAGES CXX)
+find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS ImageIO)
+add_executable(image_contract_consumer main.cpp)
+target_link_libraries(image_contract_consumer PRIVATE LVUI::ImageIO)
+enable_testing()
+add_test(NAME LVUI.ImageIOContractConsumer COMMAND image_contract_consumer)

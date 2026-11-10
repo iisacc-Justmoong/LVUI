@@ -7,11 +7,11 @@ QML 객체·스크립트·문자열 식 평가기를 만들지 않고 AOT로 생
 
 ```lvui
 import vm Model
-let Heading(title: String, subtitle: String = title): View = VStack {
+const Heading(title: String, subtitle: String = title): View = VStack {
     Label(text: title)
     Label(text: title)
     Label(text: subtitle)
-    @Static let initial: String = title
+    @Static const initial: String = title
     Label(text: initial)
 }
 Window { Heading(title: vm.compute(vm.count)) }
@@ -36,7 +36,7 @@ Window { Heading(title: vm.compute(vm.count)) }
   다시 펼치지 않는다. 자식 구성·이름이 있는 슬롯·순서가 있는 `[View]`도 같은 값을 읽는다.
 - 앞선 함수 입력의 호출 결과를 기본값으로 사용하면 입력 함수의 현재 버전과 호출 인자를
   추적한다. 함수 팩터리·실제 호출·결과 입력은 각각의 의존 계약을 유지한다.
-- 구성 내부 `@Static let`은 현재 입력을 한 번 읽어 고정한다. 일반 소비자는 변경을 따른다.
+- 구성 내부 `@Static const`는 현재 입력을 한 번 읽어 고정한다. 일반 소비자는 변경을 따른다.
 
 ## 소유권·실패
 

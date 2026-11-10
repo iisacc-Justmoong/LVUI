@@ -1,0 +1,14 @@
+import vm NativeImageLoaderViewsModel
+Window {
+    VStack {
+        Image(id: "image", source: vm.url, width: 20, height: 10)
+        Avatar(id: "avatar", source: vm.url, size: .Small)
+        Card(id: "card", type: .FilePreview, previewSource: vm.url, width: 100, height: 80)
+        ListItem(id: "item", type: .Media, previewSource: vm.url, width: 300)
+        Image(id: "override", source: vm.url, imageLoader: vm.loader, width: 20, height: 10)
+        Image(id: "pixels", source: vm.pixels, width: 20, height: 10)
+        if (vm.show) {
+            Image(id: "nested", source: "fixture.svg", width: 20, height: 10)
+        }
+    }
+}

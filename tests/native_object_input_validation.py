@@ -1,12 +1,17 @@
 """Compile actual AOT factories to verify native View input type and access contracts."""
 from pathlib import Path
+from workspace_support import checked_workspace, provider
 import argparse, json, subprocess, tempfile
 
 def main():
     parser=argparse.ArgumentParser()
     for name in ('build','compiler','core','color','gui'):parser.add_argument('--'+name,type=Path,required=True)
     parser.add_argument('--cxx',required=True)
+    parser.add_argument('--workspace', type=Path, required=True)
+    parser.add_argument('--gui-include', type=Path, required=True)
+    parser.add_argument('--gui-export-include', type=Path, required=True)
     args=parser.parse_args();source_root=Path(__file__).resolve().parents[1]
+    args.workspace = checked_workspace(args.workspace)
     record='struct Node final {std::string title="Native";};'
     cases={
         'value':(record+'struct Backend final {Node selected;};','item.title',None),
@@ -23,16 +28,16 @@ def main():
         'missing_field':(record+'struct Backend final {Node selected;};','item.missing','missing'),
     }
     result={}
-    with tempfile.TemporaryDirectory(prefix='object-input-types-',dir=args.build) as temporary:
+    with provider.TemporaryDirectory(prefix='object-input-types-',dir=args.workspace) as temporary:
         root=Path(temporary)
-        includes=[root,source_root/'src',args.build/'lvui-generated-icons',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui/'build/install/include']
+        includes=[root,source_root/'src',args.build / 'include', args.build / 'lvui-generated-icons',(args.core/'../../../include').resolve(),(args.color/'../../../include').resolve(),args.gui/'src',args.gui_include, args.gui_export_include]
         for name,(members,member,expected) in cases.items():
-            (root/'Fixture.h').write_text('#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <string>\n#include <memory>\n#include <functional>\n'+members+'\n')
-            (root/'View.lvui').write_text('import class Node\nimport vm Backend\nlet Details(item: Node): View = Label(text: '+member+')\nWindow { Details(item: vm.selected) }\n')
+            provider.write_text(root/'Fixture.h', '#pragma once\n#include <iiSDKCore/Core/Property/Observable.h>\n#include <string>\n#include <memory>\n#include <functional>\n'+members+'\n')
+            provider.write_text(root/'View.lvui', 'import class Node\nimport vm Backend\nlet Details(item: Node): View = Label(text: '+member+')\nWindow { Details(item: vm.selected) }\n')
             generation=subprocess.run([str(args.compiler),'--name','ObjectInputContract','--include','Fixture.h',str(root/'View.lvui')],text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             if generation.returncode:raise RuntimeError(f'Object input generation failed for {name}: {generation.stderr}')
-            (root/'View.generated.h').write_text(generation.stdout)
-            (root/'probe.cpp').write_text('#include "View.generated.h"\nauto factory=&lvui_generated::ObjectInputContract::build;\n')
+            provider.write_text(root/'View.generated.h', generation.stdout)
+            provider.write_text(root/'probe.cpp', '#include "View.generated.h"\nauto factory=&lvui_generated::ObjectInputContract::build;\n')
             msvc=Path(args.cxx).name.lower() in ('cl','cl.exe')
             command=[args.cxx,'/std:c++latest','/Zs','/utf-8'] if msvc else [args.cxx,'-std=c++23','-fsyntax-only']
             for include in includes:command.extend(['/I' if msvc else '-I',str(include)])
@@ -40,8 +45,8 @@ def main():
             if (expected is None and compiled.returncode) or (expected is not None and (compiled.returncode==0 or expected not in compiled.stdout)):
                 raise RuntimeError(f'Unexpected native input contract for {name}: {compiled.stdout}')
             result[name]={'compiled':compiled.returncode==0,'expected_rejection':expected}
-    report=args.build/'lvui-completion/native-object-input-type-validation.json'
-    report.parent.mkdir(exist_ok=True);report.write_text(json.dumps(result,indent=2)+'\n')
+    report=args.workspace/'lvui-completion/native-object-input-type-validation.json'
+    provider.mkdir(report.parent, exist_ok=True);provider.write_text(report, json.dumps(result,indent=2)+'\n')
     print(f'Native object input contracts: 5 valid, 7 rejected; report {report}')
 
 if __name__=='__main__':main()

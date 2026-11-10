@@ -4,9 +4,13 @@
 위젯의 배치 정보를 갱신한다. 콘텐츠 팩터리·문서 저장·백엔드 생성 경로를 호출하지
 않으며 생성 앱에서 LVUI 소스·AST·토큰 이름을 해석하지 않는다.
 
+`HStack`은 자식을 가로로, `VStack`은 세로로 나열한다. `ZStack`은 자식을
+같은 영역에 겹치며 선언 순서대로 쌓는다. 서로 중첩할 수 있다. 일반 HTML
+`div`와 CSS `flex-direction`으로 방향을 추론하지 않고 스택을 명시적으로 선택한다.
+
 ```lvui
 import vm Model
-let Inspector(gap: Metric): View = VStack(spacing: gap, padding: vm.padding,
+const Inspector(gap: Metric): View = VStack(spacing: gap, padding: vm.padding,
     width: vm.width, minimumHeight: vm.minimumHeight, alignment: .leading) {
     InputField(id: "draft", text: "Draft")
     Label(text: vm.title)
@@ -64,9 +68,13 @@ bottomLeading, bottomTrailing, stretch를 사용한다.
 빌드 시 `ii::gui::StackLayoutOptions` 리터럴로 출력한다. 상수 스택만 있는 결과에는
 LVUI 런타임 헤더를 넣지 않으며 기본 간격·스타일 프로필도 그 시점에 확정한다.
 
-동적 배치는 `NativeWidgetLayout.h`가 같은 값을 iiGUI 타입으로 변환한다. Core
-Observable 의존성을 기존 그래프가 추적하며 같은 결과는 다시 적용하지 않는다. 한 입력
-블록이 해당 스택의 배치 옵션·크기·flex 전체를 소유한다.
+동적 배치는 `NativeWidgetLayout.h`의 `stack_layout<HostLayout>()`이 전달받은 호스트
+타입으로 변환한다. 헤더는 iiGUI를 직접 포함하지 않으며 생성된 iiGUI 앱이
+`ii::gui::StackLayoutOptions`를 명시한다. 정렬은 열거형의 숫자가 아니라 이름별 의미로
+매핑한다. Core Observable 의존성을 기존 그래프가 추적하며 같은 결과는 다시 적용하지
+않는다. 한 입력 블록이 해당 스택의 배치 옵션·크기·flex 전체를 소유한다.
+macOS arm64에서 대체 호스트 타입, 생성 코드 타입 검사와 iiGUI의 14개 헤드리스
+배치 검사를 통과했다. 실제 창·GPU와 다른 운영체제는 검사하지 않았다.
 
 `Widget::set_stack_layout()`은 전체 필드를 검증한 뒤 동일 노드에 한 번에 적용한다.
 `stack_layout()`은 현재 값의 사본을 반환한다. 오류는 부분 변경을 남기지 않는다.

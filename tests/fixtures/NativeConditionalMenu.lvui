@@ -1,0 +1,59 @@
+import vm NativeConditionalMenuModel
+Window {
+    VStack {
+        Label(id: "anchor", text: "Actions")
+        ContextMenu(id: "menu", targetId: "anchor", onItemTriggered: vm.triggered) {
+            ContextMenuItem(id: "first", label: "First", hasChildItems: false, keepOpen: true)
+            if (vm.show) { ContextMenuItem(id: "conditional", label: vm.label, visible: vm.itemVisible,
+                                           enabled: vm.enabled, itemHeight: vm.height, hasChildItems: false, keepOpen: true, onClick: vm.clicked) }
+            if (vm.showDivider) { ContextMenuDivider(id: "divider") }
+            if (vm.primary) { ContextMenuItem(id: "primary", label: "Primary", keepOpen: true) {
+                Menu(id: "nested") { MenuItem(id: "nestedLeaf", label: "Leaf", hasChildItems: false) }
+            } }
+            else if (vm.third) { ContextMenuDivider(id: "alternateDivider") }
+            else { ContextMenuItem(id: "secondary", label: "Secondary", itemHeight: vm.alternate_height,
+                                   hasChildItems: false, keepOpen: true) }
+            ContextMenuItem(id: "last", label: "Last", hasChildItems: false, keepOpen: true)
+            if (vm.local) {
+                import child NativeConditionalMenuBranch
+                let caption: String = child.title
+                let Action: View = ContextMenuItem(id: "localAction", label: caption, hasChildItems: false, keepOpen: true, onClick: vm.clicked)
+                let Alias: View = Action
+                Alias()
+            } else {
+                let caption: String = "Local fallback"
+                ContextMenuItem(id: "localFallback", label: caption, hasChildItems: false, keepOpen: true)
+            }
+            if (vm.group) {
+                import class NativeConditionalMenuGroup
+                import groupModel NativeConditionalMenuGroup
+                let GroupItem(item: NativeConditionalMenuGroup): View = ContextMenuItem(id: "localGroupItem", label: item.title, hasChildItems: false, keepOpen: true)
+                let Actions: [View] = [
+                    GroupItem(item: groupModel),
+                    if (vm.groupDetail) { ContextMenuDivider(id: "localGroupDivider") }
+                    else { ContextMenuItem(id: "localGroupFallback", label: "Grouped fallback", hasChildItems: false, keepOpen: true) }
+                ]
+                Actions()
+            }
+        }
+        if (vm.plain) {
+            import child NativeConditionalMenuBranch
+            let caption: String = child.title
+            Label(id: "plainLocal", text: caption)
+        } else {
+            Label(id: "plainFallback", text: "Plain fallback")
+        }
+        if (vm.shadow) {
+            let caption: String = "Outer"
+            Label(id: "shadowLocal", text: caption) { let caption: String = "Inner" }
+        }
+        TabBar(id: "localTabs") {
+            Tab(id: "localTabBefore", text: "Before", iconName: "home")
+            if (vm.tab) {
+                import child NativeConditionalMenuBranch
+                let LocalTab: View = Tab(id: "localTab", text: child.title, iconName: "home")
+                LocalTab()
+            }
+        }
+    }
+}

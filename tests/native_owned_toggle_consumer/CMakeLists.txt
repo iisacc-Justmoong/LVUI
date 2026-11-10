@@ -154,16 +154,21 @@ target_compile_features(hierarchy_count_consumer PRIVATE cxx_std_23)
 target_include_directories(hierarchy_count_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
 target_link_libraries(hierarchy_count_consumer PRIVATE LVUI::Native iiGUI::iiGUI)
 if(LVUI_CONSUMER_TEST_COLOR)
+    find_package(iiColorManager CONFIG REQUIRED COMPONENTS iiColorManager)
+    set(LVUI_COLOR_ADAPTER_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/../../example/Integrations/App/ColorSelectionSurface.cpp"
+        CACHE FILEPATH "Application-owned color adapter source")
+    add_library(application_color_adapter STATIC "${LVUI_COLOR_ADAPTER_SOURCE}")
+    target_link_libraries(application_color_adapter PUBLIC LVUI::Color PRIVATE iiColorManager::iiColorManager)
     lvui_generate(NAME NativeOwnedColorSurface SOURCE ../fixtures/NativeOwnedColorSurface.lvui
         INCLUDES NativeOwnedColorSurfaceFixture.h OUTPUT_VARIABLE generated_color_surface)
     lvui_generate(NAME NativeOwnedColorPicker SOURCE ../fixtures/NativeOwnedColorPicker.lvui
         INCLUDES NativeOwnedColorPickerFixture.h OUTPUT_VARIABLE generated_color_picker)
     target_sources(toggle_consumer PRIVATE color.cpp "${generated_color_surface}" "${generated_color_picker}")
-    target_link_libraries(toggle_consumer PRIVATE LVUI::Color)
+    target_link_libraries(toggle_consumer PRIVATE application_color_adapter)
 
     add_executable(color_consumer color.cpp tabbar.cpp "${generated_tab_bar_slots}"
         "${generated_color_surface}" "${generated_color_picker}")
     target_compile_features(color_consumer PRIVATE cxx_std_23)
     target_include_directories(color_consumer PRIVATE "${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/../fixtures")
-    target_link_libraries(color_consumer PRIVATE LVUI::Native LVUI::Color iiGUI::iiGUI)
+    target_link_libraries(color_consumer PRIVATE LVUI::Native application_color_adapter iiGUI::iiGUI)
 endif()

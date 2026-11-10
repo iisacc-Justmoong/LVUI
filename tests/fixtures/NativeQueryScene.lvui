@@ -1,0 +1,11 @@
+Application {
+    import vm NativeQueryBackend
+    Scene(id: "queries") {
+        var count: Int = 0
+        VStack {
+            QueryConnection(source: vm.events, query: vm.selection, value: "message",
+                            onValue: { count = message.number })
+            Label(id: "count", text: count)
+        }
+    }
+}

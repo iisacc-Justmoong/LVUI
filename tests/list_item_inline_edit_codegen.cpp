@@ -5,7 +5,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { ListItem(type: .InlineEdit, label: vm.label, inputText1: vm.text, inputReadOnly1: vm.read_only, onInputTextChanged: vm.changed, onInputSubmitted: vm.submitted, onEdited: vm.edited) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto part:{"#include <LVUI/NativeListItemComposite.h>","lvui::native::NativeListItemComposite::create(","lvui::ListItemVariant::inline_edit",
+    for(auto part:{"#include <LVUI/NativeListItemComposite.h>","detail_list_composite::NativeListItemComposite::create(","lvui::ListItemVariant::inline_edit",
                    "value.input_text", ".input_text_changed =", ".input_submitted =", "component.set_options(value)"})
         if(code->find(part)==code->npos)throw std::runtime_error(std::string("Independent inline item lost ")+part);
     if(code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)

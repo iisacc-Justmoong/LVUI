@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/Components.md",
-    "sha256": "6fa37750bfb752b251cf2c0177e92a3b173bf7b4164a898feb01b6f7f46c1e7a",
-    "bytes": 10727,
+    "sha256": "8e96607fb9e15e2a10d28ebe522bcf21cf1852f8539fa8c99fabedb743f6b102",
+    "bytes": 10741,
     "line_count": 164,
     "encoding": "utf-8",
     "language": "ko"
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 5,
-      "raw": "`let Name(...): View = ...`는 빌드 시 확장하는 재사용 구성을 정의한다. 새로운 런타임\n함수나 스크립트 객체를 생성하지 않으며, 최종 입력·파생식·콜백은 C++23으로 컴파일한다.\n매개변수가 없는 기존 [View 값](ViewValues.md)의 루트 입력 덮어쓰기와 구분한다.\n"
+      "raw": "`const Name(...): View = ...`는 빌드 시 확장하는 재사용 구성을 정의한다. 새로운 런타임\n함수나 스크립트 객체를 생성하지 않으며, 최종 입력·파생식·콜백은 C++23으로 컴파일한다.\n매개변수가 없는 기존 [View 값](ViewValues.md)의 루트 입력 덮어쓰기와 구분한다.\n"
     },
     {
       "id": "b000004",
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 23,
-      "raw": "```lvui\nimport class Domain.Model\nimport document Domain.Model\n\nlet Status(backend: Model, title: String = \"Document\"): View = VStack {\n    Label(text: title)\n    Label(text: backend.title)\n    PushButton(backend.increment, text: \"Increment\")\n}\n\nWindow {\n    HStack {\n        Status(backend: document)\n        Status(backend: document, title: \"Second view\")\n    }\n}\n```\n",
+      "raw": "```lvui\nimport class Domain.Model\nimport document Domain.Model\n\nconst Status(backend: Model, title: String = \"Document\"): View = VStack {\n    Label(text: title)\n    Label(text: backend.title)\n    PushButton(backend.increment, text: \"Increment\")\n}\n\nWindow {\n    HStack {\n        Status(backend: document)\n        Status(backend: document, title: \"Second view\")\n    }\n}\n```\n",
       "language": "lvui",
-      "code": "import class Domain.Model\nimport document Domain.Model\n\nlet Status(backend: Model, title: String = \"Document\"): View = VStack {\n    Label(text: title)\n    Label(text: backend.title)\n    PushButton(backend.increment, text: \"Increment\")\n}\n\nWindow {\n    HStack {\n        Status(backend: document)\n        Status(backend: document, title: \"Second view\")\n    }\n}\n",
+      "code": "import class Domain.Model\nimport document Domain.Model\n\nconst Status(backend: Model, title: String = \"Document\"): View = VStack {\n    Label(text: title)\n    Label(text: backend.title)\n    PushButton(backend.increment, text: \"Increment\")\n}\n\nWindow {\n    HStack {\n        Status(backend: document)\n        Status(backend: document, title: \"Second view\")\n    }\n}\n",
       "closed": true
     },
     {
@@ -74,7 +74,7 @@
       "kind": "paragraph",
       "start_line": 25,
       "end_line": 28,
-      "raw": "매개변수는 이름과 타입을 필수로 선언한다. 호출 인자는 이름을 지정하며, 필수 인자 누락·\n중복·알 수 없는 이름·위치 인자·알려진 타입 불일치는 소스 위치와 함께 거부한다.\n서명은 최대 64개 매개변수를 받으며, 기존 구성 확장 깊이 64단계와 위젯 수 4,096개\n제한을 유지한다. `let Name(): View = ...`도 명시적인 빈 서명이다.\n"
+      "raw": "매개변수는 이름과 타입을 필수로 선언한다. 호출 인자는 이름을 지정하며, 필수 인자 누락·\n중복·알 수 없는 이름·위치 인자·알려진 타입 불일치는 소스 위치와 함께 거부한다.\n서명은 최대 64개 매개변수를 받으며, 기존 구성 확장 깊이 64단계와 위젯 수 4,096개\n제한을 유지한다. `const Name(): View = ...`도 명시적인 빈 서명이다.\n"
     },
     {
       "id": "b000008",
@@ -118,9 +118,9 @@
       "kind": "fenced_code",
       "start_line": 39,
       "end_line": 44,
-      "raw": "```lvui\nlet Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: subtitle)\n}\n```\n",
+      "raw": "```lvui\nconst Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: subtitle)\n}\n```\n",
       "language": "lvui",
-      "code": "let Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: subtitle)\n}\n",
+      "code": "const Heading(title: String, subtitle: String = title): View = VStack {\n    Label(text: title)\n    Label(text: subtitle)\n}\n",
       "closed": true
     },
     {
@@ -149,7 +149,7 @@
       "kind": "paragraph",
       "start_line": 51,
       "end_line": 53,
-      "raw": "매개변수 자체는 읽기 전용 입력이다. 구성 내부의 `@Static let`은 활성화 당시의 값을\n고정하며, 일반 파생 선언은 변경을 따른다. 상수로 결정되는 창 입력은 빌드 시 값으로\n사용하고, 동적 제목·크기·테마는 [네이티브 Window 입력](NativeWindow.md)을 따른다.\n"
+      "raw": "매개변수 자체는 읽기 전용 입력이다. 구성 내부의 `@Static const`는 활성화 당시의 값을\n고정하며, 일반 파생 선언은 변경을 따른다. 상수로 결정되는 창 입력은 빌드 시 값으로\n사용하고, 동적 제목·크기·테마는 [네이티브 Window 입력](NativeWindow.md)을 따른다.\n"
     },
     {
       "id": "b000018",
@@ -307,9 +307,9 @@
       "kind": "fenced_code",
       "start_line": 99,
       "end_line": 110,
-      "raw": "```lvui\nlet Empty: View = Label(text: \"No content\")\nlet Panel(title: String, content: View = Empty): View = VStack {\n    Label(text: title)\n    content()\n}\nWindow {\n    Panel(title: \"Settings\", content: HStack {\n        Label(text: \"Native content\")\n    })\n}\n```\n",
+      "raw": "```lvui\nconst Empty: View = Label(text: \"No content\")\nconst Panel(title: String, content: View = Empty): View = VStack {\n    Label(text: title)\n    content()\n}\nWindow {\n    Panel(title: \"Settings\", content: HStack {\n        Label(text: \"Native content\")\n    })\n}\n```\n",
       "language": "lvui",
-      "code": "let Empty: View = Label(text: \"No content\")\nlet Panel(title: String, content: View = Empty): View = VStack {\n    Label(text: title)\n    content()\n}\nWindow {\n    Panel(title: \"Settings\", content: HStack {\n        Label(text: \"Native content\")\n    })\n}\n",
+      "code": "const Empty: View = Label(text: \"No content\")\nconst Panel(title: String, content: View = Empty): View = VStack {\n    Label(text: title)\n    content()\n}\nWindow {\n    Panel(title: \"Settings\", content: HStack {\n        Label(text: \"Native content\")\n    })\n}\n",
       "closed": true
     },
     {

@@ -9,8 +9,8 @@
 ```lvui
 import vm Model
 var format: (Int) -> String = vm.makeFormatter(vm.amount)
-let alias: (Int) -> String = format
-@Static let pinned: (Int) -> String = format
+const alias: (Int) -> String = format
+@Static const pinned: (Int) -> String = format
 Window {
     VStack {
         Label(text: format(vm.count))

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedHierarchyToolbar.md",
-    "sha256": "827798e2787626ed5aa1a92c9415b4e8c0bffe958e30d2b80baad18a8e69a450",
-    "bytes": 3376,
-    "line_count": 49,
+    "sha256": "52bf180698f7e61ceac0dc465ee05c39398791181058b5d59dd42b30394785e0",
+    "bytes": 4704,
+    "line_count": 63,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -57,7 +57,7 @@
       "kind": "paragraph",
       "start_line": 6,
       "end_line": 8,
-      "raw": "`HierarchyToolbar`는 LVUI의 도구 버튼과 교체 가능한 항목 목록으로 구성한다. 항목의\n선택과 탐색은 도구 모음의 화면 상태이며 앱 문서를 변경하지 않는다. Qt, QML과 LVRS\n위젯을 생성하지 않는다.\n"
+      "raw": "`HierarchyToolbar`는 iiGUI의 도구 버튼과 교체 가능한 항목 목록으로 구성한다. 항목의\n선택과 탐색은 도구 모음의 화면 상태이며 앱 문서를 변경하지 않는다. Qt, QML과 LVRS\n위젯을 생성하지 않는다.\n"
     },
     {
       "id": "b000006",
@@ -129,22 +129,36 @@
       "id": "b000015",
       "kind": "paragraph",
       "start_line": 41,
-      "end_line": 45,
-      "raw": "C++ 앱은 독립 모델 `HierarchyToolbar`, `HierarchyToolbarInput`,\n`NativeHierarchyToolbar`와 명령 인터페이스를 직접 사용할 수 있다. 아이콘 공급자는\n`iconSource`와 `iconRevision`으로 교체한다. 현재 선언형 경로는 `buttonItems`만\n받으며 직접 자식 버튼 등록과 개별 이름 이벤트·페이로드는 아직 지원하지 않는다.\n실제 운영체제 표시와 보조 기술 동작도 별도 검증이 필요하다.\n"
+      "end_line": 46,
+      "raw": "C++ 앱은 `HierarchyToolbarInput`과 명령 인터페이스를 제공하고,\n`HierarchyToolbarModelBinding`, `HierarchyToolbarLayoutBinding`, `HierarchyToolbarBinding`에\niiGUI의 모델·배치·호스트를 주입해 직접 조합할 수 있다. 아이콘 공급자는\n`iconSource`와 `iconRevision`으로 교체한다. 현재 선언형 경로는 `buttonItems`만\n받으며 직접 자식 버튼 등록과 개별 이름 이벤트·페이로드는 아직 지원하지 않는다.\n실제 운영체제 표시와 보조 기술 동작도 별도 검증이 필요하다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 46,
-      "end_line": 46,
+      "start_line": 47,
+      "end_line": 47,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 47,
-      "end_line": 49,
-      "raw": "`LVUI.OwnedHierarchyToolbar.Model`은 ID와 선택 정규화, 탐색, 크기와 잘못된 입력을\n검사한다. 호스트와 생성 코드 검사는 키 기반 버튼 유지, 반응형 선택·실패 복구,\n키보드와 콜백 순서, 수명 경계를 헤드리스 트리에서 확인한다.\n"
+      "start_line": 48,
+      "end_line": 50,
+      "raw": "`LVUI.OwnedHierarchyToolbar.Model`은 ID와 선택 정규화·탐색을 검사하고,\n`LVUI.OwnedHierarchyToolbar.Layout`은 기존 디자인값과 좁은 영역의 iiGUI 배치를 검사한다. 호스트와 생성 코드 검사는 키 기반 버튼 유지, 반응형 선택·실패 복구,\n키보드와 콜백 순서, 수명 경계를 헤드리스 트리에서 확인한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 63,
+      "raw": "계층 도구 모음의 순수 기하 계산은 `iiGUI/HierarchyToolbarLayout.h`가 소유한다.\n앱은 슬롯 내부 여백과 아이콘·텍스트 간격을 설정할 수 있으며, LVUI 생성 코드는\n`Metric.space4` 토큰을 전달한다. `LVUI/HierarchyToolbarLayout.h`에는 입력 값만 남고\n기존 `hierarchy_toolbar_geometry`와 `valid_hierarchy_toolbar_appearance`는 제거되었다.\n직접 소비자는 iiGUI의 `BasicHierarchyToolbarLayout`에 LVUI의\n`HierarchyToolbarLayoutBinding` 정책을 주입한다. 항목 ID 인덱스와 선택·탐색은\n`iiGUI/HierarchyToolbarModel.h`, 키별 버튼·그리기·입력·수명은\n`iiGUI/NativeHierarchyToolbarView.h`가 소유한다. LVUI의 값과 바인딩은 iiSDKCore 외\nSDK를 직접 참조하지 않으며 생성된 앱이 두 모듈을 조합한다. 도구 모음이 퇴역하면\n버튼·아이콘 캐시·콜백을 해제하고 진행 중인 이전 갱신을 게시하지 않는다.\nmacOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 계층 도구 모음·패널 생성 및\n헤드리스 검사를 통과했다. 실제 운영체제 창과 GPU는 검사하지 않았다.\n"
     }
   ],
   "outline": [
@@ -182,8 +196,15 @@
       },
       {
         "block_id": "b000015",
-        "line": 44,
+        "line": 45,
         "text": "받으며 직접 자식 버튼 등록과 개별 이름 이벤트·페이로드는 아직 지원하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 61,
+        "text": "버튼·아이콘 캐시·콜백을 해제하고 진행 중인 이전 갱신을 게시하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }

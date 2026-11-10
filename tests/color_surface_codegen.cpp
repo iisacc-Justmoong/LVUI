@@ -5,7 +5,7 @@
 int main() {
     auto code = lvui::compile_native("import vm Model\nWindow { ColorPickerSurface(model: vm.source, modelRevision: vm.revision, field: .HueRail, onColorEdited: vm.edited) }");
     if (!code) throw std::runtime_error(code.error().message);
-    for (auto part : {"#include <LVUI/NativeColorSurface.h>", "lvui::native::NativeColorSurface::create(",
+    for (auto part : {"#include <LVUI/NativeColorSurface.h>", "lvui::native::ColorSurfaceBinding<", "iiGUI/NativeColorSurfaceView.h",
                       "lvui::native::ColorSurfaceInput", "lvui::ColorSurfaceKind::hue_rail", "component.set_options(value)"}) {
         if (code->find(part) == code->npos) throw std::runtime_error(std::string("Independent color surface lost ") + part);
     }

@@ -1,0 +1,6 @@
+import vm NativeOwnedTableModel
+let Heading(value: String): View = Label(id: "custom-heading", text: value)
+let Cell(value: String): View = Label(id: "custom-cell", text: value)
+Table(id: "table", model: vm.controller, modelRevision: vm.revision, width: 200, height: 96,
+      headerContext: "heading", cellContext: "cell",
+      columnViews: [TableColumn(key: "a", header: Heading(value: heading.text), cell: Cell(value: cell.text))])

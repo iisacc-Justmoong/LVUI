@@ -1,0 +1,131 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:1c74739cd1cd2e44fffb6e3203fa42add71a5e27900cc0f8fa9583e5d75ba90f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeScrollView.md",
+    "sha256": "75fae9ee63f0ee17d160b09cb3f60667f398253171312cba08bd15dafdcbf03b",
+    "bytes": 2043,
+    "line_count": 31,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI ScrollView",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI ScrollView\n",
+      "level": 1,
+      "title": "LVUI ScrollView"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`ScrollView`는 별도 색상이나 제품 스타일을 소유하지 않는 iiGUI 스크롤 뷰포트이다.\n정확히 하나의 직접 자식 뷰를 유지한다. 여러 컨트롤이 필요하면 스택으로 묶는다.\n뷰포트에서 벗어난 내용은 잘리며, 휠·트랙패드 입력의 중첩 전파와 포커스된 자식\n드러내기는 iiGUI 호스트가 담당한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "fenced_code",
+      "start_line": 8,
+      "end_line": 15,
+      "raw": "```lvui\nScrollView(id: \"parameters\", width: vm.panel_width, height: vm.available_height) {\n    VStack(spacing: Metric.space12) {\n        Slider(size: .mini, value: vm.size, onMoved: vm.set_size)\n        Slider(size: .mini, value: vm.opacity, onMoved: vm.set_opacity)\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "ScrollView(id: \"parameters\", width: vm.panel_width, height: vm.available_height) {\n    VStack(spacing: Metric.space12) {\n        Slider(size: .mini, value: vm.size, onMoved: vm.set_size)\n        Slider(size: .mini, value: vm.opacity, onMoved: vm.set_opacity)\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 17,
+      "end_line": 25,
+      "raw": "`width`와 `height`는 0–8192의 유한한 논리 픽셀이며 0은 호스트의 자연 크기\n계산을 따른다. 부모의 늘림 정렬은 지정된 자연 크기보다 큰 영역을 할당할 수\n있다. `enabled`, `showIndicator`, `horizontal`은 각각 스크롤 허용, 표시기와 가로\n스크롤을 선택하며 기본값은 `true`, `true`, `false`이다. 이 다섯 입력은 상수 또는\n반응형 값이 될 수 있다. 범위를 벗어난 반응형 크기는 오류로 보고하고 이전 유효\n설정을 유지한다. 일반적인 `visible`, `opacity`, `flex`도 사용할 수 있다.\n`enabled`는 스크롤 조작을 제어하며 내부 컨트롤을 비활성화하지 않는다.\n배치는 `VStack`의 입력으로 표현한다. `Label(style: .body)`의 열거형 `style`은\n공통 텍스트 스타일 선택이다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 26,
+      "end_line": 26,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 27,
+      "end_line": 31,
+      "raw": "C++23 AOT와 Python 컴파일 브리지는 같은 언어 계약을 사용한다. iiGUI의\n`WidgetBuilder::scroll_view`와 `Widget::set_scroll_options`가 교체 가능한 네이티브\n호스트 경계이다. 헤드리스 테스트는 내용 크기와 클리핑, 휠 입력, 마지막 자식의\n클릭 및 포커스 노출, 유효하지 않은 반응형 크기의 거절과 회복, 뷰 수명을 확인한다.\n실제 운영체제 창·입력 장치·접근성 및 GPU 픽셀 결과를 이 검사로 주장하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI ScrollView",
+      "anchor": "lvui-scrollview",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000007",
+        "line": 23,
+        "text": "`enabled`는 스크롤 조작을 제어하며 내부 컨트롤을 비활성화하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 31,
+        "text": "실제 운영체제 창·입력 장치·접근성 및 GPU 픽셀 결과를 이 검사로 주장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

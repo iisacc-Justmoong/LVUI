@@ -1,7 +1,9 @@
 import vm NativeOwnedTableHeaderModel
 Window {
     VStack(alignment: .leading) {
-        TableHeader(id: "header", columns: vm.columns, columnWidths: [100, 100, 100],
+        TableHeader(id: "header", columns: vm.columns, accessibilityText: vm.tableText, sort: vm.sort, columnWidths: [100, 100, 100],
+                    columnAppearance: vm.columnAppearance, defaultLeadingIcon: vm.defaultLeadingIcon,
+                    iconSource: vm.iconSource, iconRevision: vm.iconRevision,
                     interactive: true, enabled: vm.enabled, visible: vm.visible, width: vm.width,
                     onColumnClicked: vm.click)
     }

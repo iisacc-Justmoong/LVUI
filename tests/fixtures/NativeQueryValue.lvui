@@ -1,0 +1,16 @@
+import vm NativeQueryValueModel
+
+var local: String = "Local"
+@Static let initial: String = vm.value
+
+Window {
+    VStack {
+        InputField(id: "editor", text: vm.value)
+        Label(id: "live", text: vm.value)
+        Label(id: "method", text: vm.current())
+        InputField(id: "readonly", text: vm.readonly)
+        Label(id: "initial", text: initial)
+        InputField(id: "local", text: local)
+        Label(id: "localLabel", text: local)
+    }
+}

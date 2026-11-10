@@ -1,0 +1,1216 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:87cfbb92fd937960890c7c8391ac124ae5e7d9aaa52ea34f1f85da8f4bfc277f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/GraphicsBoundary.md",
+    "sha256": "a40d3ff0fc15fd2e061bbf6b22aaf2782e11f9c1dbabc5c354326bf67dfd13a5",
+    "bytes": 20976,
+    "line_count": 249,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 언어와 iiGUI 프레임워크의 책임 경계",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 언어와 iiGUI 프레임워크의 책임 경계\n",
+      "level": 1,
+      "title": "LVUI 언어와 iiGUI 프레임워크의 책임 경계"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "LVUI는 QML과 같은 역할의 선언형 UI 언어이다. 뷰와 자식 구성, 스타일 입력,\n`import`, 바인딩과 임시 UI 상태의 의미를 정의하고 AOT로 C++ 연결 코드를\n생성한다. 이는 QML 구문·엔진과의 호환이나 Qt 의존성을 요구하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 12,
+      "raw": "iiGUI는 QtQuick과 같은 역할의 그래픽 인터페이스 프레임워크이다. 시각\n컴포넌트와 그 상태·동작·배치·입력·접근성, 장면 및 GPU 렌더링을 소유한다.\nLVUI가 생성한 코드는 이 프레임워크의 공개 API를 사용한다. 애플리케이션은\niiGUI를 LVUI 없이 C++로 사용할 수도 있다. 앱 데이터와 명령은 C++ 객체가\n소유하며 iiSDKCore 쿼리로 접근한다. 뷰의 `@State`·`@Bindable`, 소유 수명,\n변경 이벤트 기반의 선택 갱신은 기존 계약을 따른다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 13,
+      "end_line": 13,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 14,
+      "end_line": 17,
+      "raw": "LVUI 디자인 시스템의 토큰과 디자인 자산은 공통 시각 계약으로 유지하되\niiGUI가 특정 앱·LVUI 컴파일러·Figma에 종속되지 않도록 값 또는 명시적\n자산 입력으로 전달한다. OS는 창·입력·텍스트·접근성 서비스를 제공하며\n컴포넌트 렌더링을 브라우저나 OS 기본 컨트롤에 위임하지 않는다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 19,
+      "end_line": 19,
+      "raw": "## 현재 소스의 차이\n",
+      "level": 2,
+      "title": "현재 소스의 차이"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 31,
+      "raw": "현재 `src/Controls`, `src/Editing`, `src/Collections`, `src/Overlays` 등에\n컴포넌트 구현이 존재하고, `Compiler.cpp`도 일부 시각 동작을 생성한다. 이는\n이전된 완료 상태가 아니라 변경할 대상이다. 진행 표시기의 상태·기하·접근성·\n그리기·모션, 메뉴 구분선, 이미지·아바타·시트와 기본 버튼·모달·목록 행·AppCard·AppHeader의 네이티브 호스트는\niiGUI로 이전했으며,\n언어 생성기는 디자인 자산·토큰과 반응형 값의 전달을 담당한다. 다른 컴포넌트는\n여전히 이전해야 한다. `LVUI::Localization`은 앱이 저장·직렬화 콜백을 주입하는\n계약으로 분리했다. `LVUI::ImageIO`와 `LVUI::Color`도 Core 외 SDK를 자동으로\n찾거나 링크하지 않는 계약이다. 구체적인 이미지·색상 서비스는 앱 예제에서\n필요한 SDK들을 명시적으로 조합한다. 아직 LVUI의 다른 시각 컴포넌트가 iiGUI\n헤더를 직접 사용하므로 전체 SDK 간 소스 의존성 제거는 완료되지 않았다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 33,
+      "end_line": 35,
+      "raw": "이전 과정에서는 `.lvui` 사용법, 기존 사용자 데이터와 병행 작업을 보존한다.\niiGUI를 LVUI에 의존시키지 않고, iiSDKCore를 제외한 SDK 모듈 간 직접 의존성을\n추가하지 않는다. 기존 코드가 남은 동안 이를 이미 이전된 것으로 보고하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 41,
+      "raw": "이전은 컴포넌트별로 상태·입력·레이아웃·모션·그리기와 디자인 값을 먼저\n분류한 뒤, 범용 C++ 구현을 iiGUI에 두고 LVUI 생성기가 해당 공개 인터페이스를\n호출하도록 진행한다. 각 컴포넌트에서 기존 선언·접근성·수명·변경 알림과\n디자인 결과를 검사하고, 소비자 이식이 확인된 뒤 중복 구현을 제거한다.\n디자인 토큰과 자산은 입력으로 분리하며 앱의 도메인 객체를 iiGUI로 옮기지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 43,
+      "end_line": 45,
+      "raw": "2026-11-07 macOS arm64에서 진행 표시기와 구분선의 생성·헤드리스 호스트,\n메뉴 섹션·중첩 메뉴 및 복합 목록 연동 검사 17건이 통과했다. 동적·모션 선언도 C++로\n컴파일했다. 이 결과는 실제 창이나 GPU, 다른 운영체제의 실행을 확인한 것은 아니다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 50,
+      "raw": "2026-11-07 이미지와 아바타의 모델·배치·접근성·그리기는 iiGUI로 이전했다.\n디자인 자산과 토큰은 생성기가 전달한다. 시트 닫기 버튼도 생성된 앱이 기존\n토큰과 모션을 전달해 iiGUI 버튼으로 조합한다. 파일·네트워크·코덱 로더 및 색상 계산은\n앱의 교체 가능한 조합 예제로 분리했으며, 실제 창이나 GPU는 실행하지 않았다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 58,
+      "raw": "앱 빌드 함수는 iiGUI를 자동 탐색하지 않으며 애플리케이션이 호스트 타깃을\n명시적으로 제공한다. 생성되는 C++과 아직 이전하지 않은 시각 구현은 여전히 iiGUI\n공개 API를 직접 사용한다. 팝업 열림 바인딩, 취소 이벤트 판정과 일시적 톤\n포트와 메뉴·탭의 섹션 조합 계약은 구체적인 그래픽 SDK 없이 iiSDKCore와\n주입된 타입 및 계약만 사용한다. 텍스트 경계 어댑터도 주입된 인덱스 타입을\n사용하므로 그래픽 SDK 헤더를 직접 포함하지 않는다. 스택 배치 변환은 앱이\n전달한 호스트 타입을 사용하고 정렬의 숫자 순서가 아닌 이름을 기준으로 연결한다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 60,
+      "end_line": 61,
+      "raw": "정적·반응형 스택의 배경과 테두리 도형은 iiGUI가 계산하고 캐시한다. LVUI는\n디자인 값과 변경 바인딩을 전달하며 해당 바인딩 헤더는 iiGUI를 직접 포함하지 않는다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 63,
+      "end_line": 98,
+      "raw": "기본 버튼과 드롭다운의 상태·기하·입력·그리기 호스트는 iiGUI로 이전했고\n중복 계산 모델을 제거했다. 기본 버튼과 드롭다운 바인딩은 Core 외 SDK를 참조하지 않는다.\n경고 버튼도 모델 계산과 호스트를 iiGUI로 옮겼다. LVUI 정책 어댑터는 기존\n디자인 토큰과 이벤트를 전달한다. `LVUI/AlertButton.h`의 중복 모델은 제거했고\n버튼 바인딩은 Core 외 SDK를 참조하지 않는다.\n경고창의 액션·배치·아이콘 및 텍스트 표현과 위젯 트리·입력 호스트도 iiGUI에 있다.\nLVUI는 토큰과 자산·콜백을 제공하며 바인딩은 Core 외 SDK를 참조하지 않는다.\n토글과 스테퍼의 상태·기하·입력과 그리기는 iiGUI가 소유한다. 두 LVUI\n바인딩은 iiGUI를 직접 참조하지 않는다. 다른 컴포넌트의 이전은 남아 있다.\n도구 버튼의 상태·배치·그리기·호스트도 iiGUI로 옮겼으며, 목록과 도구 모음이\n이를 재사용한다. 구형 `LVUI/ToolbarButton.h` 계산 모델은 제거했으며 계층 도구\n모음의 선택·기하·입력·그리기 및 수명도 iiGUI가 소유한다. 두 바인딩은 Core 외\nSDK를 참조하지 않는다.\n목록 하단의 슬롯 배치·명령·아이콘과 호스트 수명도 iiGUI로 옮겼다. 구형\n푸터 배치 모델은 제거했고 두 목록 패널의 검증도 iiGUI 모델을 사용한다. 푸터\n바인딩은 Core 외 SDK를 참조하지 않는다.\n목록 상단의 세 슬롯 도구 모음도 iiGUI가 배치·입력·그리기와 수명을 소유한다.\n단독 선언은 생성된 앱이 iiGUI를 직접 조합한다. 구형 목록 도구 모음 기하 모델은\n제거했고 목록 패널의 사전 검증도 iiGUI에서 수행한다. 목록 패널 바인딩은\nCore 외 SDK를 직접 참조하지 않는다.\n모달은 iiGUI가 상태·기하·액션·제목과 설명 표현·팝업 트리·본문 수명을 담당한다.\nLVUI 바인딩은 Core 외 SDK를 직접 참조하지 않고 앱에서 디자인 입력과 iiGUI를\n조합한다. 구형 `LVUI/Modal.h` 계산 모델은 제거했으며 다른 시각 구현은 남아 있다.\n목록의 기본 행은 iiGUI가 상태·배치·접근성·그리기와 호스트 수명을 소유한다.\n구형 행 계산 모델은 제거했고 복합 행도 같은 iiGUI 모델로 검증·배치한다. 목록\n데이터 및 가상화와 복합 행의 내부 컨트롤은 아직 LVUI에 있다.\n`AppCard`는 LVUI의 구형 위젯과 값 모델을 제거하고 생성된 앱 코드가 iiGUI를\n직접 사용한다. LVUI에는 기존 뷰모델을 위한 모양 열거형만 유지한다.\n`AppHeader`의 위젯과 모델도 LVUI에서 제거했으며, 생성된 앱이 iiGUI에 스타일과\n윈도우 악센트를 전달한다. 다른 시각 컴포넌트의 직접 참조는 여전히 남아 있다.\n`EventListener` 입력 표면과 크기 모델도 iiGUI가 소유하며 LVUI는 선언과 콜백·\n크기 바인딩을 생성한다. 기존 LVUI 리스너 구현과 해당 설치 헤더는 제거했다.\n독립 아이콘의 이미지 위젯과 갱신·퇴역은 iiGUI가 소유하며 LVUI 생성 코드가 앱에서\n디자인 자산을 연결한다. 구형 LVUI 아이콘 위젯과 설치 헤더는 제거했고 SVG 자산\n계약의 iiGUI 직접 참조도 제거했다. 디코딩과 공유 캐시는 앱이 선택한 iiGUI\n디코더가 소유하며 다른 시각 어댑터의 직접 참조는 아직 남아 있다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 100,
+      "end_line": 104,
+      "raw": "아이콘 자산의 소유 스레드 캐시도 디코더 주입 방식으로 분리했다. LVUI는 자산\n조회와 버전 검사를 제공하고 iiGUI 디코더는 SVG 처리와 공유 래스터 캐시를 담당한다.\n기존 버튼·목록 등 어댑터는 앱이 선택한 디코더를 명시하며, 이 어댑터 자체의\niiGUI 직접 참조와 다른 시각 구현은 아직 남아 있다. macOS arm64에서 설치 헤더의\nCore 단독 컴파일과 해당 컴포넌트 36개 헤드리스 검사를 통과했다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 106,
+      "end_line": 107,
+      "raw": "아바타의 디자인 마스크 자산과 화면 크기·배율 계산도 분리했다. LVUI 자산 헤더는\nCore만 포함하며 생성된 앱이 iiGUI의 이미지 공급자와 SVG 디코더를 조합한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 110,
+      "raw": "체크박스의 선택·기하·마스크 곡선·모션·그리기·입력과 수명은 iiGUI로 옮겼다.\nLVUI에는 디자인 입력과 자산 선택 바인딩이 남으며 앱이 iiGUI와 디코더를 조합한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 111,
+      "end_line": 111,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 112,
+      "end_line": 113,
+      "raw": "컴파일된 뷰를 호스트에 공급하는 팩터리와 원천은 iiGUI로 이전했다. LVUI의\n해당 네이티브 호스트 헤더는 제거했고 앱이 두 모듈을 직접 조합한다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 115,
+      "end_line": 116,
+      "raw": "렌더링용 sRGB 선형 변환은 iiGUI가 공통으로 제공하며 목록·카드·표와 입력 필드가\n이를 사용한다. LVUI 텍스트 길이 경계는 그래픽 SDK 없이 UTF-8 문자를 보존한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 117,
+      "end_line": 117,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "일반·검색 입력의 지우기 표시는 iiGUI가 그리며 LVUI의 중복 그리기 헤더는 제거했다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 119,
+      "end_line": 119,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 120,
+      "end_line": 121,
+      "raw": "텍스트 문단의 줄바꿈·암호 마스킹·선택 기하와 커서 배치는 iiGUI로 이전했다.\nLVUI의 해당 텍스트 배치 구현과 설치 헤더는 제거했다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 122,
+      "end_line": 122,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 123,
+      "end_line": 124,
+      "raw": "일반·검색 입력의 표면 재질 생성과 캐시는 iiGUI로 이전했다. LVUI는 디자인 값과\n독립 바인딩만 소유한다. 복합 목록의 텍스트 배치 경로도 iiGUI 헤더를 직접 사용한다.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 126,
+      "end_line": 127,
+      "raw": "라디오 버튼의 선택·그룹·원형 기하·색상·점 전환과 그리기·입력 호스트는\niiGUI로 옮겼다. LVUI 바인딩은 Core 외 SDK를 직접 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 128,
+      "end_line": 128,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 129,
+      "end_line": 130,
+      "raw": "목록 행의 모델·그리기·호스트 바인딩은 iiGUI 직접 참조 없이 앱이 공급한 모델과\n색 변환기·이미지·그리기 포트를 조합한다. 복합 목록은 아직 직접 참조를 가진다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 131,
+      "end_line": 131,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 132,
+      "end_line": 133,
+      "raw": "표의 사용자 View 부착·키별 수명과 가시 범위 갱신은 iiGUI가 소유한다. LVUI는\n관찰 가능한 표 컨텍스트와 Core 단독 바인딩을 제공한다. 나머지 표 시각 구현은 남아 있다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 134,
+      "end_line": 134,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "paragraph",
+      "start_line": 135,
+      "end_line": 137,
+      "raw": "표 머리글의 열 모델·아이콘 준비·클리핑·텍스트·입력·접근성과 위젯 수명은\niiGUI가 소유한다. LVUI는 Core 외 SDK에 의존하지 않는 디자인 정책과 바인딩을\n제공하며 전체 표 호스트는 아직 분리 중이다.\n"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 138,
+      "end_line": 138,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 139,
+      "end_line": 140,
+      "raw": "세그먼트 컨트롤의 모델·기하·표면·자식 스타일 연결과 수명은 iiGUI가 소유한다.\nLVUI 세그먼트 값과 바인딩은 iiSDKCore 외 SDK를 직접 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 141,
+      "end_line": 141,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 142,
+      "end_line": 143,
+      "raw": "목록 툴바의 디자인 값과 모델·호스트 바인딩은 iiSDKCore 외 SDK를 직접 참조하지\n않는다. 복합 목록이 iiGUI 모델·호스트·이미지 디코더를 명시적으로 조합한다.\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 144,
+      "end_line": 144,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 145,
+      "end_line": 146,
+      "raw": "도구 버튼과 목록 푸터는 독립 디자인 바인딩을 제공하며 앱이 iiGUI 모델·호스트와\n이미지 디코더를 조합한다. 두 패널은 생성된 앱이 조합하며 복합 행은 아직 이를 직접 조합한다.\n"
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 147,
+      "end_line": 147,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 148,
+      "end_line": 149,
+      "raw": "공통 버튼 메서드 이벤트·등록은 위젯 타입을 주입받아 iiGUI 직접 참조 없이 동작한다.\n기본 버튼 호스트도 앱이 주입하며 나머지 시각 어댑터의 직접 참조는 아직 남아 있다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 150,
+      "end_line": 150,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 151,
+      "end_line": 154,
+      "raw": "개별 메뉴 항목의 상태·단축키·화살표 방향·기하 계산과 그리기·입력·수명은\niiGUI가 소유한다. LVUI는 Core 외 SDK를 참조하지 않는 디자인 값과 바인딩을\n제공한다. 메뉴 전체의 그리기·입력·수명도 iiGUI 호스트에 있다. macOS arm64에서\n메뉴 조합과 독립 설치 소비자를 창 없이 검사했다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 155,
+      "end_line": 155,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "paragraph",
+      "start_line": 156,
+      "end_line": 159,
+      "raw": "메뉴 전체의 항목 식별·선택·활성화 세대·배치도 iiGUI 모델로 옮겼다. 같은 키의\n선택은 항목 재배열 후에도 유지하며 오래된 활성화 계획은 새로운 메뉴를 닫지 못한다.\n메뉴 전체의 입력·그리기 호스트도 iiGUI로 옮겼고 LVUI의 메뉴 바인딩은 Core 외\nSDK를 직접 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 160,
+      "end_line": 160,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 161,
+      "end_line": 164,
+      "raw": "일반 재질과 팝오버가 공유하는 그라데이션 래스터화·캐시는 iiGUI에 있다. LVUI는\n디자인 재질과 불변 방사형 필드 정책을 전달하며 Core 외 SDK를 참조하지 않는다.\n재질 상태·프레임 색상 전환·방사형 계산과 위젯 그리기·수명도 iiGUI가 소유한다.\nLVUI 재질 바인딩은 Core 외 SDK를 직접 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 165,
+      "end_line": 165,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 166,
+      "end_line": 167,
+      "raw": "팝오버의 상태·자연 크기·입력·모션·재질과 호스트 수명은 iiGUI가 소유한다.\nLVUI는 Core 외 SDK를 참조하지 않는 선언 값과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 169,
+      "end_line": 170,
+      "raw": "페이지 라우터의 콘텐츠 호스트·후보 게시와 컨텍스트 연결 수명은 iiGUI가\n소유한다. LVUI는 Core 외 SDK 참조 없는 페이지 팩터리와 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 171,
+      "end_line": 171,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 172,
+      "end_line": 173,
+      "raw": "색상 선택 버튼의 크기·상태·그리기·입력·수명은 iiGUI가 소유한다. LVUI는 색상환\n자산·공급자 계약·디자인 값을 Core 외 SDK 참조 없는 바인딩으로 전달한다.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 174,
+      "end_line": 174,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "paragraph",
+      "start_line": 175,
+      "end_line": 175,
+      "raw": "콤보 상자의 시각 상태·기하·입력·그리기와 수명은 iiGUI가 소유한다. LVUI는 디자인 값과 독립 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 176,
+      "end_line": 176,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 177,
+      "end_line": 177,
+      "raw": "링크의 시각 상태·배치·입력·그리기와 수명은 iiGUI가 소유한다. 탐색 요청과 디자인 값은 앱이 LVUI의 독립 계약으로 주입한다.\n"
+    },
+    {
+      "id": "b000074",
+      "kind": "blank",
+      "start_line": 178,
+      "end_line": 178,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "paragraph",
+      "start_line": 179,
+      "end_line": 179,
+      "raw": "편집 캔버스의 가시 영역 질의·스냅샷·입력과 수명은 iiGUI가 소유하며 앱은 원천을 NativeView에 연결한다.\n"
+    },
+    {
+      "id": "b000076",
+      "kind": "blank",
+      "start_line": 180,
+      "end_line": 180,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "paragraph",
+      "start_line": 181,
+      "end_line": 181,
+      "raw": "편집 타임라인의 상태·가시 영역 질의·그리기·입력·프레임과 수명은 iiGUI가 소유한다. LVUI 디자인 색상은 앱이 주입한다.\n"
+    },
+    {
+      "id": "b000078",
+      "kind": "blank",
+      "start_line": 182,
+      "end_line": 182,
+      "raw": "\n"
+    },
+    {
+      "id": "b000079",
+      "kind": "paragraph",
+      "start_line": 183,
+      "end_line": 183,
+      "raw": "파싱된 문서의 배치·글자 측정·그리기 프레임은 iiGUI가 소유한다. LVUI는 호스트 비의존 문서 구조와 전달 정책을 제공한다.\n"
+    },
+    {
+      "id": "b000080",
+      "kind": "blank",
+      "start_line": 184,
+      "end_line": 184,
+      "raw": "\n"
+    },
+    {
+      "id": "b000081",
+      "kind": "paragraph",
+      "start_line": 185,
+      "end_line": 185,
+      "raw": "반복 목록의 위젯 입력 라우팅과 선택 알림·수명은 iiGUI가 소유한다. LVUI는 탐색 상태와 바인딩 정책을 제공한다.\n"
+    },
+    {
+      "id": "b000082",
+      "kind": "blank",
+      "start_line": 186,
+      "end_line": 186,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "paragraph",
+      "start_line": 187,
+      "end_line": 187,
+      "raw": "색상 표면의 상태·좌표·입력·그리기와 수명은 iiGUI가 소유한다. LVUI는 원천의 프레임과 리비전 계약을 제공한다.\n"
+    },
+    {
+      "id": "b000084",
+      "kind": "blank",
+      "start_line": 188,
+      "end_line": 188,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "paragraph",
+      "start_line": 189,
+      "end_line": 189,
+      "raw": "탭과 탭 막대의 선택 모델 및 개별 탭의 그리기·입력·수명은 iiGUI가 소유한다. 탭 막대의 자식 등록·입력·배치와 수명도 iiGUI가 소유한다.\n"
+    },
+    {
+      "id": "b000086",
+      "kind": "blank",
+      "start_line": 190,
+      "end_line": 190,
+      "raw": "\n"
+    },
+    {
+      "id": "b000087",
+      "kind": "paragraph",
+      "start_line": 191,
+      "end_line": 191,
+      "raw": "카드의 상태·배치·선택·입력·그리기와 슬롯 수명은 iiGUI가 소유한다. LVUI는 디자인 값과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000088",
+      "kind": "blank",
+      "start_line": 192,
+      "end_line": 192,
+      "raw": "\n"
+    },
+    {
+      "id": "b000089",
+      "kind": "paragraph",
+      "start_line": 193,
+      "end_line": 193,
+      "raw": "목록 세그먼트의 선택·배치·입력·버튼 조합과 수명은 iiGUI가 소유하며 LVUI는 선언 값과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000090",
+      "kind": "blank",
+      "start_line": 194,
+      "end_line": 194,
+      "raw": "\n"
+    },
+    {
+      "id": "b000091",
+      "kind": "paragraph",
+      "start_line": 195,
+      "end_line": 195,
+      "raw": "목록 선택기의 선택·메뉴·키보드와 위젯 수명은 iiGUI가 소유하며 LVUI는 선언 값과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000092",
+      "kind": "blank",
+      "start_line": 196,
+      "end_line": 196,
+      "raw": "\n"
+    },
+    {
+      "id": "b000093",
+      "kind": "paragraph",
+      "start_line": 197,
+      "end_line": 197,
+      "raw": "색상 채널의 일곱 정지점 보간과 래스터 생성은 iiGUI가 소유하며 LVUI는 원천 정책과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000094",
+      "kind": "blank",
+      "start_line": 198,
+      "end_line": 198,
+      "raw": "\n"
+    },
+    {
+      "id": "b000095",
+      "kind": "paragraph",
+      "start_line": 199,
+      "end_line": 199,
+      "raw": "텍스트 입력의 선택·조합·실행 취소 상태와 입력 필드의 입력·배치·그리기·수명은 iiGUI가 소유한다. LVUI는 디자인 값과 바인딩 계약을 제공한다.\n"
+    },
+    {
+      "id": "b000096",
+      "kind": "blank",
+      "start_line": 200,
+      "end_line": 200,
+      "raw": "\n"
+    },
+    {
+      "id": "b000097",
+      "kind": "paragraph",
+      "start_line": 201,
+      "end_line": 201,
+      "raw": "여러 줄 텍스트 편집기의 최소 높이와 입력 필드 조합은 iiGUI가 소유하고 LVUI는 선언값·바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000098",
+      "kind": "blank",
+      "start_line": 202,
+      "end_line": 202,
+      "raw": "\n"
+    },
+    {
+      "id": "b000099",
+      "kind": "paragraph",
+      "start_line": 203,
+      "end_line": 203,
+      "raw": "슬라이더의 범위·스냅·배치와 입력·접근성·그리기·모션 및 퇴역은 iiGUI가 소유한다. LVUI는 디자인 값과 독립 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000100",
+      "kind": "blank",
+      "start_line": 204,
+      "end_line": 204,
+      "raw": "\n"
+    },
+    {
+      "id": "b000101",
+      "kind": "paragraph",
+      "start_line": 205,
+      "end_line": 205,
+      "raw": "검색 입력의 필드 조합·배치·재질·입력·그리기와 수명은 iiGUI가 소유하고 LVUI는 검색 값·토큰·독립 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000102",
+      "kind": "blank",
+      "start_line": 206,
+      "end_line": 206,
+      "raw": "\n"
+    },
+    {
+      "id": "b000103",
+      "kind": "paragraph",
+      "start_line": 207,
+      "end_line": 207,
+      "raw": "표 셀의 상태·기하·검증·편집과 표 행의 배치·위젯 조합·수명은 iiGUI가 소유한다. 전체 표 호스트의 시각 구현은 아직 LVUI에 남아 있다.\n"
+    },
+    {
+      "id": "b000104",
+      "kind": "blank",
+      "start_line": 208,
+      "end_line": 208,
+      "raw": "\n"
+    },
+    {
+      "id": "b000105",
+      "kind": "paragraph",
+      "start_line": 209,
+      "end_line": 209,
+      "raw": "색상 선택기의 배치·표면·채널·값 입력과 버튼 조합, 편집 및 위젯 수명은 iiGUI가 소유한다. LVUI는 디자인 값과 세션 계약을 주입한다.\n"
+    },
+    {
+      "id": "b000106",
+      "kind": "blank",
+      "start_line": 210,
+      "end_line": 210,
+      "raw": "\n"
+    },
+    {
+      "id": "b000107",
+      "kind": "paragraph",
+      "start_line": 211,
+      "end_line": 211,
+      "raw": "모바일 탐색의 상태·배치·배지·프레임 모션과 그리기·수명은 iiGUI가 소유한다. LVUI는 Figma 디자인 값과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000108",
+      "kind": "blank",
+      "start_line": 212,
+      "end_line": 212,
+      "raw": "\n"
+    },
+    {
+      "id": "b000109",
+      "kind": "paragraph",
+      "start_line": 213,
+      "end_line": 213,
+      "raw": "계층 항목과 가상 목록의 입력·선택·스크롤·드래그·자식 View·수명은 iiGUI가 소유한다. 계층 원천·행 컨텍스트와 디자인 값은 주입하며 계층 패널의 위젯 조합도 iiGUI에 있다.\n"
+    },
+    {
+      "id": "b000110",
+      "kind": "blank",
+      "start_line": 214,
+      "end_line": 214,
+      "raw": "\n"
+    },
+    {
+      "id": "b000111",
+      "kind": "paragraph",
+      "start_line": 215,
+      "end_line": 215,
+      "raw": "목록·계층 패널의 공통 영역 검증과 좁은 크기의 배치는 iiGUI가 소유한다. LVUI는 독립 설정 값과 정책을 제공한다.\n"
+    },
+    {
+      "id": "b000112",
+      "kind": "blank",
+      "start_line": 216,
+      "end_line": 216,
+      "raw": "\n"
+    },
+    {
+      "id": "b000113",
+      "kind": "paragraph",
+      "start_line": 217,
+      "end_line": 217,
+      "raw": "일반 목록과 패널의 가상 행·편집·입력·그리기·위젯 수명은 iiGUI가 소유한다. LVUI는 값과 교체 가능한 원천 계약을 제공한다.\n"
+    },
+    {
+      "id": "b000114",
+      "kind": "blank",
+      "start_line": 218,
+      "end_line": 218,
+      "raw": "\n"
+    },
+    {
+      "id": "b000115",
+      "kind": "paragraph",
+      "start_line": 219,
+      "end_line": 219,
+      "raw": "코드 편집기의 보이는 줄 셰이핑·입력·그리기와 위젯 수명은 iiGUI에 있다. LVUI는 문서 계약·값·바인딩을 제공하며 퇴역 시 편집 세션과 콜백을 해제한다.\n"
+    },
+    {
+      "id": "b000116",
+      "kind": "blank",
+      "start_line": 220,
+      "end_line": 220,
+      "raw": "\n"
+    },
+    {
+      "id": "b000117",
+      "kind": "paragraph",
+      "start_line": 221,
+      "end_line": 221,
+      "raw": "툴팁의 배치·시간 상태·표시 제어·윤곽·표시·예약·대상 관찰과 위젯 조립은 iiGUI가 소유한다. LVUI는 값과 포트·바인딩을 제공하며 앱이 두 모듈을 명시적으로 조합한다.\n"
+    },
+    {
+      "id": "b000118",
+      "kind": "blank",
+      "start_line": 222,
+      "end_line": 222,
+      "raw": "\n"
+    },
+    {
+      "id": "b000119",
+      "kind": "paragraph",
+      "start_line": 223,
+      "end_line": 223,
+      "raw": "표의 그리기, 입력, 접근성, 편집기와 사용자 정의 셀 호스트는 iiGUI가 소유한다. LVUI는 표 데이터·계약과 그래픽 구현을 주입하는 바인딩을 제공한다. macOS arm64에서 창 없이 표 모델·편집·클립보드·정렬·접근성·생성 경로와 독립 소비자를 검사했다.\n"
+    },
+    {
+      "id": "b000120",
+      "kind": "blank",
+      "start_line": 224,
+      "end_line": 224,
+      "raw": "\n"
+    },
+    {
+      "id": "b000121",
+      "kind": "paragraph",
+      "start_line": 225,
+      "end_line": 225,
+      "raw": "복합 목록 항목의 위젯 조합·그리기·입력, 상세·작업·미리보기·폼 배치와 수량 상태는 iiGUI가 소유한다. LVUI는 입력값, 관측 문맥과 바인딩을 제공하며 앱이 각 C++ 구현을 조합한다.\n"
+    },
+    {
+      "id": "b000122",
+      "kind": "blank",
+      "start_line": 226,
+      "end_line": 226,
+      "raw": "\n"
+    },
+    {
+      "id": "b000123",
+      "kind": "paragraph",
+      "start_line": 227,
+      "end_line": 227,
+      "raw": "목록의 가변 높이 가상화와 드래그 판정도 iiGUI가 소유한다. LVUI의 목록 데이터 계약은 iiSDKCore 외 SDK를 직접 참조하지 않는다.\n"
+    },
+    {
+      "id": "b000124",
+      "kind": "blank",
+      "start_line": 228,
+      "end_line": 228,
+      "raw": "\n"
+    },
+    {
+      "id": "b000125",
+      "kind": "paragraph",
+      "start_line": 229,
+      "end_line": 229,
+      "raw": "계층 목록의 가변 높이 가상화와 드래그 판정은 iiGUI가 소유하고 LVUI는 투영·요청·결과와 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000126",
+      "kind": "blank",
+      "start_line": 230,
+      "end_line": 230,
+      "raw": "\n"
+    },
+    {
+      "id": "b000127",
+      "kind": "paragraph",
+      "start_line": 231,
+      "end_line": 231,
+      "raw": "표의 행·열 표시 범위와 병합 셀 가상화 계산도 iiGUI가 소유한다. 헤더와 본문은 앱이 주입한 동일한 뷰포트 계약을 사용한다.\n"
+    },
+    {
+      "id": "b000128",
+      "kind": "blank",
+      "start_line": 232,
+      "end_line": 232,
+      "raw": "\n"
+    },
+    {
+      "id": "b000129",
+      "kind": "paragraph",
+      "start_line": 233,
+      "end_line": 233,
+      "raw": "복합 목록 메뉴의 구조와 한도 검증은 iiGUI가 소유하고 LVUI는 항목 값과 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000130",
+      "kind": "blank",
+      "start_line": 234,
+      "end_line": 234,
+      "raw": "\n"
+    },
+    {
+      "id": "b000131",
+      "kind": "paragraph",
+      "start_line": 235,
+      "end_line": 235,
+      "raw": "일반 컬렉션의 키보드 탐색·선택 상태와 가상 뷰포트의 관측·스크롤 기준점 관리는 iiGUI가 담당한다. LVUI는 상태 값, 관측 계약과 교체 가능한 바인딩을 제공한다.\n"
+    },
+    {
+      "id": "b000132",
+      "kind": "blank",
+      "start_line": 236,
+      "end_line": 236,
+      "raw": "\n"
+    },
+    {
+      "id": "b000133",
+      "kind": "paragraph",
+      "start_line": 237,
+      "end_line": 237,
+      "raw": "가상 컬렉션의 표시 범위·셀 배치·행 높이 측정과 누적 위치 인덱스도 iiGUI가 담당한다. 키별 데이터 스냅샷과 요청·결과 값은 LVUI에 남으며, 생성된 앱이 구현을 명시적으로 조합한다. 측정 결과는 세대와 크기를 확인한 뒤 변경된 행에만 반영하고 퇴역 시 원천과 측정값을 해제한다.\n"
+    },
+    {
+      "id": "b000134",
+      "kind": "blank",
+      "start_line": 238,
+      "end_line": 238,
+      "raw": "\n"
+    },
+    {
+      "id": "b000135",
+      "kind": "paragraph",
+      "start_line": 239,
+      "end_line": 239,
+      "raw": "코드 편집기의 보이는 줄·열 선택과 읽기 예산 계산도 iiGUI가 담당한다. 문서의 불변 스냅샷, 줄 경계와 편집 계약은 LVUI가 제공한다.\n"
+    },
+    {
+      "id": "b000136",
+      "kind": "blank",
+      "start_line": 240,
+      "end_line": 240,
+      "raw": "\n"
+    },
+    {
+      "id": "b000137",
+      "kind": "paragraph",
+      "start_line": 241,
+      "end_line": 241,
+      "raw": "독립 `FocusRing`의 상태, 시각 기하, 보간과 그리기는 iiGUI가 소유한다. LVUI는 선언된 입력과 반응형 바인딩을 생성하고 실제 전환 중에만 프레임 구동을 요청한다.\n"
+    },
+    {
+      "id": "b000138",
+      "kind": "blank",
+      "start_line": 242,
+      "end_line": 242,
+      "raw": "\n"
+    },
+    {
+      "id": "b000139",
+      "kind": "paragraph",
+      "start_line": 243,
+      "end_line": 243,
+      "raw": "`AbstractInputBar`는 iiGUI 텍스트 입력 구현을 사용한다. 사용자 편집은 연결된 C++ 값으로 전파되고 외부 값 변경도 입력에 반영된다.\n"
+    },
+    {
+      "id": "b000140",
+      "kind": "blank",
+      "start_line": 244,
+      "end_line": 244,
+      "raw": "\n"
+    },
+    {
+      "id": "b000141",
+      "kind": "paragraph",
+      "start_line": 245,
+      "end_line": 245,
+      "raw": "독립 모바일 탭과 모바일 탐색 막대는 iiGUI의 공통 탭 그리기를 사용한다. 배지와 선택 모션은 바인딩된 입력에 반응하며 사용자 동작과 시스템 모션 설정을 처리한다.\n"
+    },
+    {
+      "id": "b000142",
+      "kind": "blank",
+      "start_line": 246,
+      "end_line": 246,
+      "raw": "\n"
+    },
+    {
+      "id": "b000143",
+      "kind": "paragraph",
+      "start_line": 247,
+      "end_line": 247,
+      "raw": "창 노이즈의 제한된 크기 텍스처 준비와 타일 배치는 iiGUI가 소유한다. 원천 색이나 강도가 달라질 때만 CPU에서 텍스처를 다시 준비하고, 화면 합성은 iiGUI 렌더러가 담당한다. 크기만 바뀌면 같은 텍스처를 재사용한다.\n"
+    },
+    {
+      "id": "b000144",
+      "kind": "blank",
+      "start_line": 248,
+      "end_line": 248,
+      "raw": "\n"
+    },
+    {
+      "id": "b000145",
+      "kind": "paragraph",
+      "start_line": 249,
+      "end_line": 249,
+      "raw": "휠 가드는 iiGUI에서 대상과 입력을 검증하고 이벤트를 전달한다. 입력이 없을 때 별도의 프레임이나 주기적 검사를 실행하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 언어와 iiGUI 프레임워크의 책임 경계",
+      "anchor": "lvui-언어와-iigui-프레임워크의-책임-경계",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "현재 소스의 차이",
+      "anchor": "현재-소스의-차이",
+      "start_line": 19
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 5,
+        "text": "생성한다. 이는 QML 구문·엔진과의 호환이나 Qt 의존성을 요구하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000007",
+        "line": 17,
+        "text": "컴포넌트 렌더링을 브라우저나 OS 기본 컨트롤에 위임하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 27,
+        "text": "여전히 이전해야 한다. `LVUI::Localization`은 앱이 저장·직렬화 콜백을 주입하는",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 35,
+        "text": "추가하지 않는다. 기존 코드가 남은 동안 이를 이미 이전된 것으로 보고하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 57,
+        "text": "사용하므로 그래픽 SDK 헤더를 직접 포함하지 않는다. 스택 배치 변환은 앱이",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000023",
+        "line": 61,
+        "text": "디자인 값과 변경 바인딩을 전달하며 해당 바인딩 헤더는 iiGUI를 직접 포함하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 64,
+        "text": "중복 계산 모델을 제거했다. 기본 버튼과 드롭다운 바인딩은 Core 외 SDK를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 67,
+        "text": "버튼 바인딩은 Core 외 SDK를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 69,
+        "text": "LVUI는 토큰과 자산·콜백을 제공하며 바인딩은 Core 외 SDK를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 71,
+        "text": "바인딩은 iiGUI를 직접 참조하지 않는다. 다른 컴포넌트의 이전은 남아 있다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 75,
+        "text": "SDK를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 78,
+        "text": "바인딩은 Core 외 SDK를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000025",
+        "line": 82,
+        "text": "Core 외 SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000043",
+        "line": 127,
+        "text": "iiGUI로 옮겼다. LVUI 바인딩은 Core 외 SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000051",
+        "line": 140,
+        "text": "LVUI 세그먼트 값과 바인딩은 iiSDKCore 외 SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000061",
+        "line": 159,
+        "text": "SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000063",
+        "line": 162,
+        "text": "디자인 재질과 불변 방사형 필드 정책을 전달하며 Core 외 SDK를 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000063",
+        "line": 164,
+        "text": "LVUI 재질 바인딩은 Core 외 SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000123",
+        "line": 227,
+        "text": "목록의 가변 높이 가상화와 드래그 판정도 iiGUI가 소유한다. LVUI의 목록 데이터 계약은 iiSDKCore 외 SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000145",
+        "line": 249,
+        "text": "휠 가드는 iiGUI에서 대상과 입력을 검증하고 이벤트를 전달한다. 입력이 없을 때 별도의 프레임이나 주기적 검사를 실행하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -1,0 +1,22 @@
+Window(title: localized("window.title")) {
+    const heading: String = localized("counter.heading")
+    @Static const initialHeading: String = localized("counter.heading")
+    var draft: String = localized("counter.heading")
+    var selectedKey: String = "counter.heading"
+    var count: Int = 0
+    VStack {
+        Label(id: "heading", text: heading)
+        Label(id: "initial", text: initialHeading)
+        Label(id: "draft", text: draft)
+        Label(id: "dynamic", text: localized(selectedKey))
+        Label(id: "count", text: count)
+        PushButton(id: "increment", text: localized("counter.increment"), onClick: { count = count + 1 })
+        PushButton(id: "korean", text: localized("language.korean"), onClick: setLocale("ko-KR"))
+        PushButton(id: "replace", text: localized("counter.replace"), onClick: {
+            setString("counter.heading", localized("counter.replacement"))
+        })
+        PushButton(id: "chooseReplacement", text: localized("counter.replace"), onClick: {
+            selectedKey = "counter.replacement"
+        })
+    }
+}

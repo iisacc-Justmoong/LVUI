@@ -23,8 +23,12 @@ public:
             std::shared_ptr<TableEditor> editor, TablePosition position) {
         if (!editor) return error(TableErrorCode::invalid, "Table editor is required");
         auto index = TableIndex::create(std::move(snapshot)); if (!index) return std::unexpected(index.error());
-        const auto row = index->row(position.row), column = index->column(position.column);
+        auto row = index->row(position.row), column = index->column(position.column);
         if (!row || !column) return error(TableErrorCode::not_found, "Table edit cell was not found");
+        if (const auto merge = index->merge_at(*row, *column)) {
+            row = merge->row; column = merge->column;
+            position.row = index->snapshot().rows[*row].key; position.column = index->snapshot().columns[*column].key;
+        }
         const auto& data = index->snapshot(); const auto& cell = data.rows[*row].cells[*column];
         if (!data.rows[*row].enabled || !data.columns[*column].enabled || !data.columns[*column].editable || !cell.enabled || !cell.editable)
             return error(TableErrorCode::invalid, "Table cell cannot be edited");

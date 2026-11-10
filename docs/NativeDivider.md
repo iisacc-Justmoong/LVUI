@@ -1,8 +1,8 @@
 # LVUI 독립 구분선
 
-기본 `MenuDivider`와 `ContextMenuDivider`는 `LVUI/Divider.h`의 표준 C++ 모델이
-방향, 자연 크기, 선의 배치와 색상을 결정한다. 앱의 `LVUI/NativeDivider.h`
-어댑터는 범용 비대화형 표면과 그리기 경계에 결과를 전달한다. 이 경로는
+기본 `MenuDivider`와 `ContextMenuDivider`는 `iiGUI/Divider.h`의 C++ 모델이
+방향, 자연 크기, 선의 배치와 색상을 결정한다. `iiGUI/NativeDivider.h`의
+위젯은 비대화형 표면과 그리기를 소유한다. LVUI는 디자인 색상과 선언된 값을 전달한다. 이 경로는
 LVRS 구현, Qt 또는 QML 런타임을 필요로 하지 않는다.
 
 ```lvui
@@ -16,11 +16,15 @@ Window {
 ```
 
 `axis`는 `.horizontal`, `.vertical`, 대소문자를 구분하지 않는 문자열 또는
-반응형 `lvui::DividerAxis`·문자열을 받는다. `lineLength`, `thickness`,
+반응형 `ii::gui::DividerAxis`·문자열을 받는다. 기존 C++의 `lvui::DividerAxis`와
+`lvui::DividerConfiguration` 참조는 iiGUI 타입으로 바꾸어야 한다. `lineLength`, `thickness`,
 `crossPadding`, `linePadding`, `dividerColor`도 상수 또는 반응형 입력이다.
 기본 일반 선은 220 × 3, 맥락 메뉴 선은 145 × 3이며 후자는 선 양끝에 4의
 여백이 있다. 기본 색상은 LVUI가 보유한 디자인 토큰 스냅샷에서 선택한다.
 색상 입력은 encoded sRGB이며 그리기 경계에서 선형 RGB로 변환한다.
+일반 선의 기본 색은 `Panel/surfacePanel`, 두께는 1이며 위아래에 1씩 둔다.
+[독립 Figma 컴포넌트](https://www.figma.com/design/8nSrpI0BbsZlXQiotbClHD/LVUI?node-id=19-307)는
+100과 352 너비에서 선이 컨테이너를 채우도록 검증했다. 이 Figma 변경은 아직 게시하지 않았다.
 
 자연 크기의 교차축은 선 두께와 양쪽 교차 여백의 합이다. 실제 할당이 더 작으면
 선의 두께와 끝 여백을 사용 가능한 영역으로 제한한다. 입력 후보 전체를 검증한 뒤

@@ -1,5 +1,12 @@
 #include <LVUI/ColorSelectionSurface.h>
 #include <LVUI/NativeColorChannel.h>
+#include <iiGUI/NativeColorChannelView.h>
+#include <iiGUI/ColorChannelSurface.h>
+#include <iiGUI/NativeColorSurfaceView.h>
+using ColorChannelTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
+using ColorChannelTestRamp=lvui::ColorChannelSurfaceBinding<ii::gui::BasicColorChannelSurface>;
+using ColorChannelTestSurface=lvui::native::ColorSurfaceBinding<ii::gui::BasicColorSurface,ii::gui::BasicNativeColorSurface>;
+using ColorChannelTestView=lvui::native::ColorChannelBinding<ii::gui::BasicNativeColorChannel,ColorChannelTestRamp,ColorChannelTestSurface,ColorChannelTestField>;
 #include <iiGUI/WidgetState.h>
 
 #include <cmath>
@@ -31,12 +38,12 @@ int main() {
     auto selection = std::make_shared<lvui::ColorSelection>(lvui::StyleColor{1, 0, 0, 1});
     auto source = std::make_shared<lvui::ColorSelectionSurface>(selection);
     lvui::native::ColorChannelInput input; input.source = source; input.channel = lvui::ColorChannel::red;
-    std::optional<lvui::native::NativeColorChannel> channel;
+    std::optional<ColorChannelTestView> channel;
     Widget other; std::vector<lvui::StyleColor> edited;
     good(host.set_content([&](WidgetBuilder& builder) -> ii::core::Result<void> {
         auto root = builder.vstack({}, "root", {.spacing = 12, .alignment = StackAlignment::leading});
         if (!root) return std::unexpected(root.error());
-        auto value = lvui::native::NativeColorChannel::create(builder, *root, "red", input,
+        auto value = ColorChannelTestView::create(builder, *root, "red", input,
             [&](lvui::StyleColor color) { edited.push_back(color); });
         if (!value) return std::unexpected(value.error()); channel = *value;
         auto button = builder.action_surface(*root, "other", {.text = "Other", .width = 60, .height = 22});

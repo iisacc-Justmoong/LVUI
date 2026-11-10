@@ -4,7 +4,7 @@
 
 상태: 채택한 스코프 기반 백엔드 설계의 가상 뷰 예제이다.
 소스는 [examples/Counter.lvui](examples/Counter.lvui)이다.
-`lvui-check`의 구문 검사 대상으로 검증한다. C++ 백엔드·이벤트·화면을 실행하는 예제는 아니다.
+`lvui-check`와 네이티브 코드 생성 대상으로 검사한다. C++ 백엔드·이벤트·화면을 실행하는 예제는 아니다.
 
 <a id="view-structure"></a>
 
@@ -85,7 +85,7 @@ Core의 `PropertyRead`, `PropertyInvoke`, `PropertyChange`를 구성 요소로 �
 
 별도 활성화는 0으로 초기화한 독립 카운터로 시작한다.
 
-제공된 `Column` 증가·초기화 예제는 [ReactiveState.md](ReactiveState.md)와
+제공된 `VStack` 증가·초기화 예제는 [ReactiveState.md](ReactiveState.md)와
 [examples/ReactiveCounter.lvui](examples/ReactiveCounter.lvui)에 별도로 기록한다.
 
 <a id="example-only-notation-assumptions"></a>

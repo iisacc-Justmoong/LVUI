@@ -1,4 +1,5 @@
 #include <LVUI/NativeLink.h>
+#include <iiGUI/NativeLinkView.h>
 #include "NativeOwnedLink.generated.h"
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
@@ -8,6 +9,7 @@
 #include <thread>
 #include <vector>
 
+namespace lvui::native { using NativeLink=LinkBinding<ii::gui::BasicLink,ii::gui::BasicNativeLink>; }
 namespace {
 void require(bool ok,const char* why){if(!ok)throw std::runtime_error(why);}
 bool near(double a,double b){return std::abs(a-b)<1e-5;}
@@ -29,6 +31,8 @@ ii::gui::Widget find(const std::shared_ptr<ii::gui::detail::WidgetState>& state,
     if(found==snapshots.end())throw std::runtime_error("Generated Link missing");return take(state->find(found->id));
 }
 void generated(){
+    std::string phase="mount";
+    try{
     using View=lvui_generated::NativeOwnedLink;
     auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(state->content_host({},"host",{400,180}));std::shared_ptr<View::Scope> scope;
@@ -37,15 +41,15 @@ void generated(){
     auto report=find(state,"/report"),child=find(state,"/child-link"),nested=find(state,"/nested");auto frame=take(state->drawing_snapshot({400,180}));
     require(has_text(frame,"Reports")&&has_text(frame,"Custom child")&&!has_text(frame,"Fallback")&&
         take(report.snapshot()).foreground_color&&near(take(report.snapshot()).foreground_color->red,.2),"Generated Link child, text or foreground state missing");
-    good(report.activate());auto& model=scope->backend_0;
+    phase="initial activation";good(report.activate());auto& model=scope->backend_0;
     require(model.navigator->requests.size()==1&&model.navigator->requests.back().href=="/reports"&&
         model.navigator->requests.back().params==model.params.get()&&model.events==std::vector<std::string>({"navigated:true","method:/reports","after","clicked"}),
         "Generated Link lost navigation or callback order");
-    auto router=std::make_shared<NativeOwnedLinkTarget>();auto page=std::make_shared<NativeOwnedLinkPage>();
+    phase="typed router";auto router=std::make_shared<NativeOwnedLinkTarget>();auto page=std::make_shared<NativeOwnedLinkPage>();
     model.router.set(router);model.page.set(page);model.events.clear();good(report.activate());
     require(router->requests.size()==1&&router->requests.back().target==page&&model.navigator->requests.size()==1,
         "Generated reactive router or typed page priority failed");
-    model.router.set({});model.page.set({});
+    phase="reactive options";model.router.set({});model.page.set({});
     model.href.set("/updated");model.text.set("Updated");model.replace.set(true);model.underline.set(false);model.color.set({.8,.3,.2,1});
     model.events.clear();good(report.activate());require(model.navigator->requests.back().href=="/updated"&&model.navigator->requests.back().replace&&
         model.events==std::vector<std::string>({"navigated:true","method:/updated","after","clicked"})&&
@@ -53,9 +57,9 @@ void generated(){
         take(report.snapshot()).foreground_color&&near(take(report.snapshot()).foreground_color->red,.8),
         "Generated reactive Link inputs did not update together");
     auto graph=scope->native_lifetime.lock();require(bool(graph),"Link binding graph missing");
-    model.href.set(std::string("bad\0path",8));require(!take(graph->failures()).empty(),"Invalid reactive route was accepted");
-    good(report.activate());require(model.navigator->requests.back().href=="/updated","Invalid route changed the live Link");
-    model.href.set("/recovered");require(take(graph->failures()).empty(),"Link did not recover after invalid route");
+    phase="invalid route";model.href.set(std::string("bad\0path",8));require(!take(graph->failures()).empty(),"Invalid reactive route was accepted");
+    phase="activation after rejection";good(report.activate());require(model.navigator->requests.back().href=="/updated","Invalid route changed the live Link");
+    phase="recovery";model.href.set("/recovered");require(take(graph->failures()).empty(),"Link did not recover after invalid route");
     model.enabled.set(false);const auto count=model.navigator->requests.size();good(report.activate());
     require(model.navigator->requests.size()==count&&take(report.snapshot()).foreground_color&&
         near(take(report.snapshot()).foreground_color->alpha,.6),"Disabled generated Link navigated or exposed the wrong color");
@@ -64,6 +68,7 @@ void generated(){
     model.show_nested.set(false);require(!nested.snapshot(),"Conditional Link did not retire");
     std::weak_ptr<View::Scope> weak=scope;good(host.clear_content());scope.reset();graph.reset();
     require(weak.expired()&&!report.snapshot(),"Generated Link retained a retired scope");state->close();
+    }catch(const std::exception& error){throw std::runtime_error(phase+": "+error.what());}
 }
 void action_and_lifetime(){
     auto state=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
@@ -116,4 +121,11 @@ void child_and_retirement(){
     link.reset();state->close();
 }
 }
-int main(){action_and_lifetime();child_and_retirement();generated();}
+int main(){
+    const auto run=[](const char* name,auto test){
+        try{test();}catch(const std::exception& error){throw std::runtime_error(std::string(name)+": "+error.what());}
+    };
+    run("action_and_lifetime",action_and_lifetime);
+    run("child_and_retirement",child_and_retirement);
+    run("generated",generated);
+}

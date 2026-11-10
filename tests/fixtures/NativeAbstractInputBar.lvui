@@ -1,0 +1,4 @@
+import vm NativeAbstractInputBarModel
+Window {
+    AbstractInputBar(id: "field", text: vm.text, placeholder: "Enter", width: 180)
+}

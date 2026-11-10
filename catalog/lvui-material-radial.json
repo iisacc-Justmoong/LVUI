@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "reference": "LVUI material radial fields",
+  "source": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=967-5",
+  "colorProfile": "SRGB",
+  "stops": [
+    {"position": 0, "color": "primary", "opacity": 1},
+    {"position": 0.38, "color": [0.08120492845773697, 0.5099760293960571, 1], "opacity": 0.55},
+    {"position": 0.72, "color": [0.08120492845773697, 0.5099760293960571, 1], "opacity": 0.13},
+    {"position": 1, "color": [0, 0, 0], "opacity": 0}
+  ],
+  "fields": [
+    {"centerX": [0.5, -129], "centerY": [0.5, -28], "radius": [200, 200], "strength": "intense"},
+    {"centerX": [0.5, 136], "centerY": [0.5, 62], "radius": [180, 180], "strength": "faint"},
+    {"centerX": [0, 48], "centerY": [0, 32], "radius": [200, 200], "strength": "intense"},
+    {"centerX": [1, -64], "centerY": [0, 40], "radius": [260, 150], "strength": "faint"},
+    {"centerX": [0, 0], "centerY": [0.5, 0], "radius": [140, 300], "strength": "faint"},
+    {"centerX": [1, 0], "centerY": [0.5, 0], "radius": [160, 300], "strength": "intense"},
+    {"centerX": [0.5, 0], "centerY": [1, 0], "radius": [380, 150], "strength": "faint"},
+    {"centerX": [0, 72], "centerY": [1, -40], "radius": [180, 180], "strength": "intense"}
+  ]
+}

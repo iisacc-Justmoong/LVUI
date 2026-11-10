@@ -1,0 +1,10 @@
+Application {
+    import vm NativeOwnedCodeEditorModel
+    ApplicationWindow(title: "UIKit Text", width: 640, height: 480) {
+        VStack {
+            InputField(id: "input", text: "한글", width: 240)
+            CodeEditor(id: "editor", model: vm.document, editor: vm.document,
+                       sourceRevision: vm.revision, width: 400, height: 180)
+        }
+    }
+}

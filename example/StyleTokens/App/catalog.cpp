@@ -4,7 +4,7 @@
 int main() {
     const auto& catalog = lvui::default_style_tokens();
     auto valid = catalog.validate();
-    if (!valid || catalog.tokens().size() != 208)
+    if (!valid || catalog.tokens().size() != 242)
         return 1;
     auto font = catalog.string("--lvrs-theme-typography-font-font-body");
     if (!font || *font != "Pretendard")
@@ -23,7 +23,11 @@ int main() {
         colors += token.selector.starts_with("Color.");
         metrics += token.selector.starts_with("Metric.");
     }
-    if (colors != 138 || metrics != 67)
+    if (colors != 168 || metrics != 71)
         return 5;
-    std::cout << "Installed LVUI catalog: 208 tokens, immutable overrides verified\n";
+    auto search = catalog.color("Color.icon.search");
+    auto icon_size = catalog.number("Metric.textFieldIconSize");
+    if (!search || !icon_size || *icon_size != 12 || search->red != 0.8078431487083435)
+        return 6;
+    std::cout << "LVUI catalog: 242 tokens, immutable overrides and search tokens verified\n";
 }

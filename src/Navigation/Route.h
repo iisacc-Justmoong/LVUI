@@ -103,7 +103,7 @@ public:
 
 struct RouteResolution final {
     bool matched=false;
-    std::size_t index=std::numeric_limits<std::size_t>::max();
+    std::size_t index=(std::numeric_limits<std::size_t>::max)();
     RouteParameters params;
 };
 struct RouteResolverState final {
@@ -125,7 +125,7 @@ class RouteResolver final {
     [[nodiscard]] ii::core::Result<void> owner()const {
         if(std::this_thread::get_id()!=owner_)return ii::core::fail(ii::core::ErrorCode::wrong_executor,"Route resolver requires its owner thread");return {};
     }
-    static void increment(std::uint64_t& value)noexcept {if(value!=std::numeric_limits<std::uint64_t>::max())++value;}
+    static void increment(std::uint64_t& value)noexcept {if(value!=(std::numeric_limits<std::uint64_t>::max)())++value;}
     void evict(){
         while(!recent_.empty()&&(cache_.size()>state_.cache_capacity||state_.cache_bytes>max_cache_bytes)){
             auto found=cache_.find(recent_.back());if(found!=cache_.end()){state_.cache_bytes-=found->second.cost;cache_.erase(found);}recent_.pop_back();
@@ -140,7 +140,7 @@ public:
         if(auto checked=owner();!checked)return checked;
         if(values.size()>max_patterns)return ii::core::fail(ii::core::ErrorCode::out_of_range,"Too many route patterns");
         if(values==source_)return {};
-        if(state_.revision==std::numeric_limits<std::uint64_t>::max())return ii::core::fail(ii::core::ErrorCode::out_of_range,"Route revision exhausted");
+        if(state_.revision==(std::numeric_limits<std::uint64_t>::max)())return ii::core::fail(ii::core::ErrorCode::out_of_range,"Route revision exhausted");
         std::vector<RoutePattern> prepared;prepared.reserve(values.size());std::size_t bytes=0,tokens=0;
         for(const auto& value:values){
             if(value.size()>max_source_bytes-bytes)return ii::core::fail(ii::core::ErrorCode::out_of_range,"Route pattern source budget exceeded");bytes+=value.size();
@@ -155,7 +155,7 @@ public:
         if(auto checked=owner();!checked)return checked;
         if(capacity>65536)return ii::core::fail(ii::core::ErrorCode::out_of_range,"Route cache capacity is too large");
         capacity=std::max<std::size_t>(16,capacity);if(capacity==state_.cache_capacity)return {};
-        if(state_.revision==std::numeric_limits<std::uint64_t>::max())return ii::core::fail(ii::core::ErrorCode::out_of_range,"Route revision exhausted");
+        if(state_.revision==(std::numeric_limits<std::uint64_t>::max)())return ii::core::fail(ii::core::ErrorCode::out_of_range,"Route revision exhausted");
         state_.cache_capacity=capacity;++state_.revision;evict();return {};
     }
     [[nodiscard]] ii::core::Result<std::shared_ptr<const RouteResolution>> resolve(std::string_view input){

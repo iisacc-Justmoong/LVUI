@@ -5,11 +5,11 @@
 아래는 현재 구현의 구성·타입·수명 계약이다.
 
 ```lvui
-let Pair(title: String): [View] = [
+const Pair(title: String): [View] = [
     Label(text: title),
     PushButton(text: "Run")
 ]
-let Panel(content: [View] = []): View = HStack {
+const Panel(content: [View] = []): View = HStack {
     content()
 }
 Window {

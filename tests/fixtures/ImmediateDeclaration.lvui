@@ -1,0 +1,96 @@
+import vm ImmediateDeclarationBackend
+let RandomString: () -> String = vm.randomString
+let sendPair: (Int, Int) -> Void = vm.recordPair
+let greater: (Int, Int) -> Bool = vm.greater
+let random = vm.icon
+let Action: View = PushButton(text: "Nested")
+@State var expanded: Bool = false
+Window {
+    HStack(id: toolbar) {
+        gap: Metric.space8,
+        HStack() { VStack() },
+        HStack(id: viewArgParent) {
+            VStack(id: viewArgChild),
+            ZStack(id: viewArgSibling),
+        },
+        IconButton(id: button, label: RandomString(), icon: random) {
+            onClick: vm.activate()
+        },
+        PushButton(id: amountButton, text: "Add", onClick: vm.add(vm.increment)),
+        PushButton(id: factoryButton, text: "Factory", onClick: callback(vm.makeHandler(vm.increment))),
+        Action(id: nested, onClick: vm.activate()),
+        PushButton(id: orderButton, text: "Order", onClick: {
+            vm.recordPair(vm.next(1), vm.next(2))
+            vm.saveComputation(vm.next(3) * 10 + vm.next(4))
+            vm.saveComparison(vm.next(5) > vm.next(6))
+        }),
+        PushButton(id: queryButton, text: "Query", onClick: {
+            query(vm.queryPort(), vm.next(8) + vm.next(9))
+        }),
+        PushButton(id: typedOrderButton, text: "Typed order", onClick: {
+            sendPair(vm.next(10), vm.next(11))
+            if (greater(vm.next(12), vm.next(13))) { vm.saveComparison(true) }
+            else { vm.saveComparison(false) }
+            vm.saveChosen(vm.pick(vm.next(14), vm.next(15)).id)
+        }),
+        PushButton(id: flowButton, text: "Flow", onClick: {
+            if (expanded) {
+                vm.record(7)
+                vm.record(9)
+                return
+            }
+            for (item in vm.readItems()) {
+                if (!item.enabled) { continue } else if (item.id == 4) { break }
+                vm.record(item.id)
+            }
+            vm.record(42)
+        }),
+        PushButton(id: nestedFlowButton, text: "Nested flow", onClick: {
+            for (outer in [1, 2]) {
+                for (inner in [1, 2, 3]) {
+                    if (inner == 1) { continue }
+                    if (inner == 3) { break }
+                    vm.record(outer * 10 + inner)
+                }
+                vm.record(outer)
+            }
+        }),
+        PushButton(id: scriptButton, text: "Open", onClick: {
+            expanded = true
+            vm.didOpen(expanded)
+        }),
+        PushButton(id: retireButton, text: "Close", onClick: {
+            for (item in [1, 2, 3]) {
+                vm.retire()
+                vm.afterRetire()
+                vm.afterRetire()
+            }
+            vm.afterRetire()
+        }),
+        PushButton(id: conditionRetireButton, text: "Close in condition", onClick: {
+            if (vm.retireAndTrue() && vm.afterRetireTrue()) { vm.afterRetire() }
+            vm.afterRetire()
+        }),
+        PushButton(id: sourceRetireButton, text: "Close in source", onClick: {
+            for (item in vm.retireItems()) { vm.afterRetire() }
+            vm.afterRetire()
+        }),
+        PushButton(id: argumentRetireButton, text: "Close in argument", onClick: {
+            vm.recordPair(vm.retireAndReturnInt(), vm.afterRetireValue())
+            vm.afterRetire()
+        }),
+        PushButton(id: queryRetireButton, text: "Close in query", onClick: {
+            query(vm.queryPort(), vm.retireAndReturnInt() + vm.afterRetireValue())
+        }),
+        ZStack(id: layers, width: 80, height: 40, alignment: .topLeading) {
+            VStack(id: column, width: 30, height: 20, spacing: 0, alignment: .leading) {
+                HStack(id: upper, width: 10, height: 5) {}
+                HStack(id: lower, width: 10, height: 5) {}
+            },
+            HStack(id: row, width: 30, height: 20, spacing: 0, alignment: .top) {
+                VStack(id: left, width: 10, height: 5) {}
+                VStack(id: right, width: 10, height: 5) {}
+            }
+        }
+    }
+}

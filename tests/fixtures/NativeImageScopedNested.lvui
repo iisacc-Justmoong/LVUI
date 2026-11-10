@@ -1,0 +1,11 @@
+import vm NativeImageLoaderViewsModel
+Window {
+    VStack {
+        if (vm.show) {
+            VStack {
+                import local NativeImageLoaderViewsModel
+                Image(id: "nested", source: "fixture.svg", width: 20, height: 10)
+            }
+        }
+    }
+}

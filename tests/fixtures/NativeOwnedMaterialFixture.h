@@ -1,6 +1,7 @@
 #pragma once
 #include <LVUI/Material.h>
 #include <iiGUI/Appearance.h>
+#include <iiGUI/NativeWidgets.h>
 #include <iiSDKCore/Core/Property/Observable.h>
 #include <string>
 struct NativeOwnedMaterialModel final {
@@ -11,4 +12,5 @@ struct NativeOwnedMaterialModel final {
     ii::core::Observable<bool> enabled{true};
     ii::core::Observable<std::string> outline{std::string{}};
     ii::core::Observable<lvui::Motion> motion{lvui::Motion{}};
+    ii::core::Observable<ii::gui::Widget> source{ii::gui::Widget{}};
 };

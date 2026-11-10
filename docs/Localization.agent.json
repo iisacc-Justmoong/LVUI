@@ -1,0 +1,444 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:77370ba9e9dd2440066e5232316ee2c51ab847cc782c4358c47fe3e5b051b28f",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/Localization.md",
+    "sha256": "0ccc10791fa8f148308e1028c1f235e9c1ca71b7a60bf30dcfb02dcb306b17d2",
+    "bytes": 8114,
+    "line_count": 114,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "앱 문자열 저장소와 현지화 계약",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 앱 문자열 저장소와 현지화 계약\n",
+      "level": 1,
+      "title": "앱 문자열 저장소와 현지화 계약"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 7,
+      "raw": "사용자에게 표시할 문자열은 `.lvui`에서 `localized(\"키\")`로 참조하고 앱의\n`AppStrings`에 언어별 키·값으로 보관한다. 각 앱은 별도 저장소를 소유하며 하나의\n앱에 속한 Scene과 뷰 활성화는 같은 저장소를 공유한다. 명시적으로 같은 저장소를\n주입한 다른 호스트는 의도적으로 공유할 수 있다. 지역화 대상이 아닌 리터럴,\n사용자가 입력한 값, 식별자는 자동 번역하거나 임의로 추출하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 13,
+      "raw": "저장소는 선택 언어의 정확한 태그, 상위 태그, 기본 언어의 같은 순서로 키를 찾는다.\n예를 들어 `ko-KR`은 `ko-kr`, `ko`, 기본 언어의 순서이다. 태그는 ASCII 대소문자를\n구분하지 않으며 단순 하이픈 구분 태그를 받는다. 키가 없으면 키 자체를 표시하고,\n빈 문자열은 번역이 존재하는 값이다. 복수형·문법 성별·날짜/숫자 형식 변환이나\n운영체제 언어 자동 감지는 이 문자열 카탈로그가 추측하지 않는다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 14,
+      "end_line": 14,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 15,
+      "end_line": 19,
+      "raw": "언어 교체와 특정 키의 실행 중 대입은 UI 소유 스레드에서 수행하고 같은 앱의 활성\n바인딩에 반영한다. `const title: String = localized(\"title\")`은 반응형이며\n`@Static const`와 저장형 `var`는 기존 뷰 세션 계약에 따라 초기값을 보존한다. 이벤트의\n`setLocale(\"ko\")`와 `setString(\"title\", \"새 제목\")`은 각각 현재 언어와 그 언어의\n문자열을 변경한다. C++ 앱은 주입한 저장소의 같은 메서드를 직접 사용할 수 있다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 21,
+      "end_line": 27,
+      "raw": "외부 UTF-8 JSON 파일은 `{\"locale\":\"en\",\"strings\":{\"title\":\"Title\"}}` 형태이다.\n키는 각 카탈로그에서 고유하고 값은 문자열이어야 한다. 앱은 형식과 저장소를\n`StringCatalogCodec` 및 `StringCatalogStorage` 콜백으로 제공한다. 예제 앱은\n직접 iiJson과 iiFileProvider를 조합하며 잘못된 JSON 전체를 거부한다. LVUI는\n반환된 언어·키·값을 다시 검증하며 실패할 때 기존 카탈로그를 유지한다. 저장은 명시적으로\n호출할 때만 수행하고, 언어 전환이나 뷰 갱신이 원본 파일을 자동으로 수정하지 않는다.\n파일 경로와 배포 위치, 권한 및 파일 변경을 언제 다시 읽을지는 앱이 결정한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 30,
+      "raw": "조회·파일 크기 및 카탈로그 수는 유한하며, 오류와 누락은 빈 성공값으로 위장하지\n않는다. 구체적인 사용 예제, 빌드 의존성 및 검증 범위는 구현과 함께 유지한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 31,
+      "end_line": 31,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "heading",
+      "start_line": 32,
+      "end_line": 32,
+      "raw": "## 선언과 외부 파일\n",
+      "level": 2,
+      "title": "선언과 외부 파일"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "fenced_code",
+      "start_line": 34,
+      "end_line": 48,
+      "raw": "```lvui\nWindow {\n    const title: String = localized(\"counter.heading\")\n    var count: Int = 0\n    VStack {\n        Label(text: title)\n        Label(text: count)\n        PushButton(text: localized(\"counter.increment\"), onClick: { count = count + 1 })\n        PushButton(text: localized(\"language.korean\"), onClick: setLocale(\"ko-KR\"))\n        PushButton(text: localized(\"counter.replace\"), onClick: {\n            setString(\"counter.heading\", localized(\"counter.replacement\"))\n        })\n    }\n}\n```\n",
+      "language": "lvui",
+      "code": "Window {\n    const title: String = localized(\"counter.heading\")\n    var count: Int = 0\n    VStack {\n        Label(text: title)\n        Label(text: count)\n        PushButton(text: localized(\"counter.increment\"), onClick: { count = count + 1 })\n        PushButton(text: localized(\"language.korean\"), onClick: setLocale(\"ko-KR\"))\n        PushButton(text: localized(\"counter.replace\"), onClick: {\n            setString(\"counter.heading\", localized(\"counter.replacement\"))\n        })\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 49,
+      "end_line": 49,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 50,
+      "end_line": 55,
+      "raw": "`localized`의 키는 문자열 식이다. 키 자체도 반응형 값일 수 있다.\n[전체 예제](../example/GettingStarted/LocalizedCounter.lvui)와\n[영어](../example/GettingStarted/resources/strings/en.json),\n[한국어](../example/GettingStarted/resources/strings/ko.json) 카탈로그는 실제 생성\n코드와 같은 계약을 사용한다. 지역화된 문자열은 Label 이외의 String 입력과 창\n제목에도 사용할 수 있다. 식별자 등 컴파일 시 고정되어야 하는 입력은 예외이다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 60,
+      "raw": "`setString`은 현재 선택한 정확한 태그의 카탈로그를 갱신한다. 예를 들어 `ko-KR`에서\n부모 `ko`의 값을 읽고 있다면 `ko-kr`에 덮어쓰기를 만들며 `ko` 자체는 바꾸지 않는다.\n`save_string_catalog(strings, \"ko-kr\", path, storage, codec)`는 해당 카탈로그만 저장한다.\n선택 언어에 해당 파일이 없더라도 부모·기본 언어가 검색된다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "heading",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "## 앱 시작과 파일 IO\n",
+      "level": 2,
+      "title": "앱 시작과 파일 IO"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 66,
+      "raw": "기본 `BackendFactories`로 생성한 Application은 빈 `AppStrings`를 만들고 그 Scene에\n전파한다. 카탈로그가 없을 때는 키가 표시된다. 여러 별도 생성 뷰를 한 앱 저장소에\n연결하거나 시작 전에 파일을 읽으려면 다음과 같이 같은 인스턴스를 주입한다.\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "fenced_code",
+      "start_line": 68,
+      "end_line": 78,
+      "raw": "```cpp\nauto strings = std::make_shared<lvui::native::AppStrings>();\nauto storage = lvui_example::catalog_storage(); // 앱이 파일 공급자를 조합한다\nauto codec = lvui_example::catalog_codec();     // 앱이 JSON 구현을 조합한다\nif (auto loaded = lvui::native::load_string_catalog(*strings, resources / \"en.json\", storage, codec); !loaded)\n    return loaded;\nif (auto loaded = lvui::native::load_string_catalog(*strings, resources / \"ko.json\", storage, codec); !loaded)\n    return loaded;\nauto factories = lvui::native::BackendFactories{}.with_app_strings(strings);\nreturn GeneratedApp::configure_application(app, {}, factories);\n```\n",
+      "language": "cpp",
+      "code": "auto strings = std::make_shared<lvui::native::AppStrings>();\nauto storage = lvui_example::catalog_storage(); // 앱이 파일 공급자를 조합한다\nauto codec = lvui_example::catalog_codec();     // 앱이 JSON 구현을 조합한다\nif (auto loaded = lvui::native::load_string_catalog(*strings, resources / \"en.json\", storage, codec); !loaded)\n    return loaded;\nif (auto loaded = lvui::native::load_string_catalog(*strings, resources / \"ko.json\", storage, codec); !loaded)\n    return loaded;\nauto factories = lvui::native::BackendFactories{}.with_app_strings(strings);\nreturn GeneratedApp::configure_application(app, {}, factories);\n",
+      "closed": true
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 80,
+      "end_line": 84,
+      "raw": "완전한 시작 코드는 [LocalizedApplication.cpp](../example/GettingStarted/App/LocalizedApplication.cpp),\n선언은 [LocalizedApplication.lvui](../example/GettingStarted/LocalizedApplication.lvui)이다.\n`lvui_add_application`의 `CONFIGURE_SOURCE`에 이와 같은 C++ 시작 파일을 전달하면\n기본 시작 코드 대신 이 파일을 사용한다. 예제 빌드는 원본 `resources/strings`를\n참조하며 배포할 때 앱이 실제 번들·사용자 저장소의 경로를 제공해야 한다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 85,
+      "end_line": 85,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 86,
+      "end_line": 95,
+      "raw": "문자열 저장소 자체는 `LVUI::Native`에 포함된다. 선택적 `LVUI::Localization`은\n저장·형식 콜백 계약만 노출하며 iiSDKCore 외 SDK를 링크하거나 검색하지 않는다.\n앱은 [예제 어댑터](../example/GettingStarted/App/StringCatalogAdapters.h)처럼\niiJson과 iiFileProvider를 직접 조합하거나 다른 구현을 제공한다. 설치 소비자는\n`find_package(LVUI CONFIG REQUIRED COMPONENTS Native Localization)` 후\n`LVUI::Localization`을 링크한다.\n파일을 바깥에서 수정한 뒤 `load_string_catalog`를 다시 호출하면 활성 뷰가 갱신된다.\n`save_string_catalog`는 전달된 쓰기 콜백을 사용하며 원자적 저장과 충돌 정책은\n앱의 파일 공급자가 보장한다. 외부 편집자와의 내용 충돌은 자동 병합하지 않는다. 충돌 감지가 필요하면\n`encode_string_catalog`의 결과와 iiFileProvider의 명시적 `File::update`를 사용한다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "heading",
+      "start_line": 97,
+      "end_line": 97,
+      "raw": "## 경계와 검사\n",
+      "level": 2,
+      "title": "경계와 검사"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "list",
+      "start_line": 99,
+      "end_line": 114,
+      "raw": "- 언어 태그는 최대 63바이트, 하이픈으로 구분된 ASCII 영숫자 항목은 각각 최대 8자이다.\n  키는 최대 512바이트, 값은 최대 65536바이트이며 NUL과 잘못된 UTF-8을 거부한다.\n- 카탈로그당 최대 10000개 키와 8MiB, 앱당 최대 128개 언어와 총 32MiB이다.\n  원본과 출력도 각각 8MiB 이하여야 한다. 예제 JSON 어댑터는 중복 키, 예상 밖\n  필드와 비문자열 값을 거부한다. LVUI는 언어·키·값 및 UTF-8을 독립적으로 검증한다.\n- 저장소와 그에 연결된 뷰는 같은 UI 소유 스레드에서 수정한다. 파일 읽기·저장은\n  동기식이다. 큰 파일은 작업자에서 읽고 `decode_string_catalog`로 검증한 다음\n  UI 영역에서 `replace_catalog`를 호출할 수 있다. 변경 알림을 받는 사용자 코드가\n  예외를 던진 경우 저장소의 변경은 이미 확정되었을 수 있다.\n- 별도 앱이 같은 `AppStrings` 포인터를 명시적으로 받으면 상태도 공유한다.\n  서로 독립적인 앱에는 다른 인스턴스를 전달한다. 수신 중인 뷰가 퇴역하면 기존\n  바인딩 수명 계약에 따라 갱신이 중단된다.\n- `LVUI.Localization.Storage`, `LVUI.Localization.Ports`, `LVUI.Localization.Catalog`,\n  `LVUI.Localization.Generated`, `LVUI.ViewSessions.localization`은 언어 대체,\n  외부 파일 왕복·재적재, 잘못된 파일의 롤백, 여러 창·Scene 및 실제 생성 C++를\n  헤드리스로 검사한다. OS 언어 선택기와 플랫폼 화면 실행을 의미하지 않는다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "언어 태그는 최대 63바이트, 하이픈으로 구분된 ASCII 영숫자 항목은 각각 최대 8자이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "카탈로그당 최대 10000개 키와 8MiB, 앱당 최대 128개 언어와 총 32MiB이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "저장소와 그에 연결된 뷰는 같은 UI 소유 스레드에서 수정한다. 파일 읽기·저장은",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "별도 앱이 같은 `AppStrings` 포인터를 명시적으로 받으면 상태도 공유한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`LVUI.Localization.Storage`, `LVUI.Localization.Ports`, `LVUI.Localization.Catalog`,",
+          "checked": null
+        }
+      ]
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "앱 문자열 저장소와 현지화 계약",
+      "anchor": "앱-문자열-저장소와-현지화-계약",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000013",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "선언과 외부 파일",
+      "anchor": "선언과-외부-파일",
+      "start_line": 32
+    },
+    {
+      "block_id": "b000021",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "앱 시작과 파일 IO",
+      "anchor": "앱-시작과-파일-io",
+      "start_line": 62
+    },
+    {
+      "block_id": "b000031",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "경계와 검사",
+      "anchor": "경계와-검사",
+      "start_line": 97
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 7,
+        "text": "사용자가 입력한 값, 식별자는 자동 번역하거나 임의로 추출하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 13,
+        "text": "운영체제 언어 자동 감지는 이 문자열 카탈로그가 추측하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "호출할 때만 수행하고, 언어 전환이나 뷰 갱신이 원본 파일을 자동으로 수정하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 84,
+        "text": "참조하며 배포할 때 앱이 실제 번들·사용자 저장소의 경로를 제공해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 87,
+        "text": "저장·형식 콜백 계약만 노출하며 iiSDKCore 외 SDK를 링크하거나 검색하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 90,
+        "text": "`find_package(LVUI CONFIG REQUIRED COMPONENTS Native Localization)` 후",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 94,
+        "text": "앱의 파일 공급자가 보장한다. 외부 편집자와의 내용 충돌은 자동 병합하지 않는다. 충돌 감지가 필요하면",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 114,
+        "text": "헤드리스로 검사한다. OS 언어 선택기와 플랫폼 화면 실행을 의미하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000017",
+        "label": "전체 예제",
+        "target": "../example/GettingStarted/LocalizedCounter.lvui",
+        "kind": "relative",
+        "line": 51
+      },
+      {
+        "block_id": "b000017",
+        "label": "영어",
+        "target": "../example/GettingStarted/resources/strings/en.json",
+        "kind": "relative",
+        "line": 52
+      },
+      {
+        "block_id": "b000017",
+        "label": "한국어",
+        "target": "../example/GettingStarted/resources/strings/ko.json",
+        "kind": "relative",
+        "line": 53
+      },
+      {
+        "block_id": "b000027",
+        "label": "LocalizedApplication.cpp",
+        "target": "../example/GettingStarted/App/LocalizedApplication.cpp",
+        "kind": "relative",
+        "line": 80
+      },
+      {
+        "block_id": "b000027",
+        "label": "LocalizedApplication.lvui",
+        "target": "../example/GettingStarted/LocalizedApplication.lvui",
+        "kind": "relative",
+        "line": 81
+      },
+      {
+        "block_id": "b000029",
+        "label": "예제 어댑터",
+        "target": "../example/GettingStarted/App/StringCatalogAdapters.h",
+        "kind": "relative",
+        "line": 88
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

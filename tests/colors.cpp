@@ -9,6 +9,10 @@ void inputs(){
     check(code.find(".color = ii::gui::WidgetColor{")!=code.npos,"Typed Color default did not generate native color");
     auto nested=compile("import vm Backend\nlet Inner(ink: Color): View = Label(color: ink)\nlet Outer(ink: Color): View = Inner(ink: ink)\nWindow { Outer(ink: vm.color) }");
     check(nested.find("set_label_color")!=nested.npos,"Forwarded reactive Color lost its native setter");
+    auto panel=compile("import vm Backend\nWindow { VStack(backgroundColor: vm.color, borderColor: \"#ffffff\", borderWidth: 1) {} }");
+    check(panel.find("bind_panel_colors<ii::gui::PanelPainter>")!=panel.npos&&panel.find("ii::gui::PanelColors{")!=panel.npos&&
+          panel.find("LVUI/NativeWidgetColors.h")!=panel.npos&&panel.find("drawing->panels.push_back")==panel.npos,
+          "Reactive panel painting was not delegated to iiGUI");
     const auto link=lvui::compile_native("import vm Backend\nWindow { Link(linkColor: vm.ink) }",{.framework="iiGUI"});
     check(link&&link->find(".palette.link = lvui::native::link_color(lvui::native::color<ii::gui::WidgetColor>(")!=link->npos,"A Link Color input bypassed native color normalization");
 }

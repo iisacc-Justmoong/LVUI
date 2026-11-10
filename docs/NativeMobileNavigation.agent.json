@@ -1,0 +1,236 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:fd2b5325a7e55d92269351eef22a438b5aea9462ff16418343c948497fb48f59",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeMobileNavigation.md",
+    "sha256": "e3c9591b21ef49bf15c24444f4b6b8153d9210b0c9cd636d512a2ff22fc33ec1",
+    "bytes": 4522,
+    "line_count": 67,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "모바일 탐색 컴포넌트",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 모바일 탐색 컴포넌트\n",
+      "level": 1,
+      "title": "모바일 탐색 컴포넌트"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 8,
+      "raw": "Society의 모바일 탭과 Dreamscapes의 모바일 탐색은 안정적인 키를 가진 항목,\n접근성 이름과 아이콘, 현재 선택, 사용자 활성화 및 하단 안전 영역을 사용한다.\nDreamscapes는 독립된 검색 동작도 사용한다. 선택은 앱이 소유할 수 있으며\n자동 선택을 끄면 활성화가 기존 선택을 바꾸지 않는다. 외부 선택 변경은 사용자\n활성화 이벤트를 발생시키지 않는다. `MobileNavigationBar`와 `MobileTabBar`는\n애플리케이션에서 제공한 모델을 구독하고 실제 변경된 항목만 갱신한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 17,
+      "raw": "시각적 기본값은 Figma LVUI의 모바일 탐색 항목과 공통 패널·텍스트 토큰을 따른다.\n아이콘은 LVUI의 내장 아이콘 카탈로그를 사용한다. 좁은 화면에서도 터치 영역을\n유지하며 항목 영역을 가로로 스크롤한다. 창의 안전 영역 값은 호스트 또는 앱이\n전달한다. 키보드 포커스 표시는 현재 창의 악센트 토큰을 따른다. 모델은\n애플리케이션의 C++ `std::vector<MobileNavigationItem>`이며\n검색은 별도의 선택적 항목이다. 항목은 최대 5개이며 키와 아이콘 이름, 표시 문구\n또는 접근성 이름이 필요하다. 인접 항목의 활성화, 외부 선택과 선택 항목의 가시성은\n주기 검사 없이 갱신된다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 18,
+      "end_line": 18,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 19,
+      "end_line": 27,
+      "raw": "```lvui\nimport vm NavigationModel\nWindow {\n    MobileNavigationBar(model: vm.items, search: vm.searchItem,\n        currentIndex: vm.current, autoSelect: false, width: vm.width,\n        bottomSafeInset: vm.safeInset, onActivated: vm.activate,\n        onSearchRequested: vm.search)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm NavigationModel\nWindow {\n    MobileNavigationBar(model: vm.items, search: vm.searchItem,\n        currentIndex: vm.current, autoSelect: false, width: vm.width,\n        bottomSafeInset: vm.safeInset, onActivated: vm.activate,\n        onSearchRequested: vm.search)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 29,
+      "end_line": 33,
+      "raw": "뷰모델은 `ii::core::Observable<std::vector<lvui::MobileNavigationItem>>`과\n`ii::core::Observable<std::optional<lvui::MobileNavigationItem>>`을 제공한다. 선택을\n외부에서 관리할 때 `activate(int)`는 요청만 처리하고 실제 선택을 `current`에\n반영한다. `MobileTabBar`도 동일한 타입의 모델을 받으며 검색을 생략할 수 있다.\nPython에서는 `ii_lvui.compile_native`로 동일한 선언을 AOT 컴파일한다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 35,
+      "end_line": 40,
+      "raw": "두 선언형 타입의 배치·입력·배지·선택 모션과 위젯 수명은 iiGUI가 소유하며,\nLVUI는 Figma 디자인 토큰과 독립 바인딩을 제공한다. 반투명 재질·배지와 움직이는\n선택 표시는 [모션 계약](MobileTabEffects.md)을 따른다. 최소화와 원본 앱의 테스트용\n객체 이름 계약은 아직 구현하지 않았다. 항목의 키가 이동하면 포커스는 같은 키를 따라가지만 물리적\n위젯 슬롯은 인덱스로 재사용한다. 플랫폼 실기기 실행이나 모든 애니메이션 상태는\n검증하지 않았다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 42,
+      "end_line": 42,
+      "raw": "퇴역하면 선택 콜백과 아이콘 캐시를 반환하며 진행 중인 변경은 오래된 상태를 게시하지 않는다. macOS arm64의 헤드리스 검사와 독립 설치 소비자 검사는 모바일 실기기 표시 검증을 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "## 독립 모바일 탭\n",
+      "level": 2,
+      "title": "독립 모바일 탭"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 52,
+      "raw": "`MobileTab`과 `MobileNavigationTab`은 앱이 개별적으로 배치할 수 있는 iiGUI 탭이다.\n두 타입은 탐색 막대와 아이콘·레이블·배지 그리기 구현을 공유하며 `iconName`은\n필수이다. `text`, `badge`, `badgeDot`, `badgeAccessibilityName`, `selected`, `enabled`,\n`showLabel`, `drawSelection`, `platformStyle`, `width`, `height`, `iconSource`,\n`iconRevision`, `focusColor`, `motionEnabled`, `accessibilityName`, `onClick`을 받는다.\n선택 여부는 바인딩한 C++ 뷰모델이 소유하고 클릭은 요청으로 전달한다. 아이콘만\n표시할 때 접근성 이름을 생략하면 아이콘 이름을 사용한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 53,
+      "end_line": 53,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 54,
+      "end_line": 60,
+      "raw": "```lvui\nimport vm NavigationModel\nWindow {\n    MobileTab(iconName: \"home\", text: vm.label, selected: vm.selected,\n              badge: vm.badge, onClick: vm.activate)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm NavigationModel\nWindow {\n    MobileTab(iconName: \"home\", text: vm.label, selected: vm.selected,\n              badge: vm.badge, onClick: vm.activate)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 62,
+      "end_line": 67,
+      "raw": "상태가 바뀐 동안에만 전환 프레임을 요청하며 비활성화하면 예약된 프레임을 취소한다.\n시스템이 동작을 줄이도록 설정하면 전환을 중단한다. 입력 변경은 기존 위젯의 상태를 갱신하고,\n퇴역 시 아이콘·콜백·모션 참조를 해제한다. macOS arm64의 창 없는 생성·입력·배지·\n수명·프레임 검사만 수행했으며 모바일 실기기 외형 검증은 아직 없다.\n아이콘 원천의 조회 중 새 입력이 재진입하면 이전 조회 결과를 적용하지 않으며,\n조회 중 위젯이 퇴역하면 결과를 게시하지 않고 닫힘을 반환한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "모바일 탐색 컴포넌트",
+      "anchor": "모바일-탐색-컴포넌트",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "독립 모바일 탭",
+      "anchor": "독립-모바일-탭",
+      "start_line": 44
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000013",
+        "line": 42,
+        "text": "퇴역하면 선택 콜백과 아이콘 캐시를 반환하며 진행 중인 변경은 오래된 상태를 게시하지 않는다. macOS arm64의 헤드리스 검사와 독립 설치 소비자 검사는 모바일 실기기 표시 검증을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000017",
+        "line": 48,
+        "text": "필수이다. `text`, `badge`, `badgeDot`, `badgeAccessibilityName`, `selected`, `enabled`,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "모션 계약",
+        "target": "MobileTabEffects.md",
+        "kind": "relative",
+        "line": 37
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

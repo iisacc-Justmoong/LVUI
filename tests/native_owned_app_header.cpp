@@ -1,7 +1,9 @@
-#include <LVUI/NativeAppHeader.h>
+#include <iiGUI/NativeAppHeaderView.h>
 #include "NativeOwnedAppHeader.generated.h"
+#include <LVUI/StyleTokens.h>
 #include <iiGUI/WidgetState.h>
 #include <algorithm>
+#include <cmath>
 #include <memory>
 #include <optional>
 #include <stdexcept>
@@ -12,11 +14,11 @@ template<class T>T take(ii::core::Result<T> value){if(!value)throw std::runtime_
 void good(ii::core::Result<void> value){if(!value)throw std::runtime_error(value.error().message);}
 void retained_actions(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,180}));lvui::AppHeaderConfiguration config;
+    auto outer=take(tree->content_host({},"outer",{640,180}));ii::gui::AppHeaderOptions config;
     config.title="Project";config.subtitle="Editor";config.menu_visible=true;int menus=0;
-    std::optional<lvui::native::NativeAppHeader> header;ii::gui::Widget action;
+    std::optional<ii::gui::NativeAppHeader> header;ii::gui::Widget action;
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
-        auto created=lvui::native::NativeAppHeader::create(builder,{},"header",config,[&]{++menus;});
+        auto created=ii::gui::NativeAppHeader::create(builder,{},"header",config,[&]{++menus;});
         if(!created)return std::unexpected(created.error());header=*created;
         auto child=builder.action_surface(header->actions_root(),"action",{.text="Export",.minimum_height=28},{});
         if(!child)return std::unexpected(child.error());action=*child;return {};
@@ -37,26 +39,49 @@ void retained_actions(){
 }
 void generated(){
     using View=lvui_generated::NativeOwnedAppHeader;
-    auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,180}));std::shared_ptr<View::Scope> scope;
-    good(outer.set_content([&](auto& builder){return View::build(builder,{}, {},&scope);}));
-    const auto find=[&](std::string_view suffix){auto nodes=take(tree->snapshots());auto found=std::ranges::find_if(nodes,[&](const auto& node){return node.id.ends_with(suffix);});
+    ii::gui::detail::WidgetFrameHooks hooks;
+    hooks.window_geometry=[](const ii::gui::WindowGeometry&)->ii::core::Result<void>{return {};};
+    auto tree=std::make_shared<ii::gui::detail::WidgetState>(
+        [](ii::runtime::Task task){task();},View::appearance(),std::move(hooks));
+    std::shared_ptr<View::Scope> scope;
+    good(tree->construct([&](auto& builder){return View::build(builder,{}, {},&scope);}));
+    good(tree->commit_window_properties());
+    tree->commit_publication();
+    const auto find=[&](std::string_view suffix){auto nodes=take(tree->snapshots());auto found=std::ranges::find_if(nodes,[&](const auto& node){
+        return node.id.ends_with(suffix)||(suffix.starts_with('/')&&node.id==suffix.substr(1));});
         if(found==nodes.end())throw std::runtime_error("Generated header widget missing");return take(tree->find(found->id));};
     auto menu=find("/header/@menu"),action=find("/action");good(menu.activate());
     require(scope->backend_0.menu_count==1&&take(action.snapshot()).text=="Action","Generated header menu or action failed");
+    good(menu.focus());const auto menu_bounds=take(menu.snapshot()).bounds;
+    const auto focus_color=[&](){
+        auto frame=take(tree->drawing_snapshot({640,180}));
+        const auto find_stroke=[&](const auto& panels)->std::optional<ii::gui::Color>{
+            for(const auto& panel:panels)if(panel.bounds==menu_bounds&&panel.stroke_width>0)return panel.top;
+            return {};
+        };
+        if(auto color=find_stroke(frame.panels))return *color;
+        for(const auto& layer:frame.overlays)if(auto color=find_stroke(layer.panels))return *color;
+        throw std::runtime_error("Generated header focus ring is missing");
+    };
+    const auto blue=focus_color();scope->backend_0.accent.set("green");const auto green=focus_color();
+    const auto linear=[](double c){return float(c<=.04045?c/12.92:std::pow((c+.055)/1.055,2.4));};
+    const auto expected=lvui::figma_defaults::accent_green_default;
+    require(std::abs(green.red-linear(expected.red))<1e-5f&&std::abs(green.green-linear(expected.green))<1e-5f&&
+            std::abs(green.blue-linear(expected.blue))<1e-5f&&green!=blue&&action.snapshot(),
+            "Header did not update its focus color when the Window accent changed");
     scope->backend_0.compact.set(true);scope->backend_0.title.set("Updated title");scope->backend_0.subtitle.set("");
     auto graph=scope->native_lifetime.lock();require(graph&&take(graph->failures()).empty()&&action.snapshot(),"Reactive header update lost its action");
     auto frame=take(tree->drawing_snapshot({640,180}));const auto contains=[](const auto& runs){return std::ranges::any_of(runs,[](const auto& item){return item.text=="Updated title";});};
     require(contains(frame.texts)||std::ranges::any_of(frame.overlays,[&](const auto& layer){return contains(layer.texts);}),"Generated header title did not update");
-    std::weak_ptr<View::Scope> weak=scope;good(outer.clear_content());scope.reset();graph.reset();
-    require(weak.expired()&&!action.snapshot()&&!menu.snapshot(),"Retired header retained its generated scope");tree->close();
+    std::weak_ptr<View::Scope> weak=scope;tree->close();scope.reset();graph.reset();
+    require(weak.expired()&&!action.snapshot()&&!menu.snapshot(),"Retired header retained its generated scope");
 }
 void reentry_and_exception(){
     auto tree=std::make_shared<ii::gui::detail::WidgetState>([](ii::runtime::Task task){task();});
-    auto outer=take(tree->content_host({},"outer",{640,180}));lvui::AppHeaderConfiguration config;config.title="Original";
-    std::optional<lvui::native::NativeAppHeader> header;ii::gui::Widget action;bool throw_cancel=false,reentered=false;
+    auto outer=take(tree->content_host({},"outer",{640,180}));ii::gui::AppHeaderOptions config;config.title="Original";
+    std::optional<ii::gui::NativeAppHeader> header;ii::gui::Widget action;bool throw_cancel=false,reentered=false;
     good(outer.set_content([&](auto& builder)->ii::core::Result<void>{
-        auto created=lvui::native::NativeAppHeader::create(builder,{},"header",config);if(!created)return std::unexpected(created.error());header=*created;
+        auto created=ii::gui::NativeAppHeader::create(builder,{},"header",config);if(!created)return std::unexpected(created.error());header=*created;
         auto child=builder.action_surface(header->actions_root(),"action",{.text="Action",.minimum_width=100,.minimum_height=32},{});
         if(!child)return std::unexpected(child.error());action=*child;
         return child->set_control_events({.canceled=[&]{if(throw_cancel)throw std::runtime_error("Cancellation callback failed");

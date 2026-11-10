@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/CallableInputs.md",
-    "sha256": "589f8353fdcda21c2649fa3cbc96d9effb9d5d93330c1b7c39c4200b1882ee28",
-    "bytes": 6897,
+    "sha256": "3fa6520de0e2343b954e8a568c1caee8e8be0a6b457d6a52c7f1b45cea3a3f0b",
+    "bytes": 6901,
     "line_count": 94,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 18,
-      "raw": "```lvui\nimport document Model\nlet Action(run: () -> Void): View = PushButton(run)\nlet Entry(edit: (String) -> Void = document.record): View = InputField(onEdited: edit)\nWindow {\n    VStack {\n        Action(run: document.save)\n        Action(run: document.makeHandler(document.amount))\n        Entry()\n    }\n}\n```\n",
+      "raw": "```lvui\nimport document Model\nconst Action(run: () -> Void): View = PushButton(run)\nconst Entry(edit: (String) -> Void = document.record): View = InputField(onEdited: edit)\nWindow {\n    VStack {\n        Action(run: document.save)\n        Action(run: document.makeHandler(document.amount))\n        Entry()\n    }\n}\n```\n",
       "language": "lvui",
-      "code": "import document Model\nlet Action(run: () -> Void): View = PushButton(run)\nlet Entry(edit: (String) -> Void = document.record): View = InputField(onEdited: edit)\nWindow {\n    VStack {\n        Action(run: document.save)\n        Action(run: document.makeHandler(document.amount))\n        Entry()\n    }\n}\n",
+      "code": "import document Model\nconst Action(run: () -> Void): View = PushButton(run)\nconst Entry(edit: (String) -> Void = document.record): View = InputField(onEdited: edit)\nWindow {\n    VStack {\n        Action(run: document.save)\n        Action(run: document.makeHandler(document.amount))\n        Entry()\n    }\n}\n",
       "closed": true
     },
     {

@@ -1,0 +1,293 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:fa0ab841abcf76cc91a55fc1aef7bc854418e6ac2f3b12846ebd90bfefb7c173",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeSearchField.md",
+    "sha256": "d72a803e64e17c64b15f61cf8ad39dfbafd9308e6379a4a74e6b628ab4ac7a28",
+    "bytes": 6671,
+    "line_count": 74,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI 네이티브 검색 입력",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI 네이티브 검색 입력\n",
+      "level": 1,
+      "title": "LVUI 네이티브 검색 입력"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "heading",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "## 계약\n",
+      "level": 2,
+      "title": "계약"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 24,
+      "raw": "검색 입력은 개명된 원본 LVUI의 [TextField 검색 변형](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=323-9164)과\n그 값을 옮긴 별도 [검색 필드 초안](https://www.figma.com/design/8nSrpI0BbsZlXQiotbClHD/LVUI?node-id=37-952)을\n참조한 재사용 가능한 복합 컨트롤이다. iiGUI가 필드 조합·입력·배치·그리기와 수명을 소유하며 LVUI는 선언 값과 디자인 정책을 제공한다. 검색 아이콘 색상과 입력 치수에\n사용하는 다섯 변수는 원본 LVUI에도 게시했다. 이 변수의 소유권과 두 파일의\n식별자 차이는 [스타일 토큰 계약](StyleTokens.md)을 따른다. 호스트는 폭, 텍스트,\n플레이스홀더, 접근성 이름, 활성·읽기 전용 상태와 편집·제출 콜백을 제공한다.\n검색 아이콘, 지우기 동작 및 내부 여백·색상은 앱이 재정의하지 않고 LVUI가 소유한다.\n검색과 둥근 일반 입력은 원본의 활성·비활성 채우기와 효과가 같아 같은 재질\n구현을 공유한다. 디자인 값은 LVUI가 제공하고 재질 생성·캐시는 iiGUI가 소유한다.\n원통형과 인라인 검색 입력의 여섯 상태도 일반 입력과 같은 재질을 사용한다.\n원통형 반경은 99px이며 실제 크기에 맞추어 제한한다. 인라인형은 반경 0과 6px\n흐림을 사용한다. 표면 변경은 검색어·선택·입력기 조합을 유지하고, 지원하지\n않는 표면은 기존 검색 필드를 보존한다.\n`.lvui`의 `SearchField`는 같은 컨트롤을 생성하고 `text`, `placeholder`, `width`,\n`surface`, `enabled`, `readOnly`, `clearButtonVisible`, `accessibilityName`,\n`clearAccessibilityName`, `onEdited`, `onSubmit`을 받는다. 색상이나 아이콘을\n제품에서 덮어쓰는 입력은 제공하지 않는다. 관찰 가능한 입력은 같은 위젯을 유지하며\n갱신하고 유효하지 않은 갱신은 거절한다. `surface`는 `.rounded`가 기본이고\n`.cylinder`, `.inline`도 받는다. C++에서는 `SearchFieldConfiguration::surface`를\n같은 `InputFieldSurface` 값으로 지정한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 26,
+      "end_line": 29,
+      "raw": "```text\nSearchField(id: \"presetSearch\", text: vm.query, placeholder: \"Search sizes\",\n            width: vm.searchWidth, onEdited: vm.searchChanged)\n```\n",
+      "language": "text",
+      "code": "SearchField(id: \"presetSearch\", text: vm.query, placeholder: \"Search sizes\",\n            width: vm.searchWidth, onEdited: vm.searchChanged)\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 30,
+      "end_line": 30,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "list",
+      "start_line": 31,
+      "end_line": 50,
+      "raw": "- 필드 높이, 아이콘 크기, 여백과 색상은 독립 LVUI 토큰에서 생성한 불변 기본값을\n  사용한다. 실행 중 스타일 카탈로그나 LVUI 컴파일러 라이브러리를 조회하지 않는다.\n  검색 아이콘은 `searchField` 원본 자산을 사용하며 폭에 맞추어 내용과 지우기 액션을 자른다.\n- 활성 검색 표면은 원본에 따라 둥근형·원통형의 8px 흐림 또는 인라인형의 6px\n  흐림과 해당 채우기·내부 그림자를 그린다. 비활성 시 흐림과 그림자를 제거하고\n  별도 채우기를 쓴다. 모양은 크기와 화면 배율에 따라 다시 계산하고,\n  동일한 조건의 래스터는 재사용한다. 내부 그림자는 둥근 사각형 거리 함수의\n  가우시안 근사로 계산하므로 GPU 화면의 Figma 픽셀 동등성을 보장하지 않는다.\n- 값이 있고 활성화된 편집 가능 입력에만 지우기를 표시한다. IME 조합 중인 표시\n  텍스트도 판단에 포함한다. 지우기는 전체 입력을 한 번의 사용자 편집으로 삭제하고,\n  실행 취소·재실행과 포커스를 유지한다. 읽기 전용·비활성·빈 입력은 변경하지 않는다.\n- 상위 위젯이 비활성화되어도 지우기는 숨겨지고 아이콘과 입력의 비활성 색상이\n  적용된다. 상위 위젯을 다시 활성화하면 검색어와 편집 이력을 유지한 채 복구된다.\n- 텍스트·선택·조합 및 이력은 `NativeInputField`가 소유한다. 외부에서 같은 값을\n  다시 지정해도 이력이 초기화되지 않으며 텍스트 변경을 통지받는 도중 새 갱신이나\n  위젯 폐기가 일어나면 오래된 상태를 덮어쓰지 않는다.\n- 검색 입력과 지우기 동작은 각각 접근성 이름과 별도 제어 대상이 있다. 작은 폭,\n  숨김, 크기 변경, 포커스 전달, 다른 스레드 접근과 폐기된 위젯을 검사한다.\n  C++ 호스트는 필요하면 `NativeSearchFieldIds`로 내부 입력·아이콘·지우기 식별자를\n  지정해 기존 접근성 또는 자동화 연결을 유지할 수 있다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "필드 높이, 아이콘 크기, 여백과 색상은 독립 LVUI 토큰에서 생성한 불변 기본값을",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "활성 검색 표면은 원본에 따라 둥근형·원통형의 8px 흐림 또는 인라인형의 6px",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "값이 있고 활성화된 편집 가능 입력에만 지우기를 표시한다. IME 조합 중인 표시",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "상위 위젯이 비활성화되어도 지우기는 숨겨지고 아이콘과 입력의 비활성 색상이",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "텍스트·선택·조합 및 이력은 `NativeInputField`가 소유한다. 외부에서 같은 값을",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검색 입력과 지우기 동작은 각각 접근성 이름과 별도 제어 대상이 있다. 작은 폭,",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 51,
+      "end_line": 51,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 52,
+      "end_line": 57,
+      "raw": "Apple 경로는 원본의 SF Pro 지우기 기호를 사용한다. 다른 플랫폼은 원형과 ×를\nLVUI 색상으로 그리는 대체 표현을 사용하므로 원본 글리프와 픽셀 단위로 같지는 않다.\n현재 포커스 테두리는 포커스가 생긴 모든 경로에 표시한다. 원본 Figma의 키보드\n포커스 상태와 포인터로 입력 중인 상태를 별도로 판별하지 않으며, 키보드 전용\n지우기 버튼 숨김도 따로 구현하지 않았다.\nWindows·Linux는 소스 구현 범위이며 실제 플랫폼 실행과 보조 기술 검증은 수행하지 않았다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 65,
+      "raw": "입력기 조합·지우기·Undo/Redo·포커스·리사이즈·폐기와 반응형 코드 생성은 창 없는\n테스트로 검사한다. Apple의 지우기 글리프는 헤드리스 텍스트 래스터 검사에서 누락\n글리프와 구별된다. 둥근형과 인라인형 비활성 입력의 2배율 투명 PNG에서 글자와\n아이콘을 피한 세로 11개 위치의 RGBA를 각각 오차 6 이내로 비교한다. 이는 한 열의 재질 표본이며,\n실제 배경과 GPU 화면에 합성한 전체 Figma 픽셀 동등성 검증은 별도이다.\n이동 설치 소비자 검사도 `SearchField` 선언을 생성하고 독립 LVUI·iiGUI에\n컴파일·링크한다. 해당 소비자는 실제 창을 열지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 69,
+      "raw": "입력 지우기 표시의 기하·색 공간 변환과 그리기는 `iiGUI/InputClearDrawing.h`가\n소유하며 앱이 디자인 색상과 글꼴을 전달한다. 기존 LVUI 그리기 헤더는 제거했다.\nmacOS arm64에서 일반·검색 입력과 생성 경로를 헤드리스로 검사했다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 70,
+      "end_line": 70,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 71,
+      "end_line": 72,
+      "raw": "재질은 현재 크기·배율·상태에 맞춘 래스터 이미지를 필요한 때 생성하고 같은 입력은\n재사용한다. 이는 실제 GPU 실행이나 GPU 전용 셰이더 구현의 검증을 뜻하지 않는다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 73,
+      "end_line": 73,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 74,
+      "end_line": 74,
+      "raw": "`NativeSearchFieldView.h`는 필드·재질·아이콘 공급을 교체 가능한 정책으로 주입받는다. 위젯 퇴역 시 편집 콜백과 캐시된 재질 이미지를 해제하며, 재료 상태는 변경·조회 이벤트에 반응한다. LVUI 검색 입력 헤더는 iiSDKCore 외 SDK를 직접 참조하지 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI 네이티브 검색 입력",
+      "anchor": "lvui-네이티브-검색-입력",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000003",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "계약",
+      "anchor": "계약",
+      "start_line": 3
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000005",
+        "line": 21,
+        "text": "제품에서 덮어쓰는 입력은 제공하지 않는다. 관찰 가능한 입력은 같은 위젯을 유지하며",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000009",
+        "line": 32,
+        "text": "사용한다. 실행 중 스타일 카탈로그나 LVUI 컴파일러 라이브러리를 조회하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000009",
+        "line": 38,
+        "text": "가우시안 근사로 계산하므로 GPU 화면의 Figma 픽셀 동등성을 보장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000009",
+        "line": 41,
+        "text": "실행 취소·재실행과 포커스를 유지한다. 읽기 전용·비활성·빈 입력은 변경하지 않는다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000017",
+        "line": 72,
+        "text": "재사용한다. 이는 실제 GPU 실행이나 GPU 전용 셰이더 구현의 검증을 뜻하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 74,
+        "text": "`NativeSearchFieldView.h`는 필드·재질·아이콘 공급을 교체 가능한 정책으로 주입받는다. 위젯 퇴역 시 편집 콜백과 캐시된 재질 이미지를 해제하며, 재료 상태는 변경·조회 이벤트에 반응한다. LVUI 검색 입력 헤더는 iiSDKCore 외 SDK를 직접 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "TextField 검색 변형",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=323-9164",
+        "kind": "external",
+        "line": 5
+      },
+      {
+        "block_id": "b000005",
+        "label": "검색 필드 초안",
+        "target": "https://www.figma.com/design/8nSrpI0BbsZlXQiotbClHD/LVUI?node-id=37-952",
+        "kind": "external",
+        "line": 6
+      },
+      {
+        "block_id": "b000005",
+        "label": "스타일 토큰 계약",
+        "target": "StyleTokens.md",
+        "kind": "relative",
+        "line": 9
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

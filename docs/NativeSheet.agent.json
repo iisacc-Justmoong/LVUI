@@ -10,14 +10,14 @@
   },
   "source": {
     "path": "docs/NativeSheet.md",
-    "sha256": "84a915d0d2d0cd7e566166f9a349d463c808e70969a74ff9fe470b5e5ca6ba98",
-    "bytes": 3350,
-    "line_count": 48,
+    "sha256": "9f5a734e7eb55286ca8cc014bd16ee7de9c912a9fa3912aef9a75ee422b8b92a",
+    "bytes": 4454,
+    "line_count": 59,
     "encoding": "utf-8",
     "language": "ko"
   },
   "document": {
-    "title": "LVUI 독립 시트",
+    "title": "LVUI 선언과 iiGUI 시트",
     "role": "guide",
     "authority": "markdown_source"
   },
@@ -27,9 +27,9 @@
       "kind": "heading",
       "start_line": 1,
       "end_line": 1,
-      "raw": "# LVUI 독립 시트\n",
+      "raw": "# LVUI 선언과 iiGUI 시트\n",
       "level": 1,
-      "title": "LVUI 독립 시트"
+      "title": "LVUI 선언과 iiGUI 시트"
     },
     {
       "id": "b000002",
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 10,
-      "raw": "`LVUI/Sheet.h`는 데스크톱과 모바일 시트의 설정·배치와 닫기 드래그 판정을\n표준 C++ 값으로 소유한다. `automatic`은 창 폭이 아니라 호스트가 전달한 대상\n플랫폼으로 결정한다. 데스크톱 기본 폭은 560, 선호 높이는 420이며 화면 양쪽의\n24 여백 안에서 중앙에 배치한다. 모바일은 화면 전체 폭으로 하단에 정렬한다.\n`fit`은 측정된 본문과 고정 영역 및 하단 안전 여백을 합하고, `medium`과 `large`는\n각각 화면 높이의 57%, 90%를 사용한다. 모바일 높이는 상단 안전 여백과 최소 24를\n남기도록 제한한다. 기본 반경은 데스크톱 16, 모바일 24이며 작은 프레임에 맞게\n줄어든다.\n"
+      "raw": "`iiGUI/SheetModel.h`는 데스크톱과 모바일 시트의 설정·배치와 닫기 드래그 판정을\n표준 C++ 값으로 소유한다. LVUI는 선언과 관측 값, 디자인 토큰을 연결한다. `automatic`은 창 폭이 아니라 호스트가 전달한 대상\n플랫폼으로 결정한다. 데스크톱 기본 폭은 560, 선호 높이는 420이며 화면 양쪽의\n24 여백 안에서 중앙에 배치한다. 모바일은 화면 전체 폭으로 하단에 정렬한다.\n`fit`은 측정된 본문과 고정 영역 및 하단 안전 여백을 합하고, `medium`과 `large`는\n각각 화면 높이의 57%, 90%를 사용한다. 모바일 높이는 상단 안전 여백과 최소 24를\n남기도록 제한한다. 기본 반경은 데스크톱 16, 모바일 24이며 작은 프레임에 맞게\n줄어든다.\n"
     },
     {
       "id": "b000004",
@@ -70,21 +70,21 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 20,
-      "end_line": 27,
-      "raw": "`LVUI/NativeSheet.h`는 범용 호스트의 팝업·스크롤·입력 경계에 이 모델을 연결한다.\n본문 팩터리는 마운트 시 한 번 호출하며 닫고 다시 열어도 본문과 편집 상태를 유지한다.\n재개방할 때는 스크롤 위치를 0으로 초기화한다. 제목·설명과 닫기 버튼은 본문 스크롤\n밖에 있다. 시트 콘텐츠는 카드 경계에 잘린다. `scrollContent: false`는 스크롤을 끄고\n본문을 뷰포트에 맞추어 자른다.\n헤더 표시, 여백, 안전 영역과 기타 설정의 유효한 갱신은 본문을 다시 만들지 않는다.\n모바일 grabber에서 받은 드래그의 이동량과 닫기 여부는 LVUI 모델이 결정한다. 짧은\n드래그의 복귀는 현재 즉시 적용된다.\n"
+      "end_line": 32,
+      "raw": "`iiGUI/NativeSheetView.h`는 팝업·스크롤·입력 경계에 이 모델을 연결한다.\niiGUI를 단독으로 쓸 때는 기본 닫기 컨트롤을 사용하거나 팩터리를 주입할 수 있다.\n생성된 앱 코드는 기존 디자인 토큰과 모션 값을 iiGUI 버튼에 전달한다.\n버튼의 상태·입력·그리기와 닫기 연결은 iiGUI가 처리하며 별도의 LVUI 시트\n그래픽 어댑터는 설치하지 않는다.\n본문 팩터리는 마운트 시 한 번 호출하며 닫고 다시 열어도 본문과 편집 상태를 유지한다.\n재개방할 때는 스크롤 위치를 0으로 초기화한다. 제목·설명과 닫기 버튼은 본문 스크롤\n밖에 있다. 시트 콘텐츠는 카드 경계에 잘린다. `scrollContent: false`는 스크롤을 끄고\n본문을 뷰포트에 맞추어 자른다.\n헤더 표시, 여백, 안전 영역과 기타 설정의 유효한 갱신은 본문을 다시 만들지 않는다.\n동일한 설정이 다시 전달되면 재배치하지 않으며 진행 중인 모바일 드래그도 유지한다.\n모바일 grabber에서 받은 드래그의 이동량과 닫기 여부는 iiGUI 모델이 결정한다. 짧은\n드래그의 복귀는 현재 즉시 적용된다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 28,
-      "end_line": 28,
+      "start_line": 33,
+      "end_line": 33,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "fenced_code",
-      "start_line": 29,
-      "end_line": 37,
+      "start_line": 34,
+      "end_line": 42,
       "raw": "```lvui\nimport vm ExportBackend\nWindow {\n    Sheet(id: \"export\", title: vm.title, presentation: .desktop,\n          motionEnabled: false, onClosed: vm.closed) {\n        InputField(id: \"filename\", text: vm.filename, onEdited: vm.edited)\n    }\n}\n```\n",
       "language": "lvui",
       "code": "import vm ExportBackend\nWindow {\n    Sheet(id: \"export\", title: vm.title, presentation: .desktop,\n          motionEnabled: false, onClosed: vm.closed) {\n        InputField(id: \"filename\", text: vm.filename, onEdited: vm.edited)\n    }\n}\n",
@@ -93,30 +93,44 @@
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 38,
-      "end_line": 38,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 39,
-      "end_line": 43,
-      "raw": "제목·설명·프레젠테이션·detent·크기·표시·닫기 정책과 색상은 선언형 상수 또는\n관측 가능한 값으로 제공한다. 본문에는 여러 View를 넣을 수 있고 ID는 부모 마운트에서\n유일해야 한다. `open: true`는 최상위 마운트 직후 한 번 열며, 반응형 `open`과 콘텐츠\n팩터리 안의 초기 개방은 아직 지원하지 않는다. C++에서는 `root()`, `viewport()`,\n`content_root()` 핸들과 콘텐츠 팩터리를 사용한다.\n"
+      "start_line": 44,
+      "end_line": 51,
+      "raw": "제목·설명·프레젠테이션·detent·크기·표시·닫기 정책과 색상은 선언형 상수 또는\n관측 가능한 값으로 제공한다. 본문에는 여러 View를 넣을 수 있고 ID는 부모 마운트에서\n유일해야 한다. `open`은 Bool 상수 또는 관측 가능한 Bool을 받으며 해당 세대가\n게시된 뒤 초기값과 이후 변경을 적용한다. 내장 뷰와 콘텐츠 팩터리 안의 초기 개방도\n지원한다. 앱이 아닌 사용자의 닫기 조작은 앱의 Bool을 자동으로 바꾸지 않으므로\n필요한 경우 닫힘 콜백에서 갱신한다. 다시 열어도 시트 본문은 유지된다.\n[열림 바인딩](NativePopupOpen.md)의 오류와 수명 계약을 따른다. C++에서는 `root()`,\n`viewport()`, `content_root()` 핸들과 콘텐츠 팩터리를 사용한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 44,
-      "end_line": 44,
+      "start_line": 52,
+      "end_line": 52,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 45,
-      "end_line": 48,
-      "raw": "모션을 켜면 범용 호스트의 프레임 공급자가 필요하다. 공유 `motion` 객체, 드래그 복귀\n애니메이션, 운영체제 안전 영역 자동 관찰과 실제 플랫폼 표시·입력·접근성 검증은\n아직 남아 있다. 헤드리스 검사는 창이나 GPU를 실행하지 않는다. 레거시 타입이나\n구현을 사용하지 않는다.\n"
+      "start_line": 53,
+      "end_line": 56,
+      "raw": "모션을 켜면 범용 호스트의 프레임 공급자가 필요하다. 열린 시트의 전환은 호스트의\n공유 움직임 설정을 따른다. 드래그 복귀 애니메이션, 운영체제 안전 영역 자동 관찰과 실제 플랫폼 표시·입력·접근성 검증은\n아직 남아 있다. 헤드리스 검사는 창이나 GPU를 실행하지 않는다. 레거시 타입이나\n구현을 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 59,
+      "raw": "2026-11-07 macOS arm64에서 iiGUI 시트 모델·호스트와 LVUI 생성·반응형\n연결의 헤드리스 검사가 통과했다. 실제 창·GPU 실행은 수행하지 않았다.\n"
     }
   ],
   "outline": [
@@ -124,44 +138,52 @@
       "block_id": "b000001",
       "parent_id": null,
       "level": 1,
-      "title": "LVUI 독립 시트",
-      "anchor": "lvui-독립-시트",
+      "title": "LVUI 선언과 iiGUI 시트",
+      "anchor": "lvui-선언과-iigui-시트",
       "start_line": 1
     }
   ],
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000011",
-        "line": 41,
-        "text": "유일해야 한다. `open: true`는 최상위 마운트 직후 한 번 열며, 반응형 `open`과 콘텐츠",
+        "block_id": "b000007",
+        "line": 24,
+        "text": "그래픽 어댑터는 설치하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000011",
-        "line": 42,
-        "text": "팩터리 안의 초기 개방은 아직 지원하지 않는다. C++에서는 `root()`, `viewport()`,",
+        "line": 46,
+        "text": "유일해야 한다. `open`은 Bool 상수 또는 관측 가능한 Bool을 받으며 해당 세대가",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000013",
-        "line": 47,
+        "line": 55,
         "text": "아직 남아 있다. 헤드리스 검사는 창이나 GPU를 실행하지 않는다. 레거시 타입이나",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000013",
-        "line": 48,
+        "line": 56,
         "text": "구현을 사용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       }
     ],
     "commands": [],
-    "links": [],
+    "links": [
+      {
+        "block_id": "b000011",
+        "label": "열림 바인딩",
+        "target": "NativePopupOpen.md",
+        "kind": "relative",
+        "line": 50
+      }
+    ],
     "tables": []
   },
   "provenance": {

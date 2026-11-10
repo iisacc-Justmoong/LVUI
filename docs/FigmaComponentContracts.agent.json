@@ -1,0 +1,315 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:8349154aff05bc608088cf7e0c5b9dda0bd6ae8019b43c3de1a5907526a38ba1",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/FigmaComponentContracts.md",
+    "sha256": "9b6adf92f348335992665c1f01e63a995fc6ddaa3beed43f96ed81edd079f1b0",
+    "bytes": 4598,
+    "line_count": 68,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "Figma 컴포넌트 선언 계약",
+    "role": "reference",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Figma 컴포넌트 선언 계약\n",
+      "level": 1,
+      "title": "Figma 컴포넌트 선언 계약"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "공통 디자인 원본은 [Figma LVUI](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI)이다.\n`catalog/figma-lvui-components.json`은 UI가 있는 23개 페이지의 컴포넌트 정의 119개,\n속성 656개와 기본 인스턴스 참조의 이름을 기록한 스냅샷이다. 아이콘과 재질 색상은\n별도 View 이름 수천 개가 아니라 아이콘 이름과 색상·재질 값으로 다룬다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 9,
+      "raw": "LVUI는 `{}` 안에 자식 View와 이름 붙은 속성을 함께 받을 수 있다. Figma의 선택지는\n가능한 경우 접두 점 없이 쓸 수 있으며 기존의 점 표기도 유지한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "fenced_code",
+      "start_line": 11,
+      "end_line": 21,
+      "raw": "```text\nWindow {\n    VStack {\n        PushButton { type: LabelButton, kind: accent }\n        Slider { type: Filled, size: Mini }\n        Checkbox { state: On }\n        Icon { name: \"javascript\" }\n        Material { type: Window }\n    }\n}\n```\n",
+      "language": "text",
+      "code": "Window {\n    VStack {\n        PushButton { type: LabelButton, kind: accent }\n        Slider { type: Filled, size: Mini }\n        Checkbox { state: On }\n        Icon { name: \"javascript\" }\n        Material { type: Window }\n    }\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 22,
+      "end_line": 22,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 23,
+      "end_line": 26,
+      "raw": "`type`, `kind`의 값이 등록된 View 이름과 같더라도 속성 위치에서는 선택지로 읽는다.\n동명의 변수와 C++ 바인딩이 있을 때는 바인딩을 우선하며, `onClick`과 다른 동작은\n기존 C++ 객체와 메서드 연결 계약을 따른다. 이벤트로 결정되는 포인터·포커스 상태를\n백그라운드 폴링이나 고정된 애니메이션으로 대체하지 않는다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 27,
+      "end_line": 27,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "heading",
+      "start_line": 28,
+      "end_line": 28,
+      "raw": "## 현재 연결과 기본값\n",
+      "level": 2,
+      "title": "현재 연결과 기본값"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "list",
+      "start_line": 30,
+      "end_line": 49,
+      "raw": "- `Checkbox`, `Radio`, `Toggle`, `TextField`, `GeneralSearch`, `SmallList`,\n  `ColorPickerPanel`은 각각 기존 iiGUI 기반 구현의 이름에 연결된다.\n  Figma 표기의 `LabelSegementedControl`, `IconSegementedControl`도 기존 구현에 연결된다.\n- `PushButton`과 `DropdownButton`은 `type`과 `kind`로 Figma 변형을 선택한다.\n  `accent`는 기존 네이티브 `primary`에 대응한다. 기본 버튼 종류는 Figma의\n  `default`, 텍스트 버튼의 라벨은 `Button`, 드롭다운 라벨은 `Open`이며 아이콘형의\n  기본 아이콘은 Figma가 참조하는 `projectStructure`이다.\n- 체크박스·라디오·토글은 명시된 `checked` 또는 `state`가 없으면 Figma의 `On`을\n  사용한다. `state: On`과 `state: Off`는 `checked`에 연결되며 중복 입력은 거부한다.\n- 슬라이더의 기본 크기는 `Mini`, 파일 카드의 기본 크기는 `Small`, 텍스트 필드의\n  기본 표면은 `Rounded`, 시트의 기본 표현은 `Mobile Fit`이다. Alert에 버튼 수나\n  버튼 내용이 지정되지 않았으면 Figma의 기본 버튼 수 2를 사용한다.\n- `Avatar`의 기본 크기는 `Large`, `ColorPickerButton`은 `Small`이며 각각 `size`로\n  Figma 크기를 선택할 수 있다. 아이콘 세그먼트의 방향도 `orientation`으로 선택한다.\n- 카드·목록 항목의 `type`, 목록 항목의 `kind`, 텍스트 필드의 `style`과 `mode`,\n  색상 선택기 `type`, 스테퍼·콤보박스 `arrow`와 `tone`, 탭 `style`, 카드 `state`,\n  시트 `presentation`은 지원된 Figma 값에서 기존 네이티브 입력으로 변환한다.\n  `Tab`의 아이콘은 기존 계약대로 명시적으로 전달해야 한다.\n- `Icon { name: \"javascript\" }`는 Figma 이름을 소스 아이콘 `javaScript`에 연결한다.\n  `Material`의 `type`은 `Panel`, `Window`, `Surface`를 지원한다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`Checkbox`, `Radio`, `Toggle`, `TextField`, `GeneralSearch`, `SmallList`,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`PushButton`과 `DropdownButton`은 `type`과 `kind`로 Figma 변형을 선택한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "체크박스·라디오·토글은 명시된 `checked` 또는 `state`가 없으면 Figma의 `On`을",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "슬라이더의 기본 크기는 `Mini`, 파일 카드의 기본 크기는 `Small`, 텍스트 필드의",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Avatar`의 기본 크기는 `Large`, `ColorPickerButton`은 `Small`이며 각각 `size`로",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "카드·목록 항목의 `type`, 목록 항목의 `kind`, 텍스트 필드의 `style`과 `mode`,",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Icon { name: \"javascript\" }`는 Figma 이름을 소스 아이콘 `javaScript`에 연결한다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 50,
+      "end_line": 50,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 51,
+      "end_line": 53,
+      "raw": "명시적 속성은 기본값보다 우선한다. 동일 의미의 두 입력을 함께 지정하는 등 충돌이\n있으면 컴파일 오류로 보고한다. Figma 시안의 예시 파일명과 설명은 아직 모든 카드나\n목록의 앱 데이터로 자동 주입하지 않는다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "heading",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "## 스냅샷 갱신과 현재 한계\n",
+      "level": 2,
+      "title": "스냅샷 갱신과 현재 한계"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 57,
+      "end_line": 59,
+      "raw": "Figma 변경을 검토한 뒤 스냅샷을 갱신하고 `python3 -B tools/update_figma_defaults.py`를\n실행한다. `--check`와 `LVUI.Figma.DefaultCatalog`는 스냅샷과 생성 표의 불일치를\n검출한다. 스냅샷 저장과 코드 생성은 실행 앱이나 네트워크 접근을 요구하지 않는다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 61,
+      "end_line": 65,
+      "raw": "스냅샷에 기록된 모든 속성이 아직 선언·렌더러에 연결된 것은 아니다. 특히 데스크톱\n`TabBar`의 Content/Equal/Scrollable 배치, 모바일 탭 최소화, Figma `SheetContent`\n예시 구성, 세그먼트의 Count, 일부 상호작용 상태 및 카드·목록의 예시 속성과 기본값은 별도 구현이\n필요하다. `InputMethodGuard`, `WindowChromeInteraction`도 독립 네이티브 View로 생성되지\n않는다. 미지원 이름을 빈 위젯으로 등록하지 않는다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 66,
+      "end_line": 66,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 67,
+      "end_line": 68,
+      "raw": "검사는 선언의 네이티브 C++ 생성과 생성 코드의 컴파일을 대상으로 한다. 플랫폼 창,\n실제 GPU 표시, Figma의 모든 상태에 대한 픽셀 일치까지 보장하지는 않는다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Figma 컴포넌트 선언 계약",
+      "anchor": "figma-컴포넌트-선언-계약",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000011",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "현재 연결과 기본값",
+      "anchor": "현재-연결과-기본값",
+      "start_line": 28
+    },
+    {
+      "block_id": "b000017",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "스냅샷 갱신과 현재 한계",
+      "anchor": "스냅샷-갱신과-현재-한계",
+      "start_line": 55
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000009",
+        "line": 26,
+        "text": "백그라운드 폴링이나 고정된 애니메이션으로 대체하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 47,
+        "text": "`Tab`의 아이콘은 기존 계약대로 명시적으로 전달해야 한다.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000015",
+        "line": 53,
+        "text": "목록의 앱 데이터로 자동 주입하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000019",
+        "line": 59,
+        "text": "검출한다. 스냅샷 저장과 코드 생성은 실행 앱이나 네트워크 접근을 요구하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 65,
+        "text": "않는다. 미지원 이름을 빈 위젯으로 등록하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000003",
+        "label": "Figma LVUI",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI",
+        "kind": "external",
+        "line": 3
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

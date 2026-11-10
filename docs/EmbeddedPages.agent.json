@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/EmbeddedPages.md",
-    "sha256": "a43a047ddc3c670e340e67037bd8d03a65987bf4a638e2030f572d75c60568bb",
-    "bytes": 1894,
-    "line_count": 28,
+    "sha256": "3be0a51e06d2281112f26c00eb01547cb7259adf9eebb1011f27f6f2b581ae68",
+    "bytes": 2012,
+    "line_count": 29,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -73,49 +73,49 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 12,
-      "end_line": 16,
-      "raw": "최상위 LVUI 문서는 기존처럼 Window 또는 ApplicationWindow와 자식 한 개이다.\n`build`에서는 창 옵션을 사용하지 않고 자식 본문만 구성한다. 부모를 생략하면\n독립 콘텐츠 빌더의 루트가 되며, 명시하면 해당 빌더 안의 부모 아래에 붙는다.\n각 호출은 독립된 Scope와 BindingScope를 생성하여 해당 위젯 세대에 retain한다.\n정적 `mount`와 인스턴스 `attach`도 같은 생성 함수를 재사용한다.\n"
+      "end_line": 17,
+      "raw": "최상위 LVUI 문서는 독립 View이거나 Window 또는 ApplicationWindow와 자식 한 개일\n수 있다. 독립 View와 동적 루트의 계약은 [네이티브 부착](NativeEmbeddedViews.md)을\n따른다. `build`에서는 창 옵션을 사용하지 않고 자식 본문만 구성한다. 부모를 생략하면\n독립 콘텐츠 빌더의 루트가 되며, 명시하면 해당 빌더 안의 부모 아래에 붙는다.\n각 호출은 독립된 Scope와 BindingScope를 생성하여 해당 위젯 세대에 retain한다.\n정적 `mount`와 인스턴스 `attach`도 같은 생성 함수를 재사용한다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 17,
-      "end_line": 17,
+      "start_line": 18,
+      "end_line": 18,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 18,
-      "end_line": 20,
+      "start_line": 19,
+      "end_line": 21,
       "raw": "LVUI의 [독립 PageRouter](NativePageRouter.md)는 앱이 소유한 페이지 팩터리를\n연결한다. 팩터리는 빌드 시 생성한 C++의 `build`를 호출할 수 있다. 런타임 소스\n파싱, 인터프리터, 추가 OS 위젯 계층은 없다. 이전 LVRS 타입과 자동 호환되지 않는다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 21,
-      "end_line": 21,
+      "start_line": 22,
+      "end_line": 22,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 22,
-      "end_line": 25,
+      "start_line": 23,
+      "end_line": 26,
       "raw": "임베디드 페이지에서 초기 `open: true` 팝업은 `unsupported`이다. 페이지 활성화\n이후 명시적으로 열어야 한다. `build` 자체는 상위 트랜잭션을 소유하지 않으므로\n교체 원자성이 필요하면 iiGUI content_host 같은 독립 세대 호스트 안에서 호출한다.\n직접 같은 빌더에 여러 번 구성할 때 ID 유일성·루트 하나 계약은 호출자 책임이다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 26,
-      "end_line": 26,
+      "start_line": 27,
+      "end_line": 27,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 27,
-      "end_line": 28,
+      "start_line": 28,
+      "end_line": 29,
       "raw": "생성 진입점·부모 전달·스코프 유지·초기 팝업 거부는 관련 AOT 검사에서 확인한다.\n실제 OS 창과 각 플랫폼의 페이지 표시 검증은 별도로 남아 있다.\n"
     }
   ],
@@ -142,11 +142,18 @@
     "commands": [],
     "links": [
       {
+        "block_id": "b000007",
+        "label": "네이티브 부착",
+        "target": "NativeEmbeddedViews.md",
+        "kind": "relative",
+        "line": 13
+      },
+      {
         "block_id": "b000009",
         "label": "독립 PageRouter",
         "target": "NativePageRouter.md",
         "kind": "relative",
-        "line": 18
+        "line": 19
       }
     ],
     "tables": []

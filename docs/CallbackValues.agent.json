@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/CallbackValues.md",
-    "sha256": "323239ef40d0de8fd33b1b6fbd2a6aa8f44e2a1948ff7d172c18990de198f791",
-    "bytes": 8188,
+    "sha256": "fbafa1611d56cd4e94609715377df0d29d00dd72328075cd18f325452edb927f",
+    "bytes": 8192,
     "line_count": 118,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 15,
-      "raw": "```lvui\nimport vm Model\nlet Leaf(run: () -> Void): View = PushButton(run)\nlet Pair(run: () -> Void, again: () -> Void = run): View = VStack {\n    Leaf(run: run)\n    Leaf(run: again)\n}\nWindow { Pair(run: vm.makeHandler(vm.amount)) }\n```\n",
+      "raw": "```lvui\nimport vm Model\nconst Leaf(run: () -> Void): View = PushButton(run)\nconst Pair(run: () -> Void, again: () -> Void = run): View = VStack {\n    Leaf(run: run)\n    Leaf(run: again)\n}\nWindow { Pair(run: vm.makeHandler(vm.amount)) }\n```\n",
       "language": "lvui",
-      "code": "import vm Model\nlet Leaf(run: () -> Void): View = PushButton(run)\nlet Pair(run: () -> Void, again: () -> Void = run): View = VStack {\n    Leaf(run: run)\n    Leaf(run: again)\n}\nWindow { Pair(run: vm.makeHandler(vm.amount)) }\n",
+      "code": "import vm Model\nconst Leaf(run: () -> Void): View = PushButton(run)\nconst Pair(run: () -> Void, again: () -> Void = run): View = VStack {\n    Leaf(run: run)\n    Leaf(run: again)\n}\nWindow { Pair(run: vm.makeHandler(vm.amount)) }\n",
       "closed": true
     },
     {

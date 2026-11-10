@@ -1,0 +1,4 @@
+Application {
+    Scene(id: "main") { Label(id: "mainLabel", text: localized("counter.heading")) }
+    Scene(id: "tools", initiallyOpen: false) { Label(id: "toolsLabel", text: localized("counter.heading")) }
+}

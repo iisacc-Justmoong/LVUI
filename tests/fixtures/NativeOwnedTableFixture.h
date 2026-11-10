@@ -1,10 +1,15 @@
 #pragma once
 #include <LVUI/TableSorting.h>
+#include <LVUI/TableMerge.h>
 #include <LVUI/TableStructure.h>
+#include <LVUI/TableText.h>
+#include <LVUI/TableHeader.h>
+#include <LVUI/IconCatalog.h>
 #include <iiSDKCore/Core/Property/Observable.h>
 #include <cstdint>
 #include <memory>
 #include <optional>
+#include <string>
 #include <vector>
 
 struct NativeOwnedTableModel final {
@@ -17,13 +22,21 @@ struct NativeOwnedTableModel final {
     ii::core::Observable<std::shared_ptr<lvui::TableEditor>> editor{source};
     ii::core::Observable<std::shared_ptr<lvui::TableOrderEditor>> order{std::make_shared<lvui::TableMemoryOrderEditor>(source)};
     ii::core::Observable<std::shared_ptr<lvui::TableStructureEditor>> structure{std::make_shared<lvui::TableMemoryStructureEditor>(source)};
+    ii::core::Observable<std::shared_ptr<const lvui::TableStructureFactory>> factory{std::make_shared<lvui::TableDefaultStructureFactory>()};
+    ii::core::Observable<bool> showStructure{true};
+    ii::core::Observable<lvui::TableText> tableText{lvui::TableText{}};
+    ii::core::Observable<std::vector<lvui::TableHeaderColumnAppearance>> headerAppearance{std::vector<lvui::TableHeaderColumnAppearance>{}};
+    ii::core::Observable<std::string> headerLeadingIcon{"generalchevronDown"};
+    ii::core::Observable<std::shared_ptr<const lvui::IconSource>> headerIconSource{nullptr};
+    ii::core::Observable<std::int64_t> headerIconRevision{0};
+    ii::core::Observable<std::shared_ptr<lvui::TableMergeEditor>> merge{std::make_shared<lvui::TableMemoryMergeEditor>(source)};
     ii::core::Observable<bool> editable{true};
     ii::core::Observable<bool> clipboard{true};
     ii::core::Observable<bool> sorting{true};
     ii::core::Observable<std::int64_t> revision{0};
     ii::core::Observable<double> width{200};
     ii::core::Observable<bool> selection{true};
-    int events = 0, edits = 0, submissions = 0, rejections = 0, ranges = 0, sorts = 0, structures = 0, columns = 0, rows = 0;
+    int events = 0, edits = 0, submissions = 0, rejections = 0, ranges = 0, sorts = 0, structures = 0, columns = 0, rows = 0, merges = 0;
     std::optional<lvui::TableSelection> last; std::optional<lvui::TableRange> last_range;
     std::optional<lvui::TableSortOrder> last_sort;
     void edited(std::size_t, std::size_t, std::string) { ++edits; }
@@ -34,5 +47,6 @@ struct NativeOwnedTableModel final {
     void structured(const lvui::TableStructureEdit&) { ++structures; revision.set(std::int64_t(source->snapshot().value()->revision)); }
     void columnResized(std::size_t, double) { ++columns; }
     void rowResized(std::size_t, double) { ++rows; }
+    void merged(const lvui::TableMergeEdit&) { ++merges; revision.set(std::int64_t(source->snapshot().value()->revision)); }
     void selected(std::optional<lvui::TableSelection> value) { ++events; last = std::move(value); }
 };

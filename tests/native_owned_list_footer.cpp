@@ -1,4 +1,6 @@
 #include <LVUI/NativeListFooter.h>
+#include <iiGUI/NativeListFooterView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <iiGUI/WidgetState.h>
 
 #include <functional>
@@ -7,7 +9,19 @@
 #include <stdexcept>
 #include <string>
 #include <thread>
+#include <type_traits>
 #include <vector>
+
+namespace lvui::native {
+using ToolbarButtonModel=ii::gui::BasicToolbarButton<ToolbarButtonModelPolicy>;
+using NativeToolbarButton=ToolbarButtonBinding<ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+using ListFooterModel=ii::gui::BasicListFooter<ListFooterModelPolicy<ToolbarButtonModel>>;
+using NativeListFooter=ListFooterBinding<ii::gui::BasicListFooter,ii::gui::BasicNativeListFooter,
+    ii::gui::BasicToolbarButton,ii::gui::BasicNativeToolbarButton,ii::gui::CachedSvgDecoder>;
+}
+static_assert(std::is_same_v<lvui::native::NativeListFooter,
+    ii::gui::BasicNativeListFooter<lvui::native::ListFooterHostPolicy<lvui::native::ListFooterModel,
+    lvui::native::ToolbarButtonModel,lvui::native::NativeToolbarButton,ii::gui::CachedSvgDecoder>>>);
 
 namespace {
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }

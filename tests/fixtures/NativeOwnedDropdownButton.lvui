@@ -3,7 +3,8 @@ Window {
     VStack {
         DropdownButton(id: "drop", text: vm.text, width: vm.width, enabled: vm.enabled,
                        iconMode: vm.iconMode, icon: vm.icon, onClick: vm.clicked,
-                       onPressed: vm.pressed, onReleased: vm.released)
+                       onPressed: vm.pressed, onReleased: vm.released,
+                       method: vm.method, methods: [vm.after, [vm.last]])
         LabelMenuButton(id: "label", text: "Label", onClick: vm.clicked)
         IconMenuButton(id: "icon", iconName: "projectStructure", onClick: vm.clicked)
         LabelSegmentedControl(forceBorderlessTone: vm.force) {

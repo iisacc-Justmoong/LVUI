@@ -1,0 +1,6 @@
+import vm NativeWindowNoiseModel
+Window {
+    WindowNoiseTexture(id: "noise", width: 300, height: 200,
+                       color: "#333333", primaryColor: "#aa5533",
+                       noiseStrength: vm.strength, blurRadius: 1.5, grainStrength: 0.05)
+}

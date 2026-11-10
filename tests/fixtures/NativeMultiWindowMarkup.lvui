@@ -1,0 +1,5 @@
+import vm NativeApplicationBackend
+Application(onStart: vm.started, onReady: vm.ready, onStop: vm.stopped) {
+    Window(title: vm.title, accent: vm.accent) { Label(id: "shared", text: vm.title) }
+    ApplicationWindow(title: "Tools", accent: vm.accent, onClosed: vm.scene_closed) { Label(id: "shared", text: vm.title) }
+}

@@ -1,0 +1,10 @@
+import vm NativeOwnedListItemFormModel
+Window {
+    VStack(alignment: .leading) {
+        ListItem(id: "form", type: vm.kind, label: "Publish", fieldLabel1: "Title", fieldLabel2: vm.label2,
+                 inputText1: vm.title, inputText2: vm.notes, inputReadOnly2: vm.read_only2,
+                 onInputTextChanged: vm.titleChanged, onInputText2Changed: vm.notesChanged,
+                 onInput2Submitted: vm.notesSubmitted, onEdited: vm.edited, onActionValuesTriggered: vm.actionValues,
+                 onActionEvent: vm.actionEvent)
+    }
+}

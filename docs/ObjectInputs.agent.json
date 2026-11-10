@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/ObjectInputs.md",
-    "sha256": "3c5f53aa69f1cff90f3d426dbf97427b6a68db342b63def46cef76d9a172baef",
-    "bytes": 7426,
+    "sha256": "6be3c4039538101466533c8b4096e93eb253ba243e4aa0933b742766a31e5970",
+    "bytes": 7430,
     "line_count": 103,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 17,
-      "raw": "```lvui\nimport class Domain.Record\nimport vm Model\nlet Details(item: Record, again: Record = item): View = VStack {\n    Label(text: item.title)\n    Label(text: again.title)\n    @Static let initial: String = item.title\n    Label(text: initial)\n}\nWindow { Details(item: vm.makeRecord(vm.count)) }\n```\n",
+      "raw": "```lvui\nimport class Domain.Record\nimport vm Model\nconst Details(item: Record, again: Record = item): View = VStack {\n    Label(text: item.title)\n    Label(text: again.title)\n    @Static const initial: String = item.title\n    Label(text: initial)\n}\nWindow { Details(item: vm.makeRecord(vm.count)) }\n```\n",
       "language": "lvui",
-      "code": "import class Domain.Record\nimport vm Model\nlet Details(item: Record, again: Record = item): View = VStack {\n    Label(text: item.title)\n    Label(text: again.title)\n    @Static let initial: String = item.title\n    Label(text: initial)\n}\nWindow { Details(item: vm.makeRecord(vm.count)) }\n",
+      "code": "import class Domain.Record\nimport vm Model\nconst Details(item: Record, again: Record = item): View = VStack {\n    Label(text: item.title)\n    Label(text: again.title)\n    @Static const initial: String = item.title\n    Label(text: initial)\n}\nWindow { Details(item: vm.makeRecord(vm.count)) }\n",
       "closed": true
     },
     {

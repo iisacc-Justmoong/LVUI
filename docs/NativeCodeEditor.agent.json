@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeCodeEditor.md",
-    "sha256": "0ec2ee92ef3ca308bd29939ac2b8c65cdf27294043843f9853514dcc63e6efe7",
-    "bytes": 4777,
-    "line_count": 54,
+    "sha256": "c78bc1c3116b2dee474127221e621ed355da71f9acf56ae4653f4b25cb5ed05e",
+    "bytes": 10045,
+    "line_count": 109,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -42,36 +42,36 @@
       "id": "b000003",
       "kind": "paragraph",
       "start_line": 3,
-      "end_line": 9,
-      "raw": "`NativeCodeEditor.h`는 LVUI의 [독립 코드 문서·입력 세션](CodeDocument.md)을 iiGUI의\n일반 위젯 및 텍스트 셰이퍼에 연결한다. `CodeEditorInput`에 교체 가능한 `source`와\n선택적인 `editor`를 주입한다. 편집기가 없으면 읽기 전용이다. 보이는 줄만 읽고 셰이핑하며\n선택, 스칼라 이동·삭제, 줄 이동, 복사·잘라내기, 일반 입력과 조합 입력을 처리한다.\n복사 출력은 주입할 수 있고, 원본 리비전이 바뀌면 `refresh()`로 명시적으로 갱신한다.\n`frame()`과 `snapshot()`은 화면 상태를 문서 편집 없이 조회한다. 실제 문서 리비전이\n바뀌지 않은 동일 문자열 교체는 선택을 접을 수 있지만 편집 이벤트를 발행하지 않는다.\n"
+      "end_line": 5,
+      "raw": "조합 입력의 커서 숨김과 선택 방향을 유지한다. 숨김은 조합 커서만 감추며\n후보 밑줄과 문서의 커서 위치 조회는 유지한다. 이 입력 속성을 사용하는 빌드는\n같은 iiGUI 빌드의 헤더와 라이브러리가 필요하며, 구버전에는 해당 입력 속성이 없다.\n"
     },
     {
       "id": "b000004",
       "kind": "blank",
-      "start_line": 10,
-      "end_line": 10,
+      "start_line": 6,
+      "end_line": 6,
       "raw": "\n"
     },
     {
       "id": "b000005",
       "kind": "paragraph",
-      "start_line": 11,
-      "end_line": 15,
-      "raw": "한 화면은 최대 512줄과 4 MiB의 텍스트를 읽고, 수평으로 긴 줄은 UTF-16 열 단위의\n제한된 구간을 표시한다. 문서의 줄 수가 1억을 넘으면 화면 조회를 거절한다. 커서가 현재\n구간 밖으로 이동할 때 구간을 옮긴다. 마우스 휠의 수평 이동이 구간 경계 밖으로 자동\n진행하지는 않는다. 확장 자소·단어 이동, 실행 취소, 구문 강조, 줄 번호, 스크롤바,\n접근성 및 OS 입력 어댑터의 실기기 검증은 남아 있다.\n"
+      "start_line": 7,
+      "end_line": 14,
+      "raw": "`iiGUI/NativeCodeEditorView.h`는 주입된 [코드 문서·입력 세션](CodeDocument.md)을\n일반 위젯 및 텍스트 셰이퍼에 연결하며 입력·그리기와 수명을 소유한다. LVUI의\n`CodeEditorBinding`은 값과 문서 계약만 제공하고 iiSDKCore 외 SDK를 직접 참조하지 않는다. `CodeEditorInput`에 교체 가능한 `source`와\n선택적인 `editor`를 주입한다. 편집기가 없으면 읽기 전용이다. 보이는 줄만 읽고 셰이핑하며\n선택, 스칼라 이동·삭제, 줄 이동, 복사·잘라내기, 일반 입력과 조합 입력을 처리한다.\n복사 출력은 주입할 수 있고, 원본 리비전이 바뀌면 `refresh()`로 명시적으로 갱신한다.\n`frame()`과 `snapshot()`은 화면 상태를 문서 편집 없이 조회한다. 실제 문서 리비전이\n바뀌지 않은 동일 문자열 교체는 선택을 접을 수 있지만 편집 이벤트를 발행하지 않는다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 16,
-      "end_line": 16,
+      "start_line": 15,
+      "end_line": 15,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 17,
+      "start_line": 16,
       "end_line": 19,
-      "raw": "`LVUI.OwnedCodeDocument.Native`는 실제 창을 열지 않는 iiGUI 위젯 트리에서 표시 범위,\n조합 입력, 키 입력, 복사·잘라내기, 충돌, 재진입과 큰 문서 탐색을 검사한다. 이는 실제\n플랫폼 입력기나 그래픽 화면의 검증을 뜻하지 않는다.\n"
+      "raw": "선택 복사는 문서를 UTF-16 스칼라 경계에 맞춘 제한된 조각으로 읽어 UTF-8 원문을\n조립한다. 단일 문서 읽기의 4 MiB 제한과 별개로 최대 64 MiB를 복사하며, 부분 읽기나\n일관되지 않은 크기를 발견하면 클립보드 쓰기 전에 거절한다. 읽기 전용 선택은 원본을\n변경하지 않는다. 플랫폼 클립보드에도 같은 크기의 데이터를 수용하는 iiGUI가 필요하다.\n"
     },
     {
       "id": "b000008",
@@ -84,109 +84,207 @@
       "id": "b000009",
       "kind": "paragraph",
       "start_line": 21,
-      "end_line": 26,
-      "raw": "기본 LVUI 선언의 `CodeEditor`는 이 독립 위젯을 생성한다. `model`은\n`CodeDocumentSource`, `editor`는 `CodeDocumentEditor` 인터페이스이며 동일한 메모리\n문서나 서로 다른 앱 구현을 사용할 수 있다. `model` 없이 `text`를 주면 LVUI가 자체\n메모리 문서를 만들고, `readOnly: true`면 편집기를 연결하지 않는다. `model`과 `text`,\n`height`와 `editorHeight`는 각각 동시에 사용할 수 없다. 주입 문서의 교체 가능한 포트는\n생성 시 정해지며 포인터 자체의 반응형 교체는 아직 지원하지 않는다.\n"
+      "end_line": 42,
+      "raw": "새 iiGUI의 `text_selection` 입력은 포커스된 편집기의 UTF-16 범위를 선택한다.\n읽기 전용 문서도 선택할 수 있으며 잘못된 Unicode 경계는 거절한다. 조합 중에도\n선택을 조합 안팎으로 옮기고 확정할 때 보존한다. 새 iiGUI는 역방향 선택도 전달한다.\n최신 iiGUI는 Android `InputConnection`의 기본 선택·조합·확정을 이 편집기에\n전달한다. 일부 주변 삭제와 확장 입력 요청 및 기기 검증은 남아 있다. 구버전\niiGUI는 기존 경로로 빌드한다.\n`text_composition_region`은 기존 문자를 조합 영역으로 지정하고 역방향 선택을\n포함한 현재 선택을 유지한다. 새로운 영역을 검증한 다음 기존 후보를 확정하며, 실제\n문서 리비전이 바뀌면 편집 알림에 확정 변경을 포함한다. 잘못된 영역이나 오래된\n문서의 요청은 후보와 선택을 보존한다. 구버전 iiGUI에서는 이 입력 경로가 제외된다.\n조합이 없는 선택 양쪽의 삭제는 한 번의 문서 변경으로 게시하고 선택 방향을 보존한다.\n양쪽 삭제 시 보존할 선택은 최대 65,536 UTF-16 단위와 65,536 UTF-8 바이트이며,\n한쪽 삭제는 선택 텍스트를 복사하지 않는다. 범위·리비전·결과 선택 검증이 실패하면\n문서를 변경하지 않는다.\n조합 중의 주변 삭제도 같은 입력기로 전달한다. 후보 밖에서 삭제된 원본 변경은\n편집 콜백에 게시하며 후보 내부의 삭제는 표시 투영에 남는다. 후보가 확정되면\n그 변경을 별도로 게시한다. 리비전 충돌과 부분 읽기는 전체 요청을 거절한다.\n최신 iiGUI에는 문서의 확정 리비전과 별도로 편집 화면 상태 버전을 제공한다.\n따라서 길이가 같은 조합 후보 교체도 구분하며, 공유 원본의 실제 편집은 문서\n리비전으로 다시 검증한다. 구버전 iiGUI에서는 기존 경로로 빌드한다.\nAndroid AOT 소비자 링크 검사는 선언형 코드 편집기를 포함하며 동적 의존성과 함께 앱·SDK의 정의 심볼에서도\nQt·QML·LVRS 연결 흔적을 검사한다. 이는 기기 실행 검사가 아니다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 27,
-      "end_line": 27,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "\n"
     },
     {
       "id": "b000011",
-      "kind": "fenced_code",
-      "start_line": 28,
-      "end_line": 35,
-      "raw": "```lvui\nimport vm EditorModel\nWindow {\n    CodeEditor(model: vm.document, editor: vm.document, sourceRevision: vm.revision,\n               width: vm.width, height: 160, onDocumentEdited: vm.changed,\n               onSelectionChanged: vm.selectionChanged)\n}\n```\n",
-      "language": "lvui",
-      "code": "import vm EditorModel\nWindow {\n    CodeEditor(model: vm.document, editor: vm.document, sourceRevision: vm.revision,\n               width: vm.width, height: 160, onDocumentEdited: vm.changed,\n               onSelectionChanged: vm.selectionChanged)\n}\n",
-      "closed": true
+      "kind": "paragraph",
+      "start_line": 44,
+      "end_line": 48,
+      "raw": "새 iiGUI에는 표시된 코드 줄의 실제 셰이핑과 스크롤에 맞춘 UTF-16 범위 기하를\n제공한다. 화면 밖의 줄을 추가로 읽지 않고 보이는 선택 영역만 반환한다. 범위 밖의\n위치와 잘못된 스칼라 경계는 거절하며 구버전 iiGUI에서는 이 조회를 생략한다.\n헤드리스 편집기 검사는 이모지·여러 줄과 수직 스크롤을 확인한다. iPhoneOS에서는\n관련 소스만 객체 컴파일했으며 입력기를 실행하지 않았다.\n"
     },
     {
       "id": "b000012",
-      "kind": "blank",
-      "start_line": 36,
-      "end_line": 36,
-      "raw": "\n"
-    },
-    {
-      "id": "b000013",
-      "kind": "paragraph",
-      "start_line": 37,
-      "end_line": 44,
-      "raw": "`sourceRevision`이 바뀌면 기존 위젯의 문서 스냅샷을 새로 읽는다. 위젯에서 발생한\n같은 리비전의 확인은 재진입 없이 처리한다. 크기, 글꼴, 여백, 색상, 활성 상태와 접근성\n이름의 지원 입력은 반응형으로 갱신된다. 이벤트는 전체 텍스트 복사 대신\n`CodeDocumentChange`와 `CodeSelection`을 전달한다. `text`와 `readOnly`는 초기 값이며,\n지원하지 않는 속성이나 자식 뷰는 컴파일 오류로 표시한다. 생성 코드의 컴파일과 반응형\n갱신은 `LVUI.OwnedCodeDocument.Codegen`과 `LVUI.OwnedCodeDocument.Generated`가 검사한다.\n편집 이벤트에서 발생한 외관 변경과 새로운 소스 리비전은 현재 이벤트 전달이 끝난 뒤\n적용한다. 같은 이벤트 안에서 문서나 선택을 위젯을 통해 다시 편집하는 요청은 거절한다.\n"
-    },
-    {
-      "id": "b000014",
-      "kind": "blank",
-      "start_line": 45,
-      "end_line": 45,
-      "raw": "\n"
-    },
-    {
-      "id": "b000015",
-      "kind": "paragraph",
-      "start_line": 46,
-      "end_line": 46,
-      "raw": "아래는 제거된 레거시 AOT 생성 경로의 역사적 기록이다.\n"
-    },
-    {
-      "id": "b000016",
-      "kind": "blank",
-      "start_line": 47,
-      "end_line": 47,
-      "raw": "\n"
-    },
-    {
-      "id": "b000017",
-      "kind": "paragraph",
-      "start_line": 48,
-      "end_line": 48,
-      "raw": "`FRAMEWORK LVRS`의 CodeEditor 예약어는 `lvrs::CodeEditor::create`를 직접 호출하는 C++23을 생성한다. 런타임 파서나 스크립트 실행기를 추가하지 않는다. `model`은 scoped backend의 `shared_ptr<TextDocumentModel>`, `text`는 초기 문자열이다. 두 입력은 함께 사용할 수 없다. `height`와 `editorHeight`도 같은 높이를 지정하므로 함께 사용하지 않는다.\n"
-    },
-    {
-      "id": "b000018",
       "kind": "blank",
       "start_line": 49,
       "end_line": 49,
       "raw": "\n"
     },
     {
-      "id": "b000019",
+      "id": "b000013",
       "kind": "paragraph",
       "start_line": 50,
-      "end_line": 50,
-      "raw": "문자·숫자·불리언·색상의 공개 지원 입력은 생성한 options에 명시적으로 반영한다. Core Observable 바인딩은 같은 편집기 인스턴스의 options나 `set_text`/`set_cursor_position`을 갱신한다. 전체 모델을 교체하는 반응형 바인딩은 제공하지 않는다. cursorPosition의 백엔드 값은 음수가 없는 정수 위치로 제공한다.\n"
+      "end_line": 57,
+      "raw": "UIKit 텍스트 서비스는 보이는 코드 줄의 커서·선택 기하와 UTF-16 조합을 사용한다.\n문서 갱신과 사용자 선택의 외부 변경은 입력 델리게이트에 변경 전후로 전달한다.\n후보 교체·확정, 조합 범위 안팎의 확정 문자열 교체, 범위 밖 선택의 원자적 확정,\n이모지 이동, 세로 이동 및 외부 소스 변경은 헤드리스 검사로\n확인한다. 생성된 iPhoneOS 앱의 링크는 실제 기기 입력 검증과 구분한다.\nWindows IMM의 확정 문자열과 다음 후보가 함께 오는 경우도 하나의 원본 확정 뒤\n새 투영으로 연결하고, 입력 종료 시 확정 전 후보만 취소한다. 이 연결은 헤드리스\n검사이며 실제 Windows 입력기를 실행한 결과가 아니다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 59,
+      "end_line": 62,
+      "raw": "`LVUI.AtSpi.TextNotifications`는 모의 Wayland 연결에 부착한 이 편집기의 문서와\n선택 변경이 iiGUI AT-SPI 이벤트로 전달되는지 확인한다. 이는 실제 Linux compositor·\n세션 버스·스크린 리더 검증과 구분한다. 텍스트 스냅샷 예산과 큰 문서의 비용은\niiGUI의 [접근성 의미 정보](../../iiGUI/docs/AccessibilitySemantics.md)를 따른다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 63,
+      "end_line": 63,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 64,
+      "end_line": 68,
+      "raw": "한 화면은 최대 512줄과 4 MiB의 텍스트를 읽고, 수평으로 긴 줄은 UTF-16 열 단위의\n제한된 구간을 표시한다. 문서의 줄 수가 1억을 넘으면 화면 조회를 거절한다. 커서가 현재\n구간 밖으로 이동할 때 구간을 옮긴다. 마우스 휠의 수평 이동이 구간 경계 밖으로 자동\n진행하지는 않는다. 논리 줄의 자동 줄바꿈은 아직 제공하지 않는다. 확장 자소·단어 이동, 실행 취소, 구문 강조, 줄 번호, 스크롤바,\n접근성 및 OS 입력 어댑터의 실기기 검증은 남아 있다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 69,
+      "end_line": 69,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 70,
+      "end_line": 72,
+      "raw": "`LVUI.OwnedCodeDocument.Native`는 실제 창을 열지 않는 iiGUI 위젯 트리에서 표시 범위,\n조합 입력, 키 입력, 복사·잘라내기, 충돌, 재진입과 큰 문서 탐색을 검사한다. 이는 실제\n플랫폼 입력기나 그래픽 화면의 검증을 뜻하지 않는다.\n"
     },
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 51,
-      "end_line": 51,
+      "start_line": 73,
+      "end_line": 73,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "paragraph",
-      "start_line": 52,
-      "end_line": 52,
-      "raw": "`onDocumentEdited`는 변경 범위와 모델 상태를 받으며 전체 문자열 복사를 피한다. `onTextEdited`와 `onSubmitted`는 요청된 경우 전체 문자열을 구성한다. `onSelectionChanged`는 UTF-16 범위를 받는다. 모델 통지 안에서는 문서 읽기만 허용하므로 동기적으로 문서를 재편집하지 않는다.\n"
+      "start_line": 74,
+      "end_line": 79,
+      "raw": "기본 LVUI 선언의 `CodeEditor`는 이 독립 위젯을 생성한다. `model`은\n`CodeDocumentSource`, `editor`는 `CodeDocumentEditor` 인터페이스이며 동일한 메모리\n문서나 서로 다른 앱 구현을 사용할 수 있다. `model` 없이 `text`를 주면 LVUI가 자체\n메모리 문서를 만들고, `readOnly: true`면 편집기를 연결하지 않는다. `model`과 `text`,\n`height`와 `editorHeight`는 각각 동시에 사용할 수 없다. 주입 문서의 교체 가능한 포트는\n생성 시 정해지며 포인터 자체의 반응형 교체는 아직 지원하지 않는다.\n"
     },
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 53,
-      "end_line": 53,
+      "start_line": 80,
+      "end_line": 80,
       "raw": "\n"
     },
     {
       "id": "b000023",
+      "kind": "fenced_code",
+      "start_line": 81,
+      "end_line": 88,
+      "raw": "```lvui\nimport vm EditorModel\nWindow {\n    CodeEditor(model: vm.document, editor: vm.document, sourceRevision: vm.revision,\n               width: vm.width, height: 160, onDocumentEdited: vm.changed,\n               onSelectionChanged: vm.selectionChanged)\n}\n```\n",
+      "language": "lvui",
+      "code": "import vm EditorModel\nWindow {\n    CodeEditor(model: vm.document, editor: vm.document, sourceRevision: vm.revision,\n               width: vm.width, height: 160, onDocumentEdited: vm.changed,\n               onSelectionChanged: vm.selectionChanged)\n}\n",
+      "closed": true
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
       "kind": "paragraph",
-      "start_line": 54,
-      "end_line": 54,
+      "start_line": 90,
+      "end_line": 97,
+      "raw": "`sourceRevision`이 바뀌면 기존 위젯의 문서 스냅샷을 새로 읽는다. 위젯에서 발생한\n같은 리비전의 확인은 재진입 없이 처리한다. 크기, 글꼴, 여백, 색상, 활성 상태와 접근성\n이름의 지원 입력은 반응형으로 갱신된다. 이벤트는 전체 텍스트 복사 대신\n`CodeDocumentChange`와 `CodeSelection`을 전달한다. `text`와 `readOnly`는 초기 값이며,\n지원하지 않는 속성이나 자식 뷰는 컴파일 오류로 표시한다. 생성 코드의 컴파일과 반응형\n갱신은 `LVUI.OwnedCodeDocument.Codegen`과 `LVUI.OwnedCodeDocument.Generated`가 검사한다.\n편집 이벤트에서 발생한 외관 변경과 새로운 소스 리비전은 현재 이벤트 전달이 끝난 뒤\n적용한다. 같은 이벤트 안에서 문서나 선택을 위젯을 통해 다시 편집하는 요청은 거절한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 98,
+      "end_line": 98,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "아래는 제거된 레거시 AOT 생성 경로의 역사적 기록이다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "`FRAMEWORK LVRS`의 CodeEditor 예약어는 `lvrs::CodeEditor::create`를 직접 호출하는 C++23을 생성한다. 런타임 파서나 스크립트 실행기를 추가하지 않는다. `model`은 scoped backend의 `shared_ptr<TextDocumentModel>`, `text`는 초기 문자열이다. 두 입력은 함께 사용할 수 없다. `height`와 `editorHeight`도 같은 높이를 지정하므로 함께 사용하지 않는다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "문자·숫자·불리언·색상의 공개 지원 입력은 생성한 options에 명시적으로 반영한다. Core Observable 바인딩은 같은 편집기 인스턴스의 options나 `set_text`/`set_cursor_position`을 갱신한다. 전체 모델을 교체하는 반응형 바인딩은 제공하지 않는다. cursorPosition의 백엔드 값은 음수가 없는 정수 위치로 제공한다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 104,
+      "end_line": 104,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 105,
+      "end_line": 105,
+      "raw": "`onDocumentEdited`는 변경 범위와 모델 상태를 받으며 전체 문자열 복사를 피한다. `onTextEdited`와 `onSubmitted`는 요청된 경우 전체 문자열을 구성한다. `onSelectionChanged`는 UTF-16 범위를 받는다. 모델 통지 안에서는 문서 읽기만 허용하므로 동기적으로 문서를 재편집하지 않는다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 106,
+      "end_line": 106,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 107,
+      "end_line": 107,
       "raw": "이 레거시 경로와 그 옵션은 제거 대상이며 LVUI 독립 API의 구현이나 실행 의존성이 아니다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "편집기가 퇴역하면 진행 중인 입력·콜백이 끝난 뒤 조합을 취소하고 문서·클립보드·콜백 참조를 반환한다. macOS arm64 독립 설치 소비자와 LVUI 코드 생성·문서·입력 회귀를 창 없이 검사했다. 실제 창과 다른 운영체제는 검사하지 않았다.\n"
     }
   ],
   "outline": [
@@ -202,8 +300,15 @@
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000003",
+        "block_id": "b000005",
         "line": 9,
+        "text": "`CodeEditorBinding`은 값과 문서 계약만 제공하고 iiSDKCore 외 SDK를 직접 참조하지 않는다. `CodeEditorInput`에 교체 가능한 `source`와",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 14,
         "text": "바뀌지 않은 동일 문자열 교체는 선택을 접을 수 있지만 편집 이벤트를 발행하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -211,41 +316,69 @@
       {
         "block_id": "b000007",
         "line": 19,
-        "text": "플랫폼 입력기나 그래픽 화면의 검증을 뜻하지 않는다.",
+        "text": "변경하지 않는다. 플랫폼 클립보드에도 같은 크기의 데이터를 수용하는 iiGUI가 필요하다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000009",
-        "line": 24,
-        "text": "메모리 문서를 만들고, `readOnly: true`면 편집기를 연결하지 않는다. `model`과 `text`,",
+        "line": 33,
+        "text": "한쪽 삭제는 선택 텍스트를 복사하지 않는다. 범위·리비전·결과 선택 검증이 실패하면",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000009",
-        "line": 26,
-        "text": "생성 시 정해지며 포인터 자체의 반응형 교체는 아직 지원하지 않는다.",
+        "line": 34,
+        "text": "문서를 변경하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 48,
-        "text": "`FRAMEWORK LVRS`의 CodeEditor 예약어는 `lvrs::CodeEditor::create`를 직접 호출하는 C++23을 생성한다. 런타임 파서나 스크립트 실행기를 추가하지 않는다. `model`은 scoped backend의 `shared_ptr<TextDocumentModel>`, `text`는 초기 문자열이다. 두 입력은 함께 사용할 수 없다. `height`와 `editorHeight`도 같은 높이를 지정하므로 함께 사용하지 않는다.",
+        "line": 67,
+        "text": "진행하지는 않는다. 논리 줄의 자동 줄바꿈은 아직 제공하지 않는다. 확장 자소·단어 이동, 실행 취소, 구문 강조, 줄 번호, 스크롤바,",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000019",
-        "line": 50,
-        "text": "문자·숫자·불리언·색상의 공개 지원 입력은 생성한 options에 명시적으로 반영한다. Core Observable 바인딩은 같은 편집기 인스턴스의 options나 `set_text`/`set_cursor_position`을 갱신한다. 전체 모델을 교체하는 반응형 바인딩은 제공하지 않는다. cursorPosition의 백엔드 값은 음수가 없는 정수 위치로 제공한다.",
+        "line": 72,
+        "text": "플랫폼 입력기나 그래픽 화면의 검증을 뜻하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000021",
-        "line": 52,
+        "line": 77,
+        "text": "메모리 문서를 만들고, `readOnly: true`면 편집기를 연결하지 않는다. `model`과 `text`,",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000021",
+        "line": 79,
+        "text": "생성 시 정해지며 포인터 자체의 반응형 교체는 아직 지원하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 101,
+        "text": "`FRAMEWORK LVRS`의 CodeEditor 예약어는 `lvrs::CodeEditor::create`를 직접 호출하는 C++23을 생성한다. 런타임 파서나 스크립트 실행기를 추가하지 않는다. `model`은 scoped backend의 `shared_ptr<TextDocumentModel>`, `text`는 초기 문자열이다. 두 입력은 함께 사용할 수 없다. `height`와 `editorHeight`도 같은 높이를 지정하므로 함께 사용하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 103,
+        "text": "문자·숫자·불리언·색상의 공개 지원 입력은 생성한 options에 명시적으로 반영한다. Core Observable 바인딩은 같은 편집기 인스턴스의 options나 `set_text`/`set_cursor_position`을 갱신한다. 전체 모델을 교체하는 반응형 바인딩은 제공하지 않는다. cursorPosition의 백엔드 값은 음수가 없는 정수 위치로 제공한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 105,
         "text": "`onDocumentEdited`는 변경 범위와 모델 상태를 받으며 전체 문자열 복사를 피한다. `onTextEdited`와 `onSubmitted`는 요청된 경우 전체 문자열을 구성한다. `onSelectionChanged`는 UTF-16 범위를 받는다. 모델 통지 안에서는 문서 읽기만 허용하므로 동기적으로 문서를 재편집하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -254,11 +387,18 @@
     "commands": [],
     "links": [
       {
-        "block_id": "b000003",
-        "label": "독립 코드 문서·입력 세션",
+        "block_id": "b000005",
+        "label": "코드 문서·입력 세션",
         "target": "CodeDocument.md",
         "kind": "relative",
-        "line": 3
+        "line": 7
+      },
+      {
+        "block_id": "b000015",
+        "label": "접근성 의미 정보",
+        "target": "../../iiGUI/docs/AccessibilitySemantics.md",
+        "kind": "relative",
+        "line": 62
       }
     ],
     "tables": []

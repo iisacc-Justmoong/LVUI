@@ -1,0 +1,11 @@
+Window {
+    VStack {
+        Alert(id: "staticAlert", open: true, motionEnabled: false, showIcon: false)
+        Modal(id: "staticModal", open: true, motionEnabled: false) {
+            Label(id: "staticBody", text: "Static")
+        }
+        Sheet(id: "staticSheet", open: true, motionEnabled: false) {
+            Label(id: "staticSheetBody", text: "Sheet")
+        }
+    }
+}

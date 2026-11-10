@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/OwnedListModel.md",
-    "sha256": "fedf74917181a4a8712973b481f14b2d0d56d0cc6ea74dea65918f45821b668f",
-    "bytes": 2292,
-    "line_count": 30,
+    "sha256": "a69c95ade3adbc3c5b66a97c21a506b275b83e07e8d8a5c822e67b0caa8a9c72",
+    "bytes": 4824,
+    "line_count": 55,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 8,
-      "raw": "`List.h`는 평면 목록의 데이터와 화면 선택을 LVUI가 소유하는 독립 경계다.\n`ListSource`는 고유 키·레이블·설명·아이콘 이름·활성 상태를 가진 불변\n`ListSnapshot`을 제공한다. `ListEditor`는 삽입, 키를 유지하는 교체, 삭제와 순서\n이동을 관찰한 리비전과 함께 받는다. 앱은 파일, 데이터베이스 또는 다른 저장소에\n맞는 구현으로 두 경계를 교체할 수 있다. 계층 목록, Qt, QML이나 LVRS의 데이터\n타입을 요구하지 않는다.\n"
+      "raw": "`List.h`는 평면 목록의 데이터와 화면 선택을 LVUI가 소유하는 독립 경계다.\n`ListSource`는 고유 키·레이블·설명·아이콘 이름·활성·선택 가능·편집 가능·이동 가능 상태를 가진 불변\n`ListSnapshot`을 제공한다. `ListEditor`는 삽입, 키를 유지하는 교체, 삭제와 순서\n이동을 관찰한 리비전과 함께 받는다. 앱은 파일, 데이터베이스 또는 다른 저장소에\n맞는 구현으로 두 경계를 교체할 수 있다. 계층 목록, Qt, QML이나 LVRS의 데이터\n타입을 요구하지 않는다.\n"
     },
     {
       "id": "b000004",
@@ -56,50 +56,92 @@
       "id": "b000005",
       "kind": "paragraph",
       "start_line": 10,
-      "end_line": 13,
-      "raw": "`ListMemory`는 선택적인 메모리 구현이다. 한 편집을 검증한 뒤 불변 스냅샷을\n게시하며 오래된 리비전은 거절한다. 같은 내용의 교체나 같은 위치로의 이동은\n리비전을 늘리지 않는다. 항목은 최대 65,536개, 전체 텍스트는 64 MiB이며 키는\n비어 있지 않은 고유한 UTF-8이어야 한다. 이전 스냅샷은 이후 편집에도 유지된다.\n"
+      "end_line": 16,
+      "raw": "`ListEntry::editable`은 개별 항목의 이름 편집 가능 여부이며 기본값은 `true`다.\n이는 편집 UI를 자동으로 켜지 않는다. 화면에서도 편집을 켜고 `ListEditor`를\n제공해야 한다. `ListEditing`은 선택한 항목의 원본과 리비전, 별도 초안을 보관한다.\n확정할 때 원본 항목의 레이블만 교체하도록 요청하므로 앱의 편집기가 검증과 저장을\n제어한다. 오래된 리비전이나 거절된 값은 초안을 유지하며 취소는 원본을 바꾸지 않는다.\n호출자는 스냅샷을 제공한 원본과 같은 데이터·리비전 체계의 편집기를 전달해야 한다.\nLVUI는 서로 다른 저장소가 우연히 같은 키와 리비전을 갖는지 판별하지 않는다.\n"
     },
     {
       "id": "b000006",
       "kind": "blank",
-      "start_line": 14,
-      "end_line": 14,
+      "start_line": 17,
+      "end_line": 17,
       "raw": "\n"
     },
     {
       "id": "b000007",
       "kind": "paragraph",
-      "start_line": 15,
-      "end_line": 19,
-      "raw": "`ListController`는 키 기반 선택을 문서와 분리해 보관한다. 선택은 문서 리비전을\n변경하지 않는다. 앱이 외부 변경 후 `refresh()`를 호출하면 새 스냅샷을 검증하고,\n선택 항목이 제거되었거나 선택할 수 없게 된 경우에만 선택을 비운다. 소스가 게시한\n리비전은 단조 증가해야 한다. 컨트롤러는 생성한 스레드에서 사용하며 새로고침 중\n재진입을 거절한다.\n"
+      "start_line": 18,
+      "end_line": 24,
+      "raw": "`ListEntry::draggable`의 기본값은 `true`이며 이름 편집 가능 여부와 독립적이다.\n`ii::gui::BasicListDrag`는 스냅샷에서 출발 행과 포인터 동작을 보관하고, 가변 높이 뷰포트의\n행 위쪽·아래쪽 또는 마지막 행 뒤에 대한 이동 후보를 계산한다. 드래그 도중에는\n데이터를 수정하지 않고, 제자리 이동과 비활성 대상은 후보에서 제외한다. 후보의\n`ListEdit`에는 원본 리비전과 이동할 키, 앞에 놓을 키가 포함된다. 호출자는 손을\n놓았을 때만 같은 원본의 `ListEditor`에 이를 전달한다. 새 리비전이나 내용이 다른\n스냅샷은 이전 후보를 만료시킨다. 취소와 잘못된 위치는 후보를 보존하지 않는다.\n"
     },
     {
       "id": "b000008",
-      "kind": "blank",
-      "start_line": 20,
-      "end_line": 20,
-      "raw": "\n"
-    },
-    {
-      "id": "b000009",
-      "kind": "paragraph",
-      "start_line": 21,
-      "end_line": 24,
-      "raw": "`ListViewportSource`는 불변 스냅샷과 키 색인을 사용해 고정 높이 목록의 보이는 행과\n앞뒤 여유 행만 계산한다. 행 삽입 뒤에는 가능한 한 같은 키와 행 내부 위치를 유지하며,\n사용자의 새로운 스크롤이나 특정 키 표시 요청은 이전 기준점보다 우선한다. 계산에는\n문서 편집이 수반되지 않는다.\n"
-    },
-    {
-      "id": "b000010",
       "kind": "blank",
       "start_line": 25,
       "end_line": 25,
       "raw": "\n"
     },
     {
-      "id": "b000011",
+      "id": "b000009",
       "kind": "paragraph",
       "start_line": 26,
+      "end_line": 29,
+      "raw": "`ListMemory`는 선택적인 메모리 구현이다. 한 편집을 검증한 뒤 불변 스냅샷을\n게시하며 오래된 리비전은 거절한다. 같은 내용의 교체나 같은 위치로의 이동은\n리비전을 늘리지 않는다. 항목은 최대 65,536개, 전체 텍스트는 64 MiB이며 키는\n비어 있지 않은 고유한 UTF-8이어야 한다. 이전 스냅샷은 이후 편집에도 유지된다.\n"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 30,
       "end_line": 30,
-      "raw": "`LVUI.OwnedList.Model`은 스냅샷 보존, 선택과 문서 상태 분리, 원자적 편집, 유효성,\n오래된 요청, 동시 편집과 스레드 경계를 검사한다. `LVUI.OwnedList.Viewport`는\n10,000개 항목의 부분 조회, 스크롤 기준점, 표시 요청과 입력 한도를 검사한다. 일반\n[독립 목록 화면](NativeOwnedListView.md)과 [기본 목록 선언](NativeOwnedListPanel.md)은\n이를 직접 사용한다.\n"
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 31,
+      "end_line": 37,
+      "raw": "`ListController`는 키 기반 선택을 문서와 분리해 보관한다. 선택은 문서 리비전을\n변경하지 않으며 `view_revision()`으로 선택 변경을 별도로 추적한다. 외부 선택을\n선언형 목록에 반영할 때는 이 값을 `viewRevision`으로 전달할 수 있다.\n앱이 외부 변경 후 `refresh()`를 호출하면 새 스냅샷을 검증하고,\n선택 항목이 제거되었거나 선택할 수 없게 된 경우에만 선택을 비운다. 소스가 게시한\n리비전은 단조 증가해야 한다. 컨트롤러는 생성한 스레드에서 사용하며 새로고침 중\n재진입을 거절한다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 38,
+      "end_line": 38,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "paragraph",
+      "start_line": 39,
+      "end_line": 45,
+      "raw": "`ii::gui::BasicListViewportSource`는 불변 스냅샷과 키 색인을 사용해 기본 높이 또는 키별 높이를\n가진 목록의 보이는 행과 앞뒤 여유 행만 계산한다. 생성 시 제공하는 키별 높이는\n1~8,192 범위의 절대 높이이며 존재하지 않는 키와 잘못된 값은 거절한다. 기본 높이는\n18~256이다. 불변 누적 색인과 이진 탐색으로 행 위치와 스크롤 구간을 찾으며, 스크롤할\n때 전체 목록을 순회하지 않는다. 행 삽입 뒤에는 가능한 한 같은 키와 행 내부 위치를 유지하며,\n사용자의 새로운 스크롤이나 특정 키 표시 요청은 이전 기준점보다 우선한다. 계산에는\n문서 편집이 수반되지 않는다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 47,
+      "end_line": 53,
+      "raw": "`LVUI.OwnedList.Model`은 스냅샷 보존, 선택과 문서 상태 분리, 원자적 편집, 유효성,\n오래된 요청, 동시 편집과 스레드 경계를 검사한다. `LVUI.OwnedList.Viewport`는\n10,000개 항목의 부분 조회, 가변 높이 경계, 스크롤 기준점, 표시 요청과 입력 한도를 검사한다.\n`LVUI.OwnedList.Drag`는 후보 위치, 제자리 이동, 비활성 대상, 서로 다른 스냅샷과\n스크롤 방향을 검사한다. 일반\n[독립 목록 화면](NativeOwnedListView.md)과 [기본 목록 선언](NativeOwnedListPanel.md)은\n이를 직접 사용한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 54,
+      "end_line": 54,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "목록 표시 범위와 드래그 판정은 각각 `iiGUI/ListViewport.h`, `iiGUI/ListDrag.h`에 있다. LVUI는 불변 스냅샷·요청·결과 및 `ListViewportBinding`·`ListDragBinding`을 제공한다. 앱은 구현을 명시적으로 주입한다.\n"
     }
   ],
   "outline": [
@@ -122,16 +164,44 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000007",
+        "block_id": "b000005",
+        "line": 12,
+        "text": "제공해야 한다. `ListEditing`은 선택한 항목의 원본과 리비전, 별도 초안을 보관한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 15,
+        "text": "호출자는 스냅샷을 제공한 원본과 같은 데이터·리비전 체계의 편집기를 전달해야 한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
         "line": 16,
-        "text": "변경하지 않는다. 앱이 외부 변경 후 `refresh()`를 호출하면 새 스냅샷을 검증하고,",
+        "text": "LVUI는 서로 다른 저장소가 우연히 같은 키와 리비전을 갖는지 판별하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000007",
-        "line": 18,
+        "line": 24,
+        "text": "스냅샷은 이전 후보를 만료시킨다. 취소와 잘못된 위치는 후보를 보존하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000011",
+        "line": 36,
         "text": "리비전은 단조 증가해야 한다. 컨트롤러는 생성한 스레드에서 사용하며 새로고침 중",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000013",
+        "line": 43,
+        "text": "때 전체 목록을 순회하지 않는다. 행 삽입 뒤에는 가능한 한 같은 키와 행 내부 위치를 유지하며,",
         "basis": "lexical_match",
         "context": "paragraph"
       }
@@ -139,18 +209,18 @@
     "commands": [],
     "links": [
       {
-        "block_id": "b000011",
+        "block_id": "b000015",
         "label": "독립 목록 화면",
         "target": "NativeOwnedListView.md",
         "kind": "relative",
-        "line": 29
+        "line": 52
       },
       {
-        "block_id": "b000011",
+        "block_id": "b000015",
         "label": "기본 목록 선언",
         "target": "NativeOwnedListPanel.md",
         "kind": "relative",
-        "line": 29
+        "line": 52
       }
     ],
     "tables": []

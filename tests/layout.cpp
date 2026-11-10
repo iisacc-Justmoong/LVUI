@@ -16,6 +16,8 @@ Window { VStack(id: "panel", spacing: vm.gap, defaultSpacing: vm.defaultGap, pad
 )lvui");
     check(code.find("set_stack_layout(") != code.npos && code.find("NativeWidgetLayout.h") != code.npos,
           "A dynamic stack layout was not connected to one native layout update");
+    check(code.find("stack_layout<ii::gui::StackLayoutOptions>(") != code.npos,
+          "Generated layout did not supply the host layout type");
     for (auto field : {"gap", "defaultGap", "padding", "left", "top", "right", "bottom", "width", "height", "minimumWidth", "minimumHeight", "alignment", "alignmentName", "flex"})
         check(code.find(std::string("backend_0.") + field) != code.npos, "A native layout input lost its source");
 }
@@ -36,6 +38,12 @@ void constants() {
     check(code.find("set_stack_layout(") != code.npos, "Constant stack dimensions bypassed the native layout contract");
     check(code.find("LVUI/")==code.npos && code.find(".spacing = 6")!=code.npos && code.find(".extent = {200, 100}")!=code.npos,
           "A constant layout retained runtime normalization or lost AOT folding");
+    const auto stacks = compile("Window { ZStack(id: layers) { VStack(id: column) { Label() }\n HStack(id: row) { Label() } } }");
+    const auto overlay = stacks.find("widgets.zstack(");
+    const auto column = stacks.find("widgets.vstack(", overlay);
+    const auto row = stacks.find("widgets.hstack(", column);
+    check(overlay != stacks.npos && column != stacks.npos && row != stacks.npos && overlay < column && column < row,
+          "Explicit stacks did not lower to iiGUI in declaration order");
 }
 void diagnostics() {
     for (auto source : {

@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/LocalScopes.md",
-    "sha256": "61b420bb079dd8cd1b6c089300cb76d183c8f7688af9df5dd27225c4e059453c",
-    "bytes": 2413,
+    "sha256": "b6afe910878599a31aecbe49cc305144540becd898b8264623788e175e2d356f",
+    "bytes": 2417,
     "line_count": 41,
     "encoding": "utf-8",
     "language": "ko"
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 5,
-      "raw": "뷰 본문의 지역 `let`·`var`·import는 해당 뷰를 구성하는 C++ 활성화에 속한다.\nAOT는 이를 별도 스코프와 구성 함수로 생성한다. 부모의 값과 import는 같은 객체를\n빌려 읽고, 지역 import는 자체 객체를 생성한다. 지역 이름은 부모 이름을 가릴 수 있다.\n"
+      "raw": "뷰 본문의 지역 `const`·`var`·import는 해당 뷰를 구성하는 C++ 활성화에 속한다.\nAOT는 이를 별도 스코프와 구성 함수로 생성한다. 부모의 값과 import는 같은 객체를\n빌려 읽고, 지역 import는 자체 객체를 생성한다. 지역 이름은 부모 이름을 가릴 수 있다.\n"
     },
     {
       "id": "b000004",
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 20,
-      "raw": "```lvui\nimport document Backend\nWindow {\n    VStack {\n        VStack {\n            import inspector Backend\n            let status: String = document.ready ? \"Ready\" : \"Waiting\"\n            Label(text: status)\n            PushButton(inspector.refresh, text: \"Refresh\")\n        }\n        Label(text: document.title)\n    }\n}\n```\n",
+      "raw": "```lvui\nimport document Backend\nWindow {\n    VStack {\n        VStack {\n            import inspector Backend\n            const status: String = document.ready ? \"Ready\" : \"Waiting\"\n            Label(text: status)\n            PushButton(inspector.refresh, text: \"Refresh\")\n        }\n        Label(text: document.title)\n    }\n}\n```\n",
       "language": "lvui",
-      "code": "import document Backend\nWindow {\n    VStack {\n        VStack {\n            import inspector Backend\n            let status: String = document.ready ? \"Ready\" : \"Waiting\"\n            Label(text: status)\n            PushButton(inspector.refresh, text: \"Refresh\")\n        }\n        Label(text: document.title)\n    }\n}\n",
+      "code": "import document Backend\nWindow {\n    VStack {\n        VStack {\n            import inspector Backend\n            const status: String = document.ready ? \"Ready\" : \"Waiting\"\n            Label(text: status)\n            PushButton(inspector.refresh, text: \"Refresh\")\n        }\n        Label(text: document.title)\n    }\n}\n",
       "closed": true
     },
     {

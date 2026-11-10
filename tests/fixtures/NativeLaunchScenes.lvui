@@ -1,0 +1,7 @@
+Application(onLaunchArguments: vm.launch_arguments, onOpenFiles: vm.open_files) {
+    import vm NativeApplicationBackend
+    Window(onOpened: vm.scene_opened, onClosed: vm.scene_closed) {
+        PushButton(text: "Tools", onClick: openWindow("tools"))
+    }
+    Window(id: "tools", initiallyOpen: false) { Label(text: vm.title) }
+}

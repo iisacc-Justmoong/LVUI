@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/ViewSequences.md",
-    "sha256": "2c4e1741d16a49c62bdeae5f633c38263974c29d3c09ecbfac2aa185108b2906",
-    "bytes": 5855,
+    "sha256": "346669c9d6bb131b0fb66cd54e9787f3d186b75c6096e169947292ceb52c9ff3",
+    "bytes": 5859,
     "line_count": 87,
     "encoding": "utf-8",
     "language": "ko"
@@ -57,9 +57,9 @@
       "kind": "fenced_code",
       "start_line": 7,
       "end_line": 18,
-      "raw": "```lvui\nlet Pair(title: String): [View] = [\n    Label(text: title),\n    PushButton(text: \"Run\")\n]\nlet Panel(content: [View] = []): View = HStack {\n    content()\n}\nWindow {\n    Panel(content: Pair(title: \"Native\"))\n}\n```\n",
+      "raw": "```lvui\nconst Pair(title: String): [View] = [\n    Label(text: title),\n    PushButton(text: \"Run\")\n]\nconst Panel(content: [View] = []): View = HStack {\n    content()\n}\nWindow {\n    Panel(content: Pair(title: \"Native\"))\n}\n```\n",
       "language": "lvui",
-      "code": "let Pair(title: String): [View] = [\n    Label(text: title),\n    PushButton(text: \"Run\")\n]\nlet Panel(content: [View] = []): View = HStack {\n    content()\n}\nWindow {\n    Panel(content: Pair(title: \"Native\"))\n}\n",
+      "code": "const Pair(title: String): [View] = [\n    Label(text: title),\n    PushButton(text: \"Run\")\n]\nconst Panel(content: [View] = []): View = HStack {\n    content()\n}\nWindow {\n    Panel(content: Pair(title: \"Native\"))\n}\n",
       "closed": true
     },
     {
