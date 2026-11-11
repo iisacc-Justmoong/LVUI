@@ -71,6 +71,13 @@ ii::gui::Color material_color(const std::shared_ptr<ii::gui::detail::WidgetState
     }
     throw std::runtime_error("Window accent material was not drawn");
 }
+ii::gui::Color neutral_window_material_color(const std::shared_ptr<ii::gui::detail::WidgetState>& state,const ii::gui::Widget& material) {
+    const auto frame=take(state->drawing_snapshot({640,420}));const auto bounds=take(material.snapshot()).bounds;
+    for(const auto& layer:frame.overlays)if(layer.backdrop&&layer.backdrop->bounds==bounds){
+        require(!layer.backdrop->underlay,"Neutral window allocated an accent underlay");return layer.backdrop->tint;
+    }
+    throw std::runtime_error("Neutral window material was not drawn");
+}
 bool near(double a,double b){return std::abs(a-b)<1e-5;}
 enum class OtherAccent { blue };
 template<class T> concept AccentInput=requires(T value){lvui::native::window_accent(value);};
@@ -127,18 +134,27 @@ int main() {
     const auto blue=button_color(state,first),nested_blue=button_color(state,nested),badge_blue=button_color(state,badge);
     const auto custom_initial=button_color(state,custom);
     const auto material_blue=material_color(state,material),nested_material_blue=material_color(state,nested_material);
-    const auto custom_material_initial=material_color(state,custom_material);
+    const auto custom_material_initial=neutral_window_material_color(state,custom_material);
     require(take(custom.action_options()).width==140,"Button did not apply its declared width");
     auto graph=scope->native_lifetime.lock();
     require(bool(graph),"Window binding graph was not retained");
     scope->backend_0.accent.set("purple");
     const auto purple=button_color(state,first),nested_purple=button_color(state,nested),badge_purple=button_color(state,badge);
     const auto material_purple=material_color(state,material),nested_material_purple=material_color(state,nested_material);
-    require(near(take(state->appearance()).primary.red,purple_default.red)&&take(state->appearance()).window==window_background&&
-            purple!=blue&&nested_purple!=nested_blue&&badge_purple!=badge_blue,
-            "Reactive Window accent did not update the host and scoped buttons");
+    require(near(take(state->appearance()).primary.red,purple_default.red),
+            "Reactive Window accent did not update the host accent");
+    require(take(state->appearance()).window==window_background,
+            "Reactive Window accent changed the window background");
+    if(purple==blue){
+        const auto errors=take(graph->failures());
+        throw std::runtime_error("Reactive Window accent did not update the primary button; color="+
+            std::to_string(blue.red)+","+std::to_string(blue.green)+","+std::to_string(blue.blue)+
+            "; binding errors="+std::to_string(errors.size()));
+    }
+    require(nested_purple!=nested_blue,"Reactive Window accent did not update the nested button");
+    require(badge_purple!=badge_blue,"Reactive Window accent did not update the badge");
     require(material_blue!=material_purple&&nested_material_blue!=nested_material_purple&&
-            material_color(state,custom_material)==custom_material_initial,
+            neutral_window_material_color(state,custom_material)==custom_material_initial,
             "Material lost inherited, nested, or explicit Window accent");
     require(pressed_color(state,normal_icon)==linear(lvui::figma_defaults::accent_purple_selected)&&
             pressed_color(state,fixed_icon)==linear({0,1,0,1}),
@@ -178,7 +194,7 @@ int main() {
     const auto green=button_color(state,first),nested_green=button_color(state,nested),badge_green=button_color(state,badge);
     const auto material_green=material_color(state,material),nested_material_green=material_color(state,nested_material);
     require(take(graph->failures()).empty()&&green!=purple&&material_green!=material_purple&&
-            nested_material_green!=nested_material_purple&&material_color(state,custom_material)==custom_material_initial,
+            nested_material_green!=nested_material_purple&&neutral_window_material_color(state,custom_material)==custom_material_initial,
             "Window accent did not recover after invalid input");
 
     reject=true;

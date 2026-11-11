@@ -3826,7 +3826,11 @@ class Generator final {
         const auto expression=[&](const Input& input){return "lvui::native::widget_value<ii::gui::WidgetColor>("+expression_code(input.value,input.position,initial)+")";};
         const auto primary=accent_colors(window_accent_name).primary;
         std::string setup="value.kind = lvui::MaterialKind::"+std::string(kind=="WindowMaterial"?"window":kind=="PanelMaterial"?"panel":"surface")+"; ";
-        if(!values.contains("primaryColor")){
+        if(kind=="WindowMaterial"&&!values.contains("color")){
+            const auto color=token_color("--lvui-theme-colors-panel-window");
+            setup+="value.color = lvui::StyleColor{"+decimal(color.red)+", "+decimal(color.green)+", "+decimal(color.blue)+", "+decimal(color.alpha)+"}; ";
+        }
+        if(kind!="WindowMaterial"&&!values.contains("primaryColor")){
             if(!active_window_accent.empty())
                 setup+="value.primary_color = lvui::native::material_color(window_accent_palette(context.read("+active_window_accent+"))[0]); ";
             else
@@ -5330,16 +5334,26 @@ class Generator final {
         std::string title, appearance, palette;
         double width=0, height=0, minimum_width=0, minimum_height=0;
         std::string opened, closed, close_requested;
+        bool custom_chrome=false;
     };
     WindowOutput prepare_window(const View& root) {
         if(component_kinds(root.children).size()!=1)error(root.position,"ApplicationWindow requires exactly one child View after sequence expansion");
-        const auto values=inputs(root,{"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
+        const auto values=inputs(root,{"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","windowChrome","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
         if (!application_generation && (values.contains("id") || values.contains("initiallyOpen")))
             error(root.position, "Named Window scenes require an Application root");
         const bool scene_events=values.contains("onOpened")||values.contains("onClosed")||values.contains("onCloseRequested");
         if(scene_events&&!application_generation)error(root.position,"Window lifecycle events require an Application root");
         scene_lifecycle_runtime=scene_lifecycle_runtime||scene_events;
         const auto opened=action(values,"onOpened"),closed=action(values,"onClosed"),close_requested=close_decision(values);
+        bool custom_chrome=false;
+        if (auto found=values.find("windowChrome");found!=values.end()) {
+            const auto& input=*found->second;
+            if (native_expression(input.value)) error(input.position,"windowChrome requires a static .system or .custom value");
+            const auto value=resolve(input.value,input.position);
+            if(value.kind!=ValueKind::enumeration || (value.text!=".system" && value.text!=".custom"))
+                error(input.position,"windowChrome requires a static .system or .custom value");
+            custom_chrome=value.text==".custom";
+        }
         window_close_runtime=window_close_runtime||close_requested!="{}";
         if(auto found=values.find("accent");found!=values.end()) {
             const auto& input=*found->second;
@@ -5355,7 +5369,7 @@ class Generator final {
             }
         }
         Inputs properties=values;
-        properties.erase("onOpened"); properties.erase("onClosed"); properties.erase("onCloseRequested"); properties.erase("id"); properties.erase("initiallyOpen");
+        properties.erase("onOpened"); properties.erase("onClosed"); properties.erase("onCloseRequested"); properties.erase("id"); properties.erase("initiallyOpen"); properties.erase("windowChrome");
         Inputs bootstrap=properties;
         for(auto it=bootstrap.begin();it!=bootstrap.end();)if(native_expression(it->second->value))it=bootstrap.erase(it);else ++it;
         auto width=numeric(bootstrap,"width",640,1,32767),height=numeric(bootstrap,"height",420,1,32767);
@@ -5368,7 +5382,7 @@ class Generator final {
         emit_window_properties(properties);
         for(const auto& child:root.children)emit(child,"native_parent");
         return {text(bootstrap,"title","LVUI"),appearance_code(bootstrap,window_accent_name),accent_palette_code(),
-                width,height,minimum_width,minimum_height,opened,closed,close_requested};
+                width,height,minimum_width,minimum_height,opened,closed,close_requested,custom_chrome};
     }
     enum class ScopedRowContext { none, hierarchy, list, list_item, table };
     std::string emit_scoped(const View& view, const std::string& parent, const Inputs* menu_parent,const Repetition* repetition=nullptr,bool menu_row=false,ScopedRowContext row_context=ScopedRowContext::none,bool tab_row=false,WindowOutput* window=nullptr) {
@@ -7233,7 +7247,7 @@ class Generator final {
         }
         else if(material){
             const auto native="material_"+variable,derived="material_inputs_"+variable;
-            const bool dynamic=(!active_window_accent.empty()&&!values.contains("primaryColor"))||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&pair.first!="backdropSource"&&pair.first!="backdropBackground"&&native_expression(pair.second->value);});
+            const bool dynamic=(kind!="WindowMaterial"&&!active_window_accent.empty()&&!values.contains("primaryColor"))||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&pair.first!="backdropSource"&&pair.first!="backdropBackground"&&native_expression(pair.second->value);});
             if(dynamic){
                 body+="            auto "+derived+"_result = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+owned_material_options(kind,values,false)+"; });\n"
                     "            if (!"+derived+"_result) return std::unexpected("+derived+"_result.error());\n"
@@ -8038,7 +8052,7 @@ public:
                     error(scene.position, "Application requires unconditional Window or ApplicationWindow scenes");
                 auto declaration = scene;
                 declaration.imports.clear(); declaration.bindings.clear();
-                const auto values = inputs(declaration, {"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
+                const auto values = inputs(declaration, {"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","windowChrome","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
                 std::string id;
                 if (auto found = values.find("id"); found != values.end()) {
                     const auto value = resolve(found->second->value, found->second->position);
@@ -8236,7 +8250,8 @@ public:
         result+="\nnamespace ii::gui { class RadioGroups; }\nnamespace lvui { class NavigationContext; }\n";
         const auto options_value = [&](const WindowOutput& value) {
             return "ii::gui::HostOptions{.title = " + literal(value.title) +
-                ", .size = {" + decimal(value.width) + ", " + decimal(value.height) + "}, .minimum_size = {" + decimal(value.minimum_width) + ", " + decimal(value.minimum_height) + "}}";
+                ", .size = {" + decimal(value.width) + ", " + decimal(value.height) + "}, .minimum_size = {" + decimal(value.minimum_width) + ", " + decimal(value.minimum_height) + "}" +
+                (value.custom_chrome ? ", .chrome = ii::gui::WindowChrome::custom" : "") + "}";
         };
         result += "\nnamespace lvui_generated {\n";
         if (owned_list_item_composite_runtime) result +=

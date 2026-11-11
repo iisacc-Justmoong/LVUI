@@ -151,6 +151,13 @@
       "role": "guide"
     },
     {
+      "document_id": "urn:iisacc:document:888dc9c4180cfd43d963e6634910e7945283ac344e0b1f9c9faa5a3fa766400d",
+      "source": "docs/CustomWindowChrome.md",
+      "agent_json": "docs/CustomWindowChrome.agent.json",
+      "source_sha256": "f6aaebe087bec8d5d282d06390ffc73e715277ec5f6f36e3aeab74c7a20ae1d9",
+      "role": "guide"
+    },
+    {
       "document_id": "urn:iisacc:document:e10c4b6ff9e5c4a8366a9ca86cddb77348ab62b7aa174e9f5a38dcc8a0e439bf",
       "source": "docs/DeclarationAnnotations.md",
       "agent_json": "docs/DeclarationAnnotations.agent.json",
@@ -294,7 +301,7 @@
       "document_id": "urn:iisacc:document:bc4c45496c1543b1ff3ed8b6da543a89b092bebb9d2425811dbccadab2df6c1e",
       "source": "docs/LVUIIndependence.md",
       "agent_json": "docs/LVUIIndependence.agent.json",
-      "source_sha256": "31a8b9e440f8e192b62632f88f3b60198013f4b782bc1e1f876ff2a8b4c9f249",
+      "source_sha256": "46bb010c2018056350008ff3862e147f0f229153c2d22c94c86c80d12b827e09",
       "role": "guide"
     },
     {
@@ -672,7 +679,7 @@
       "document_id": "urn:iisacc:document:ba422e0653cb32006231b4746d43da5003088dd114a77e4c8bb60f41203ae3e9",
       "source": "docs/NativeMaterials.md",
       "agent_json": "docs/NativeMaterials.agent.json",
-      "source_sha256": "c6637a8d0589e2fcd160e134b6466bf5dbcaa07d97829fabde587d8ea22e823d",
+      "source_sha256": "f55c0a171368bae0e2bb2ea50efaf743dccbbf884f7778975a17aa8052df2496",
       "role": "guide"
     },
     {
@@ -1022,7 +1029,7 @@
       "document_id": "urn:iisacc:document:37e1e768690a5d059e5175f361e9544dc66bdd4e5d059f6d6fa36cd4e89dd617",
       "source": "docs/NativeWindow.md",
       "agent_json": "docs/NativeWindow.agent.json",
-      "source_sha256": "257841ccd4a86deee9b4f6f6452919ae2e5c47dd26ef02bfe755338cc333d2b8",
+      "source_sha256": "c71ec4cd32d7d3c676a6fd8015f87a75a23dcb721d4c116251716b95599ce818",
       "role": "guide"
     },
     {

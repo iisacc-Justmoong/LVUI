@@ -39,7 +39,7 @@ void accent(){
           "Window accent ignored an application style override");
     auto extras=lvui::compile_native("Window(accent: .purple) { VStack {\nProgressBar(currentValue: 50)\nColorPickerButton()\nAlertButton(tone: .primary)\nToolbarButton(tone: .primary)\nAlert(primaryText: \"OK\")\n} }",options);
     if(!extras)throw std::runtime_error(extras.error().message);
-    check(extras->find("value.style.fill = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
+    check(extras->find("value.style.fill = ii::gui::progress_color(lvui::StyleColor{0.125, 0.25, 0.5, 1})")!=extras->npos&&
           extras->find("value.configuration.palette.focus = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
           extras->find("value.palette.primary = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&
           extras->find("value.configuration.palette.primary = lvui::StyleColor{0.125, 0.25, 0.5, 1}")!=extras->npos&&

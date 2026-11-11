@@ -1,19 +1,19 @@
 import vm NativeWindowAccentModel
-let AccentChild(label: String): View = PushButton(id: "nested", text: label, onClick: vm.clicked)
+let AccentChild(label: String): View = PushButton(id: "nested", text: label, tone: .primary, onClick: vm.clicked)
 let AccentMaterial(): View = PanelMaterial(id: "nestedMaterial", width: 80, height: 20, motionEnabled: false)
 let AccentPopover(): View = Popover(id: "nestedPopover", width: 80, height: 40) { Label(text: "Nested") }
 Window(accent: vm.accent, width: vm.width, backgroundColor: "#151515") {
     VStack {
-        PushButton(id: "primary", text: "Save", onClick: vm.clicked)
+        PushButton(id: "primary", text: "Save", tone: .primary, onClick: vm.clicked)
         IconButton(id: "normalIcon", iconName: "generalopen", tone: .default, width: 32)
         IconButton(id: "fixedIcon", iconName: "generalopen", tone: .borderless, width: 32,
                    normalPressedColor: "#00ff00")
         AccentChild(label: vm.label)
-        PushButton(id: "custom", text: "Custom", width: vm.customWidth, primaryColor: vm.customColor,
+        PushButton(id: "custom", text: "Custom", tone: .primary, width: vm.customWidth, primaryColor: vm.customColor,
                    hoverColor: "#336699", borderColor: "#ffffff", borderWidth: 1,
                    fontSize: 14, lineHeight: 18, onClick: vm.clicked)
         HierarchyItem(id: "hierarchy", label: "Layers", count: 2, countWidth: 60,
-                      countView: PushButton(id: "badge", text: "2", width: 40, height: 20, onClick: vm.clicked))
+                      countView: PushButton(id: "badge", text: "2", tone: .primary, width: 40, height: 20, onClick: vm.clicked))
         MaterialSurface(id: "material", width: 80, height: 20, motionEnabled: false)
         AccentMaterial()
         WindowMaterial(id: "customMaterial", width: 80, height: 20, primaryColor: "#ff0000", motionEnabled: false)

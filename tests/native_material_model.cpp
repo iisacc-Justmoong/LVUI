@@ -25,8 +25,14 @@ void defaults() {
     require(near(w.tint.red,lvui::figma_defaults::panel_window.red),
             "Window material did not adopt the Figma tint");
     require(near(w.width,500)&&near(w.height,272)&&near(w.radius,16)&&near(w.blur_radius,64)&&
-            near(w.tint.alpha,.5)&&near(w.border.alpha,.12)&&near(w.shadow_radius,48)&&near(w.shadow_offset_y,16), "Window defaults changed");
-    config.density=lvui::MaterialDensity::glass25; config.tint_opacity=.7;config.blur_enabled=false;
+            near(w.tint.alpha,.75)&&near(w.border.alpha,.12)&&near(w.shadow_radius,48)&&near(w.shadow_offset_y,16), "Window defaults changed");
+    config.primary_color=lvui::StyleColor{1,0,0,1};config.intense_opacity=.9;config.faint_opacity=.8;
+    require(value.set_configuration(config,{})&&near(value.resolved().intense_opacity,0)&&near(value.resolved().faint_opacity,0)&&
+            near(value.gradient_alpha(48,32,500,272),0),"Window material still contains accent gradients");
+    config.density=lvui::MaterialDensity::glass25;
+    require(value.set_configuration(config,{})&&near(value.resolved().tint.alpha,.25)&&near(value.resolved().blur_radius,16),
+            "Window Glass 25 did not retain its density defaults");
+    config.tint_opacity=.7;config.blur_enabled=false;
     require(value.set_configuration(config, {}), "Material overrides rejected");w=value.resolved();
     require(near(w.tint.alpha,.7)&&near(w.blur_radius,0)&&near(w.border.alpha,.22), "Density and overrides were not resolved independently");
 }

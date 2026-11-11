@@ -1,6 +1,6 @@
 Window(accent: .purple) {
     VStack {
-        PushButton(id: "primary", text: "Static")
+        PushButton(id: "primary", text: "Static", tone: .primary)
         IconButton(id: "normalIcon", iconName: "generalopen", tone: .default, width: 32)
         MaterialSurface(id: "material", width: 80, height: 20, motionEnabled: false)
         Popover(id: "accentPopover", width: 80, height: 40) { Label(text: "Accent") }

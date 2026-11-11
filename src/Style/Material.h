@@ -126,6 +126,7 @@ struct MaterialModelPolicy final {
     inline static constexpr auto fields=material_radial_defaults::fields;
     inline static constexpr auto first_position=material_radial_defaults::first_position,second_position=material_radial_defaults::second_position;
     inline static constexpr auto first_opacity=material_radial_defaults::first_opacity,second_opacity=material_radial_defaults::second_opacity;
+    inline static constexpr bool neutral_window=true;
     [[nodiscard]] static Color default_tint()noexcept{return figma_defaults::panel_window;}
     [[nodiscard]] static Color default_primary()noexcept{return figma_defaults::accent_blue_default;}
     [[nodiscard]] static bool valid_extra(const Configuration& value)noexcept {return valid_material_outline(value.outline_path)&&valid_motion(value.motion);}

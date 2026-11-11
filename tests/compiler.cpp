@@ -16,6 +16,17 @@ void bad(std::string_view source, std::string_view reason) {
         throw std::runtime_error("Unexpected diagnostic: " + result.error().message);
 }
 void generation() {
+    const auto custom_window = compile("ApplicationWindow(windowChrome: .custom) { Label() }");
+    check(custom_window.find(".chrome = ii::gui::WindowChrome::custom") != std::string::npos,
+          "Custom window chrome was not forwarded to iiGUI");
+    const auto system_window = compile("ApplicationWindow { Label() }");
+    check(system_window.find("WindowChrome::custom") == std::string::npos,
+          "System window chrome must remain the default");
+    bad("ApplicationWindow(windowChrome: .unknown) { Label() }", "windowChrome");
+    bad("import vm Backend\nApplicationWindow(windowChrome: vm.chrome) { Label() }", "windowChrome");
+    const auto custom_scene = compile("Application { Window(windowChrome: .custom) { Label() } }");
+    check(custom_scene.find(".chrome = ii::gui::WindowChrome::custom") != std::string::npos,
+          "Named application windows must forward custom chrome");
     const auto code = compile(R"(let greeting: String = "Hello World"
 ApplicationWindow(title: greeting, width: 600, height: 360) {
     VStack(spacing: 12, padding: 24) {
