@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Components.md",
-    "sha256": "8e96607fb9e15e2a10d28ebe522bcf21cf1852f8539fa8c99fabedb743f6b102",
-    "bytes": 10741,
-    "line_count": 164,
+    "sha256": "9680dca33facf3a8bb07968c7305282891a01190573dcef3e2eb28ffb2294fd1",
+    "bytes": 11258,
+    "line_count": 172,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -492,6 +492,29 @@
       "start_line": 162,
       "end_line": 164,
       "raw": "모든 생성·빌드·설치 스테이징은 `build/` 하위에 두었다. 실제 창·GPU·입력·접근성과\nLVRS 앱·테스트 실행은 전체 작업의 최종 일괄 검증 범위로 유지한다. 이 기록은\n[전체 언어·모듈 완성](Completion.md)을 선언하는 것이 아니다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "heading",
+      "start_line": 165,
+      "end_line": 165,
+      "raw": "# EventListener interaction notifications\n",
+      "level": 1,
+      "title": "EventListener interaction notifications"
+    },
+    {
+      "id": "b000061",
+      "kind": "blank",
+      "start_line": 166,
+      "end_line": 166,
+      "raw": "\n"
+    },
+    {
+      "id": "b000062",
+      "kind": "paragraph",
+      "start_line": 167,
+      "end_line": 172,
+      "raw": "`EventListener` accepts `onHovered` and `onFocused` no-argument C++ callbacks.\nEach callback runs only when the listener or one of its descendants enters the\ncorresponding interactive state. A listener that has no such callbacks allocates\nno interaction subscription. The iiGUI interaction query delivers changes on\nthe owner thread, does not consume input, and is closed with the view. Hiding,\ndisabling, blocking, and retiring a listener do not trigger an entry callback.\n"
     }
   ],
   "outline": [
@@ -542,6 +565,14 @@
       "title": "2026-10-26 검증 기록",
       "anchor": "2026-10-26-검증-기록",
       "start_line": 143
+    },
+    {
+      "block_id": "b000060",
+      "parent_id": null,
+      "level": 1,
+      "title": "EventListener interaction notifications",
+      "anchor": "eventlistener-interaction-notifications",
+      "start_line": 165
     }
   ],
   "indexes": {
@@ -606,6 +637,13 @@
         "block_id": "b000053",
         "line": 146,
         "text": "독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000062",
+        "line": 172,
+        "text": "disabling, blocking, and retiring a listener do not trigger an entry callback.",
         "basis": "lexical_match",
         "context": "paragraph"
       }

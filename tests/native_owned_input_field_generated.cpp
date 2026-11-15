@@ -80,6 +80,9 @@ int main(){
     scope->backend_0.readOnly.set(true);good(tree->input({.kind=WidgetInputKind::text,.text="x"}));
     require(text(field)=="Later","Read-only generated field accepted input");
     good(tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::enter}));require(scope->backend_0.submissions==1,"Generated field lost submission");
+    auto focus_nodes=take(tree->snapshots());auto focus_next=std::ranges::find_if(focus_nodes,[](const auto& node){return node.id.ends_with("/multi");});
+    require(focus_next!=focus_nodes.end()&&focus_next->focused,"Submitted input did not transfer focus to its declared target");
+    good(field.focus());
     scope->backend_0.enabled.set(false);good(tree->input({.kind=WidgetInputKind::text,.text="y"}));
     require(text(field)=="Later","Disabled generated field accepted input");
     nodes=take(tree->snapshots());found=std::ranges::find_if(nodes,[](const auto& node){return node.id.ends_with("/multi");});
@@ -97,5 +100,7 @@ int main(){
     good(tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::end}));
     require(take(multi.snapshot()).text_selection.location==wrapped_end&&text(multi)=="one two three four",
             "Reactive wrapping did not recover without replacing text");
-    good(host.clear_content());scope.reset();graph.reset();require(!field.snapshot(),"Retired generated field remained active");tree->close();
+    scope->backend_0.enabled.set(true);scope->backend_0.onSubmit=[&]{good(host.clear_content());};good(field.focus());
+    good(tree->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::enter}));
+    scope.reset();graph.reset();require(!field.snapshot()&&!multi.snapshot(),"Submit after retirement retained a focus target");tree->close();
 }

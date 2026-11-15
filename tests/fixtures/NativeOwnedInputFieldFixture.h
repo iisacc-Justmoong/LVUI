@@ -1,5 +1,6 @@
 #pragma once
 #include <iiSDKCore/Core/Property/Observable.h>
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -10,6 +11,7 @@ struct NativeOwnedInputFieldModel final {
     ii::core::Observable<bool> enabled{true},readOnly{false},password{false},wrap{true},clear{false};
     std::vector<std::string> edits;
     unsigned submissions=0;
+    std::function<void()> onSubmit;
     void edited(std::string value){edits.push_back(value);text.set(std::move(value));}
-    void submit(){++submissions;}
+    void submit(){++submissions;if(auto callback=onSubmit)callback();}
 };

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Completion.md",
-    "sha256": "378f0c6aac762c98b40b9c61d503d063f3edd68cec97b5b911c03b1b14d45a8a",
-    "bytes": 17841,
-    "line_count": 193,
+    "sha256": "459d39bc148e82697e186f54d20a220437863345b6eb2614f903baa6ab450858",
+    "bytes": 18109,
+    "line_count": 197,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -315,44 +315,58 @@
       "id": "b000030",
       "kind": "blank",
       "start_line": 179,
-      "end_line": 180,
-      "raw": "\n\n"
+      "end_line": 179,
+      "raw": "\n"
     },
     {
       "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 180,
+      "end_line": 182,
+      "raw": "관측기의 회귀 테스트는 유지하며 구형 QML 입력 예제는\n`tests/Legacy/`에 격리한다. 테스트는 원래 예제의 바이트와 줄 위치를 읽어\n관측 결과를 비교한다. 2026-11-15 예제 분리 후 관측 검사 5개가 통과했다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 183,
+      "end_line": 184,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000033",
       "kind": "heading",
-      "start_line": 181,
-      "end_line": 181,
+      "start_line": 185,
+      "end_line": 185,
       "raw": "### 설치 소비자 검사 시간과 런타임 응답 기준\n",
       "level": 3,
       "title": "설치 소비자 검사 시간과 런타임 응답 기준"
     },
     {
-      "id": "b000032",
-      "kind": "blank",
-      "start_line": 182,
-      "end_line": 182,
-      "raw": "\n"
-    },
-    {
-      "id": "b000033",
-      "kind": "paragraph",
-      "start_line": 183,
-      "end_line": 188,
-      "raw": "`LVUI.NativeInstalled`는 설치·재배치, 오래된 Core 거부, 부정 C++ 계약 검사와 별도의\n소비자 세 개를 새로 빌드·실행한다. 2026-10-27 오류 검출 구성에서 기존 180초의 통합\n제한을 두 차례 넘겼고, 두 번째 시도는 일반/컴파일러 소비자 두 개의 통과 후 마지막\n런타임 소비자 빌드 중 종료됐다. 따라서 이 패키지 검사 한 항목의 제한을 360초로 한다.\n개별 값·메서드 검사 제한이나 제품의 UI/런타임 지연 기준을 바꾸는 조정이 아니다.\n원래 실패 기록, 동일 조건 재실행과 제한 변경 후 재실행을 별도로 보존한다.\n"
-    },
-    {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 189,
-      "end_line": 189,
+      "start_line": 186,
+      "end_line": 186,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 190,
+      "start_line": 187,
+      "end_line": 192,
+      "raw": "`LVUI.NativeInstalled`는 설치·재배치, 오래된 Core 거부, 부정 C++ 계약 검사와 별도의\n소비자 세 개를 새로 빌드·실행한다. 2026-10-27 오류 검출 구성에서 기존 180초의 통합\n제한을 두 차례 넘겼고, 두 번째 시도는 일반/컴파일러 소비자 두 개의 통과 후 마지막\n런타임 소비자 빌드 중 종료됐다. 따라서 이 패키지 검사 한 항목의 제한을 360초로 한다.\n개별 값·메서드 검사 제한이나 제품의 UI/런타임 지연 기준을 바꾸는 조정이 아니다.\n원래 실패 기록, 동일 조건 재실행과 제한 변경 후 재실행을 별도로 보존한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 193,
       "end_line": 193,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 194,
+      "end_line": 197,
       "raw": "패키지 소비자는 Release 최적화로 빌드하며 상위 검사의 sanitizer 플래그를 함께 전달한다.\n따라서 Debug 라이브러리를 사용하는 패키지 검사도 최적화된 소비자 컴파일 비용을 가진다.\n360초 제한에서 같은 오류 검출 소비자 검사가 321.05초에 통과했다. 이 값은 설치·컴파일·\n검사 전체 시간이며 애플리케이션 또는 UI의 실행 지연 측정값이 아니다.\n"
     }
   ],
@@ -398,12 +412,12 @@
       "start_line": 67
     },
     {
-      "block_id": "b000031",
+      "block_id": "b000033",
       "parent_id": "b000021",
       "level": 3,
       "title": "설치 소비자 검사 시간과 런타임 응답 기준",
       "anchor": "설치-소비자-검사-시간과-런타임-응답-기준",
-      "start_line": 181
+      "start_line": 185
     }
   ],
   "indexes": {

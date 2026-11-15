@@ -3,9 +3,9 @@
 #include <string>
 
 int main(){
-    auto code=lvui::compile_native("import vm Model\nWindow { EventListener(id: \"listener\", width: vm.width, height: vm.height, onInput: vm.input, onResized: vm.resized) }");
+    auto code=lvui::compile_native("import vm Model\nWindow { EventListener(id: \"listener\", width: vm.width, height: vm.height, onInput: vm.input, onPinch: vm.pinch, onResized: vm.resized, onSizeChanged: vm.sizeChanged, onHovered: vm.hovered, onFocused: vm.focused, onClick: vm.clicked) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto token:{"#include <iiGUI/NativeEventListenerView.h>","ii::gui::NativeEventListener::create(","ii::gui::EventListenerOptions","component.set_options(value)","ii::gui::WidgetInput"})
+    for(auto token:{"#include <iiGUI/NativeEventListenerView.h>","ii::gui::NativeEventListener::create(","ii::gui::EventListenerOptions","component.set_options(value)","ii::gui::WidgetInput", "WidgetInteractionPort", "observe_interaction", ".clicked = ", "last_size", "pinch_scale_factor"})
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("Generated listener lost ")+token);
     if(code->find("<LVUI/NativeEventListener.h>")!=code->npos||code->find("lvui::native::NativeEventListener")!=code->npos)
         throw std::runtime_error("Generated listener still uses the LVUI implementation");
@@ -25,7 +25,7 @@ int main(){
     if(!reactive||reactive->find(".size_to_content = true")==std::string::npos||
        reactive->find("component.set_options(value)")==std::string::npos)
         throw std::runtime_error("Content-sized listener lost its reactive axis binding");
-    for(auto source:{"Window { EventListener(width: -1) }","Window { EventListener(height: 9000) }","Window { EventListener(onInput: 1) }",
+    for(auto source:{"Window { EventListener(width: -1) }","Window { EventListener(height: 9000) }","Window { EventListener(onInput: 1) }", "Window { EventListener(onHovered: 1) }", "Window { EventListener(onSizeChanged: 1) }",
             "Window { EventListener() { Label() Label() } }", "import vm Model\nWindow { EventListener(sizeToContent: vm.flag) }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid listener input was accepted");
 }

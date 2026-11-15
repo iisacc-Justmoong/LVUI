@@ -10,7 +10,9 @@ struct NativeTextEditorModel final {
     ii::core::Observable<bool> enabled{true},readOnly{false};
     std::vector<std::string> edits;
     std::vector<double> content_heights;
+    std::vector<bool> wrapping_fallback;
     bool adaptive=false;
     void edited(std::string value){edits.push_back(value);text.set(std::move(value));}
     void measured(double value){content_heights.push_back(value);if(adaptive)height.set(std::clamp(value+2*inset.get(),minimumHeight.get(),160.));}
+    void wrappingChanged(bool value){wrapping_fallback.push_back(value);}
 };

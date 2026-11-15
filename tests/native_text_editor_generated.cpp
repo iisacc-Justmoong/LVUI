@@ -22,6 +22,7 @@ int main(){
     if(!(initial.text_input&&initial.size.height==72&&text(field)=="Project"))
         throw std::runtime_error("Initial editor: input="+std::to_string(initial.text_input)+" height="+std::to_string(initial.size.height)+" text="+text(field));
     check(!scope->backend_0.content_heights.empty()&&scope->backend_0.content_heights.back()>0,"Initial text measurement was not delivered");
+    check(scope->backend_0.wrapping_fallback==std::vector<bool>{false},"Initial wrap status was not delivered");
     good(field.focus());good(tree->input({.kind=WidgetInputKind::text,.text="한"}));
     check(text(field)=="Project한"&&scope->backend_0.text.get()=="Project한"&&scope->backend_0.edits.size()==1,
           "Committed text was not sent once or reactive reentry lost it");
@@ -52,6 +53,13 @@ int main(){
     (void)take(tree->drawing_snapshot({400,300}));
     check(scope->backend_0.content_heights.back()>height_before_width,"A width-only reflow did not update the content measurement");
     scope->backend_0.width.set(160);(void)take(tree->drawing_snapshot({400,300}));
+    scope->backend_0.text.set(std::string(5000,'x'));scope->backend_0.width.set(17);
+    good(host.set_extent({17,300}));(void)take(tree->drawing_snapshot({17,300}));
+    check(scope->backend_0.wrapping_fallback==std::vector<bool>({false,true}),"Overflow status did not reach LVUI");
+    scope->backend_0.width.set(160);good(host.set_extent({400,300}));(void)take(tree->drawing_snapshot({400,300}));
+    const auto wideBounds=take(field.snapshot()).bounds;
+    (void)take(field.text_position(wideBounds.x+10,wideBounds.y+10));
+    check(scope->backend_0.wrapping_fallback==std::vector<bool>({false,true,false}),"Wrap recovery did not reach LVUI");
     scope->backend_0.text.set("External\nnotes");
     scope->backend_0.minimumHeight.set(-1);scope->backend_0.text.set("Pending");
     check(!take(graph->failures()).empty()&&text(field)=="External\nnotes","Invalid configuration replaced editor state");

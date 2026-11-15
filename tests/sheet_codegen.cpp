@@ -3,13 +3,13 @@
 #include <string>
 
 int main() {
-    auto code = lvui::compile_native("import vm Model\nWindow { Sheet(title: vm.title, preferredWidth: vm.width, motionEnabled: false, onClosed: vm.closed) { Label(text: vm.text) } }");
+    auto code = lvui::compile_native("import vm Model\nWindow { Sheet(title: vm.title, preferredWidth: vm.width, motionEnabled: false, onClosed: vm.closed, onCanceled: vm.canceled) { Label(text: vm.text) } }");
     if (!code) throw std::runtime_error(code.error().message);
     for (auto part : {"#include <iiGUI/NativeSheetView.h>", "ii::gui::NativeSheet::create(",
                       "ii::gui::SheetContentFactory", "#include <iiGUI/NativeButtonView.h>",
                       "ii::gui::NativeButton::create(", "lvui::ButtonPalette",
                       "lvui::figma_defaults::panel_surface_panel", "component.set_options(value)",
-                      "ii::gui::Widget content"}) {
+                      "ii::gui::Widget content", ".canceled = "}) {
         if (code->find(part) == code->npos) throw std::runtime_error(std::string("Independent Sheet lost ") + part);
     }
     if (code->find("LVUI/NativeSheetAssets.h") != code->npos || code->find("lvui::native::sheet_close_button") != code->npos ||

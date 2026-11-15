@@ -24,6 +24,10 @@ struct VirtualAnchor final {
     std::size_t index=0;
     double delta=0;
     std::uint64_t movement=0;
+    // A gesture anchor stores a fraction of the cell stride and the local
+    // viewport position to preserve; ordinary anchors keep a pixel delta.
+    double focus=0;
+    bool proportional=false;
     friend bool operator==(const VirtualAnchor&,const VirtualAnchor&)=default;
 };
 struct VirtualCell final {

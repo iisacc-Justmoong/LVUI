@@ -177,6 +177,10 @@ python3 -B tools/observe_qml.py --check
 python3 -B -m unittest discover -s tests -p test_qml_observation.py
 ```
 
+관측기의 회귀 테스트는 유지하며 구형 QML 입력 예제는
+`tests/Legacy/`에 격리한다. 테스트는 원래 예제의 바이트와 줄 위치를 읽어
+관측 결과를 비교한다. 2026-11-15 예제 분리 후 관측 검사 5개가 통과했다.
+
 
 ### 설치 소비자 검사 시간과 런타임 응답 기준
 

@@ -22,6 +22,8 @@ Window {
 네이티브 래스터를 받는다. `previewSource`는 화면의 이미지 서비스나 개별
 `imageLoader`가 해석하는 파일·URL 문자열도 받는다. 로딩과 상태는
 [이미지 로딩](NativeImageLoading.md)을 따른다.
+생성 코드는 미리보기의 크기를 `iiGUI::BasicCard` 모델로 계산한다. 따라서 동적
+미리보기의 AOT 결과도 제거된 LVUI 내부 카드 구현을 참조하지 않는다.
 `iconName`과 `iconSource`는 교체 가능한 아이콘 공급자를
 사용한다. 텍스트, 상태, 크기, 색상과 이미지가 바뀌면 기존 카드를 갱신한다.
 

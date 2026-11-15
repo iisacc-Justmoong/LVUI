@@ -2,7 +2,8 @@ import vm NativeOwnedEventListenerModel
 Window {
     VStack {
         EventListener(id: "listener", width: vm.width, height: vm.height,
-                      onInput: vm.input, onResized: vm.resized) {
+                      onInput: vm.input, onDrop: vm.drop, onPinch: vm.pinch, onResized: vm.resized, onSizeChanged: vm.sizeChanged,
+                      onHovered: vm.hovered, onFocused: vm.focused) {
             Avatar(id: "listener-avatar", size: .Small)
         }
         EventListener(id: "listener-bool", width: 200, height: 80, onInput: vm.input_bool)

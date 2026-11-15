@@ -44,7 +44,7 @@ int main() {
     scope->backend_0.width.set(600); require(take(graph->failures()).empty(), "Sheet did not recover from invalid width");
     good(sheet.close_popup()); good(sheet.open_at(0, 0));
     require(take(take(sheet.popup_content("editor")).snapshot()).id == id && text(editor) == "Updated" &&
-            scope->backend_0.opens == 2 && scope->backend_0.closes == 1,
+            scope->backend_0.opens == 2 && scope->backend_0.closes == 1 && scope->backend_0.cancels == 0,
             "Generated Sheet did not preserve content across openings");
     scope->backend_0.presentation.set(ii::gui::SheetPresentation::mobile);
     scope->backend_0.detent.set(ii::gui::SheetDetent::medium);
@@ -54,8 +54,12 @@ int main() {
     require(close_state.accessibility_name=="Close" && close_state.bounds.width==26 && close_state.bounds.height==26,
             "Generated Sheet did not retain its styled accessible close control");
     good(close.activate());
-    require(!take(sheet.snapshot()).opened && scope->backend_0.closes==2,
-            "Generated Sheet close control did not dismiss exactly once");
+    require(!take(sheet.snapshot()).opened && scope->backend_0.closes==2 && scope->backend_0.cancels==1,
+            "Generated Sheet close control did not cancel exactly once");
+    good(sheet.open_at(0, 0));
+    good(tree->input({.kind=ii::gui::WidgetInputKind::key_down, .key=ii::gui::WidgetKey::escape}));
+    require(!take(sheet.snapshot()).opened && scope->backend_0.closes==3 && scope->backend_0.cancels==2,
+            "Generated Sheet Escape did not cancel exactly once");
     std::weak_ptr<View::Scope> weak = scope; good(host.clear_content()); scope.reset(); graph.reset();
     require(weak.expired() && !sheet.snapshot() && !editor.snapshot(), "Generated Sheet retained its activation"); tree->close();
 }

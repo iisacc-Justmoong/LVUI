@@ -39,6 +39,8 @@ Window {
 | `selectionMode` | `.none`, `.single`, `.multiple`; 기본 `.single` |
 | `selectOnMove` | 일반 탐색 키로 이동할 때 선택도 이동; 기본 `true` |
 | `selectOnClick` | 행 배경 클릭 시 선택도 변경; 기본 `true` |
+| `activateOnClick` | 행 배경의 단일 클릭을 활성화 명령으로 전달; 기본 `false` |
+| `activateOnDoubleClick` | 같은 행의 더블클릭을 활성화 명령으로 전달; 기본 `false` |
 | `navigationFilter` | 항목과 원래 인덱스를 사용하는 순수 C++ 탐색 가능 조건; 기본 전체 |
 | `onCurrentChanged` | 현재 키 변경 알림 |
 | `onSelectionChanged` | 선택한 키 목록 변경 알림 |
@@ -47,6 +49,16 @@ Window {
 객체는 `import`로 소유하거나 상위 스코프에서 안정적으로 차용한다. 교체될 수 있는 행
 데이터 내부의 탐색 객체를 고정 포인터로 보관하지 않도록 컴파일러가 그러한 입력을 거부한다.
 사용자 C++ 객체도 같은 상태·명령 인터페이스를 구현하면 어댑터에 연결할 수 있다.
+
+`activateOnClick`과 `activateOnDoubleClick`은 반응형 불리언이며 `navigation`을 함께 제공해야 한다.
+단일 클릭을 켜면 같은 행에서 기본 버튼을 누르고 놓는 동작이 활성화되며 선택
+보조키가 있어도 전달한다. 드래그·취소·다른 행이나 내부 컨트롤은 활성화하지 않는다.
+두 옵션을 동시에 켜면 단일 클릭이 우선한다.
+
+`activateOnDoubleClick`을 켜면 iiGUI가 클릭·취소·행 수명과 플랫폼 클릭 횟수를 판정한 뒤 `onActivate`에
+해당 키를 보낸다. 기본값은 꺼져 기존 단일 클릭·키보드 입력을 바꾸지 않는다.
+생성 코드·입력 연결은 iiGUI의 선택적 `native_double_click_generated` 창 없는
+위젯 검사로 확인하며, 실제 운영체제 입력 검증과는 구분한다.
 
 `selectOnMove: false`이면 일반 방향키는 포커스만 옮긴다. 명시적인 Shift 범위나 Space
 선택은 계속 가능하다. `.none`은 선택 없이 포커스만 관리한다. 모드 변경도 네이티브

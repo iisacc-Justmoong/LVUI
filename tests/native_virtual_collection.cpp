@@ -65,6 +65,50 @@ void anchor(){
     auto moved=virtual_collection_frame(values,key,{.item_height=80,.item_width=150,.spacing=10},viewport.current(),viewport.anchor());
     check(moved.y==0&&moved.anchor.key=="1001","A user scroll was overridden by a stale anchor");
 }
+void pinch_anchor(){
+    auto source=virtual_collection_source(data(),key);VirtualViewport viewport;
+    viewport.observe({.width=320,.height=160,.y=300});
+    VirtualCollectionLayout before{.item_height=80,.item_width=80,.spacing=2,.overscan=1};
+    auto first=virtual_collection_frame(*source,before,viewport.current(),viewport.anchor());first.source=source;
+    check(viewport.commit(first),"Initial pinch viewport did not commit");
+    const auto original=viewport.anchor();
+    auto canceled=viewport.begin_focus(150,100);check(canceled!=0,"No pinch focus was recorded");
+    check(viewport.begin_focus(150,100)==0,"A nested pinch replaced an active focus");
+    viewport.end_focus(canceled);check(viewport.anchor()==original,"A canceled pinch changed the viewport anchor");
+    auto ticket=viewport.begin_focus(150,100);check(ticket!=0&&viewport.anchor().key=="13","Pinch did not anchor the touched item");
+    VirtualCollectionLayout after{.item_height=120,.item_width=120,.spacing=2,.overscan=1};
+    auto resized=virtual_collection_frame(*source,after,viewport.current(),viewport.anchor());resized.source=source;
+    const double fraction=(400.-4.*82.)/82.;
+    check(resized.columns==2&&std::abs(resized.y-(6.*122.+fraction*122.-100.))<1e-9,
+          "Pinch did not preserve the touched position across a column change");
+    check(viewport.commit(resized),"Pinch result failed to commit");const auto settled=viewport.anchor();
+    viewport.end_focus(ticket);check(viewport.anchor()==settled,"A completed pinch restored a stale anchor");
+    check(viewport.begin_focus(-1,50)==0&&viewport.begin_focus(10,161)==0,"An out-of-viewport focus was admitted");
+    ticket=viewport.begin_focus(150,100);check(ticket!=0,"Second focus was not admitted");
+    viewport.observe({.width=320,.height=160,.y=0});viewport.end_focus(ticket);
+    auto moved=virtual_collection_frame(*source,after,viewport.current(),viewport.anchor());
+    check(moved.y==0,"A user scroll was overwritten by a pending pinch");
+    viewport.close();check(viewport.begin_focus(150,100)==0,"A retired viewport accepted a pinch focus");
+
+    VirtualViewport horizontal;horizontal.observe({.width=140,.height=90,.x=65});
+    VirtualCollectionLayout row{.item_height=40,.item_width=60,.spacing=4,.horizontal=true};
+    auto horizontalFirst=virtual_collection_frame(*source,row,horizontal.current(),horizontal.anchor());horizontalFirst.source=source;
+    check(horizontal.commit(horizontalFirst),"Horizontal viewport did not commit");
+    const auto h=horizontal.begin_focus(100,40);check(h!=0&&horizontal.anchor().key=="2","Horizontal focus lost its item");
+    row.item_width=90;
+    auto horizontalAfter=virtual_collection_frame(*source,row,horizontal.current(),horizontal.anchor());
+    check(std::abs(horizontalAfter.x-(2.*94.+37./64.*94.-100.))<1e-9,"Horizontal focus did not follow the item");
+    horizontal.end_focus(h);
+
+    VirtualViewport measured;measured.observe({.width=320,.height=160,.y=300});
+    auto measuredFrame=virtual_collection_frame(*source,before,measured.current(),measured.anchor());
+    measuredFrame.source=source;measuredFrame.measure_height=true;
+    check(measured.commit(measuredFrame)&&measured.begin_focus(150,100)==0,"Measured rows accepted an unsupported focus");
+    auto shortSource=virtual_collection_source(std::vector<int>{0,1,2},key);VirtualViewport shortView;
+    shortView.observe({.width=320,.height=400});
+    auto shortFrame=virtual_collection_frame(*shortSource,before,shortView.current(),shortView.anchor());shortFrame.source=shortSource;
+    check(shortView.commit(shortFrame)&&shortView.begin_focus(20,200)==0,"Empty viewport space selected a phantom focus item");
+}
 void lifetime(){
     VirtualViewport viewport;bool rejected=false;
     std::thread worker([&]{try{viewport.observe({.width=20,.height=20});}catch(const std::logic_error&){rejected=true;}});worker.join();
@@ -123,7 +167,7 @@ void reveal(){
 }
 int main(int argc,char** argv){try{
     std::string name=argc>1?argv[1]:"vertical";
-    if(name=="vertical")vertical();else if(name=="grid")grid();else if(name=="anchor")anchor();else if(name=="lifetime")lifetime();else if(name=="diagnostics")diagnostics();else if(name=="indexed")indexed();else if(name=="reveal")reveal();
+    if(name=="vertical")vertical();else if(name=="grid")grid();else if(name=="anchor")anchor();else if(name=="pinch_anchor")pinch_anchor();else if(name=="lifetime")lifetime();else if(name=="diagnostics")diagnostics();else if(name=="indexed")indexed();else if(name=="reveal")reveal();
     else throw std::runtime_error("Unknown native virtual collection test");
     std::cout<<"Native virtual collection "<<name<<" passed\n";
 }catch(const std::exception& error){std::cerr<<error.what()<<'\n';return 1;}}

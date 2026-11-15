@@ -143,6 +143,7 @@ class Generator final {
     std::string window_accent_name="blue", active_window_accent, window_accent_derived, window_appearance_name="appearance";
     std::size_t native_scope_next = 0;
     mutable bool native_runtime = false;
+    bool visible_lifecycle_here = false;
     bool application_generation = false, scene_lifecycle_runtime = false, scene_registry_runtime = false, window_close_runtime = false;
     mutable bool application_quit_runtime = false;
     std::vector<std::string> application_scene_ids;
@@ -176,11 +177,15 @@ class Generator final {
     std::string id_prefix;
     std::set<std::string, std::less<>> ids;
     std::map<std::string,std::string,std::less<>> widget_variables;
+    using FocusPath = std::vector<std::string>;
+    using FocusCatalog = std::map<std::string,std::vector<FocusPath>,std::less<>>;
+    FocusCatalog conditional_focus_targets;
     struct ContextBinding final {
         std::string menu,target;SourcePosition position;bool tooltip=false;
         bool material=false;
         std::string background,background_expression,content_expression;
         bool wheel=false;
+        bool submit_focus=false;
     };
     std::vector<ContextBinding> context_bindings;
     bool popup_open_runtime=false,popup_mount_validation=false;
@@ -959,10 +964,11 @@ class Generator final {
         }
         error(at, "Empty C++ member path");
     }
-    std::string binding_owner(bool diagnose=true, const std::string& before_retirement={}) const {
+    std::string binding_owner(bool diagnose=true, const std::string& before_retirement={}, bool visible_lifecycle=false) const {
         std::string result;
         if (native_runtime){
             result += "            auto native_bindings = std::make_shared<lvui::native::Bindings>();\n            if (auto owned_native = widgets.retain(native_bindings); !owned_native) return owned_native;\n";
+            if(visible_lifecycle)result += "            auto visibility_finalizers = std::make_shared<std::vector<std::function<void()>>>();\n            if (auto retiring = widgets.on_retire([weak = std::weak_ptr(native_bindings), finalizers = visibility_finalizers] { if (!finalizers->empty()) { if (auto owner = weak.lock()) (void)owner->retire_effects(); auto pending = std::move(*finalizers); for (auto& finish : pending) try { finish(); } catch (...) {} } }); !retiring) return retiring;\n";
             result += before_retirement;
             if(scene_lifecycle_runtime) result += "            if (scope->scene_effects) if (auto tracked = scope->scene_effects->track(native_bindings); !tracked) return tracked;\n";
             if(diagnose)result += "            if (!scope->binding_diagnostics) return ii::core::fail(ii::core::ErrorCode::closed, \"Binding diagnostics owner retired\");\n"
@@ -1867,6 +1873,28 @@ class Generator final {
                 continue;
             }
             auto target=widget_variables.find(binding.target);
+            if(binding.submit_focus){
+                const auto nested=conditional_focus_targets.find(binding.target);
+                if(target!=widget_variables.end()&&nested!=conditional_focus_targets.end())
+                    error(binding.position,"Ambiguous InputField submitFocusId "+std::string(scope_label));
+                if(target!=widget_variables.end()){
+                    body+="            *"+binding.menu+" = [target = *"+target->second+"]() -> ii::core::Result<ii::gui::Widget> { return target; };\n";
+                    continue;
+                }
+                if(nested==conditional_focus_targets.end())error(binding.position,"Unknown InputField submitFocusId "+std::string(scope_label));
+                if(nested->second.size()!=1)error(binding.position,"Ambiguous InputField submitFocusId "+std::string(scope_label));
+                const auto& path=nested->second.front();
+                const auto host=widget_variables.find(path.front());
+                if(host==widget_variables.end())error(binding.position,"Invalid conditional submitFocusId path "+std::string(scope_label));
+                body+="            *"+binding.menu+" = [target = *"+host->second+"]() -> ii::core::Result<ii::gui::Widget> {\n";
+                for(std::size_t i=1;i<path.size();++i){
+                    const auto current="focus_item_"+std::to_string(i);
+                    const auto parent=i==1?"target":"(*focus_item_"+std::to_string(i-1)+")";
+                    body+="                auto "+current+" = "+parent+".content_item("+literal(path[i])+"); if (!"+current+") return std::unexpected("+current+".error());\n";
+                }
+                body+="                return *focus_item_"+std::to_string(path.size()-1)+";\n            };\n";
+                continue;
+            }
             if(target==widget_variables.end())error(binding.position,std::string(binding.wheel?"Unknown WheelScrollGuard targetId ":binding.tooltip?"Unknown Tooltip targetId ":"Unknown context menu targetId ")+std::string(scope_label));
             body+="            if (auto bound = "+((binding.tooltip||binding.wheel)?binding.menu+"->set_target(*"+target->second+")":target->second+"->set_context_menu(*"+binding.menu+")")+"; !bound) return bound;\n";
         }
@@ -2240,7 +2268,7 @@ class Generator final {
             native_runtime = true;
             return "try { " + statements + " } catch (const lvui::native::detail::ScriptRetired&) { return; } ";
     }
-    std::string action(const Inputs& values, std::string_view name="onClick", std::string parameter={},std::string arguments="value",bool query_notification=false) const {
+    std::string action(const Inputs& values, std::string_view name="onClick", std::string parameter={},std::string arguments="value",bool query_notification=false,bool publish_revision=true) const {
         auto it = values.find(name);
         if (it == values.end()) return "{}";
         const auto& value = it->second->value;
@@ -2274,13 +2302,15 @@ class Generator final {
         if(!target.shared.empty())return shared_action(target,parameter,args);
         if(!target.block.empty())return "lvui::native::callback(scope, native_bindings, []([[maybe_unused]] const auto& scope" +
             (parameter.empty() ? std::string{} : ", [[maybe_unused]] auto&&... ignored") + ") { " + target.block + "})";
-        if(!target.factory.empty())return returned_action(target,parameter,args,false,{},query_notification);
+        if(!target.factory.empty())return returned_action(target,parameter,args,false,{},query_notification,publish_revision);
         if(query_notification&&!target.signature){
             const auto call="[]<class B, class V>(B& backend, const V& value) { if constexpr (requires { backend."+target.method+"(value); }) (void)backend."+target.method+"(value); else (void)backend."+target.method+"(); }("+access.object+", "+arguments+")";
-            const auto invoked=access.revision.empty()?call+";":"(void)lvui::native::invoke("+access.revision+", [&] { "+call+"; });";
+            const auto invoked=access.revision.empty()||!publish_revision?call+";":"(void)lvui::native::invoke("+access.revision+", [&] { "+call+"; });";
             return "lvui::native::callback(scope, native_bindings, []([[maybe_unused]] const auto& scope, "+parameter+") { "+invoked+" })";
         }
-        return "lvui::native::callback(scope, native_bindings, []([[maybe_unused]] const auto& scope" + (parameter.empty()?std::string{}:", "+parameter) + ") { (void)lvui::native::invoke(" + access.revision + ", [&]() -> decltype(auto) { return " + method_invocation(target,args) + "; }); })";
+        const auto call=method_invocation(target,args);
+        const auto invoked=access.revision.empty()||!publish_revision?"(void)"+call+";":"(void)lvui::native::invoke("+access.revision+", [&]() -> decltype(auto) { return "+call+"; });";
+        return "lvui::native::callback(scope, native_bindings, []([[maybe_unused]] const auto& scope" + (parameter.empty()?std::string{}:", "+parameter) + ") { "+invoked+" })";
     }
     std::string bindable_target(const Value& value, std::size_t depth=0) const {
         if(depth>64)error(value.position,"Maximum binding alias depth is 64");
@@ -2342,14 +2372,14 @@ class Generator final {
         const auto invoked = target.access.revision.empty() ? call : "lvui::native::invoke(" + target.access.revision + ", [&]() -> decltype(auto) { return " + call + "; })";
         return "lvui::native::scoped_function<bool>(scope, native_bindings, []([[maybe_unused]] const auto& scope) -> bool { return " + invoked + "; })";
     }
-    std::string returned_action(const BoundMethod& target,const std::string& parameter,const std::string& arguments,bool button=false,std::string_view event_type={},bool query_notification=false)const{
+    std::string returned_action(const BoundMethod& target,const std::string& parameter,const std::string& arguments,bool button=false,std::string_view event_type={},bool query_notification=false,bool publish_revision=true)const{
         auto invocation=button?"[]<class H>(H& handler, [[maybe_unused]] const "+std::string(event_type)+"& event) { if constexpr (std::invocable<H&, const "+std::string(event_type)+"&>) (void)std::invoke(handler, event); else (void)std::invoke(handler); }(handler, event)":"std::invoke(handler"+(arguments.empty()?std::string{}:", "+arguments)+")";
         if(query_notification&&!target.signature)invocation="[]<class H, class V>(H& handler, const V& value) { if constexpr (std::invocable<H&, const V&>) (void)std::invoke(handler, value); else (void)std::invoke(handler); }(handler, "+arguments+")";
         if(target.signature){
             const auto supplied=button&&target.signature->arguments.empty()?std::string{}:arguments;
             invocation="lvui::native::invoke_callback<"+callback_signature(*target.signature)+">(handler"+(supplied.empty()?std::string{}:", "+supplied)+")";
         }
-        auto call=target.access.revision.empty()?"(void)"+invocation+";":"(void)lvui::native::invoke("+target.access.revision+", [&]() -> decltype(auto) { return "+invocation+"; });";
+        auto call=target.access.revision.empty()||!publish_revision?"(void)"+invocation+";":"(void)lvui::native::invoke("+target.access.revision+", [&]() -> decltype(auto) { return "+invocation+"; });";
         return "lvui::native::returned_callback(scope, native_bindings, [scope]([[maybe_unused]] lvui::native::ReadContext& context) -> decltype(auto) { return "+target.factory+"; }, []([[maybe_unused]] const auto& scope, auto& handler"+(parameter.empty()?std::string{}:", "+parameter)+") { "+call+" })";
     }
     std::pair<std::string,double> text_role(const Inputs& values) const {
@@ -2395,11 +2425,12 @@ class Generator final {
 
     std::string modal_content(const View& view,std::string_view factory_type="ModalContentFactory",bool isolated=true) {
         if(view.children.empty())return "{}";
-        auto outer_body=std::move(body);auto outer_ids=std::move(ids);auto outer_variables=std::move(widget_variables);auto outer_bindings=std::move(context_bindings);
-        body.clear();ids=isolated?std::set<std::string,std::less<>>{}:outer_ids;widget_variables.clear();context_bindings.clear();++factory_depth;
+        const auto outer_visibility=std::exchange(visible_lifecycle_here,false);
+        auto outer_body=std::move(body);auto outer_ids=std::move(ids);auto outer_variables=std::move(widget_variables);auto outer_bindings=std::move(context_bindings);auto outer_focus=std::move(conditional_focus_targets);
+        body.clear();ids=isolated?std::set<std::string,std::less<>>{}:outer_ids;widget_variables.clear();context_bindings.clear();conditional_focus_targets.clear();++factory_depth;
         for(const auto& child:view.children)emit(child,"content");
         emit_context_bindings("in content scope");
-        auto children=std::move(body);--factory_depth;body=std::move(outer_body);if(isolated)ids=std::move(outer_ids);widget_variables=std::move(outer_variables);context_bindings=std::move(outer_bindings);
+        auto children=std::move(body);const bool local_visibility=visible_lifecycle_here;visible_lifecycle_here=outer_visibility;--factory_depth;body=std::move(outer_body);if(isolated)ids=std::move(outer_ids);widget_variables=std::move(outer_variables);context_bindings=std::move(outer_bindings);conditional_focus_targets=std::move(outer_focus);
         if(children.empty())return "{}";
         const auto capture = native_runtime ? "[weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings)]" : "[]";
         const auto admission = native_runtime ? "            auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n            if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Content owner retired\");\n" : "";
@@ -2407,7 +2438,7 @@ class Generator final {
             ? std::string("lvui::native::ModalContentFactoryValue<ii::gui::WidgetBuilder,ii::gui::Widget>")
             : (factory_type=="SheetContentFactory" ? std::string("ii::gui::") : std::string("lvui::native::"))+std::string(factory_type);
         return type+"{"+capture+"(ii::gui::WidgetBuilder& widgets, ii::gui::Widget content) -> ii::core::Result<void> {\n" + admission +
-            ((""))+binding_owner()+children+"            return {};\n        }}";
+            ((""))+binding_owner(true,{},local_visibility)+children+"            return {};\n        }}";
     }
     void emit_popup_open(const Inputs& values,const std::string& variable){
         const auto found=values.find("open");if(found==values.end())return;
@@ -2653,6 +2684,44 @@ class Generator final {
         const auto call=method_invocation(target,"value");
         const auto invoked=target.access.revision.empty()?call:"lvui::native::invoke("+target.access.revision+", [&]() -> decltype(auto) { return "+call+"; })";
         return "lvui::native::scoped_function<"+result+">(scope, native_bindings, []([[maybe_unused]] const auto& scope, "+parameter+") -> "+result+" { return "+invoked+"; })";
+    }
+    std::string listener_drop(const Inputs& values)const{
+        const auto& input=*values.at("onDrop");
+        const auto target=callback_target(input.value,input.position);native_runtime=true;
+        if(!target.block.empty())error(input.position,"A drop decision requires a result-returning C++ callable");
+        const auto parameter=std::string("const std::vector<std::string>& files"),result=std::string("ii::core::Result<bool>");
+        if(!target.shared.empty())return "lvui::native::scoped_function<"+result+">(scope, native_bindings, []([[maybe_unused]] const auto& scope, "+parameter+") -> "+result+" { auto handler = "+callback_path(target)+"; if (!handler) return ii::core::fail(ii::core::ErrorCode::closed, \"Drop callback is unavailable\"); return (*handler)(files); })";
+        if(!target.factory.empty())return "lvui::native::returned_function<"+result+">(scope, native_bindings, [scope]([[maybe_unused]] lvui::native::ReadContext& context) -> decltype(auto) { return "+target.factory+"; }, []([[maybe_unused]] const auto& scope, auto& handler, "+parameter+") -> "+result+" { return std::invoke(handler, files); })";
+        return "lvui::native::scoped_function<"+result+">(scope, native_bindings, []([[maybe_unused]] const auto& scope, "+parameter+") -> "+result+" { return "+method_invocation(target,"files")+"; })";
+    }
+    std::string listener_pinch(const Inputs& values,const char* name="onPinch",bool drag=false)const{
+        const auto& input=*values.at(name);
+        const auto target=callback_target(input.value,input.position);native_runtime=true;
+        if(!target.block.empty())error(input.position,"A pinch decision requires a result-returning C++ callable");
+        const auto parameter=std::string(drag?"double scale, bool first":"double scale"),result=std::string("ii::core::Result<bool>");
+        const auto arguments=std::string(drag?"scale, first":"scale");
+        if(!target.shared.empty())return "lvui::native::scoped_function<"+result+">(scope, native_bindings, []([[maybe_unused]] const auto& scope, "+parameter+") -> "+result+" { auto handler = "+callback_path(target)+"; if (!handler) return ii::core::fail(ii::core::ErrorCode::closed, \"Scale callback is unavailable\"); return (*handler)("+arguments+"); })";
+        if(!target.factory.empty())return "lvui::native::returned_function<"+result+">(scope, native_bindings, [scope]([[maybe_unused]] lvui::native::ReadContext& context) -> decltype(auto) { return "+target.factory+"; }, []([[maybe_unused]] const auto& scope, auto& handler, "+parameter+") -> "+result+" { return std::invoke(handler, "+arguments+"); })";
+        return "lvui::native::scoped_function<"+result+">(scope, native_bindings, []([[maybe_unused]] const auto& scope, "+parameter+") -> "+result+" { return "+method_invocation(target,arguments)+"; })";
+    }
+    std::string listener_inputs(const Inputs& values)const{
+        if(!values.contains("onDrop")&&!values.contains("onPinch"))return listener_input(values);
+        const auto fallback=values.contains("onInput")?"auto handled = input(value); return handled;":"return false;";
+        std::string captures;
+        const auto add=[&](std::string part){if(!captures.empty())captures+=", ";captures+=std::move(part);};
+        if(values.contains("onDrop"))add("drop = "+listener_drop(values));
+        if(values.contains("onPinch"))add("pinch = "+listener_pinch(values));
+        if(values.contains("onInput"))add("input = "+listener_input(values));
+        const auto drop=values.contains("onDrop")?"if (value.kind == ii::gui::WidgetInputKind::drop && value.content && !value.content->files.empty()) { auto handled = drop(value.content->files); if (!handled || *handled) return handled; } ":"";
+        const auto pinch=values.contains("onPinch")?"if (auto scale = ii::gui::pinch_scale_factor(value)) { auto handled = pinch(*scale); if (!handled || *handled) return handled; } ":"";
+        return "["+captures+"](const ii::gui::WidgetInput& value) mutable -> ii::core::Result<bool> { "+drop+pinch+fallback+" }";
+    }
+    std::string listener_resize(const Inputs& values)const{
+        const auto resized=action(values,"onResized","ii::gui::Rect value");
+        if(!values.contains("onSizeChanged"))return resized;
+        const auto size=action(values,"onSizeChanged","double width, double height","width, height");
+        const auto rectangle=values.contains("onResized")?"std::function<void(ii::gui::Rect)>{"+resized+"}":"std::function<void(ii::gui::Rect)>{}";
+        return "[resized = "+rectangle+", sized = std::function<void(double, double)>{"+size+"}, last_size = std::optional<std::pair<double, double>>{}](ii::gui::Rect value) mutable { if (resized) resized(value); const std::pair<double, double> next{value.width, value.height}; if (last_size && *last_size == next) return; auto previous = last_size; last_size = next; try { sized(next.first, next.second); } catch (...) { last_size = previous; throw; } }";
     }
 
 
@@ -4229,7 +4298,7 @@ class Generator final {
             }else continue;
             result+="value."+field+" = "+expression+"; ";
         }
-        if(!preview.empty())result+="if (value.configuration.type == lvui::CardType::file || value.configuration.type == lvui::CardType::file_preview) { lvui::Card model; if (!model.set_configuration(value.configuration)) throw std::invalid_argument(\"Invalid card configuration\"); auto image_size = model.intrinsic_size(); value.preview = "+preview+"; } ";
+        if(!preview.empty())result+="if (value.configuration.type == lvui::CardType::file || value.configuration.type == lvui::CardType::file_preview) { ii::gui::BasicCard<lvui::CardModelPolicy> model; if (!model.set_configuration(value.configuration)) throw std::invalid_argument(\"Invalid card configuration\"); auto image_size = model.intrinsic_size(); value.preview = "+preview+"; } ";
         return result+"return value; }())";
     }
     std::string owned_selector_options(const Inputs& values,bool initial)const {
@@ -5434,8 +5503,10 @@ class Generator final {
         auto outer_constructor = std::exchange(scope_constructor, {});
         const auto outer_scope_next = std::exchange(native_scope_next, 0);
         auto outer_body = std::exchange(body, {});
+        const auto outer_visibility=std::exchange(visible_lifecycle_here,false);
         auto outer_variables = std::exchange(widget_variables, {});
         auto outer_context = std::exchange(context_bindings, {});
+        auto outer_focus = std::exchange(conditional_focus_targets, {});
         auto outer_storage = std::exchange(storage_names, {});
         const auto outer_backend_next = std::exchange(next_backend, 0);
         for (auto& [key, access] : backend_access) { borrow_path(access.object); borrow_path(access.revision); borrow_path(access.dependency); }
@@ -5527,7 +5598,7 @@ class Generator final {
             std::string(scene_registry_runtime?"            scope->scene_registry = scope->parent->scene_registry;\n":"")+
             std::string(scoped_image_runtime?"            scope->image_services = scope->parent->image_services;\n":"")+
             std::string(repetition?"            scope->row = std::move(row);\n":"")+std::string(menu_row?"            scope->menu_row = std::move(menu_row);\n":"")+std::string(captured_menu?"            scope->menu_pending = std::move(menu_pending);\n":"")+std::string(captured_row?"            scope->menu_pending = std::make_shared<lvui_generated::detail_menu::MenuCapture>();\n            if (auto retiring = widgets.on_retire([weak = std::weak_ptr(scope->menu_pending)] { if (auto owner = weak.lock()) (void)owner->close(); }); !retiring) return retiring;\n":"")+std::string(hierarchy_view_row?"            scope->hierarchy_view_row = std::move(hierarchy_view_row);\n":"")+std::string(list_view_row?"            scope->list_view_row = std::move(list_view_row);\n":"")+std::string(list_item_view?"            scope->list_item_view = std::move(list_item_view);\n":"")+std::string(table_view?"            scope->table_view = std::move(table_view);\n":"")+std::string(tab_row?"            scope->tab_row = std::move(tab_row);\n":"")+std::string(captured_tab?"            scope->tab_pending = std::move(tab_pending);\n":"")+std::string(captured_tab_row?"            scope->tab_pending = std::make_shared<lvui_generated::detail_tab::TabCapture>();\n            if (auto retiring = widgets.on_retire([weak = std::weak_ptr(scope->tab_pending)] { if (auto owner = weak.lock()) (void)owner->close(); }); !retiring) return retiring;\n":"")+"            if (auto owned = widgets.retain(scope); !owned) return owned;\n" +
-            scene_scope_setup + binding_owner(true, window_close_setup + window_lifecycle_setup) + "            scope->native_lifetime = native_bindings;\n            if (auto activated = lvui::native::attach_backend_activation(scope, widgets); !activated) return activated;\n" +
+            scene_scope_setup + binding_owner(true, window_close_setup + window_lifecycle_setup, visible_lifecycle_here) + "            scope->native_lifetime = native_bindings;\n            if (auto activated = lvui::native::attach_backend_activation(scope, widgets); !activated) return activated;\n" +
             (native_initializers.empty() ? "" : "            if (auto initialized = initialize_values(scope, native_bindings); !initialized) return initialized;\n") + window_close_publish + window_lifecycle_publish +
             group_setup + menu_collectors + tab_collectors + body + std::string(captured_row?"            if (auto published = scope->menu_pending->publish([weak = std::weak_ptr(scope->menu_row)](std::vector<lvui_generated::detail_menu::MenuItemPort> items) -> ii::core::Result<void> { auto row = weak.lock(); if (!row) return ii::core::fail(ii::core::ErrorCode::closed, \"Repeated menu row retired\"); return row->replace(std::move(items)); }); !published) return published;\n":"") + std::string(captured_tab_row?"            if (auto published = scope->tab_pending->publish([weak = std::weak_ptr(scope->tab_row)](std::vector<lvui_generated::detail_tab::TabGroupPort> items) -> ii::core::Result<void> { auto row = weak.lock(); if (!row) return ii::core::fail(ii::core::ErrorCode::closed, \"Repeated tab row retired\"); return row->replace(std::move(items)); }); !published) return published;\n":"") + "            return {};\n        }\n    };\n";
         constants = std::move(outer_constants); reactive = std::move(outer_reactive);
@@ -5548,9 +5619,9 @@ class Generator final {
         active_menu_registration=outer_menu;active_menu_divider_registration=outer_divider;active_menu_section=outer_section;active_menu_row=outer_menu_row;active_menu_capture=outer_menu_capture;
         native_scope_base = std::move(outer_base); native_scope_next = outer_scope_next;
         scope_constructor = std::move(outer_constructor);
-        widget_variables = std::move(outer_variables); context_bindings = std::move(outer_context);
+        widget_variables = std::move(outer_variables); context_bindings = std::move(outer_context); conditional_focus_targets = std::move(outer_focus);
         storage_names = std::move(outer_storage); next_backend = outer_backend_next;
-        body = std::move(outer_body);
+        body = std::move(outer_body);visible_lifecycle_here=outer_visibility;
         if(!repetition&&!hierarchy_view_row&&!list_view_row&&!list_item_view&&!table_view)body += "            if (auto local = " + name + "<Scope>::build(widgets, " + parent + ", scope"+(captured_menu?", "+outer_menu_capture:"")+(captured_tab?", "+outer_tabbar_capture:"")+(window_close?", scene_close_guard":"")+ "); !local) return local;\n";
         return name;
     }
@@ -5562,11 +5633,12 @@ class Generator final {
     void emit_repetition(const View& view,const std::string& parent,const Inputs* menu_parent){
         native_runtime=collection_runtime=needs_parent_scope=true;
         const auto& repetition=*view.repetition;
+        for(const auto& option:repetition.options)if(option.name=="onVisibleChanged")visible_lifecycle_here=true;
         if(!identifier(repetition.item)||(!repetition.index.empty()&&!identifier(repetition.index)))error(view.position,"Invalid repeated item or index identifier");
         if(view.children.size()!=1)error(view.position,"A repeated View requires exactly one root View");
         Inputs values;
         for(const auto& input:repetition.options){
-            constexpr std::string_view supported[]={"id","first","count","spacing","horizontal","itemHeight","itemWidth","columns","overscan","width","height","flex","measureHeight","measureRevision","navigation","navigationFilter","selectionMode","selectOnMove","selectOnClick","onCurrentChanged","onSelectionChanged","onActivate"};
+            constexpr std::string_view supported[]={"id","first","count","spacing","horizontal","itemHeight","itemWidth","columns","overscan","width","height","flex","measureHeight","measureRevision","navigation","navigationFilter","selectionMode","selectOnMove","selectOnClick","activateOnClick","activateOnDoubleClick","onCurrentChanged","onSelectionChanged","onActivate","onVisibleChanged","onPinch","onDragZoom","dragZoomDistance","revealKey","revealRevision","revealAlignment"};
             if(std::ranges::find(supported,input.name)==std::end(supported))error(input.position,"Unknown repetition option '"+input.name+"'");
             if(!values.emplace(input.name,&input).second)error(input.position,"Duplicate repetition option");
         }
@@ -5591,10 +5663,14 @@ class Generator final {
         }
         const bool automatic=values.contains("itemHeight");
         if(automatic&&(values.contains("first")||values.contains("count")))error(view.position,"Automatic virtualization cannot combine with a manual first/count range");
-        if(!automatic)for(auto name:{"itemWidth","columns","overscan","width","height","flex","measureHeight","measureRevision","navigation","navigationFilter","selectionMode","selectOnMove","selectOnClick","onCurrentChanged","onSelectionChanged","onActivate"})
+        if(!automatic)for(auto name:{"itemWidth","columns","overscan","width","height","flex","measureHeight","measureRevision","navigation","navigationFilter","selectionMode","selectOnMove","selectOnClick","activateOnClick","activateOnDoubleClick","onCurrentChanged","onSelectionChanged","onActivate","onVisibleChanged","onPinch","onDragZoom","dragZoomDistance","revealKey","revealRevision","revealAlignment"})
             if(values.contains(name))error(view.position,"Virtual viewport options require itemHeight");
+        if(values.contains("dragZoomDistance")&&!values.contains("onDragZoom"))
+            error(view.position,"A drag zoom distance requires onDragZoom");
+        if(!values.contains("revealKey")&&(values.contains("revealRevision")||values.contains("revealAlignment")))
+            error(view.position,"A reveal revision or alignment requires revealKey");
         const bool navigated=values.contains("navigation");
-        if(!navigated)for(auto name:{"navigationFilter","selectionMode","selectOnMove","selectOnClick","onCurrentChanged","onSelectionChanged","onActivate"})
+        if(!navigated)for(auto name:{"navigationFilter","selectionMode","selectOnMove","selectOnClick","activateOnClick","activateOnDoubleClick","onCurrentChanged","onSelectionChanged","onActivate"})
             if(values.contains(name))error(view.position,"Collection interaction options require a navigation backend");
         const auto offset=[&](std::string_view name,std::string fallback){
             const auto found=values.find(name);if(found==values.end())return fallback;
@@ -5682,6 +5758,28 @@ class Generator final {
             body+="            auto "+variable+"_viewport = widgets.scroll_view("+parent+", "+literal(viewport_id)+", {.virtual_content_height = 0, .virtual_content_width = 0});\n            if (!"+variable+"_viewport) return std::unexpected("+variable+"_viewport.error());\n";
             body+="            auto "+variable+" = widgets.content_host(*"+variable+"_viewport, "+literal(id)+", {});\n            if (!"+variable+") return std::unexpected("+variable+".error());\n";
             body+="            { auto target = *"+variable+"; auto scroll_target = *"+variable+"_viewport;\n              auto viewport = std::make_shared<lvui::native::VirtualViewportBinding<ii::gui::BasicVirtualViewport>>();\n              if (auto owned = widgets.retain(viewport); !owned) return owned;\n              if (auto retiring = widgets.on_retire([weak = std::weak_ptr(viewport)] { if (auto owner = weak.lock()) owner->close(); }); !retiring) return retiring;\n";
+            if(values.contains("onPinch")){
+                body+="              { auto pinch = "+listener_pinch(values)+";\n"
+                    "                auto installed = scroll_target.set_input_handler([weak_viewport = std::weak_ptr(viewport), pinch = std::move(pinch)](const ii::gui::WidgetInput& input) mutable -> ii::core::Result<bool> {\n"
+                    "                  auto scale = ii::gui::pinch_scale_factor(input); if (!scale) return false;\n"
+                    "                  auto owner = weak_viewport.lock(); if (!owner) return false;\n"
+                    "                  const auto ticket = input.local_position ? owner->begin_focus(input.local_position->x, input.local_position->y) : 0;\n"
+                    "                  try { auto handled = pinch(*scale); owner->end_focus(ticket); return handled; }\n"
+                    "                  catch (...) { owner->end_focus(ticket); throw; }\n"
+                    "                });\n                if (!installed) return installed; }\n";
+            }
+            if(values.contains("onDragZoom")){
+                const auto distance=decimal(numeric(values,"dragZoomDistance",180,1,32767));
+                body+="#if !defined(IIGUI_HORIZONTAL_DRAG_API)\n#error \"LVUI onDragZoom requires iiGUI horizontal drag support\"\n#endif\n"
+                    "              { auto zoom = "+listener_pinch(values,"onDragZoom",true)+";\n"
+                    "                auto installed = scroll_target.set_horizontal_drag_handler({}, [weak_viewport = std::weak_ptr(viewport), zoom = std::move(zoom)](const ii::gui::HorizontalDrag& drag) mutable -> ii::core::Result<void> {\n"
+                    "                  const auto scale = std::exp2(std::clamp(drag.total_x / "+distance+", -1022., 1023.));\n"
+                    "                  auto owner = weak_viewport.lock(); if (!owner) return {};\n"
+                    "                  const auto ticket = owner->begin_focus(drag.origin.x, drag.origin.y);\n"
+                    "                  try { auto handled = zoom(scale, drag.first); owner->end_focus(ticket); if (!handled) return std::unexpected(handled.error()); return {}; }\n"
+                    "                  catch (...) { owner->end_focus(ticket); throw; }\n"
+                    "                });\n                if (!installed) return installed; }\n";
+            }
             body+="              auto geometry = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return ii::gui::Size{"+width+", "+height+"}; }, [scroll_target](ii::gui::Size size) { return scroll_target.set_extent(size); });\n              if (!geometry) return std::unexpected(geometry.error());\n";
             body+="              auto flex = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+flex+"; }, [scroll_target](double value) { return scroll_target.set_flex(value); });\n              if (!flex) return std::unexpected(flex.error());\n";
             body+="              using Collection = lvui::native::KeyedRows<lvui::native::collection_item_t<decltype("+initial_source+")>>;\n              auto rows = std::make_shared<Collection>();\n              if (auto owned = widgets.retain(rows); !owned) return owned;\n              if (auto retiring = widgets.on_retire([weak = std::weak_ptr(rows)] { if (auto owner = weak.lock()) (void)owner->close(); }); !retiring) return retiring;\n";
@@ -5710,15 +5808,42 @@ class Generator final {
                 body+="              using Navigation = std::remove_reference_t<decltype("+access.object+")>;\n              using WidgetNavigation = lvui::widgets::CollectionWidgetNavigationBinding<ii::gui::BasicCollectionWidgetNavigation, lvui::native::collection_item_t<decltype("+initial_source+")>, Navigation, lvui::native::VirtualViewportBinding<ii::gui::BasicVirtualViewport>>;\n";
                 body+="              auto attached_navigation = WidgetNavigation::create(widgets, target, "+access.object+", viewport, [weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings)]() -> std::shared_ptr<void> { auto scope = weak_scope.lock(); auto activation = weak_activation.lock(); if (scope && activation && activation->available() && scope->active()) return scope; return {}; },\n                [weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings)] { auto scope = weak_scope.lock(); auto activation = weak_activation.lock(); if (scope && activation && activation->available() && scope->active()) (void)lvui::native::invoke("+access.revision+", [] {}); },\n                {.current_changed = "+action(values,"onCurrentChanged","std::string key","key")+", .activated = "+action(values,"onActivate","std::string key","key")+", .selection_changed = "+action(values,"onSelectionChanged","std::vector<std::string> keys","keys")+"}, "+filter+");\n              if (!attached_navigation) return std::unexpected(attached_navigation.error());\n              auto navigation = *attached_navigation;\n";
                 body+="              auto click_options = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+reactive_bool("selectOnClick",true)+"; }, [navigation](bool enabled) -> ii::core::Result<void> { navigation->select_on_click(enabled); return {}; });\n              if (!click_options) return std::unexpected(click_options.error());\n";
+                if(values.contains("activateOnClick"))
+                    body+="              auto activate_click_options = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+reactive_bool("activateOnClick",false)+"; }, [navigation](bool enabled) -> ii::core::Result<void> { navigation->activate_on_click(enabled); return {}; });\n              if (!activate_click_options) return std::unexpected(activate_click_options.error());\n";
+                if(values.contains("activateOnDoubleClick"))
+                    body+="              auto double_click_options = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+reactive_bool("activateOnDoubleClick",false)+"; }, [navigation](bool enabled) -> ii::core::Result<void> { navigation->activate_on_double_click(enabled); return {}; });\n              if (!double_click_options) return std::unexpected(double_click_options.error());\n";
+            }
+            if(values.contains("revealKey")){
+                const auto& key=*values.at("revealKey");
+                const auto key_value="lvui::native::text("+expression_code(key.value,key.position)+")";
+                std::string revision="std::uint64_t{0}";
+                if(values.contains("revealRevision")){
+                    const auto& input=*values.at("revealRevision");
+                    if(scoped_expression(input.value))revision="static_cast<std::uint64_t>(lvui::native::integer(lvui::native::range("+expression_code(input.value,input.position)+", 0, 9007199254740991)))";
+                    else {const auto n=number(resolve(input.value,input.position),input.position);if(n<0||n>9007199254740991.||std::trunc(n)!=n)error(input.position,"Reveal revision must be a non-negative integer");revision="static_cast<std::uint64_t>("+decimal(n)+")";}
+                }
+                std::string alignment="contain";
+                if(values.contains("revealAlignment")){
+                    const auto& input=*values.at("revealAlignment");
+                    if(input.value.kind!=ValueKind::enumeration)error(input.position,"Reveal alignment must be .Contain, .Begin, .End or .Center");
+                    const auto name=input.value.text;
+                    if(name==".Contain")alignment="contain";else if(name==".Begin")alignment="begin";
+                    else if(name==".End")alignment="end";else if(name==".Center")alignment="center";
+                    else error(input.position,"Unknown reveal alignment");
+                }
+                body+="              auto revealing = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return std::pair{"+key_value+", "+revision+"}; }, [viewport](const auto& request) -> ii::core::Result<void> { viewport->reveal(request.first, lvui::native::CollectionReveal::"+alignment+"); return {}; });\n              if (!revealing) return std::unexpected(revealing.error());\n";
             }
             body+="              auto ambient = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) {\n";
             for(const auto& read:row_ambient)body+="                (void)("+read+");\n";
             if(auto revision=values.find("measureRevision");revision!=values.end())body+="                (void)("+expression_code(revision->second->value,revision->second->position)+");\n";
             body+="                return std::make_shared<const int>(0);\n              });\n              if (!ambient) return std::unexpected(ambient.error());\n              auto ambient_state = *ambient;\n";
+            if(values.contains("onVisibleChanged"))body+="              auto visible_callback = "+action(values,"onVisibleChanged","std::vector<std::string> keys","std::move(keys)",false,false)+";\n              auto last_visible = std::make_shared<std::optional<std::vector<std::string>>>();\n              visibility_finalizers->push_back([visible_callback, last_visible]() mutable { if (*last_visible && !(**last_visible).empty()) { *last_visible = std::vector<std::string>{}; visible_callback(std::vector<std::string>{}); } });\n";
             body+="              auto binding = native_bindings->bind([scope, viewport, source_state, measurements, ambient_state]([[maybe_unused]] lvui::native::ReadContext& context) { measurements->track(context); return measurements->plan(context.read(*source_state), {.item_height = "+item_height+", .item_width = "+item_width+", .spacing = "+spacing+", .horizontal = "+horizontal+", .columns = "+columns+", .overscan = "+overscan+", .measure_height = "+measured+"}, viewport->read(context), viewport->anchor(), context.read(*ambient_state)); },\n";
-            auto setter=std::string("                [weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings), rows, viewport, measurements, target, scroll_target")+(navigated?", navigation":"")+"](const auto& frame) -> ii::core::Result<void> {\n                  auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n                  if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Virtual owner retired\");\n                  auto applied = rows->apply(frame.collection, [&](const auto& mounted) -> ii::core::Result<void> {\n                    std::vector<ii::gui::KeyedContentItem> items; items.reserve(mounted.size());\n                    for (std::size_t index = 0; index < mounted.size(); ++index) { const auto& item = mounted[index]; const auto& cell = frame.cells[index];\n                      items.push_back({item.key, [weak_scope, weak_activation, row = item.row](ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n                        auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n                        if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Virtual row owner retired\");\n                        return "+row_view+"<Scope, typename Collection::Row>::build(widgets, {}, scope, row);\n                      }, ii::gui::Rect{float(cell.x), float(cell.y), float(cell.width), float(cell.height)}});\n                    }\n                    return target.set_keyed_content(std::move(items), {.viewport = ii::gui::Size{frame.width, frame.height}});\n                  });\n                  if (!applied) return applied;\n                  if (!viewport->commit(frame)) return ii::core::fail(ii::core::ErrorCode::busy, \"Viewport changed during row activation\");\n                  std::vector<lvui::native::VirtualRowMeasurement> natural; natural.reserve(frame.collection.items.size());\n                  for (std::size_t index = 0; index < frame.collection.items.size(); ++index) {\n                    const auto& item = frame.collection.items[index];\n                    auto root = target.keyed_content_item(item.key); if (!root) return std::unexpected(root.error());\n                    if (frame.measure_height) {\n                      auto observing = root->set_measure_handler([weak_scope, weak_activation, weak_measurements = std::weak_ptr(measurements), key = item.key, generation = frame.measurement_generation](const ii::gui::WidgetMeasurement& size) {\n                        auto scope = weak_scope.lock(); auto activation = weak_activation.lock(); auto owner = weak_measurements.lock();\n                        if (scope && activation && activation->available() && scope->active() && owner) (void)owner->report(generation, {{key, size.available_width, size.natural.height}});\n                      });\n                      if (!observing) return observing;\n                      const auto width = double(float(frame.cells[index].width));\n                      if (width > 0) { auto size = root->measure(width); if (!size) return std::unexpected(size.error()); natural.push_back({item.key, width, size->height}); }\n                    } else if (auto stopped = root->set_measure_handler({}); !stopped) return stopped;\n                  }\n                  if (frame.measure_height) (void)measurements->report(frame.measurement_generation, natural);\n";
+            auto setter=std::string("                [weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings), rows, viewport, measurements, target, scroll_target")+(navigated?", navigation":"")+(values.contains("onVisibleChanged")?", visible_callback, last_visible":"")+"](const auto& frame) mutable -> ii::core::Result<void> {\n                  auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n                  if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Virtual owner retired\");\n                  auto applied = rows->apply(frame.collection, [&](const auto& mounted) -> ii::core::Result<void> {\n                    std::vector<ii::gui::KeyedContentItem> items; items.reserve(mounted.size());\n                    for (std::size_t index = 0; index < mounted.size(); ++index) { const auto& item = mounted[index]; const auto& cell = frame.cells[index];\n                      items.push_back({item.key, [weak_scope, weak_activation, row = item.row](ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n                        auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n                        if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Virtual row owner retired\");\n                        return "+row_view+"<Scope, typename Collection::Row>::build(widgets, {}, scope, row);\n                      }, ii::gui::Rect{float(cell.x), float(cell.y), float(cell.width), float(cell.height)}});\n                    }\n                    return target.set_keyed_content(std::move(items), {.viewport = ii::gui::Size{frame.width, frame.height}});\n                  });\n                  if (!applied) return applied;\n                  if (!viewport->commit(frame)) return ii::core::fail(ii::core::ErrorCode::busy, \"Viewport changed during row activation\");\n                  std::vector<lvui::native::VirtualRowMeasurement> natural; natural.reserve(frame.collection.items.size());\n                  for (std::size_t index = 0; index < frame.collection.items.size(); ++index) {\n                    const auto& item = frame.collection.items[index];\n                    auto root = target.keyed_content_item(item.key); if (!root) return std::unexpected(root.error());\n                    if (frame.measure_height) {\n                      auto observing = root->set_measure_handler([weak_scope, weak_activation, weak_measurements = std::weak_ptr(measurements), key = item.key, generation = frame.measurement_generation](const ii::gui::WidgetMeasurement& size) {\n                        auto scope = weak_scope.lock(); auto activation = weak_activation.lock(); auto owner = weak_measurements.lock();\n                        if (scope && activation && activation->available() && scope->active() && owner) (void)owner->report(generation, {{key, size.available_width, size.natural.height}});\n                      });\n                      if (!observing) return observing;\n                      const auto width = double(float(frame.cells[index].width));\n                      if (width > 0) { auto size = root->measure(width); if (!size) return std::unexpected(size.error()); natural.push_back({item.key, width, size->height}); }\n                    } else if (auto stopped = root->set_measure_handler({}); !stopped) return stopped;\n                  }\n                  if (frame.measure_height) (void)measurements->report(frame.measurement_generation, natural);\n";
             if(navigated)setter+="                  navigation->publish(frame);\n";
-            body+=setter+"                  return scroll_target.set_virtual_scroll_content({frame.content_width, frame.content_height}, frame.x, frame.y);\n                });\n              if (!binding) return std::unexpected(binding.error());\n";
+            if(values.contains("onVisibleChanged"))setter+="                  auto applied_scroll = scroll_target.set_virtual_scroll_content({frame.content_width, frame.content_height}, frame.x, frame.y);\n                  if (!applied_scroll) return applied_scroll;\n                  auto visible = ii::gui::visible_collection_keys(frame);\n                  if (!*last_visible || **last_visible != visible) { auto previous = *last_visible; *last_visible = visible; try { visible_callback(std::move(visible)); } catch (...) { *last_visible = std::move(previous); throw; } }\n                  return {};\n";
+            else setter+="                  return scroll_target.set_virtual_scroll_content({frame.content_width, frame.content_height}, frame.x, frame.y);\n";
+            body+=setter+"                });\n              if (!binding) return std::unexpected(binding.error());\n";
             body+="              auto observing = scroll_target.set_scroll_handler([weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings), weak_viewport = std::weak_ptr(viewport)](const ii::gui::ScrollViewport& view) {\n                auto scope = weak_scope.lock(); auto activation = weak_activation.lock(); auto viewport = weak_viewport.lock();\n                if (scope && activation && activation->available() && scope->active() && viewport) viewport->observe({.width = view.bounds.width, .height = view.bounds.height, .x = view.horizontal_offset, .y = view.offset});\n              });\n              if (!observing) return observing; }\n";
             return;
         }
@@ -5727,13 +5852,15 @@ class Generator final {
         body+="              auto target = *"+variable+";\n              auto binding = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return lvui::native::collection_frame("+source+", [&](const auto& row_value, std::size_t row_index) { return "+key+"; }, {.first = "+first+", .count = "+count+", .spacing = "+spacing+", .horizontal = "+horizontal+"}); },\n";
         body+="                [weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings), rows, target](const auto& frame) -> ii::core::Result<void> {\n                  auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n                  if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Repeated owner retired\");\n                  return rows->apply(frame, [&](const auto& mounted) -> ii::core::Result<void> {\n                    std::vector<ii::gui::KeyedContentItem> items; items.reserve(mounted.size());\n                    for (const auto& item : mounted) items.push_back({item.key, [weak_scope, weak_activation, row = item.row](ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n                      auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n                      if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Repeated row owner retired\");\n                      return "+row_view+"<Scope, typename Collection::Row>::build(widgets, {}, scope, row);\n                    }});\n                    return target.set_keyed_content(std::move(items), {.horizontal = frame.options.horizontal, .layout = {.spacing = frame.options.spacing, .alignment = ii::gui::StackAlignment::stretch}});\n                  });\n                });\n              if (!binding) return std::unexpected(binding.error()); }\n";
     }
-    std::string scoped_view_factory(const View& branch,std::string_view owner="Conditional",const Inputs* menu_parent=nullptr,bool menu_section=false,bool grouped_menu=false) {
+    std::string scoped_view_factory(const View& branch,std::string_view owner="Conditional",const Inputs* menu_parent=nullptr,bool menu_section=false,bool grouped_menu=false,FocusCatalog* exported_focus=nullptr) {
         const bool connection_only=owner=="Conditional"&&!menu_section&&!grouped_menu&&component_kinds({branch}).empty();
         if(!grouped_menu&&!connection_only)require_single_view(branch,owner=="Conditional"?"A conditional branch":"A hierarchy count View");
         auto outer_body = std::exchange(body, {});
+        const auto outer_visibility=std::exchange(visible_lifecycle_here,false);
         auto outer_ids = std::exchange(ids, {});
         auto outer_variables = std::exchange(widget_variables, {});
         auto outer_context = std::exchange(context_bindings, {});
+        auto outer_focus = std::exchange(conditional_focus_targets, {});
         const auto outer_menu=active_menu_registration,outer_divider=active_menu_divider_registration,outer_section=active_menu_section,outer_capture=active_menu_capture;
         if(menu_section){active_menu_registration="capture_menu_item";active_menu_divider_registration="capture_menu_divider";active_menu_capture="pending";}
         std::string group_setup;
@@ -5757,21 +5884,29 @@ class Generator final {
         ++factory_depth;
         emit(branch, grouped_menu?"*menu_group":connection_only?"*query_group":"{}",menu_parent);
         emit_context_bindings("in conditional content");
-        auto content = std::move(body);
+        if(exported_focus){
+            for(const auto& [id,variable]:widget_variables){
+                (void)variable;
+                if(id.find("@lvui/")==std::string::npos)(*exported_focus)[id].push_back({id});
+            }
+            for(const auto& [id,paths]:conditional_focus_targets)
+                for(const auto& path:paths)(*exported_focus)[id].push_back(path);
+        }
+        auto content = std::move(body);const bool local_visibility=visible_lifecycle_here;visible_lifecycle_here=outer_visibility;
         --factory_depth;
         active_menu_registration=outer_menu;active_menu_divider_registration=outer_divider;active_menu_section=outer_section;active_menu_capture=outer_capture;
         body = std::move(outer_body); ids = std::move(outer_ids);
-        widget_variables = std::move(outer_variables); context_bindings = std::move(outer_context);
+        widget_variables = std::move(outer_variables); context_bindings = std::move(outer_context); conditional_focus_targets = std::move(outer_focus);
         return std::string("ii::gui::WidgetFactory{[weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings)") + (menu_section?", pending":"") + "](ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n            auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n            if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, " +
                literal(std::string(owner)+" owner retired") + ");\n" +
                (menu_section?"            if (auto owned = widgets.retain(pending); !owned) return owned;\n            if (auto retiring = widgets.on_retire([weak = std::weak_ptr(pending)] { if (auto owner = weak.lock()) (void)owner->close(); }); !retiring) return retiring;\n":"") + group_setup +
                (menu_section?"            [[maybe_unused]] auto capture_menu_item = [pending](lvui_generated::detail_menu::MenuItemPort item) -> ii::core::Result<void> { return pending->append(std::move(item)); };\n            [[maybe_unused]] auto capture_menu_divider = [pending](ii::gui::DividerGroupPort divider) -> ii::core::Result<void> { auto item = lvui_generated::detail_menu::NativeMenu::divider_port(std::move(divider)); if (!item) return std::unexpected(item.error()); return pending->append(std::move(*item)); };\n":"") +
-               binding_owner() + content + "            return {};\n        }}";
+               binding_owner(true,{},local_visibility) + content + "            return {};\n        }}";
     }
     std::string scoped_tab_factory(const View& branch,const Inputs* tab_parent,bool grouped){
         if(!grouped)require_single_view(branch,"A conditional TabBar branch");
-        auto outer_body=std::exchange(body,{});auto outer_ids=std::exchange(ids,{});
-        auto outer_variables=std::exchange(widget_variables,{});auto outer_context=std::exchange(context_bindings,{});
+        auto outer_body=std::exchange(body,{});const auto outer_visibility=std::exchange(visible_lifecycle_here,false);auto outer_ids=std::exchange(ids,{});
+        auto outer_variables=std::exchange(widget_variables,{});auto outer_context=std::exchange(context_bindings,{});auto outer_focus=std::exchange(conditional_focus_targets,{});
         const auto outer_registration=active_tabbar_registration,outer_capture=active_tabbar_capture;
         active_tabbar_registration="capture_tab";active_tabbar_capture="pending";
         std::string group_setup;
@@ -5786,16 +5921,16 @@ class Generator final {
         }
         ++factory_depth;emit(branch,grouped?"*tab_group":"{}",tab_parent);
         emit_context_bindings("in conditional content");
-        auto content=std::move(body);--factory_depth;
+        auto content=std::move(body);const bool local_visibility=visible_lifecycle_here;visible_lifecycle_here=outer_visibility;--factory_depth;
         active_tabbar_registration=outer_registration;active_tabbar_capture=outer_capture;
-        body=std::move(outer_body);ids=std::move(outer_ids);widget_variables=std::move(outer_variables);context_bindings=std::move(outer_context);
+        body=std::move(outer_body);ids=std::move(outer_ids);widget_variables=std::move(outer_variables);context_bindings=std::move(outer_context);conditional_focus_targets=std::move(outer_focus);
         return std::string("ii::gui::WidgetFactory{[weak_scope = std::weak_ptr(scope), weak_activation = std::weak_ptr(native_bindings), pending](ii::gui::WidgetBuilder& widgets) -> ii::core::Result<void> {\n"
             "            auto scope = weak_scope.lock(); auto activation = weak_activation.lock();\n"
             "            if (!scope || !activation || !activation->available() || !scope->active()) return ii::core::fail(ii::core::ErrorCode::closed, \"Conditional TabBar owner retired\");\n"
             "            if (auto owned = widgets.retain(pending); !owned) return owned;\n"
             "            if (auto retiring = widgets.on_retire([weak = std::weak_ptr(pending)] { if (auto owner = weak.lock()) (void)owner->close(); }); !retiring) return retiring;\n") + group_setup +
             "            [[maybe_unused]] auto capture_tab = [pending](lvui_generated::detail_tab::TabGroupPort item) -> ii::core::Result<void> { return pending->append(std::move(item)); };\n" +
-            binding_owner()+content+"            return {};\n        }}";
+            binding_owner(true,{},local_visibility)+content+"            return {};\n        }}";
     }
     std::string list_item_view_factory(const Inputs& values,std::string_view name) {
         auto slot=values.find(name);if(slot==values.end())return {};
@@ -6071,8 +6206,17 @@ class Generator final {
         const auto variable = "node_" + std::to_string(next++);
         const auto id = id_prefix + "@lvui/conditional/" + std::to_string(next);
         ids.insert(id); widget_variables.emplace(id, variable);
-        const auto positive = scoped_view_factory(view.children[0]);
-        const auto negative = view.children.size() == 2 ? scoped_view_factory(view.children[1]) : "ii::gui::WidgetFactory{}";
+        FocusCatalog positive_targets,negative_targets;
+        const auto positive = scoped_view_factory(view.children[0],"Conditional",nullptr,false,false,&positive_targets);
+        const auto negative = view.children.size() == 2 ? scoped_view_factory(view.children[1],"Conditional",nullptr,false,false,&negative_targets) : "ii::gui::WidgetFactory{}";
+        const auto export_targets=[&](const FocusCatalog& targets){
+            for(const auto& [name,paths]:targets)for(const auto& path:paths){
+                FocusPath qualified{id};qualified.insert(qualified.end(),path.begin(),path.end());
+                auto& candidates=conditional_focus_targets[name];
+                if(std::ranges::find(candidates,qualified)==candidates.end())candidates.push_back(std::move(qualified));
+            }
+        };
+        export_targets(positive_targets);export_targets(negative_targets);
         const auto condition = scoped_expression(*view.condition) ? expression_code(*view.condition, view.position) : [&] {
             const auto value = resolve(*view.condition, view.position);
             if (value.kind != ValueKind::boolean) error(view.position, "A conditional View requires Bool");
@@ -6242,7 +6386,7 @@ class Generator final {
         else if(avatar)values=inputs(view,{"id","size","source","imageLoader","backgroundColor","width","height","enabled","accessibilityName"});
         else if(card)values=inputs(view,{"id","title","subtitle","enabled","width","height","padding","spacing","cornerRadius","shapeStyle","backgroundColor","titleColor","subtitleColor"});
         else if(header)values=inputs(view,{"id","title","subtitle","menuVisible","compact","enabled","contentHorizontalPadding","contentVerticalPadding","rowSpacing","actionSpacing","menuButtonPadding","width","height","backgroundColor","titleColor","subtitleColor","menuBackgroundColor","menuPressedBackgroundColor","onMenuClicked"});
-        else if(listener)values=inputs(view,{"id","width","height","sizeToContent","onInput","onResized"});
+        else if(listener)values=inputs(view,{"id","width","height","sizeToContent","onInput","onResized","onSizeChanged","onHovered","onFocused","onClick","onDrop","onPinch"});
         else if(list_panel)values=inputs(view,{"id","controller","model","editor","editable","reorderable","scrollable","modelRevision","viewRevision","width","height","rowHeight","overscan","showIndicator","keyboardNavigationEnabled","leftPadding","rightPadding","iconSize","spacing","cornerRadius","iconSource","iconRevision","itemDelegate","itemRow","textColor","descriptionColor","disabledTextColor","rowBackgroundColor","hoverColor","pressedColor","selectedRowColor","focusColor","toolbarHeight","toolbarVisible","toolbarIcon1","toolbarIcon2","toolbarIcon3","toolbarIconSize","toolbarInteractive","footerHeight","footerVisible","footerInteractive","footerButton1","footerButton2","footerButton3","backgroundColor","enabled","interactive","onItemActivated","onItemEdited","onItemSubmitted","onItemRejected","onItemMoved","onToolbarIconTriggered","onFooterButtonTriggered"});
         else if(hierarchy_panel)values=inputs(view,{"id","controller","editor","editable","modelRevision","viewRevision","width","height","rowHeight","overscan","showIndicator","keyboardNavigationEnabled","indentStep","iconSize","chevronSize","baseLeftPadding","rowRightPadding","leadingSpacing","cornerRadius","countWidth","countView","countRow","itemDelegate","itemRow","iconSource","iconRevision","textColorNormal","textColorDisabled","rowBackgroundColorIdle","rowBackgroundColorHover","rowBackgroundColorPressed","rowBackgroundColorActive","rowBackgroundColorInactive","rowBackgroundColorDrag","focusColor","toolbarHeight","toolbarVisible","toolbarItems","activeToolbarButtonId","footerHeight","footerVisible","footerInteractive","footerButton1","footerButton2","footerButton3","backgroundColor","enabled","onItemActivated","onExpansionChanged","onItemMoved","onToolbarActiveChanged","onToolbarTriggered","onFooterClicked"});
         else if((table_view))values=inputs(view,{"id","controller","model","editor","orderEditor","sorter","structureEditor","structureFactory","structureControlsVisible","addRowControlsVisible","addColumnControlsVisible","deleteContextMenuEnabled","selectOnContextClick","structureGutterWidth","structureGutterHeight","mergeEditor","editable","clipboardEnabled","sortingEnabled","columnResizeEnabled","rowResizeEnabled","columnResizeHandleWidth","rowResizeHandleHeight","modelRevision","headerColumnAppearance","headerDefaultLeadingIcon","headerDefaultTrailingIcon","headerIconSize","headerIconSpacing","headerIconSource","headerIconRevision","headerDelegate","headerCellDelegate","cellDelegate","delegate","headerContext","cellContext","columnViews","width","height","headerHeight","cellPadding","fallbackCellWidth","minColumnWidth","fontSize","enabled","selectionEnabled","keyboardNavigationEnabled","fitColumnsToViewport","showIndicator","accessibilityName","accessibilityText","backgroundColor","dividerColor","headerTextColor","cellTextColor","selectionColor","currentCellBorderColor","onSelectionChanged","onCellInputEdited","onCellInputSubmitted","onCellInputRejected","onRangeValuesChanged","onRowsSorted","onStructureChanged","onColumnResized","onRowResized","onMergeChanged"});
@@ -6270,8 +6414,8 @@ class Generator final {
         else if((kind=="CheckBox")) values=inputs(view,{"id","text","enabled","checked","group","onToggled","accessibilityName","boxSize","framePadding","boxRadius","checkMarkStrokeWidth","labelGap","checkedColor","uncheckedColor","disabledCheckedColor","disabledUncheckedColor","checkColor","checkMarkColorDisabled","boxBorderWidthCheckedEnabled","boxBorderWidthUncheckedEnabled","boxBorderWidthCheckedDisabled","boxBorderWidthUncheckedDisabled","boxBorderColorCheckedEnabled","boxBorderColorUncheckedEnabled","boxBorderColorCheckedDisabled","boxBorderColorUncheckedDisabled","textColor","disabledTextColor","useFigmaCheckedAssets","innerShadowSoftColor","innerShadowStrongColor","shapeStyle","motionEnabled","motion","transitionDuration"});
         else if((kind=="ToggleSwitch")) values=inputs(view,{"id","text","enabled","checked","group","onToggled","accessibilityName","rightToLeft","motionEnabled","motion","transitionDuration","trackWidth","trackHeight","trackPadding","knobSize","trackCornerRadius","knobCornerRadius","labelGap","onColor","onColorHover","onColorPressed","offColor","offColorHover","offColorPressed","disabledTrackColor","knobFillColor","disabledKnobColor","textColor","disabledTextColor"});
         else if(check) values=inputs(view,{"id","text","enabled","checked","group","onToggled"});
-        else if((kind=="InputField")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","size","surface","onEdited","onSubmit","multiline","password","wrapEnabled","maximumLength","accessibilityName","clearButtonVisible","clearAccessibilityName","fontFamily","fontSize","lineHeight","horizontalPadding","verticalPadding","cornerRadius","backgroundColor","hoverColor","textColor","placeholderColor","selectionColor","caretColor","focusColor"});
-        else if((kind=="TextEditor")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","minimumHeight","onEdited","onSubmit","onContentHeightChanged","wrapEnabled","accessibilityName","fontFamily","fontSize","lineHeight","horizontalPadding","verticalPadding"});
+        else if((kind=="InputField")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","size","surface","onEdited","onSubmit","submitFocusId","focusOnMount","multiline","password","wrapEnabled","maximumLength","accessibilityName","clearButtonVisible","clearAccessibilityName","fontFamily","fontSize","lineHeight","horizontalPadding","verticalPadding","cornerRadius","backgroundColor","hoverColor","textColor","placeholderColor","selectionColor","caretColor","focusColor"});
+        else if((kind=="TextEditor")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","minimumHeight","onEdited","onSubmit","onContentHeightChanged","onWrappingFallbackChanged","wrapEnabled","accessibilityName","fontFamily","fontSize","lineHeight","horizontalPadding","verticalPadding"});
         else if((kind=="SearchField")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","surface","clearButtonVisible","accessibilityName","clearAccessibilityName","onEdited","onSubmit"});
         else if((kind=="Slider")) values=inputs(view,{"id","from","to","value","stepSize","width","enabled","active","type","showTicks","tickCount","segmentCount","showSymbol","symbolName","showMinMax","showLabels","showEndpointIcons","minimumLabel","maximumLabel","minimumIconName","maximumIconName","rightToLeft","size","thumbDiameter","trackHeight","rangeInset","height","accessibilityName","trackColor","fillColor","inactiveFillColor","thumbColor","focusColor","labelColor","onMoved"});
         else if(kind=="ProgressBar") values=inputs(view,{"id","minimumValue","maximumValue","endValue","startValue","currentValue","stateModel","minimumValueStateKey","maximumValueStateKey","startValueStateKey","currentValueStateKey","size","shapeStyle","width","height","largeHeight","regularHeight","cornerRadius","trackColor","fillColor","motionEnabled","motion","displayedStart","displayedProgress"});
@@ -6279,7 +6423,7 @@ class Generator final {
         else if((color_picker)) values=inputs(view,{"id","type","model","modelRevision","width","padding","enabled","showRecentColors","showActions","rememberOnAccept","recentColors","applyText","cancelText","accessibilityName","onColorEdited","onAccepted","onCanceled","onEyedropperRequested"});
         else if((color_button)) values=inputs(view,{"id","model","modelRevision","currentColor","buttonSize","padding","cornerRadius","enabled","showHueRing","circular","borderOpacity","accessibilityName","backgroundColor","hoverColor","pressedColor","borderColor","focusColor","onClick","onPressed","onReleased","onCanceled"},true);
         else if((popover)) values=inputs(view,{"id","width","height","padding","margins","cornerRadius","surfaceColor","surfaceOpacity","primaryColor","modal","dim","focus","clip","blurEnabled","motionEnabled","closeOnEscape","closeOnPressOutside","closeOnContextRequest","accessibilityName","onOpened","onClosed","onCanceled"});
-        else if(sheet) values=inputs(view,{"id","open","title","description","presentation","detent","cornerRadius","showHeader","showDescription","showCloseButton","showGrabber","scrollContent","preferredWidth","preferredHeight","desktopMargin","contentPadding","topSafeInset","bottomSafeInset","dismissOnBackground","dismissOnEscape","dismissOnDrag","motionEnabled","motion","animationDuration","surfaceColor","backdropColor","accessibilityName","onOpened","onClosed"});
+        else if(sheet) values=inputs(view,{"id","open","title","description","presentation","detent","cornerRadius","showHeader","showDescription","showCloseButton","showGrabber","scrollContent","preferredWidth","preferredHeight","desktopMargin","contentPadding","topSafeInset","bottomSafeInset","dismissOnBackground","dismissOnEscape","dismissOnDrag","motionEnabled","motion","animationDuration","surfaceColor","backdropColor","accessibilityName","onOpened","onClosed","onCanceled"});
         else if((modal)) values=inputs(view,{"id","open","title","description","desc","message","iconName","iconSource","iconResolver","iconRevision","showIcon","iconSize","iconCornerRadius","iconBackgroundColor","iconBorderColor","buttonCount","primaryText","secondaryText","tertiaryText","primaryEnabled","secondaryEnabled","tertiaryEnabled","minWidth","maxWidth","preferredWidth","sidePadding","frameMinHeight","verticalOffset","frameCornerRadius","shapeStyle","frameColor","backdropColor","dismissOnBackground","dismissOnEscape","motionEnabled","motion","enterDuration","exitDuration","motionOvershoot","initialScale","contentPadding","sectionSpacing","actionSpacing","accessibilityName","onPrimaryClicked","onSecondaryClicked","onTertiaryClicked","onCanceled","onOpened","onClosed"});
         else if((alert_button)) values=inputs(view,{"id","text","enabled","motionEnabled","enterKeyActivation","tone","dialogStyle","width","height","horizontalPadding","cornerRadius","textColor","primaryColor","accessibilityName","method","methods","onClick","onPressed","onReleased","onCanceled"},true);
         else if((alert)) values=inputs(view,{"id","open","title","message","description","buttonCount","primaryText","secondaryText","tertiaryText","button1Text","button2Text","button3Text","button1Method","button2Method","button3Method","primaryEnabled","secondaryEnabled","tertiaryEnabled","secondaryDestructive","dismissOnBackground","closeOnEscape","minWidth","maxWidth","preferredWidth","sidePadding","cardCornerRadius","shapeStyle","backdropColor","cardBackgroundColor","glassEnabled","glassBlurRadius","shadowEnabled","motionEnabled","motion","enterDuration","exitDuration","motionOvershoot","initialScale","showIcon","appIconSource","imageSource","iconSource","iconName","iconResolver","iconRevision","iconFrameSize","primaryColor","accessibilityName","onPrimaryClicked","onSecondaryClicked","onTertiaryClicked","onDismissed","onOpened","onClosed"});
@@ -6551,7 +6695,8 @@ class Generator final {
             const auto content=modal_content(view,"SheetContentFactory",false);
             const auto close_factory=owned_sheet_close_factory();
             const bool dynamic=std::ranges::any_of(values,[&](const auto& pair){return pair.first!="open"&&pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&!pair.first.starts_with("on")&&native_expression(pair.second->value);});
-            const auto callbacks="ii::gui::NativeSheetCallbacks{.opened = "+action(values,"onOpened")+", .closed = "+action(values,"onClosed")+"}";
+            const auto callbacks="ii::gui::NativeSheetCallbacks{.opened = "+action(values,"onOpened")+", .closed = "+action(values,"onClosed")+
+                (values.contains("onCanceled") ? ", .canceled = "+action(values,"onCanceled") : "")+"}";
             if(dynamic){
                 body+="            auto "+derived+"_result = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+owned_sheet_options(values,false)+"; });\n"
                     "            if (!"+derived+"_result) return std::unexpected("+derived+"_result.error());\n"
@@ -7115,7 +7260,7 @@ class Generator final {
         else if((kind=="TextEditor")){
             const auto native="text_editor_"+variable,derived="text_editor_inputs_"+variable;
             const bool dynamic=!active_window_accent.empty()||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&!pair.first.starts_with("on")&&native_expression(pair.second->value);});
-            const auto callbacks="lvui::native::NativeTextEditorCallbacks{.edited = "+bindable_action(values,"text","onEdited","std::string")+", .submitted = "+action(values,"onSubmit")+", .content_height_changed = "+action(values,"onContentHeightChanged","double value")+"}";
+            const auto callbacks="lvui::native::NativeTextEditorCallbacks{.edited = "+bindable_action(values,"text","onEdited","std::string")+", .submitted = "+action(values,"onSubmit")+", .content_height_changed = "+action(values,"onContentHeightChanged","double value")+", .wrapping_fallback_changed = "+action(values,"onWrappingFallbackChanged","bool value")+"}";
             if(dynamic){
                 body+="            auto "+derived+"_result = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+owned_input_field_options(values,false,true)+"; });\n"
                     "            if (!"+derived+"_result) return std::unexpected("+derived+"_result.error());\n"
@@ -7131,8 +7276,17 @@ class Generator final {
         }
         else if((kind=="InputField")){
             const auto native="input_field_"+variable,derived="input_field_inputs_"+variable;
-            const bool dynamic=!active_window_accent.empty()||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&!pair.first.starts_with("on")&&native_expression(pair.second->value);});
-            const auto callbacks="lvui::native::NativeInputFieldCallbacks{.edited = "+bindable_action(values,"text","onEdited","std::string")+", .submitted = "+action(values,"onSubmit")+"}";
+            const bool dynamic=!active_window_accent.empty()||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&pair.first!="submitFocusId"&&pair.first!="focusOnMount"&&!pair.first.starts_with("on")&&native_expression(pair.second->value);});
+            auto submitted=action(values,"onSubmit");
+            if(auto focus=values.find("submitFocusId");focus!=values.end()){
+                if(native_expression(focus->second->value))error(focus->second->position,"submitFocusId must be a static widget id");
+                const auto target="submit_focus_"+variable;
+                body+="            auto "+target+" = std::make_shared<std::function<ii::core::Result<ii::gui::Widget>()>>();\n";
+                context_bindings.push_back({target,id_prefix+text(values,"submitFocusId"),focus->second->position,false,false,{},{},{},false,true});
+                const auto callback=values.contains("onSubmit")?"std::function<void()>{"+submitted+"}":"std::function<void()>{}";
+                submitted="["+target+", submitted = "+callback+"] { std::optional<ii::gui::Widget> candidate; std::optional<std::string> resolution_error; if (*"+target+") { auto resolved = (*"+target+")(); if (resolved) candidate = *resolved; else if (resolved.error().code != ii::core::ErrorCode::closed && resolved.error().code != ii::core::ErrorCode::not_found && resolved.error().code != ii::core::ErrorCode::invalid_argument) resolution_error = resolved.error().message; } if (submitted) submitted(); if (resolution_error) throw std::runtime_error(*resolution_error); if (candidate) { auto focused = candidate->focus(); if (!focused && focused.error().code != ii::core::ErrorCode::closed && focused.error().code != ii::core::ErrorCode::invalid_argument && focused.error().code != ii::core::ErrorCode::not_found) throw std::runtime_error(focused.error().message); } }";
+            }
+            const auto callbacks="lvui::native::NativeInputFieldCallbacks{.edited = "+bindable_action(values,"text","onEdited","std::string")+", .submitted = "+submitted+"}";
             if(dynamic){
                 body+="            auto "+derived+"_result = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+owned_input_field_options(values,false)+"; });\n"
                     "            if (!"+derived+"_result) return std::unexpected("+derived+"_result.error());\n"
@@ -7145,6 +7299,10 @@ class Generator final {
             }else body+="            auto "+native+" = lvui_generated::detail_input::NativeInputField::create(widgets, "+args+", "+owned_input_field_options(values,true)+", "+callbacks+");\n"
                        "            if (!"+native+") return std::unexpected("+native+".error());\n"
                        "            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";
+            if(auto focus=values.find("focusOnMount");focus!=values.end()){
+                if(native_expression(focus->second->value))error(focus->second->position,"focusOnMount must be a static Bool");
+                if(boolean(values,"focusOnMount",false)=="true")body+="            if (auto published = widgets.on_publish([target = *"+variable+"] { (void)target.focus(); }); !published) return published;\n";
+            }
         }
         else if((kind=="SearchField")){
             const auto native="search_field_"+variable,derived="search_field_inputs_"+variable;
@@ -7275,7 +7433,8 @@ class Generator final {
         }
         else if((listener)){
             const auto native="listener_"+variable,derived="listener_inputs_"+variable;
-            const auto callbacks="ii::gui::EventListenerCallbacks{.input = "+listener_input(values)+", .resized = "+action(values,"onResized","ii::gui::Rect value")+"}";
+            const auto callbacks="ii::gui::EventListenerCallbacks{.input = "+listener_inputs(values)+", .resized = "+listener_resize(values)+
+                (values.contains("onClick") ? ", .clicked = "+action(values,"onClick") : "")+"}";
             const bool dynamic=std::ranges::any_of(values,[&](const auto& pair){return (pair.first=="width"||pair.first=="height")&&native_expression(pair.second->value);});
             if(dynamic){
                 body+="            auto "+derived+"_result = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+owned_listener_options(values,false)+"; });\n"
@@ -7289,6 +7448,20 @@ class Generator final {
             }else body+="            auto "+native+" = ii::gui::NativeEventListener::create(widgets, "+args+", "+owned_listener_options(values,true)+", "+callbacks+");\n"
                        "            if (!"+native+") return std::unexpected("+native+".error());\n"
                        "            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";
+            if(values.contains("onHovered")||values.contains("onFocused")){
+                const auto port="interaction_port_"+variable;
+                body+="            { std::function<void()> hovered = "+action(values,"onHovered")+", focused = "+action(values,"onFocused")+";\n"
+                    "              auto "+port+" = std::make_shared<ii::gui::WidgetInteractionPort>([hovered = std::move(hovered), focused = std::move(focused), was_hovered = false, was_focused = false](const ii::gui::WidgetInteraction& value) mutable {\n"
+                    "                  const bool available = value.alive && value.visible && value.enabled && !value.input_blocked;\n"
+                    "                  const bool now_hovered = available && value.hovered, now_focused = available && value.focused;\n"
+                    "                  const bool enter_hover = now_hovered && !was_hovered, enter_focus = now_focused && !was_focused;\n"
+                    "                  was_hovered = now_hovered; was_focused = now_focused;\n"
+                    "                  if (enter_hover && hovered) hovered(); if (enter_focus && focused) focused();\n"
+                    "              });\n"
+                    "              if (auto owned = widgets.retain("+port+"); !owned) return owned;\n"
+                    "              if (auto observed = "+variable+"->observe_interaction("+port+"); !observed) return observed;\n"
+                    "              if (auto retiring = widgets.on_retire([weak = std::weak_ptr("+port+")] { if (auto port = weak.lock()) (void)port->close(); }); !retiring) return retiring; }\n";
+            }
         }
         else if((table_row)){
             const auto native="table_row_"+variable,derived="table_row_inputs_"+variable;
@@ -8175,7 +8348,7 @@ public:
         if (owned_card_runtime) result += "#include <iiGUI/NativeAppCardView.h>\n";
         if (owned_media_card_runtime) result += "#include <LVUI/NativeCard.h>\n#include <iiGUI/NativeCardView.h>\n#include <iiGUI/SvgImageCache.h>\n";
         if (owned_header_runtime) result += "#include <iiGUI/NativeAppHeaderView.h>\n";
-        if (owned_listener_runtime) result += "#include <iiGUI/NativeEventListenerView.h>\n";
+        if (owned_listener_runtime) result += "#include <iiGUI/NativeEventListenerView.h>\n#include <functional>\n#include <optional>\n#include <utility>\n";
         if (owned_avatar_runtime) result += "#include <iiGUI/NativeAvatarView.h>\n#include <iiGUI/SvgImageCache.h>\n#include <LVUI/NativeAvatarAssets.h>\n#include <LVUI/NativeAuthoredIcons.h>\n";
         if (owned_tooltip_runtime) result += "#include <LVUI/NativeTooltip.h>\n#include <iiGUI/TooltipModel.h>\n#include <iiGUI/TooltipController.h>\n#include <iiGUI/TooltipOutline.h>\n#include <iiGUI/NativeMaterialView.h>\n#include <iiGUI/NativeTooltipPresentationView.h>\n#include <iiGUI/NativeTooltipTargetView.h>\n#include <iiGUI/TooltipScheduler.h>\n#include <iiGUI/NativeTooltipView.h>\n";
         if (owned_slider_runtime) result += "#include <LVUI/NativeSlider.h>\n#include <iiGUI/NativeSliderView.h>\n#include <iiGUI/SvgImageCache.h>\n";
@@ -8234,7 +8407,7 @@ public:
         if (object_value_runtime) result += "#include <LVUI/NativeObjects.h>\n";
         if (inferred_runtime) result += "#include <LVUI/NativeInferredValues.h>\n";
         if (function_variable_runtime) result += "#include <LVUI/NativeFunctionVariable.h>\n";
-        if (collection_runtime) result += "#include <LVUI/NativeCollection.h>\n#include <iiGUI/VirtualViewport.h>\n#include <iiGUI/VirtualCollectionPlanner.h>\n#include <iiGUI/VirtualMeasurements.h>\n#include <LVUI/NativeVirtualCollection.h>\n#include <LVUI/NativeMeasuredCollection.h>\n#include <LVUI/NativeCollectionWidgets.h>\n#include <iiGUI/CollectionWidgetNavigation.h>\n";
+        if (collection_runtime) result += "#include <algorithm>\n#include <cmath>\n#include <LVUI/NativeCollection.h>\n#include <iiGUI/VirtualViewport.h>\n#include <iiGUI/VirtualCollectionPlanner.h>\n#include <iiGUI/VirtualMeasurements.h>\n#include <LVUI/NativeVirtualCollection.h>\n#include <LVUI/NativeMeasuredCollection.h>\n#include <LVUI/NativeCollectionWidgets.h>\n#include <iiGUI/CollectionWidgetNavigation.h>\n";
         if(panel_paint_runtime)result+="#include <iiGUI/PanelPainter.h>\n";
         if(widget_color_runtime)result+="#include <LVUI/NativeWidgetColors.h>\n";
         if(widget_layout_runtime)result+="#include <LVUI/NativeWidgetLayout.h>\n";
@@ -9073,7 +9246,7 @@ public:
             if(native_runtime&&!scope.empty())result += "            scope->binding_diagnostics = std::make_shared<lvui::native::BindingDiagnostics>();\n";
             if (owned_radio_runtime) result += "            scope->radio_groups = std::make_shared<ii::gui::RadioGroups>();\n";
             if (owned_link_runtime||owned_router_runtime) result += "            scope->navigation_context = std::make_shared<lvui::NavigationContext>();\n";
-            result += binding_owner(!scope.empty());
+            result += binding_owner(!scope.empty(),{},visible_lifecycle_here);
             if (native_runtime && !scope.empty()) result += "            scope->native_lifetime = native_bindings;\n";
             if (!scope.empty()) result += "            if (auto activated = lvui::native::attach_backend_activation(scope, widgets); !activated) return activated;\n            if (configure) configure(*scope);\n";
             if (!native_initializers.empty()) result += "            if (auto initialized = initialize_values(scope, native_bindings); !initialized) return initialized;\n";

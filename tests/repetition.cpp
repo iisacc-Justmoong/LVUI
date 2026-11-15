@@ -31,6 +31,15 @@ void projection(){
     const auto automatic=compile("import vm Backend\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, itemWidth: 150, overscan: 2, width: vm.width, height: 400) { Label(text: item.title) } }");
     check(automatic.find("measurements->plan")!=automatic.npos&&automatic.find("set_scroll_handler")!=automatic.npos&&
           automatic.find("set_virtual_scroll_content")!=automatic.npos,"Automatic virtualization did not generate native viewport planning and delivery");
+    const auto pinch=compile("import vm Backend\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, itemWidth: 80, onPinch: vm.pinch) { Label(text: item.title) } }");
+    check(pinch.find("pinch_scale_factor")!=pinch.npos&&pinch.find("begin_focus")!=pinch.npos&&
+          pinch.find("end_focus")!=pinch.npos&&pinch.find("set_input_handler")!=pinch.npos,
+          "Virtual pinch did not emit a scoped native focus and input handler");
+    const auto drag=compile("import vm Backend\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, itemWidth: 80, onDragZoom: vm.dragZoom, dragZoomDistance: 180) { Label(text: item.title) } }");
+    check(drag.find("IIGUI_HORIZONTAL_DRAG_API")!=drag.npos&&drag.find("set_horizontal_drag_handler")!=drag.npos&&drag.find("std::exp2")!=drag.npos&&
+          drag.find("drag.total_x")!=drag.npos&&drag.find("drag.first")!=drag.npos&&
+          drag.find("begin_focus")!=drag.npos&&drag.find("end_focus")!=drag.npos,
+          "Virtual drag zoom did not emit a scoped native focus and drag handler");
     const auto measured=compile("import vm Backend\nlet Cell(hidden: Bool): View = if (hidden) { Label(text: \"scope->parent->literal\") } else { Label() }\nWindow { for (item in vm.items, key: item.id, itemHeight: 40, measureHeight: true) { VStack { Label(text: item.title)\nCell(hidden: vm.hidden)\nLabel(text: vm.caption()) } } }");
     const auto begin=measured.find("auto ambient = native_bindings->derive"),end=measured.find("auto ambient_state",begin);
     const auto ambient=measured.substr(begin,end-begin);
@@ -54,6 +63,10 @@ void diagnostics(){
         "Window { for (item in [1], key: item, itemHeight: 20, first: 0) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, count: 1) { Label() } }",
         "Window { for (item in [1], key: item, itemWidth: 80) { Label() } }",
+        "import vm Backend\nWindow { for (item in [1], key: item, onPinch: vm.pinch) { Label() } }",
+        "import vm Backend\nWindow { for (item in [1], key: item, onDragZoom: vm.pinch) { Label() } }",
+        "Window { for (item in [1], key: item, itemHeight: 20, dragZoomDistance: 180) { Label() } }",
+        "import vm Backend\nWindow { for (item in [1], key: item, itemHeight: 20, onDragZoom: vm.pinch, dragZoomDistance: 0) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, columns: 1.5) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, horizontal: true) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, itemWidth: 30, horizontal: true, columns: 2) { Label() } }",
@@ -63,6 +76,8 @@ void diagnostics(){
         "Window { for (item in [1], key: item, navigation: true) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, navigation: true) { Label() } }",
         "Window { for (item in [1], key: item, itemHeight: 20, selectionMode: .multiple) { Label() } }",
+        "Window { for (item in [1], key: item, itemHeight: 20, activateOnDoubleClick: true) { Label() } }",
+        "Window { for (item in [1], key: item, itemHeight: 20, activateOnClick: true) { Label() } }",
         "import nav CollectionNavigation\nWindow { for (item in [1], key: item, itemHeight: 20, navigation: nav, selectionMode: .invalid) { Label() } }",
         "Window { for (item in [1], key: item) { Label()\nLabel() } }",
         "Window { for (item in [], key: item) { Label() } }",
@@ -77,9 +92,11 @@ void diagnostics(){
     check(bool(lvui::compile_native("for (item in [1], key: item) { Label() }")),"Standalone repetition root was rejected");
 }
 void navigation(){
-    const auto code=compile("import vm Backend\nimport nav CollectionNavigation\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, navigation: nav, selectionMode: .multiple, selectOnMove: false, navigationFilter: item.enabled, onActivate: vm.activate) { Label(text: nav.state.current_key) } }");
+    const auto code=compile("import vm Backend\nimport nav CollectionNavigation\nWindow { for (item in vm.items, key: item.id, itemHeight: 80, navigation: nav, selectionMode: .multiple, selectOnMove: false, activateOnDoubleClick: vm.doubleClick, activateOnClick: vm.singleClick, navigationFilter: item.enabled, onActivate: vm.activate) { Label(text: nav.state.current_key) } }");
     check(code.find("CollectionWidgetNavigation")!=code.npos&&code.find("navigation->publish(frame)")!=code.npos&&
-          code.find("CollectionSelectionMode::multiple")!=code.npos&&code.find("object).activate(std::forward")!=code.npos,
+          code.find("CollectionSelectionMode::multiple")!=code.npos&&code.find("object).activate(std::forward")!=code.npos&&
+          code.find("navigation->activate_on_double_click(enabled)")!=code.npos&&code.find("doubleClick")!=code.npos&&
+          code.find("navigation->activate_on_click(enabled)")!=code.npos&&code.find("singleClick")!=code.npos,
           "Navigated repetition omitted its native adapter, presentation, options or C++ endpoint");
 }
 }

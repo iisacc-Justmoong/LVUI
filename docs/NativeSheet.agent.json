@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeSheet.md",
-    "sha256": "9f5a734e7eb55286ca8cc014bd16ee7de9c912a9fa3912aef9a75ee422b8b92a",
-    "bytes": 4454,
-    "line_count": 59,
+    "sha256": "b335252c661e3d6580367f1f46bca14fb9b71cd0a5535d5c4dde62a5e983cb58",
+    "bytes": 4798,
+    "line_count": 63,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -101,35 +101,35 @@
       "id": "b000011",
       "kind": "paragraph",
       "start_line": 44,
-      "end_line": 51,
-      "raw": "제목·설명·프레젠테이션·detent·크기·표시·닫기 정책과 색상은 선언형 상수 또는\n관측 가능한 값으로 제공한다. 본문에는 여러 View를 넣을 수 있고 ID는 부모 마운트에서\n유일해야 한다. `open`은 Bool 상수 또는 관측 가능한 Bool을 받으며 해당 세대가\n게시된 뒤 초기값과 이후 변경을 적용한다. 내장 뷰와 콘텐츠 팩터리 안의 초기 개방도\n지원한다. 앱이 아닌 사용자의 닫기 조작은 앱의 Bool을 자동으로 바꾸지 않으므로\n필요한 경우 닫힘 콜백에서 갱신한다. 다시 열어도 시트 본문은 유지된다.\n[열림 바인딩](NativePopupOpen.md)의 오류와 수명 계약을 따른다. C++에서는 `root()`,\n`viewport()`, `content_root()` 핸들과 콘텐츠 팩터리를 사용한다.\n"
+      "end_line": 55,
+      "raw": "제목·설명·프레젠테이션·detent·크기·표시·닫기 정책과 색상은 선언형 상수 또는\n관측 가능한 값으로 제공한다. 본문에는 여러 View를 넣을 수 있고 ID는 부모 마운트에서\n유일해야 한다. `open`은 Bool 상수 또는 관측 가능한 Bool을 받으며 해당 세대가\n게시된 뒤 초기값과 이후 변경을 적용한다. 내장 뷰와 콘텐츠 팩터리 안의 초기 개방도\n지원한다. 앱이 아닌 사용자의 닫기 조작은 앱의 Bool을 자동으로 바꾸지 않으므로\n필요한 경우 닫힘 콜백에서 갱신한다. 다시 열어도 시트 본문은 유지된다.\n`onClosed`는 프로그램과 사용자의 닫기를 모두 알리고, `onCanceled`는 사용자가\nEscape·허용된 바깥 클릭·닫기 버튼·닫기 드래그로 닫은 경우에만 실행된다.\n모델을 갱신해 `open`이 거짓이 되거나 C++에서 `close_popup()`을 호출한 경우에는\n`onCanceled`가 호출되지 않는다.\n[열림 바인딩](NativePopupOpen.md)의 오류와 수명 계약을 따른다. C++에서는 `root()`,\n`viewport()`, `content_root()` 핸들과 콘텐츠 팩터리를 사용한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 52,
-      "end_line": 52,
+      "start_line": 56,
+      "end_line": 56,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 53,
-      "end_line": 56,
+      "start_line": 57,
+      "end_line": 60,
       "raw": "모션을 켜면 범용 호스트의 프레임 공급자가 필요하다. 열린 시트의 전환은 호스트의\n공유 움직임 설정을 따른다. 드래그 복귀 애니메이션, 운영체제 안전 영역 자동 관찰과 실제 플랫폼 표시·입력·접근성 검증은\n아직 남아 있다. 헤드리스 검사는 창이나 GPU를 실행하지 않는다. 레거시 타입이나\n구현을 사용하지 않는다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 57,
-      "end_line": 57,
+      "start_line": 61,
+      "end_line": 61,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 58,
-      "end_line": 59,
+      "start_line": 62,
+      "end_line": 63,
       "raw": "2026-11-07 macOS arm64에서 iiGUI 시트 모델·호스트와 LVUI 생성·반응형\n연결의 헤드리스 검사가 통과했다. 실제 창·GPU 실행은 수행하지 않았다.\n"
     }
   ],
@@ -161,14 +161,14 @@
       },
       {
         "block_id": "b000013",
-        "line": 55,
+        "line": 59,
         "text": "아직 남아 있다. 헤드리스 검사는 창이나 GPU를 실행하지 않는다. 레거시 타입이나",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000013",
-        "line": 56,
+        "line": 60,
         "text": "구현을 사용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -181,7 +181,7 @@
         "label": "열림 바인딩",
         "target": "NativePopupOpen.md",
         "kind": "relative",
-        "line": 50
+        "line": 54
       }
     ],
     "tables": []

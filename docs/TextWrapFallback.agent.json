@@ -1,0 +1,85 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:5b93a96a80ae834fec5da3897d8d7dc25301754b585dbc787d940129346ae18d",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/TextWrapFallback.md",
+    "sha256": "1e4165993f35789741e697a68d42a08ffb506f39880847a6066f617aa29de5de",
+    "bytes": 736,
+    "line_count": 10,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "TextEditor 줄바꿈 상태 알림",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# TextEditor 줄바꿈 상태 알림\n",
+      "level": 1,
+      "title": "TextEditor 줄바꿈 상태 알림"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "`TextEditor`의 선택적 `onWrappingFallbackChanged` 이벤트는 iiGUI가 현재 텍스트를\n요청한 폭으로 자동 줄바꿈하지 못해 줄바꿈 없는 배치를 사용하는지 불리언으로\n전달한다. 최초 상태를 한 번 알리고 실제 상태가 바뀔 때만 재통지한다. 뷰모델은\n이 상태를 이용해 더 큰 문서 전용 뷰나 다른 명확한 대체 경로를 선택할 수 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 8,
+      "end_line": 10,
+      "raw": "이 이벤트는 기존 텍스트·선택·복사 동작을 바꾸거나 레이아웃 및 입력의 크기\n제한을 늘리지 않는다. 콜백을 생략한 기존 뷰는 계속 동작하며 iiGUI와 LVUI는\n각자의 역할과 독립적인 모듈 경계를 유지한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "TextEditor 줄바꿈 상태 알림",
+      "anchor": "texteditor-줄바꿈-상태-알림",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

@@ -162,3 +162,11 @@ Menu의 자식 타입을 검사한다. 가변 View 교체와 일반 슬롯 프�
 모든 생성·빌드·설치 스테이징은 `build/` 하위에 두었다. 실제 창·GPU·입력·접근성과
 LVRS 앱·테스트 실행은 전체 작업의 최종 일괄 검증 범위로 유지한다. 이 기록은
 [전체 언어·모듈 완성](Completion.md)을 선언하는 것이 아니다.
+# EventListener interaction notifications
+
+`EventListener` accepts `onHovered` and `onFocused` no-argument C++ callbacks.
+Each callback runs only when the listener or one of its descendants enters the
+corresponding interactive state. A listener that has no such callbacks allocates
+no interaction subscription. The iiGUI interaction query delivers changes on
+the owner thread, does not consume input, and is closed with the view. Hiding,
+disabling, blocking, and retiring a listener do not trigger an entry callback.

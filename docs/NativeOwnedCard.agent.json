@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeOwnedCard.md",
-    "sha256": "c8094ef90dee9d9eef26b15bd44a3a64f1613164dd6564e2467b44e45a13139d",
-    "bytes": 5243,
-    "line_count": 73,
+    "sha256": "cc2248f2aadd77efd672513d49b04c9d6e613d6cb6b7a68ecca57b33c9c17a37",
+    "bytes": 5439,
+    "line_count": 75,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -73,35 +73,35 @@
       "id": "b000007",
       "kind": "paragraph",
       "start_line": 21,
-      "end_line": 26,
-      "raw": "선언의 `rows`는 `std::vector<lvui::CardRow>`를 전달하고 `previewSource`와 `icon`은\n네이티브 래스터를 받는다. `previewSource`는 화면의 이미지 서비스나 개별\n`imageLoader`가 해석하는 파일·URL 문자열도 받는다. 로딩과 상태는\n[이미지 로딩](NativeImageLoading.md)을 따른다.\n`iconName`과 `iconSource`는 교체 가능한 아이콘 공급자를\n사용한다. 텍스트, 상태, 크기, 색상과 이미지가 바뀌면 기존 카드를 갱신한다.\n"
+      "end_line": 28,
+      "raw": "선언의 `rows`는 `std::vector<lvui::CardRow>`를 전달하고 `previewSource`와 `icon`은\n네이티브 래스터를 받는다. `previewSource`는 화면의 이미지 서비스나 개별\n`imageLoader`가 해석하는 파일·URL 문자열도 받는다. 로딩과 상태는\n[이미지 로딩](NativeImageLoading.md)을 따른다.\n생성 코드는 미리보기의 크기를 `iiGUI::BasicCard` 모델로 계산한다. 따라서 동적\n미리보기의 AOT 결과도 제거된 LVUI 내부 카드 구현을 참조하지 않는다.\n`iconName`과 `iconSource`는 교체 가능한 아이콘 공급자를\n사용한다. 텍스트, 상태, 크기, 색상과 이미지가 바뀌면 기존 카드를 갱신한다.\n"
     },
     {
       "id": "b000008",
       "kind": "blank",
-      "start_line": 27,
-      "end_line": 27,
+      "start_line": 29,
+      "end_line": 29,
       "raw": "\n"
     },
     {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 28,
-      "end_line": 31,
+      "start_line": 30,
+      "end_line": 33,
       "raw": "카드 내부 전체를 앱 View로 구성하려면 자식 View 하나 또는 `contentComponent`를\n사용한다. 파일 미리보기와 아이콘 영역만 교체하려면 각각 `previewComponent`,\n`iconComponent`를 사용한다. 부분 슬롯은 함께 사용할 수 있으나 전체 콘텐츠와 함께\n지정할 수 없다. 영역은 카드 모델의 배치를 따르며 바깥으로 그려지는 내용은 잘린다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 32,
-      "end_line": 32,
+      "start_line": 34,
+      "end_line": 34,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "fenced_code",
-      "start_line": 33,
-      "end_line": 43,
+      "start_line": 35,
+      "end_line": 45,
       "raw": "```text\nimport vm CardModel\nCard(type: .Model, width: 256, height: 280, showMenu: false, showAction: false) {\n    VStack {\n        var count: Int = 0\n        Label(text: vm.title)\n        Label(text: count)\n        PushButton(text: \"+\", onClick: { count = count + 1 })\n    }\n}\n```\n",
       "language": "text",
       "code": "import vm CardModel\nCard(type: .Model, width: 256, height: 280, showMenu: false, showAction: false) {\n    VStack {\n        var count: Int = 0\n        Label(text: vm.title)\n        Label(text: count)\n        PushButton(text: \"+\", onClick: { count = count + 1 })\n    }\n}\n",
@@ -110,57 +110,57 @@
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 44,
-      "end_line": 44,
+      "start_line": 46,
+      "end_line": 46,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 45,
-      "end_line": 52,
+      "start_line": 47,
+      "end_line": 54,
       "raw": "기본 카드 표면과 별도 메뉴·액션은 유지하며 전체 슬롯은 기본 텍스트·이미지·진행\n콘텐츠를 대체한다. 부분 슬롯은 해당 기본 이미지만 대체한다. 슬롯에 별도의 버튼이\n있으면 그 버튼의 이벤트를 처리하며 카드 클릭을 중복 호출하지 않는다. 같은 카드의\n속성 갱신은 슬롯 View의 지역 상태를 유지하고 카드 제거 시 슬롯도 퇴역한다. 사용자\n미리보기 또는 아이콘이 있는 동안 그 위치의 기본 파일이나 아이콘을 읽지 않는다.\nC++에서는 `NativeCardViewsValue<Factory>`의 `content`, `preview`, `icon` 팩터리를\n조합한 카드 호스트의 `create()` 마지막 인자로 넘긴다. 실패한 최초 생성은 기존 부모 콘텐츠를\n교체하지 않는다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 53,
-      "end_line": 53,
+      "start_line": 55,
+      "end_line": 55,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 54,
-      "end_line": 59,
+      "start_line": 56,
+      "end_line": 61,
       "raw": "파일, 파일 미리보기, 폴더, 프로젝트, 장치, 모델, 멤버, 링크 유형을 모델에서 표현한다.\n파일 카드는 크기에 따라 140×160, 210×240 또는 360×280이며 미리보기는 480×320,\n다른 유형은 기본 폭 256과 최소 높이 280을 사용한다. `width`와 `height`는 이 크기를\n재정의한다. Folder·Project·Device·Model·Member·Link의 기본 외곽은 모든 상태에서 투명하고 반경 0이며 상태별 테두리를 유지한다. File 및 FilePreview의 기본 배경·반경은 그대로다. `corner_radius`는 선택적 값으로, 생략하면 카드 유형의 기본값을 사용하며 명시값으로 재정의할 수 있다. 미리보기 이미지는 가운데를 기준으로 영역에 맞추고, 프로젝트와 장치는\n진행 표시를 사용한다. 행은 최대 128개, 전체 텍스트는 2 MiB로 제한한다. 표시와\n접근성 텍스트는 UTF-8 경계에서 각각 최대 8,192바이트로 제한하며 원본 값은 유지한다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 60,
-      "end_line": 60,
+      "start_line": 62,
+      "end_line": 62,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 61,
-      "end_line": 67,
+      "start_line": 63,
+      "end_line": 69,
       "raw": "일반 활성화는 선택 가능한 경우 선택 상태를 전환하고 `selected_changed` 다음에\n`clicked`를 호출한다. 첫 콜백에서 카드가 제거되거나 다시 설정되면 오래된 클릭은\n전달하지 않는다. 메뉴와 액션은 별도 콜백으로 전달하며 메인 클릭을 발생시키지 않는다.\n입력은 생성한 스레드에서만 허용하고 잘못된 설정이나 아이콘은 마지막 정상 상태를\n유지한다. 동일 입력은 다시 처리하지 않는다. 아이콘 조회 중 최신 요청이나 화면 폐기가\n발생하면 오래된 결과를 게시하지 않고, 퇴역 시 슬롯·공급자·콜백을 해제한다. 외부\n상태의 변경은 되돌리지 않는다.\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 68,
-      "end_line": 68,
+      "start_line": 70,
+      "end_line": 70,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "paragraph",
-      "start_line": 69,
-      "end_line": 73,
+      "start_line": 71,
+      "end_line": 75,
       "raw": "모든 앱 카드의 세부 표현과 실제 운영체제의 렌더링·접근성 검증은 아직 필요하다.\n`LVUI.OwnedCard.SlotsHost`, `SlotsGenerated`는 세 슬롯과 반응형 데이터, 버튼, 상태 유지,\n비활성화와 생성 실패를 검증한다. `LVUI.OwnedCard.Model`, `Host`, `Codegen`,\n`Generated`는 유효성, 좁은 영역의 배치, 상태와 콜백, 오류 복구와 수명을 창을 열지\n않는 환경에서 검사한다.\n"
     }
   ],
@@ -177,29 +177,36 @@
   "indexes": {
     "directive_candidates": [
       {
+        "block_id": "b000007",
+        "line": 26,
+        "text": "미리보기의 AOT 결과도 제거된 LVUI 내부 카드 구현을 참조하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
         "block_id": "b000013",
-        "line": 47,
+        "line": 49,
         "text": "있으면 그 버튼의 이벤트를 처리하며 카드 클릭을 중복 호출하지 않는다. 같은 카드의",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000013",
-        "line": 52,
+        "line": 54,
         "text": "교체하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 63,
+        "line": 65,
         "text": "전달하지 않는다. 메뉴와 액션은 별도 콜백으로 전달하며 메인 클릭을 발생시키지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 65,
+        "line": 67,
         "text": "유지한다. 동일 입력은 다시 처리하지 않는다. 아이콘 조회 중 최신 요청이나 화면 폐기가",
         "basis": "lexical_match",
         "context": "paragraph"

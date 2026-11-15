@@ -264,17 +264,44 @@ void generated(){
     require(avatar!=nodes.end()&&avatar->visible&&avatar->size.width==24&&avatar->size.height==24,
         "EventListener did not retain its child Avatar at its natural size");
     require(!scope->backend_0.layouts.empty(),"Generated listener lost its layout callback");
+    require(!scope->backend_0.sizes.empty()&&scope->backend_0.sizes.back()==std::pair<double,double>{bounds.width,bounds.height},
+            "Generated listener lost its scalar size notification");
+    good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_move,.x=bounds.x+5,.y=bounds.y+5}));
+    good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_move,.x=bounds.x+6,.y=bounds.y+6}));
+    require(scope->backend_0.hover_count==1,"Hover did not produce exactly one entry notification");
+    good(listener.focus()); good(listener.focus());
+    require(scope->backend_0.focus_count==1,"Focus did not produce exactly one entry notification");
+    scope->backend_0.events.clear();
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_down,.x=bounds.x+5,.y=bounds.y+5}));
     require(scope->backend_0.events.size()==1&&scope->backend_0.events.back().kind==ii::gui::WidgetInputKind::pointer_down,
         "Generated listener lost its input callback");
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_up,.x=bounds.x+5,.y=bounds.y+5}));
+    auto dropped=std::make_shared<ii::gui::ClipboardContent>();dropped->files={"/tmp/example.png"};
+    const auto before_drop=scope->backend_0.events.size();
+    good(tree->input({.kind=ii::gui::WidgetInputKind::drop,.x=bounds.x+5,.y=bounds.y+5,.content=dropped}));
+    require(scope->backend_0.dropped==dropped->files&&scope->backend_0.events.size()==before_drop,
+            "Accepted drop did not preserve its paths or reached the fallback input handler");
+    scope->backend_0.accepts_drop=false;
+    good(tree->input({.kind=ii::gui::WidgetInputKind::drop,.x=bounds.x+5,.y=bounds.y+5,.content=dropped}));
+    require(scope->backend_0.events.size()==before_drop+1&&scope->backend_0.events.back().kind==ii::gui::WidgetInputKind::drop,
+            "Rejected drop did not reach the fallback input handler");
 #if defined(IIGUI_POINTER_CANCEL_API)
+    const auto before_pinch=scope->backend_0.events.size();
     good(tree->input({.kind=ii::gui::WidgetInputKind::scroll,.x=bounds.x+5,.y=bounds.y+5,
-        .scroll_y=-std::log(2.)*ii::gui::pinch_scroll_units,.control=true,.precise_scroll=true,.device=ii::gui::PointerDevice::touch}));
-    require(std::abs(scope->backend_0.magnification.get()-2.)<.001,"Generated ViewModel did not receive pinch magnification");
+        .scroll_y=std::log(2.)*ii::gui::pinch_scroll_units,.control=true,.precise_scroll=true,.device=ii::gui::PointerDevice::touch}));
+    require(scope->backend_0.pinch_count==1&&scope->backend_0.events.size()==before_pinch,
+            "Accepted pinch reached the fallback input handler");
+    if(std::abs(scope->backend_0.magnification.get()-2.)>=.001)
+        throw std::runtime_error("Generated ViewModel did not receive pinch magnification: " +
+            std::to_string(scope->backend_0.magnification.get()) + ", events=" + std::to_string(scope->backend_0.events.size()));
     auto scaled=take(tree->snapshots());
     auto label=std::ranges::find_if(scaled,[](const auto& node){return node.id.ends_with("/magnification");});
     require(label!=scaled.end()&&label->text=="2","Pinch did not update the generated reactive label");
+    scope->backend_0.accepts_pinch=false;
+    good(tree->input({.kind=ii::gui::WidgetInputKind::scroll,.x=bounds.x+5,.y=bounds.y+5,
+        .scroll_y=std::log(2.)*ii::gui::pinch_scroll_units,.control=true,.precise_scroll=true,.device=ii::gui::PointerDevice::touch}));
+    require(scope->backend_0.pinch_count==2&&scope->backend_0.events.size()==before_pinch+1&&scope->backend_0.magnification.get()==2.,
+            "Rejected pinch did not reach the fallback input handler");
 #endif
     nodes=take(tree->snapshots());auto alternate=std::ranges::find_if(nodes,[](const auto& node){return node.id.ends_with("/listener-bool");});
     require(alternate!=nodes.end(),"Generated Bool listener missing");auto bool_listener=take(tree->find(alternate->id));auto alternate_bounds=take(bool_listener.snapshot()).bounds;
@@ -289,7 +316,10 @@ void generated(){
             "Generated content-sized listener lost its input callback");
     good(tree->input({.kind=ii::gui::WidgetInputKind::pointer_up,.x=sized->bounds.x+5,.y=sized->bounds.y+5}));
     auto graph=scope->native_lifetime.lock();require(bool(graph),"Generated listener binding graph missing");
+    const auto old_sizes=scope->backend_0.sizes.size();
     scope->backend_0.width.set(400);(void)take(listener.snapshot());require(take(graph->failures()).empty(),"Valid listener size failed");
+    require(scope->backend_0.sizes.size()==old_sizes+1&&scope->backend_0.sizes.back().first==400,
+            "Changed width did not reach the scalar size callback exactly once");
     scope->backend_0.width.set(-1);require(!take(graph->failures()).empty()&&listener.snapshot(),"Invalid size changed the live listener");
     scope->backend_0.width.set(360);require(take(graph->failures()).empty(),"Listener size did not recover");
     std::weak_ptr<View::Scope> weak=scope;good(outer.clear_content());scope.reset();graph.reset();

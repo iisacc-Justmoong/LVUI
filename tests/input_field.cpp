@@ -27,6 +27,32 @@ int main(){
     auto clear=lvui::compile_native("import vm Model\nWindow { InputField(clearButtonVisible: vm.clear, clearAccessibilityName: vm.clearName) }");
     if(!clear||clear->find("value.clear_button_visible")==clear->npos||clear->find("value.clear_accessibility_name")==clear->npos)
         throw std::runtime_error("Input clear options were not generated");
+    auto focus=lvui::compile_native("Window { VStack {\n InputField(id: \"first\", submitFocusId: \"next\")\n InputField(id: \"next\")\n } }");
+    if(!focus)throw std::runtime_error(focus.error().message);
+    if(!focus||focus->find("submit_focus_")==focus->npos||focus->find("->focus()")==focus->npos)
+        throw std::runtime_error("Submit focus link was not generated");
+    auto conditional=lvui::compile_native(R"LVUI(import vm Model
+Window { VStack {
+    InputField(id: "first", submitFocusId: "next")
+    if (vm.show) { VStack { if (vm.inner) { InputField(id: "next") } } }
+} })LVUI");
+    if(!conditional)throw std::runtime_error("Conditional submit target: "+conditional.error().message);
+    auto alternate=lvui::compile_native(R"LVUI(import vm Model
+Window { VStack {
+    InputField(id: "first", submitFocusId: "next")
+    if (vm.show) { InputField(id: "next") } else { InputField(id: "next") }
+} })LVUI");
+    if(!alternate)throw std::runtime_error("Exclusive submit target: "+alternate.error().message);
+    auto ambiguous=lvui::compile_native(R"LVUI(import vm Model
+Window { VStack {
+    InputField(id: "first", submitFocusId: "next")
+    if (vm.show) { InputField(id: "next") }
+    if (vm.inner) { InputField(id: "next") }
+} })LVUI");
+    if(ambiguous)throw std::runtime_error("Ambiguous conditional submit target was accepted");
+    auto initial_focus=lvui::compile_native("Window { InputField(focusOnMount: true) }");
+    if(!initial_focus||initial_focus->find("on_publish(")==initial_focus->npos||initial_focus->find(".focus()")==initial_focus->npos)
+        throw std::runtime_error("Initial focus request was not generated");
     auto rounded=lvui::compile_native("Window { InputField(surface: .rounded) }");
     auto cylinder=lvui::compile_native("Window { InputField(surface: .cylinder) }");
     auto inline_field=lvui::compile_native("Window { InputField(surface: .inline) }");
@@ -42,6 +68,9 @@ int main(){
                      "Window { InputField(maximumLength: -1) }", "Window { InputField(maximumLength: 1.5) }",
                      "Window { InputField(maximumLength: 2147483648) }", "Window { InputField(size: .huge) }",
                      "Window { InputField(size: 1.5) }","Window { InputField(clearButtonVisible: 1) }",
-                     "Window { InputField(surface: .unknown) }","Window { InputField(surface: 1.5) }"})
+                     "Window { InputField(surface: .unknown) }","Window { InputField(surface: 1.5) }",
+                     "Window { InputField(submitFocusId: \"missing\") }",
+                     "import vm Model\nWindow { InputField(submitFocusId: vm.target) }",
+                     "import vm Model\nWindow { InputField(focusOnMount: vm.focus) }"})
         if(lvui::compile_native(source))throw std::runtime_error("Invalid input field option was accepted");
 }

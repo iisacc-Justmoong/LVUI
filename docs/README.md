@@ -264,6 +264,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/ConditionalViews.md`](ConditionalViews.md) | [JSON](ConditionalViews.agent.json) |
 | [`docs/CoreWidgetVerification.md`](CoreWidgetVerification.md) | [JSON](CoreWidgetVerification.agent.json) |
 | [`docs/CounterExample.md`](CounterExample.md) | [JSON](CounterExample.agent.json) |
+| [`docs/CustomWindowChrome.md`](CustomWindowChrome.md) | [JSON](CustomWindowChrome.agent.json) |
 | [`docs/DeclarationAnnotations.md`](DeclarationAnnotations.md) | [JSON](DeclarationAnnotations.agent.json) |
 | [`docs/DeclarativeSyntax.md`](DeclarativeSyntax.md) | [JSON](DeclarativeSyntax.agent.json) |
 | [`docs/DesignIconCatalog.md`](DesignIconCatalog.md) | [JSON](DesignIconCatalog.agent.json) |
@@ -417,6 +418,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/TableSorting.md`](TableSorting.md) | [JSON](TableSorting.agent.json) |
 | [`docs/TableStructure.md`](TableStructure.md) | [JSON](TableStructure.agent.json) |
 | [`docs/TextInput.md`](TextInput.md) | [JSON](TextInput.agent.json) |
+| [`docs/TextWrapFallback.md`](TextWrapFallback.md) | [JSON](TextWrapFallback.agent.json) |
 | [`docs/Toolbars.md`](Toolbars.md) | [JSON](Toolbars.agent.json) |
 | [`docs/TypeImports.md`](TypeImports.md) | [JSON](TypeImports.agent.json) |
 | [`docs/VariableDeclarations.md`](VariableDeclarations.md) | [JSON](VariableDeclarations.agent.json) |

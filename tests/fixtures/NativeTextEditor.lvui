@@ -4,6 +4,6 @@ Window {
         TextEditor(id: "notes", text: vm.text, placeholder: vm.placeholder, width: vm.width,
                    height: vm.height, minimumHeight: vm.minimumHeight, verticalPadding: vm.inset,
                    enabled: vm.enabled, readOnly: vm.readOnly, onEdited: vm.edited,
-                   onContentHeightChanged: vm.measured)
+                   onContentHeightChanged: vm.measured, onWrappingFallbackChanged: vm.wrappingChanged)
     }
 }

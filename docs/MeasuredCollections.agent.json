@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/MeasuredCollections.md",
-    "sha256": "f383f04b2bef81301350af7f267954c9d8366839b2f8e6738f9f4123234aee9b",
-    "bytes": 7222,
-    "line_count": 108,
+    "sha256": "20864ed70c0e83267106d930d11f53886520a95b7052b68b90d2cae5af912d37",
+    "bytes": 10004,
+    "line_count": 139,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -244,53 +244,109 @@
     },
     {
       "id": "b000027",
-      "kind": "heading",
+      "kind": "paragraph",
       "start_line": 69,
-      "end_line": 69,
-      "raw": "## 수명·오류·경계\n",
-      "level": 2,
-      "title": "수명·오류·경계"
+      "end_line": 76,
+      "raw": "자동 가상 반복에 `onVisibleChanged: vm.visibleItems`를 지정하면 실제 뷰포트와\n교차하는 행의 키 목록을 C++ 콜백으로 받는다. 미리 보관한 overscan은 제외하며\n목록이 달라진 경우에만 통지한다. 이를 미리보기 우선순위 같은 명시적 작업에 사용할 수\n있다. 통지는 반응형 상태를 직접 변경하지 않으면 백엔드 전체 리비전을 증가시키지\n않는다. 콜백이 실패하면 이전에 통지한 키를 유지하여 다음 뷰포트 이벤트에서 같은\n키를 다시 전달할 수 있다. 뷰 활성화가 퇴역할 때는 관측 효과를 먼저 해제한 뒤\n마지막으로 빈 키 목록을 전달한다. 마운트를 유지한 채 숨기는 경우의 자원 해제는\n화면 소유자가 명시적으로 수행한다.\n"
     },
     {
       "id": "b000028",
-      "kind": "blank",
-      "start_line": 70,
-      "end_line": 70,
-      "raw": "\n"
-    },
-    {
-      "id": "b000029",
-      "kind": "paragraph",
-      "start_line": 71,
-      "end_line": 74,
-      "raw": "측정 소유자는 UI 실행 영역을 확인하고 닫힌 뒤의 알림을 무시한다. 행의 측정 콜백은\n스코프·바인딩·측정 소유자를 약하게 참조한다. 잘못된 크기·중복 측정 키·오래된 세대와\n종료 중 호출을 구분한다. 자연 높이는 0~32,767, 너비는 0~8,192이며 기존 컬렉션·위젯\n노드 한계도 유지한다. 무한한 레이아웃 피드백은 기존 바인딩·배치 정착 한계로 차단한다.\n"
-    },
-    {
-      "id": "b000030",
-      "kind": "blank",
-      "start_line": 75,
-      "end_line": 75,
-      "raw": "\n"
-    },
-    {
-      "id": "b000031",
-      "kind": "paragraph",
-      "start_line": 76,
-      "end_line": 76,
-      "raw": "검사 대상은 다음과 같다.\n"
-    },
-    {
-      "id": "b000032",
       "kind": "blank",
       "start_line": 77,
       "end_line": 77,
       "raw": "\n"
     },
     {
-      "id": "b000033",
-      "kind": "list",
+      "id": "b000029",
+      "kind": "paragraph",
       "start_line": 78,
-      "end_line": 83,
+      "end_line": 81,
+      "raw": "`revealKey`는 가상 컬렉션의 특정 키를 드러내는 요청이다. `revealAlignment`는\n`.Contain`, `.Begin`, `.End`, `.Center` 중 선택하고, 같은 키를 다시 요청할 때는\n`revealRevision`을 증가시킨다. 화면이 측정되기 전 요청은 유효한 뷰포트가 생길\n때까지 유지하며, 요청 처리 후 사용자의 스크롤을 다시 덮어쓰지 않는다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 83,
+      "end_line": 88,
+      "raw": "균일 가상 반복에 `onPinch: vm.pinch`를 지정하면 터치 확대의 증분 배율을 C++\n결정 콜백에 전달한다. 콜백은 `bool` 또는 `Result<bool>`을 반환한다. iiGUI는\n콜백이 셀 크기를 바꾸기 전에 제스처 중심의 키와 상대 위치를 임시 기준점으로\n설정하고, 관련 배치가 끝나거나 동작이 거절되면 그 입력의 기준점을 해제한다.\n다른 스크롤 입력은 계속 전파한다. 자연 높이를 측정하는 반복은 배율 콜백을 받지만\n제스처 중심 보정을 보장하지 않는다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 89,
+      "end_line": 89,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "paragraph",
+      "start_line": 90,
+      "end_line": 98,
+      "raw": "가상 반복의 `onDragZoom: vm.dragZoom`은 iiGUI의 가로 드래그를 C++ 배율\n콜백에 연결한다. 콜백은 누르기 시작 시점 대비 배율과 첫 갱신 여부를 인자로 받고\n`bool` 또는 `Result<bool>`을 반환한다. `dragZoomDistance`는 배율이 두 배가 되는 논리 픽셀 이동량이며\n기본값은 180, 허용 범위는 1–32,767이다. 최초 누름 위치의 키와 행 내부 상대\n위치를 보정 기준으로 사용하고, 탭·세로 스크롤·길게 누르기의 입력 경계를 유지한다.\n선언은 `itemHeight`가 있는 가상 반복에서만 유효하며 `dragZoomDistance` 단독\n사용은 거절한다. 자연 높이 측정 반복의 경우 드래그 콜백은 전달하지만 초점 보정은\n보장하지 않는다. 입력은 이벤트로만 처리하며 지속적인 프레임 작업을 만들지 않는다.\n생성 C++는 `IIGUI_HORIZONTAL_DRAG_API`를 확인해 해당 iiGUI 헤더가 없으면 빌드에서 진단한다.\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "heading",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "## 수명·오류·경계\n",
+      "level": 2,
+      "title": "수명·오류·경계"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "paragraph",
+      "start_line": 102,
+      "end_line": 105,
+      "raw": "측정 소유자는 UI 실행 영역을 확인하고 닫힌 뒤의 알림을 무시한다. 행의 측정 콜백은\n스코프·바인딩·측정 소유자를 약하게 참조한다. 잘못된 크기·중복 측정 키·오래된 세대와\n종료 중 호출을 구분한다. 자연 높이는 0~32,767, 너비는 0~8,192이며 기존 컬렉션·위젯\n노드 한계도 유지한다. 무한한 레이아웃 피드백은 기존 바인딩·배치 정착 한계로 차단한다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 106,
+      "end_line": 106,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 107,
+      "end_line": 107,
+      "raw": "검사 대상은 다음과 같다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "list",
+      "start_line": 109,
+      "end_line": 114,
       "raw": "- `LVUI.NativeMeasuredCollection.*`: 누적 색인, 실제 높이·그리드 최대값·기준점·공통\n  변경, 희소 인덱스·스레드·퇴역·잘못된 측정.\n- `LVUI.Repetition.*`: 입력 진단과 상위 속성·전달 매개변수·메서드 리비전의 C++ 생성.\n- `iiGUI.keyed_content.measurement`: 고정 사각형 안의 자연 크기 변경과 관찰 해제·퇴역.\n- `iiGUI.native_measured_repetition.*`: 생성 C++의 줄바꿈·본문 변경·그리드·기준점·\n  0 높이·공유 객체의 화면 밖 변경 통지와 소유자 해제.\n",
       "items": [
         {
@@ -316,61 +372,61 @@
       ]
     },
     {
-      "id": "b000034",
+      "id": "b000042",
       "kind": "blank",
-      "start_line": 84,
-      "end_line": 84,
+      "start_line": 115,
+      "end_line": 115,
       "raw": "\n"
     },
     {
-      "id": "b000035",
+      "id": "b000043",
       "kind": "paragraph",
-      "start_line": 85,
-      "end_line": 86,
+      "start_line": 116,
+      "end_line": 117,
       "raw": "실제 창·GPU·플랫폼과 전체 LVRS 실행의 완료 증거는 별도이다. 전체 목표의 완료 여부는\n[완료 기준](Completion.md)을 따른다.\n"
     },
     {
-      "id": "b000036",
+      "id": "b000044",
       "kind": "blank",
-      "start_line": 87,
-      "end_line": 87,
+      "start_line": 118,
+      "end_line": 118,
       "raw": "\n"
     },
     {
-      "id": "b000037",
+      "id": "b000045",
       "kind": "heading",
-      "start_line": 88,
-      "end_line": 88,
+      "start_line": 119,
+      "end_line": 119,
       "raw": "## 2026-10-26 검증 기록\n",
       "level": 2,
       "title": "2026-10-26 검증 기록"
     },
     {
-      "id": "b000038",
+      "id": "b000046",
       "kind": "blank",
-      "start_line": 89,
-      "end_line": 89,
+      "start_line": 120,
+      "end_line": 120,
       "raw": "\n"
     },
     {
-      "id": "b000039",
+      "id": "b000047",
       "kind": "paragraph",
-      "start_line": 90,
-      "end_line": 90,
+      "start_line": 121,
+      "end_line": 121,
       "raw": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 각 범위는 겹치므로 합산하지 않는다.\n"
     },
     {
-      "id": "b000040",
+      "id": "b000048",
       "kind": "blank",
-      "start_line": 91,
-      "end_line": 91,
+      "start_line": 122,
+      "end_line": 122,
       "raw": "\n"
     },
     {
-      "id": "b000041",
+      "id": "b000049",
       "kind": "table",
-      "start_line": 92,
-      "end_line": 99,
+      "start_line": 123,
+      "end_line": 130,
       "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release 검사 | 129/129 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 52/52 통과 |\n| iiGUI 창 없는 회귀·생성 C++ 통합 | 34/34 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 34/34 통과 |\n| 설치·경로 이동 소비자 | 네이티브 실행·컴파일 소비자 2/2 통과 |\n| LVRS 실제 생성 팩토리 | 자연 높이 행을 포함한 C++ 오브젝트 컴파일 통과, 실행하지 않음 |\n",
       "columns": [
         "범위",
@@ -404,31 +460,31 @@
       ]
     },
     {
-      "id": "b000042",
+      "id": "b000050",
       "kind": "blank",
-      "start_line": 100,
-      "end_line": 100,
+      "start_line": 131,
+      "end_line": 131,
       "raw": "\n"
     },
     {
-      "id": "b000043",
+      "id": "b000051",
       "kind": "paragraph",
-      "start_line": 101,
-      "end_line": 105,
+      "start_line": 132,
+      "end_line": 136,
       "raw": "1,000개 모델의 실제 줄바꿈과 높이 변경, 그리드의 최대 높이, 기준점 보정·지역 상태,\n200개 빈 행의 퇴역·복구, 화면 밖 공유 항목의 명시적 변경 통지를 검사했다. 별도 C++\n검사는 1,000개 중 높이가 있는 두 항목만 비연속 인덱스로 마운트하는 투영을 검사한다.\n자연 크기 피드백으로 모델 컬렉션·백엔드의 문서 리비전이 바뀌지 않는 것도 확인했다.\n이 결과는 실제 제품의 프레임 지연 측정이나 전체 LVUI 완성의 증거가 아니다.\n"
     },
     {
-      "id": "b000044",
+      "id": "b000052",
       "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
+      "start_line": 137,
+      "end_line": 137,
       "raw": "\n"
     },
     {
-      "id": "b000045",
+      "id": "b000053",
       "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 108,
+      "start_line": 138,
+      "end_line": 139,
       "raw": "검증 범위·원시 로그·제품 보존·실행 파일 경계는\n`build/lvui-completion/measured-collection-verification-20261026.json`에 기록한다.\n"
     }
   ],
@@ -466,20 +522,20 @@
       "start_line": 51
     },
     {
-      "block_id": "b000027",
+      "block_id": "b000035",
       "parent_id": "b000001",
       "level": 2,
       "title": "수명·오류·경계",
       "anchor": "수명오류경계",
-      "start_line": 69
+      "start_line": 100
     },
     {
-      "block_id": "b000037",
+      "block_id": "b000045",
       "parent_id": "b000001",
       "level": 2,
       "title": "2026-10-26 검증 기록",
       "anchor": "2026-10-26-검증-기록",
-      "start_line": 88
+      "start_line": 119
     }
   ],
   "indexes": {
@@ -541,8 +597,22 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000039",
-        "line": 90,
+        "block_id": "b000031",
+        "line": 88,
+        "text": "제스처 중심 보정을 보장하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000033",
+        "line": 97,
+        "text": "보장하지 않는다. 입력은 이벤트로만 처리하며 지속적인 프레임 작업을 만들지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000047",
+        "line": 121,
         "text": "macOS arm64의 현재 변경에서 다음 결과를 확인했다. 각 범위는 겹치므로 합산하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -551,16 +621,16 @@
     "commands": [],
     "links": [
       {
-        "block_id": "b000035",
+        "block_id": "b000043",
         "label": "완료 기준",
         "target": "Completion.md",
         "kind": "relative",
-        "line": 86
+        "line": 117
       }
     ],
     "tables": [
       {
-        "block_id": "b000041",
+        "block_id": "b000049",
         "columns": [
           "범위",
           "결과"

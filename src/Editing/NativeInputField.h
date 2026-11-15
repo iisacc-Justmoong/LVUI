@@ -15,6 +15,7 @@ template<class Color>[[nodiscard]] inline StyleColor input_field_color(const Col
 struct NativeInputFieldCallbacks final {
  std::function<void(std::string)> edited;std::function<void()> submitted;std::function<void(bool)> focus_changed;
  std::function<void(std::string)> displayed_changed;std::function<void(double)> content_height_changed;
+ std::function<void(bool)> wrapping_fallback_changed;
 };
 struct NativeInputFieldClipboard final {std::function<ii::core::Result<void>(std::string)> write;};
 template<class Affinity>struct NativeInputFieldSnapshotValue final {

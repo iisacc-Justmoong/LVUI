@@ -8,8 +8,9 @@ struct NativeOwnedSheetModel final {
     ii::core::Observable<double> width{560};
     ii::core::Observable<ii::gui::SheetPresentation> presentation{ii::gui::SheetPresentation::desktop};
     ii::core::Observable<ii::gui::SheetDetent> detent{ii::gui::SheetDetent::fit};
-    int opens = 0, closes = 0, edits = 0;
+    int opens = 0, closes = 0, cancels = 0, edits = 0;
     void opened() { ++opens; }
     void closed() { ++closes; }
+    void canceled() { ++cancels; }
     void edited(std::string) { ++edits; }
 };

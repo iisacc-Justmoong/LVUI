@@ -1,0 +1,6 @@
+Window {
+    VStack {
+        InputField(id: "first", focusOnMount: true, submitFocusId: "next")
+        InputField(id: "next")
+    }
+}

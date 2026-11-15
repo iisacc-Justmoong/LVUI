@@ -1,0 +1,11 @@
+import vm NativeConditionalFocusBackend
+Window {
+    VStack {
+        InputField(id: "first", focusOnMount: true, submitFocusId: "next", onSubmit: vm.submit)
+        if (vm.show) {
+            VStack {
+                if (vm.inner) { InputField(id: "next", enabled: vm.enabled, visible: vm.visible) }
+            }
+        }
+    }
+}

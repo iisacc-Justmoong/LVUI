@@ -1,0 +1,11 @@
+import vm NativeVirtualCollectionBackend
+Window {
+    VStack {
+        if (vm.show) {
+            for (item in vm.items, key: item.id, id: "conditionalRows",
+                 itemHeight: 80, width: 320, height: 180, onVisibleChanged: vm.visible) {
+                Label(text: item.title)
+            }
+        }
+    }
+}

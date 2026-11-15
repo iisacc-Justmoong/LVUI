@@ -42,7 +42,15 @@ struct NativeVirtualCollectionBackend final {
         return result;
     }()};
     ii::core::Observable<int> width{480},height{170};
-    ii::core::Observable<bool> horizontal{false};
+    ii::core::Observable<bool> horizontal{false},show{true};
+    ii::core::Observable<std::string> reveal_key{""};
+    ii::core::Observable<int> reveal_revision{0};
+    std::vector<std::vector<std::string>> visible_events;
+    bool reject_next_visible=false;
+    void visible(std::vector<std::string> keys){
+        if(std::exchange(reject_next_visible,false))throw std::runtime_error("Requested visible notification failure");
+        visible_events.push_back(std::move(keys));
+    }
 };
 struct NativeLiveCollectionBackend final {
     ii::core::Observable<std::vector<std::shared_ptr<NativeLiveItem>>> items{

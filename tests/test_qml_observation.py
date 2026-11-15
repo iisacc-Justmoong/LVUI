@@ -5,6 +5,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+LEGACY = ROOT / "tests" / "Legacy"
 spec = importlib.util.spec_from_file_location("qml_observation", ROOT / "tools/observe_qml.py")
 observer = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(observer)
@@ -12,15 +13,7 @@ spec.loader.exec_module(observer)
 
 class QmlObservationTests(unittest.TestCase):
     def test_comments_and_literals_do_not_invent_components(self):
-        source = '''// FakeView { }
-        /* AnotherFake { } */
-        import LVRS 1.0 as LV
-        Item {
-            property string prompt: "HiddenView { } ? onInvented:"
-            property string templateText: `MoreHidden { }`
-            LV.Label { text: "real" }
-        }
-        '''
+        source = (LEGACY / "comments.qml").read_text(encoding="utf-8")
         data = observer.inspect_source(source)
         self.assertEqual([c["name"] for c in data["components"]], ["Item", "LV.Label"])
         self.assertEqual(data["components"][1]["module"], "LVRS")
@@ -28,27 +21,14 @@ class QmlObservationTests(unittest.TestCase):
         self.assertFalse(data["handlers"])
 
     def test_native_model_and_view_occurrences_remain_distinct_facts(self):
-        data = observer.inspect_source('''import Dreamscapes.Storage 1.0
-        Item {
-            NativeToolState { }
-            Repeater { model: vm.rows; LV.Label { text: modelData.name } }
-            Loader { active: vm.ready }
-        }''')
+        data = observer.inspect_source((LEGACY / "models.qml").read_text(encoding="utf-8"))
         self.assertEqual(data["features"]["model_delegates"], 1)
         self.assertEqual(data["features"]["loaders"], 1)
         self.assertIn("NativeToolState", [c["type"] for c in data["components"]])
         self.assertIsNone(data["components"][1]["module"])
 
     def test_positions_properties_handlers_and_inline_types(self):
-        data = observer.inspect_source('''import LVRS 1.0 as LV
-component Prompt: LV.TextEditor {
-    required property var model
-    readonly property alias input: field.editorItem
-    property bool wide: width >= 1000
-    onTextEdited: value => model.setText(value)
-    function focusEditor() { }
-}
-''')
+        data = observer.inspect_source((LEGACY / "inline-types.qml").read_text(encoding="utf-8"))
         self.assertEqual(data["inline_components"], [{"name": "Prompt", "base": "LV.TextEditor", "line": 2}])
         self.assertEqual(data["properties"][0]["line"], 3)
         self.assertEqual(data["features"]["required_properties"], 1)
@@ -61,7 +41,7 @@ component Prompt: LV.TextEditor {
         (ROOT / "build").mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(dir=ROOT / "build", prefix="qml-observe-") as tmp:
             root = Path(tmp)
-            content = b'import LVRS 1.0 as LV\nLV.Label { text: "hello" }\n'
+            content = (LEGACY / "inventory.qml").read_bytes()
             path = root / "Main.qml"
             path.write_bytes(content)
             first = observer.observe(root)
@@ -71,12 +51,7 @@ component Prompt: LV.TextEditor {
             self.assertEqual(first["summary"]["qml_files"], 1)
 
     def test_commented_import_and_escaped_quotes_are_ignored(self):
-        data = observer.inspect_source('''/*
-import Incorrect 1.0 as LV
-*/
-import LVRS 1.0 as LV
-LV.Label { text: "escaped \\" Fake { }" }
-''')
+        data = observer.inspect_source((LEGACY / "escaped.qml").read_text(encoding="utf-8"))
         self.assertEqual(data["imports"], [{"module": "LVRS", "version": "1.0", "alias": "LV", "line": 4}])
         self.assertEqual([c["name"] for c in data["components"]], ["LV.Label"])
 

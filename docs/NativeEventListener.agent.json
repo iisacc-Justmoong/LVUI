@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeEventListener.md",
-    "sha256": "3e2bf4f80fc7746c1cde4643f2ee1053ef984a7f7eded4c88a8c5217c8bdf54e",
-    "bytes": 7679,
-    "line_count": 90,
+    "sha256": "a5b093c8096c804fc9dcb6c7ceb65cfc57f5dc79839cc3cb3d67ba5d6190c4b0",
+    "bytes": 9731,
+    "line_count": 113,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -57,7 +57,7 @@
       "kind": "paragraph",
       "start_line": 7,
       "end_line": 14,
-      "raw": "iiGUI가 `IIGUI_POINTER_CANCEL_API`를 제공하면 `onInput`은 포커스 손실과 별개인\n`pointer_cancel`을 전달한다. 캡처된 목록·계층·표·시트는 이 이벤트에서 진행 중인\n포인터 조작만 취소하고 입력기의 포커스와 조합은 보존한다. 이전 iiGUI 계약을 쓰는\n소비자는 기존 `focus_lost` 취소 경로를 유지한다. Android 두 손가락 핀치는 중심\n좌표와 `control`, `precise_scroll`, 로그 비율을 가진 터치 스크롤로 리스너에 도달한다.\nViewModel은 `ii::gui::pinch_scale_factor(input)`을 호출해 해당 이벤트의 증분 확대\n배율을 읽을 수 있다. 반환값이 없으면 확대 이벤트가 아니므로 다른 입력 처리로 넘긴다.\n이 배율을 앱의 관찰 가능한 상태에 반영하면 일반 LVUI 바인딩이 갱신된다.\n"
+      "raw": "iiGUI가 `IIGUI_POINTER_CANCEL_API`를 제공하면 `onInput`은 포커스 손실과 별개인\n`pointer_cancel`을 전달한다. 캡처된 목록·계층·표·시트는 이 이벤트에서 진행 중인\n포인터 조작만 취소하고 입력기의 포커스와 조합은 보존한다. 이전 iiGUI 계약을 쓰는\n소비자는 기존 `focus_lost` 취소 경로를 유지한다. Android 두 손가락 핀치는 중심\n좌표와 `control`, `precise_scroll`, 로그 비율을 가진 터치 스크롤로 리스너에 도달한다.\nViewModel은 `onInput`을 통해 `ii::gui::pinch_scale_factor(input)`을 호출하거나,\n`onPinch`를 선언해 iiGUI 타입 없이 증분 확대 배율을 받을 수 있다. 이 배율을\n앱의 관찰 가능한 상태에 반영하면 일반 LVUI 바인딩이 갱신된다.\n"
     },
     {
       "id": "b000006",
@@ -184,21 +184,63 @@
       "id": "b000023",
       "kind": "paragraph",
       "start_line": 65,
-      "end_line": 75,
-      "raw": "기본 선언형 `EventListener`는 이 구현을 생성하며 `width`, `height`, `onInput`,\n`onResized`와 공통 가시성·불투명도·flex를 지원한다. 크기는 관찰 가능한 C++ 값으로\n갱신할 수 있다. `onInput`은 C++ `WidgetInput`을 받아 `ii::core::Result<bool>` 또는\n그에 변환 가능한 값을 돌려주는 콜백이고, `onResized`는 `ii::gui::Rect`를 받는\n콜백이다. 입력 결과를 보존하는 반환 콜백은 현재 팩터리 결과와 활성 범위를 사용한다.\n선언형 리스너는 하나의 콘텐츠 뷰를 자식으로 받을 수 있다. 자식은 리스너의\n절대 배치 표면에 놓이며, 여러 콘텐츠가 필요하면 스택으로 묶는다. 예를 들어\n`EventListener { Avatar(size: .Large) }`는 공통 아바타를 그리면서 리스너가\n처리하는 입력을 전달한다. 자식의 입력 처리와 상위 전달은 호스트의 일반적인\n히트 테스트 계약을 따른다.\n실제 플랫폼 입력·접근성 검증은 아직 남아 있다.\n"
+      "end_line": 82,
+      "raw": "기본 선언형 `EventListener`는 이 구현을 생성하며 `width`, `height`, `onInput`,\n`onResized`와 공통 가시성·불투명도·flex를 지원한다. 크기는 관찰 가능한 C++ 값으로\n갱신할 수 있다. `onInput`은 C++ `WidgetInput`을 받아 `ii::core::Result<bool>` 또는\n그에 변환 가능한 값을 돌려주는 콜백이고, `onResized`는 `ii::gui::Rect`를 받는\n콜백이다. 입력 결과를 보존하는 반환 콜백은 현재 팩터리 결과와 활성 범위를 사용한다.\n선언형 리스너는 하나의 콘텐츠 뷰를 자식으로 받을 수 있다. 자식은 리스너의\n절대 배치 표면에 놓이며, 여러 콘텐츠가 필요하면 스택으로 묶는다. 예를 들어\n`EventListener { Avatar(size: .Large) }`는 공통 아바타를 그리면서 리스너가\n처리하는 입력을 전달한다. 자식의 입력 처리와 상위 전달은 호스트의 일반적인\n히트 테스트 계약을 따른다.\n`onHovered`와 `onFocused`는 리스너 또는 자식이 그 상태에 처음 들어갈 때 실행할\n인자 없는 C++ 콜백이다. 선언한 경우에만 iiGUI 상호작용 쿼리를 구독하며 입력을\n가로채지 않는다. 비활성·차단·숨김 상태에서는 진입 콜백을 실행하지 않고, 뷰가\n퇴역하면 구독을 닫는다. 포인터 이동이나 프레임이 없는 동안 반복 검사하지 않는다.\n`onClick`은 리스너 표면 자체의 포인터 클릭에 대한 인자 없는 C++ 콜백이다.\n자식 컨트롤의 클릭은 가로채지 않고, 드래그·취소·콜백 교체 시 이전 클릭을 폐기한다.\n키보드와 접근성 동작에는 자식의 실제 버튼이나 선택 컨트롤을 함께 사용한다.\n실제 플랫폼 입력·접근성 검증은 아직 남아 있다.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 76,
-      "end_line": 76,
+      "start_line": 83,
+      "end_line": 83,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "paragraph",
-      "start_line": 77,
+      "start_line": 84,
+      "end_line": 89,
+      "raw": "`onDrop`은 운영체제 호스트가 전달한 파일 경로 목록을 C++의\n`bool drop(const std::vector<std::string>&)` 또는 `ii::core::Result<bool>` 콜백으로\n전달한다. 처리했다고 반환하면 이벤트를 소비하며, 거절한 경우 같은 리스너에\n`onInput`이 있으면 기존 입력 콜백으로 넘긴다. 빈 파일 목록은 드롭 콜백을 호출하지\n않는다. 경로를 받아도 파일을 자동으로 열거나 네트워크로 보내지 않는다. 파일 접근과\n사용자 승인 정책은 앱의 제공자와 호스트가 소유한다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 90,
       "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 91,
+      "end_line": 94,
+      "raw": "`onPinch`는 iiGUI가 인식한 터치 핀치의 증분 배율을 `bool pinch(double)` 또는\n`ii::core::Result<bool>` C++ 콜백에 전달한다. 처리했다고 반환하면 이벤트를 소비하고,\n거절하면 같은 리스너의 `onInput`에 전달한다. 일반 스크롤과 마우스 입력은 핀치로\n변환하지 않는다. 입력을 받은 경우에만 호출하며 자체 타이머나 폴링을 만들지 않는다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "paragraph",
+      "start_line": 96,
+      "end_line": 98,
+      "raw": "`onSizeChanged`는 배치된 폭과 높이를 두 `double` 값으로 C++ 콜백에 전달한다.\n`onResized`와 함께 선언할 수 있으며, 위치만 바뀌고 크기가 같으면 크기 콜백을\n반복하지 않는다. 폭과 높이를 받는 뷰모델은 iiGUI의 사각형 타입을 포함할 필요가 없다.\n"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 99,
+      "end_line": 99,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 100,
+      "end_line": 113,
       "raw": "`tests/native_owned_event_listener.cpp`는 중첩 호스트 입력의 순서와 압력, 캡처 취소,\n누름 중 재진입한 해제의 캡처 수명, 콜백 교체·퇴역과 대기열 한도를 다룬다. 이 동작은 실제 운영체제의 포인터 입력과\n결합해 별도로 확인해야 한다.\nmacOS arm64에서 iiGUI 단독 모델·호스트와 설치 소비자, LVUI 생성·호스트와 설치\n패키지 경계의 헤드리스 검사를 통과했다. 이 결과에 실제 OS 입력은 포함되지 않는다.\n소스 트리의 iiGUI 테스트 헤더와 호환 설치본을 사용할 수 있으면 LVUI 구성에서\n`LVUI_TEST_NATIVE_EVENT_HOST=ON`을 지정해 같은 `build/`의\n`LVUI.NativeEventFlow.Host` 검사로 실행한다. 이 선택적 검사는 LVUI의 기본 Native\n모듈에 iiGUI 의존성을 추가하지 않는다.\n같은 선택적 구성의 `LVUIHostInputProbe`는 네이티브 창에서 한 번 드래그한 뒤 종료하며\n운영체제에서 들어온 입력·바인딩 갱신·Core 작업 수를 `OS_INPUT_TRACE`로 출력한다.\n입력 좌표나 원본 사용자 데이터는 기록하지 않는다. 실제 마우스와 물리 펜의 검증은 구분한다.\nmacOS에서 자동화한 한 번의 마우스 드래그는 누름 1·이동 2·해제 1, 바인딩 무효화 8·\n중복 병합 4·효과 4로 관측됐다. 이는 해당 실행의 표본이며 장치나 입력 속도별 보장은 아니다.\n"
     }
   ],
@@ -265,22 +307,43 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000025",
-        "line": 79,
+        "block_id": "b000023",
+        "line": 78,
+        "text": "퇴역하면 구독을 닫는다. 포인터 이동이나 프레임이 없는 동안 반복 검사하지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000027",
+        "line": 94,
+        "text": "변환하지 않는다. 입력을 받은 경우에만 호출하며 자체 타이머나 폴링을 만들지 않는다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000029",
+        "line": 98,
+        "text": "반복하지 않는다. 폭과 높이를 받는 뷰모델은 iiGUI의 사각형 타입을 포함할 필요가 없다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000031",
+        "line": 102,
         "text": "결합해 별도로 확인해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000025",
-        "line": 85,
+        "block_id": "b000031",
+        "line": 108,
         "text": "모듈에 iiGUI 의존성을 추가하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
-        "block_id": "b000025",
-        "line": 88,
+        "block_id": "b000031",
+        "line": 111,
         "text": "입력 좌표나 원본 사용자 데이터는 기록하지 않는다. 실제 마우스와 물리 펜의 검증은 구분한다.",
         "basis": "lexical_match",
         "context": "paragraph"
