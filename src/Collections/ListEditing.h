@@ -29,12 +29,16 @@ class ListEditing final {
 public:
     [[nodiscard]] static ListResult<ListEditing> begin(std::shared_ptr<const ListSnapshot> snapshot,
             std::shared_ptr<ListEditor> editor,std::string_view key){
-        if(!editor)return error(ListErrorCode::invalid,"List editor is required");
         auto index=ListIndex::create(std::move(snapshot));if(!index)return std::unexpected(index.error());
-        auto position=index->find(key);if(!position)return error(ListErrorCode::not_found,"List edit row was not found");
-        const auto data=index->snapshot();const auto& entry=data->entries[*position];
+        return begin(*index, std::move(editor), key);
+    }
+    [[nodiscard]] static ListResult<ListEditing> begin(const ListIndex& index,
+            std::shared_ptr<ListEditor> editor,std::string_view key){
+        if(!editor)return error(ListErrorCode::invalid,"List editor is required");
+        auto position=index.find(key);if(!position)return error(ListErrorCode::not_found,"List edit row was not found");
+        const auto& entry=index.entry(*position);
         if(!entry.enabled||!entry.editable)return error(ListErrorCode::invalid,"List row cannot be edited");
-        return ListEditing(std::make_shared<Data>(std::move(editor),ListEditState{entry,entry.label,*position,data->revision}));
+        return ListEditing(std::make_shared<Data>(std::move(editor),ListEditState{entry,entry.label,*position,index.revision()}));
     }
     [[nodiscard]] ListResult<ListEditState> state()const{
         auto data=data_;if(!data)return error(ListErrorCode::invalid,"List edit has ended");

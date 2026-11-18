@@ -62,6 +62,11 @@ std::shared_ptr<const ii::gui::RasterImage> image(const ii::gui::CanvasFrame& fr
     for (const auto& layer : frame.overlays) for (const auto& item : layer.images) if (item.image) return item.image;
     return {};
 }
+const ii::gui::TextRun& text_run(const ii::gui::CanvasFrame& frame, std::string_view text) {
+    for (const auto& run : frame.texts) if (run.text == text) return run;
+    for (const auto& layer : frame.overlays) for (const auto& run : layer.texts) if (run.text == text) return run;
+    throw std::runtime_error("Alert text was not drawn");
+}
 }
 
 int main() {
@@ -107,6 +112,19 @@ int main() {
     good(root.open_at(0, 0));
     auto frame = take(root.snapshot());
     require(frame.modal && frame.dim && frame.bounds.width == 500, "Alert did not open as a centered modal");
+    auto themed=input;
+    themed.style.title_typography=lvui::AlertTypography{19,20,600};
+    themed.style.description_typography=lvui::AlertTypography{15,16,500};
+    themed.style.action_text=lvui::StyleColor{.2,.4,.6,.8};
+    good(alert->set_options(themed));
+    const auto themed_frame=take(tree->drawing_snapshot({800,600}));
+    require(text_run(themed_frame,"Notice").font_size==19 && text_run(themed_frame,"Notice").line_height==20 &&
+            text_run(themed_frame,"Continue?").font_size==15 && text_run(themed_frame,"Continue?").line_height==16,
+            "Alert ignored supplied typography");
+    auto invalid_style=themed;invalid_style.style.description_typography->font_size=-1;
+    require(!alert->set_options(invalid_style) && take(alert->options())==themed,
+            "Alert accepted an invalid theme and replaced its retained options");
+    good(alert->set_options(input));
     const auto two_action_icon = image(take(tree->drawing_snapshot({800, 600})));
     require(bool(two_action_icon), "Alert did not render its LVUI-owned default icon");
     auto primary = take(root.popup_content("alert.action-0"));

@@ -14,7 +14,7 @@ void independent(const std::string& code) {
 int main() {
     auto owned = lvui::compile_native("Window { ColorPicker(type: .RGB, recentColors: [\"#FF000080\"]) }");
     if (!owned) throw std::runtime_error(owned.error().message);
-    for (auto part : {"#include <LVUI/NativeColorPicker.h>", "#include <LVUI/ColorSelectionSurface.h>",
+    for (auto part : {"#include <LVUI>", 
                       "std::make_shared<lvui::ColorSelection>()", "lvui_generated::detail_color_picker::NativeColorPicker::create(",
                       "lvui::ColorPickerMode::rgb", "lvui::StyleColor{1"}) contains(*owned, part);
     independent(*owned);
@@ -22,7 +22,7 @@ int main() {
     if (!dynamic) throw std::runtime_error(dynamic.error().message);
     for (auto part : {"lvui_generated::detail_color_picker::NativeColorPicker::create(", "component.set_options(value)",
                       "value.preserve_recent_colors = true", "lvui::native::NativeColorPickerCallbacks"}) contains(*dynamic, part);
-    if (dynamic->find("#include <LVUI/ColorSelectionSurface.h>") != dynamic->npos)
+    if (dynamic->find("std::make_shared<lvui::ColorSelection>()") != dynamic->npos)
         throw std::runtime_error("Injected picker model requires the default adapter");
     independent(*dynamic);
     auto local = lvui::compile_native("import vm Model\nWindow { ColorPicker(width: vm.width) }");

@@ -11,6 +11,10 @@ void require(bool value, const char* message) { if (!value) throw std::runtime_e
 }
 
 int main() {
+    require(lvui::valid_alert_typography(lvui::AlertTypography{19,20,600}) &&
+            !lvui::valid_alert_typography(lvui::AlertTypography{-1,20,600}) &&
+            !lvui::valid_alert_typography(lvui::AlertTypography{19,20,450}),
+            "Alert typography validation accepted an invalid style");
     lvui::native::AlertModel alert;
     auto config = alert.configuration();
     require(alert.action_count() == 1 && alert.action(0).text == "Button" &&

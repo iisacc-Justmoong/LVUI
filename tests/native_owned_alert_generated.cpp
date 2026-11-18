@@ -1,7 +1,9 @@
 #include "NativeOwnedAlert.generated.h"
+#include <iiGUI/SrgbColor.h>
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
+#include <cmath>
 #include <memory>
 #include <stdexcept>
 #include <vector>
@@ -14,6 +16,15 @@ template<class T>T take(ii::core::Result<T> value) {
 }
 void good(ii::core::Result<void> value) {
     if (!value) { if (value.error().cause) std::rethrow_exception(value.error().cause); throw std::runtime_error(value.error().message); }
+}
+const ii::gui::TextRun& text_run(const ii::gui::CanvasFrame& frame, std::string_view text) {
+    for (const auto& run : frame.texts) if (run.text == text) return run;
+    for (const auto& layer : frame.overlays) for (const auto& run : layer.texts) if (run.text == text) return run;
+    throw std::runtime_error("Generated Alert text was not drawn");
+}
+bool near(ii::gui::Color a,ii::gui::Color b) {
+    return std::abs(a.red-b.red)<1e-6 && std::abs(a.green-b.green)<1e-6 &&
+           std::abs(a.blue-b.blue)<1e-6 && std::abs(a.alpha-b.alpha)<1e-6;
 }
 }
 
@@ -28,6 +39,13 @@ int main() {
     require(found != nodes.end(), "Generated Alert did not mount");
     auto alert = take(tree->find(found->id));
     (void)take(tree->drawing_snapshot({800, 600})); good(alert.open_at(0, 0));
+    const auto frame=take(tree->drawing_snapshot({800, 600}));
+    const auto& title=text_run(frame,"Initial");const auto& description=text_run(frame,"Details");
+    require(title.font_size==26 && title.line_height==26 && title.font_weight==700 &&
+            near(title.color,ii::gui::srgb_to_linear(ii::gui::WidgetColor{244./255,245./255,247./255,1})) &&
+            description.font_size==13 && description.line_height==13 && description.font_weight==500 &&
+            near(description.color,ii::gui::srgb_to_linear(ii::gui::WidgetColor{214./255,217./255,223./255,1})),
+            "Generated Alert did not use its Figma material and typography tokens");
     auto action = take(alert.popup_content("alert.action-0")); good(action.activate());
     require(scope->backend_0.events == std::vector<std::string>{"method", "clicked"},
             "Generated Alert action method and callback did not execute in order");

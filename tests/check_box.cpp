@@ -5,9 +5,9 @@ namespace {void require(bool value,const char* message){if(!value)throw std::run
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { CheckBox(text: vm.text, checked: vm.checked, enabled: vm.enabled, boxSize: vm.size, checkedColor: vm.color, shapeStyle: vm.shape, motionEnabled: vm.animated, motion: vm.motion, transitionDuration: vm.duration, useFigmaCheckedAssets: vm.useAsset, innerShadowSoftColor: vm.shadow, innerShadowStrongColor: vm.shadow, onToggled: vm.changed) }");
     require(bool(code),"Independent checkbox did not compile");
-    require(code->find("#include <LVUI/NativeCheckBox.h>")!=code->npos&&
+    require(code->find("#include <LVUI>")!=code->npos&&
             code->find("lvui::native::CheckBoxBinding<ii::gui::BasicCheckBox, ii::gui::BasicNativeCheckBox, ii::gui::CachedSvgDecoder>::create(")!=code->npos&&
-            code->find("#include <iiGUI/NativeCheckBoxView.h>")!=code->npos&&
+            code->find("#include <iiGUI>")!=code->npos&&
             code->find("lvui::CheckBoxConfiguration{")!=code->npos&&
             code->find("component.set_options(value)")!=code->npos&&code->find(".use_figma_checked_assets")!=code->npos&&
             code->find(".inner_shadow_soft")!=code->npos&&code->find(".inner_shadow_strong")!=code->npos&&code->find(".shape_style")!=code->npos&&

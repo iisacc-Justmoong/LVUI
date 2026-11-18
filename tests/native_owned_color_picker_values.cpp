@@ -4,6 +4,7 @@
 using ColorPickerValuesTestField=lvui::native::InputFieldBinding<ii::gui::BasicNativeInputField,ii::gui::BasicTextInput,ii::gui::BasicTextFieldMaterial,ii::gui::NativeTextAffinity>;
 using ColorPickerValuesTestView=lvui::native::ColorPickerValuesBinding<ii::gui::BasicNativeColorPickerValues,ColorPickerValuesTestField>;
 #include <iiGUI/WidgetState.h>
+#include <iiGUI/SrgbColor.h>
 
 #include <cmath>
 #include <memory>
@@ -25,12 +26,21 @@ bool near(double a, double b) { return std::abs(a - b) < 1e-7; }
 std::string text(ii::gui::Widget field) {
     const auto snapshot = take(field.snapshot()); return take(field.text_content({0, snapshot.text_length})).text;
 }
+const ii::gui::TextRun& run(const ii::gui::CanvasFrame& frame,std::string_view value) {
+    for(const auto& item:frame.texts)if(item.text==value)return item;
+    for(const auto& layer:frame.overlays)for(const auto& item:layer.texts)if(item.text==value)return item;
+    throw std::runtime_error("Color picker label was not drawn");
+}
 }
 
 int main() {
     using namespace ii::gui;
     const lvui::StyleColor red{1, 0, 0, .5}, blue{0, 0, 1, 1};
-    auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
+    auto appearance=default_widget_appearance();
+    appearance.text_styles=std::array<TextRoleStyle,8>{};appearance.text_colors=std::array<WidgetColor,8>{};
+    (*appearance.text_styles)[static_cast<unsigned>(TextRole::caption)]={15,16,600};
+    (*appearance.text_colors)[static_cast<unsigned>(TextRole::description)]={.2,.3,.4,.6};
+    auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); },appearance);
     auto host = take(tree->content_host({}, "host", {400, 100}));
     auto editor = std::make_shared<lvui::ColorSelection>(red);
     auto picker = std::make_shared<lvui::ColorPicker>(editor);
@@ -48,6 +58,9 @@ int main() {
     }));
     auto hex = values->hex_field(), alpha = values->alpha_field();
     require(text(hex) == "FF0000" && text(alpha) == "50", "Picker value fields did not show the initial color");
+    const auto themed=take(tree->drawing_snapshot({400,100}));const auto& label=run(themed,"Hex");
+    require(label.font_size==15 && label.line_height==16 && label.font_weight==600 &&
+            label.color==srgb_to_linear(WidgetColor{.2,.3,.4,.6}),"Color picker value label ignored Figma text roles");
     const auto replace = [&](Widget field, std::string value) {
         good(field.focus()); good(tree->input({.kind = WidgetInputKind::key_down, .key = WidgetKey::select_all}));
         good(tree->input({.kind = WidgetInputKind::text, .text = std::move(value)}));

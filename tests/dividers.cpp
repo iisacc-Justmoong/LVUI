@@ -8,7 +8,7 @@ void require(bool condition,const char* message){if(!condition)throw std::runtim
 int main(){
     const auto code=lvui::compile_native("import vm Model\nWindow { VStack { MenuDivider(axis: vm.axis, lineLength: vm.length, thickness: vm.thickness, dividerColor: vm.color)\nContextMenuDivider() } }");
     require(bool(code),"Independent divider did not compile");
-    require(code->find("#include <iiGUI/NativeDivider.h>")!=code->npos&&code->find("ii::gui::NativeDivider::create(")!=code->npos&&
+    require(code->find("#include <iiGUI>")!=code->npos&&code->find("ii::gui::NativeDivider::create(")!=code->npos&&
             code->find("ii::gui::DividerConfiguration{")!=code->npos&&code->find("component.set_options(value)")!=code->npos&&
             code->find("lvrs::")==code->npos&&code->find("widgets.menu_divider(")==code->npos,
             "Divider still depends on legacy implementation");

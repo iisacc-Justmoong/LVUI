@@ -58,6 +58,7 @@ struct TableHeaderConfiguration final {
     std::string default_leading_icon="generalchevronDown",default_trailing_icon;
     double icon_size=18,icon_spacing=7;
     std::vector<TableHeaderColumnAppearance> column_appearance;
+    std::optional<TableTypography> typography;
     friend bool operator==(const TableHeaderConfiguration&,const TableHeaderConfiguration&)=default;
 };
 [[nodiscard]] inline TableHeaderPresentation table_header_presentation(const TableHeaderConfiguration& value){
@@ -72,6 +73,7 @@ template<class Viewport>struct TableHeaderModelPolicy final {
     using Error=TableError;using ErrorCode=TableErrorCode;using SortOrder=TableSortOrder;
     template<class T>using Result=TableResult<T>;
     [[nodiscard]] static bool valid_presentation(const Configuration& value){return valid_table_header_presentation(table_header_presentation(value));}
+    [[nodiscard]] static bool valid_typography(const std::optional<TableTypography>& value)noexcept{return valid_table_typography(value);}
 };
 template<template<class>class Model,class Viewport>using TableHeaderModelBinding=Model<TableHeaderModelPolicy<Viewport>>;
 

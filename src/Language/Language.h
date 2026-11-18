@@ -115,6 +115,7 @@ struct View final {
     std::size_t lexical_context = 0; // Compiler-owned call-site context for a supplied View slot.
     std::optional<Repetition> repetition{};
     bool fragment = false; // Transparent [View] composition or branch-local declaration scope.
+    std::optional<SourcePosition> ignore_safe_area{}; // Window-type components only.
 };
 class ViewDocument;
 using ViewParseResult = std::expected<ViewDocument, Diagnostic>;

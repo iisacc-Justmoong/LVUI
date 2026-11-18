@@ -1,0 +1,5 @@
+Window {
+    VStack(id: "content", spacing: 0, alignment: .stretch) {
+        Label(text: "Content")
+    }
+}.ignoreSafeArea()

@@ -8,7 +8,7 @@ void require(bool value,const char* message){if(!value)throw std::runtime_error(
 int main(){
     lvui::InputFieldConfiguration options;
     require(lvui::valid_input_field_configuration(options)&&options.width==206&&options.height==30&&
-        options.horizontal_padding==8&&options.font_size==13&&options.double_click_interval==.5&&
+        options.horizontal_padding==8&&options.font_size==13&&options.font_weight==400&&options.double_click_interval==.5&&
         options.double_click_distance==4&&options.enabled&&!options.multiline&&!options.password,
         "Input field defaults changed");
     options.text="preserve";options.width=321;
@@ -36,6 +36,13 @@ int main(){
     options.double_click_distance=4;
     options.password=true;options.multiline=true;options.text="한😀";
     require(lvui::valid_input_field_configuration(options),"Valid international secure input was rejected");
+    options.font_weight=lvui::input_field_font_weight(600);
+    require(lvui::valid_input_field_configuration(options),"Valid native font weight was rejected");
+    options.font_weight=550;
+    require(!lvui::valid_input_field_configuration(options),"Unsupported native font weight was accepted");
+    invalid=false;try{(void)lvui::input_field_font_weight(600.5);}catch(const std::invalid_argument&){invalid=true;}
+    require(invalid,"A fractional binding was silently rounded to another weight");
+    options.font_weight=400;
     options.text=std::string("bad\0value",9);
     require(!lvui::valid_input_field_configuration(options),"NUL text was accepted");
     options.text="ok";options.width=std::numeric_limits<double>::infinity();

@@ -17,7 +17,7 @@ template<class NativeDrawing,class NativeField,class Image,class Decoder,class B
 struct ListViewHostPolicy final {
     using Input=ListViewInput;using Callbacks=NativeListViewCallbacks;using ViewFactory=ListRowViewFactoryValue<Builder>;
     using Drawing=NativeDrawing;using ItemConfiguration=ListItemConfiguration;using InputField=NativeField;using InputFieldConfiguration=lvui::InputFieldConfiguration;
-    using IconCache=NativeIconCache<Decoder>;using Color=StyleColor;using Snapshot=ListSnapshot;using Entry=ListEntry;using Controller=ListController;
+    using IconCache=NativeIconCache<Decoder>;using Color=StyleColor;using Snapshot=ListSnapshot;using Index=ListIndex;using Entry=ListEntry;using Controller=ListController;
     using ViewportSource=NativeViewport;using ViewportAnchor=ListViewportAnchor;using Reveal=ListReveal;
     using Error=ListError;using ErrorCode=ListErrorCode;using EditEvent=ListEditEvent;using ViewEvent=ListViewEvent;
     using Editing=ListEditing;using Drag=NativeDrag;using DragPoint=ListDragPoint;using DragProposal=ListDragProposal;

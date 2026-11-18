@@ -12,8 +12,19 @@ int main(){
     auto defaults=lvui::compile_native("Window { InputField() }");
     auto zero=lvui::compile_native("Window { InputField(maximumLength: 0) }");
     if(!defaults||defaults->find("value.maximum_length = 32767;")==defaults->npos||
+       defaults->find("value.font_weight = 400;")==defaults->npos||
        !zero||zero->find("value.maximum_length = 0;")==zero->npos)
-        throw std::runtime_error("Input field did not preserve default and zero limits");
+        throw std::runtime_error("Input field lost the regular typography or length defaults");
+    auto typography=lvui::compile_native(R"LVUI(import vm Model
+Window { VStack {
+    InputField(text: "안녕하세요", readOnly: true, multiline: true, fontWeight: 600)
+    InputField(fontFamily: vm.family, fontWeight: vm.weight)
+} })LVUI");
+    if(!typography||typography->find("value.font_weight = 600;")==typography->npos||
+       typography->find("value.font_weight = lvui::input_field_font_weight(")==typography->npos||
+       typography->find("value.font_family = lvui::native::text(")==typography->npos||
+       lvui::compile_native("Window { InputField(fontWeight: 550) }"))
+        throw std::runtime_error("Input field did not preserve or validate its typography");
     auto compact=lvui::compile_native("Window { InputField(size: .compact) }");
     auto reactive=lvui::compile_native("import vm Model\nWindow { InputField(size: vm.size) }");
     if(!compact||compact->find("lvui::apply_input_field_size(value, lvui::InputFieldSize::compact)")==compact->npos||

@@ -5,9 +5,9 @@ namespace {void require(bool value,const char* message){if(!value)throw std::run
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { RadioButton(text: vm.text, checked: vm.checked, group: vm.group, indicatorSize: vm.size, onColor: vm.color, onToggled: vm.changed) }");
     require(bool(code),"Independent radio did not compile");
-    require(code->find("#include <LVUI/NativeRadioButton.h>")!=code->npos&&
+    require(code->find("#include <LVUI>")!=code->npos&&
             code->find("lvui::native::RadioButtonBinding<ii::gui::BasicRadioButton, ii::gui::BasicNativeRadioButton>::create(")!=code->npos&&
-            code->find("#include <iiGUI/NativeRadioButtonView.h>")!=code->npos&&
+            code->find("#include <iiGUI>")!=code->npos&&
             code->find("lvui::RadioButtonConfiguration{")!=code->npos&&
             code->find("component.set_options(value)")!=code->npos&&
             code->find("widgets.radio_button(")==code->npos&&code->find("lvrs::")==code->npos,

@@ -304,6 +304,7 @@ int main(){
             "A row-height change recreated its delegate or mutated the source");
     input.row_height=20;good(list->set_options(input));
     require(one->get().height==20&&take(label.placement()).scope.lock()==identity,"Resetting row height lost the retained delegate");
+    const auto other_revision = two->revision();
     std::uint64_t revision=0;
     auto replacement=entries[0];replacement.label="Updated";replacement.icon_name="unused-missing-icon";
     revision=take(source->apply({.revision=revision,.kind=lvui::ListEditKind::replace,.key="one",.item=replacement}));input.source_revision=std::int64_t(revision);
@@ -311,6 +312,8 @@ int main(){
     require(contexts.at("one")==one&&one->get().entry.label=="Updated"&&observed=="Updated"&&
             take(label.snapshot()).text=="Custom Updated"&&take(label.placement()).scope.lock()==identity,
             "Updating a visible key replaced its delegate or resolved an unused default icon");
+    require(contexts.at("two") == two && two->revision() == other_revision,
+            "Updating a visible key published a change to an unrelated row");
     auto invalid=input;invalid.view_revision=-1;
     require(!list->set_options(invalid)&&one->get().entry.label=="Updated"&&take(label.snapshot()).text=="Custom Updated",
             "An invalid view revision replaced the current row");

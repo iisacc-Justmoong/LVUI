@@ -9,7 +9,7 @@ std::string compile(std::string_view source){auto result=lvui::compile_native(so
 }
 int main(){
     auto code=compile("import vm Model\nWindow { VStack { PushButton(text: vm.text, enabled: vm.enabled, tone: vm.tone, onClick: vm.save)\nIconButton(icon: vm.icon, onClick: vm.save) } }");
-    require(code.find("#include <LVUI/NativeButton.h>")!=code.npos && code.find("lvui::native::ButtonBinding<")!=code.npos &&
+    require(code.find("#include <LVUI>")!=code.npos && code.find("lvui::native::ButtonBinding<")!=code.npos &&
             code.find("lvui::native::ButtonInputValue<ii::gui::RasterImage>{")!=code.npos && code.find("component.set_options(value)")!=code.npos &&
             code.find("widgets.button(")==code.npos && code.find("lvrs::")==code.npos,"Button is not LVUI-owned");
     auto empty=lvui::compile_native("Window { IconButton() }");

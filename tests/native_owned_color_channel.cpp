@@ -8,6 +8,7 @@ using ColorChannelTestRamp=lvui::ColorChannelSurfaceBinding<ii::gui::BasicColorC
 using ColorChannelTestSurface=lvui::native::ColorSurfaceBinding<ii::gui::BasicColorSurface,ii::gui::BasicNativeColorSurface>;
 using ColorChannelTestView=lvui::native::ColorChannelBinding<ii::gui::BasicNativeColorChannel,ColorChannelTestRamp,ColorChannelTestSurface,ColorChannelTestField>;
 #include <iiGUI/WidgetState.h>
+#include <iiGUI/SrgbColor.h>
 
 #include <cmath>
 #include <memory>
@@ -29,11 +30,20 @@ bool near(double a, double b) { return std::abs(a - b) < 1e-7; }
 std::string text(ii::gui::Widget field) {
     const auto snapshot = take(field.snapshot()); return take(field.text_content({0, snapshot.text_length})).text;
 }
+const ii::gui::TextRun& run(const ii::gui::CanvasFrame& frame,std::string_view value) {
+    for(const auto& item:frame.texts)if(item.text==value)return item;
+    for(const auto& layer:frame.overlays)for(const auto& item:layer.texts)if(item.text==value)return item;
+    throw std::runtime_error("Color channel label was not drawn");
+}
 }
 
 int main() {
     using namespace ii::gui;
-    auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); });
+    auto appearance=default_widget_appearance();
+    appearance.text_styles=std::array<TextRoleStyle,8>{};appearance.text_colors=std::array<WidgetColor,8>{};
+    (*appearance.text_styles)[static_cast<unsigned>(TextRole::body)]={19,20,700};
+    (*appearance.text_colors)[static_cast<unsigned>(TextRole::description)]={.2,.3,.4,.6};
+    auto tree = std::make_shared<detail::WidgetState>([](ii::runtime::Task task) { task(); },appearance);
     auto host = take(tree->content_host({}, "host", {400, 200}));
     auto selection = std::make_shared<lvui::ColorSelection>(lvui::StyleColor{1, 0, 0, 1});
     auto source = std::make_shared<lvui::ColorSelectionSurface>(selection);
@@ -53,7 +63,9 @@ int main() {
     const auto ramp_snapshot = take(ramp.snapshot());
     require(ramp_snapshot.accessibility_semantics && ramp_snapshot.accessibility_semantics->role == AccessibilityRole::slider &&
             text(field) == "255", "Color channel did not expose its initial value");
-    (void)take(tree->drawing_snapshot({400, 200}));
+    const auto themed=take(tree->drawing_snapshot({400, 200}));const auto& label=run(themed,"R");
+    require(label.font_size==19 && label.line_height==20 && label.font_weight==700 &&
+            label.color==srgb_to_linear(WidgetColor{.2,.3,.4,.6}),"Color channel ignored its Figma body typography or description color");
     const auto bounds = take(ramp.snapshot()).bounds;
     good(tree->input({.kind = WidgetInputKind::pointer_down, .x = bounds.x + bounds.width / 2, .y = bounds.y + bounds.height / 2}));
     good(tree->input({.kind = WidgetInputKind::pointer_up, .x = bounds.x + bounds.width / 2, .y = bounds.y + bounds.height / 2}));
@@ -79,6 +91,9 @@ int main() {
             "A pending stale numeric edit overwrote an external color");
     auto green = input; green.channel = lvui::ColorChannel::green; good(channel->set_options(green));
     require(text(field) == "255", "Color channel did not rebind its source and value");
+    const auto rebound=take(tree->drawing_snapshot({400,200}));
+    require(run(rebound,"G").font_size==19 && run(rebound,"G").color==srgb_to_linear(WidgetColor{.2,.3,.4,.6}),
+            "Color channel lost its themed label on update");
     bool rejected = false;
     std::thread worker([&] { auto result = channel->set_options(input); rejected = !result && result.error().code == ii::core::ErrorCode::wrong_executor; });
     worker.join(); require(rejected, "Color channel accepted a foreign-thread update");

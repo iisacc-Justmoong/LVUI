@@ -6,9 +6,11 @@
 #include <cstdint>
 #include <functional>
 #include <memory>
+#include <optional>
 namespace lvui::native {
 struct ColorPickerInput final {
  ColorPickerConfiguration configuration;std::shared_ptr<ColorPickerSession> session;std::int64_t source_revision=0;bool preserve_recent_colors=false;
+ std::optional<StyleColor> divider_color;
  friend bool operator==(const ColorPickerInput&,const ColorPickerInput&)=default;
 };
 template<class HostColor>struct NativeColorPickerCallbacksValue final {

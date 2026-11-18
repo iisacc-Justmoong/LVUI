@@ -64,6 +64,45 @@ Figma 원본에서 읽은 `catalog/lvui-search-field-material.json`,
 
 ## 기본값
 
+### 플랫폼 공통 전달 계약
+
+LVUI 카탈로그에서 해석한 색상·글꼴·타이포그래피·치수는 동일한 AOT 경로로
+네이티브와 Web iiGUI 호스트에 전달한다. 텍스트 역할의 색상은 알파만이 아니라
+encoded sRGB의 네 채널을 보존한다. 명시적인 컴포넌트 입력은 해당 공통 기본값보다
+우선한다. 카탈로그에는 현재 Dark 모드만 있으므로 웹의 운영체제 설정을 근거로
+별도의 Light 값을 만들거나 바꾸지 않는다.
+
+여덟 텍스트 역할의 크기·줄 높이·굵기도 iiGUI 사용자 정의 그리기 경계에
+전달한다. 각 컴포넌트의 내부 그리기가 이 역할을 사용해야 적용되므로, 전달
+자체가 아직 모든 컴포넌트의 토큰 적용을 뜻하지는 않는다.
+
+테이블의 기본 헤더는 Figma의 description 색상·크기·줄 높이·굵기, 셀은 body
+색상·크기·줄 높이·굵기, 구분선은 Panel/surfaceInput을 사용한다. 각 속성에
+명시된 입력은 토큰 기본값보다 우선한다. 표의 `fontSize`를 명시하면 기존처럼
+머리글과 셀의 공통 크기를 사용한다. 목록과 목록 항목의 기본 본문·보조·비활성
+색상은 각각 body·caption·disabled 텍스트 토큰을 사용한다. 목록 항목의 본문,
+설명·날짜, 폴더·태그 그리기는 각각 body, description, caption의 타이포그래피를
+사용한다. 명시적인 항목 값의 글꼴 설정은 유지한다. 카탈로그 색상의 적용과
+플랫폼별 글리프 래스터화가 픽셀 단위로 일치하는지는 별개의 계약이다.
+
+Sheet는 Figma의 `Panel/surfaceSolid` 배경과 header 타이포그래피·titleHeader
+색상의 제목, body 타이포그래피·description 색상의 설명을 사용한다. 명시적인
+`surfaceColor`가 기본 배경보다 우선한다.
+
+Alert는 Figma의 `Panel/surfaceSolid`와 72% 표면 불투명도, `Glass/Edge`,
+`Alert/textPrimary`, `Glass/Foreground`를 사용한다. 제목에는 title 서체,
+설명에는 body 서체를 적용하고 아이콘 배경과 테두리에는 Blue/Subtle과
+Blue/Outline, 액션에는 Alert 전용 텍스트·테두리 토큰을 전달한다.
+명시적인 `cardBackgroundColor`는 기본 배경보다 우선한다.
+
+ColorPicker의 채널 문자는 body 타이포그래피와 description 색상을, `Hex`·`A`·`%`·
+`Recent` 같은 보조 표시는 caption 타이포그래피와 description 색상을 사용한다.
+내부 라벨에 두 역할을 각각 전달하므로 공통 서체 변경 뒤에도 이 조합을 유지한다.
+구분선은 `Glass/Edge`의 색상과 불투명도를 사용한다.
+다만 ColorPicker는 내부 편집 필드를 생성하므로 아직 Web 호스트의 미구현
+텍스트 편집·IME 경계에서 생성에 실패한다. 현재 검증된 표시는 네이티브 호스트의
+결과이며, 해당 역할의 브라우저 화면 검증은 이 호스트 기능이 필요하다.
+
 옵션 없이 사용하는 `parse()`와 `compile_native()`에 카탈로그가 연결된다. 명시적인 컴포넌트 입력과 인라인 스타일이 기본값보다 우선한다.
 
 | 대상 | 기본 토큰 |
@@ -179,8 +218,8 @@ CMake는 `lvui_generate(... STYLE_MODES "Theme Colors=Dark" "Theme Typography=Va
 생성된 창의 크기별 기본 굵기를 결정한다. 동일 크기는 목록의 마지막 규칙이 이기며,
 위젯에서 명시한 굵기와 compact 메뉴 스타일은 우선한다. 지원 굵기는 현재 iiGUI
 텍스트 경계에 맞춘 400·500·600·700이고 다른 값은 생성 시 진단한다.
-생성된 창은 이 규칙을 지원하는 iiGUI 0.5.0 이상이 필요하며, 이전 헤더를 선택하면
-생성 헤더가 구체적인 오류를 낸다. 새 헤더와 이전 라이브러리를 조합해도 ABI 1
+생성된 창은 역할색 전달을 지원하는 iiGUI 0.6.0 이상이 필요하며, 이전 헤더를 선택하면
+생성 헤더가 구체적인 오류를 낸다. 새 헤더와 이전 라이브러리를 조합해도 ABI 2
 심볼을 찾지 못해 링크가 실패한다. 패키지는 `LVUI_IIGUI_MIN_VERSION`도 공개한다.
 
 ## 색 공간·알파·단위

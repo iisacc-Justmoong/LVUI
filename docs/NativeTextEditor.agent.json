@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeTextEditor.md",
-    "sha256": "ebdd69a43aa030c4dd711bcd6574a8eccdd4eb0d655d1ef46b324f3121242572",
-    "bytes": 3351,
-    "line_count": 42,
+    "sha256": "56cc9fc465d02d286566b904d16eb9092c8df58b6c52dff9a1d3ea51cb7961a8",
+    "bytes": 3776,
+    "line_count": 46,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -117,6 +117,36 @@
       "start_line": 42,
       "end_line": 42,
       "raw": "`LVUI/NativeTextEditor.h`와 설정 계약은 iiSDKCore 외 SDK를 직접 참조하지 않는다. macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 생성·반응형 높이·스크롤 경로를 창 없이 검사했다. 실제 운영체제 창과 GPU는 검사하지 않았다.\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 43,
+      "end_line": 43,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "heading",
+      "start_line": 44,
+      "end_line": 44,
+      "raw": "## 입력 필드와 일치하는 타이포그래피\n",
+      "level": 2,
+      "title": "입력 필드와 일치하는 타이포그래피"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "`TextEditor`는 `InputField`와 동일한 타이포그래피 규칙을 사용한다. 글꼴·크기·굵기는 편집 텍스트와 플레이스홀더에 동일하게 전달되며 기본 굵기는 `Weight/Regular`다. 조판과 화면 배율에 따른 픽셀 처리는 페인터의 책임이다. 텍스트, 초점, 측정값에는 기존 쿼리 바인딩이 적용된다.\n"
     }
   ],
   "outline": [
@@ -127,6 +157,14 @@
       "title": "네이티브 여러 줄 텍스트 편집기",
       "anchor": "네이티브-여러-줄-텍스트-편집기",
       "start_line": 1
+    },
+    {
+      "block_id": "b000015",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "입력 필드와 일치하는 타이포그래피",
+      "anchor": "입력-필드와-일치하는-타이포그래피",
+      "start_line": 44
     }
   ],
   "indexes": {
@@ -158,7 +196,7 @@
     "tables": []
   },
   "provenance": {
-    "generator": "workspace-docs",
+    "generator": "manual-lossless-update",
     "version": "1.0.0",
     "profile": "lossless-blocks-v1",
     "derived": true

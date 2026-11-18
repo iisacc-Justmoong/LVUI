@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/CustomWindowChrome.md",
-    "sha256": "f6aaebe087bec8d5d282d06390ffc73e715277ec5f6f36e3aeab74c7a20ae1d9",
-    "bytes": 1415,
-    "line_count": 24,
+    "sha256": "df3526f7126e8b7f97555df13329a5b56b89a3db268bf313b523f47cf7186882",
+    "bytes": 2179,
+    "line_count": 37,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -84,24 +84,55 @@
       "raw": "\n"
     },
     {
+      "id": "b000012",
+      "kind": "paragraph",
+      "raw": "`titleBarVisible: false`는 시스템 타이틀바를 생략하고 사용자 정의 창 프레임을\n선택한다. 기본값은 기존 시스템 프레임이며 `titleBarVisible: true`로 명시할 수 있다.\n값은 창 생성 전에 결정되는 정적 Bool이다. `.custom`과 `false`, `.system`과 `true`는\n함께 쓸 수 있으며 서로 충돌하는 조합은 오류다. 사용자 정의 프레임에서는 `titleBar`에\n별도 View를 선택적으로 전달한다. macOS의 기본 창 버튼은 남으며 다른 데스크톱 호스트의\n앱은 필요한 창 버튼과 드래그 영역을 제공한다. 모바일과 웹은 각 호스트 정책을 따른다.\n",
+      "start_line": 15,
+      "end_line": 20
+    },
+    {
+      "id": "b000013",
+      "kind": "blank",
+      "raw": "\n",
+      "start_line": 21,
+      "end_line": 21
+    },
+    {
+      "id": "b000014",
+      "kind": "fenced_code",
+      "raw": "```lvui\nApplicationWindow(titleBarVisible: false) {\n    VStack { Label(text: \"Content\") }\n}\n```\n",
+      "language": "lvui",
+      "code": "ApplicationWindow(titleBarVisible: false) {\n    VStack { Label(text: \"Content\") }\n}\n",
+      "closed": true,
+      "start_line": 22,
+      "end_line": 26
+    },
+    {
+      "id": "b000015",
+      "kind": "blank",
+      "raw": "\n",
+      "start_line": 27,
+      "end_line": 27
+    },
+    {
       "id": "b000009",
       "kind": "paragraph",
-      "start_line": 15,
-      "end_line": 20,
+      "start_line": 28,
+      "end_line": 33,
       "raw": "`ii::gui::window_chrome_presentation()`으로 플랫폼별 표시 정책을 구분한다.\nmacOS에서는 시스템 창 버튼을 위한 공간을 남긴다. Windows와 Linux에서는 LVUI\n버튼을 닫기, 최소화, 최대화·복원 동작에 연결한다. iPadOS와 Android에서는\n버튼 없이 타이틀바만 표시할 수 있다. 마우스 이동 영역은 뷰모델을 거쳐 iiGUI의\n`Host::begin_window_drag()`에 연결한다. 시스템 창 관리 기능과 검증 범위는\n따로 있는 iiGUI의 창 프레임 문서를 따른다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 21,
-      "end_line": 21,
+      "start_line": 34,
+      "end_line": 34,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 22,
-      "end_line": 24,
+      "start_line": 35,
+      "end_line": 37,
       "raw": "LVUI 소비자와 iiGUI 바이너리는 변경된 `HostOptions` 헤더를 기준으로 함께 다시\n빌드한다. 컴파일러 검사는 기본값과 사용자 정의 값, 잘못된 동적 값 및 애플리케이션\n장면을 확인하며 실제 운영체제 창을 열지는 않는다.\n"
     }
   ],
@@ -130,7 +161,7 @@
     "tables": []
   },
   "provenance": {
-    "generator": "workspace-docs",
+    "generator": "manual-lossless-update",
     "version": "1.0.0",
     "profile": "lossless-blocks-v1",
     "derived": true

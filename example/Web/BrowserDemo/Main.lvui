@@ -1,0 +1,15 @@
+import vm BrowserDemoModel
+
+Application {
+    ApplicationWindow(title: "LVUI WebAssembly Demo") {
+        VStack(id: "content", spacing: Metric.space16, padding: .space32, alignment: .leading) {
+            Label(id: "title", text: "Hello, WebAssembly!", style: .title)
+            Label(id: "description", text: "LVUI is running in your browser.", style: .body)
+            Label(id: "count", text: vm.count, style: .title)
+            HStack(id: "actions", spacing: Metric.space8) {
+                PushButton(id: "increment", text: "Count up", onClick: vm.increment)
+                PushButton(id: "reset", text: "Reset", onClick: vm.reset)
+            }
+        }
+    }
+}

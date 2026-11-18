@@ -4,10 +4,10 @@
 namespace {
 void check(bool value,const char* message){if(!value)throw std::runtime_error(message);}
 std::string compile(std::string_view source,std::string framework="iiGUI"){auto result=lvui::compile_native(source,{.framework=std::move(framework)});if(!result)throw std::runtime_error(result.error().message);return *result;}
-void frameworks(){for(auto framework:{"iiGUI"}){auto result=compile("import vm Model\nWindow { NativeView(source: vm.canvas, width: 640, height: 480) }",framework);check(result.find("ii::gui::NativeView::create")!=result.npos&&result.find("#include <iiGUI/NativeView.h>")!=result.npos,"C++ visual source did not enter the native builder");}}
+void frameworks(){for(auto framework:{"iiGUI"}){auto result=compile("import vm Model\nWindow { NativeView(source: vm.canvas, width: 640, height: 480) }",framework);check(result.find("ii::gui::NativeView::create")!=result.npos&&result.find("#include <iiGUI>")!=result.npos,"C++ visual source did not enter the native builder");}}
 void bindings(){auto result=compile("import vm Model\nWindow { NativeView(source: vm.current(), width: vm.width, height: vm.height, enabled: vm.enabled, clip: vm.clip) }");check(result.find("return ii::gui::NativeViewOptions{")!=result.npos&&result.find("component.set_options(value)")!=result.npos&&result.find("lvui::native::range(")!=result.npos,"Native source and dimensions did not share a retained update");}
 void empty(){auto result=compile("Window { NativeView() }");check(result.find(".source = {}")!=result.npos&&result.find(".clip = true")!=result.npos,"Native asynchronous empty state was rejected");}
-void isolation(){auto result=compile("Window { Label(text: \"Basic\") }");check(result.find("#include <iiGUI/NativeView.h>")==result.npos,"An unused C++ visual source became a dependency of every view");}
+void isolation(){auto result=compile("Window { Label(text: \"Basic\") }");check(result.find("ii::gui::NativeView::create")==result.npos,"An unused C++ visual source became a dependency of every view");}
 void roots(){
     auto plain=compile("VStack { var count: Int = 0\nLabel(text: count) }");
     check(plain.find("value_count")!=plain.npos&&plain.find("static ii::core::Result<void> build")!=plain.npos,"A standalone View did not produce a mountable activation");

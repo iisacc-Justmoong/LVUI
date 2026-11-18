@@ -12,6 +12,19 @@ ApplicationWindow(title: "Example", windowChrome: .custom) {
 `.custom`을 정적으로 지정한다. LVUI AOT 결과는 이 값을 iiGUI에 전달하며 LVUI를
 런타임에 해석하지 않는다. 타이틀바는 일반 선언형 뷰와 대응하는 뷰모델로 구성한다.
 
+`titleBarVisible: false`는 시스템 타이틀바를 생략하고 사용자 정의 창 프레임을
+선택한다. 기본값은 기존 시스템 프레임이며 `titleBarVisible: true`로 명시할 수 있다.
+값은 창 생성 전에 결정되는 정적 Bool이다. `.custom`과 `false`, `.system`과 `true`는
+함께 쓸 수 있으며 서로 충돌하는 조합은 오류다. 사용자 정의 프레임에서는 `titleBar`에
+별도 View를 선택적으로 전달한다. macOS의 기본 창 버튼은 남으며 다른 데스크톱 호스트의
+앱은 필요한 창 버튼과 드래그 영역을 제공한다. 모바일과 웹은 각 호스트 정책을 따른다.
+
+```lvui
+ApplicationWindow(titleBarVisible: false) {
+    VStack { Label(text: "Content") }
+}
+```
+
 `ii::gui::window_chrome_presentation()`으로 플랫폼별 표시 정책을 구분한다.
 macOS에서는 시스템 창 버튼을 위한 공간을 남긴다. Windows와 Linux에서는 LVUI
 버튼을 닫기, 최소화, 최대화·복원 동작에 연결한다. iPadOS와 Android에서는

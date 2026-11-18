@@ -65,4 +65,79 @@ void diagnostics(){
         check(!code&&code.error().line>0&&code.error().column>0,"Invalid Window input lost its source diagnostic");
     }
 }
-int main(int argc,char** argv){try{std::string name=argc>1?argv[1]:"dynamic";if(name=="dynamic")dynamic();else if(name=="accent")accent();else if(name=="constants")constants();else if(name=="diagnostics")diagnostics();else throw std::runtime_error("Unknown Window test");std::cout<<"Native Window "<<name<<" passed\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+void safe_area(){
+    constexpr auto marker = "@lvui/window-safe-area";
+    const auto ordinary = generate("Window { VStack { Label() } }");
+    check(ordinary.find(marker)!=ordinary.npos && ordinary.find(".insets = ii::gui::Insets{16, 0, 16, 0}")!=ordinary.npos,
+          "A window did not receive the default horizontal content insets");
+    for(auto source:{"Window { Label() }.ignoreSafeArea", "Window { Label() }.ignoreSafeArea()",
+                     "ApplicationWindow { VStack { Label() } }.ignoreSafeArea()",
+                     "AppBootstrapWindow { Label() }.ignoreSafeArea()",
+                     "AppShell(visible: true) { Label() }.ignoreSafeArea()",
+                     "Window { VStack { Label() } }\n.ignoreSafeArea()",
+                     "Application { Scene { Label() }.ignoreSafeArea() }"}) {
+        const auto code = generate(source);
+        check(code.find(marker)==code.npos,"ignoreSafeArea did not remove the default window insets");
+    }
+    const auto scenes = generate("Application { Window { Label() }\nWindow { Label() }.ignoreSafeArea }");
+    const auto first = scenes.find(marker);
+    check(first!=scenes.npos && scenes.find(marker,first+1)==scenes.npos,
+          "Window content insets leaked between application scenes");
+    for(auto source:{"Window { Label() }.ignoreSafeArea(1)", "Window { Label() }.ignoreSafeArea.ignoreSafeArea",
+                     "Window { VStack { Label() }.ignoreSafeArea }", "Window { Label().ignoreSafeArea() }",
+                     "Window { VStack { Label().ignoreSafeArea } }", "Window { Label().unknownModifier }",
+                     "Application { Scene { Label() } }.ignoreSafeArea()"}) {
+        auto code=lvui::compile_native(source);
+        check(!code && code.error().line>0,"An unsupported or misplaced safe-area modifier was accepted");
+    }
+    lvui::NativeCompileOptions options;
+    options.view_factory_only = true;
+    auto embedded = lvui::compile_native("VStack { Label() }", options);
+    check(embedded && embedded->find(marker)==embedded->npos,
+          "An embedded view factory gained application window insets");
+    auto surface_window = lvui::compile_native("Window { Label() }", options);
+    check(surface_window && surface_window->find(marker)!=surface_window->npos,
+          "An explicit window lost its insets on an externally supplied surface");
+    const auto chrome = generate("Window(windowChrome: .custom, titleBar: HStack(id: \"chrome\", height: 32) {}) { VStack(id: \"content\") {} }");
+    check(chrome.find("@lvui/window-chrome-shell")!=chrome.npos && chrome.find(marker)!=chrome.npos,
+          "Custom title bar and padded content were not separated");
+    check(!lvui::compile_native("Window(titleBar: HStack()) { Label() }"),
+          "A custom title bar was accepted with system chrome");
+    check(!lvui::compile_native("Window(windowChrome: .custom, titleBar: 42) { Label() }"),
+          "A title bar accepted a non-View value");
+    const auto hidden = generate("ApplicationWindow(titleBarVisible: false) { Label() }");
+    check(hidden.find(".chrome = ii::gui::WindowChrome::custom")!=hidden.npos &&
+          hidden.find("@lvui/window-chrome-shell")==hidden.npos,
+          "An optional system title bar could not be omitted");
+    const auto shown = generate("ApplicationWindow(titleBarVisible: true) { Label() }");
+    check(shown.find("WindowChrome::custom")==shown.npos,"The visible system title bar changed its default chrome");
+    const auto explicitShown = generate("Window(titleBarVisible: true, windowChrome: .system) { Label() }");
+    check(explicitShown.find("WindowChrome::custom")==explicitShown.npos,"A matching visible system title bar was rejected");
+    const auto explicitHidden = generate("Window(titleBarVisible: false, windowChrome: .custom) { Label() }");
+    check(explicitHidden.find(".chrome = ii::gui::WindowChrome::custom")!=explicitHidden.npos,
+          "A matching hidden system title bar was rejected");
+    const auto replaced = generate("ApplicationWindow(titleBarVisible: false, titleBar: HStack(id: \"chrome\") {}) { Label() }");
+    check(replaced.find(".chrome = ii::gui::WindowChrome::custom")!=replaced.npos &&
+          replaced.find("@lvui/window-chrome-shell")!=replaced.npos,
+          "An omitted system title bar could not be replaced by a custom View");
+    for (auto source:{"Window(titleBarVisible: 1) { Label() }",
+                      "import vm Model\nWindow(titleBarVisible: vm.visible) { Label() }",
+                      "Window(titleBarVisible: false, windowChrome: .system) { Label() }",
+                      "Window(titleBarVisible: true, windowChrome: .custom) { Label() }"})
+        check(!lvui::compile_native(source),"Invalid or conflicting title-bar visibility was accepted");
+    const auto hiddenScene=generate("Application { Scene(titleBarVisible: false) { Label() } }");
+    check(hiddenScene.find(".chrome = ii::gui::WindowChrome::custom")!=hiddenScene.npos,
+          "Application scenes could not omit the system title bar");
+    const auto named_title = generate("const Header: View = HStack(id: \"chrome\") {}\nWindow(windowChrome: .custom, titleBar: Header) { Label() }");
+    check(named_title.find("@lvui/window-chrome-shell")!=named_title.npos,
+          "A named title bar View was not mounted");
+    const auto custom_scene = generate("Application { Scene(windowChrome: .custom, titleBar: HStack() {}) { Label() } }");
+    check(custom_scene.find("@lvui/window-chrome-shell")!=custom_scene.npos && custom_scene.find(marker)!=custom_scene.npos,
+          "Application scene lost its separate title bar or safe area");
+    const auto full_width = generate("Window(windowChrome: .custom, titleBar: HStack() {}) { Label() }.ignoreSafeArea");
+    check(full_width.find("@lvui/window-chrome-shell")!=full_width.npos && full_width.find(marker)==full_width.npos,
+          "Ignoring content insets changed the title bar or kept the default safe area");
+    check(!lvui::compile_native("Window { VStack(id: \"@lvui/window-safe-area\") {} }"),
+          "A user id collided with the generated safe-area widget");
+}
+int main(int argc,char** argv){try{std::string name=argc>1?argv[1]:"dynamic";if(name=="dynamic")dynamic();else if(name=="accent")accent();else if(name=="constants")constants();else if(name=="diagnostics")diagnostics();else if(name=="safe_area")safe_area();else throw std::runtime_error("Unknown Window test");std::cout<<"Native Window "<<name<<" passed\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

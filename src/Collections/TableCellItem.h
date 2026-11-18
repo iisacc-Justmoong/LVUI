@@ -28,6 +28,7 @@ struct TableCellItemConfiguration final {
     double width=234,height=24,padding=8,font_size=13,current_border_width=1;
     bool enabled=true,visible=true,inputable=false,selected=false,current=false,show_divider=true,clip_content=true;
     TablePalette palette;
+    std::optional<TableTypography> typography;
     friend bool operator==(const TableCellItemConfiguration&,const TableCellItemConfiguration&)=default;
 };
 struct TableCellItemRect final {double x=0,y=0,width=0,height=0;};
@@ -39,6 +40,7 @@ struct TableCellItemModelPolicy final {
  using Configuration=TableCellItemConfiguration;using Geometry=TableCellItemGeometry;using Visual=TableCellItemVisual;
  using Color=StyleColor;using Validator=TableCellValueValidator;using Result=TableResult<void>;
  [[nodiscard]] static bool valid_text(std::string_view value)noexcept{return valid_accessibility_text(value);}
+ [[nodiscard]] static bool valid_typography(const std::optional<TableTypography>& value)noexcept{return valid_table_typography(value);}
  [[nodiscard]] static Result reject(std::string message){return std::unexpected(TableError{TableErrorCode::invalid,std::move(message)});}
 };
 template<template<class>class Model>using TableCellItemModelBinding=Model<TableCellItemModelPolicy>;

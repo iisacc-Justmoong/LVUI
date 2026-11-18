@@ -9,9 +9,9 @@
 namespace lvui {
 enum class MenuDirection { automatic,right,left,up,down };
 struct MenuItemPalette final {
-    StyleColor text{1,1,1,.8},disabled_text{1,1,1,.3},detail{1,1,1,.6};
-    StyleColor selected{figma_defaults::accent_blue_default},hover{figma_defaults::panel_surface_alt};
-    StyleColor pressed{figma_defaults::accent_blue_subtle},focus{figma_defaults::accent_blue_default};
+    StyleColor text{figma_defaults::text_title_header_color},disabled_text{1,1,1,.3},detail{1,1,1,.6};
+    StyleColor selected{figma_defaults::accent_blue_selected},hover{figma_defaults::panel_surface_alt};
+    StyleColor pressed{figma_defaults::accent_blue_selected},focus{figma_defaults::accent_blue_default};
     friend bool operator==(const MenuItemPalette&,const MenuItemPalette&)=default;
 };
 struct MenuItemConfiguration final {

@@ -27,6 +27,7 @@ struct TableRowViewConfiguration final {
     double width=717,cell_width=234,cell_height=24,content_spacing=8,font_size=13;
     bool inputable=false,enabled=true,visible=true,show_divider=true;
     TablePalette palette;
+    std::optional<TableTypography> typography;
     friend bool operator==(const TableRowViewConfiguration&,const TableRowViewConfiguration&)=default;
 };
 struct TableRowSlot final {std::size_t index=0;double x=0,width=0;};

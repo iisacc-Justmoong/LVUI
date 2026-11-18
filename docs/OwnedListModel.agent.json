@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/OwnedListModel.md",
-    "sha256": "a69c95ade3adbc3c5b66a97c21a506b275b83e07e8d8a5c822e67b0caa8a9c72",
-    "bytes": 4824,
-    "line_count": 55,
+    "sha256": "d6c8e74bde68c1c92eb5c6ee1cafa28a3bf4df7ff50e17c92241e0c79f48da03",
+    "bytes": 5387,
+    "line_count": 60,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -81,66 +81,66 @@
       "raw": "\n"
     },
     {
-      "id": "b000009",
       "kind": "paragraph",
+      "id": "b000009",
       "start_line": 26,
-      "end_line": 29,
-      "raw": "`ListMemory`는 선택적인 메모리 구현이다. 한 편집을 검증한 뒤 불변 스냅샷을\n게시하며 오래된 리비전은 거절한다. 같은 내용의 교체나 같은 위치로의 이동은\n리비전을 늘리지 않는다. 항목은 최대 65,536개, 전체 텍스트는 64 MiB이며 키는\n비어 있지 않은 고유한 UTF-8이어야 한다. 이전 스냅샷은 이후 편집에도 유지된다.\n"
+      "end_line": 32,
+      "raw": "`ListMemory`는 `IndexedListSource`를 구현한다. `index()`는 해당 리비전의 키 색인과\n불변 행을 공유한다. `ListEdit`으로 한 행을 바꾸면 그 행과 텍스트 총량을 검증하고,\n해당 블록의 참조만 교체한다. 삽입·삭제·이동은 행 순서와 키 위치를 갱신하면서\n유지되는 행의 값을 공유한다. 앱은 성공한 편집의 리비전을 게시하여 소비자를\n깨운다. 같은 값이나 위치는 리비전을 늘리지 않으며 오래된 편집은 거절한다.\n최대 항목 수는 65,536개이고 텍스트 한도는 64 MiB이다. 이전 `ListIndex`와 명시적으로\n내보낸 `ListSnapshot`은 이후 편집에도 유지된다.\n"
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 30,
-      "end_line": 30,
+      "start_line": 33,
+      "end_line": 33,
       "raw": "\n"
     },
     {
-      "id": "b000011",
       "kind": "paragraph",
-      "start_line": 31,
-      "end_line": 37,
-      "raw": "`ListController`는 키 기반 선택을 문서와 분리해 보관한다. 선택은 문서 리비전을\n변경하지 않으며 `view_revision()`으로 선택 변경을 별도로 추적한다. 외부 선택을\n선언형 목록에 반영할 때는 이 값을 `viewRevision`으로 전달할 수 있다.\n앱이 외부 변경 후 `refresh()`를 호출하면 새 스냅샷을 검증하고,\n선택 항목이 제거되었거나 선택할 수 없게 된 경우에만 선택을 비운다. 소스가 게시한\n리비전은 단조 증가해야 한다. 컨트롤러는 생성한 스레드에서 사용하며 새로고침 중\n재진입을 거절한다.\n"
+      "id": "b000011",
+      "start_line": 34,
+      "end_line": 42,
+      "raw": "`ListController`는 키 기반 선택을 문서와 분리해 보관한다. 선택은 문서 리비전을\n변경하지 않으며 `view_revision()`으로 선택 변경을 별도로 추적한다. 외부 선택을\n선언형 목록에 반영할 때는 이 값을 `viewRevision`으로 전달할 수 있다.\n앱이 외부 변경 후 `refresh()`를 호출하면 색인이 있는 원본에서는 이미 검증된\n리비전의 읽기 뷰를 전달받는다. `ListController::index()`로 필요한 키나 행을 읽는다.\n`snapshot()`은 전체 목록을 명시적으로 요청하는 API이다. 스냅샷 전용 `ListSource`\n구현에는 기존 읽기·검증 경로가 적용된다. 컨트롤러는 선택 항목이 제거되거나\n선택할 수 없게 된 경우에만 선택을 비운다. 리비전은 단조 증가해야 하며 컨트롤러는\n생성한 스레드에서 사용한다. 새로고침 중 재진입을 거절한다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 38,
-      "end_line": 38,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "\n"
     },
     {
-      "id": "b000013",
       "kind": "paragraph",
-      "start_line": 39,
-      "end_line": 45,
-      "raw": "`ii::gui::BasicListViewportSource`는 불변 스냅샷과 키 색인을 사용해 기본 높이 또는 키별 높이를\n가진 목록의 보이는 행과 앞뒤 여유 행만 계산한다. 생성 시 제공하는 키별 높이는\n1~8,192 범위의 절대 높이이며 존재하지 않는 키와 잘못된 값은 거절한다. 기본 높이는\n18~256이다. 불변 누적 색인과 이진 탐색으로 행 위치와 스크롤 구간을 찾으며, 스크롤할\n때 전체 목록을 순회하지 않는다. 행 삽입 뒤에는 가능한 한 같은 키와 행 내부 위치를 유지하며,\n사용자의 새로운 스크롤이나 특정 키 표시 요청은 이전 기준점보다 우선한다. 계산에는\n문서 편집이 수반되지 않는다.\n"
+      "id": "b000013",
+      "start_line": 44,
+      "end_line": 50,
+      "raw": "`ii::gui::BasicListViewportSource`는 불변 행과 키 색인을 사용해 기본 높이 또는 키별 높이를\n가진 목록의 보이는 행과 앞뒤 여유 행만 계산한다. 생성 시 제공하는 키별 높이는\n1~8,192 범위의 절대 높이이며 존재하지 않는 키와 잘못된 값은 거절한다. 기본 높이는\n18~256이다. 불변 누적 색인과 이진 탐색으로 행 위치와 스크롤 구간을 찾으며, 스크롤할\n때 전체 목록을 순회하지 않는다. 행 삽입 뒤에는 가능한 한 같은 키와 행 내부 위치를 유지하며,\n사용자의 새로운 스크롤이나 특정 키 표시 요청은 이전 기준점보다 우선한다. 계산에는\n문서 편집이 수반되지 않는다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 46,
-      "end_line": 46,
+      "start_line": 51,
+      "end_line": 51,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 47,
-      "end_line": 53,
+      "start_line": 52,
+      "end_line": 58,
       "raw": "`LVUI.OwnedList.Model`은 스냅샷 보존, 선택과 문서 상태 분리, 원자적 편집, 유효성,\n오래된 요청, 동시 편집과 스레드 경계를 검사한다. `LVUI.OwnedList.Viewport`는\n10,000개 항목의 부분 조회, 가변 높이 경계, 스크롤 기준점, 표시 요청과 입력 한도를 검사한다.\n`LVUI.OwnedList.Drag`는 후보 위치, 제자리 이동, 비활성 대상, 서로 다른 스냅샷과\n스크롤 방향을 검사한다. 일반\n[독립 목록 화면](NativeOwnedListView.md)과 [기본 목록 선언](NativeOwnedListPanel.md)은\n이를 직접 사용한다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 54,
-      "end_line": 54,
+      "start_line": 59,
+      "end_line": 59,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 55,
-      "end_line": 55,
+      "start_line": 60,
+      "end_line": 60,
       "raw": "목록 표시 범위와 드래그 판정은 각각 `iiGUI/ListViewport.h`, `iiGUI/ListDrag.h`에 있다. LVUI는 불변 스냅샷·요청·결과 및 `ListViewportBinding`·`ListDragBinding`을 제공한다. 앱은 구현을 명시적으로 주입한다.\n"
     }
   ],
@@ -192,15 +192,8 @@
         "context": "paragraph"
       },
       {
-        "block_id": "b000011",
-        "line": 36,
-        "text": "리비전은 단조 증가해야 한다. 컨트롤러는 생성한 스레드에서 사용하며 새로고침 중",
-        "basis": "lexical_match",
-        "context": "paragraph"
-      },
-      {
         "block_id": "b000013",
-        "line": 43,
+        "line": 48,
         "text": "때 전체 목록을 순회하지 않는다. 행 삽입 뒤에는 가능한 한 같은 키와 행 내부 위치를 유지하며,",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -213,14 +206,14 @@
         "label": "독립 목록 화면",
         "target": "NativeOwnedListView.md",
         "kind": "relative",
-        "line": 52
+        "line": 57
       },
       {
         "block_id": "b000015",
         "label": "기본 목록 선언",
         "target": "NativeOwnedListPanel.md",
         "kind": "relative",
-        "line": 52
+        "line": 57
       }
     ],
     "tables": []

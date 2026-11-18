@@ -5,6 +5,11 @@ function(lvui_require_core_observation)
     endif()
     set(CMAKE_REQUIRED_LIBRARIES iiSDKCore::Observation)
     set(CMAKE_CXX_STANDARD 23)
+    if(EMSCRIPTEN)
+        # This probe only includes headers; never require the optional C++
+        # module scanner for it, even when the application uses modules.
+        set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+    endif()
     unset(LVUI_CORE_SCOPED_OBSERVATION CACHE)
     check_cxx_source_compiles("#include <iiSDKCore/Core/Property/Observable.h>
 int main() {

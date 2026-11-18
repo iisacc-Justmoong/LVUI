@@ -53,6 +53,7 @@ struct ButtonConfiguration final {
     bool motion_enabled = true;
     bool enter_key_activation = true;
     ButtonSelectionStyle selection_style = ButtonSelectionStyle::accent;
+    bool pointer_focus_visible = true;
     friend bool operator==(const ButtonConfiguration&,const ButtonConfiguration&) = default;
 };
 [[nodiscard]] inline ButtonConfiguration icon_button_configuration() {

@@ -9,6 +9,14 @@ import ii_lvui
 
 
 class PythonCompilerTests(unittest.TestCase):
+    def test_window_safe_area(self):
+        padded = ii_lvui.compile_native('Window { VStack { Label() } }')
+        self.assertIn('.insets = ii::gui::Insets{16, 0, 16, 0}', padded)
+        full_width = ii_lvui.compile_native('Window { VStack { Label() } }.ignoreSafeArea()')
+        self.assertNotIn('@lvui/window-safe-area', full_width)
+        with self.assertRaises(ii_lvui.CompileError):
+            ii_lvui.compile_native('Window { VStack { Label() }.ignoreSafeArea() }')
+
     def test_default_state_and_binding(self):
         code = ii_lvui.compile_native('''const heading: String = "Ready"
 var draft: String = heading

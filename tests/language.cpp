@@ -68,6 +68,17 @@ void lexing() {
     check(!lvui::tokenize("\"unterminated") && !lvui::tokenize("/* unterminated"), "Truncated lexical token accepted");
 }
 void views() {
+    for (auto source : {"Window { Label() }.ignoreSafeArea()",
+                        "ApplicationWindow { Label() }.ignoreSafeArea",
+                        "AppBootstrapWindow { Label() }.ignoreSafeArea()",
+                        "AppShell(visible: true) { Label() }.ignoreSafeArea()",
+                        "Application { Scene { Label() }.ignoreSafeArea() }"})
+        check(bool(lvui::parse_view(source)), "Window safe-area modifier was rejected");
+    for (auto source : {"VStack { Label() }.ignoreSafeArea()",
+                        "Window { VStack { Label() }.ignoreSafeArea() }",
+                        "Window { Label().ignoreSafeArea() }",
+                        "Application { Scene { Label() } }.ignoreSafeArea()"})
+        bad(source, "Window");
     const auto constants = good("const title: String = \"Counter\"\nvar count: Int = 0\nWindow { @State @Bindable var local: Int = 1\n Label(text: title) }");
     check(constants.bindings().size() == 2 && !constants.bindings()[0].mutable_value && constants.bindings()[1].mutable_value,
           "const and var lost their mutability distinction");

@@ -1,5 +1,44 @@
 # 네이티브 반응형 레이아웃
 
+## 창 콘텐츠의 기본 여백
+
+`Window`, `ApplicationWindow`, `Scene`의 콘텐츠 영역에는 좌우 각각 16 논리 픽셀의
+기본 여백이 적용된다. 이 여백은 타이틀바를 제외한 콘텐츠 안쪽에만 적용되며 상하
+여백을 추가하지 않는다. 고해상도 디스플레이의 실제 픽셀 변환은 호스트가 처리한다.
+창의 배경은 전체 영역에 남으며, 콘텐츠 뷰가 지정한 여백은 기본 여백에 더해진다.
+
+```lvui
+Window(title: "Editor") {
+    VStack { Label(text: "Content") }
+}
+
+// 창에 직접 지정한다.
+Window(title: "Full width") {
+    VStack { Label(text: "Content") }
+}.ignoreSafeArea()
+```
+
+`.ignoreSafeArea`와 `.ignoreSafeArea()`는 이 기본 좌우 여백만 제거한다. `Window`,
+`ApplicationWindow`, `Scene`, `AppBootstrapWindow`, `AppShell`에 직접 지정한다.
+`VStack` 등은 지원하지 않으며 운영체제의 노치·시스템 바나 타이틀바까지 확장하지 않는다.
+창마다 설정을 갖고, 내장용 일반 뷰 팩터리는 창이 아니므로 기본 여백이 추가되지 않는다.
+명시적 창을 외부 표면에 그릴 때도 같은 규칙이며, 폴링이나 별도 프레임 구동은 만들지 않는다.
+
+사용자 정의 타이틀바는 일반 뷰와 구별할 수 있도록 `windowChrome: .custom`과 함께
+`titleBar`에 전달한다. 타이틀바는 전체 폭을 차지하며 그 아래 콘텐츠에만 기본
+여백이 적용된다. 기존에 콘텐츠 트리 안에서 직접 구성한 타이틀바는 이 입력으로
+옮겨야 구분된다.
+
+```lvui
+Window(windowChrome: .custom, titleBar: HStack(height: 32) { Label(text: "Title") }) {
+    VStack { Label(text: "Content") }
+}
+```
+
+일반 `Window`의 `build`는 내장 뷰용이므로 창 여백을 추가하지 않는다. 독립 창
+표면에는 `build_window_content`를 사용한다. `Application` 및 외부 표면용으로
+컴파일한 명시적 `Window`의 `build`에는 기본 여백이 적용된다.
+
 스택의 배치 입력을 AOT 생성 C++와 iiGUI의 배치 엔진에 연결한다. 값이 바뀌면 같은
 위젯의 배치 정보를 갱신한다. 콘텐츠 팩터리·문서 저장·백엔드 생성 경로를 호출하지
 않으며 생성 앱에서 LVUI 소스·AST·토큰 이름을 해석하지 않는다.

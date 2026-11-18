@@ -1,4 +1,5 @@
 #include "NativeOwnedSheet.generated.h"
+#include <iiGUI/SrgbColor.h>
 #include <iiGUI/WidgetState.h>
 
 #include <algorithm>
@@ -18,6 +19,11 @@ std::string text(ii::gui::Widget field) {
     const auto snapshot = take(field.snapshot());
     return take(field.text_content({0, snapshot.text_length})).text;
 }
+const ii::gui::TextRun& text_run(const ii::gui::CanvasFrame& frame, std::string_view text) {
+    for (const auto& run : frame.texts) if (run.text == text) return run;
+    for (const auto& layer : frame.overlays) for (const auto& run : layer.texts) if (run.text == text) return run;
+    throw std::runtime_error("Generated Sheet text was not drawn");
+}
 }
 
 int main() {
@@ -31,6 +37,13 @@ int main() {
     require(found != nodes.end(), "Generated Sheet did not mount");
     auto sheet = take(tree->find(found->id));
     (void)take(tree->drawing_snapshot({800, 600})); good(sheet.open_at(0, 0));
+    const auto frame = take(tree->drawing_snapshot({800, 600}));
+    const auto& title = text_run(frame,"Export"); const auto& description = text_run(frame,"Save your file");
+    require(title.font_size==17 && title.line_height==17 && title.font_weight==600 &&
+            title.color==ii::gui::srgb_to_linear(ii::gui::WidgetColor{1,1,1,.9}) &&
+            description.font_size==13 && description.line_height==13 && description.font_weight==500 &&
+            description.color==ii::gui::srgb_to_linear(ii::gui::WidgetColor{1,1,1,.6}),
+            "Generated Sheet did not use the Figma text tokens");
     auto editor = take(sheet.popup_content("editor")); const auto id = take(editor.snapshot()).id;
     require(text(editor) == "Document" && take(sheet.snapshot()).bounds.width == 560 && scope->backend_0.opens == 1,
             "Generated Sheet did not mount its retained content");

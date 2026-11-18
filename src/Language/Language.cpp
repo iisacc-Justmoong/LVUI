@@ -742,6 +742,31 @@ struct Parser final {
                 }
             }
         }
+        // View modifiers are distinct from expressions and can continue on the
+        // following line without consuming a sibling View's separator.
+        for (;;) {
+            auto modifier = cursor;
+            while (tokens[modifier].kind == TokenKind::newline) ++modifier;
+            if (tokens[modifier].kind != TokenKind::dot) break;
+            cursor = modifier;
+            const auto modifier_position = position();
+            ++cursor;
+            if (!at(TokenKind::identifier) || current().text != "ignoreSafeArea")
+                error("Unknown View modifier; expected ignoreSafeArea");
+            ++cursor;
+            if (!result.component || (result.component->spelling != "Window" &&
+                                      result.component->spelling != "ApplicationWindow" &&
+                                      result.component->spelling != "Scene" &&
+                                      result.component->spelling != "AppBootstrapWindow" &&
+                                      result.component->spelling != "AppShell"))
+                error("ignoreSafeArea requires a Window-type component");
+            if (result.ignore_safe_area) error("Duplicate ignoreSafeArea modifier");
+            if (accept(TokenKind::left_paren)) {
+                newlines();
+                expect(TokenKind::right_paren, "ignoreSafeArea does not take arguments");
+            }
+            result.ignore_safe_area = modifier_position;
+        }
         view_names.pop_back();
         active_view_depth = previous_depth;
         return result;

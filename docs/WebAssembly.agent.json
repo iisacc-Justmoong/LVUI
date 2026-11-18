@@ -1,0 +1,713 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:690fb386a37896cedf945d2f98c69349b52e4ca7c2a42df806de387782c895ea",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/WebAssembly.md",
+    "sha256": "a291c36897981be911a6eac01ae9982b23212facd78b676d98e0843f0d4a7639",
+    "bytes": 15669,
+    "line_count": 234,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "LVUI WebAssembly 대상",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# LVUI WebAssembly 대상\n",
+      "level": 1,
+      "title": "LVUI WebAssembly 대상"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 6,
+      "raw": "웹 대상은 호스트의 `lvui-compile`이 `.lvui`를 C++로 미리 변환하고, 생성된 뷰와\n`LVUI::Native`, iiGUI 및 iiSDKCore를 Emscripten으로 연결한다. 같은 iiGUI 컴포넌트,\n레이아웃, C++ 뷰모델과 변경 알림을 사용한다. 브라우저에는 단일 캔버스와 WebGL2\n호스트를 제공하며 LVUI 파서나 DOM 위젯 트리는 배포하지 않는다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "heading",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "## 계약\n",
+      "level": 2,
+      "title": "계약"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "list",
+      "start_line": 10,
+      "end_line": 33,
+      "raw": "- 앱은 교차 빌드에서 호스트용 `LVUI_HOST_COMPILER`와 Emscripten용 LVUI, iiGUI,\n  같은 실행 모드의 iiSDKCore 패키지를 명시한다. 네이티브 라이브러리를 WebAssembly\n  링크에 혼합하지 않는다.\n- `lvui_add_application`으로 생성한 대상에 `lvui_configure_web`을 적용한다. 앱이\n  `SHELL_FILE`과 선택적인 `RESOURCES`를 제공하며, 리소스는 `/resources/`로\n  사전 로드한다. `lvui_install_web`은 HTML과 대응하는 JS, WASM 및 리소스가 있는\n  경우 데이터 파일을 같은 디렉터리에 설치한다.\n- 셸은 `#canvas`와 Emscripten의 `{{{ SCRIPT }}}` 삽입점을 제공한다. CSS는 캔버스의\n  논리 크기를 소유한다. 가변 크기를 원하면 창 선언의 고정 크기로 CSS를 덮어쓰지\n  않도록 하고, 상위 요소에 명확한 크기를 지정한다.\n- 예제 셸은 캔버스를 뷰포트에 맞추고 `data-iigui-accessibility`로 iiGUI 의미\n  정보를 브라우저 접근성 피어에 연결한다. 자체 셸은 추가로\n  `data-iigui-respect-minimum`을 지정해 최소 창 크기보다 작은 화면에서 브라우저\n  스크롤을 사용할 수 있다. 두 정책은 컴포넌트의 그리기나 상태 소유권을 DOM에 넘기지 않는다.\n- iiGUI는 캔버스 자체의 크기와 기기 배율 변경을 이벤트로 관찰하여 공통 위젯에\n  배치를 다시 요청한다. 0 크기의 캔버스에서는 그리기를 중지하고 유효한 크기가\n  돌아오면 다시 배치한다. 반응형 값은 변경 알림과 `EventListener.onSizeChanged`를\n  통해 C++ 뷰모델에 연결할 수 있다.\n- pthread 빌드는 SharedArrayBuffer, OffscreenCanvas/WebGL2와 worker의\n  `requestAnimationFrame`, `Atomics.waitAsync`, Worker FontFace가 필요하고,\n  서버에 COOP `same-origin`과 COEP `require-corp`가 필요하다. 단일 스레드에는\n  이 요구 없이 WebGL2가 필요하다. `ResizeObserver`가 없으면 창과 배율만 관찰한다.\n  입력·글꼴·접근성의 실제 범위는 [iiGUI 웹 호스트](../../iiGUI/docs/HostPlatforms.md#web-실행-계약)와\n  [캔버스 크기 계약](../../iiGUI/docs/WebResponsive.md)을 따른다.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "앱은 교차 빌드에서 호스트용 `LVUI_HOST_COMPILER`와 Emscripten용 LVUI, iiGUI,\n스레드 지원 iiSDKCore 패키지를 명시한다. 네이티브 설치 라이브러리를 WebAssembly\n링크에 혼합하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`lvui_add_application`으로 생성한 대상에 `lvui_configure_web`을 적용한다. 앱이\n`SHELL_FILE`과 선택적인 `RESOURCES`를 제공하며, 리소스는 `/resources/`로\n사전 로드한다. `lvui_install_web`은 HTML과 대응하는 JS, WASM 및 리소스가 있는\n경우 데이터 파일을 같은 디렉터리에 설치한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "셸은 `#canvas`와 Emscripten의 `{{{ SCRIPT }}}` 삽입점을 제공한다. CSS는 캔버스의\n논리 크기를 소유한다. 가변 크기를 원하면 창 선언의 고정 크기로 CSS를 덮어쓰지\n않도록 하고, 상위 요소에 명확한 크기를 지정한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "예제 셸은 캔버스를 뷰포트에 맞추고 `data-iigui-accessibility`로 iiGUI 의미\n정보를 브라우저 접근성 피어에 연결한다. 자체 셸은 추가로\n`data-iigui-respect-minimum`을 지정해 최소 창 크기보다 작은 화면에서 브라우저\n스크롤을 사용할 수 있다. 두 정책은 컴포넌트의 그리기나 상태 소유권을 DOM에 넘기지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "iiGUI는 캔버스 자체의 크기와 기기 배율 변경을 이벤트로 관찰하여 공통 위젯에\n배치를 다시 요청한다. 0 크기의 캔버스에서는 그리기를 중지하고 유효한 크기가\n돌아오면 다시 배치한다. 반응형 값은 변경 알림과 `EventListener.onSizeChanged`를\n통해 C++ 뷰모델에 연결할 수 있다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "스레드와 SharedArrayBuffer, OffscreenCanvas/WebGL2, worker의\n`requestAnimationFrame`, `Atomics.waitAsync`, Worker FontFace를 지원하는 보안\n브라우저 환경이 필요하다. 서버는 COOP `same-origin`과 COEP `require-corp`를\n제공해야 한다. `ResizeObserver`가 없으면 창 resize와 배율 변경만 관찰한다.\n입력·글꼴·접근성의 실제 범위는 [iiGUI 웹 호스트](../../iiGUI/docs/HostPlatforms.md#web-실행-계약)와\n[캔버스 크기 계약](../../iiGUI/docs/WebResponsive.md)을 따른다.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 34,
+      "end_line": 34,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "heading",
+      "start_line": 35,
+      "end_line": 35,
+      "raw": "## 소스에서 예제 빌드\n",
+      "level": 2,
+      "title": "소스에서 예제 빌드"
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 36,
+      "end_line": 36,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 37,
+      "end_line": 40,
+      "raw": "다음은 Workspace 체크아웃과 Emscripten, Ninja 및 이미 네이티브로 빌드한\n`SDK/LVUI/build/lvui-compile`을 전제로 한다. 예제는 기존 C++ 뷰모델 카운터를\n사용하며 별도의 뷰 디자인이나 DOM 컴포넌트를 만들지 않는다. 설치 접두사는 모두\n각 저장소의 `build/` 아래이다.\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "blank",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "\n"
+    },
+    {
+      "id": "b000013",
+      "kind": "fenced_code",
+      "start_line": 42,
+      "end_line": 74,
+      "raw": "```sh\nws=/Volumes/Storage/Workspace\nemcmake cmake -S \"$ws/SDK/iiSDKCore\" -B \"$ws/SDK/iiSDKCore/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DIISDKCORE_BUILD_EXAMPLES=OFF \\\n  -DIISDKCORE_WASM_THREADS=ON -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/iiSDKCore/build/web-stage\"\ncmake --build \"$ws/SDK/iiSDKCore/build/web\" --parallel 4\ncmake --install \"$ws/SDK/iiSDKCore/build/web\"\nemcmake cmake -S \"$ws/SDK/iiGUI\" -B \"$ws/SDK/iiGUI/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DIIGUI_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/iiGUI/build/web-stage\"\ncmake --build \"$ws/SDK/iiGUI/build/web\" --parallel 4\ncmake --install \"$ws/SDK/iiGUI/build/web\"\nemcmake cmake -S \"$ws/SDK/LVUI\" -B \"$ws/SDK/LVUI/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/web-stage\"\ncmake --build \"$ws/SDK/LVUI/build/web\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/web\"\nemcmake cmake -S \"$ws/SDK/LVUI/example/Web\" -B \"$ws/SDK/LVUI/build/web-example\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DiiGUI_DIR=\"$ws/SDK/iiGUI/build/web-stage/lib/cmake/iiGUI\" \\\n  -DLVUI_DIR=\"$ws/SDK/LVUI/build/web-stage/lib/cmake/LVUI\" \\\n  -DLVUI_HOST_COMPILER=\"$ws/SDK/LVUI/build/lvui-compile\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/web-package\"\ncmake --build \"$ws/SDK/LVUI/build/web-example\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/web-example\"\n```\n",
+      "language": "sh",
+      "code": "ws=/Volumes/Storage/Workspace\nemcmake cmake -S \"$ws/SDK/iiSDKCore\" -B \"$ws/SDK/iiSDKCore/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DIISDKCORE_BUILD_EXAMPLES=OFF \\\n  -DIISDKCORE_WASM_THREADS=ON -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/iiSDKCore/build/web-stage\"\ncmake --build \"$ws/SDK/iiSDKCore/build/web\" --parallel 4\ncmake --install \"$ws/SDK/iiSDKCore/build/web\"\nemcmake cmake -S \"$ws/SDK/iiGUI\" -B \"$ws/SDK/iiGUI/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DIIGUI_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/iiGUI/build/web-stage\"\ncmake --build \"$ws/SDK/iiGUI/build/web\" --parallel 4\ncmake --install \"$ws/SDK/iiGUI/build/web\"\nemcmake cmake -S \"$ws/SDK/LVUI\" -B \"$ws/SDK/LVUI/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/web-stage\"\ncmake --build \"$ws/SDK/LVUI/build/web\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/web\"\nemcmake cmake -S \"$ws/SDK/LVUI/example/Web\" -B \"$ws/SDK/LVUI/build/web-example\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DiiGUI_DIR=\"$ws/SDK/iiGUI/build/web-stage/lib/cmake/iiGUI\" \\\n  -DLVUI_DIR=\"$ws/SDK/LVUI/build/web-stage/lib/cmake/LVUI\" \\\n  -DLVUI_HOST_COMPILER=\"$ws/SDK/LVUI/build/lvui-compile\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/web-package\"\ncmake --build \"$ws/SDK/LVUI/build/web-example\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/web-example\"\n",
+      "closed": true
+    },
+    {
+      "id": "b000014",
+      "kind": "blank",
+      "start_line": 75,
+      "end_line": 75,
+      "raw": "\n"
+    },
+    {
+      "id": "b000015",
+      "kind": "paragraph",
+      "start_line": 76,
+      "end_line": 81,
+      "raw": "결과 디렉터리의 `LVUICounterWeb.html`, `.js`, `.wasm`, `.data`와 생성된 경우\n`.worker.js`를 함께 제공한다. 예제 셸은 캔버스를 부모에 맞추기 위해 CSS 크기를\n우선한다. 자체 앱은 셸과 크기 정책을 교체할 수 있다. 기본 글꼴 입력은\n`SDK/iiGUI/resources/native`에서 가져오며, 다른 소스 경로는 예제의\n`LVUI_WEB_IIGUI_RESOURCE_DIR`로 지정한다. Web 타깃의 Python 컴파일러 브리지는\n기본으로 빌드하지 않는다. 호스트의 네이티브 Python API와 컴파일러는 유지한다.\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "blank",
+      "start_line": 82,
+      "end_line": 82,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "paragraph",
+      "start_line": 83,
+      "end_line": 89,
+      "raw": "같은 Web 예제 빌드와 설치 명령은 `LVUIReadingListWeb.html`,\n`LVUIInventoryWeb.html`, `LVUIControlsFixtureWeb.html`,\n`LVUIRadioRowsFixtureWeb.html`, `LVUIToggleFixtureWeb.html`,\n`LVUISliderFixtureWeb.html`도 생성한다. 앞의 두 예제는 기존 GettingStarted의\n`.lvui` 뷰와 C++ 뷰모델을 그대로 사용한다. 나머지는 기존 컨트롤 검증 fixture이며\n일부는 색상 재정의 시험 항목을 포함한다. 각 HTML은 같은 이름의\nJS·WASM·data·worker 파일과 함께 제공해야 한다.\n"
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 90,
+      "end_line": 90,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "paragraph",
+      "start_line": 91,
+      "end_line": 95,
+      "raw": "웹의 편집용 `TextLine`과 IME는 아직 미구현이다. `InputField`가 포함된 읽기 목록과\n복합 컨트롤 fixture는 현재 뷰 생성에 실패하는 재현 사례이며, 인벤토리 표의 셀도\n편집할 수 없다. 미지원 편집 요청은 `unsupported`로 보고하고 표의 나머지 입력과\n정렬은 계속할 수 있다. 라디오·체크박스·토글·슬라이더 fixture는 해당 편집 서비스에\n의존하지 않는다.\n"
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 96,
+      "end_line": 96,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "paragraph",
+      "start_line": 97,
+      "end_line": 100,
+      "raw": "다른 앱에서는 `find_package`로 두 대상 패키지를 찾고 `lvui_add_application` 다음에\n`lvui_configure_web(MyApp SHELL_FILE <파일> RESOURCES <파일들>)`과\n`lvui_install_web(MyApp DESTINATION <상대경로>)`을 호출한다. 같은 이름의 리소스는\n충돌로 거부한다. 리소스가 없으면 `.data` 설치 항목을 만들지 않는다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "heading",
+      "start_line": 102,
+      "end_line": 102,
+      "raw": "## 검증 경계\n",
+      "level": 2,
+      "title": "검증 경계"
+    },
+    {
+      "id": "b000024",
+      "kind": "blank",
+      "start_line": 103,
+      "end_line": 103,
+      "raw": "\n"
+    },
+    {
+      "id": "b000025",
+      "kind": "paragraph",
+      "start_line": 104,
+      "end_line": 106,
+      "raw": "빌드·헤드리스 자동 테스트와 실제 브라우저의 입력·출력·시각 검증은 별개이다.\n전체 컴포넌트의 브라우저별 동작이나 완전한 애플리케이션 기능을 위 계약만으로\n보증하지 않는다.\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "blank",
+      "start_line": 107,
+      "end_line": 107,
+      "raw": "\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "paragraph",
+      "start_line": 108,
+      "end_line": 112,
+      "raw": "2026-11-16 macOS arm64에서 현재 소스로 iiSDKCore·iiGUI·LVUI Web 정적 패키지를\n교차 빌드하고, 설치 패키지 소비자가 카운터 뷰와 크기 콜백 fixture를 AOT C++로\n변환해 WebAssembly에 컴파일·링크했다. HTML·JS·WASM·data·worker 파일의 설치도\n확인했다. 네이티브 헤드리스 테스트와 JS 모의 관찰자는 실제 브라우저나 GPU 화면,\n입력 및 모든 컴포넌트의 품질을 검증한 결과가 아니다.\n"
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 113,
+      "end_line": 113,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 114,
+      "end_line": 114,
+      "raw": "## 로컬에서 제공하기\n",
+      "level": 2,
+      "title": "로컬에서 제공하기"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 115,
+      "end_line": 115,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 116,
+      "end_line": 117,
+      "raw": "다음 명령은 필요한 격리 헤더를 붙여 loopback 주소에서만 파일을 제공한다.\n서버의 기존 안내 문구는 HelloHosts를 가리키므로 실제 예제 주소는 아래와 같다.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 118,
+      "end_line": 118,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "fenced_code",
+      "start_line": 119,
+      "end_line": 122,
+      "raw": "```sh\npython3 -B \"$ws/SDK/iiGUI/tools/serve_web.py\" \"$ws/SDK/LVUI/build/web-package\"\n# http://127.0.0.1:8765/LVUICounterWeb.html\n```\n",
+      "language": "sh",
+      "code": "python3 -B \"$ws/SDK/iiGUI/tools/serve_web.py\" \"$ws/SDK/LVUI/build/web-package\"\n# http://127.0.0.1:8765/LVUICounterWeb.html\n",
+      "closed": true
+    },
+    {
+      "id": "b000034",
+      "kind": "blank",
+      "start_line": 123,
+      "end_line": 123,
+      "raw": "\n"
+    },
+    {
+      "id": "b000035",
+      "kind": "paragraph",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "이 명령은 예제를 실행하거나 검증했다는 뜻이 아니며, 사용자가 직접 실행한다.\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "blank",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "\n"
+    },
+    {
+      "id": "b000037",
+      "kind": "heading",
+      "start_line": 126,
+      "end_line": 126,
+      "raw": "## 실제 브라우저 검증\n",
+      "level": 2,
+      "title": "실제 브라우저 검증"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 127,
+      "end_line": 127,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "paragraph",
+      "start_line": 128,
+      "end_line": 133,
+      "raw": "2026-11-16 macOS arm64의 Chromium 157 기반 브라우저에서 위 카운터 예제를\n실행했다. 1280×720과 390×844 뷰포트에서 `+`의 반복 입력, C++ 뷰모델 값과\n레이블의 갱신, `Reset`, 크기 변경 후 상태 유지를 확인했다. 별도의 임베디드\nfixture에서는 720×480과 320×480 캔버스 사이의 재배치와 0×0에서 복원한 뒤\n입력 및 기존 값 유지를 확인했다. 포인터와 스페이스 키 활성화도 확인했으며,\n검증한 두 페이지에서 브라우저 콘솔 경고와 오류는 관찰되지 않았다.\n"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 134,
+      "end_line": 134,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 135,
+      "end_line": 137,
+      "raw": "이 검증은 카운터 예제의 `Window`, `VStack`, `Label`, `PushButton`과 해당 입력\n경로에 한정된다. 모든 LVUI 컴포넌트, 브라우저 엔진, 실제 모바일 기기 및 GPU\n구현에 대한 검증은 아니다.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 138,
+      "end_line": 138,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 139,
+      "end_line": 145,
+      "raw": "같은 날 Chromium 157 기반 브라우저에서 추가로 표의 행·열 렌더링과 머리글 정렬,\n라디오 그룹의 상호 배타적 선택, 체크박스와 토글의 전환, 슬라이더 드래그와\n방향키를 확인했다. 1280×720과 390×844 사이의 크기 변경 후 선택과 슬라이더\n값이 유지되었다. 인벤토리 예제의 390px 화면에서 오른쪽 열이 계속 잘린다는\n초기 판단은 렌더링이 안정되기 전의 관찰이었다. 다시 확인한 결과 표는 사용 가능한\n폭으로 줄어들며 방향키로 마지막 열을 선택하면 내부 스크롤이 열 전체를 보인다.\n1280px로 넓힌 뒤에도 선택은 유지되었다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 146,
+      "end_line": 146,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 147,
+      "end_line": 150,
+      "raw": "셀 편집 진입은 웹 텍스트 배치가 없어 지원되지 않으며, 오류 처리 수정 후에는\n편집 요청 뒤에도 정렬과 키보드 선택을 계속할 수 있음을 확인했다. 읽기 목록과\n복합 컨트롤 fixture는 같은 미지원 입력 필드 때문에 아직 브라우저에서 열리지\n않는다.\n"
+    },
+    {
+      "id": "b000046",
+      "kind": "blank",
+      "start_line": 151,
+      "end_line": 151,
+      "raw": "\n"
+    },
+    {
+      "id": "b000047",
+      "kind": "paragraph",
+      "start_line": 152,
+      "end_line": 160,
+      "raw": "선택형 최소 크기 정책을 적용한 별도 Chromium 검증에서는 390px 뷰포트에서\n브라우저 가로 스크롤로 인벤토리의 `Status` 열에 도달해 정렬했다. 이 정책은\n고정 최소 폭을 지키는 대안이며 자동 재배치를 뜻하지 않는다. 같은 브라우저의\n접근성 트리에서 카운터의 버튼과 라디오·체크박스의 역할 및 상태를 확인하고\nTab, Space, 방향키로 iiGUI 뷰모델과 화면이 함께 갱신됨을 확인했다. 스위치의\n전환과 슬라이더의 0–10 범위 및 Home·End 입력도 브라우저 의미 트리와 캔버스에서\n확인했다. 임베디드 실험에서는 캔버스를 숨기면 피어가 제거되고 복원하면 이전\n카운터 값과 입력이 유지되었다. 라디오 그룹 관계와 텍스트 입력·표 접근성은 아직\n웹 피어에 연결하지 않았다. 실제 스크린리더나 다른 브라우저 엔진은 검증하지 않았다.\n"
+    },
+    {
+      "id": "b000048",
+      "kind": "blank",
+      "start_line": 161,
+      "end_line": 161,
+      "raw": "\n"
+    },
+    {
+      "id": "b000049",
+      "kind": "heading",
+      "start_line": 162,
+      "end_line": 162,
+      "raw": "## LVUI 문법으로 웹 앱 작성\n",
+      "level": 2,
+      "title": "LVUI 문법으로 웹 앱 작성"
+    },
+    {
+      "id": "b000050",
+      "kind": "blank",
+      "start_line": 163,
+      "end_line": 163,
+      "raw": "\n"
+    },
+    {
+      "id": "b000051",
+      "kind": "paragraph",
+      "start_line": 164,
+      "end_line": 168,
+      "raw": "`example/Web/Declarative`는 기존 카운터의 컴포넌트 배치를 재사용한다. `Main.lvui`의\n`Application`과 `ApplicationWindow`에서 `Label`, `PushButton`을 선언하고,\n`WebCounterModel.h`의 iiSDKCore `Observable`과 명령에 연결한다. 런타임 파싱이나\n별도의 DOM 위젯 없이 LVUI가 생성한 C++ 뷰를 iiGUI 캔버스에 표시한다. 예제와\n기본 웹 셸은 LVUI 설치 패키지에도 포함된다.\n"
+    },
+    {
+      "id": "b000052",
+      "kind": "blank",
+      "start_line": 169,
+      "end_line": 169,
+      "raw": "\n"
+    },
+    {
+      "id": "b000053",
+      "kind": "paragraph",
+      "start_line": 170,
+      "end_line": 172,
+      "raw": "소비자 CMake에서는 Web용 iiSDKCore·iiGUI·LVUI 패키지를 찾고 다음과 같이 앱을\n정의한다. `INCLUDES`의 헤더는 소비자 소스 디렉터리에서 찾는다. 다른 디렉터리의\n헤더는 해당 대상에 `target_include_directories`로 추가한다.\n"
+    },
+    {
+      "id": "b000054",
+      "kind": "blank",
+      "start_line": 173,
+      "end_line": 173,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "fenced_code",
+      "start_line": 174,
+      "end_line": 181,
+      "raw": "```cmake\nfind_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Native)\nfind_package(iiGUI 0.6 CONFIG REQUIRED)\nlvui_add_web_application(MyApp\n    SOURCE Main.lvui\n    INCLUDES WebCounterModel.h\n    INSTALL_DESTINATION .)\n```\n",
+      "language": "cmake",
+      "code": "find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Native)\nfind_package(iiGUI 0.6 CONFIG REQUIRED)\nlvui_add_web_application(MyApp\n    SOURCE Main.lvui\n    INCLUDES WebCounterModel.h\n    INSTALL_DESTINATION .)\n",
+      "closed": true
+    },
+    {
+      "id": "b000056",
+      "kind": "blank",
+      "start_line": 182,
+      "end_line": 182,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "paragraph",
+      "start_line": 183,
+      "end_line": 191,
+      "raw": "기본 셸은 설치된 LVUI에서, 기본 글꼴과 라이선스는 설치된 iiGUI의\n`iiGUI_NATIVE_RESOURCES`에서 사용한다. `SHELL_FILE`로 셸을 교체하고,\n`RESOURCES`로 추가 파일을 `/resources/`에 사전 로드할 수 있다.\n`NO_DEFAULT_FONTS`는 iiGUI 기본 리소스의 자동 포함을 끈다. 같은 파일 이름의\n리소스는 충돌로 거부한다. 기본 부트스트랩은 `Application` 루트를 대상으로 하며,\n별도의 초기화나 재사용 `Window` 루트에는 기존 `CONFIGURE_SOURCE`를 지정한다.\n`NAME`, `STYLE_FILE`, `STYLE_MODES`, `SOURCES`, `LIBRARIES`, `OUTPUT_VARIABLE`도\n기존 `lvui_add_application`과 같은 뜻이다. 설치는 `INSTALL_DESTINATION`을\n지정했을 때만 설정하며 생략하면 나중에 `lvui_install_web`을 호출할 수 있다.\n"
+    },
+    {
+      "id": "b000058",
+      "kind": "blank",
+      "start_line": 192,
+      "end_line": 192,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "paragraph",
+      "start_line": 193,
+      "end_line": 195,
+      "raw": "앞 절에서 Web용 패키지를 설치한 뒤, 같은 `ws` 변수를 사용해 예제를 빌드한다.\n소스 체크아웃 대신 설치된 `share/LVUI/examples/Web/Declarative` 디렉터리를\n별도 프로젝트로 복사해도 된다.\n"
+    },
+    {
+      "id": "b000060",
+      "kind": "blank",
+      "start_line": 196,
+      "end_line": 196,
+      "raw": "\n"
+    },
+    {
+      "id": "b000061",
+      "kind": "fenced_code",
+      "start_line": 197,
+      "end_line": 208,
+      "raw": "```sh\nemcmake cmake -S \"$ws/SDK/LVUI/example/Web/Declarative\" -B \"$ws/SDK/LVUI/build/declarative-web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DCMAKE_PREFIX_PATH=\"$ws/SDK/LVUI/build/web-stage;$ws/SDK/iiGUI/build/web-stage;$ws/SDK/iiSDKCore/build/web-stage\" \\\n  -DLVUI_HOST_COMPILER=\"$ws/SDK/LVUI/build/lvui-compile\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/declarative-web-package\"\ncmake --build \"$ws/SDK/LVUI/build/declarative-web\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/declarative-web\"\npython3 -B \"$ws/SDK/iiGUI/tools/serve_web.py\" \"$ws/SDK/LVUI/build/declarative-web-package\"\n# http://127.0.0.1:8765/LVUIDeclarativeWeb.html\n```\n",
+      "language": "sh",
+      "code": "emcmake cmake -S \"$ws/SDK/LVUI/example/Web/Declarative\" -B \"$ws/SDK/LVUI/build/declarative-web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DCMAKE_PREFIX_PATH=\"$ws/SDK/LVUI/build/web-stage;$ws/SDK/iiGUI/build/web-stage;$ws/SDK/iiSDKCore/build/web-stage\" \\\n  -DLVUI_HOST_COMPILER=\"$ws/SDK/LVUI/build/lvui-compile\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/declarative-web-package\"\ncmake --build \"$ws/SDK/LVUI/build/declarative-web\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/declarative-web\"\npython3 -B \"$ws/SDK/iiGUI/tools/serve_web.py\" \"$ws/SDK/LVUI/build/declarative-web-package\"\n# http://127.0.0.1:8765/LVUIDeclarativeWeb.html\n",
+      "closed": true
+    },
+    {
+      "id": "b000062",
+      "kind": "blank",
+      "start_line": 209,
+      "end_line": 209,
+      "raw": "\n"
+    },
+    {
+      "id": "b000063",
+      "kind": "paragraph",
+      "start_line": 210,
+      "end_line": 211,
+      "raw": "앞서 설명한 브라우저 격리·스레드·WebGL 요구사항과 텍스트 편집 제한은 이\n작성 경로에도 그대로 적용된다.\n"
+    },
+    {
+      "id": "b000064",
+      "kind": "blank",
+      "start_line": 212,
+      "end_line": 212,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "paragraph",
+      "start_line": 213,
+      "end_line": 218,
+      "raw": "2026-11-16 macOS arm64에서 설치된 LVUI 예제를 별도 소비자 디렉터리로 복사하고\n설치된 Web용 LVUI·iiGUI·iiSDKCore와 iiGUI 의존 패키지로 AOT 빌드 및 설치했다. Chromium\n기반 브라우저의 1280×720과 390×844 화면에서 `+`, `Reset`, Tab·Space 입력과\n뷰모델 값의 화면 갱신을 확인했다. 크기를 바꾸어도 값은 유지되었고 해당 실행에서\n콘솔 경고와 오류는 관찰되지 않았다. 이 결과는 선언형 카운터와 이 브라우저에\n한정되며 전체 컴포넌트나 다른 브라우저의 동작을 보증하지 않는다.\n"
+    },
+    {
+      "id": "b000066",
+      "kind": "blank",
+      "start_line": 219,
+      "end_line": 219,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 220,
+      "end_line": 223,
+      "raw": "Core의 `IISDKCORE_WASM_THREADS=OFF` 설정으로 단일 스레드 Core를 별도 빌드하고\n같은 패키지로 iiGUI와 LVUI를 빌드할 수 있다. 위 명령의 `ON` 예는 격리가 필요한\npthread 모드다. 두 모드는 별개의 산출물이다. Emscripten용 LVUI는 C++ 모듈\n스캐너를 기본 요구하지 않으며 `CMAKE_CXX_SCAN_FOR_MODULES` 명시값은 존중한다.\n"
+    },
+    {
+      "id": "b000068",
+      "kind": "blank",
+      "start_line": 224,
+      "end_line": 224,
+      "raw": "\n"
+    },
+    {
+      "id": "b000069",
+      "kind": "paragraph",
+      "start_line": 225,
+      "end_line": 226,
+      "raw": "설치된 LVUI가 Core Observation을 확인하는 C++ 헤더 검사에도 모듈 스캐너는\n필요하지 않다. 검사의 로컬 설정은 앱의 C++ 모듈 설정을 변경하지 않는다.\n"
+    },
+    {
+      "id": "b000070",
+      "kind": "blank",
+      "start_line": 227,
+      "end_line": 227,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "heading",
+      "start_line": 228,
+      "end_line": 228,
+      "raw": "## 브라우저 카운터 예제\n",
+      "level": 2,
+      "title": "브라우저 카운터 예제"
+    },
+    {
+      "id": "b000072",
+      "kind": "blank",
+      "start_line": 229,
+      "end_line": 229,
+      "raw": "\n"
+    },
+    {
+      "id": "b000073",
+      "kind": "paragraph",
+      "start_line": 230,
+      "end_line": 234,
+      "raw": "`example/Web/BrowserDemo`는 LVUI 선언과 C++ `BrowserDemoModel`을 사용하는\n작은 카운터다. 기본 버튼으로 값을 늘리거나 초기화한다. 단일 스레드 Core와\n이에 맞춘 iiGUI·LVUI 패키지 및 호스트 `lvui-compile`로 Emscripten 교차 빌드한다.\n생성된 HTML·JS·Wasm·데이터 파일은 같은 디렉터리에서 HTTP로 제공한다.\n디자인은 [LVUI 카운터 시안](https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=1966-14)을 따른다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "LVUI WebAssembly 대상",
+      "anchor": "lvui-webassembly-대상",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000005",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "계약",
+      "anchor": "계약",
+      "start_line": 8
+    },
+    {
+      "block_id": "b000009",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "소스에서 예제 빌드",
+      "anchor": "소스에서-예제-빌드",
+      "start_line": 35
+    },
+    {
+      "block_id": "b000023",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "검증 경계",
+      "anchor": "검증-경계",
+      "start_line": 102
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "로컬에서 제공하기",
+      "anchor": "로컬에서-제공하기",
+      "start_line": 114
+    },
+    {
+      "block_id": "b000037",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "실제 브라우저 검증",
+      "anchor": "실제-브라우저-검증",
+      "start_line": 126
+    },
+    {
+      "block_id": "b000049",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "LVUI 문법으로 웹 앱 작성",
+      "anchor": "lvui-문법으로-웹-앱-작성",
+      "start_line": 162
+    },
+    {
+      "block_id": "b000071",
+      "level": 2,
+      "title": "브라우저 카운터 예제",
+      "parent_id": "b000001",
+      "anchor": "브라우저-카운터-예제",
+      "start_line": 228
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [
+      {
+        "block_id": "b000013",
+        "language": "sh",
+        "code": "ws=/Volumes/Storage/Workspace\nemcmake cmake -S \"$ws/SDK/iiSDKCore\" -B \"$ws/SDK/iiSDKCore/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DIISDKCORE_BUILD_EXAMPLES=OFF \\\n  -DIISDKCORE_WASM_THREADS=ON -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/iiSDKCore/build/web-stage\"\ncmake --build \"$ws/SDK/iiSDKCore/build/web\" --parallel 4\ncmake --install \"$ws/SDK/iiSDKCore/build/web\"\nemcmake cmake -S \"$ws/SDK/iiGUI\" -B \"$ws/SDK/iiGUI/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DIIGUI_BUILD_EXAMPLES=OFF \\\n  -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/iiGUI/build/web-stage\"\ncmake --build \"$ws/SDK/iiGUI/build/web\" --parallel 4\ncmake --install \"$ws/SDK/iiGUI/build/web\"\nemcmake cmake -S \"$ws/SDK/LVUI\" -B \"$ws/SDK/LVUI/build/web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/web-stage\"\ncmake --build \"$ws/SDK/LVUI/build/web\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/web\"\nemcmake cmake -S \"$ws/SDK/LVUI/example/Web\" -B \"$ws/SDK/LVUI/build/web-example\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DiiSDKCore_DIR=\"$ws/SDK/iiSDKCore/build/web-stage/lib/cmake/iiSDKCore\" \\\n  -DiiGUI_DIR=\"$ws/SDK/iiGUI/build/web-stage/lib/cmake/iiGUI\" \\\n  -DLVUI_DIR=\"$ws/SDK/LVUI/build/web-stage/lib/cmake/LVUI\" \\\n  -DLVUI_HOST_COMPILER=\"$ws/SDK/LVUI/build/lvui-compile\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/web-package\"\ncmake --build \"$ws/SDK/LVUI/build/web-example\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/web-example\"\n"
+      },
+      {
+        "block_id": "b000033",
+        "language": "sh",
+        "code": "python3 -B \"$ws/SDK/iiGUI/tools/serve_web.py\" \"$ws/SDK/LVUI/build/web-package\"\n# http://127.0.0.1:8765/LVUICounterWeb.html\n"
+      },
+      {
+        "block_id": "b000061",
+        "language": "sh",
+        "code": "emcmake cmake -S \"$ws/SDK/LVUI/example/Web/Declarative\" -B \"$ws/SDK/LVUI/build/declarative-web\" -G Ninja \\\n  -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_SCAN_FOR_MODULES=OFF \\\n  -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=BOTH \\\n  -DCMAKE_PREFIX_PATH=\"$ws/SDK/LVUI/build/web-stage;$ws/SDK/iiGUI/build/web-stage;$ws/SDK/iiSDKCore/build/web-stage\" \\\n  -DLVUI_HOST_COMPILER=\"$ws/SDK/LVUI/build/lvui-compile\" \\\n  -DCMAKE_INSTALL_PREFIX=\"$ws/SDK/LVUI/build/declarative-web-package\"\ncmake --build \"$ws/SDK/LVUI/build/declarative-web\" --parallel 4\ncmake --install \"$ws/SDK/LVUI/build/declarative-web\"\npython3 -B \"$ws/SDK/iiGUI/tools/serve_web.py\" \"$ws/SDK/LVUI/build/declarative-web-package\"\n# http://127.0.0.1:8765/LVUIDeclarativeWeb.html\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000007",
+        "label": "iiGUI 웹 호스트",
+        "target": "../../iiGUI/docs/HostPlatforms.md#web-실행-계약",
+        "kind": "relative",
+        "line": 32
+      },
+      {
+        "block_id": "b000007",
+        "label": "캔버스 크기 계약",
+        "target": "../../iiGUI/docs/WebResponsive.md",
+        "kind": "relative",
+        "line": 33
+      },
+      {
+        "block_id": "b000073",
+        "label": "LVUI 카운터 시안",
+        "target": "https://www.figma.com/design/0GkItQYSNIR0lZ3iJhfJzc/LVUI?node-id=1966-14",
+        "kind": "external",
+        "line": 234
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0-compatible",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

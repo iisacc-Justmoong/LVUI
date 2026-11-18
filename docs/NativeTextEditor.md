@@ -40,3 +40,7 @@ Python 컴파일러 API인 `ii_lvui.compile_native`도 이 선언을 처리한�
 구현 범위를 뜻하지 않는다.
 
 `LVUI/NativeTextEditor.h`와 설정 계약은 iiSDKCore 외 SDK를 직접 참조하지 않는다. macOS arm64에서 iiGUI 독립 설치 소비자와 LVUI 생성·반응형 높이·스크롤 경로를 창 없이 검사했다. 실제 운영체제 창과 GPU는 검사하지 않았다.
+
+## 입력 필드와 일치하는 타이포그래피
+
+`TextEditor`는 `InputField`와 동일한 타이포그래피 규칙을 사용한다. 글꼴·크기·굵기는 편집 텍스트와 플레이스홀더에 동일하게 전달되며 기본 굵기는 `Weight/Regular`다. 조판과 화면 배율에 따른 픽셀 처리는 페인터의 책임이다. 텍스트, 초점, 측정값에는 기존 쿼리 바인딩이 적용된다.

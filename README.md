@@ -29,6 +29,10 @@ remain implemented pending migration; the compiler does not yet enforce the rule
 An application can declare named [Scenes](docs/Scenes.md), each with a native
 window and its own view session. [The Scenes example](example/GettingStarted/App/Scenes.lvui)
 opens a second scene and demonstrates independent reactive state.
+Window content uses a default 16-logical-pixel horizontal safe area. Apply
+`.ignoreSafeArea()` directly to a window-type component to remove it; see
+[window content layout](docs/NativeLayout.md#창-콘텐츠의-기본-여백) for custom
+title bars and externally hosted views.
 [App-scoped strings](docs/Localization.md) keep translated text in external
 UTF-8 catalogs and update active views when the locale or a value changes.
 The optional `LVUI::Localization` component loads and saves JSON catalogs.

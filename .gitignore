@@ -7,3 +7,10 @@
 **/.*.iisacc-preview
 **/*.iisacc.json
 resources/
+!/resources/
+/resources/*
+!/resources/platform/
+/resources/platform/*
+!/resources/platform/web/
+/resources/platform/web/*
+!/resources/platform/web/shell.html

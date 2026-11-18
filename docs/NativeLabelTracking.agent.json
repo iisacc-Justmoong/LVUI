@@ -1,0 +1,99 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:7795bcd8664d6f7c4820eb85d5d09212c44f3619b44895e8f7c4f5344938dbf8",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/NativeLabelTracking.md",
+    "sha256": "3e914374379785461e8bdeab5b941a0ee8fa5b7f92f832e03d1a88f4dc419fb9",
+    "bytes": 799,
+    "line_count": 13,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "네이티브 레이블 자간과 반응형 크기",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 네이티브 레이블 자간과 반응형 크기\n",
+      "level": 1,
+      "title": "네이티브 레이블 자간과 반응형 크기"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 5,
+      "raw": "`Label`의 `letterSpacing`은 iiGUI 자간을 논리 픽셀로 전달한다. 기본값은 0이며\n유효 범위는 -256부터 256까지이다. `fontSize`, `lineHeight`, `letterSpacing`은\n상수 또는 관찰 가능한 뷰모델 값으로 지정할 수 있다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 10,
+      "raw": "`lineHeight`를 생략하고 `fontSize`를 지정하면 현재 글꼴 크기를 줄 높이로 쓴다.\n반응형 입력은 `LabelOptions` 묶음으로 검증하고 변경하며, 잘못된 값은 기존\n표시를 보존하는 바인딩 오류가 된다. 텍스트 측정과 플랫폼 렌더링의 제한은\niiGUI의 `docs/TextTracking.md`를 따른다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 12,
+      "end_line": 13,
+      "raw": "생성 코드와 헤드리스 위젯 검사는 실제 브라우저 화면의 픽셀 또는 기기별 입력\n검증과 구분한다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "네이티브 레이블 자간과 반응형 크기",
+      "anchor": "native-label-tracking",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "manual",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

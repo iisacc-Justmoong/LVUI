@@ -6,6 +6,15 @@ int main(){
     if(!code)throw std::runtime_error(code.error().message);
     for(auto part:{"#include <LVUI/NativeMenuItem.h>","iiGUI/NativeMenuItemView.h","lvui::native::MenuItemBinding<","lvui::native::MenuItemInputValue<","component.set_options(value)"})
         if(code->find(part)==code->npos)throw std::runtime_error(std::string("Independent MenuItem lost ")+part);
+    const auto paletteValue=[&](const char* name) {
+        const std::string prefix=std::string("value.configuration.palette.")+name+" = ";
+        const auto start=code->find(prefix);
+        if(start==code->npos)throw std::runtime_error("Generated menu palette role is missing");
+        const auto valueStart=start+prefix.size(),end=code->find(';',valueStart);
+        return code->substr(valueStart,end-valueStart);
+    };
+    if(paletteValue("selected")!=paletteValue("pressed") || paletteValue("selected")==paletteValue("focus"))
+        throw std::runtime_error("Generated menu selection must match press, not the primary accent");
     if(code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Default MenuItem depends on a legacy implementation");
     for(auto source:{"Window { MenuItem(state: .bad) }","Window { ContextMenuItem(selectionDirection: .bad) }",

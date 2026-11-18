@@ -23,9 +23,40 @@ public:
         return memory->snapshot();
     }
 };
+
+void incremental_rows()
+{
+    using namespace lvui;
+    std::vector<ListEntry> rows;
+    for (int i = 0; i < 4096; ++i)
+        rows.push_back({.key = std::to_string(i), .label = "Original"});
+    auto source = take(ListMemory::create(std::move(rows)));
+    auto controller = take(ListController::create(source));
+    const auto initial = take(controller.index());
+    const auto untouched = &initial.entry(2047);
+    require(take(controller.select("2047")), "Selecting a retained row failed");
+
+    require(take(source->apply({.revision = 0, .kind = ListEditKind::replace, .key = "2048",
+                              .item = {.key = "2048", .label = "Changed"}})) == 1,
+            "The row edit was not published");
+    require(take(controller.refresh()), "The controller missed the row edit");
+    const auto edited = take(controller.index());
+    require(initial.entry(2048).label == "Original" && edited.entry(2048).label == "Changed"
+            && &edited.entry(2047) == untouched && take(controller.selection()) == "2047",
+            "A row edit copied unrelated rows or changed a retained revision");
+
+    require(take(source->apply({.revision = 1, .kind = ListEditKind::move, .key = "2047"})) == 2,
+            "Moving a retained row failed");
+    require(take(controller.refresh()), "The controller missed an order change");
+    const auto moved = take(controller.index());
+    require(moved.find("2047") == 4095 && &moved.entry(4095) == untouched
+            && &moved.entry(2047) == &edited.entry(2048) && take(controller.selection()) == "2047",
+            "Moving a row copied content or lost the selection");
+}
 }
 int main(){
     using namespace lvui;
+    incremental_rows();
     auto source=take(ListMemory::create({{.key="a",.label="Alpha"},{.key="b",.label="Beta"},{.key="c",.label="Gamma"}}));
     auto first=take(source->snapshot());auto controller=take(ListController::create(source));
     require(take(controller.select("a")) && take(controller.selection())=="a" && take(source->snapshot())->revision==0,

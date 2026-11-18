@@ -18,6 +18,7 @@ using ColorPickerTestValues=lvui::native::ColorPickerValuesBinding<ii::gui::Basi
 using ColorPickerTestButton=lvui::native::ButtonBinding<ii::gui::BasicButton,ii::gui::BasicNativeButton,ii::gui::CachedSvgDecoder,ii::gui::Widget>;
 using ColorPickerTestView=lvui::native::ColorPickerBinding<ii::gui::BasicNativeColorPicker,ColorPickerTestLayout,ColorPickerTestSurface,ColorPickerTestChannel,ColorPickerTestValues,ColorPickerTestButton,ii::gui::RasterImage,ii::gui::WidgetColor>;
 #include <iiGUI/WidgetState.h>
+#include <iiGUI/SrgbColor.h>
 
 #include <cmath>
 #include <memory>
@@ -38,6 +39,10 @@ void good(ii::core::Result<void> value) {
 bool near(double a, double b) { return std::abs(a - b) < 1e-7; }
 std::string text(ii::gui::Widget field) {
     const auto snapshot = take(field.snapshot()); return take(field.text_content({0, snapshot.text_length})).text;
+}
+bool panel_color(const ii::gui::CanvasFrame& frame,ii::gui::Rect bounds,ii::gui::Color color) {
+    const auto found=[&](const auto& panels){for(const auto& panel:panels)if(panel.bounds==bounds&&panel.top==color)return true;return false;};
+    if(found(frame.panels))return true;for(const auto& layer:frame.overlays)if(found(layer.panels))return true;return false;
 }
 }
 
@@ -62,6 +67,19 @@ int main() {
              .canceled = [&] { ++canceled; }, .eyedropper_requested = [&] { ++eyedropper; }});
         if (!value) return std::unexpected(value.error()); view = *value; return {};
     }));
+    auto themed=input;themed.divider_color=lvui::StyleColor{.1,.2,.3,.7};good(view->set_options(themed));
+    const auto divider=take(host.content_item("picker.divider"));
+    auto first_frame=take(tree->drawing_snapshot({600,700}));
+    require(panel_color(first_frame,take(divider.snapshot()).bounds,srgb_to_linear(WidgetColor{.1,.2,.3,.7})),
+            "Color picker divider ignored its supplied theme color");
+    themed.divider_color=lvui::StyleColor{.4,.5,.6,.8};good(view->set_options(themed));
+    auto changed_frame=take(tree->drawing_snapshot({600,700}));
+    require(panel_color(changed_frame,take(divider.snapshot()).bounds,srgb_to_linear(WidgetColor{.4,.5,.6,.8})),
+            "Color picker retained a stale divider after its theme changed");
+    auto invalid_theme=themed;invalid_theme.divider_color->alpha=-1;
+    require(!view->set_options(invalid_theme) && take(view->options())==themed,
+            "Color picker accepted an invalid divider color");
+    good(view->set_options(input));
     auto root = take(view->root().snapshot());
     require(near(root.size.width, 320) && near(root.size.height, 461), "Default picker geometry changed");
     require(text(view->hex_field()) == "FF0000", "Default picker color was not shown");

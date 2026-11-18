@@ -268,7 +268,9 @@ ApplicationWindow(fontFamily: token("Theme Typography/Font/fontBody")) {
           "Runtime token resolver leaked into app");
     check(code.find("IIGUI_TEXT_WEIGHT_RULES_API") != code.npos &&
               code.find("ii::gui::require_text_weight_rules_abi_v1()") != code.npos &&
-              code.find("requires iiGUI 0.5.0") != code.npos,
+              code.find("IIGUI_TEXT_COLORS_API") != code.npos &&
+              code.find("ii::gui::require_text_colors_abi_v2()") != code.npos &&
+              code.find("requires iiGUI 0.6.0") != code.npos,
           "Generated view did not diagnose an older iiGUI appearance API");
     NativeCompileOptions o;
     o.style_tokens.overrides["--lvrs-theme-metrics-space-8"] = 14.;
@@ -280,6 +282,76 @@ ApplicationWindow(fontFamily: token("Theme Typography/Font/fontBody")) {
     const auto rules = weighted.find("result.text_weight_rules = ");
     check(rules != weighted.npos && weighted.find("{19.5, 700}", rules) != weighted.npos,
           "Window typography policy ignored LVUI token overrides");
+    NativeCompileOptions theme_colors;
+    theme_colors.style_tokens.overrides["Color.text.body"] = StyleColor{.125, .25, .5, .75};
+    theme_colors.style_tokens.overrides["Color.text.description"] = StyleColor{.25, .5, .75, .5};
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-body-text-body"] = 19.;
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-body-text-body-line-height"] = 20.;
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-description-text-description"] = 15.;
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-description-text-description-line-height"] = 16.;
+    const auto themed = compile("Window { VStack {\nLabel(style: .body)\nTable()\nTableHeader()\nTableRow()\nTableCellItem()\n} }", theme_colors);
+    const auto palette_begin=themed.find("result.text_colors = ");
+    check(palette_begin != themed.npos, "The window did not emit text role colors");
+    const auto palette_end=themed.find(';',palette_begin);
+    const auto palette=themed.substr(palette_begin,palette_end-palette_begin);
+    check(palette.find("ii::gui::WidgetColor{0.125, 0.25, 0.5, 0.75}") != palette.npos &&
+          palette.find("ii::gui::WidgetColor{0.25, 0.5, 0.75, 0.5}") != palette.npos,
+          "The window discarded the RGB channels of global text tokens");
+    const auto styles_begin=themed.find("result.text_styles = ");
+    check(styles_begin!=themed.npos,"The window did not emit global role typography");
+    const auto styles=themed.substr(styles_begin,themed.find(';',styles_begin)-styles_begin);
+    check(styles.find("ii::gui::TextRoleStyle{19, 20, 500}")!=styles.npos &&
+          styles.find("ii::gui::TextRoleStyle{15, 16, 600}")!=styles.npos,
+          "The window discarded role font size, line height, or weight tokens");
+    for (const auto name : {"value.appearance.palette.cell_text", "value.appearance.palette.header_text",
+                            "value.configuration.palette.cell_text", "value.configuration.palette.header_text"})
+        check(themed.find(name) != themed.npos, "Table component did not inherit global color tokens");
+    check(themed.find("value.appearance.header_typography = lvui::TableTypography{15, 16, 600}") != themed.npos &&
+          themed.find("value.appearance.cell_typography = lvui::TableTypography{19, 20, 500}") != themed.npos &&
+          themed.find("value.configuration.typography = lvui::TableTypography{15, 16, 600}") != themed.npos &&
+          themed.find("value.configuration.typography = lvui::TableTypography{19, 20, 500}") != themed.npos,
+          "Table components did not inherit the distinct description and body typography tokens");
+    const auto explicit_table = compile("Window { Table(fontSize: 17, cellTextColor: \"#123456\") }", theme_colors);
+    check(explicit_table.find("value.appearance.font_size = 17") != explicit_table.npos &&
+          explicit_table.find("value.appearance.header_typography = ") == explicit_table.npos &&
+          explicit_table.rfind("value.appearance.palette.cell_text = ") > explicit_table.find("value.appearance.palette.cell_text = "),
+          "An explicit table style did not override the token default");
+    const auto themed_lists=compile("Window { VStack {\nListItem()\nListItem(type: .detailActions)\nList()\n} }",theme_colors);
+    for(const auto name:{"value.configuration.palette.text = lvui::StyleColor{0.125, 0.25, 0.5, 0.75}",
+                         "value.row.configuration.palette.text = lvui::StyleColor{0.125, 0.25, 0.5, 0.75}",
+                         "value.list.palette.text = lvui::StyleColor{0.125, 0.25, 0.5, 0.75}"})
+        check(themed_lists.find(name)!=themed_lists.npos,"List component did not inherit the global body text token");
+    theme_colors.style_tokens.overrides["Color.surfaceSolid"] = StyleColor{.2, .3, .4, .9};
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-header-text-header"] = 21.;
+    const auto themed_sheet=compile("Window { Sheet(title: \"Sheet\") {} }",theme_colors);
+    for(const auto expected:{"value.configuration.palette.surface = ii::gui::WidgetColor{0.2, 0.3, 0.4, 0.9}",
+                             "title_style_typography = ii::gui::TextRoleStyle{21, 17, 600}",
+                             "description_style_typography = ii::gui::TextRoleStyle{19, 20, 500}",
+                             "value.description_style->color = ii::gui::WidgetColor{0.25, 0.5, 0.75, 0.5}"})
+        check(themed_sheet.find(expected)!=themed_sheet.npos,"Sheet did not inherit Figma's surface and text tokens");
+    const auto explicit_sheet=compile("Window { Sheet(surfaceColor: \"#123456\") {} }",theme_colors);
+    check(explicit_sheet.rfind("value.configuration.palette.surface = ")>explicit_sheet.find("value.configuration.palette.surface = "),
+          "An explicit Sheet surface did not override its token default");
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-title-text-title"] = 29.;
+    theme_colors.style_tokens.overrides["--lvui-theme-typography-title-text-title-line-height"] = 30.;
+    theme_colors.style_tokens.overrides["--lvui-material-alert-text-primary"] = StyleColor{.3, .4, .5, 1};
+    theme_colors.style_tokens.overrides["--lvui-material-glass-foreground"] = StyleColor{.2, .3, .4, .8};
+    const auto themed_alert=compile("Window { Alert(title: \"Alert\") }",theme_colors);
+    for(const auto expected:{"value.configuration.palette.frame = lvui::StyleColor{0.2, 0.3, 0.4,",
+                             "value.configuration.palette.title = lvui::StyleColor{0.3, 0.4, 0.5, 1}",
+                             "value.configuration.palette.description = lvui::StyleColor{0.2, 0.3, 0.4, 0.8}",
+                             "value.style.action_text = lvui::StyleColor{0.3, 0.4, 0.5, 1}",
+                             "value.style.icon_background = ", "value.style.icon_border = ", "value.style.action_border = ",
+                             "value.style.title_typography = lvui::AlertTypography{29, 30, 700}",
+                             "value.style.description_typography = lvui::AlertTypography{19, 20, 500}"})
+        check(themed_alert.find(expected)!=themed_alert.npos,"Alert did not inherit its Figma material and typography tokens");
+    const auto explicit_alert=compile("Window { Alert(cardBackgroundColor: \"#123456\") }",theme_colors);
+    check(explicit_alert.rfind("value.configuration.palette.frame = ")>explicit_alert.find("value.configuration.palette.frame = "),
+          "An explicit Alert background did not override its token default");
+    theme_colors.style_tokens.overrides["--lvui-material-glass-edge"] = StyleColor{.1, .2, .3, .7};
+    const auto themed_picker=compile("Window { ColorPicker() }",theme_colors);
+    check(themed_picker.find("value.divider_color = lvui::StyleColor{0.1, 0.2, 0.3, 0.7}")!=themed_picker.npos,
+          "ColorPicker divider ignored its Figma Glass/Edge token");
     typography.style_tokens.overrides["--lvrs-theme-typography-weight-medium"] = 450.;
     check(!compile_native("Window { Label() }", typography), "Unsupported host font weight was accepted");
     auto html = compile(

@@ -9,7 +9,11 @@ int main(){
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("TextEditor codegen lost ")+token);
     for(auto forbidden:{"<Qt","<LVRS/","lvrs::"})
         if(code->find(forbidden)!=code->npos)throw std::runtime_error("TextEditor generated a legacy dependency");
+    auto typography=lvui::compile_native("Window { TextEditor(fontWeight: 700) }");
+    if(!typography||typography->find("value.font_weight = 700;")==typography->npos)
+        throw std::runtime_error("TextEditor did not forward its weight into the field");
     for(auto invalid:{"Window { TextEditor(width: 0) }", "Window { TextEditor(minimumHeight: -1) }",
+                      "Window { TextEditor(fontWeight: 600.5) }",
                       "Window { TextEditor(filePath: \"notes.txt\") }", "Window { TextEditor(richText: true) }",
                       "Window { TextEditor() { Label(text: \"child\") } }"})
         if(lvui::compile_native(invalid))throw std::runtime_error("Invalid or unsupported TextEditor input was accepted");

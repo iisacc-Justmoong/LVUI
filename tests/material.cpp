@@ -17,7 +17,7 @@ int main(){
         "Window material ignored the resolved Panel/window token");
     auto code=lvui::compile_native("import vm Model\nWindow { VStack { PanelMaterial(width: vm.width, primaryColor: vm.color, density: .Glass25, backdrop: .PreviousLayers) { Label(text: \"child\") }\n WindowMaterial()\n MaterialSurface() } }");
     if(!code)throw std::runtime_error(code.error().message);
-    require(code->find("#include <LVUI/NativeMaterial.h>")!=code->npos&&code->find("lvui::native::MaterialBinding<")!=code->npos&&
+    require(code->find("#include <LVUI>")!=code->npos&&code->find("lvui::native::MaterialBinding<")!=code->npos&&
         code->find("lvui::MaterialKind::panel")!=code->npos&&code->find("lvui::MaterialKind::window")!=code->npos&&
         code->find("component.set_options(value)")!=code->npos&&code->find("lvrs::")==code->npos&&code->find("<LVRS/")==code->npos,
         "Material code does not own its renderer and reactive input");

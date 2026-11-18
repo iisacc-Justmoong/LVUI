@@ -1,0 +1,12 @@
+import vm WebCounterModel
+
+// The existing GettingStarted counter layout, hosted by an LVUI application.
+Application {
+    ApplicationWindow(title: "LVUI Counter") {
+        VStack {
+            Label(id: "value", text: vm.count)
+            PushButton(id: "increment", text: "+", onClick: vm.increment)
+            PushButton(id: "reset", text: "Reset", onClick: vm.reset)
+        }
+    }
+}

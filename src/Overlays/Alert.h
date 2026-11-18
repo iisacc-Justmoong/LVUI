@@ -16,6 +16,18 @@ namespace lvui {
 
 enum class AlertShape { rounded, cylinder };
 
+struct AlertTypography final {
+    double font_size=13, line_height=13;
+    unsigned font_weight=500;
+    friend bool operator==(const AlertTypography&,const AlertTypography&)=default;
+};
+[[nodiscard]] inline bool valid_alert_typography(const std::optional<AlertTypography>& value) noexcept {
+    if(!value)return true;
+    return std::isfinite(value->font_size)&&value->font_size>=1&&value->font_size<=256&&
+        std::isfinite(value->line_height)&&value->line_height>=0&&value->line_height<=8192&&
+        (value->font_weight==400||value->font_weight==500||value->font_weight==600||value->font_weight==700);
+}
+
 struct AlertPalette final {
     StyleColor frame{figma_defaults::with_alpha(figma_defaults::panel_surface_panel, .85)};
     StyleColor backdrop{0, 0, 0, .4};

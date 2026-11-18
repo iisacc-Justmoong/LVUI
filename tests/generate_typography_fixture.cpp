@@ -7,9 +7,14 @@ int main(int argc, char** argv) {
     lvui::NativeCompileOptions options;
     options.name = "NativeTypographyPolicy";
     options.style_tokens.overrides["--lvrs-theme-typography-body-text-body"] = 19.5;
+    options.style_tokens.overrides["--lvui-theme-typography-body-text-body-line-height"] = 20.;
     options.style_tokens.overrides["--lvrs-theme-typography-weight-medium"] = 700.;
+    options.style_tokens.overrides["Color.text.body"] = lvui::StyleColor{.125, .25, .5, .75};
+    options.style_tokens.overrides["Color.text.caption"] = lvui::StyleColor{.25, .5, .75, .5};
     auto result = lvui::compile_native(
-        "Window { Label(id: \"generated\", text: \"Generated typography\", style: .body) }", options);
+        "Window { VStack {\nLabel(id: \"generated\", text: \"Generated typography\", style: .body)\n"
+        "ListItem(type: .Navigation, label: \"Themed item\", description: \"Themed detail\")\n"
+        "ListItem(type: .DetailActions, label: \"Themed composite\", description: \"Composite detail\")\n} }", options);
     if (!result) { std::cerr << result.error().message << '\n'; return 1; }
     std::ofstream output(argv[1], std::ios::binary | std::ios::trunc);
     output << *result;

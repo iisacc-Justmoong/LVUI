@@ -16,6 +16,17 @@ void bad(std::string_view source, std::string_view reason) {
         throw std::runtime_error("Unexpected diagnostic: " + result.error().message);
 }
 void generation() {
+    const auto dynamic_typography = compile(
+        "import vm Backend\nWindow { Label(text: vm.title, fontSize: vm.size, lineHeight: vm.leading, letterSpacing: vm.tracking) }");
+    check(dynamic_typography.find(".letter_spacing") != std::string::npos &&
+          dynamic_typography.find("set_label_options") != std::string::npos,
+          "Reactive label typography was not forwarded to iiGUI");
+    const auto static_tracking = compile("Window { Label(text: \"Title\", letterSpacing: -1.2) }");
+    check(static_tracking.find(".letter_spacing") != std::string::npos,
+          "Static label tracking was not forwarded to iiGUI");
+    const auto pointer_focus = compile("ApplicationWindow { IconButton(iconName: \"brush\", pointerFocusVisible: false) }");
+    check(pointer_focus.find("value.configuration.pointer_focus_visible = false") != std::string::npos,
+          "IconButton pointer focus visibility was not forwarded to iiGUI");
     const auto custom_window = compile("ApplicationWindow(windowChrome: .custom) { Label() }");
     check(custom_window.find(".chrome = ii::gui::WindowChrome::custom") != std::string::npos,
           "Custom window chrome was not forwarded to iiGUI");
@@ -64,6 +75,7 @@ void validation() {
     bad("ApplicationWindow { Label(text: \"x\", typo: 1) }", "Unknown input");
     bad("ApplicationWindow(width: 2) { Label(text: \"x\") }", "minimum");
     bad("ApplicationWindow { Label(text: \"x\", fontSize: -1) }", "range");
+    bad("ApplicationWindow { Label(text: \"x\", letterSpacing: 300) }", "range");
     bad("ApplicationWindow { Label(text: \"x\") { Label(text: \"y\") } }", "children");
     bad("ApplicationWindow { VStack { Label(id: \"same\", text: \"x\")\n Label(id: \"same\", text: \"y\") } }", "Duplicate widget id");
     bad("Window { HStack(spacing: 1, gap: 2) {} }", "Duplicate component input");
@@ -83,7 +95,7 @@ void application() {
     ApplicationWindow(title: title) { Label(text: "Ready") }
 })";
     const auto code = compile(source);
-    check(code.find("#include <iiGUI/Application.h>") != code.npos &&
+    check(code.find("#include <iiGUI>") != code.npos &&
           code.find("configure_application(ii::runtime::Application&") != code.npos &&
           code.find("app.configure_atomically(") != code.npos &&
           code.find("attach_before_driver(") != code.npos &&
@@ -130,7 +142,7 @@ void application() {
         Label(text: "Ready")
     }
 })");
-    check(scene_events.find("#include <LVUI/SceneLifecycle.h>") != scene_events.npos &&
+    check(scene_events.find("#include <LVUI>") != scene_events.npos &&
           scene_events.find(".opened(") != scene_events.npos && scene_events.find(".closed(") != scene_events.npos &&
           scene_events.find("on_publish(") != scene_events.npos && scene_events.find("on_retire(") != scene_events.npos,
           "Window lifecycle events were not generated");
@@ -152,7 +164,7 @@ void application() {
     const auto files = compile(R"(Application(onOpenFiles: vm.openFiles) { import vm Backend
         Window { Label() }
     })");
-    check(files.find("#include <LVUI/ApplicationFileEvents.h>") != files.npos &&
+    check(files.find("#include <LVUI>") != files.npos &&
           files.find("callbacks.files_opened") != files.npos && files.find(".openFiles(") != files.npos &&
           files.find("cancel_file_events()") != files.npos,
           "Application did not connect native file requests to its scoped callback");
@@ -235,7 +247,7 @@ Application(onCloseRequested: decision) { Window { Label() } })");
           scenes.find("IIGUI_HOST_APPLICATION_DRIVER_API") != scenes.npos &&
           scenes.find("ii::gui::require_application_driver_abi_v1()") != scenes.npos &&
           scenes.find("set_application_driver(true)") != scenes.npos &&
-          scenes.find("#include <LVUI/SceneWindowSet.h>") != scenes.npos &&
+          scenes.find("#include <LVUI>") != scenes.npos &&
           scenes.find("bind_scene_window(") != scenes.npos &&
           scenes.find("(*scene_hosts)[0] = *host") == scenes.npos &&
           scenes.find("set_failure_handler(") != scenes.npos &&
@@ -248,7 +260,7 @@ Application(onCloseRequested: decision) { Window { Label() } })");
     Window { PushButton(onClick: openWindow("tools")) }
     Window(id: "tools", initiallyOpen: false) { PushButton(onClick: closeWindow("tools")) }
 })");
-    check(named_scenes.find("#include <LVUI/SceneRegistry.h>") != named_scenes.npos &&
+    check(named_scenes.find("#include <LVUI>") != named_scenes.npos &&
           named_scenes.find("->open(\"tools\")") != named_scenes.npos &&
           named_scenes.find("->close(\"tools\")") != named_scenes.npos &&
           named_scenes.find("scenes->cancel()") != named_scenes.npos &&
@@ -445,14 +457,14 @@ void native_widget() {
 }
 void embedded_build(){
     const auto code=compile("import vm Backend\nWindow { VStack(id: \"page\") { Label(text: vm.title) } }");
-    check(code.find("static ii::core::Result<void> build(ii::gui::WidgetBuilder&")!=code.npos&&code.find("widgets.vstack(native_parent,")!=code.npos,"AOT page has no build-only parent entry point");
-    check(code.find("return construct(widgets, native_parent, configure, scope_owner, factories)")!=code.npos&&code.find("widgets.retain(scope)")!=code.npos&&code.find("widgets.retain(native_bindings)")!=code.npos,"Embedded page lost scope, construction inputs or binding ownership");
+    check(code.find("static ii::core::Result<void> build(ii::gui::WidgetBuilder&")!=code.npos&&code.find("widgets.vstack(_lvui_window_content_parent_")!=code.npos,"AOT page has no build-only parent entry point");
+    check(code.find("return construct(widgets, native_parent, configure, scope_owner, factories, false)")!=code.npos&&code.find("widgets.retain(scope)")!=code.npos&&code.find("widgets.retain(native_bindings)")!=code.npos,"Embedded page lost scope, construction inputs or binding ownership");
     check(code.find("factories.create<::Backend>(\"Backend\", \"vm\", this->backend_activation)")!=code.npos&&code.find("ScopeFactoryStorage(factories)")!=code.npos,
           "A native import lost its typed constructor or activation-owned dependencies");
     auto popup=lvui::compile_native("Window { Modal(open: true) {} }",{.framework="iiGUI"});
     check(popup&&popup->find("bind_popup_open(widgets, native_bindings")!=popup->npos&&
           popup->find("ii::gui::require_committed_publication_abi_v1()")!=popup->npos&&
-          popup->find("return construct(widgets, native_parent, configure, scope_owner, factories)")!=popup->npos&&
+          popup->find("return construct(widgets, native_parent, configure, scope_owner, factories, false)")!=popup->npos&&
           popup->find("Embedded pages must open dialogs after activation")==popup->npos,
           "Embedded initial dialog did not defer opening until publication");
     auto scoped_popup=lvui::compile_native("import vm Backend\nWindow { VStack { Label(text: vm.title)\nModal(open: true) {} } }",{.framework="iiGUI"});
@@ -664,7 +676,7 @@ Window { VStack {
  Tooltip(targetId: "origin", text: "Help")
  LabelButton(id: "origin", text: "Help")
 } })");
-    check(independent&&independent->find("#include <LVUI/NativeTooltip.h>")!=independent->npos&&
+    check(independent&&independent->find("#include <LVUI>")!=independent->npos&&
           independent->find("detail_tooltip::NativeTooltip::create(")!=independent->npos&&
           independent->find("->set_target(")!=independent->npos&&
           independent->find("lvrs::")==independent->npos&&independent->find("<LVRS/")==independent->npos,

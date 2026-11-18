@@ -56,8 +56,16 @@ struct InputFieldConfiguration final {
     double double_click_interval=.5,double_click_distance=4;
     bool use_native_click_count=true;
     bool reveal_caret_in_ancestors=false;
+    unsigned font_weight=400;
     friend bool operator==(const InputFieldConfiguration&,const InputFieldConfiguration&)=default;
 };
+[[nodiscard]] constexpr bool valid_input_field_font_weight(double weight) noexcept {
+    return weight==400||weight==500||weight==600||weight==700;
+}
+[[nodiscard]] inline unsigned input_field_font_weight(double weight) {
+    if(!valid_input_field_font_weight(weight))throw std::invalid_argument("InputField fontWeight must be 400/500/600/700 for native fonts");
+    return static_cast<unsigned>(weight);
+}
 inline void apply_input_field_size(InputFieldConfiguration& value,InputFieldSize size) {
     switch(input_field_size(size)) {
     case InputFieldSize::regular: {
@@ -83,7 +91,7 @@ inline void apply_input_field_size(InputFieldConfiguration& value,InputFieldSize
     const auto color=[&](StyleColor c){return range(c.red,0,1)&&range(c.green,0,1)&&range(c.blue,0,1)&&range(c.alpha,0,1);};
     return valid_accessibility_text(value.text)&&valid_accessibility_text(value.placeholder)&&
         valid_accessibility_text(value.accessibility_name)&&valid_accessibility_text(value.clear_accessibility_name)&&
-        valid_accessibility_text(value.font_family)&&value.font_family.size()<=256&&
+        valid_accessibility_text(value.font_family)&&value.font_family.size()<=256&&valid_input_field_font_weight(value.font_weight)&&
         range(value.width,1,8192)&&range(value.height,1,8192)&&range(value.horizontal_padding,0,8192)&&
         range(value.vertical_padding,0,8192)&&range(value.corner_radius,0,8192)&&range(value.font_size,1,256)&&
         range(value.line_height,0,1024)&&range(value.double_click_interval,0,2)&&range(value.double_click_distance,0,128)&&

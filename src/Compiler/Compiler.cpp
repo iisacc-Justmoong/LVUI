@@ -6,6 +6,7 @@
 #include <LVUI/Material.h>
 #include <LVUI/WindowAccent.h>
 #include <LVUI/Slider.h>
+#include <LVUI/InputField.h>
 #include "FigmaComponents.h"
 #include <iiSDKCore/Core/Text/Number.h>
 #include <iiSDKCore/Core/Text/Utf8.h>
@@ -24,6 +25,43 @@ namespace {
 [[noreturn]] void error(SourcePosition at, std::string message) {
     throw Diagnostic{at.offset, at.line, at.column, std::move(message)};
 }
+
+// Generated view features request their own headers in the prologue. Publish
+// one import per SDK, in first-use order, before app-supplied C++ headers are
+// appended. Keep feature checks and all non-SDK directives in place.
+std::string module_import_prologue(std::string_view prologue) {
+    constexpr std::string_view include = "#include <";
+    constexpr std::array<std::string_view, 2> modules{"iiGUI", "LVUI"};
+    std::array<bool, modules.size()> imported{};
+    std::string output;
+    output.reserve(prologue.size());
+    while (!prologue.empty()) {
+        const auto newline = prologue.find('\n');
+        const auto length = newline == prologue.npos ? prologue.size() : newline + 1;
+        const auto line = prologue.substr(0, length);
+        prologue.remove_prefix(length);
+        if (line.starts_with(include)) {
+            const auto path = line.substr(include.size());
+            const auto slash = path.find('/');
+            if (slash != path.npos) {
+                const auto module = std::ranges::find(modules, path.substr(0, slash));
+                if (module != modules.end()) {
+                    const auto index = static_cast<std::size_t>(module - modules.begin());
+                    if (!imported[index]) {
+                        output += include;
+                        output += *module;
+                        output += ">\n";
+                        imported[index] = true;
+                    }
+                    continue;
+                }
+            }
+        }
+        output += line;
+    }
+    return output;
+}
+
 bool identifier(std::string_view name) {
     constexpr std::string_view forbidden =
         " alignas alignof and and_eq asm auto bitand bitor bool break case catch char char8_t char16_t char32_t class "
@@ -1673,17 +1711,49 @@ class Generator final {
     }
     std::string list_accent_setup(const Inputs& values,std::string_view palette,std::string_view selected,bool initial) const {
         std::string result;
+        for(const auto& [input,field,key]:{
+                std::tuple{"textColor","text","--lvui-theme-colors-text-body-color"},
+                std::tuple{"descriptionColor","description","--lvui-theme-colors-text-caption-color"},
+                std::tuple{"disabledTextColor","disabled_text","--lvui-theme-colors-text-disabled-color"},
+                std::tuple{"hoverColor","hover","--lvui-theme-colors-panel-surface-alt"}}) {
+            if(values.contains(input))continue;
+            const auto c=token_color(key);
+            result+=std::string(palette)+field+" = lvui::StyleColor{"+decimal(c.red)+", "+decimal(c.green)+", "+decimal(c.blue)+", "+decimal(c.alpha)+"}; ";
+        }
         if(!values.contains("pressedColor"))result+=std::string(palette)+"pressed = "+accent_style(3,initial)+"; ";
         if(!values.contains(selected))result+=std::string(palette)+"selected = "+accent_tint(.30,initial)+"; ";
         if(!values.contains("focusColor"))result+=std::string(palette)+"focus = "+accent_style(0,initial)+"; ";
         return result;
     }
     std::string table_accent_setup(const Inputs& values,std::string_view palette,std::string_view current,bool initial) const {
-        std::string result;
+        std::string result=table_theme_colors(palette);
         if(!values.contains("selectionColor"))result+=std::string(palette)+"selection = "+accent_tint(31./255.,initial)+"; ";
         if(!values.contains(current))result+=std::string(palette)+"current = "+accent_style(0,initial)+"; ";
         return result;
     }
+    std::string table_theme_colors(std::string_view palette) const {
+        std::string result;
+        for(const auto& [field,key]:{
+                std::pair{"divider","--lvui-theme-colors-panel-surface-input"},
+                std::pair{"header_text","--lvui-theme-colors-text-description-color"},
+                std::pair{"cell_text","--lvui-theme-colors-text-body-color"}}) {
+            const auto c=token_color(key);
+            result+=std::string(palette)+field+" = lvui::StyleColor{"+decimal(c.red)+", "+decimal(c.green)+", "+decimal(c.blue)+", "+decimal(c.alpha)+"}; ";
+        }
+        return result;
+    }
+    std::string role_typography(std::string_view role,std::string_view type) const {
+        const auto metric=text_metric(role);
+        const auto weight=role=="title"||role=="title2"?"bold":
+            role=="header"||role=="header2"||role=="description"?"semi-bold":role=="body"?"medium":"regular";
+        const auto size=token_number(metric,1,256);
+        const auto line=token_number(metric+"-line-height",0,8192);
+        const auto font_weight=token_number("--lvui-theme-typography-weight-"+std::string(weight),400,700);
+        if(font_weight!=400&&font_weight!=500&&font_weight!=600&&font_weight!=700)
+            error({},"Typography weight must be 400/500/600/700 for native fonts");
+        return std::string(type)+"{"+decimal(size)+", "+decimal(line)+", "+decimal(font_weight)+"}";
+    }
+    std::string table_typography(std::string_view role) const {return role_typography(role,"lvui::TableTypography");}
     std::string toolbar_accent_setup(const Inputs& values,std::string_view palette,bool initial) const {
         std::string result;
         if(!values.contains("pressedColor"))result+=std::string(palette)+"pressed = "+accent_style(3,initial)+"; ";
@@ -1692,8 +1762,8 @@ class Generator final {
         return result;
     }
     std::string menu_accent_setup(bool initial) const {
-        return "value.configuration.palette.selected = "+accent_style(0,initial)+
-            "; value.configuration.palette.pressed = "+accent_style(3,initial)+
+        return "value.configuration.palette.selected = "+accent_style(4,initial)+
+            "; value.configuration.palette.pressed = "+accent_style(4,initial)+
             "; value.configuration.palette.focus = "+accent_style(0,initial)+"; ";
     }
     std::string accent_palette_code() const {
@@ -1708,7 +1778,7 @@ class Generator final {
     }
     std::string appearance_code(const Inputs &values, const std::string &accent) const {
         std::string code =
-            "    static ii::gui::WidgetAppearance appearance() {\n        ii::gui::require_text_weight_rules_abi_v1();\n        auto result = " +
+            "    static ii::gui::WidgetAppearance appearance() {\n        ii::gui::require_text_weight_rules_abi_v1();\n        ii::gui::require_text_colors_abi_v2();\n        auto result = " +
             ((std::string("ii::gui::WidgetAppearance{}"))) +
             ";\n        result.styled = true;\n";
         const auto font =
@@ -1736,6 +1806,22 @@ class Generator final {
                 code += ", ";
             first = false;
             code += decimal(text_color(role).alpha);
+        }
+        code += "};\n";
+        code += "        result.text_colors = std::array<ii::gui::WidgetColor, 8>{";
+        first = true;
+        for (auto role : {"title", "title2", "header", "header2", "body", "description", "caption", "disabled"}) {
+            if (!first) code += ", ";
+            first = false;
+            code += color_literal(text_color(role));
+        }
+        code += "};\n";
+        code += "        result.text_styles = std::array<ii::gui::TextRoleStyle, 8>{";
+        first = true;
+        for (auto role : {"title", "title2", "header", "header2", "body", "description", "caption", "disabled"}) {
+            if (!first) code += ", ";
+            first = false;
+            code += role_typography(role,"ii::gui::TextRoleStyle");
         }
         code += "};\n";
         code += "        result.text_weight_rules = std::vector<ii::gui::TextWeightRule>{";
@@ -2898,8 +2984,16 @@ class Generator final {
     std::string label_presentation_options(const Inputs& values,bool initial,SourcePosition position)const {
         const auto dynamic=[&](std::string_view name){auto item=values.find(name);return item!=values.end()&&native_expression(item->second->value);};
         const auto [role,size]=text_role(values);
-        const auto font=numeric(values,"fontSize",size,1,256);
-        const auto line=values.contains("fontSize")?font:token_number(text_metric(role)+"-line-height",1,8192);
+        const auto font=dynamic("fontSize")
+            ?"lvui::native::number(lvui::native::range("+expression_code(values.at("fontSize")->value,values.at("fontSize")->position,initial)+", 1, 256))"
+            :decimal(numeric(values,"fontSize",size,1,256));
+        const auto line=dynamic("lineHeight")
+            ?"lvui::native::number(lvui::native::range("+expression_code(values.at("lineHeight")->value,values.at("lineHeight")->position,initial)+", 0, 8192))"
+            :values.contains("lineHeight")?decimal(numeric(values,"lineHeight",0,0,8192))
+            :values.contains("fontSize")?font:decimal(token_number(text_metric(role)+"-line-height",1,8192));
+        const auto tracking=dynamic("letterSpacing")
+            ?"lvui::native::number(lvui::native::range("+expression_code(values.at("letterSpacing")->value,values.at("letterSpacing")->position,initial)+", -256, 256))"
+            :decimal(numeric(values,"letterSpacing",0,-256,256));
         const auto weight=token_number("--lvui-theme-typography-weight-"+
             std::string(role=="title"||role=="title2"?"bold":role=="header"||role=="header2"||role=="description"?"semi-bold":role=="body"?"medium":"regular"),100,900);
         const auto font_weight=numeric(values,"fontWeight",weight,400,700);
@@ -2919,9 +3013,10 @@ class Generator final {
                 alignment="ii::gui::TextAlignment::"+name;}
         }
         const std::string elide=dynamic("elideRight")?"lvui::native::truth("+expression_code(values.at("elideRight")->value,values.at("elideRight")->position,initial)+")":boolean(values,"elideRight",false);
-        return "ii::gui::LabelOptions{.text = "+content+", .font_size = "+decimal(font)+", .selectable = "+selected+
+        return "ii::gui::LabelOptions{.text = "+content+", .font_size = "+font+", .selectable = "+selected+
             ", .role = ii::gui::TextRole::"+role+", .color = "+ink+", .alignment = "+alignment+
-            ", .line_height = "+decimal(numeric(values,"lineHeight",line,0,8192))+", .font_weight = "+decimal(font_weight)+", .elide_right = "+elide+"}";
+            ", .line_height = "+line+", .font_weight = "+decimal(font_weight)+", .elide_right = "+elide+
+            (values.contains("letterSpacing")?", .letter_spacing = "+tracking:std::string{})+"}";
     }
     std::string owned_color_button_options(const Inputs& values,bool initial,SourcePosition position)const {
         const auto dynamic=[&](std::string_view name){auto item=values.find(name);return item!=values.end()&&native_expression(item->second->value);};
@@ -3004,7 +3099,9 @@ class Generator final {
     }
     std::string owned_color_picker_options(const Inputs& values,bool initial,SourcePosition position,std::string_view fallback)const {
         const auto dynamic=[&](std::string_view name){auto item=values.find(name);return item!=values.end()&&native_expression(item->second->value);};
-        std::string setup;
+        const auto divider=token_color("--lvui-material-glass-edge");
+        std::string setup="value.divider_color = lvui::StyleColor{"+decimal(divider.red)+", "+decimal(divider.green)+", "+
+            decimal(divider.blue)+", "+decimal(divider.alpha)+"}; ";
         if(auto item=values.find("model");item!=values.end()){
             if(!dynamic("model"))error(item->second->position,"Color picker model requires an LVUI ColorPickerSession from a C++ backend");
             setup+="value.session = lvui::native::widget_value<ii::gui::WidgetColor>("+expression_code(item->second->value,item->second->position,initial)+"); ";
@@ -3154,7 +3251,18 @@ class Generator final {
     std::string owned_sheet_options(const Inputs& values,bool initial)const {
         const auto dynamic=[&](std::string_view name){auto item=values.find(name);return item!=values.end()&&native_expression(item->second->value);};
         if(auto item=values.find("motion");item!=values.end())error(item->second->position,"The independent Sheet does not support a motion model yet");
-        std::string setup = "value.configuration.palette.surface = lvui::native::color<ii::gui::WidgetColor>(lvui::figma_defaults::panel_surface_panel); ";
+        std::string setup = "value.configuration.palette.surface = "+color_literal(token_color("--lvui-theme-colors-panel-surface-solid"))+"; ";
+        for(const auto& [field,role,color_role]:{
+                std::tuple{"title_style","header","header"},std::tuple{"description_style","body","description"}}) {
+            const auto name=std::string(field), typography=name+"_typography";
+            setup+="const auto "+typography+" = "+role_typography(role,"ii::gui::TextRoleStyle")+"; "+
+                "value."+name+" = ii::gui::LabelOptions{}; "+
+                "value."+name+"->font_size = "+typography+".font_size; "+
+                "value."+name+"->line_height = "+typography+".line_height; "+
+                "value."+name+"->font_weight = "+typography+".font_weight; "+
+                "value."+name+"->role = ii::gui::TextRole::"+role+"; "+
+                "value."+name+"->color = "+color_literal(text_color(color_role))+"; ";
+        }
         for(const auto& [name,field]:{std::pair{"title","title"},std::pair{"description","description"},std::pair{"accessibilityName","accessibility_name"}})
             if(auto item=values.find(name);item!=values.end())setup+="value.configuration."+std::string(field)+" = "+
                 (dynamic(name)?"lvui::native::text("+expression_code(item->second->value,item->second->position,initial)+")":literal(text(values,name)))+"; ";
@@ -3204,7 +3312,20 @@ class Generator final {
         const auto icon=alias_key(values,"iconSource","appIconSource");
         if(values.contains("imageSource")&&(values.contains("iconSource")||values.contains("appIconSource")))error(position,"Use one Alert image source");
         const auto image=values.contains("imageSource")?std::string("imageSource"):icon;
-        std::string setup;
+        auto frame=token_color("--lvui-theme-colors-panel-surface-solid");frame.alpha*=.72;
+        const auto style_color=[](const auto& c){return "lvui::StyleColor{"+decimal(c.red)+", "+decimal(c.green)+", "+decimal(c.blue)+", "+decimal(c.alpha)+"}";};
+        std::string setup="value.configuration.palette.frame = "+style_color(frame)+"; ";
+        for(const auto& [field,key]:{
+                std::pair{"configuration.palette.border","--lvui-material-glass-edge"},
+                std::pair{"configuration.palette.title","--lvui-material-alert-text-primary"},
+                std::pair{"configuration.palette.description","--lvui-material-glass-foreground"},
+                std::pair{"style.icon_background","--lvui-theme-colors-accent-blue-subtle"},
+                std::pair{"style.icon_border","--lvui-theme-colors-accent-blue-outline"},
+                std::pair{"style.action_text","--lvui-material-alert-text-primary"},
+                std::pair{"style.action_border","--lvui-material-alert-action-border"}})
+            setup+="value."+std::string(field)+" = "+style_color(token_color(key))+"; ";
+        setup+="value.style.title_typography = "+role_typography("title","lvui::AlertTypography")+"; ";
+        setup+="value.style.description_typography = "+role_typography("body","lvui::AlertTypography")+"; ";
         for(const auto& [field,key]:{
                 std::pair{"action_horizontal_inset","--lvui-theme-metrics-space-24"},
                 std::pair{"action_gap","--lvui-theme-metrics-space-14"},
@@ -3383,7 +3504,7 @@ class Generator final {
         setup+=owned_named_icon_setup(values,initial,true);
         if(auto icon=values.find("icon");icon!=values.end())setup+="value.configuration.icon_name.clear(); value.icon = lvui::native::widget_value<ii::gui::WidgetColor>("+expression_code(icon->second->value,icon->second->position,initial)+"); ";
         for(const auto& [field,key]:std::map<std::string,std::string,std::less<>>{
-                {"text","--lvui-theme-colors-text-body-color"},{"disabled_text","--lvui-theme-colors-text-disabled-color"},
+                {"text","--lvui-theme-colors-text-title-header-color"},{"disabled_text","--lvui-theme-colors-text-disabled-color"},
                 {"detail","--lvui-theme-colors-text-description-color"},{"hover","--lvui-theme-colors-panel-surface-alt"}}){
             const auto c=token_color(key);setup+="value.configuration.palette."+field+" = lvui::StyleColor{"+decimal(c.red)+", "+decimal(c.green)+", "+decimal(c.blue)+", "+decimal(c.alpha)+"}; ";
         }
@@ -3566,6 +3687,7 @@ class Generator final {
             if(v.contains(name))appearance+="value.configuration."+std::string(field)+" = "+number(name,0,low,high)+"; ";
         if(v.contains("checkable"))appearance+="value.configuration.checkable = "+flag("checkable",false)+"; ";
         if(v.contains("checked"))appearance+="value.configuration.checked = "+flag("checked",false)+"; ";
+        if(v.contains("pointerFocusVisible"))appearance+="value.configuration.pointer_focus_visible = "+flag("pointerFocusVisible",true)+"; ";
         if(auto item=v.find("selectionStyle");item!=v.end()){
             std::string style;
             if(native_expression(item->second->value))style="lvui::native::button_selection_style("+expression("selectionStyle","")+")";
@@ -4032,6 +4154,11 @@ class Generator final {
         const auto dynamic=[&](std::string_view key){auto item=values.find(key);return item!=values.end()&&native_expression(item->second->value);};
         std::string result="([&] { lvui::native::TableInput value; ";
         result+=table_accent_setup(values,"value.appearance.palette.","currentCellBorderColor",initial);
+        if(!values.contains("fontSize")) {
+            result+="value.appearance.font_size = "+decimal(token_number(text_metric("body"),1,256))+"; ";
+            result+="value.appearance.header_typography = "+table_typography("description")+"; ";
+            result+="value.appearance.cell_typography = "+table_typography("body")+"; ";
+        }
         if(auto item=values.find("editable");item!=values.end()&&!values.contains("editor") &&
             (native_expression(item->second->value)||boolean(values,"editable",false)=="true"))
             error(item->second->position,"Editable tables require an explicit TableEditor");
@@ -4133,6 +4260,10 @@ class Generator final {
             {"selectionColor","selection"},{"currentBorderColor","current"}};
         std::string result="([&] { lvui::native::TableRowInput value; ";
         result+=table_accent_setup(values,"value.configuration.palette.","currentBorderColor",initial);
+        if(!values.contains("fontSize")) {
+            result+="value.configuration.font_size = "+decimal(token_number(text_metric("body"),1,256))+"; ";
+            result+="value.configuration.typography = "+table_typography("body")+"; ";
+        }
         for(const auto& [key,input]:values){
             const bool dynamic=native_expression(input->value);std::string field,expression;
             if(auto found=numbers.find(key);found!=numbers.end()){
@@ -4166,6 +4297,18 @@ class Generator final {
             {"selectionColor","selection"},{"currentBorderColor","current"}};
         std::string result="([&] { lvui::native::TableCellItemInput value; ";
         result+=table_accent_setup(values,"value.configuration.palette.","currentBorderColor",initial);
+        if(!values.contains("fontSize")) {
+            auto styles=values;
+            if(auto item=values.find("textStyle");item!=values.end())styles["style"]=item->second;
+            else styles.erase("style");
+            const auto role=values.contains("textStyle")?text_role(styles).first:std::string("body");
+            result+="value.configuration.font_size = "+decimal(token_number(text_metric(role),1,256))+"; ";
+            result+="value.configuration.typography = "+table_typography(role)+"; ";
+            if(values.contains("textStyle")&&!values.contains("textColor")) {
+                const auto c=text_color(role);
+                result+="value.configuration.palette.cell_text = lvui::StyleColor{"+decimal(c.red)+", "+decimal(c.green)+", "+decimal(c.blue)+", "+decimal(c.alpha)+"}; ";
+            }
+        }
         for(const auto& [key,input]:values){
             const bool dynamic=native_expression(input->value);std::string field,expression;
             if(auto found=numbers.find(key);found!=numbers.end()){
@@ -4196,6 +4339,8 @@ class Generator final {
             {"iconSize","icon_size"},{"iconSpacing","icon_spacing"}};
         const std::map<std::string,std::string,std::less<>> colors{{"textColor","header_text"},{"backgroundColor","background"},{"separatorColor","divider"},{"focusColor","current"}};
         std::string result="([&] { lvui::native::TableHeaderInput value; ",widths;
+        result+=table_theme_colors("value.configuration.palette.");
+        result+="value.configuration.typography = "+table_typography("description")+"; ";
         if(!values.contains("focusColor"))result+="value.configuration.palette.current = "+accent_style(0,initial)+"; ";
         for(const auto& [key,input]:values){
             const bool dynamic=native_expression(input->value);std::string field,expression;
@@ -5123,6 +5268,19 @@ class Generator final {
         number("width","width",1,8192);number("height","height",1,8192);
         number("horizontalPadding","horizontal_padding",0,8192);number("verticalPadding","vertical_padding",0,8192);
         number("cornerRadius","corner_radius",0,8192);number("fontSize","font_size",1,256);number("lineHeight","line_height",0,1024);
+        const auto weight=values.find("fontWeight");
+        if(dynamic("fontWeight")){
+            setup+="value.font_weight = lvui::input_field_font_weight(lvui::native::number(lvui::native::widget_value<ii::gui::WidgetColor>("+
+                expression_code(weight->second->value,weight->second->position,initial)+"))); ";
+        }else{
+            const auto regular=token_number("--lvui-theme-typography-weight-regular",400,700);
+            const auto selected=numeric(values,"fontWeight",regular,400,700);
+            if(!valid_input_field_font_weight(selected)){
+                if(weight==values.end())throw std::invalid_argument("Style token Weight/Regular must identify a supported native font weight");
+                error(weight->second->position,"fontWeight must be 400/500/600/700 for native fonts");
+            }
+            setup+="value.font_weight = "+std::to_string(static_cast<unsigned>(selected))+"; ";
+        }
         for(const auto& [name,field]:std::map<std::string,std::string,std::less<>>{{"backgroundColor","background"},{"hoverColor","hover"},{"textColor","text"},{"placeholderColor","placeholder"},{"selectionColor","selection"},{"caretColor","caret"},{"focusColor","focus"}})
             if(auto item=values.find(name);item!=values.end())setup+="value.palette."+field+" = lvui::native::input_field_color("+color_expression(item->second->value,item->second->position,initial)+"); ";
         if(text_editor){
@@ -5405,9 +5563,9 @@ class Generator final {
         std::string opened, closed, close_requested;
         bool custom_chrome=false;
     };
-    WindowOutput prepare_window(const View& root) {
+    WindowOutput prepare_window(const View& root, bool apply_default_safe_area = true) {
         if(component_kinds(root.children).size()!=1)error(root.position,"ApplicationWindow requires exactly one child View after sequence expansion");
-        const auto values=inputs(root,{"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","windowChrome","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
+        const auto values=inputs(root,{"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","windowChrome","titleBarVisible","titleBar","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
         if (!application_generation && (values.contains("id") || values.contains("initiallyOpen")))
             error(root.position, "Named Window scenes require an Application root");
         const bool scene_events=values.contains("onOpened")||values.contains("onClosed")||values.contains("onCloseRequested");
@@ -5423,6 +5581,16 @@ class Generator final {
                 error(input.position,"windowChrome requires a static .system or .custom value");
             custom_chrome=value.text==".custom";
         }
+        if (auto found=values.find("titleBarVisible");found!=values.end()) {
+            if (native_expression(found->second->value))
+                error(found->second->position,"titleBarVisible requires a static Bool");
+            const bool requested_custom=boolean(values,"titleBarVisible",true)=="false";
+            if (values.contains("windowChrome") && custom_chrome!=requested_custom)
+                error(found->second->position,"titleBarVisible conflicts with windowChrome");
+            custom_chrome=requested_custom;
+        }
+        if (values.contains("titleBar") && !custom_chrome)
+            error(values.at("titleBar")->position, "titleBar requires windowChrome: .custom");
         window_close_runtime=window_close_runtime||close_requested!="{}";
         if(auto found=values.find("accent");found!=values.end()) {
             const auto& input=*found->second;
@@ -5438,7 +5606,7 @@ class Generator final {
             }
         }
         Inputs properties=values;
-        properties.erase("onOpened"); properties.erase("onClosed"); properties.erase("onCloseRequested"); properties.erase("id"); properties.erase("initiallyOpen"); properties.erase("windowChrome");
+        properties.erase("onOpened"); properties.erase("onClosed"); properties.erase("onCloseRequested"); properties.erase("id"); properties.erase("initiallyOpen"); properties.erase("windowChrome"); properties.erase("titleBarVisible"); properties.erase("titleBar");
         Inputs bootstrap=properties;
         for(auto it=bootstrap.begin();it!=bootstrap.end();)if(native_expression(it->second->value))it=bootstrap.erase(it);else ++it;
         auto width=numeric(bootstrap,"width",640,1,32767),height=numeric(bootstrap,"height",420,1,32767);
@@ -5449,7 +5617,48 @@ class Generator final {
         if(values.contains("minimumHeight")&&!bootstrap.contains("minimumHeight"))minimum_height=std::min(minimum_height,height);
         if(width<minimum_width||height<minimum_height)error(root.position,"Window size must be at least its minimum size");
         emit_window_properties(properties);
-        for(const auto& child:root.children)emit(child,"native_parent");
+        const bool ignore_safe_area = root.ignore_safe_area.has_value();
+        std::string content_parent = "native_parent";
+        if (auto found = values.find("titleBar"); found != values.end()) {
+            const auto& input = *found->second;
+            View titlebar;
+            if (input.value.kind == ValueKind::view && input.value.view) titlebar = *input.value.view;
+            else if (input.value.kind == ValueKind::reference && view_values.contains(input.value.text)) {
+                titlebar.custom_component = input.value.text;
+                titlebar.position = input.position;
+            } else error(input.position, "titleBar requires one View");
+            require_single_view(titlebar, "titleBar");
+            if (!ids.insert("@lvui/window-chrome-shell").second || !ids.insert("@lvui/window-content").second)
+                error(root.position, "Duplicate widget id for window chrome");
+            const auto shell = "_lvui_window_shell_" + std::to_string(next++);
+            const auto slot = "_lvui_window_content_" + std::to_string(next++);
+            body += "            auto " + shell + " = widgets.vstack(native_parent, \"@lvui/window-chrome-shell\", {.spacing = 0, .alignment = ii::gui::StackAlignment::stretch});\n"
+                    "            if (!" + shell + ") return std::unexpected(" + shell + ".error());\n";
+            emit(titlebar, "*" + shell);
+            body += "            auto " + slot + " = widgets.zstack(*" + shell + ", \"@lvui/window-content\", {.spacing = 0, .alignment = ii::gui::StackAlignment::stretch});\n"
+                    "            if (!" + slot + ") return std::unexpected(" + slot + ".error());\n"
+                    "            if (auto sizing = " + slot + "->set_flex(1); !sizing) return sizing;\n";
+            content_parent = "*" + slot;
+        }
+        if (apply_default_safe_area && !ignore_safe_area) {
+            const auto safe_area = "_lvui_window_safe_area_" + std::to_string(next++);
+            if (!ids.insert("@lvui/window-safe-area").second)
+                error(root.position, "Duplicate widget id for window safe area");
+            const auto create = "            auto " + safe_area + " = widgets.zstack(" + content_parent + ", \"@lvui/window-safe-area\", "
+                "{.spacing = 0, .alignment = ii::gui::StackAlignment::stretch, .insets = ii::gui::Insets{16, 0, 16, 0}});\n"
+                "            if (!" + safe_area + ") return std::unexpected(" + safe_area + ".error());\n";
+            if (application_generation) {
+                body += create;
+                content_parent = "*" + safe_area;
+            } else {
+                const auto parent = "_lvui_window_content_parent_" + std::to_string(next++);
+                body += "            auto " + parent + " = " + content_parent + ";\n"
+                        "            if (_lvui_apply_window_safe_area) {\n" + create +
+                        "                " + parent + " = *" + safe_area + ";\n            }\n";
+                content_parent = parent;
+            }
+        }
+        for (const auto& child : root.children) emit(child, content_parent);
         return {text(bootstrap,"title","LVUI"),appearance_code(bootstrap,window_accent_name),accent_palette_code(),
                 width,height,minimum_width,minimum_height,opened,closed,close_requested,custom_chrome};
     }
@@ -6285,6 +6494,8 @@ class Generator final {
               "            { auto binding = native_bindings->bind([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+expression+"; }, ["+connection+"](const auto& selection) { return "+connection+"->select(selection); }); if (!binding) return std::unexpected(binding.error()); }\n";
     }
     void emit(const View& view, const std::string& parent,const Inputs* menu_parent=nullptr, bool figma_normalized=false) {
+        if (view.ignore_safe_area)
+            error(*view.ignore_safe_area, "ignoreSafeArea requires a Window-type component");
         if (view.lexical_context) {
             if (view.lexical_context > slot_environments.size()) error(view.position, "Invalid supplied View context");
             const auto outer = environment();
@@ -6395,11 +6606,11 @@ class Generator final {
         else if((table_header))values=inputs(view,{"id","columns","width","rowHeight","cellHorizontalPadding","columnWidths","fallbackCellWidth","minColumnWidth","offset","fitColumnsToViewport","textColor","backgroundColor","focusColor","separatorHeight","separatorColor","interactive","enabled","accessibilityText","sort","columnAppearance","defaultLeadingIcon","defaultTrailingIcon","iconSize","iconSpacing","iconSource","iconRevision","onColumnClicked","cellDelegate","delegate","cellContext","columnViews"});
         else if(kind=="Spacer") values=inputs(view,{"id","minLength"});
         else if(image_view)values=inputs(view,{"id","source","imageLoader","width","height","accessibilityName","padding","cornerRadius","borderWidth","backgroundColor","borderColor","preserveAspect","fit","circular","allowEmpty","iconName","iconSize","iconSource","iconRevision"});
-        else if(kind=="Label") values=inputs(view,{"id","text","fontSize","fontWeight","lineHeight","color","selectable","style","alignment","elideRight"});
+        else if(kind=="Label") values=inputs(view,{"id","text","fontSize","fontWeight","lineHeight","letterSpacing","color","selectable","style","alignment","elideRight"});
         else if((dropdown)) values=inputs(view,{"id","text","enabled","tone","method","methods","onClick","onPressed","onReleased","onCanceled","iconMode","iconName","iconSource","iconRevision","iconSize","icon","width","height","horizontalPadding","leftPadding","rightPadding","spacing","cornerRadius","indicatorSize","fontSize","lineHeight","accessibilityName","primaryColor","hoverColor","pressedColor","textColor","disabledTextColor"},true);
         else if((kind=="HelpButton")) values=inputs(view,{"id","text","enabled","motionEnabled","enterKeyActivation","tone","method","methods","onClick","onPressed","onReleased","onCanceled","width","height","horizontalPadding","cornerRadius","fontSize","lineHeight","textOffsetY","accessibilityName","backgroundColor","hoverColor","pressedColor","textColor","disabledTextColor"},true);
         else if((kind=="ListItem")) values=inputs(view,{"id","type","size","label","text","description","detail","iconName","icon","iconSource","iconRevision","accessibilityName","selected","enabled","interactive","selectable","showDescription","showChevron","showTrailingIcon","showValue","value","valueWidth","showDate","showFolders","showTags","folderLabel1","folderLabel2","tagLabel1","tagLabel2","dateText","metadata1","metadata2","statusText","bookmarkIconName","durationText","mediaDetail","previewIconName","previewSource","imageLoader","previewSize","showPreview","previewComponent","footerComponent","leadingComponent","trailingComponent","trailingWidth","trailingHeight","showLeadingIcon","showBookmark","showMetadata","detailHorizontalPadding","sectionSpacing","contentSpacing","checked","toggleEnabled","selectionEnabled","showToggle","showSelection","primaryAction","secondaryAction","moreMenu","moreItems","showPrimaryAction","showSecondaryAction","showMoreMenu","actionWidth","slotPadding","slotSpacing","quantity","minimumQuantity","maximumQuantity","stepSize","quantityWidth","quantitySpacing","quantityLabel","optionLabel","modeLabel","scopeLabel","stepperEnabled","showStepper","stepperArrow","stepperTone","selector","selectorIndex","selectorWidth","selectorEnabled","showSelector","unitSelector","unitIndex","unitSelectorWidth","unitSelectorEnabled","showUnitSelector","segments","segmentIndex","segmentWidth","segmentsEnabled","showSegments","inputText1","inputPlaceholder1","inputText2","inputPlaceholder2","fieldLabel1","fieldLabel2","inputWidth","inputHeight","inputEnabled1","inputReadOnly1","showInput1","inputEnabled2","inputReadOnly2","showInput2","width","height","leftPadding","rightPadding","iconSize","spacing","cornerRadius","chevronSize","textColor","descriptionColor","disabledTextColor","backgroundColor","hoverColor","pressedColor","selectedColor","focusColor","onClick","onCheckedChanged","onEdited","onActionTriggered","onActionValuesTriggered","onActionEvent","onMenuItemTriggered","onMenuSelectionTriggered","onQuantityChanged","onSelectorIndexChanged","onUnitIndexChanged","onSegmentIndexChanged","onInputTextChanged","onInputSubmitted","onInputText2Changed","onInput2Submitted"},true);
-        else if((button)) values=inputs(view,{"id","text","enabled","motionEnabled","enterKeyActivation","tone","checkable","checked","selectionStyle","method","methods","onClick","onPressed","onReleased","onCanceled","iconMode","iconName","iconSource","iconRevision","iconSize","icon","width","height","horizontalPadding","cornerRadius","iconSpacing","fontSize","lineHeight","textOffsetY","borderColor","borderWidth","primaryColor","hoverColor","pressedColor","normalColor","normalHoverColor","normalPressedColor","selectedColor","dangerColor","dangerHoverColor","dangerPressedColor","disabledBackgroundColor","textColor","disabledTextColor","accessibilityName"},true);
+        else if((button)) values=inputs(view,{"id","text","enabled","motionEnabled","enterKeyActivation","pointerFocusVisible","tone","checkable","checked","selectionStyle","method","methods","onClick","onPressed","onReleased","onCanceled","iconMode","iconName","iconSource","iconRevision","iconSize","icon","width","height","horizontalPadding","cornerRadius","iconSpacing","fontSize","lineHeight","textOffsetY","borderColor","borderWidth","primaryColor","hoverColor","pressedColor","normalColor","normalHoverColor","normalPressedColor","selectedColor","dangerColor","dangerHoverColor","dangerPressedColor","disabledBackgroundColor","textColor","disabledTextColor","accessibilityName"},true);
         else if((tab)) values=inputs(view,{"id","text","iconName","iconSource","iconRevision","badge","enabled","selected","tabStyle","iconSize","minimumWidth","height","accessibilityName","onClick"},true);
         else if((tabbar)) values=inputs(view,{"id","spacing","minimumTabWidth","currentIndex","autoSelect","accessibilityName","onCurrentIndexChanged"});
         else if(mobile_tab)values=inputs(view,{"id","text","iconName","iconSource","iconRevision","badge","badgeDot","badgeAccessibilityName","selected","enabled","showLabel","drawSelection","motionEnabled","platformStyle","width","height","focusColor","accessibilityName","onClick"},true);
@@ -6414,8 +6625,8 @@ class Generator final {
         else if((kind=="CheckBox")) values=inputs(view,{"id","text","enabled","checked","group","onToggled","accessibilityName","boxSize","framePadding","boxRadius","checkMarkStrokeWidth","labelGap","checkedColor","uncheckedColor","disabledCheckedColor","disabledUncheckedColor","checkColor","checkMarkColorDisabled","boxBorderWidthCheckedEnabled","boxBorderWidthUncheckedEnabled","boxBorderWidthCheckedDisabled","boxBorderWidthUncheckedDisabled","boxBorderColorCheckedEnabled","boxBorderColorUncheckedEnabled","boxBorderColorCheckedDisabled","boxBorderColorUncheckedDisabled","textColor","disabledTextColor","useFigmaCheckedAssets","innerShadowSoftColor","innerShadowStrongColor","shapeStyle","motionEnabled","motion","transitionDuration"});
         else if((kind=="ToggleSwitch")) values=inputs(view,{"id","text","enabled","checked","group","onToggled","accessibilityName","rightToLeft","motionEnabled","motion","transitionDuration","trackWidth","trackHeight","trackPadding","knobSize","trackCornerRadius","knobCornerRadius","labelGap","onColor","onColorHover","onColorPressed","offColor","offColorHover","offColorPressed","disabledTrackColor","knobFillColor","disabledKnobColor","textColor","disabledTextColor"});
         else if(check) values=inputs(view,{"id","text","enabled","checked","group","onToggled"});
-        else if((kind=="InputField")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","size","surface","onEdited","onSubmit","submitFocusId","focusOnMount","multiline","password","wrapEnabled","maximumLength","accessibilityName","clearButtonVisible","clearAccessibilityName","fontFamily","fontSize","lineHeight","horizontalPadding","verticalPadding","cornerRadius","backgroundColor","hoverColor","textColor","placeholderColor","selectionColor","caretColor","focusColor"});
-        else if((kind=="TextEditor")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","minimumHeight","onEdited","onSubmit","onContentHeightChanged","onWrappingFallbackChanged","wrapEnabled","accessibilityName","fontFamily","fontSize","lineHeight","horizontalPadding","verticalPadding"});
+        else if((kind=="InputField")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","size","surface","onEdited","onSubmit","submitFocusId","focusOnMount","multiline","password","wrapEnabled","maximumLength","accessibilityName","clearButtonVisible","clearAccessibilityName","fontFamily","fontSize","fontWeight","lineHeight","horizontalPadding","verticalPadding","cornerRadius","backgroundColor","hoverColor","textColor","placeholderColor","selectionColor","caretColor","focusColor"});
+        else if((kind=="TextEditor")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","height","minimumHeight","onEdited","onSubmit","onContentHeightChanged","onWrappingFallbackChanged","wrapEnabled","accessibilityName","fontFamily","fontSize","fontWeight","lineHeight","horizontalPadding","verticalPadding"});
         else if((kind=="SearchField")) values=inputs(view,{"id","text","placeholder","enabled","readOnly","width","surface","clearButtonVisible","accessibilityName","clearAccessibilityName","onEdited","onSubmit"});
         else if((kind=="Slider")) values=inputs(view,{"id","from","to","value","stepSize","width","enabled","active","type","showTicks","tickCount","segmentCount","showSymbol","symbolName","showMinMax","showLabels","showEndpointIcons","minimumLabel","maximumLabel","minimumIconName","maximumIconName","rightToLeft","size","thumbDiameter","trackHeight","rangeInset","height","accessibilityName","trackColor","fillColor","inactiveFillColor","thumbColor","focusColor","labelColor","onMoved"});
         else if(kind=="ProgressBar") values=inputs(view,{"id","minimumValue","maximumValue","endValue","startValue","currentValue","stateModel","minimumValueStateKey","maximumValueStateKey","startValueStateKey","currentValueStateKey","size","shapeStyle","width","height","largeHeight","regularHeight","cornerRadius","trackColor","fillColor","motionEnabled","motion","displayedStart","displayedProgress"});
@@ -6611,7 +6822,8 @@ class Generator final {
         else if(native_view)call="ii::gui::NativeView::create(widgets, "+args+", "+native_view_options(values,true)+")";
         else if(image_view){if(image_icon){owned_icon_runtime=true;native_runtime=true;needs_parent_scope=true;}}
         else if(kind=="Label") {
-            if(values.contains("alignment")||values.contains("elideRight")){
+            if(values.contains("alignment")||values.contains("elideRight")||values.contains("letterSpacing")||
+               std::ranges::any_of(values,[&](const auto& pair){return (pair.first=="fontSize"||pair.first=="lineHeight")&&native_expression(pair.second->value);})){
                 call=prefix+"label("+args+", "+label_presentation_options(values,true,view.position)+")";
                 native_runtime=true;needs_parent_scope=true;
             }else{
@@ -7908,7 +8120,8 @@ class Generator final {
             if(dynamic) body+="            { auto binding = native_bindings->bind(["+derived+"]([[maybe_unused]] lvui::native::ReadContext& context) { return context.read(*"+derived+"); }, [component = *"+native+"](const ii::gui::ProgressConfiguration& value) { return component.set_configuration(value); });\n"
                 "              if (!binding) return std::unexpected(binding.error()); }\n";
         }
-        else if(kind=="Label"&&(values.contains("alignment")||values.contains("elideRight"))){
+        else if(kind=="Label"&&(values.contains("alignment")||values.contains("elideRight")||values.contains("letterSpacing")||
+                std::ranges::any_of(values,[&](const auto& pair){return (pair.first=="fontSize"||pair.first=="lineHeight")&&native_expression(pair.second->value);}))){
             const auto derived="label_inputs_"+variable;
             const bool dynamic=std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&native_expression(pair.second->value);});
             if(dynamic){
@@ -8206,6 +8419,8 @@ public:
         std::string application_start, application_ready, application_stop, application_active, application_inactive,
                     application_foreground, application_background, application_files, application_arguments, application_close;
         if (application_root) {
+            if (root.ignore_safe_area)
+                error(*root.ignore_safe_area, "ignoreSafeArea requires a Window-type component");
             if (root.condition || root.repetition)
                 error(root.position, "Application does not accept conditions or repetition");
             declarations(root.imports, root.bindings, scope, type_imports);
@@ -8225,7 +8440,7 @@ public:
                     error(scene.position, "Application requires unconditional Window or ApplicationWindow scenes");
                 auto declaration = scene;
                 declaration.imports.clear(); declaration.bindings.clear();
-                const auto values = inputs(declaration, {"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","windowChrome","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
+                const auto values = inputs(declaration, {"title","width","height","minimumWidth","minimumHeight","accent","backgroundColor","fontFamily","windowChrome","titleBarVisible","titleBar","onOpened","onClosed","onCloseRequested","id","initiallyOpen"});
                 std::string id;
                 if (auto found = values.find("id"); found != values.end()) {
                     const auto value = resolve(found->second->value, found->second->position);
@@ -8266,8 +8481,10 @@ public:
             application_close = close_decision(events);
         }
         if (!application_root) finish_scene_declarations();
+        bool implicit_window = false;
         if (!application_root && root.component->spelling != "ApplicationWindow" && root.component->spelling != "Window") {
             if (root.component->spelling == "Scene") error(root.position, "Scene requires an Application parent");
+            implicit_window = true;
             View window;
             window.component = find_keyword("Window");
             window.position = root.position;
@@ -8302,7 +8519,7 @@ public:
         } else {
             declarations(root.imports, root.bindings, scope, type_imports);
             root.imports.clear(); root.bindings.clear();
-            window=prepare_window(root);
+            window=prepare_window(root, !options.view_factory_only || !implicit_window);
         }
         const bool application_close_runtime = application_root && (application_close != "{}" || application_quit_runtime || multiple_scenes || window_close_runtime);
         const bool application_state_runtime = application_root && (application_active != "{}" || application_inactive != "{}" ||
@@ -8317,7 +8534,7 @@ public:
             error(root.position, "External view factory cannot discard window-close or popup host lifecycle");
         std::string result = "// Generated by lvui-compile. C++23 native widget construction; do not edit.\n#pragma once\n#include <iiGUI/NativeWidgets.h>\n#include <iiGUI/Bindings.h>\n";
         if (!options.view_factory_only) result += "#include <iiGUI/Host.h>\n";
-        result += "#include <memory>\n#include <vector>\n#if !defined(IIGUI_TEXT_WEIGHT_RULES_API) || IIGUI_TEXT_WEIGHT_RULES_API < 1\n#error \"LVUI generated view requires iiGUI 0.5.0 or later\"\n#endif\n";
+        result += "#include <array>\n#include <memory>\n#include <vector>\n#if !defined(IIGUI_TEXT_WEIGHT_RULES_API) || IIGUI_TEXT_WEIGHT_RULES_API < 1 || !defined(IIGUI_TEXT_COLORS_API) || IIGUI_TEXT_COLORS_API < 1\n#error \"LVUI generated view requires iiGUI 0.6.0 or later\"\n#endif\n";
         if (application_root) result += "#include <iiGUI/Application.h>\n#include <LVUI/Scene.h>\n#include <array>\n#include <limits>\n#include <optional>\n#include <thread>\n#include <utility>\n#if !defined(IISDKCORE_APPLICATION_CONFIGURATION_TRANSACTION_API) || IISDKCORE_APPLICATION_CONFIGURATION_TRANSACTION_API < 1\n#error \"LVUI Application requires iiSDKCore atomic application configuration\"\n#endif\n#if !defined(IISDKCORE_APPLICATION_BEFORE_DRIVER_API) || IISDKCORE_APPLICATION_BEFORE_DRIVER_API < 1\n#error \"LVUI Application requires iiSDKCore before-driver attachment\"\n#endif\n";
         if (multiple_scenes) result += "#include <LVUI/SceneStartup.h>\n#include <LVUI/SceneWindowSet.h>\n#if !defined(IIGUI_HOST_FAILURE_HANDLER_API) || IIGUI_HOST_FAILURE_HANDLER_API < 1\n#error \"LVUI multiple windows require iiGUI host failure notifications\"\n#endif\n#if !defined(IIGUI_HOST_APPLICATION_DRIVER_API) || IIGUI_HOST_APPLICATION_DRIVER_API < 1\n#error \"LVUI multiple windows require an independent iiGUI application driver\"\n#endif\n";
         if (window_close_runtime) result += "#include <LVUI/WindowCloseGuard.h>\n";
@@ -8351,7 +8568,9 @@ public:
         if (owned_listener_runtime) result += "#include <iiGUI/NativeEventListenerView.h>\n#include <functional>\n#include <optional>\n#include <utility>\n";
         if (owned_avatar_runtime) result += "#include <iiGUI/NativeAvatarView.h>\n#include <iiGUI/SvgImageCache.h>\n#include <LVUI/NativeAvatarAssets.h>\n#include <LVUI/NativeAuthoredIcons.h>\n";
         if (owned_tooltip_runtime) result += "#include <LVUI/NativeTooltip.h>\n#include <iiGUI/TooltipModel.h>\n#include <iiGUI/TooltipController.h>\n#include <iiGUI/TooltipOutline.h>\n#include <iiGUI/NativeMaterialView.h>\n#include <iiGUI/NativeTooltipPresentationView.h>\n#include <iiGUI/NativeTooltipTargetView.h>\n#include <iiGUI/TooltipScheduler.h>\n#include <iiGUI/NativeTooltipView.h>\n";
-        if (owned_slider_runtime) result += "#include <LVUI/NativeSlider.h>\n#include <iiGUI/NativeSliderView.h>\n#include <iiGUI/SvgImageCache.h>\n";
+        if (owned_slider_runtime) result += "#include <LVUI/NativeSlider.h>\n#include <iiGUI/NativeSliderView.h>\n#include <iiGUI/SvgImageCache.h>\n"
+            "#if !defined(IIGUI_ACCESSIBILITY_VALUE_HANDLER_API) || IIGUI_ACCESSIBILITY_VALUE_HANDLER_API < 1\n"
+            "#error \"LVUI Slider requires iiGUI accessible value support\"\n#endif\n";
         if (owned_input_field_runtime) result += "#include <LVUI/NativeInputField.h>\n#include <iiGUI/NativeInputFieldView.h>\n";
         if (owned_text_editor_runtime) result += "#include <LVUI/NativeTextEditor.h>\n#include <iiGUI/NativeTextEditorView.h>\n#include <iiGUI/NativeInputFieldView.h>\n";
         if (owned_mobile_navigation_runtime) result += "#include <LVUI/NativeMobileNavigation.h>\n#include <iiGUI/NativeMobileNavigationView.h>\n#include <iiGUI/MobileNavigationModel.h>\n#include <iiGUI/MobileNavigationMotion.h>\n#include <iiGUI/NativeMaterialView.h>\n#include <iiGUI/SvgImageCache.h>\n";
@@ -8413,6 +8632,7 @@ public:
         if(widget_layout_runtime)result+="#include <LVUI/NativeWidgetLayout.h>\n";
         if(window_runtime)result+="#include <LVUI/NativeWindowValues.h>\n";
         if(!window.palette.empty())result+="#include <array>\n#include <stdexcept>\n";
+        result = module_import_prologue(result);
         for (const auto& include : options.includes) {
             if (include.empty() || include.front() == '/' || include.find("..") != include.npos ||
                 !std::ranges::all_of(include, [](char c) { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
@@ -9221,7 +9441,8 @@ public:
         result += "private:\n    static ii::core::Result<void> construct(ii::gui::WidgetBuilder& widgets, ii::gui::Widget native_parent"+scope_parameters+
                   std::string(application_root?", std::shared_ptr<ApplicationOwner> supplied = {}":"")+
                   std::string(multiple_scenes?", std::size_t scene_index = 0":"")+
-                  std::string(window_close_runtime?", std::shared_ptr<lvui::native::WindowCloseGuard> scene_close_guard = {}":"")+") {\n";
+                  std::string(window_close_runtime?", std::shared_ptr<lvui::native::WindowCloseGuard> scene_close_guard = {}":"")+
+                  std::string(application_root?"":", [[maybe_unused]] bool _lvui_apply_window_safe_area = true")+") {\n";
         if (multiple_scenes) result += "            if (scene_index >= scene_count) return ii::core::fail(ii::core::ErrorCode::out_of_range, \"Unknown application scene\");\n";
         if (window_close_runtime) result += "            if (!scene_close_guard) scene_close_guard = std::make_shared<lvui::native::WindowCloseGuard>();\n";
         if(application_root) {
@@ -9258,8 +9479,13 @@ public:
 )LVUI";
         if (!scope.empty()) result += "            if (scope_owner) *scope_owner = scope;\n";
         result += "            return {};\n    }\npublic:\n    static ii::core::Result<void> build(ii::gui::WidgetBuilder& widgets, ii::gui::Widget native_parent = {}"+scope_parameters+") {\n";
-        result+="        return construct(widgets, native_parent"+scope_arguments+");\n";
+        const auto build_window_area = options.view_factory_only && !implicit_window;
+        result+="        return construct(widgets, native_parent"+scope_arguments+
+                std::string(application_root?"":(build_window_area?", true":", false"))+");\n";
         result+="    }\n";
+        if (!application_root)
+            result+="    static ii::core::Result<void> build_window_content(ii::gui::WidgetBuilder& widgets, ii::gui::Widget native_parent = {}"+scope_parameters+") {\n"
+                    "        return construct(widgets, native_parent"+scope_arguments+", true);\n    }\n";
         if(application_root) result += R"LVUI(    static ii::core::Result<void> build_with_application(ii::gui::WidgetBuilder& widgets, ii::gui::Widget native_parent,
             std::shared_ptr<ApplicationOwner> application)LVUI" + std::string(window_close_runtime ? ", std::shared_ptr<lvui::native::WindowCloseGuard> scene_close_guard = {}" : "") + R"LVUI() {
         if (!application) return ii::core::fail(ii::core::ErrorCode::invalid_argument, "Application scope owner is missing");
