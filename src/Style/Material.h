@@ -12,7 +12,7 @@
 
 namespace lvui {
 enum class MaterialKind { surface, panel, window };
-enum class MaterialDensity { glass25, dense75 };
+enum class MaterialDensity { glass85, dense75, glass25=glass85 };
 enum class MaterialBackdrop { none, content, previous_layers };
 
 // Accept SVG path data only, never XML. Validate complete command groups before

@@ -59,8 +59,7 @@ Window(accent: vm.accent) {
 버튼도 같은 값을 사용한다. 버튼에서 명시한 `primaryColor`, `hoverColor`,
 `pressedColor` 또는 `normalPressedColor`는 창 기본값보다 우선한다.
 `MaterialSurface`와 `PanelMaterial`은 창의 정적·반응형 강조색을 따르며,
-재질의 명시적인 `primaryColor`가 우선한다. `WindowMaterial`은 강조색에 반응하지
-않고 기본 색상으로 `Panel/window`를 사용한다. Dense 75와 Glass 25의 밀도·블러는 유지한다.
+재질의 명시적인 `primaryColor`가 우선한다. `WindowMaterial`의 Dense 75는 중립 `Panel/window`를 사용하고 Glass 85는 검정 틴트와 강조색을 사용한다. 밀도별 블러는 각각 64px과 16px이다.
 별도의 명시적인 창 배경색 입력이 없는 ApplicationWindow의 바탕도 `Panel/window`다.
 재사용 View 안에서도 같다.
 `InputField`의 포커스·선택, `RadioButton`·`CheckBox`·`ToggleSwitch`의 선택,

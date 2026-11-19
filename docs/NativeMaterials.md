@@ -10,7 +10,7 @@
 ```lvui
 import vm MaterialBackend
 Window {
- PanelMaterial(width: 380, height: 204, density: .Glass25,
+ PanelMaterial(width: 380, height: 204, density: .Glass85,
                primaryColor: vm.accent, backdrop: .PreviousLayers,
                backdropBackground: "background", backdropSource: vm.source) {
   Label(text: "Native material")
@@ -22,14 +22,13 @@ Window {
 ## 값과 렌더링 계약
 
 `MaterialConfiguration`의 밀도별 기본값을 독립적으로 계산한다. 패널의 기본 크기는
-380×204, 창은 500×272 논리 px이다. 유리 밀도는 25% 채색과 16px 블러,
-밀집 밀도는 75% 채색과 64px 블러를 사용한다. 창과 패널 모두 선택한 밀도의
-불투명도를 사용한다. 기본 창 재질의 색상은 `Panel/window`이며 앱의 강조색과
-무관하다. 창 재질에는 악센트 방사형 밑그림을 생성하지 않는다. 패널과 일반
-재질은 기존처럼 창의 `accent` 또는 명시한 강조색을 사용할 수 있다.
-창 재질에 전달된 `primaryColor`, `intenseOpacity`, `faintOpacity`는 창 바탕에
-악센트를 더하지 않는다. 색상을 따로 지정하지 않으면 AOT 컴파일은 현재 스타일
-프로필의 `Panel/window`를 창 재질 색상으로 전달한다.
+380×204, 창은 500×272 논리 px이다. Glass 85는 기본 검정 틴트 85%와 16px 블러,
+Dense 75는 75% 틴트와 64px 블러를 사용한다. Glass 85는 패널과 창에서 강조색
+방사형을 사용하며 85% 검정 틴트 아래의 기여는 최대 15%다. 실제 픽셀은 방사형
+분포와 배경 블러에 따라 달라지며 Figma와 픽셀 동일성이 보장되지는 않는다.
+Dense 75 창은 기존 중립 `Panel/window` 토큰을 유지한다. `.Glass25`와 C++
+`glass25`는 기존 소스 호환을 위한 별칭이며 새로운 선언에는 `.Glass85`를 사용한다.
+명시한 색상과 불투명도는 기본값에 우선한다.
 개별 값은 명시적으로 덮어쓸 수 있고 밀도가 반응형으로 바뀌면 생략한 값은 새 밀도에
 따라 다시 계산된다. 색상과 불투명도, 테두리, 안쪽 하이라이트, 그림자와 블러 및
 `.None`·`.Content`·`.PreviousLayers` 배경 캡처를 전달한다. 그리기 값의 색상은

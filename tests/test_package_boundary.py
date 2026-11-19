@@ -359,7 +359,7 @@ def main():
             raise AssertionError("Installed LVUIConfig.cmake is missing")
         if 'set(LVUI_CompilerBridge_FOUND TRUE)' not in config.read_text(encoding="utf-8"):
             raise AssertionError("Installed package does not advertise the CompilerBridge component")
-        if 'set(LVUI_IIGUI_MIN_VERSION "0.5.0")' not in config.read_text(encoding="utf-8"):
+        if 'set(LVUI_IIGUI_MIN_VERSION "0.6.0")' not in config.read_text(encoding="utf-8"):
             raise AssertionError("Installed LVUI package does not publish its required iiGUI API version")
         image_targets = config.parent / "LVUIImageIOTargets.cmake"
         if not image_header.is_file() or not resolver_header.is_file():

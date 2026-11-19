@@ -7,7 +7,7 @@ if(NOT DEFINED CMAKE_CXX_SCAN_FOR_MODULES)
     set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 endif()
 find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Native)
-find_package(iiGUI 0.6 CONFIG REQUIRED)
+find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 
 # The source fonts stay in resources/. The generated package contains the
 # Emscripten data archive, and does not need a development resource copy.

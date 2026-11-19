@@ -431,5 +431,7 @@ Markdown is the maintained human source. Agent JSON is a structured, source-trac
 | [`docs/WindowsValidation.md`](WindowsValidation.md) | [JSON](WindowsValidation.agent.json) |
 | [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |
 | [`example/README.md`](../example/README.md) | [JSON](mirrors/example/README.agent.json) |
+| [`example/HelloAndroid/README.md`](../example/HelloAndroid/README.md) | [JSON](mirrors/example/HelloAndroid/README.agent.json) |
+| [`example/HelloHosts/README.md`](../example/HelloHosts/README.md) | [JSON](mirrors/example/HelloHosts/README.agent.json) |
 | [`example/StyleTokens/README.md`](../example/StyleTokens/README.md) | [JSON](mirrors/example/StyleTokens/README.agent.json) |
 <!-- workspace-docs:document-map:end -->

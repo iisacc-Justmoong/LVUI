@@ -247,3 +247,22 @@ LVUI는 Core 외 SDK를 참조하지 않는 선언 값과 바인딩을 제공한
 창 노이즈의 제한된 크기 텍스처 준비와 타일 배치는 iiGUI가 소유한다. 원천 색이나 강도가 달라질 때만 CPU에서 텍스처를 다시 준비하고, 화면 합성은 iiGUI 렌더러가 담당한다. 크기만 바뀌면 같은 텍스처를 재사용한다.
 
 휠 가드는 iiGUI에서 대상과 입력을 검증하고 이벤트를 전달한다. 입력이 없을 때 별도의 프레임이나 주기적 검사를 실행하지 않는다.
+
+## 호스트 조합 빌드
+
+LVUI 0.1.1은 생성된 C++이 요구하는 iiGUI 0.6.0을
+LVUI_IIGUI_MIN_VERSION으로 공개한다. 기존 find_package(LVUI 0.1)
+소비자도 같은 버전 계열을 사용할 수 있다. 앱이 이 값으로 iiGUI를 찾고
+생성된 코드와 LVUI 바인딩을 호스트에 연결한다. LVUI의 컴파일러와 바인딩은
+각각 설치 패키지를 통해 사용할 수 있다.
+
+iiGUI를 먼저 빌드·설치한 뒤 LVUI에서 LVUI_BUILD_HOST_EXAMPLES를 켜면
+HelloWorld, HelloHosts, HelloAndroid 중 대상 플랫폼의 예제를 빌드한다.
+설치된 예제의 경로는 share/LVUI/examples이다. 생성 뷰의 창 없는 회귀 테스트는
+BUILD_TESTING과 LVUI_BUILD_IIGUI_INTEGRATION_TESTS를 켠 LVUI 빌드에 등록된다.
+소비자는 iiGUI_DIR로 설치 패키지를 선택하고 내부 위젯 상태 검사에는
+LVUI_IIGUI_SOURCE_DIR로 대응하는 소스 체크아웃을 지정한다. 설치본 재배치 테스트까지 실행할
+때는 LVUI_TEST_IIGUI_BUILD에 같은 호스트의 빌드 경로를 전달한다.
+
+초기 HTML형 문서 예제 HelloLVUI는 이전 문서 렌더링 API의 소스 기록이다.
+현재 데스크톱 호스트 예제는 AOT 컴파일을 사용하는 HelloWorld이다.

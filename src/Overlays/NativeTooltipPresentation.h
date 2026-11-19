@@ -9,8 +9,20 @@
 namespace lvui::native {
 template<class Motion>
 struct TooltipPresentationStyleValue final {
-    MaterialConfiguration material=[] {MaterialConfiguration value;value.kind=MaterialKind::panel;
-        value.backdrop=MaterialBackdrop::content;value.motion_enabled=false;return value;}();
+    // The tooltip's translucent black material follows the LVUI glass design.
+    MaterialConfiguration material=[] {
+        MaterialConfiguration value;
+        value.kind=MaterialKind::panel;
+        value.backdrop=MaterialBackdrop::content;
+        value.motion_enabled=false;
+        value.color=figma_defaults::panel_surface_ghost;
+        value.tint_opacity=0.84;
+        value.blur_radius=20;
+        value.inner_highlight_opacity=0.12;
+        value.intense_opacity=0.02;
+        value.faint_opacity=0.0055;
+        return value;
+    }();
     double content_padding=12;
     bool scroll_content=true;
     bool motion_enabled=true;

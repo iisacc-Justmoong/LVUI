@@ -8,14 +8,14 @@ int main(){
     const auto window_kind=neutral->find("value.kind = lvui::MaterialKind::window");
     const auto window_end=neutral->find("return value;",window_kind);
     require(window_kind!=neutral->npos&&window_end!=neutral->npos&&
-        neutral->substr(window_kind,window_end-window_kind).find("value.primary_color")==neutral->npos,
-        "Window material unexpectedly inherited the application accent");
+        neutral->substr(window_kind,window_end-window_kind).find("value.primary_color")!=neutral->npos,
+        "Window material did not inherit the application accent for glass");
     lvui::NativeCompileOptions theme;
     theme.style_tokens.overrides["--lvui-theme-colors-panel-window"]=lvui::StyleColor{.25,.5,.75,1};
     auto themed=lvui::compile_native("Window { WindowMaterial() }",theme);
-    require(themed&&themed->find("value.color = lvui::StyleColor{0.25, 0.5, 0.75, 1};")!=themed->npos,
+    require(themed&&themed->find("*value.density == lvui::MaterialDensity::dense75) value.color = lvui::StyleColor{0.25, 0.5, 0.75, 1};")!=themed->npos,
         "Window material ignored the resolved Panel/window token");
-    auto code=lvui::compile_native("import vm Model\nWindow { VStack { PanelMaterial(width: vm.width, primaryColor: vm.color, density: .Glass25, backdrop: .PreviousLayers) { Label(text: \"child\") }\n WindowMaterial()\n MaterialSurface() } }");
+    auto code=lvui::compile_native("import vm Model\nWindow { VStack { PanelMaterial(width: vm.width, primaryColor: vm.color, density: .Glass85, backdrop: .PreviousLayers) { Label(text: \"child\") }\n WindowMaterial()\n MaterialSurface() } }");
     if(!code)throw std::runtime_error(code.error().message);
     require(code->find("#include <LVUI>")!=code->npos&&code->find("lvui::native::MaterialBinding<")!=code->npos&&
         code->find("lvui::MaterialKind::panel")!=code->npos&&code->find("lvui::MaterialKind::window")!=code->npos&&

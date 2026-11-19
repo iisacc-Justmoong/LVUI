@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.31)
 project(LVUIWebConsumer LANGUAGES CXX)
 find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Native)
-find_package(iiGUI 0.5 CONFIG REQUIRED)
+find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/../../example/Web" web-example)
 
 if(TARGET LVUI::CompilerBridge OR LVUI_CompilerBridge_FOUND)

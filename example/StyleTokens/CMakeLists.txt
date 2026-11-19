@@ -5,7 +5,7 @@ if(NOT TARGET LVUI::LVUI)
     find_package(LVUI 0.1 CONFIG REQUIRED)
 endif()
 if(NOT TARGET iiGUI::iiGUI)
-    find_package(iiGUI 0.6.0 CONFIG REQUIRED)
+    find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 endif()
 lvui_generate(NAME TokenWindow SOURCE App/TokenWindow.lvui
     STYLE_MODES "Theme Colors=Dark" "Theme Typography=Value" OUTPUT_VARIABLE _window)

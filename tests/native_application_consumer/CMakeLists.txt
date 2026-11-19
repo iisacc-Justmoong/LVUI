@@ -5,7 +5,7 @@ if(LOCALIZED_APPLICATION)
     list(APPEND _lvui_components Localization)
 endif()
 find_package(LVUI CONFIG REQUIRED COMPONENTS ${_lvui_components})
-find_package(iiGUI 0.5.0 CONFIG REQUIRED)
+find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 
 if(BAD_APPLICATION_TARGET)
     lvui_add_application(bad-target SOURCE NativeApplication.lvui)

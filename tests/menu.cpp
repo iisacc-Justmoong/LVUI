@@ -4,13 +4,20 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { VStack { Label(id: \"anchor\")\nContextMenu(targetId: \"anchor\", selectedIndex: vm.index, itemWidth: vm.width, dismissOnGlobalPress: false, dismissOnGlobalContextRequest: true, onItemTriggered: vm.triggered) { ContextMenuItem(label: vm.label, hasChildItems: false, keepOpen: vm.keep)\nContextMenuDivider(visible: vm.show, thickness: vm.thickness)\nMenuItem(label: \"Second\", hasChildItems: false, closeOnTrigger: true) } } }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto part:{"#include <LVUI/NativeMenu.h>","lvui_generated::detail_menu::NativeMenu::create(","weak_registration_port(","divider_port(","->content_root()","->finalize()","component.set_options(value)","set_context_menu("})
+    for(auto part:{"#include <LVUI>","#include <iiGUI>","lvui_generated::detail_menu::NativeMenu::create(","weak_registration_port(","divider_port(","->content_root()","->finalize()","component.set_options(value)","set_context_menu("})
         if(code->find(part)==code->npos)throw std::runtime_error(std::string("Independent Menu lost ")+part);
     if(code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Default Menu depends on a legacy implementation");
+    if(code->find("suppress_popup_transient_feedback()") == std::string::npos)
+        throw std::runtime_error("ContextMenu did not suppress transient feedback for its popup subtree");
     auto list=lvui::compile_native("Window { Menu(items: [\"A\", \"B\"]) }");
     if(!list||list->find("MenuItemBinding<")==list->npos||list->find("register_item(")==list->npos)
         throw std::runtime_error("Static Menu items did not use independent items");
+    if(list->find("suppress_popup_transient_feedback()") != std::string::npos)
+        throw std::runtime_error("Regular Menu lost its interactive feedback");
+    auto context_list=lvui::compile_native("Window { ContextMenu(items: [\"A\", \"B\"]) }");
+    if(!context_list||context_list->find("suppress_popup_transient_feedback()") == std::string::npos)
+        throw std::runtime_error("Static ContextMenu items did not inherit transient-feedback suppression");
     auto nested=lvui::compile_native("Window { Menu { MenuItem(label: \"More\") { Menu { MenuItem(label: \"Action\", hasChildItems: false) } } } }");
     if(!nested||nested->find("set_submenu(")==nested->npos||nested->find("weak_popup_port(")==nested->npos)
         throw std::runtime_error("Independent nested Menu was not attached to its item");

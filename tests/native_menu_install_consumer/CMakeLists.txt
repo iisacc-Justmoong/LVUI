@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.31)
 project(LVUIMenuBundleConsumer LANGUAGES CXX)
 find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Native)
-find_package(iiGUI CONFIG REQUIRED)
+find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 lvui_generate(NAME NativeMenuBundles SOURCE NativeMenuBundles.lvui
     INCLUDES NativeMenuBundlesFixture.h OUTPUT_VARIABLE generated)
 lvui_generate(NAME NativeMenuNestedComposition SOURCE NativeMenuNestedComposition.lvui

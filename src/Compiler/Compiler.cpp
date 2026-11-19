@@ -4017,11 +4017,7 @@ class Generator final {
         const auto expression=[&](const Input& input){return "lvui::native::widget_value<ii::gui::WidgetColor>("+expression_code(input.value,input.position,initial)+")";};
         const auto primary=accent_colors(window_accent_name).primary;
         std::string setup="value.kind = lvui::MaterialKind::"+std::string(kind=="WindowMaterial"?"window":kind=="PanelMaterial"?"panel":"surface")+"; ";
-        if(kind=="WindowMaterial"&&!values.contains("color")){
-            const auto color=token_color("--lvui-theme-colors-panel-window");
-            setup+="value.color = lvui::StyleColor{"+decimal(color.red)+", "+decimal(color.green)+", "+decimal(color.blue)+", "+decimal(color.alpha)+"}; ";
-        }
-        if(kind!="WindowMaterial"&&!values.contains("primaryColor")){
+        if(!values.contains("primaryColor")){
             if(!active_window_accent.empty())
                 setup+="value.primary_color = lvui::native::material_color(window_accent_palette(context.read("+active_window_accent+"))[0]); ";
             else
@@ -4038,7 +4034,7 @@ class Generator final {
                 else {const auto item=resolve(input->value,input->position);
                     if(name=="density"){
                         if(item.text==".Dense75")value="lvui::MaterialDensity::dense75";
-                        else if(item.text==".Glass25")value="lvui::MaterialDensity::glass25";
+                        else if(item.text==".Glass85" || item.text==".Glass25")value="lvui::MaterialDensity::glass85";
                         else error(input->position,"Unknown independent material density");
                     }else{
                         if(item.text==".None")value="lvui::MaterialBackdrop::none";
@@ -4061,6 +4057,10 @@ class Generator final {
                 value=native_expression(input->value)?"lvui::native::number("+expression(*input)+")":decimal(numeric(values,name,0,offset?-8192:0,upper));
             }
             setup+="value."+field->second+" = "+value+"; ";
+        }
+        if(kind=="WindowMaterial"&&!values.contains("color")){
+            const auto color=token_color("--lvui-theme-colors-panel-window");
+            setup+="if (!value.density || *value.density == lvui::MaterialDensity::dense75) value.color = lvui::StyleColor{"+decimal(color.red)+", "+decimal(color.green)+", "+decimal(color.blue)+", "+decimal(color.alpha)+"}; ";
         }
         return "([&] { lvui::MaterialConfiguration value; "+setup+"return value; }())";
     }
@@ -7074,6 +7074,7 @@ class Generator final {
             }else body+="            auto "+native+" = lvui_generated::detail_menu::NativeMenu::create(widgets, "+args+", "+owned_menu_options(values,true,context)+", "+callbacks+");\n"
                        "            if (!"+native+") return std::unexpected("+native+".error());\n"
                        "            auto "+variable+" = ii::core::Result<ii::gui::Widget>{"+native+"->root()};\n";
+            if(context)body+="            if (auto feedback = "+native+"->root().suppress_popup_transient_feedback(); !feedback) return std::unexpected(feedback.error());\n";
             const auto registration="menu_registration_"+variable,divider_registration="menu_divider_registration_"+variable,section_owner="menu_section_owner_"+variable;
             native_style_slots+="        lvui_generated::detail_menu::MenuRegistrationPort "+registration+";\n        std::function<ii::core::Result<void>(ii::gui::DividerGroupPort)> "+divider_registration+";\n        std::optional<lvui_generated::detail_menu::MenuSectionAccess> "+section_owner+";\n";
             body+="            scope->"+section_owner+" = "+native+"->weak_section_access();\n"
@@ -7617,7 +7618,7 @@ class Generator final {
         }
         else if(material){
             const auto native="material_"+variable,derived="material_inputs_"+variable;
-            const bool dynamic=(kind!="WindowMaterial"&&!active_window_accent.empty()&&!values.contains("primaryColor"))||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&pair.first!="backdropSource"&&pair.first!="backdropBackground"&&native_expression(pair.second->value);});
+            const bool dynamic=(!active_window_accent.empty()&&!values.contains("primaryColor"))||std::ranges::any_of(values,[&](const auto& pair){return pair.first!="visible"&&pair.first!="opacity"&&pair.first!="flex"&&pair.first!="backdropSource"&&pair.first!="backdropBackground"&&native_expression(pair.second->value);});
             if(dynamic){
                 body+="            auto "+derived+"_result = native_bindings->derive([scope]([[maybe_unused]] lvui::native::ReadContext& context) { return "+owned_material_options(kind,values,false)+"; });\n"
                     "            if (!"+derived+"_result) return std::unexpected("+derived+"_result.error());\n"

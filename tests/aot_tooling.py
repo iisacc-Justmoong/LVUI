@@ -84,7 +84,7 @@ class AotToolingTests(unittest.TestCase):
         source = 'ApplicationWindow { CheckBox(checked: true) }'
         native = self.invoke(source, '--framework', 'iiGUI')
         self.assertEqual(native.returncode, 0, native.stderr)
-        self.assertIn('#include <iiGUI/NativeCheckBoxView.h>', native.stdout)
+        self.assertIn('#include <iiGUI>', native.stdout)
         self.assertIn('lvui::native::CheckBoxBinding<ii::gui::BasicCheckBox, ii::gui::BasicNativeCheckBox, ii::gui::CachedSvgDecoder>::create(', native.stdout)
         self.assertNotIn('lvui::native::NativeCheckBox::create(', native.stdout)
         self.assertNotIn('lvrs::', native.stdout)

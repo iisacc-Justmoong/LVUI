@@ -18,7 +18,7 @@ include("${CMAKE_CURRENT_LIST_DIR}/LVUITargets.cmake")
 include("${CMAKE_CURRENT_LIST_DIR}/LVUIAot.cmake")
 # Explicit capability for consumers that still carry legacy AOT fixtures.
 set(LVUI_AOT_FRAMEWORKS "iiGUI")
-set(LVUI_IIGUI_MIN_VERSION "0.6.0")
+set(LVUI_IIGUI_MIN_VERSION "@LVUI_IIGUI_MIN_VERSION@")
 set(LVUI_Native_FOUND TRUE)
 set(LVUI_Compiler_FOUND TRUE)
 if(TARGET LVUI::CompilerBridge)

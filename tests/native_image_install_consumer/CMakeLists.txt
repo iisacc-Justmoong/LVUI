@@ -3,7 +3,7 @@ project(LVUIImageConsumer LANGUAGES CXX)
 
 find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS ImageIO)
 find_package(iiSDKCore 0.20 CONFIG REQUIRED COMPONENTS Runtime)
-find_package(iiGUI 0.5.0 CONFIG REQUIRED)
+find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 find_package(iiFileProviderNative 0.9 CONFIG REQUIRED)
 find_package(iiNetwork 0.5 CONFIG REQUIRED)
 find_package(iiVisualCodec 0.2 CONFIG REQUIRED COMPONENTS Image)

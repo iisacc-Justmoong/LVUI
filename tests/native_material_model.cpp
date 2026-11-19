@@ -14,11 +14,11 @@ void defaults() {
     config.kind=lvui::MaterialKind::panel;
     require(value.set_configuration(config, {}), "Panel material rejected");
     auto p=value.resolved();
-    require(near(p.tint.red,lvui::figma_defaults::panel_window.red) &&
+    require(near(p.tint.red,0) &&
             p.primary==lvui::figma_defaults::accent_blue_default,
             "Panel material did not adopt the Figma tint and accent");
     require(near(p.width,380)&&near(p.height,204)&&near(p.radius,12)&&near(p.blur_radius,16)&&
-            near(p.tint.alpha,.25)&&near(p.border.alpha,.22)&&near(p.inner_highlight_opacity,.14), "Glass defaults changed");
+            near(p.tint.alpha,.85)&&near(p.border.alpha,.22)&&near(p.inner_highlight_opacity,.14), "Glass defaults changed");
     config.kind=lvui::MaterialKind::window;
     require(value.set_configuration(config, {}), "Window material rejected");
     auto w=value.resolved();
@@ -29,9 +29,9 @@ void defaults() {
     config.primary_color=lvui::StyleColor{1,0,0,1};config.intense_opacity=.9;config.faint_opacity=.8;
     require(value.set_configuration(config,{})&&near(value.resolved().intense_opacity,0)&&near(value.resolved().faint_opacity,0)&&
             near(value.gradient_alpha(48,32,500,272),0),"Window material still contains accent gradients");
-    config.density=lvui::MaterialDensity::glass25;
-    require(value.set_configuration(config,{})&&near(value.resolved().tint.alpha,.25)&&near(value.resolved().blur_radius,16),
-            "Window Glass 25 did not retain its density defaults");
+    config.density=lvui::MaterialDensity::glass85;
+    require(value.set_configuration(config,{})&&near(value.resolved().tint.alpha,.85)&&near(value.resolved().blur_radius,16),
+            "Window Glass 85 did not retain its density defaults");
     config.tint_opacity=.7;config.blur_enabled=false;
     require(value.set_configuration(config, {}), "Material overrides rejected");w=value.resolved();
     require(near(w.tint.alpha,.7)&&near(w.blur_radius,0)&&near(w.border.alpha,.22), "Density and overrides were not resolved independently");

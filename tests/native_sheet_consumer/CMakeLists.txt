@@ -3,7 +3,7 @@ project(LVUINativeSheetConsumer LANGUAGES CXX)
 
 include(CTest)
 find_package(LVUI 0.1 CONFIG REQUIRED COMPONENTS Native)
-find_package(iiGUI 0.5 CONFIG REQUIRED)
+find_package(iiGUI ${LVUI_IIGUI_MIN_VERSION} CONFIG REQUIRED)
 set(IIGUI_WIDGET_STATE_HEADER "" CACHE FILEPATH "iiGUI private WidgetState.h for the headless test host")
 if(NOT EXISTS "${IIGUI_WIDGET_STATE_HEADER}")
     message(FATAL_ERROR "IIGUI_WIDGET_STATE_HEADER must identify the headless test host")

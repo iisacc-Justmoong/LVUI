@@ -64,11 +64,11 @@ Window { VStack {
         generated->find("FunctionVariable<std::string(std::int64_t)>") == generated->npos ||
         generated->find("widgets.hstack(") == generated->npos || generated->find("component_input(scope,") == generated->npos ||
         generated->find("component_storage(scope,") == generated->npos || generated->find("set_stack_layout(") == generated->npos ||
-        generated->find("NativeWidgetLayout.h") == generated->npos) return 2;
+        generated->find("#include <iiGUI>") == generated->npos) return 2;
     auto window=lvui::compile_native("import vm Model\nWindow(title: vm.title, width: vm.width) { Label() }");
-    if(!window||window->find("window_properties()")==window->npos||window->find("NativeWindowValues.h")==window->npos)return 100;
+    if(!window||window->find("window_properties()")==window->npos||window->find("#include <LVUI>")==window->npos)return 100;
     auto object=lvui::compile_native("import class Domain.Record\nimport vm Model\nlet Details(item: Record, again: Record = item): View = Label(text: again.title)\nWindow { Details(item: vm.record) }");
-    if(!object||object->find("object_input<::Domain::Record>")==object->npos||object->find("NativeObjectInputs.h")==object->npos)return 101;
+    if(!object||object->find("object_input<::Domain::Record>")==object->npos||object->find("#include <LVUI>")==object->npos)return 101;
     auto method=lvui::compile_native("import vm Model\nWindow { Label(text: vm.selected.format(2)) }");
     if(!method||method->find("Methods::query(context")==method->npos)return 102;
     auto hierarchy=lvui::compile_native("import vm Model\nWindow { HierarchyList(controller: vm.controller, viewRevision: vm.revision) }");

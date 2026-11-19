@@ -1,5 +1,10 @@
 # LVUI
 
+LVUI 0.1.1 generates applications for iiGUI 0.6.0 and later. Applications
+choose the host explicitly. The installed LVUI compiler and binding package can
+be found independently. Host examples and headless integration tests build from
+the LVUI checkout using the options in [GraphicsBoundary.md](docs/GraphicsBoundary.md).
+
 LVUI is a declarative UI language whose `.lvui` files generate native C++ view
 construction and bindings. iiGUI is the graphics framework that owns visual
 components, layout, input, accessibility and GPU scene rendering. Their roles
