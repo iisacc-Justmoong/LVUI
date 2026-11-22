@@ -1,6 +1,18 @@
 #pragma once
 
 // C++ public entry for LVUI; the linked components select the API.
+// Qt exposes `slots` as a macro. Suspend it while parsing LVUI declarations,
+// and restore the consumer's exact macro state after the umbrella include.
+#if defined(slots)
+#pragma push_macro("slots")
+#undef slots
+#define LVUI_RESTORE_QT_SLOTS
+#endif
+#if defined(emit)
+#pragma push_macro("emit")
+#undef emit
+#define LVUI_RESTORE_QT_EMIT
+#endif
 
 #if defined(IISDK_IMPORT_LVUI_BASE)
 #include <LVUI/Document.h>
@@ -236,4 +248,13 @@
 
 #if defined(IISDK_IMPORT_LVUI_RUNTIME)
 #include <LVUI/NativeWork.h>
+#endif
+
+#if defined(LVUI_RESTORE_QT_SLOTS)
+#pragma pop_macro("slots")
+#undef LVUI_RESTORE_QT_SLOTS
+#endif
+#if defined(LVUI_RESTORE_QT_EMIT)
+#pragma pop_macro("emit")
+#undef LVUI_RESTORE_QT_EMIT
 #endif

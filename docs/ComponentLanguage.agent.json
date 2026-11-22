@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/ComponentLanguage.md",
-    "sha256": "913835fda51f1a54c5a823c087de8ef7b015c84224178df24aa7330e4d0b6275",
-    "bytes": 9728,
+    "sha256": "0c3ba0a1a5e18b6019080ca5317d8d141ceb0d8f396dd8195014015901ebe901",
+    "bytes": 9787,
     "line_count": 150,
     "encoding": "utf-8",
     "language": "ko"
@@ -43,7 +43,7 @@
       "kind": "paragraph",
       "start_line": 3,
       "end_line": 6,
-      "raw": "`IconButton`을 비롯한 버튼은 `pointerFocusVisible: false`로 포인터 포커스의\n테두리만 숨길 수 있다. 논리적 포커스와 키보드 포커스 표시는 유지한다. 기본값은\n`true`다. `checked`는 애플리케이션 상태에 따른 선택 표시이며, `checkable`을\n지정하지 않으면 버튼이 독자적으로 그 값을 반전하지 않는다.\n"
+      "raw": "`IconButton`을 비롯한 버튼은 기본적으로 포인터 포커스에 테두리를 표시하지\n않는다. 논리적 포커스와 키보드 포커스 표시는 유지한다. 필요한 경우\n`pointerFocusVisible: true`로 포인터에도 표시한다. `checked`는 선택 표시이며, `checkable`을\n지정하지 않으면 버튼이 독자적으로 그 값을 반전하지 않는다. `<LVUI>`는 Qt 키워드 매크로를 보존한다.\n"
     },
     {
       "id": "b000004",

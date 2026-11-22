@@ -3687,7 +3687,7 @@ class Generator final {
             if(v.contains(name))appearance+="value.configuration."+std::string(field)+" = "+number(name,0,low,high)+"; ";
         if(v.contains("checkable"))appearance+="value.configuration.checkable = "+flag("checkable",false)+"; ";
         if(v.contains("checked"))appearance+="value.configuration.checked = "+flag("checked",false)+"; ";
-        if(v.contains("pointerFocusVisible"))appearance+="value.configuration.pointer_focus_visible = "+flag("pointerFocusVisible",true)+"; ";
+        if(v.contains("pointerFocusVisible"))appearance+="value.configuration.pointer_focus_visible = "+flag("pointerFocusVisible",false)+"; ";
         if(auto item=v.find("selectionStyle");item!=v.end()){
             std::string style;
             if(native_expression(item->second->value))style="lvui::native::button_selection_style("+expression("selectionStyle","")+")";

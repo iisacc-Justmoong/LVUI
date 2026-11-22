@@ -5,6 +5,8 @@ int main() {
     if(!icon.icon_mode || icon.height!=22 || icon.icon_size!=18 || icon.horizontal_padding!=2 || icon.corner_radius!=8)
         throw std::runtime_error("Authored icon button defaults changed");
     const lvui::ButtonConfiguration value;
+    if(value.pointer_focus_visible || icon.pointer_focus_visible)
+        throw std::runtime_error("Pointer focus must not display the keyboard focus ring by default");
     if(value.palette.primary!=lvui::figma_defaults::accent_blue_default ||
        value.palette.normal!=lvui::figma_defaults::panel_surface_solid || !(value==value))
         throw std::runtime_error("Authored button palette or equality changed");

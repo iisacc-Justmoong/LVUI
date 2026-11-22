@@ -107,6 +107,7 @@ void native_input_events(){
     auto state=std::make_shared<detail::WidgetState>([](ii::runtime::Task task){task();});
     auto host=take(state->content_host({},"events-host",{200,100}));
     lvui::native::ButtonInput options;options.configuration.width=100;options.configuration.height=30;
+    options.configuration.motion_enabled=false;
     std::optional<lvui::native::NativeButton> button;std::vector<std::string> events;
     good(host.set_content([&](WidgetBuilder& builder)->ii::core::Result<void>{
         auto root=take(builder.absolute_stack({},"events-root",{200,100}));
@@ -116,9 +117,26 @@ void native_input_events(){
     good(button->set_events({.pressed=[&]{events.emplace_back("pressed");},
         .released=[&]{events.emplace_back("released");},.canceled=[&]{events.emplace_back("canceled");}}));
     (void)take(state->drawing_snapshot({200,100}));
+    const auto ring_visible=[&]{
+        const auto frame=take(state->drawing_snapshot({200,100}));
+        const auto ring=[](const auto& panels){return std::ranges::any_of(panels,[](const auto& p){return p.stroke_width>0&&p.top.alpha>0;});};
+        return ring(frame.panels)||std::ranges::any_of(frame.overlays,[&](const auto& layer){return ring(layer.panels);});
+    };
     good(state->input({.kind=WidgetInputKind::pointer_down,.x=30,.y=30}));
+    require(!ring_visible(),"Pointer press drew a keyboard focus ring");
     good(state->input({.kind=WidgetInputKind::pointer_up,.x=30,.y=30}));
     require(events==std::vector<std::string>{"pressed","released","clicked"},"Pointer button event order is wrong");
+    require(take(button->root().snapshot()).focused&&!ring_visible(),"Pointer focus drew a keyboard focus ring");
+    good(state->input({.kind=WidgetInputKind::key_down,.key=WidgetKey::space}));
+    require(ring_visible(),"Keyboard interaction did not show the focus ring");
+    good(state->input({.kind=WidgetInputKind::key_up,.key=WidgetKey::space}));
+    options.configuration.pointer_focus_visible=true;
+    good(button->set_options(options));
+    good(state->input({.kind=WidgetInputKind::pointer_down,.x=30,.y=30}));
+    good(state->input({.kind=WidgetInputKind::pointer_up,.x=30,.y=30}));
+    require(ring_visible(),"Explicit pointer focus visibility did not show the ring");
+    options.configuration.pointer_focus_visible=false;
+    good(button->set_options(options));
     events.clear();good(state->input({.kind=WidgetInputKind::pointer_down,.x=30,.y=30}));
     good(state->input({.kind=WidgetInputKind::pointer_up,.x=190,.y=90}));
     require(events==std::vector<std::string>{"pressed","released"},"Outside release incorrectly clicked");
@@ -568,7 +586,13 @@ void button_focus_ring(){
     state->close();
 }
 }
-int main(){
+int main(int argc, char** argv){
+    // Allow the input and focus contract to be verified independently of the
+    // separate generated-appearance fixtures and their installed token data.
+    if(argc==2 && std::string_view(argv[1])=="--pointer-focus") {
+        native_input_events();
+        return 0;
+    }
     native_options();
     native_input_events();
     native_input_methods();
