@@ -37,7 +37,10 @@ int main() {
         same("Window { RadioButton() }", "Window { RadioButton(checked: true) }");
         same("Window { ToggleSwitch() }", "Window { ToggleSwitch(checked: true) }");
         same("Window { Slider() }", "Window { Slider(size: .mini) }");
-        same("Window { TextField() }", "Window { InputField() }");
+        same("Window { TextField() }", "Window { InputField(size: .compact) }");
+        same("Window { TextField(size: .regular) }", "Window { InputField(size: .regular) }");
+        same("import vm Example\nWindow { TextField(size: vm.size) }",
+             "import vm Example\nWindow { InputField(size: vm.size) }");
         same("Window { InputField() }", "Window { InputField(surface: .rounded) }");
         same("Window { GeneralSearch() }", "Window { SearchField() }");
         same("Window { SmallList() }", "Window { List() }");
@@ -54,7 +57,7 @@ int main() {
         same("Window { ListItem { type: Navigation, kind: Selected } }",
              "Window { ListItem(type: .Navigation, selected: true, enabled: true) }");
         same("Window { TextField { style: Cylinder, mode: Password } }",
-             "Window { InputField(surface: .cylinder, password: true) }");
+             "Window { InputField(surface: .cylinder, password: true, size: .compact) }");
         same("Window { Stepper { arrow: UpDown, tone: Primary } }",
              "Window { Stepper(arrow: .UpDown, tone: .Primary) }");
         same("Window { ComboBox { arrow: UpDown, tone: primary } }",

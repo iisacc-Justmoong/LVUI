@@ -1,4 +1,4 @@
-Window(windowChrome: .custom, titleBar: HStack(id: "chrome", height: 32) {}) {
+Window(titleBar: HStack(id: "chrome", height: 32) {}) {
     VStack(id: "content", spacing: 0, alignment: .stretch) {
         Label(text: "Content")
     }

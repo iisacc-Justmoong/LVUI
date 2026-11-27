@@ -3,7 +3,7 @@
 # 카운터 뷰 예제
 
 상태: 채택한 스코프 기반 백엔드 설계의 가상 뷰 예제이다.
-소스는 [examples/Counter.lvui](examples/Counter.lvui)이다.
+소스는 [Examples/Counter.lvui](Examples/Counter.lvui)이다.
 `lvui-check`와 네이티브 코드 생성 대상으로 검사한다. C++ 백엔드·이벤트·화면을 실행하는 예제는 아니다.
 
 <a id="view-structure"></a>
@@ -26,11 +26,9 @@ import는 `import counter CounterBackend`이다.
 예제는 C++ 타입 `CounterBackend`가 다음 공개 인터페이스를 제공한다고 가정한다.
 import나 이 멤버들에 대한 접근에 `@export` 어노테이션은 필요하지 않다.
 
-| 멤버 | 계약 |
-|---|---|
-| `value` | 0으로 초기화하며 읽기·관찰 가능한 정수 속성이다. |
-| `increment()` | `value`를 1 늘리고 변경을 알린다. 인자와 반환값은 없다. |
-| `decrement()` | `value`를 1 줄이고 변경을 알린다. 인자와 반환값은 없다. |
+- 멤버: `value`; 계약: 0으로 초기화하며 읽기·관찰 가능한 정수 속성이다.
+- 멤버: `increment()`; 계약: `value`를 1 늘리고 변경을 알린다. 인자와 반환값은 없다.
+- 멤버: `decrement()`; 계약: `value`를 1 줄이고 변경을 알린다. 인자와 반환값은 없다.
 
 변경 전파는 [기본 반응형 값 모델](ReactiveState.md)의 요구사항이다.
 숫자 레이블이 `value`를 따라가기 위한 관찰 어노테이션은 필요하지 않다.
@@ -86,7 +84,7 @@ Core의 `PropertyRead`, `PropertyInvoke`, `PropertyChange`를 구성 요소로 �
 별도 활성화는 0으로 초기화한 독립 카운터로 시작한다.
 
 제공된 `VStack` 증가·초기화 예제는 [ReactiveState.md](ReactiveState.md)와
-[examples/ReactiveCounter.lvui](examples/ReactiveCounter.lvui)에 별도로 기록한다.
+[Examples/ReactiveCounter.lvui](Examples/ReactiveCounter.lvui)에 별도로 기록한다.
 
 <a id="example-only-notation-assumptions"></a>
 

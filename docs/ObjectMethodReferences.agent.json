@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/ObjectMethodReferences.md",
-    "sha256": "01556f18e5a61cbd1b80f0ce3836f234b84373b2a640b31af6cbdf4c39f70c3f",
-    "bytes": 10875,
-    "line_count": 150,
+    "sha256": "aa6fa4fd8d5b01e24b6dbc3c3b0632a6160bfcbacf8a0c2e3362b4d6a281c60c",
+    "bytes": 10962,
+    "line_count": 148,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -379,107 +379,112 @@
     },
     {
       "id": "b000045",
-      "kind": "table",
       "start_line": 105,
-      "end_line": 115,
-      "raw": "| 검사 | 결과 |\n|---|---|\n| LVUI 일반 전체 | 244/244 통과 |\n| LVUI 관련 ASan·UBSan | 174/174와 별도 설치 소비자 검사 통과 |\n| iiGUI 창 없는 회귀·설치 | 일반·ASan·UBSan 각각 186/186 통과 |\n| 새 참조 검사 | 컴파일러 5건·네이티브 9건·위젯 13건 통과 |\n| 생성 C++ 타입 | 각 구성에서 유효 11개 컴파일, 부적합 9개 거부 |\n| 임시 컨테이너 | 비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인 |\n| 설치·재배치 | 공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크 |\n| 생성 C++·LVRS | 위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시 |\n| 제품 관측 | Dreamscapes QML 81개 기준 해시 유지 |\n",
-      "columns": [
-        "검사",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI 일반 전체",
-          "244/244 통과"
-        ],
-        [
-          "LVUI 관련 ASan·UBSan",
-          "174/174와 별도 설치 소비자 검사 통과"
-        ],
-        [
-          "iiGUI 창 없는 회귀·설치",
-          "일반·ASan·UBSan 각각 186/186 통과"
-        ],
-        [
-          "새 참조 검사",
-          "컴파일러 5건·네이티브 9건·위젯 13건 통과"
-        ],
-        [
-          "생성 C++ 타입",
-          "각 구성에서 유효 11개 컴파일, 부적합 9개 거부"
-        ],
-        [
-          "임시 컨테이너",
-          "비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인"
-        ],
-        [
-          "설치·재배치",
-          "공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크"
-        ],
-        [
-          "생성 C++·LVRS",
-          "위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시"
-        ],
-        [
-          "제품 관측",
-          "Dreamscapes QML 81개 기준 해시 유지"
-        ]
+      "end_line": 113,
+      "raw": "- 검사: LVUI 일반 전체; 결과: 244/244 통과\n- 검사: LVUI 관련 ASan·UBSan; 결과: 174/174와 별도 설치 소비자 검사 통과\n- 검사: iiGUI 창 없는 회귀·설치; 결과: 일반·ASan·UBSan 각각 186/186 통과\n- 검사: 새 참조 검사; 결과: 컴파일러 5건·네이티브 9건·위젯 13건 통과\n- 검사: 생성 C++ 타입; 결과: 각 구성에서 유효 11개 컴파일, 부적합 9개 거부\n- 검사: 임시 컨테이너; 결과: 비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인\n- 검사: 설치·재배치; 결과: 공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크\n- 검사: 생성 C++·LVRS; 결과: 위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시\n- 검사: 제품 관측; 결과: Dreamscapes QML 81개 기준 해시 유지\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "검사: LVUI 일반 전체; 결과: 244/244 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVUI 관련 ASan·UBSan; 결과: 174/174와 별도 설치 소비자 검사 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI 창 없는 회귀·설치; 결과: 일반·ASan·UBSan 각각 186/186 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 새 참조 검사; 결과: 컴파일러 5건·네이티브 9건·위젯 13건 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 생성 C++ 타입; 결과: 각 구성에서 유효 11개 컴파일, 부적합 9개 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 임시 컨테이너; 결과: 비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 설치·재배치; 결과: 공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 생성 C++·LVRS; 결과: 위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 제품 관측; 결과: Dreamscapes QML 81개 기준 해시 유지",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 116,
-      "end_line": 116,
+      "start_line": 114,
+      "end_line": 114,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 117,
-      "end_line": 119,
+      "start_line": 115,
+      "end_line": 117,
       "raw": "최초 중첩 참조 거부 4건을 재현한 뒤 구현했다. 별도 수명 재현에서 임시 부모가 호출 전에\n파괴되는 문제도 확인했다. 수정 후 부모 생존 수가 0에서 1로 바뀌었고, 생성 위젯의\n부모·하위 필드·getter 검사도 통과했다. 실제 부모 수명 실패와 복구를 독립 검사로 남긴다.\n"
     },
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 120,
-      "end_line": 120,
+      "start_line": 118,
+      "end_line": 118,
       "raw": "\n"
     },
     {
       "id": "b000049",
       "kind": "paragraph",
-      "start_line": 121,
-      "end_line": 122,
+      "start_line": 119,
+      "end_line": 120,
       "raw": "일반 오류 진단에서 기존 `Unknown backend` 정보를 잃었던 한 항목은 수신자 확장과\n함께 기존 정보를 보존하도록 수정했고, 최종 일반 전체 검사 244개를 다시 통과했다.\n"
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 123,
-      "end_line": 123,
+      "start_line": 121,
+      "end_line": 121,
       "raw": "\n"
     },
     {
       "id": "b000051",
       "kind": "paragraph",
-      "start_line": 124,
-      "end_line": 129,
+      "start_line": 122,
+      "end_line": 127,
       "raw": "현재 기록은 `build/lvui-completion/object-method-reference-verification-20261026.json`에\n각 로그·소스 해시·설치 결과·타입 계약·생성 헤더와 함께 보관한다. 중간 통과와 이후\n임시 부모 실패를 담은 `object-method-reference-phase1-verification-20261026.json`도\n보존한다. [전체 완료 기준](Completion.md)은 유지하며 해당 단계만으로 callable 필드·\n타입 추론·가변 View·깊은 Static·전체 LVRS·플랫폼 계약을 완료 처리하지 않는다.\n후속 [callable 필드](CallableFields.md)의 값 게시·공유 버전·차용 결과는 별도로 기록한다.\n"
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "heading",
-      "start_line": 131,
-      "end_line": 131,
+      "start_line": 129,
+      "end_line": 129,
       "raw": "## 엄격한 소비자 경고 설정\n",
       "level": 2,
       "title": "엄격한 소비자 경고 설정"
@@ -487,71 +492,71 @@
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 132,
-      "end_line": 132,
+      "start_line": 130,
+      "end_line": 130,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 133,
-      "end_line": 136,
+      "start_line": 131,
+      "end_line": 134,
       "raw": "AOT가 만드는 읽기 문맥 인자는 `[[maybe_unused]]`로 표시한다. 수신자가 스코프의\n일반 C++ 객체이면 문맥을 읽지 않을 수 있지만, 반응형 수신자는 같은 인자를 사용한다.\n의존 추적·호출·수명 동작은 유지하며 소비자의 `-Werror=unused-parameter`에서도\n직접 백엔드 메서드와 중첩 객체 메서드를 컴파일한다. 소비자 경고 설정을 완화하지 않는다.\n"
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 137,
-      "end_line": 137,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "\n"
     },
     {
       "id": "b000057",
       "kind": "paragraph",
-      "start_line": 138,
-      "end_line": 139,
+      "start_line": 136,
+      "end_line": 137,
       "raw": "메서드 타입을 판별하는 내부 포인터 인자도 값 호출 대신 타입 증명에만 쓰는 경우를\n명시한다. 인자의 구성·전달이나 원래 메서드의 호출 시점은 바꾸지 않는다.\n"
     },
     {
       "id": "b000058",
       "kind": "blank",
-      "start_line": 140,
-      "end_line": 140,
+      "start_line": 138,
+      "end_line": 138,
       "raw": "\n"
     },
     {
       "id": "b000059",
       "kind": "paragraph",
-      "start_line": 141,
-      "end_line": 142,
+      "start_line": 139,
+      "end_line": 140,
       "raw": "같은 어댑터가 순수 조회 콜백과 상태 변경 콜백에 공통으로 쓰이므로 스코프·버튼 이벤트\n인자도 선택 경로에서 사용하지 않을 수 있음을 표시한다. 필요할 때의 참조·이벤트 전달은 유지한다.\n"
     },
     {
       "id": "b000060",
       "kind": "blank",
-      "start_line": 143,
-      "end_line": 143,
+      "start_line": 141,
+      "end_line": 141,
       "raw": "\n"
     },
     {
       "id": "b000061",
       "kind": "paragraph",
-      "start_line": 144,
-      "end_line": 147,
+      "start_line": 142,
+      "end_line": 145,
       "raw": "선택된 호출 가능 필드가 함수 호출 연산자를 제공하지 않으면 같은 인자를 받는\n`invoke` 또는 `trigger` 멤버를 호출할 수 있다. 함수 호출 연산자, `invoke`,\n`trigger` 순으로 선택하며 선택한 원본 객체의 수명과 발행 경계는 그대로 유지한다.\n이는 LVRS 버튼 메서드 객체를 네이티브 C++ 콜백으로 이식하는 공통 경로이다.\n"
     },
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 148,
-      "end_line": 148,
+      "start_line": 146,
+      "end_line": 146,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 149,
-      "end_line": 150,
+      "start_line": 147,
+      "end_line": 148,
       "raw": "자동으로 대화상자를 여는 페이지의 embedded build 거부 경로에서는 생성자 팩토리 인자도\n명시적으로 소비한다. 이 경로는 오류를 반환하는 기존 정책을 유지하며 엄격한 예제 빌드로 검사한다.\n"
     }
   ],
@@ -610,7 +615,7 @@
       "level": 2,
       "title": "엄격한 소비자 경고 설정",
       "anchor": "엄격한-소비자-경고-설정",
-      "start_line": 131
+      "start_line": 129
     }
   ],
   "indexes": {
@@ -687,14 +692,14 @@
       },
       {
         "block_id": "b000051",
-        "line": 128,
+        "line": 126,
         "text": "타입 추론·가변 View·깊은 Static·전체 LVRS·플랫폼 계약을 완료 처리하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000055",
-        "line": 136,
+        "line": 134,
         "text": "직접 백엔드 메서드와 중첩 객체 메서드를 컴파일한다. 소비자 경고 설정을 완화하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -714,63 +719,17 @@
         "label": "전체 완료 기준",
         "target": "Completion.md",
         "kind": "relative",
-        "line": 127
+        "line": 125
       },
       {
         "block_id": "b000051",
         "label": "callable 필드",
         "target": "CallableFields.md",
         "kind": "relative",
-        "line": 129
+        "line": 127
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000045",
-        "columns": [
-          "검사",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI 일반 전체",
-            "244/244 통과"
-          ],
-          [
-            "LVUI 관련 ASan·UBSan",
-            "174/174와 별도 설치 소비자 검사 통과"
-          ],
-          [
-            "iiGUI 창 없는 회귀·설치",
-            "일반·ASan·UBSan 각각 186/186 통과"
-          ],
-          [
-            "새 참조 검사",
-            "컴파일러 5건·네이티브 9건·위젯 13건 통과"
-          ],
-          [
-            "생성 C++ 타입",
-            "각 구성에서 유효 11개 컴파일, 부적합 9개 거부"
-          ],
-          [
-            "임시 컨테이너",
-            "비복사 요소의 선택·호출·해제를 두 구성에서 추가 확인"
-          ],
-          [
-            "설치·재배치",
-            "공개 Native 참조 선택·퇴역 실행, 생성 참조·임시 부모·인덱스 팩터리 컴파일·링크"
-          ],
-          [
-            "생성 C++·LVRS",
-            "위젯 헤더 50개 두 구성 내용 일치, LVRS 팩터리 51개 두 구성 컴파일, 실행 미실시"
-          ],
-          [
-            "제품 관측",
-            "Dreamscapes QML 81개 기준 해시 유지"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

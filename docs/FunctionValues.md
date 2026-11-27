@@ -117,16 +117,14 @@ Void 이벤트·원래 수신자 종료·자기 제거·다른 실행 영역 거
 통과 증거와 구분한다. 범위가 겹치는 검사를 합산하여
 독립 기능 수나 플랫폼 지원 수로 표시하지 않는다.
 
-| 범위 | 결과 |
-|---|---|
-| LVUI Release CTest | 167/167 통과 |
-| 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer | 90/90 통과 |
-| 작업·공유 콜백·반환 함수 ThreadSanitizer | 17/17 통과, 빌린 Core Runtime 라이브러리는 비계측 |
-| iiGUI 창 없는 기존 동작·생성 C++ 통합 검사 | 75/75 통과 |
-| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 75/75 통과, NativeBindings 구현은 별도 LVUI 검사 |
-| 설치·재배치 독립 소비자 | Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과 |
-| 생성 C++ 타입 검사 | 유효 2개 컴파일, 잘못된 9개 거부 |
-| LVRS 생성 C++ | 함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음 |
+- 범위: LVUI Release CTest; 결과: 167/167 통과
+- 범위: 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 90/90 통과
+- 범위: 작업·공유 콜백·반환 함수 ThreadSanitizer; 결과: 17/17 통과, 빌린 Core Runtime 라이브러리는 비계측
+- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합 검사; 결과: 75/75 통과
+- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 75/75 통과, NativeBindings 구현은 별도 LVUI 검사
+- 범위: 설치·재배치 독립 소비자; 결과: Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과
+- 범위: 생성 C++ 타입 검사; 결과: 유효 2개 컴파일, 잘못된 9개 거부
+- 범위: LVRS 생성 C++; 결과: 함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음
 
 잘못된 Bool·String·Void 결과, 이벤트 인자 수·타입, 필수 인자, private 접근을 생성 C++
 컴파일에서 거부한다. 이 거부 검사는 구문 컴파일 검사이며 sanitizer 실행 검사와 구분한다.
@@ -143,16 +141,14 @@ Void 이벤트·원래 수신자 종료·자기 제거·다른 실행 영역 거
 스냅샷 변경과 차용 참조 수명 수정을 포함한 macOS arm64 검증이다. 이전 단계의 검사 수와
 합산하지 않는다.
 
-| 범위 | 결과 |
-|---|---|
-| LVUI Release CTest | 169/169 통과 |
-| 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer | 92/92 통과 |
-| 작업·공유 콜백·반환 함수 ThreadSanitizer | 19/19 통과, 빌린 Core Runtime 라이브러리는 비계측 |
-| iiGUI 창 없는 기존 동작·생성 C++ 통합 검사 | 77/77 통과 |
-| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 77/77 통과, NativeBindings 구현은 별도 LVUI 검사 |
-| 설치·재배치 독립 소비자 | Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과 |
-| 생성 C++ 타입 검사 | 유효 2개 컴파일, 잘못된 9개 거부 |
-| LVRS 생성 C++ | Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음 |
+- 범위: LVUI Release CTest; 결과: 169/169 통과
+- 범위: 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 92/92 통과
+- 범위: 작업·공유 콜백·반환 함수 ThreadSanitizer; 결과: 19/19 통과, 빌린 Core Runtime 라이브러리는 비계측
+- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합 검사; 결과: 77/77 통과
+- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 77/77 통과, NativeBindings 구현은 별도 LVUI 검사
+- 범위: 설치·재배치 독립 소비자; 결과: Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과
+- 범위: 생성 C++ 타입 검사; 결과: 유효 2개 컴파일, 잘못된 9개 거부
+- 범위: LVRS 생성 C++; 결과: Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음
 
 이동·복사 불가능한 const 함수 객체의 참조를 선택한 뒤 원본을 닫는 검사를 추가했다.
 원래 수신자가 스냅샷 때문에 남는 실패를 먼저 재현하고, 실행 중 차용과 대기 중 버전

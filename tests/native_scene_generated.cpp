@@ -39,13 +39,21 @@ struct Generation final {
     ii::gui::Widget host;
     bool closed = false;
 };
-void scene_generation_and_render_tree() {
+// Check the compiled host options independently for each window scene.
+void scene_chrome() {
     static_assert(View::scene_count == 3 && View::scenes.size() == 3);
     static_assert(View::scenes[0].id == "main" && View::scenes[0].initially_open);
     static_assert(View::scenes[1].id == "tools" && !View::scenes[1].initially_open);
     static_assert(View::scenes[2].id == "legacy" && View::scenes[2].initially_open);
     require(take(View::options_for_scene(1)).title == "Tools", "Scene window options were lost");
+    require(take(View::options_for_scene(0)).chrome == ii::gui::WindowChrome::custom &&
+            take(View::options_for_scene(1)).chrome == ii::gui::WindowChrome::system &&
+            take(View::options_for_scene(2)).chrome == ii::gui::WindowChrome::custom,
+            "Generated window scenes did not preserve their independent title-bar choices");
+}
 
+void scene_generation_and_render_tree() {
+    scene_chrome();
     const auto previous_created = NativeWindowBackend::created;
     const auto previous_destroyed = NativeWindowBackend::destroyed;
     NativeApplicationBackend::scene_events.clear();
@@ -145,4 +153,7 @@ void scene_generation_and_render_tree() {
     main->close();
 }
 }
-int main() { scene_generation_and_render_tree(); }
+int main(int argc, char** argv) {
+    if (argc > 1 && std::string_view(argv[1]) == "chrome") scene_chrome();
+    else scene_generation_and_render_tree();
+}

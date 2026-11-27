@@ -42,13 +42,11 @@ LVRS 원본은 읽기 참조했고, 외형·글꼴 파일 해시를 iiGUI 스냅
 
 ## 최종 결과
 
-| 검사 | 결과 | JUnit 파일 |
-| --- | --- | --- |
-| iiSDKCore 전체 | 54/54 통과 | `iiSDKCore/build/core-application-tests.xml` |
-| LVUI 전체 | 21/21 통과 | `LVUI/build/core-widget-tests.xml` |
-| iiGUI 전체 | 40/40 통과 | `iiGUI/build/core-widget-tests.xml` |
-| iiGUI·위젯·Hello World ASan/UBSan | 11/11 통과 | `iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml` |
-| 재배치 설치 소비자 | 1/1 통과 | `iiGUI/build/core-widget-consumer-final/tests.xml` |
+- 검사: iiSDKCore 전체; 결과: 54/54 통과; JUnit 파일: `iiSDKCore/build/core-application-tests.xml`
+- 검사: LVUI 전체; 결과: 21/21 통과; JUnit 파일: `LVUI/build/core-widget-tests.xml`
+- 검사: iiGUI 전체; 결과: 40/40 통과; JUnit 파일: `iiGUI/build/core-widget-tests.xml`
+- 검사: iiGUI·위젯·Hello World ASan/UBSan; 결과: 11/11 통과; JUnit 파일: `iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml`
+- 검사: 재배치 설치 소비자; 결과: 1/1 통과; JUnit 파일: `iiGUI/build/core-widget-consumer-final/tests.xml`
 
 모든 검사에서 실패·건너뜀이 0개이다. ASan/UBSan은 iiGUI와 소비자 코드에 적용했으며,
 별도로 설치된 Core 동적 라이브러리 전체에 계측을 적용했다는 의미는 아니다.

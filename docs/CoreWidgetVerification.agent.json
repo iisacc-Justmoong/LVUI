@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/CoreWidgetVerification.md",
-    "sha256": "6734697a0e27df9b99824735d47f45540f3f7882d4159fc9dd948cdd96e3d33f",
-    "bytes": 4660,
-    "line_count": 65,
+    "sha256": "1efe5cdb261f491dbf018a2b28ed01eeb8dcfb081c734a66d04db7d18cd863b0",
+    "bytes": 4735,
+    "line_count": 63,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -238,83 +238,78 @@
     },
     {
       "id": "b000023",
-      "kind": "table",
       "start_line": 45,
-      "end_line": 51,
-      "raw": "| 검사 | 결과 | JUnit 파일 |\n| --- | --- | --- |\n| iiSDKCore 전체 | 54/54 통과 | `iiSDKCore/build/core-application-tests.xml` |\n| LVUI 전체 | 21/21 통과 | `LVUI/build/core-widget-tests.xml` |\n| iiGUI 전체 | 40/40 통과 | `iiGUI/build/core-widget-tests.xml` |\n| iiGUI·위젯·Hello World ASan/UBSan | 11/11 통과 | `iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml` |\n| 재배치 설치 소비자 | 1/1 통과 | `iiGUI/build/core-widget-consumer-final/tests.xml` |\n",
-      "columns": [
-        "검사",
-        "결과",
-        "JUnit 파일"
-      ],
-      "rows": [
-        [
-          "iiSDKCore 전체",
-          "54/54 통과",
-          "`iiSDKCore/build/core-application-tests.xml`"
-        ],
-        [
-          "LVUI 전체",
-          "21/21 통과",
-          "`LVUI/build/core-widget-tests.xml`"
-        ],
-        [
-          "iiGUI 전체",
-          "40/40 통과",
-          "`iiGUI/build/core-widget-tests.xml`"
-        ],
-        [
-          "iiGUI·위젯·Hello World ASan/UBSan",
-          "11/11 통과",
-          "`iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml`"
-        ],
-        [
-          "재배치 설치 소비자",
-          "1/1 통과",
-          "`iiGUI/build/core-widget-consumer-final/tests.xml`"
-        ]
+      "end_line": 49,
+      "raw": "- 검사: iiSDKCore 전체; 결과: 54/54 통과; JUnit 파일: `iiSDKCore/build/core-application-tests.xml`\n- 검사: LVUI 전체; 결과: 21/21 통과; JUnit 파일: `LVUI/build/core-widget-tests.xml`\n- 검사: iiGUI 전체; 결과: 40/40 통과; JUnit 파일: `iiGUI/build/core-widget-tests.xml`\n- 검사: iiGUI·위젯·Hello World ASan/UBSan; 결과: 11/11 통과; JUnit 파일: `iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml`\n- 검사: 재배치 설치 소비자; 결과: 1/1 통과; JUnit 파일: `iiGUI/build/core-widget-consumer-final/tests.xml`\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "검사: iiSDKCore 전체; 결과: 54/54 통과; JUnit 파일: `iiSDKCore/build/core-application-tests.xml`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVUI 전체; 결과: 21/21 통과; JUnit 파일: `LVUI/build/core-widget-tests.xml`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI 전체; 결과: 40/40 통과; JUnit 파일: `iiGUI/build/core-widget-tests.xml`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI·위젯·Hello World ASan/UBSan; 결과: 11/11 통과; JUnit 파일: `iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 재배치 설치 소비자; 결과: 1/1 통과; JUnit 파일: `iiGUI/build/core-widget-consumer-final/tests.xml`",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 52,
-      "end_line": 52,
+      "start_line": 50,
+      "end_line": 50,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "paragraph",
-      "start_line": 53,
-      "end_line": 56,
+      "start_line": 51,
+      "end_line": 54,
       "raw": "모든 검사에서 실패·건너뜀이 0개이다. ASan/UBSan은 iiGUI와 소비자 코드에 적용했으며,\n별도로 설치된 Core 동적 라이브러리 전체에 계측을 적용했다는 의미는 아니다.\n설치 소비자는 Qt를 찾지 않도록 구성했으며, 최종 Mach-O arm64 바이너리에서 Qt 링크와\nLVUI 파서 심볼이 없음을 검사했다. Core의 진입점과 Pretendard 네 얼굴이 최종 앱에 부착된다.\n"
     },
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 57,
-      "end_line": 57,
+      "start_line": 55,
+      "end_line": 55,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 58,
-      "end_line": 61,
+      "start_line": 56,
+      "end_line": 59,
       "raw": "같은 설치 소비자의 `HelloWorld.app`을 자체 검증 인자 없이 직접 실행했다.\n접근성 트리와 화면에서 `Hello World · LVRS · iiSDKCore` 창, 타이머,\n백그라운드 결과 `42`를 확인했으며, `Say Hello` 버튼을 클릭하자\n문구가 `Hello World · Cocoa!`로 바뀌었다. 최종 창은 실행 상태로 유지했다.\n"
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 62,
-      "end_line": 62,
+      "start_line": 60,
+      "end_line": 60,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 63,
-      "end_line": 65,
+      "start_line": 61,
+      "end_line": 63,
       "raw": "현재 AOT 네이티브 구현 범위는 `ApplicationWindow`, `VStack`, `HStack`, `Label`,\n`PushButton`이다. 나머지 예약어는 AOT 진단을 반환하며, 이 기록은 전체 107개 예약어의\n네이티브 구현이나 범용 반응형 속성 추적을 검증한 것으로 해석하지 않는다.\n"
     }
   ],
@@ -370,7 +365,7 @@
       },
       {
         "block_id": "b000029",
-        "line": 65,
+        "line": 63,
         "text": "네이티브 구현이나 범용 반응형 속성 추적을 검증한 것으로 해석하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -400,43 +395,7 @@
         "line": 10
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000023",
-        "columns": [
-          "검사",
-          "결과",
-          "JUnit 파일"
-        ],
-        "rows": [
-          [
-            "iiSDKCore 전체",
-            "54/54 통과",
-            "`iiSDKCore/build/core-application-tests.xml`"
-          ],
-          [
-            "LVUI 전체",
-            "21/21 통과",
-            "`LVUI/build/core-widget-tests.xml`"
-          ],
-          [
-            "iiGUI 전체",
-            "40/40 통과",
-            "`iiGUI/build/core-widget-tests.xml`"
-          ],
-          [
-            "iiGUI·위젯·Hello World ASan/UBSan",
-            "11/11 통과",
-            "`iiGUI/build/aot-sanitizer/build/core-widget-sanitizer-tests.xml`"
-          ],
-          [
-            "재배치 설치 소비자",
-            "1/1 통과",
-            "`iiGUI/build/core-widget-consumer-final/tests.xml`"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

@@ -5,7 +5,7 @@
 int main() {
     auto code = lvui::compile_native("import vm Model\nWindow { Alert(title: vm.title, buttonCount: vm.count, button1Method: vm.save, onPrimaryClicked: vm.clicked, motionEnabled: false) }");
     if (!code) throw std::runtime_error(code.error().message);
-    for (auto part : {"#include <LVUI/NativeAlert.h>", "lvui::native::AlertBinding<",
+    for (auto part : {"#include <LVUI>", "lvui::native::AlertBinding<",
                       "lvui::native::AlertInputValue<ii::gui::RasterImage>", "lvui::native::ButtonEventValue<ii::gui::Widget>", "component.set_options(value)"}) {
         if (code->find(part) == code->npos) throw std::runtime_error(std::string("Independent Alert lost ") + part);
     }
@@ -14,9 +14,11 @@ int main() {
     lvui::NativeCompileOptions theme;
     theme.style_tokens.overrides["--lvui-theme-metrics-space-24"]=30.;
     theme.style_tokens.overrides["--lvui-theme-metrics-size-56"]=60.;
+    theme.style_tokens.overrides["--lvui-material-alert-divider"]=lvui::StyleColor{.1,.2,.3,1};
     auto themed=lvui::compile_native("Window { Alert() }",theme);
     if(!themed||themed->find("value.configuration.metrics.action_horizontal_inset = 30;")==themed->npos||
-       themed->find("value.configuration.metrics.action_height = 60;")==themed->npos)
+       themed->find("value.configuration.metrics.action_height = 60;")==themed->npos||
+       themed->find("value.configuration.palette.divider = lvui::StyleColor{0.1, 0.2, 0.3, 1};")==themed->npos)
         throw std::runtime_error("Alert action metrics ignored the chosen design tokens");
     auto initially_open = lvui::compile_native("Window { Alert(id: \"alert\", open: true, motionEnabled: false) }");
     if (!initially_open || initially_open->find("bind_popup_open") == initially_open->npos)

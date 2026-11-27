@@ -2,17 +2,28 @@
 #include <LVUI/NativeVirtualCollection.h>
 #include <LVUI/NativeMeasuredCollection.h>
 #include <LVUI/NativeCollectionNavigation.h>
+#include <LVUI/NativeMenuItem.h>
 #include <iiGUI/HierarchyViewport.h>
 #include <iiGUI/VirtualCollectionPlanner.h>
 #include <iiGUI/VirtualMeasurements.h>
 #include <iiGUI/CollectionNavigation.h>
+#include <iiGUI/MenuItemModel.h>
 #include <memory>
 #include <vector>
 using HierarchyViewport=lvui::HierarchyViewportBinding<ii::gui::BasicHierarchyViewportSource>;
 using Planner=lvui::native::VirtualCollectionPlannerBinding<ii::gui::BasicVirtualCollectionPlanner>;
 using Measurements=lvui::native::VirtualMeasurementsBinding<ii::gui::BasicVirtualMeasurements,int,Planner>;
 using Navigation=lvui::native::CollectionNavigationBinding<ii::gui::BasicCollectionNavigation>;
+struct MenuTestImage{};
+struct MenuTestDecoder{using Image=MenuTestImage;};
+using MenuBase=ii::gui::BasicMenuItem<lvui::MenuItemModelPolicy>;
+using MenuDisplay=lvui::native::MenuItemHostPolicy<MenuBase,MenuTestDecoder,int,int>::Model;
 int main(){
+    MenuDisplay menu;lvui::MenuItemConfiguration shortcut;shortcut.label="Open";shortcut.shortcut="Option+Shift+Command+i";
+    if(!menu.set_configuration(shortcut)||menu.shortcut()!="⌥⇧⌘i"||
+       menu.configuration().accessibility_name.find(shortcut.shortcut)==std::string::npos)return 205;
+    shortcut.shortcut.clear();shortcut.key_placeholder="Shift+Command+I";
+    if(!menu.set_configuration(shortcut)||menu.shortcut()!="⇧⌘I")return 206;
     auto key=[](int value,std::size_t){return value;};
     auto hierarchy_source=std::make_shared<lvui::HierarchyMemory>(std::vector<lvui::HierarchyEntry>{
         {.key="first",.label="First"},{.key="second",.label="Second"}});

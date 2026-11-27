@@ -101,7 +101,7 @@ void safe_area(){
     const auto chrome = generate("Window(windowChrome: .custom, titleBar: HStack(id: \"chrome\", height: 32) {}) { VStack(id: \"content\") {} }");
     check(chrome.find("@lvui/window-chrome-shell")!=chrome.npos && chrome.find(marker)!=chrome.npos,
           "Custom title bar and padded content were not separated");
-    check(!lvui::compile_native("Window(titleBar: HStack()) { Label() }"),
+    check(!lvui::compile_native("Window(windowChrome: .system, titleBar: HStack()) { Label() }"),
           "A custom title bar was accepted with system chrome");
     check(!lvui::compile_native("Window(windowChrome: .custom, titleBar: 42) { Label() }"),
           "A title bar accepted a non-View value");
@@ -140,4 +140,33 @@ void safe_area(){
     check(!lvui::compile_native("Window { VStack(id: \"@lvui/window-safe-area\") {} }"),
           "A user id collided with the generated safe-area widget");
 }
-int main(int argc,char** argv){try{std::string name=argc>1?argv[1]:"dynamic";if(name=="dynamic")dynamic();else if(name=="accent")accent();else if(name=="constants")constants();else if(name=="diagnostics")diagnostics();else if(name=="safe_area")safe_area();else throw std::runtime_error("Unknown Window test");std::cout<<"Native Window "<<name<<" passed\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}
+
+// A window has no implicit title bar; each form must opt in to one explicitly.
+void chrome_defaults(){
+    constexpr auto custom=".chrome = ii::gui::WindowChrome::custom";
+    constexpr auto system=".chrome = ii::gui::WindowChrome::system";
+    constexpr auto bar="@lvui/window-chrome-shell";
+    for(auto source:{"ApplicationWindow { Label() }", "Window { Label() }", "AppBootstrapWindow { Label() }",
+                     "AppShell(visible: true) { Label() }", "Application { Scene { Label() } }", "Label()"}){
+        const auto code=generate(source);
+        check(code.find(custom)!=code.npos&&code.find(bar)==code.npos,
+              "A default window created a system or custom title bar");
+    }
+    for(auto source:{"ApplicationWindow(titleBarVisible: true) { Label() }",
+                     "Window(windowChrome: .system) { Label() }",
+                     "Application { Scene(titleBarVisible: true) { Label() } }"}){
+        const auto code=generate(source);
+        check(code.find(system)!=code.npos&&code.find(custom)==code.npos&&code.find(bar)==code.npos,
+              "An explicitly requested system title bar was not selected");
+    }
+    const auto provided=generate("ApplicationWindow(titleBar: HStack(id: \"header\") {}) { Label() }");
+    check(provided.find(custom)!=provided.npos&&provided.find(bar)!=provided.npos&&provided.find("header")!=provided.npos,
+          "An explicitly provided custom title bar was not mounted");
+    const auto scenes=generate("Application { Scene(id: \"main\") { Label() }\nScene(id: \"secondary\", titleBarVisible: true) { Label() } }");
+    check(scenes.find(custom)!=scenes.npos&&scenes.find(system)!=scenes.npos,
+          "Window scenes did not retain independent chrome choices");
+    for(auto source:{"ApplicationWindow(titleBarVisible: true, titleBar: HStack()) { Label() }",
+                     "Window(windowChrome: .system, titleBar: HStack()) { Label() }"})
+        check(!lvui::compile_native(source),"A custom title bar was combined with system chrome");
+}
+int main(int argc,char** argv){try{std::string name=argc>1?argv[1]:"dynamic";if(name=="dynamic")dynamic();else if(name=="accent")accent();else if(name=="constants")constants();else if(name=="diagnostics")diagnostics();else if(name=="safe_area")safe_area();else if(name=="chrome_defaults")chrome_defaults();else throw std::runtime_error("Unknown Window test");std::cout<<"Native Window "<<name<<" passed\n";}catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}}

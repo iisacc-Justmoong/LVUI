@@ -18,18 +18,16 @@ ApplicationWindow(backgroundColor: Color.window) {
 
 타입 멤버의 문법은 `Color.멤버`와 `Metric.멤버`이다. 타입을 명시한 선언이나 색상·수치 입력에서는 `.멤버`로 축약할 수 있다. 위 Label의 색상을 `.primary`, 글자 크기를 `.textBody`로 작성해도 같은 C++ 코드가 생성된다. 기존 컴포넌트 enum인 `style: .body`, `tone: .primary`는 기존 의미를 유지한다.
 
-| 선택 | 원본 |
-|---|---|
-| `Color.primary` | Theme Colors / Action/primary |
-| `Color.window` | Theme Colors / Panel/window |
-| `Color.text.body` | Theme Colors / Text/bodyColor |
-| `Color.blue`, `Color.blue.hover` | Theme Colors / Accent/Blue/Default, Hover |
-| `Color.material.surface.dense.edge` | Material / Surface/Dense/Edge |
-| `Color.picker.current` | ColorPicker / Current color |
-| `Metric.space8`, `Metric.radius8` | Theme Metrics / Space/8, Radius/8 |
-| `Metric.size22`, `Metric.stroke1_5` | Theme Metrics / Size/22, Stroke/1_5 |
-| `Metric.textBody`, `Metric.textBodyLineHeight` | Theme Typography / Body의 크기·줄 높이 |
-| `Metric.weightMedium` | Theme Typography / Weight/Medium |
+- 선택: `Color.primary`; 원본: Theme Colors / Action/primary
+- 선택: `Color.window`; 원본: Theme Colors / Panel/window
+- 선택: `Color.text.body`; 원본: Theme Colors / Text/bodyColor
+- 선택: `Color.blue`, `Color.blue.hover`; 원본: Theme Colors / Accent/Blue/Default, Hover
+- 선택: `Color.material.surface.dense.edge`; 원본: Material / Surface/Dense/Edge
+- 선택: `Color.picker.current`; 원본: ColorPicker / Current color
+- 선택: `Metric.space8`, `Metric.radius8`; 원본: Theme Metrics / Space/8, Radius/8
+- 선택: `Metric.size22`, `Metric.stroke1_5`; 원본: Theme Metrics / Size/22, Stroke/1_5
+- 선택: `Metric.textBody`, `Metric.textBodyLineHeight`; 원본: Theme Typography / Body의 크기·줄 높이
+- 선택: `Metric.weightMedium`; 원본: Theme Typography / Weight/Medium
 
 접두사를 생략할 타입 문맥이 없는 `const ink = .primary`는 오류이다. `const ink = Color.primary`로 타입을 추론하거나 `const ink: Color = .primary`로 지정한다. 수치 입력은 Number와 Metric을 받으며, Metric을 색상·문자열·Bool로 사용하는 것은 거부한다. 수치 목록 입력에서도 `[Metric.size44, .size56]`처럼 작성할 수 있다.
 

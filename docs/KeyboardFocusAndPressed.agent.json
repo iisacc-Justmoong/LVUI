@@ -1,0 +1,128 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:0e6c6c9eb3791464218802993135a6007a8326f0fcd9b1fe520bb4eee2e709aa",
+  "project": {
+    "id": "urn:iisacc:project:SDK%2FLVUI",
+    "name": "LVUI",
+    "root": "SDK/LVUI",
+    "kind": "sdk"
+  },
+  "source": {
+    "path": "docs/KeyboardFocusAndPressed.md",
+    "sha256": "10722812b83f38631a60cdac65efc0bdffd85aa539c1670f8edbbccad479ca42",
+    "bytes": 1165,
+    "line_count": 9,
+    "encoding": "utf-8",
+    "language": "ko"
+  },
+  "document": {
+    "title": "키보드 포커스와 유지되는 누름 상태",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# 키보드 포커스와 유지되는 누름 상태\n",
+      "level": 1,
+      "title": "키보드 포커스와 유지되는 누름 상태"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "LVUI 컴포넌트는 포커스 시각 상태를 키보드로 탐색하거나 조작할 때에만 표시한다. 포인터·터치·펜이나 자동 포커스로는 포커스 시각 상태를 표시하지 않는다. 텍스트 입력과 접근성에 필요한 논리 포커스는 유지한다.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "기존 버튼의 `pointer_focus_visible` 설정은 소스 호환성을 위해 남아 있지만 값을 켜더라도 포인터 포커스 표시를 허용하지 않는다. 직접 상호작용 상태를 전달하는 호스트는 논리 포커스가 아니라 키보드 포커스 표시 여부를 시각 모델의 포커스 입력으로 전달한다.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "메뉴 또는 팝오버를 연 컨트롤은 해당 팝업이 열려 있는 동안 누름 시각 상태를 유지하고, 닫히면 해제한다. 선택·호버·논리 포커스는 이 상태와 독립적이다. 이 동작은 개별 앱의 스타일 오버라이드가 아니라 iiGUI 공통 입력·표시 계약을 통해 제공한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "Figma의 버튼, 드롭다운, 메뉴, 목록, 계층, 입력, 슬라이더 및 탭 컴포넌트에도 같은 동작 주석을 둔다.\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "키보드 포커스와 유지되는 누름 상태",
+      "anchor": "키보드-포커스와-유지되는-누름-상태",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [
+      {
+        "block_id": "b000003",
+        "line": 3,
+        "text": "LVUI 컴포넌트는 포커스 시각 상태를 키보드로 탐색하거나 조작할 때에만 표시한다. 포인터·터치·펜이나 자동 포커스로는 포커스 시각 상태를 표시하지 않는다. 텍스트 입력과 접근성에 필요한 논리 포커스는 유지한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000005",
+        "line": 5,
+        "text": "기존 버튼의 `pointer_focus_visible` 설정은 소스 호환성을 위해 남아 있지만 값을 켜더라도 포인터 포커스 표시를 허용하지 않는다. 직접 상호작용 상태를 전달하는 호스트는 논리 포커스가 아니라 키보드 포커스 표시 여부를 시각 모델의 포커스 입력으로 전달한다.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      }
+    ],
+    "commands": [],
+    "links": [],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0-compatible-local",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

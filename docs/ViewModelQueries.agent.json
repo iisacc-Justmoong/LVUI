@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/ViewModelQueries.md",
-    "sha256": "f1478078bf6cd690ec33077aed3132c0c6785495d97c63113ff5139ebd1c8a90",
-    "bytes": 13573,
-    "line_count": 236,
+    "sha256": "0d5e37fde5bb10b4bc084ebcd1a3f4ea194897747f981ed5a9ef17b49e52b048",
+    "bytes": 13681,
+    "line_count": 232,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -569,87 +569,87 @@
     },
     {
       "id": "b000071",
-      "kind": "table",
       "start_line": 136,
-      "end_line": 141,
-      "raw": "| 작업 | 기존 목적 |\n|---|---|\n| `PropertyRead` | 요청한 값을 선택해 반환한다. |\n| `PropertyWrite` | 수신 측 타입·접근·검증 규칙에 따라 값을 쓴다. |\n| `PropertyInvoke` | 명시적 인자 값으로 메서드를 호출하고 결과를 반환한다. |\n| `PropertyChange` | 변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다. |\n",
-      "columns": [
-        "작업",
-        "기존 목적"
-      ],
-      "rows": [
-        [
-          "`PropertyRead`",
-          "요청한 값을 선택해 반환한다."
-        ],
-        [
-          "`PropertyWrite`",
-          "수신 측 타입·접근·검증 규칙에 따라 값을 쓴다."
-        ],
-        [
-          "`PropertyInvoke`",
-          "명시적 인자 값으로 메서드를 호출하고 결과를 반환한다."
-        ],
-        [
-          "`PropertyChange`",
-          "변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다."
-        ]
+      "end_line": 139,
+      "raw": "- 작업: `PropertyRead`; 기존 목적: 요청한 값을 선택해 반환한다.\n- 작업: `PropertyWrite`; 기존 목적: 수신 측 타입·접근·검증 규칙에 따라 값을 쓴다.\n- 작업: `PropertyInvoke`; 기존 목적: 명시적 인자 값으로 메서드를 호출하고 결과를 반환한다.\n- 작업: `PropertyChange`; 기존 목적: 변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "작업: `PropertyRead`; 기존 목적: 요청한 값을 선택해 반환한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: `PropertyWrite`; 기존 목적: 수신 측 타입·접근·검증 규칙에 따라 값을 쓴다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: `PropertyInvoke`; 기존 목적: 명시적 인자 값으로 메서드를 호출하고 결과를 반환한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: `PropertyChange`; 기존 목적: 변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000072",
       "kind": "blank",
-      "start_line": 142,
-      "end_line": 142,
+      "start_line": 140,
+      "end_line": 140,
       "raw": "\n"
     },
     {
       "id": "b000073",
       "kind": "paragraph",
-      "start_line": 143,
-      "end_line": 145,
+      "start_line": 141,
+      "end_line": 143,
       "raw": "`PropertyChange`는 새 값이나 객체 전체를 자동으로 포함하지 않는다.\n수신 측은 선택한 최신 값을 요청할 수 있다.\n사용자 정의 타입 지정 쿼리는 선언된 계약에 따라 새 값을 명시적으로 포함할 수 있다.\n"
     },
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 146,
-      "end_line": 146,
+      "start_line": 144,
+      "end_line": 144,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "paragraph",
-      "start_line": 147,
-      "end_line": 149,
+      "start_line": 145,
+      "end_line": 147,
       "raw": "동적인 쿼리 가능·쓰기 가능·타입 정책은 계속 적용된다.\n`ObjectProperties::apply()`는 소유자의 권한이며 정책을 우회하는 외부 지름길로 사용해서는 안 된다.\n공개 C++ 멤버 브리지와 도메인 객체의 명시적 쿼리 API에는 각각 적절한 수신 측 계약이 필요하다.\n"
     },
     {
       "id": "b000076",
+      "kind": "blank",
+      "start_line": 148,
+      "end_line": 148,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "html",
+      "start_line": 149,
+      "end_line": 149,
+      "raw": "<a id=\"execution-and-response-delivery\"></a>\n"
+    },
+    {
+      "id": "b000078",
       "kind": "blank",
       "start_line": 150,
       "end_line": 150,
       "raw": "\n"
     },
     {
-      "id": "b000077",
-      "kind": "html",
-      "start_line": 151,
-      "end_line": 151,
-      "raw": "<a id=\"execution-and-response-delivery\"></a>\n"
-    },
-    {
-      "id": "b000078",
-      "kind": "blank",
-      "start_line": 152,
-      "end_line": 152,
-      "raw": "\n"
-    },
-    {
       "id": "b000079",
       "kind": "heading",
-      "start_line": 153,
-      "end_line": 153,
+      "start_line": 151,
+      "end_line": 151,
       "raw": "## 실행과 응답 전달\n",
       "level": 2,
       "title": "실행과 응답 전달"
@@ -657,89 +657,88 @@
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 154,
-      "end_line": 154,
+      "start_line": 152,
+      "end_line": 152,
       "raw": "\n"
     },
     {
       "id": "b000081",
-      "kind": "table",
-      "start_line": 155,
-      "end_line": 159,
-      "raw": "| Core 작업 | ViewModel에 관련된 계약 |\n|---|---|\n| `send(request)` | 호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다. |\n| 바인딩된 포트의 `post(request, completion)` | 설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다. |\n| `post(executor, request, completion)` | 바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다. |\n",
-      "columns": [
-        "Core 작업",
-        "ViewModel에 관련된 계약"
-      ],
-      "rows": [
-        [
-          "`send(request)`",
-          "호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다."
-        ],
-        [
-          "바인딩된 포트의 `post(request, completion)`",
-          "설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다."
-        ],
-        [
-          "`post(executor, request, completion)`",
-          "바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다."
-        ]
+      "start_line": 153,
+      "end_line": 155,
+      "raw": "- Core 작업: `send(request)`; ViewModel에 관련된 계약: 호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다.\n- Core 작업: 바인딩된 포트의 `post(request, completion)`; ViewModel에 관련된 계약: 설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다.\n- Core 작업: `post(executor, request, completion)`; ViewModel에 관련된 계약: 바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Core 작업: `send(request)`; ViewModel에 관련된 계약: 호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Core 작업: 바인딩된 포트의 `post(request, completion)`; ViewModel에 관련된 계약: 설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Core 작업: `post(executor, request, completion)`; ViewModel에 관련된 계약: 바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000082",
+      "kind": "blank",
+      "start_line": 156,
+      "end_line": 156,
+      "raw": "\n"
+    },
+    {
+      "id": "b000083",
+      "kind": "paragraph",
+      "start_line": 157,
+      "end_line": 159,
+      "raw": "`post` 결과는 접수 여부를 나타내며 실행 완료나 도메인 결과 성공을 뜻하지 않는다.\n취소·종료로 처리기와 완료 콜백이 억제될 수 있다.\n완료 콜백이 UI 스레드에서 실행된다고 가정해서는 안 된다.\n"
+    },
+    {
+      "id": "b000084",
       "kind": "blank",
       "start_line": 160,
       "end_line": 160,
       "raw": "\n"
     },
     {
-      "id": "b000083",
+      "id": "b000085",
       "kind": "paragraph",
       "start_line": 161,
       "end_line": 163,
-      "raw": "`post` 결과는 접수 여부를 나타내며 실행 완료나 도메인 결과 성공을 뜻하지 않는다.\n취소·종료로 처리기와 완료 콜백이 억제될 수 있다.\n완료 콜백이 UI 스레드에서 실행된다고 가정해서는 안 된다.\n"
+      "raw": "화면 상태 갱신은 소유 UI 실행 영역과 수신 스코프 종료 경계를 거쳐 돌아와야 한다.\n다른 영역의 작업을 기다리며 UI를 막거나,\n쿼리를 우회하기 위해 작업자 소유 변경 가능 상태를 직접 읽어서는 안 된다.\n"
     },
     {
-      "id": "b000084",
+      "id": "b000086",
       "kind": "blank",
       "start_line": 164,
       "end_line": 164,
       "raw": "\n"
     },
     {
-      "id": "b000085",
-      "kind": "paragraph",
-      "start_line": 165,
-      "end_line": 167,
-      "raw": "화면 상태 갱신은 소유 UI 실행 영역과 수신 스코프 종료 경계를 거쳐 돌아와야 한다.\n다른 영역의 작업을 기다리며 UI를 막거나,\n쿼리를 우회하기 위해 작업자 소유 변경 가능 상태를 직접 읽어서는 안 된다.\n"
-    },
-    {
-      "id": "b000086",
-      "kind": "blank",
-      "start_line": 168,
-      "end_line": 168,
-      "raw": "\n"
-    },
-    {
       "id": "b000087",
       "kind": "html",
-      "start_line": 169,
-      "end_line": 169,
+      "start_line": 165,
+      "end_line": 165,
       "raw": "<a id=\"reactive-value-flow\"></a>\n"
     },
     {
       "id": "b000088",
       "kind": "blank",
-      "start_line": 170,
-      "end_line": 170,
+      "start_line": 166,
+      "end_line": 166,
       "raw": "\n"
     },
     {
       "id": "b000089",
       "kind": "heading",
-      "start_line": 171,
-      "end_line": 171,
+      "start_line": 167,
+      "end_line": 167,
       "raw": "## 반응형 값 흐름\n",
       "level": 2,
       "title": "반응형 값 흐름"
@@ -747,85 +746,85 @@
     {
       "id": "b000090",
       "kind": "blank",
-      "start_line": 172,
-      "end_line": 172,
+      "start_line": 168,
+      "end_line": 168,
       "raw": "\n"
     },
     {
       "id": "b000091",
       "kind": "paragraph",
-      "start_line": 173,
-      "end_line": 175,
+      "start_line": 169,
+      "end_line": 171,
       "raw": "읽기 계약으로 초기값을 얻는다.\n변경 쿼리를 받으면 의존 바인딩을 무효화하고 필요한 최신 값을 얻는다.\n같은 VM 인스턴스를 유지하며 매 프레임 모든 속성을 폴링하지 않는다.\n"
     },
     {
       "id": "b000092",
       "kind": "blank",
-      "start_line": 176,
-      "end_line": 176,
+      "start_line": 172,
+      "end_line": 172,
       "raw": "\n"
     },
     {
       "id": "b000093",
       "kind": "paragraph",
-      "start_line": 177,
-      "end_line": 180,
+      "start_line": 173,
+      "end_line": 176,
       "raw": "Core 쿼리만으로 임의의 C++ 대입을 관찰하지 않는다.\n언어의 기본 반응형 동작을 구현하려면 변경 처리기·생성된 접근 경로·관찰 기능이 적절한 변경 정보를 발행해야 한다.\n이는 연동 의무이며 값마다 애플리케이션 수준에서 관찰을 활성화할 필요는 없다.\n일반 공개 멤버 추적은 여전히 구현이 필요하다.\n"
     },
     {
       "id": "b000094",
       "kind": "blank",
-      "start_line": 181,
-      "end_line": 181,
+      "start_line": 177,
+      "end_line": 177,
       "raw": "\n"
     },
     {
       "id": "b000095",
       "kind": "paragraph",
-      "start_line": 182,
-      "end_line": 186,
+      "start_line": 178,
+      "end_line": 182,
       "raw": "기본 VM 바인딩은 기존 원본의 읽기·쓰기·변경 계약을 사용한다.\n[선언 어노테이션](DeclarationAnnotations.md)은 `@Observable`을 선택적인 명시적 표기로,\n`@Static`을 값 안정성을 위한 표기로 유지한다.\n바인딩 편집은 쿼리 계약으로 원본에 쓰며 VM 상태의 별도 복사본을 만들지 않는다.\n정적 값은 설정된 전체 수명 동안 고정 값 보장을 유지한다.\n"
     },
     {
       "id": "b000096",
+      "kind": "blank",
+      "start_line": 183,
+      "end_line": 183,
+      "raw": "\n"
+    },
+    {
+      "id": "b000097",
+      "kind": "paragraph",
+      "start_line": 184,
+      "end_line": 186,
+      "raw": "Core의 기존 변경 처리기는 쿼리 수신 측이다.\n암묵적인 UI 구독 레지스트리를 제공하지 않는다.\n스코프를 따르는 LVUI 어댑터가 의존 바인딩을 관리하고 쿼리를 수신 측에 전달해야 한다.\n"
+    },
+    {
+      "id": "b000098",
       "kind": "blank",
       "start_line": 187,
       "end_line": 187,
       "raw": "\n"
     },
     {
-      "id": "b000097",
-      "kind": "paragraph",
-      "start_line": 188,
-      "end_line": 190,
-      "raw": "Core의 기존 변경 처리기는 쿼리 수신 측이다.\n암묵적인 UI 구독 레지스트리를 제공하지 않는다.\n스코프를 따르는 LVUI 어댑터가 의존 바인딩을 관리하고 쿼리를 수신 측에 전달해야 한다.\n"
-    },
-    {
-      "id": "b000098",
-      "kind": "blank",
-      "start_line": 191,
-      "end_line": 191,
-      "raw": "\n"
-    },
-    {
       "id": "b000099",
       "kind": "html",
-      "start_line": 192,
-      "end_line": 192,
+      "start_line": 188,
+      "end_line": 188,
       "raw": "<a id=\"errors-and-lifetime\"></a>\n"
     },
     {
       "id": "b000100",
       "kind": "blank",
-      "start_line": 193,
-      "end_line": 193,
+      "start_line": 189,
+      "end_line": 189,
       "raw": "\n"
     },
     {
       "id": "b000101",
       "kind": "heading",
-      "start_line": 194,
-      "end_line": 194,
+      "start_line": 190,
+      "end_line": 190,
       "raw": "## 오류와 수명\n",
       "level": 2,
       "title": "오류와 수명"
@@ -833,85 +832,85 @@
     {
       "id": "b000102",
       "kind": "blank",
-      "start_line": 195,
-      "end_line": 195,
+      "start_line": 191,
+      "end_line": 191,
       "raw": "\n"
     },
     {
       "id": "b000103",
       "kind": "paragraph",
-      "start_line": 196,
-      "end_line": 197,
+      "start_line": 192,
+      "end_line": 193,
       "raw": "접수 거부·쿼리 전달 실패·처리기 실패·도메인 작업 오류를 구분한다.\n`ObjectProperties` 응답은 전송 결과 안에 속성 작업 결과를 감싼다.\n"
     },
     {
       "id": "b000104",
       "kind": "blank",
-      "start_line": 198,
-      "end_line": 198,
+      "start_line": 194,
+      "end_line": 194,
       "raw": "\n"
     },
     {
       "id": "b000105",
       "kind": "paragraph",
-      "start_line": 199,
-      "end_line": 200,
+      "start_line": 195,
+      "end_line": 196,
       "raw": "확정된 속성 편집은 `notification_error`를 별도로 보고할 수 있다.\n값은 이미 바뀌었으므로 알림 실패만을 이유로 편집을 반복하지 않는다.\n"
     },
     {
       "id": "b000106",
       "kind": "blank",
-      "start_line": 201,
-      "end_line": 201,
+      "start_line": 197,
+      "end_line": 197,
       "raw": "\n"
     },
     {
       "id": "b000107",
       "kind": "paragraph",
-      "start_line": 202,
-      "end_line": 205,
+      "start_line": 198,
+      "end_line": 201,
       "raw": "빌린 포트 참조는 소유자보다 오래 유지되어서는 안 된다.\n파괴된 포트의 원시 참조가 쿼리 오류 처리만으로 안전해지지는 않는다.\n대기 요청·활성 처리기·결과 전달은 VM과 같은\n[스코프 종료 경계](InvocationLifecycle.md)를 따른다.\n"
     },
     {
       "id": "b000108",
       "kind": "blank",
-      "start_line": 206,
-      "end_line": 206,
+      "start_line": 202,
+      "end_line": 202,
       "raw": "\n"
     },
     {
       "id": "b000109",
       "kind": "paragraph",
-      "start_line": 207,
-      "end_line": 210,
+      "start_line": 203,
+      "end_line": 206,
       "raw": "종료 시 새 요청을 거부하고 대기·활성 사용을 종료하며 UI 수신 측을 분리한다.\n늦은 결과가 제거된 뷰나 새 활성화를 갱신해서는 안 된다.\n오래된 결과 검사에 사용하는 요청 정체성·활성화 정체성·리비전은 명시적인 어댑터·페이로드 계약이며,\nCore가 자동으로 넣지 않는다.\n"
     },
     {
       "id": "b000110",
       "kind": "blank",
-      "start_line": 211,
-      "end_line": 211,
+      "start_line": 207,
+      "end_line": 207,
       "raw": "\n"
     },
     {
       "id": "b000111",
       "kind": "html",
-      "start_line": 212,
-      "end_line": 212,
+      "start_line": 208,
+      "end_line": 208,
       "raw": "<a id=\"current-source-references\"></a>\n"
     },
     {
       "id": "b000112",
       "kind": "blank",
-      "start_line": 213,
-      "end_line": 213,
+      "start_line": 209,
+      "end_line": 209,
       "raw": "\n"
     },
     {
       "id": "b000113",
       "kind": "heading",
-      "start_line": 214,
-      "end_line": 214,
+      "start_line": 210,
+      "end_line": 210,
       "raw": "## 현재 소스 참조\n",
       "level": 2,
       "title": "현재 소스 참조"
@@ -919,15 +918,15 @@
     {
       "id": "b000114",
       "kind": "blank",
-      "start_line": 215,
-      "end_line": 215,
+      "start_line": 211,
+      "end_line": 211,
       "raw": "\n"
     },
     {
       "id": "b000115",
       "kind": "list",
-      "start_line": 216,
-      "end_line": 219,
+      "start_line": 212,
+      "end_line": 215,
       "raw": "- `SDK/iiSDKCore/src/Runtime/Query.h`: 타입 지정 동기·큐 포트.\n- `SDK/iiSDKCore/src/Runtime/ObjectProperties.h`: 요청·결과·변경 기록.\n- `SDK/iiSDKCore/src/Core/Property/PropertyLens.h`: 재사용 가능한 읽기·쓰기·호출 선택.\n- `SDK/iiSDKCore/docs/object-properties.md`: 정책·알림·수명.\n",
       "items": [
         {
@@ -955,29 +954,29 @@
     {
       "id": "b000116",
       "kind": "blank",
-      "start_line": 220,
-      "end_line": 220,
+      "start_line": 216,
+      "end_line": 216,
       "raw": "\n"
     },
     {
       "id": "b000117",
       "kind": "html",
-      "start_line": 221,
-      "end_line": 221,
+      "start_line": 217,
+      "end_line": 217,
       "raw": "<a id=\"implementation-validation-targets\"></a>\n"
     },
     {
       "id": "b000118",
       "kind": "blank",
-      "start_line": 222,
-      "end_line": 222,
+      "start_line": 218,
+      "end_line": 218,
       "raw": "\n"
     },
     {
       "id": "b000119",
       "kind": "heading",
-      "start_line": 223,
-      "end_line": 223,
+      "start_line": 219,
+      "end_line": 219,
       "raw": "## 구현 검증 대상\n",
       "level": 2,
       "title": "구현 검증 대상"
@@ -985,15 +984,15 @@
     {
       "id": "b000120",
       "kind": "blank",
-      "start_line": 224,
-      "end_line": 224,
+      "start_line": 220,
+      "end_line": 220,
       "raw": "\n"
     },
     {
       "id": "b000121",
       "kind": "list",
-      "start_line": 225,
-      "end_line": 234,
+      "start_line": 221,
+      "end_line": 230,
       "raw": "- VM은 어노테이션이나 별도 래퍼 선언 없이 바인딩을 제공한다.\n- 증가·초기화는 관찰 어노테이션 없이 `Label(text: vm.value)`를 갱신한다.\n  비정적 지역 LVUI 변수도 변경을 전파한다.\n- 편집 가능한 바인딩은 원래의 쓰기 가능한 VM 멤버를 변경하며, 읽기 전용 멤버는 계속 읽기 전용이다.\n- VM은 타입 지정 요청을 받고 계약에 정한 값만 반환한다.\n- VM에서 서비스로 보낸 요청의 결과는 VM 소유 실행 영역에서 적용한다.\n- 카운터의 읽기·호출·변경·읽기 흐름은 VM 재생성 없이 레이블을 갱신한다.\n- 실행기 오류와 접수 오류를 도메인 실패와 구분한다.\n- 알림 실패는 확정된 증가를 반복하지 않는다.\n- 뷰 제거 후 대기 요청·늦은 결과는 제거된 VM이나 대체 활성화에 접근할 수 없다.\n",
       "items": [
         {
@@ -1046,15 +1045,15 @@
     {
       "id": "b000122",
       "kind": "blank",
-      "start_line": 235,
-      "end_line": 235,
+      "start_line": 231,
+      "end_line": 231,
       "raw": "\n"
     },
     {
       "id": "b000123",
       "kind": "paragraph",
-      "start_line": 236,
-      "end_line": 236,
+      "start_line": 232,
+      "end_line": 232,
       "raw": "이는 향후 LVUI 어댑터 검증 항목이며, 런타임 테스트 통과 결과가 아니다.\n"
     }
   ],
@@ -1121,7 +1120,7 @@
       "level": 2,
       "title": "실행과 응답 전달",
       "anchor": "실행과-응답-전달",
-      "start_line": 153
+      "start_line": 151
     },
     {
       "block_id": "b000089",
@@ -1129,7 +1128,7 @@
       "level": 2,
       "title": "반응형 값 흐름",
       "anchor": "반응형-값-흐름",
-      "start_line": 171
+      "start_line": 167
     },
     {
       "block_id": "b000101",
@@ -1137,7 +1136,7 @@
       "level": 2,
       "title": "오류와 수명",
       "anchor": "오류와-수명",
-      "start_line": 194
+      "start_line": 190
     },
     {
       "block_id": "b000113",
@@ -1145,7 +1144,7 @@
       "level": 2,
       "title": "현재 소스 참조",
       "anchor": "현재-소스-참조",
-      "start_line": 214
+      "start_line": 210
     },
     {
       "block_id": "b000119",
@@ -1153,7 +1152,7 @@
       "level": 2,
       "title": "구현 검증 대상",
       "anchor": "구현-검증-대상",
-      "start_line": 223
+      "start_line": 219
     }
   ],
   "indexes": {
@@ -1230,84 +1229,84 @@
       },
       {
         "block_id": "b000073",
-        "line": 143,
+        "line": 141,
         "text": "`PropertyChange`는 새 값이나 객체 전체를 자동으로 포함하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000075",
-        "line": 148,
+        "line": 146,
         "text": "`ObjectProperties::apply()`는 소유자의 권한이며 정책을 우회하는 외부 지름길로 사용해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000083",
-        "line": 161,
+        "line": 157,
         "text": "`post` 결과는 접수 여부를 나타내며 실행 완료나 도메인 결과 성공을 뜻하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000083",
-        "line": 163,
+        "line": 159,
         "text": "완료 콜백이 UI 스레드에서 실행된다고 가정해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000091",
-        "line": 175,
+        "line": 171,
         "text": "같은 VM 인스턴스를 유지하며 매 프레임 모든 속성을 폴링하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000093",
-        "line": 177,
+        "line": 173,
         "text": "Core 쿼리만으로 임의의 C++ 대입을 관찰하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000093",
-        "line": 178,
+        "line": 174,
         "text": "언어의 기본 반응형 동작을 구현하려면 변경 처리기·생성된 접근 경로·관찰 기능이 적절한 변경 정보를 발행해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000097",
-        "line": 189,
+        "line": 185,
         "text": "암묵적인 UI 구독 레지스트리를 제공하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000097",
-        "line": 190,
+        "line": 186,
         "text": "스코프를 따르는 LVUI 어댑터가 의존 바인딩을 관리하고 쿼리를 수신 측에 전달해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000105",
-        "line": 200,
+        "line": 196,
         "text": "값은 이미 바뀌었으므로 알림 실패만을 이유로 편집을 반복하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000109",
-        "line": 208,
+        "line": 204,
         "text": "늦은 결과가 제거된 뷰나 새 활성화를 갱신해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000121",
-        "line": 233,
+        "line": 229,
         "text": "- 알림 실패는 확정된 증가를 반복하지 않는다.",
         "basis": "lexical_match",
         "context": "list"
@@ -1369,64 +1368,17 @@
         "label": "선언 어노테이션",
         "target": "DeclarationAnnotations.md",
         "kind": "relative",
-        "line": 183
+        "line": 179
       },
       {
         "block_id": "b000107",
         "label": "스코프 종료 경계",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
-        "line": 205
+        "line": 201
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000071",
-        "columns": [
-          "작업",
-          "기존 목적"
-        ],
-        "rows": [
-          [
-            "`PropertyRead`",
-            "요청한 값을 선택해 반환한다."
-          ],
-          [
-            "`PropertyWrite`",
-            "수신 측 타입·접근·검증 규칙에 따라 값을 쓴다."
-          ],
-          [
-            "`PropertyInvoke`",
-            "명시적 인자 값으로 메서드를 호출하고 결과를 반환한다."
-          ],
-          [
-            "`PropertyChange`",
-            "변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다."
-          ]
-        ]
-      },
-      {
-        "block_id": "b000081",
-        "columns": [
-          "Core 작업",
-          "ViewModel에 관련된 계약"
-        ],
-        "rows": [
-          [
-            "`send(request)`",
-            "호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다."
-          ],
-          [
-            "바인딩된 포트의 `post(request, completion)`",
-            "설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다."
-          ],
-          [
-            "`post(executor, request, completion)`",
-            "바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeProgress.md",
-    "sha256": "cf8a70873df74d62daf3c9c5be1c97133aa91b550c4f2a4a9f38ca71c420ca23",
-    "bytes": 8214,
-    "line_count": 111,
+    "sha256": "db6145c9ada3fa7c17215bf62e6dd354c48ead151d72c9d18ce4d23960d40778",
+    "bytes": 8262,
+    "line_count": 109,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -217,95 +217,97 @@
     },
     {
       "id": "b000027",
-      "kind": "table",
       "start_line": 75,
-      "end_line": 82,
-      "raw": "| 영역 | 입력 |\n|---|---|\n| 직접 값 | minimumValue, maximumValue 또는 endValue, startValue, currentValue |\n| 상태 제공자 | stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey |\n| 크기·모양 | size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius |\n| 색상 | trackColor, fillColor |\n| 모션 | motionEnabled, motion |\n| 표시값 직접 제어 | displayedStart, displayedProgress |\n",
-      "columns": [
-        "영역",
-        "입력"
-      ],
-      "rows": [
-        [
-          "직접 값",
-          "minimumValue, maximumValue 또는 endValue, startValue, currentValue"
-        ],
-        [
-          "상태 제공자",
-          "stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey"
-        ],
-        [
-          "크기·모양",
-          "size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius"
-        ],
-        [
-          "색상",
-          "trackColor, fillColor"
-        ],
-        [
-          "모션",
-          "motionEnabled, motion"
-        ],
-        [
-          "표시값 직접 제어",
-          "displayedStart, displayedProgress"
-        ]
+      "end_line": 80,
+      "raw": "- 영역: 직접 값; 입력: minimumValue, maximumValue 또는 endValue, startValue, currentValue\n- 영역: 상태 제공자; 입력: stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey\n- 영역: 크기·모양; 입력: size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius\n- 영역: 색상; 입력: trackColor, fillColor\n- 영역: 모션; 입력: motionEnabled, motion\n- 영역: 표시값 직접 제어; 입력: displayedStart, displayedProgress\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "영역: 직접 값; 입력: minimumValue, maximumValue 또는 endValue, startValue, currentValue",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 상태 제공자; 입력: stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 크기·모양; 입력: size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 색상; 입력: trackColor, fillColor",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 모션; 입력: motionEnabled, motion",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 표시값 직접 제어; 입력: displayedStart, displayedProgress",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 83,
-      "end_line": 83,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "paragraph",
-      "start_line": 84,
-      "end_line": 88,
+      "start_line": 82,
+      "end_line": 86,
       "raw": "`size`는 `.large`/`.regular` 또는 정수 0/1이며 `shapeStyle`은\n`.shapeRoundRect`/`.shapeCylinder` 또는 정수 0/1이다. C++ 제공자는 대응하는 native enum\n또는 정수를 반환한다. `motion`은 공유 native Motion이다. maximumValue와 endValue를\n동시에 지정하면 소스 위치가 포함된 진단이다. 읽기 전용 progress 같은 계산값을 입력으로\n허용하지 않는다.\n"
     },
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 89,
-      "end_line": 89,
+      "start_line": 87,
+      "end_line": 87,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 90,
-      "end_line": 93,
+      "start_line": 88,
+      "end_line": 91,
       "raw": "모든 입력은 상수 또는 C++ 반응형 식을 받는다. 동적인 여러 입력은 하나의 native 옵션\n후보로 계산하여 한 번에 적용한다. 따라서 minimum·maximum·상태 키·제공자가 함께\n바뀌어도 중간 구성이 모델 수신자에게 노출되지 않는다. 값과 스타일 변경은 같은 위젯·모델을\n유지한다. 실패한 후보의 오류와 모델 반영 이후의 수신자·프레임 접수 오류는 구분한다.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 94,
-      "end_line": 94,
+      "start_line": 92,
+      "end_line": 92,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 95,
-      "end_line": 98,
+      "start_line": 93,
+      "end_line": 96,
       "raw": "스코프 수명, 기본 크기·색상·OutBack 모션과 남은 원본 계약은\n[LVRS ProgressBar](../../LVRS/docs/native/ProgressBar.md)를 따른다.\n위젯 ID로 읽기 전용 상태를 참조하는 일반 언어 계약과 전체 Item 상속 API를 완료했다고\n간주하지 않는다.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 99,
-      "end_line": 99,
+      "start_line": 97,
+      "end_line": 97,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "heading",
-      "start_line": 100,
-      "end_line": 100,
+      "start_line": 98,
+      "end_line": 98,
       "raw": "## 검증\n",
       "level": 2,
       "title": "검증"
@@ -313,29 +315,29 @@
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 101,
-      "end_line": 101,
+      "start_line": 99,
+      "end_line": 99,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 102,
-      "end_line": 105,
+      "start_line": 100,
+      "end_line": 103,
       "raw": "`tests/progress.cpp`는 기본 경로·원본 입력·반응형 생성·scoped import·진단을 검사한다.\n`NativeProgress`, `NativeProgressScoped`, `NativeProgressForwarded`는 실제 생성 C++의\n컴파일·링크 대상이다. LVRS 실행 검사는 전체 목표의 최종 일괄 단계에 수행한다.\nDreamscapes는 관측 기준으로 유지하며 제품 소스를 변환하거나 설치하지 않는다.\n"
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
+      "start_line": 104,
+      "end_line": 104,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 111,
+      "start_line": 105,
+      "end_line": 109,
       "raw": "2026-10-26에는 일반·ASan/UBSan 구성에서 LVUI 컴파일러 검사 34개씩을 통과했다.\n기존 호출을 기대한 회귀 검사 한 개는 새 네이티브 컨트롤 호출을 검증하도록 갱신한 뒤\n다시 통과했다. LVRS 팩터리 62개를 각 구성에서 생성·컴파일했고 생성 코드는 동일하다.\n이 기능을 포함한 재배치 소비자의 컴파일·링크 및 아직 실행하지 않은 LVRS 검사 38개의\n등록은 `SDK/LVRS/build/lvui-completion/progress-bar/verification-20261026.json`에 기록한다.\n"
     }
   ],
@@ -378,7 +380,7 @@
       "level": 2,
       "title": "검증",
       "anchor": "검증",
-      "start_line": 100
+      "start_line": 98
     }
   ],
   "indexes": {
@@ -392,21 +394,21 @@
       },
       {
         "block_id": "b000029",
-        "line": 88,
+        "line": 86,
         "text": "허용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000033",
-        "line": 98,
+        "line": 96,
         "text": "간주하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000037",
-        "line": 105,
+        "line": 103,
         "text": "Dreamscapes는 관측 기준으로 유지하며 제품 소스를 변환하거나 설치하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -454,44 +456,10 @@
         "label": "LVRS ProgressBar",
         "target": "../../LVRS/docs/native/ProgressBar.md",
         "kind": "relative",
-        "line": 96
+        "line": 94
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000027",
-        "columns": [
-          "영역",
-          "입력"
-        ],
-        "rows": [
-          [
-            "직접 값",
-            "minimumValue, maximumValue 또는 endValue, startValue, currentValue"
-          ],
-          [
-            "상태 제공자",
-            "stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey"
-          ],
-          [
-            "크기·모양",
-            "size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius"
-          ],
-          [
-            "색상",
-            "trackColor, fillColor"
-          ],
-          [
-            "모션",
-            "motionEnabled, motion"
-          ],
-          [
-            "표시값 직접 제어",
-            "displayedStart, displayedProgress"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

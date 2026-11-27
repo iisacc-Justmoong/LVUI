@@ -171,7 +171,7 @@ ApplicationWindow {
 변경은 동일한 모델의 명시적 API를 통해 전달된다. 임의 C++ 대입을 자동으로 관찰하거나 모델
 멤버의 포인터 재대입을 자동 연결하는 기능은 아직 없다. 명시적 `set_color_model`로 연결을
 교체할 수 있다. 이것은 일반 반응형 언어 계약의 완료 선언이 아니다. 여섯 표면 예제는
-LVRS의 `examples/NativeColorGallery`이다.
+LVRS의 `Examples/NativeColorGallery`이다.
 
 ## 합성 ColorPicker
 
@@ -190,7 +190,7 @@ HEX·알파·최근 색상·액션을 함께 만드는 네이티브 C++ 호출�
 옵션은 생성 시 상수이며 일반 반응형 재연결은 아직 없다. C++의 `lvrs::ColorPicker` 핸들은
 타입·폭·숨김·활성·최근 색상을 같은 마운트에서 바꿀 수 있다. 합성 모델 포인터의 변경은
 재마운트한다. 원본 전체 시각·상속 계약의 완료를 뜻하지 않는다. 전용 설치 예제는
-`examples/NativePickerGallery`이며 상세 계약은 LVRS의 `docs/native/ColorPicker.md`이다.
+`Examples/NativePickerGallery`이며 상세 계약은 LVRS의 `docs/native/ColorPicker.md`이다.
 
 ## 일반 콘텐츠 Popover
 
@@ -204,7 +204,7 @@ HEX·알파·최근 색상·액션을 함께 만드는 네이티브 C++ 호출�
 해석하며 바깥 백엔드는 기존 스코프를 빌린다. 부모 백엔드의 재생성은 없다. 호출식 대신 메서드
 참조를 쓰는 규칙도 같다. 초기 개방을 요구하는 중첩 생성 함수와 범위 간 target 참조는 진단한다.
 전체 지원 입력과 남은 차이는 LVRS의 `docs/native/Modal.md`에 기록한다.
-예제는 LVRS의 `examples/NativeActivationGallery`, 상세 계약은
+예제는 LVRS의 `Examples/NativeActivationGallery`, 상세 계약은
 `docs/native/ActivationContent.md`이다.
 
 `ColorPickerButton`도 `FRAMEWORK LVRS`에서 자체 버튼 호출로 생성한다. `currentColor`의

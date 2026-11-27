@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeInputField.md",
-    "sha256": "5675ab84d710eec9dc091fdfa24e36ae49c40d7a178876e02ce2cad4ab185941",
-    "bytes": 26793,
-    "line_count": 305,
+    "sha256": "b598c77e0dd3eea6c4ebcc0ced9ae5e4e5bc3254f2f955fb3ebb60ba7cb58028",
+    "bytes": 27112,
+    "line_count": 309,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -632,6 +632,20 @@
       "start_line": 305,
       "end_line": 305,
       "raw": "LVUI는 선언을 네이티브 입력 필드 설정으로 변환한다. 글꼴 폴백, 한글 자소 조합, 픽셀 배치와 화면 배율에 맞춘 래스터화는 iiGUI가 담당한다. 화면 배율을 설정하는 LVUI 속성은 필요 없다.\n"
+    },
+    {
+      "id": "b000086",
+      "kind": "blank",
+      "start_line": 306,
+      "end_line": 306,
+      "raw": "\n"
+    },
+    {
+      "id": "b000087",
+      "kind": "paragraph",
+      "start_line": 307,
+      "end_line": 309,
+      "raw": "Figma의 `TextField` 이름으로 선언한 텍스트·암호 변형은 크기를 지정하지 않으면\n원본의 206×22 치수에 해당하는 `compact`를 선택한다. 명시적인 `size`는 우선한다.\n독립 `InputField`의 기존 `regular` 기본 크기와 검색 변형의 크기는 그대로 유지된다.\n"
     }
   ],
   "outline": [
@@ -919,7 +933,7 @@
     "tables": []
   },
   "provenance": {
-    "generator": "manual-lossless-update",
+    "generator": "workspace-docs",
     "version": "1.0.0",
     "profile": "lossless-blocks-v1",
     "derived": true

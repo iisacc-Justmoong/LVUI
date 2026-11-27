@@ -36,12 +36,10 @@ Window {
 작업을 정리한다. 별도 활성화는 별도 소유 수명이다. 구체적인 생성·공유·차용은
 [import 계약](TypeImports.md)과 [종료 계약](InvocationLifecycle.md)을 따른다.
 
-| SwiftUI의 관리 개념 | LVUI와 C++에서의 대응 | 현재 범위 |
-|---|---|---|
-| `@StateObject` | 활성 뷰의 `import name Type`이 C++ 객체를 소유 | 활성화별 생성, 재그리기 시 유지 |
-| `@ObservedObject` | 상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용 | 전달과 수명을 명시해야 함 |
-| `@State` | 화면에만 속하는 임시 표시 상태를 해당 활성화에 둠 | 앱·도메인 상태의 대안이 아님 |
-| `@EnvironmentObject` | 공유 객체를 상위에서 자식에 명시적으로 전달 | 범용 계층 환경 주입은 아직 제공하지 않음 |
+- SwiftUI의 관리 개념: `@StateObject`; LVUI와 C++에서의 대응: 활성 뷰의 `import name Type`이 C++ 객체를 소유; 현재 범위: 활성화별 생성, 재그리기 시 유지
+- SwiftUI의 관리 개념: `@ObservedObject`; LVUI와 C++에서의 대응: 상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용; 현재 범위: 전달과 수명을 명시해야 함
+- SwiftUI의 관리 개념: `@State`; LVUI와 C++에서의 대응: 화면에만 속하는 임시 표시 상태를 해당 활성화에 둠; 현재 범위: 앱·도메인 상태의 대안이 아님
+- SwiftUI의 관리 개념: `@EnvironmentObject`; LVUI와 C++에서의 대응: 공유 객체를 상위에서 자식에 명시적으로 전달; 현재 범위: 범용 계층 환경 주입은 아직 제공하지 않음
 
 이 표는 소유·관측 관계를 비교하는 것이며 Swift의 속성 래퍼 문법이나 모든
 SwiftUI의 동작을 그대로 제공한다는 의미는 아니다.

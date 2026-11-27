@@ -22,25 +22,21 @@ LVUI 네이티브 바인딩 + iiGUI 호스트 + iiSDKCore 런타임
 [문서 색인](README.md)을 확인한다. 기본 경로의 대상은 LVUI 자체 컨트롤이고,
 `FRAMEWORK LVRS`는 더 이상 지원하지 않으며 명시적으로 선택하면 오류를 반환한다.
 
-| 범위 | 사용 가능한 주요 접점 | 먼저 확인할 계약 |
-|---|---|---|
-| 화면 구성 | 창, 스택, 레이블, 조건부 View, 타입 입력과 슬롯, 키 기반 반복 | [배치](NativeLayout.md), [재사용 View](Components.md), [반복](Repetition.md) |
-| 입력·기본 제어 | 버튼, 입력 필드, 스위치, 체크·라디오, 슬라이더, 스테퍼 | [버튼](NativeButton.md), [입력](NativeInputField.md), [스위치](NativeToggleSwitch.md) |
-| 데이터 화면 | 가상 표, 일반 목록, 계층 목록·패널, 코드 편집기 | [표](NativeOwnedTable.md), [목록](NativeOwnedListView.md), [계층](NativeOwnedHierarchyList.md), [코드 편집기](NativeCodeEditor.md) |
-| 오버레이·탐색 | 메뉴, 팝오버, 모달·시트, 경고, 툴팁, 페이지 라우터 | [메뉴](NativeMenu.md), [모달](NativeModal.md), [페이지 라우터](NativePageRouter.md) |
-| 시각·모델 | 스타일 값, 진행률·모션, 이미지, 색상 선택과 공급자 | [스타일](StyleTokens.md), [진행률](NativeProgress.md), [이미지](NativeImage.md), [색상 선택](ColorSelection.md) |
+- 범위: 화면 구성; 사용 가능한 주요 접점: 창, 스택, 레이블, 조건부 View, 타입 입력과 슬롯, 키 기반 반복; 먼저 확인할 계약: [배치](NativeLayout.md), [재사용 View](Components.md), [반복](Repetition.md)
+- 범위: 입력·기본 제어; 사용 가능한 주요 접점: 버튼, 입력 필드, 스위치, 체크·라디오, 슬라이더, 스테퍼; 먼저 확인할 계약: [버튼](NativeButton.md), [입력](NativeInputField.md), [스위치](NativeToggleSwitch.md)
+- 범위: 데이터 화면; 사용 가능한 주요 접점: 가상 표, 일반 목록, 계층 목록·패널, 코드 편집기; 먼저 확인할 계약: [표](NativeOwnedTable.md), [목록](NativeOwnedListView.md), [계층](NativeOwnedHierarchyList.md), [코드 편집기](NativeCodeEditor.md)
+- 범위: 오버레이·탐색; 사용 가능한 주요 접점: 메뉴, 팝오버, 모달·시트, 경고, 툴팁, 페이지 라우터; 먼저 확인할 계약: [메뉴](NativeMenu.md), [모달](NativeModal.md), [페이지 라우터](NativePageRouter.md)
+- 범위: 시각·모델; 사용 가능한 주요 접점: 스타일 값, 진행률·모션, 이미지, 색상 선택과 공급자; 먼저 확인할 계약: [스타일](StyleTokens.md), [진행률](NativeProgress.md), [이미지](NativeImage.md), [색상 선택](ColorSelection.md)
 
 각 계약 문서의 미완료 입력과 플랫폼 제한을 개별적으로 확인한다. 특히 동적 메뉴 자식,
 표의 셀별 접근성과 실제 장치별 그리기 등은 위 목록이 완성을 뜻하지 않는다.
 
 ## 예제 둘러보기
 
-| 앱 | 파일 | 익히는 내용 |
-|---|---|---|
-| Hello | [Hello.lvui](../example/GettingStarted/App/Hello.lvui) | 창, 수직 배치, 텍스트 역할, Metric·Color, 진행 표시 |
-| Scenes | [Scenes.lvui](../example/GettingStarted/App/Scenes.lvui) | 독립 Scene 상태, 장면 열기·닫기와 네이티브 창 수명 |
-| ReadingList | [ReadingList.lvui](../example/GettingStarted/App/ReadingList.lvui), [백엔드](../example/GettingStarted/App/ReadingListBackend.h) | 텍스트 입력, Observable, 콜백, 재사용 View, 조건 분기와 키 기반 반복 |
-| Inventory | [Inventory.lvui](../example/GettingStarted/App/Inventory.lvui), [백엔드](../example/GettingStarted/App/InventoryBackend.h) | 표 모델·편집 경계, 선택, 정렬, 클립보드, 변경 리비전 |
+- 앱: Hello; 파일: [Hello.lvui](../example/GettingStarted/App/Hello.lvui); 익히는 내용: 창, 수직 배치, 텍스트 역할, Metric·Color, 진행 표시
+- 앱: Scenes; 파일: [Scenes.lvui](../example/GettingStarted/App/Scenes.lvui); 익히는 내용: 독립 Scene 상태, 장면 열기·닫기와 네이티브 창 수명
+- 앱: ReadingList; 파일: [ReadingList.lvui](../example/GettingStarted/App/ReadingList.lvui), [백엔드](../example/GettingStarted/App/ReadingListBackend.h); 익히는 내용: 텍스트 입력, Observable, 콜백, 재사용 View, 조건 분기와 키 기반 반복
+- 앱: Inventory; 파일: [Inventory.lvui](../example/GettingStarted/App/Inventory.lvui), [백엔드](../example/GettingStarted/App/InventoryBackend.h); 익히는 내용: 표 모델·편집 경계, 선택, 정렬, 클립보드, 변경 리비전
 
 Hello는 `Application` 루트에서 앱 진입을 생성한다. ReadingList와 Inventory는
 기존 [애플리케이션 연결 코드](../example/GettingStarted/App/Application.cpp)를

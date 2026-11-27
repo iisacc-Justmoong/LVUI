@@ -29,13 +29,11 @@ OS 위젯은 컴파일한 함수가 실행될 때 생성된다.
 
 ## 현재 지원하는 입력
 
-| 컴포넌트 | 입력 | Cocoa 대상 |
-|---|---|---|
-| `ApplicationWindow` | `title`, `width`, `height`, `minimumWidth`, `minimumHeight` | iiGUI의 `NSWindow` |
-| `VStack` | `id`, `spacing`, `padding` | 세로 `NSStackView` |
-| `HStack` | `id`, `spacing`, `padding` | 가로 `NSStackView` |
-| `Label` | `id`, `text`, `fontSize`, `selectable` | `NSTextField` |
-| `PushButton` | `id`, `text`, `enabled`, `onClick` 또는 첫 번째 위치 인자 | `NSButton` |
+- 컴포넌트: `ApplicationWindow`; 입력: `title`, `width`, `height`, `minimumWidth`, `minimumHeight`; Cocoa 대상: iiGUI의 `NSWindow`
+- 컴포넌트: `VStack`; 입력: `id`, `spacing`, `padding`; Cocoa 대상: 세로 `NSStackView`
+- 컴포넌트: `HStack`; 입력: `id`, `spacing`, `padding`; Cocoa 대상: 가로 `NSStackView`
+- 컴포넌트: `Label`; 입력: `id`, `text`, `fontSize`, `selectable`; Cocoa 대상: `NSTextField`
+- 컴포넌트: `PushButton`; 입력: `id`, `text`, `enabled`, `onClick` 또는 첫 번째 위치 인자; Cocoa 대상: `NSButton`
 
 `ApplicationWindow`는 루트이며 자식 한 개를 받는다. 레이아웃은 스택의 `{}`로 합성한다.
 라벨·버튼은 자식 뷰를 받지 않는다. `id`는 마운트 내에서 유일하며 생략하면 컴파일러가
@@ -48,7 +46,7 @@ OS 위젯은 컴파일한 함수가 실행될 때 생성된다.
 해석한 문자열은 UTF-8 바이트를 보존하는 C++ 리터럴로 변환하고 숫자는 정규화한다.
 중복 ID·알 수 없는 입력·입력 타입·구현하지 않은 컴포넌트는 소스 행·열을 가진 오류이다.
 
-전체 시각 예약어 107개를 인식하는 것과 위 표의 네이티브 매핑은 다른 범위이다.
+전체 시각 예약어 107개를 인식하는 것과 위 목록의 네이티브 매핑은 다른 범위이다.
 나머지 컴포넌트, `var`, C++ 속성의 자동 반응형 바인딩, 지역 선언·import,
 커스텀 컴포넌트·어노테이션·GPU 표면 생성은 현재 AOT 컴파일에서 거부한다.
 지원하지 않는 반응형 값을 고정 문자열로 바꾸어 의미를 축소하지 않는다.

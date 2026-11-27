@@ -519,7 +519,7 @@ struct Parser final {
             }
             newlines();
         }
-        if (!binding_declaration()) error("An annotation must precede a const or var declaration");
+        if (!binding_declaration()) error("An annotation must precede a const, let or var declaration");
         bool mutableValue = word("var"); ++cursor;
         if (mutableValue && annotation == BindingAnnotation::static_value)
             error("@Static requires an immutable const declaration");

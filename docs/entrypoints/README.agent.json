@@ -10,7 +10,7 @@
   },
   "source": {
     "path": "README.md",
-    "sha256": "392980bb430b6da121001724ae8e5ec6eb9d1f155fb9b301a458374141710133",
+    "sha256": "14db757b65b924bd9332508c0b8003ef0ac5a52c65f85aca79d261dffc3db4a2",
     "bytes": 36167,
     "line_count": 539,
     "encoding": "utf-8",
@@ -447,9 +447,9 @@
       "kind": "fenced_code",
       "start_line": 437,
       "end_line": 446,
-      "raw": "```sh\ncmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$HOME/.local/SDK/LVUI\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n```\n",
+      "raw": "```sh\ncmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$HOME/.local/SDK/LVUI\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/Examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n```\n",
       "language": "sh",
-      "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$HOME/.local/SDK/LVUI\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n",
+      "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$HOME/.local/SDK/LVUI\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/Examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n",
       "closed": true
     },
     {
@@ -955,7 +955,7 @@
       {
         "block_id": "b000059",
         "language": "sh",
-        "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$HOME/.local/SDK/LVUI\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n"
+        "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$HOME/.local/SDK/LVUI\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/Examples/ReservedComponents.lvui\n./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui\ncmake --install build\n"
       }
     ],
     "links": [

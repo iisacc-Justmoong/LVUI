@@ -33,18 +33,16 @@ Window {
 
 자동 모드인 `itemHeight` 반복에서 다음 입력을 사용할 수 있다.
 
-| 입력 | 의미 |
-|---|---|
-| `navigation` | 안정적인 스코프의 C++ 탐색 객체 |
-| `selectionMode` | `.none`, `.single`, `.multiple`; 기본 `.single` |
-| `selectOnMove` | 일반 탐색 키로 이동할 때 선택도 이동; 기본 `true` |
-| `selectOnClick` | 행 배경 클릭 시 선택도 변경; 기본 `true` |
-| `activateOnClick` | 행 배경의 단일 클릭을 활성화 명령으로 전달; 기본 `false` |
-| `activateOnDoubleClick` | 같은 행의 더블클릭을 활성화 명령으로 전달; 기본 `false` |
-| `navigationFilter` | 항목과 원래 인덱스를 사용하는 순수 C++ 탐색 가능 조건; 기본 전체 |
-| `onCurrentChanged` | 현재 키 변경 알림 |
-| `onSelectionChanged` | 선택한 키 목록 변경 알림 |
-| `onActivate` | 현재 항목 활성화 명령 |
+- 입력: `navigation`; 의미: 안정적인 스코프의 C++ 탐색 객체
+- 입력: `selectionMode`; 의미: `.none`, `.single`, `.multiple`; 기본 `.single`
+- 입력: `selectOnMove`; 의미: 일반 탐색 키로 이동할 때 선택도 이동; 기본 `true`
+- 입력: `selectOnClick`; 의미: 행 배경 클릭 시 선택도 변경; 기본 `true`
+- 입력: `activateOnClick`; 의미: 행 배경의 단일 클릭을 활성화 명령으로 전달; 기본 `false`
+- 입력: `activateOnDoubleClick`; 의미: 같은 행의 더블클릭을 활성화 명령으로 전달; 기본 `false`
+- 입력: `navigationFilter`; 의미: 항목과 원래 인덱스를 사용하는 순수 C++ 탐색 가능 조건; 기본 전체
+- 입력: `onCurrentChanged`; 의미: 현재 키 변경 알림
+- 입력: `onSelectionChanged`; 의미: 선택한 키 목록 변경 알림
+- 입력: `onActivate`; 의미: 현재 항목 활성화 명령
 
 객체는 `import`로 소유하거나 상위 스코프에서 안정적으로 차용한다. 교체될 수 있는 행
 데이터 내부의 탐색 객체를 고정 포인터로 보관하지 않도록 컴파일러가 그러한 입력을 거부한다.
@@ -144,14 +142,12 @@ C++ 타입을 제공한다. LVUI의 계약은 iiSDKCore 외 SDK에 직접 의존
 
 macOS arm64의 이 변경에서 확인한 결과이다. 각 검사는 겹치므로 수량을 합산하지 않는다.
 
-| 범위 | 결과 |
-|---|---|
-| LVUI 전체 Release CTest | 137/137 통과 |
-| 관련 언어·네이티브 런타임 ASan·UBSan | 60/60 통과 |
-| iiGUI 창 없는 회귀·생성 C++ 통합 | 45/45 통과 |
-| iiGUI 구현·생성 C++ ASan·UBSan | 동일 45/45 통과 |
-| 설치·경로 이동 독립 소비자 | 코어 실행·컴파일러 소비자 2/2 통과, 탐색 헤더·구문 포함 |
-| 실제 LVRS 생성 팩토리 | 일반·공유·고정 가상화·가변 높이·탐색의 오브젝트 컴파일 통과, 실행하지 않음 |
+- 범위: LVUI 전체 Release CTest; 결과: 137/137 통과
+- 범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 60/60 통과
+- 범위: iiGUI 창 없는 회귀·생성 C++ 통합; 결과: 45/45 통과
+- 범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 45/45 통과
+- 범위: 설치·경로 이동 독립 소비자; 결과: 코어 실행·컴파일러 소비자 2/2 통과, 탐색 헤더·구문 포함
+- 범위: 실제 LVRS 생성 팩토리; 결과: 일반·공유·고정 가상화·가변 높이·탐색의 오브젝트 컴파일 통과, 실행하지 않음
 
 1,000개 중 끝 항목으로 이동하여 필요한 행만 활성화하는지, 비활성 항목을 건너뛰고
 범위·추가 선택을 유지하는지 검사했다. 초기 C++ 포커스·필터로 숨긴 선택·화면 밖 재정렬·

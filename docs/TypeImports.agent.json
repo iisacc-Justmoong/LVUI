@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/TypeImports.md",
-    "sha256": "245814082ce7585f7974bb1c492f1c6c315a01d00ac60c502a0a7552d5562fc9",
-    "bytes": 9335,
-    "line_count": 174,
+    "sha256": "4a679e080a5a34709db3a76aa3d0df814861040bc19ff6d3aaa30ec8f435abd8",
+    "bytes": 9591,
+    "line_count": 172,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -497,103 +497,107 @@
     },
     {
       "id": "b000065",
-      "kind": "table",
       "start_line": 110,
-      "end_line": 119,
-      "raw": "| 작업 | 인스턴스에 미치는 영향 |\n|---|---|\n| 소유 스코프 활성화 | 가져온 인스턴스를 생성한다. |\n| 연결된 버튼 메서드 호출 | 기존 인스턴스를 사용한다. |\n| 속성 재평가 또는 다시 그리기 | 기존 인스턴스를 유지한다. |\n| 가져온 이름을 자식에게 전달 | 기존 인스턴스를 빌린다. |\n| 차용하는 자식 제거 | 해당 자식의 사용을 제거한다. |\n| 스코프를 유지한 채 뷰 숨기기 | 사용이 끝났다고 추론하지 않는다. |\n| 소유 스코프 제거 | 종료를 시작하고 소유 백엔드의 사용을 종료한다. |\n| 제거 후 새 스코프 활성화 | 해당 활성화를 위한 새 인스턴스를 생성한다. |\n",
-      "columns": [
-        "작업",
-        "인스턴스에 미치는 영향"
-      ],
-      "rows": [
-        [
-          "소유 스코프 활성화",
-          "가져온 인스턴스를 생성한다."
-        ],
-        [
-          "연결된 버튼 메서드 호출",
-          "기존 인스턴스를 사용한다."
-        ],
-        [
-          "속성 재평가 또는 다시 그리기",
-          "기존 인스턴스를 유지한다."
-        ],
-        [
-          "가져온 이름을 자식에게 전달",
-          "기존 인스턴스를 빌린다."
-        ],
-        [
-          "차용하는 자식 제거",
-          "해당 자식의 사용을 제거한다."
-        ],
-        [
-          "스코프를 유지한 채 뷰 숨기기",
-          "사용이 끝났다고 추론하지 않는다."
-        ],
-        [
-          "소유 스코프 제거",
-          "종료를 시작하고 소유 백엔드의 사용을 종료한다."
-        ],
-        [
-          "제거 후 새 스코프 활성화",
-          "해당 활성화를 위한 새 인스턴스를 생성한다."
-        ]
+      "end_line": 117,
+      "raw": "- 작업: 소유 스코프 활성화; 인스턴스에 미치는 영향: 가져온 인스턴스를 생성한다.\n- 작업: 연결된 버튼 메서드 호출; 인스턴스에 미치는 영향: 기존 인스턴스를 사용한다.\n- 작업: 속성 재평가 또는 다시 그리기; 인스턴스에 미치는 영향: 기존 인스턴스를 유지한다.\n- 작업: 가져온 이름을 자식에게 전달; 인스턴스에 미치는 영향: 기존 인스턴스를 빌린다.\n- 작업: 차용하는 자식 제거; 인스턴스에 미치는 영향: 해당 자식의 사용을 제거한다.\n- 작업: 스코프를 유지한 채 뷰 숨기기; 인스턴스에 미치는 영향: 사용이 끝났다고 추론하지 않는다.\n- 작업: 소유 스코프 제거; 인스턴스에 미치는 영향: 종료를 시작하고 소유 백엔드의 사용을 종료한다.\n- 작업: 제거 후 새 스코프 활성화; 인스턴스에 미치는 영향: 해당 활성화를 위한 새 인스턴스를 생성한다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "작업: 소유 스코프 활성화; 인스턴스에 미치는 영향: 가져온 인스턴스를 생성한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 연결된 버튼 메서드 호출; 인스턴스에 미치는 영향: 기존 인스턴스를 사용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 속성 재평가 또는 다시 그리기; 인스턴스에 미치는 영향: 기존 인스턴스를 유지한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 가져온 이름을 자식에게 전달; 인스턴스에 미치는 영향: 기존 인스턴스를 빌린다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 차용하는 자식 제거; 인스턴스에 미치는 영향: 해당 자식의 사용을 제거한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 스코프를 유지한 채 뷰 숨기기; 인스턴스에 미치는 영향: 사용이 끝났다고 추론하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 소유 스코프 제거; 인스턴스에 미치는 영향: 종료를 시작하고 소유 백엔드의 사용을 종료한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "작업: 제거 후 새 스코프 활성화; 인스턴스에 미치는 영향: 해당 활성화를 위한 새 인스턴스를 생성한다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000066",
       "kind": "blank",
-      "start_line": 120,
-      "end_line": 120,
+      "start_line": 118,
+      "end_line": 118,
       "raw": "\n"
     },
     {
       "id": "b000067",
       "kind": "paragraph",
-      "start_line": 121,
-      "end_line": 122,
+      "start_line": 119,
+      "end_line": 120,
       "raw": "참조 가능한 살아 있는 import 바인딩은 미래 사용 경로이다.\n마지막 텍스트상 멤버 접근이나 메서드 한 번의 반환만으로 객체가 더 이상 사용되지 않는다고 확정할 수 없다.\n"
     },
     {
       "id": "b000068",
       "kind": "blank",
-      "start_line": 123,
-      "end_line": 123,
+      "start_line": 121,
+      "end_line": 121,
       "raw": "\n"
     },
     {
       "id": "b000069",
       "kind": "paragraph",
-      "start_line": 124,
-      "end_line": 125,
+      "start_line": 122,
+      "end_line": 123,
       "raw": "해제 조건과 종료 순서는 [InvocationLifecycle.md](InvocationLifecycle.md)에 규정한다.\nimport 활성화는 선언된 소비자들을 연결하기도 전에 즉시 객체를 버리는 것을 허용하지 않는다.\n"
     },
     {
       "id": "b000070",
+      "kind": "blank",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "\n"
+    },
+    {
+      "id": "b000071",
+      "kind": "html",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "<a id=\"public-c-interface\"></a>\n"
+    },
+    {
+      "id": "b000072",
       "kind": "blank",
       "start_line": 126,
       "end_line": 126,
       "raw": "\n"
     },
     {
-      "id": "b000071",
-      "kind": "html",
-      "start_line": 127,
-      "end_line": 127,
-      "raw": "<a id=\"public-c-interface\"></a>\n"
-    },
-    {
-      "id": "b000072",
-      "kind": "blank",
-      "start_line": 128,
-      "end_line": 128,
-      "raw": "\n"
-    },
-    {
       "id": "b000073",
       "kind": "heading",
-      "start_line": 129,
-      "end_line": 129,
+      "start_line": 127,
+      "end_line": 127,
       "raw": "## 공개 C++ 인터페이스\n",
       "level": 2,
       "title": "공개 C++ 인터페이스"
@@ -601,29 +605,29 @@
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "paragraph",
-      "start_line": 131,
-      "end_line": 132,
+      "start_line": 129,
+      "end_line": 130,
       "raw": "import는 지역 이름을 통해 객체의 공개 멤버를 사용할 수 있게 한다.\n이 접근에 클래스·멤버 수준의 `@export` 표식은 필요하지 않다.\n"
     },
     {
       "id": "b000076",
       "kind": "blank",
-      "start_line": 133,
-      "end_line": 133,
+      "start_line": 131,
+      "end_line": 131,
       "raw": "\n"
     },
     {
       "id": "b000077",
       "kind": "list",
-      "start_line": 134,
-      "end_line": 137,
+      "start_line": 132,
+      "end_line": 135,
       "raw": "- 공개 데이터 멤버는 읽을 수 있으며, C++에서 변경을 허용하면 쓸 수 있다.\n- 공개 메서드는 시그니처에 따라 참조하고 호출할 수 있다.\n- private·protected 멤버는 import를 통해 접근할 수 없다.\n- constness, 일반 C++ 멤버 접근성, 호출 호환성을 유지하며 import는 특권 접근을 부여하지 않는다.\n",
       "items": [
         {
@@ -651,99 +655,99 @@
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 138,
-      "end_line": 138,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "paragraph",
-      "start_line": 139,
-      "end_line": 143,
+      "start_line": 137,
+      "end_line": 141,
       "raw": "`cpp.method`는 기존의 가져온 수신 객체에 연결된 메서드 참조이다.\n`cpp.method()`는 표현식을 평가할 때 메서드를 명시적으로 호출한다.\n둘 중 어느 표현식을 컴포넌트에 전달하더라도 수신 입력의 타입 계약을 적용한다.\n호출 결과를 지연 호출로 자동 포장하지 않는다.\n[MethodReferences.md](MethodReferences.md)를 참조한다.\n"
     },
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 144,
-      "end_line": 144,
+      "start_line": 142,
+      "end_line": 142,
       "raw": "\n"
     },
     {
       "id": "b000081",
       "kind": "paragraph",
-      "start_line": 145,
-      "end_line": 148,
+      "start_line": 143,
+      "end_line": 146,
       "raw": "공개 멤버 접근과 네이티브 변경 알림은 별개의 구현 책임이다.\n뷰가 읽는 비정적 값은 [기본 반응형 모델](ReactiveState.md)에 따라 원본 변경을 따라야 한다.\n구현은 값마다 관찰을 활성화하도록 요구하지 않고 해당 추적을 제공해야 한다.\n생성·파괴·접근·관찰 기능은 [RuntimeContracts.md](RuntimeContracts.md#public-interface-contract)에 기술한다.\n"
     },
     {
       "id": "b000082",
       "kind": "blank",
-      "start_line": 149,
-      "end_line": 149,
+      "start_line": 147,
+      "end_line": 147,
       "raw": "\n"
     },
     {
       "id": "b000083",
       "kind": "paragraph",
-      "start_line": 150,
-      "end_line": 152,
+      "start_line": 148,
+      "end_line": 150,
       "raw": "VM은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 선택한 값을 송수신할 수 있다.\n쿼리 전송도 같은 인스턴스 소유권·공개 접근 규칙을 유지한다.\n빌린 포트 참조와 대기 요청은 소유 import의 종료 경계를 따라야 한다.\n"
     },
     {
       "id": "b000084",
       "kind": "blank",
-      "start_line": 153,
-      "end_line": 153,
+      "start_line": 151,
+      "end_line": 151,
       "raw": "\n"
     },
     {
       "id": "b000085",
       "kind": "paragraph",
-      "start_line": 154,
-      "end_line": 157,
+      "start_line": 152,
+      "end_line": 155,
       "raw": "ViewModel로 사용하는 가져온 객체는 기본 바인딩을 제공한다.\n뷰는 바인딩 어노테이션이나 래퍼 선언 없이 공개 상태를 직접 사용한다.\n바인딩은 같은 소유 인스턴스를 참조하며 공개 읽기·쓰기 계약을 유지한다.\n[기본 ViewModel 바인딩](ViewModelQueries.md#default-viewmodel-binding)을 참조한다.\n"
     },
     {
       "id": "b000086",
       "kind": "blank",
-      "start_line": 158,
-      "end_line": 158,
+      "start_line": 156,
+      "end_line": 156,
       "raw": "\n"
     },
     {
       "id": "b000087",
       "kind": "paragraph",
-      "start_line": 159,
-      "end_line": 160,
+      "start_line": 157,
+      "end_line": 158,
       "raw": "빌드 시 C++ 선언 탐색과 네이티브 브리지 생성 방식은 구현 결정으로 남아 있다.\n공개 멤버 접근을 허용하는 조건으로 수동 export 어노테이션이나 멤버별 등록을 도입해서는 안 된다.\n"
     },
     {
       "id": "b000088",
+      "kind": "blank",
+      "start_line": 159,
+      "end_line": 159,
+      "raw": "\n"
+    },
+    {
+      "id": "b000089",
+      "kind": "html",
+      "start_line": 160,
+      "end_line": 160,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000090",
       "kind": "blank",
       "start_line": 161,
       "end_line": 161,
       "raw": "\n"
     },
     {
-      "id": "b000089",
-      "kind": "html",
-      "start_line": 162,
-      "end_line": 162,
-      "raw": "<a id=\"open-questions\"></a>\n"
-    },
-    {
-      "id": "b000090",
-      "kind": "blank",
-      "start_line": 163,
-      "end_line": 163,
-      "raw": "\n"
-    },
-    {
       "id": "b000091",
       "kind": "heading",
-      "start_line": 164,
-      "end_line": 164,
+      "start_line": 162,
+      "end_line": 162,
       "raw": "## 미정 사항\n",
       "level": 2,
       "title": "미정 사항"
@@ -751,15 +755,15 @@
     {
       "id": "b000092",
       "kind": "blank",
-      "start_line": 165,
-      "end_line": 165,
+      "start_line": 163,
+      "end_line": 163,
       "raw": "\n"
     },
     {
       "id": "b000093",
       "kind": "list",
-      "start_line": 166,
-      "end_line": 171,
+      "start_line": 164,
+      "end_line": 169,
       "raw": "- 식별자 구문·이름공간·줄 이어쓰기·중복 이름 진단.\n- 생성자 인자·의존성 입력·초기화 순서.\n- 생성 실패와 일부만 활성화된 경우의 롤백.\n- 조건부·동적 반복 뷰의 정확한 활성화 경계.\n- C++ 선언 탐색·브리지 생성·메타데이터 캐시·백엔드 코드 유지.\n- 구체적인 차용 핸들 표현과 만료된 접근의 진단.\n",
       "items": [
         {
@@ -797,15 +801,15 @@
     {
       "id": "b000094",
       "kind": "blank",
-      "start_line": 172,
-      "end_line": 172,
+      "start_line": 170,
+      "end_line": 170,
       "raw": "\n"
     },
     {
       "id": "b000095",
       "kind": "paragraph",
-      "start_line": 173,
-      "end_line": 174,
+      "start_line": 171,
+      "end_line": 172,
       "raw": "별도 import는 프로세스 전역·세션 전역 백엔드 싱글턴을 암묵적으로 선택하지 않는다.\n공유 사용은 기존 인스턴스를 전달하여 표현한다.\n"
     }
   ],
@@ -856,7 +860,7 @@
       "level": 2,
       "title": "공개 C++ 인터페이스",
       "anchor": "공개-c-인터페이스",
-      "start_line": 129
+      "start_line": 127
     },
     {
       "block_id": "b000091",
@@ -864,7 +868,7 @@
       "level": 2,
       "title": "미정 사항",
       "anchor": "미정-사항",
-      "start_line": 164
+      "start_line": 162
     }
   ],
   "indexes": {
@@ -927,49 +931,49 @@
       },
       {
         "block_id": "b000065",
-        "line": 117,
-        "text": "| 스코프를 유지한 채 뷰 숨기기 | 사용이 끝났다고 추론하지 않는다. |",
+        "line": 115,
+        "text": "- 작업: 스코프를 유지한 채 뷰 숨기기; 인스턴스에 미치는 영향: 사용이 끝났다고 추론하지 않는다.",
         "basis": "lexical_match",
-        "context": "table"
+        "context": "list"
       },
       {
         "block_id": "b000069",
-        "line": 125,
+        "line": 123,
         "text": "import 활성화는 선언된 소비자들을 연결하기도 전에 즉시 객체를 버리는 것을 허용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000077",
-        "line": 137,
+        "line": 135,
         "text": "- constness, 일반 C++ 멤버 접근성, 호출 호환성을 유지하며 import는 특권 접근을 부여하지 않는다.",
         "basis": "lexical_match",
         "context": "list"
       },
       {
         "block_id": "b000079",
-        "line": 142,
+        "line": 140,
         "text": "호출 결과를 지연 호출로 자동 포장하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000081",
-        "line": 147,
+        "line": 145,
         "text": "구현은 값마다 관찰을 활성화하도록 요구하지 않고 해당 추적을 제공해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000087",
-        "line": 160,
+        "line": 158,
         "text": "공개 멤버 접근을 허용하는 조건으로 수동 export 어노테이션이나 멤버별 등록을 도입해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000095",
-        "line": 173,
+        "line": 171,
         "text": "별도 import는 프로세스 전역·세션 전역 백엔드 싱글턴을 암묵적으로 선택하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -1003,87 +1007,45 @@
         "label": "InvocationLifecycle.md",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
-        "line": 124
+        "line": 122
       },
       {
         "block_id": "b000079",
         "label": "MethodReferences.md",
         "target": "MethodReferences.md",
         "kind": "relative",
-        "line": 143
+        "line": 141
       },
       {
         "block_id": "b000081",
         "label": "기본 반응형 모델",
         "target": "ReactiveState.md",
         "kind": "relative",
-        "line": 146
+        "line": 144
       },
       {
         "block_id": "b000081",
         "label": "RuntimeContracts.md",
         "target": "RuntimeContracts.md#public-interface-contract",
         "kind": "relative",
-        "line": 148
+        "line": 146
       },
       {
         "block_id": "b000083",
         "label": "Core 객체 쿼리",
         "target": "ViewModelQueries.md",
         "kind": "relative",
-        "line": 150
+        "line": 148
       },
       {
         "block_id": "b000085",
         "label": "기본 ViewModel 바인딩",
         "target": "ViewModelQueries.md#default-viewmodel-binding",
         "kind": "relative",
-        "line": 157
+        "line": 155
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000065",
-        "columns": [
-          "작업",
-          "인스턴스에 미치는 영향"
-        ],
-        "rows": [
-          [
-            "소유 스코프 활성화",
-            "가져온 인스턴스를 생성한다."
-          ],
-          [
-            "연결된 버튼 메서드 호출",
-            "기존 인스턴스를 사용한다."
-          ],
-          [
-            "속성 재평가 또는 다시 그리기",
-            "기존 인스턴스를 유지한다."
-          ],
-          [
-            "가져온 이름을 자식에게 전달",
-            "기존 인스턴스를 빌린다."
-          ],
-          [
-            "차용하는 자식 제거",
-            "해당 자식의 사용을 제거한다."
-          ],
-          [
-            "스코프를 유지한 채 뷰 숨기기",
-            "사용이 끝났다고 추론하지 않는다."
-          ],
-          [
-            "소유 스코프 제거",
-            "종료를 시작하고 소유 백엔드의 사용을 종료한다."
-          ],
-          [
-            "제거 후 새 스코프 활성화",
-            "해당 활성화를 위한 새 인스턴스를 생성한다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

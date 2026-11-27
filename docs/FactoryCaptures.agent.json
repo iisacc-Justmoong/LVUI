@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/FactoryCaptures.md",
-    "sha256": "7b6b64a3463b1b3866e5d526f7f251c7713b8951285bbf38d036537d3505adb9",
-    "bytes": 6744,
-    "line_count": 93,
+    "sha256": "f5722bd1b91277124af3c230eafe35045bfe462cbf21dfab946ac751887b546c",
+    "bytes": 6831,
+    "line_count": 91,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -247,93 +247,98 @@
     },
     {
       "id": "b000031",
-      "kind": "table",
       "start_line": 67,
-      "end_line": 77,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI Release 전체 CTest | 269/269 통과 |\n| 관련 언어·네이티브 ASan·UBSan | 199/199 통과 |\n| iiGUI 창 없는 기존 동작·생성 코드 | 일반·ASan·UBSan 각각 209/209 통과 |\n| 새 포획 동작·생성기·위젯 검사 | 네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과 |\n| 실제 생성 C++ 타입 계약 | 두 빌드에서 각각 허용 14개·거부 6개 확인 |\n| Native·컴파일러·선택적 Runtime 설치·재배치 소비자 | 두 빌드에서 3종 및 설치 CLI 직접 실행 통과 |\n| LVRS 생성 팩토리 | 두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지 |\n| iiGUI 생성 헤더 | 두 빌드의 54개가 바이트 단위로 일치 |\n| Dreamscapes QML 관측 기준선 | 81개 파일 변경 0개 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI Release 전체 CTest",
-          "269/269 통과"
-        ],
-        [
-          "관련 언어·네이티브 ASan·UBSan",
-          "199/199 통과"
-        ],
-        [
-          "iiGUI 창 없는 기존 동작·생성 코드",
-          "일반·ASan·UBSan 각각 209/209 통과"
-        ],
-        [
-          "새 포획 동작·생성기·위젯 검사",
-          "네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과"
-        ],
-        [
-          "실제 생성 C++ 타입 계약",
-          "두 빌드에서 각각 허용 14개·거부 6개 확인"
-        ],
-        [
-          "Native·컴파일러·선택적 Runtime 설치·재배치 소비자",
-          "두 빌드에서 3종 및 설치 CLI 직접 실행 통과"
-        ],
-        [
-          "LVRS 생성 팩토리",
-          "두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지"
-        ],
-        [
-          "iiGUI 생성 헤더",
-          "두 빌드의 54개가 바이트 단위로 일치"
-        ],
-        [
-          "Dreamscapes QML 관측 기준선",
-          "81개 파일 변경 0개"
-        ]
+      "end_line": 75,
+      "raw": "- 범위: LVUI Release 전체 CTest; 결과: 269/269 통과\n- 범위: 관련 언어·네이티브 ASan·UBSan; 결과: 199/199 통과\n- 범위: iiGUI 창 없는 기존 동작·생성 코드; 결과: 일반·ASan·UBSan 각각 209/209 통과\n- 범위: 새 포획 동작·생성기·위젯 검사; 결과: 네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과\n- 범위: 실제 생성 C++ 타입 계약; 결과: 두 빌드에서 각각 허용 14개·거부 6개 확인\n- 범위: Native·컴파일러·선택적 Runtime 설치·재배치 소비자; 결과: 두 빌드에서 3종 및 설치 CLI 직접 실행 통과\n- 범위: LVRS 생성 팩토리; 결과: 두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지\n- 범위: iiGUI 생성 헤더; 결과: 두 빌드의 54개가 바이트 단위로 일치\n- 범위: Dreamscapes QML 관측 기준선; 결과: 81개 파일 변경 0개\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI Release 전체 CTest; 결과: 269/269 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 ASan·UBSan; 결과: 199/199 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 기존 동작·생성 코드; 결과: 일반·ASan·UBSan 각각 209/209 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 새 포획 동작·생성기·위젯 검사; 결과: 네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 실제 생성 C++ 타입 계약; 결과: 두 빌드에서 각각 허용 14개·거부 6개 확인",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: Native·컴파일러·선택적 Runtime 설치·재배치 소비자; 결과: 두 빌드에서 3종 및 설치 CLI 직접 실행 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVRS 생성 팩토리; 결과: 두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 생성 헤더; 결과: 두 빌드의 54개가 바이트 단위로 일치",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: Dreamscapes QML 관측 기준선; 결과: 81개 파일 변경 0개",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 78,
-      "end_line": 78,
+      "start_line": 76,
+      "end_line": 76,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 79,
-      "end_line": 84,
+      "start_line": 77,
+      "end_line": 82,
       "raw": "임시 수신자와 임시 인자가 첫 실행 전에 파괴되는 실패 2개를 수명 카운터로 먼저\n재현했으며 파괴된 함수는 호출하지 않았다. 수정 후 참조·값 반환 함수, 이동 불가 값,\n수신자 교체 중 재진입, Static·가변 초기 선택, 실패 복구와 자기 제거를 실행했다.\n이동 불가 값 매개변수와 참조 매개변수가 같은 호출에 있는 경우도 타입·실행 검사로\n확인했다. 기존 초기화 코드의 문자열 형태를 전제한 검사 한 곳은 새 내부 문맥과\n인자 보존 형태에 맞춰 갱신하고 전체 검사를 다시 통과했다.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 85,
-      "end_line": 85,
+      "start_line": 83,
+      "end_line": 83,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 86,
-      "end_line": 89,
+      "start_line": 84,
+      "end_line": 87,
       "raw": "생성 위젯 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.\niiGUI 메모리 검사는 생성 C++와 WidgetState를 계측하며, 차용한 일반 Native 아카이브의\n구현은 LVUI의 별도 메모리 검사로 검증한다. 이 결과는 실제 LVRS 앱·OS 창·GPU·다른\n플랫폼의 실행이나 제품 UI 지연 개선률을 입증하지 않는다.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 90,
-      "end_line": 90,
+      "start_line": 88,
+      "end_line": 88,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 91,
-      "end_line": 93,
+      "start_line": 89,
+      "end_line": 91,
       "raw": "소스 해시·원시 로그·실패 재현·설치 소비자와 바이너리 의존성은\n`build/lvui-completion/factory-captures-verification-20261026.json`에 기록한다. 언어의\n전체 타입·프로토콜과 LVRS·플랫폼 완료 조건은 이 단계의 결과로 축소하지 않는다.\n"
     }
   ],
@@ -425,21 +430,21 @@
       },
       {
         "block_id": "b000035",
-        "line": 86,
+        "line": 84,
         "text": "생성 위젯 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000035",
-        "line": 89,
+        "line": 87,
         "text": "플랫폼의 실행이나 제품 UI 지연 개선률을 입증하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000037",
-        "line": 93,
+        "line": 91,
         "text": "전체 타입·프로토콜과 LVRS·플랫폼 완료 조건은 이 단계의 결과로 축소하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -455,53 +460,7 @@
         "line": 60
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000031",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI Release 전체 CTest",
-            "269/269 통과"
-          ],
-          [
-            "관련 언어·네이티브 ASan·UBSan",
-            "199/199 통과"
-          ],
-          [
-            "iiGUI 창 없는 기존 동작·생성 코드",
-            "일반·ASan·UBSan 각각 209/209 통과"
-          ],
-          [
-            "새 포획 동작·생성기·위젯 검사",
-            "네이티브 10개·생성기 3개·위젯 12개, 두 빌드에서 통과"
-          ],
-          [
-            "실제 생성 C++ 타입 계약",
-            "두 빌드에서 각각 허용 14개·거부 6개 확인"
-          ],
-          [
-            "Native·컴파일러·선택적 Runtime 설치·재배치 소비자",
-            "두 빌드에서 3종 및 설치 CLI 직접 실행 통과"
-          ],
-          [
-            "LVRS 생성 팩토리",
-            "두 빌드에서 55개 컴파일, 실행은 최종 일괄 단계로 유지"
-          ],
-          [
-            "iiGUI 생성 헤더",
-            "두 빌드의 54개가 바이트 단위로 일치"
-          ],
-          [
-            "Dreamscapes QML 관측 기준선",
-            "81개 파일 변경 0개"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

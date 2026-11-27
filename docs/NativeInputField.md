@@ -303,3 +303,7 @@ macOS arm64에서 일반·검색 입력과 생성 경로를 헤드리스로 검�
 `InputField`는 `fontFamily`, `fontSize`, `fontWeight`를 입력 텍스트와 플레이스홀더에 동일하게 전달한다. `fontWeight`는 400·500·600·700, `Weight/Regular` 같은 스타일 토큰, 또는 이 값을 제공하는 바인딩을 받을 수 있다. 생략하면 `Weight/Regular`가 적용된다.
 
 LVUI는 선언을 네이티브 입력 필드 설정으로 변환한다. 글꼴 폴백, 한글 자소 조합, 픽셀 배치와 화면 배율에 맞춘 래스터화는 iiGUI가 담당한다. 화면 배율을 설정하는 LVUI 속성은 필요 없다.
+
+Figma의 `TextField` 이름으로 선언한 텍스트·암호 변형은 크기를 지정하지 않으면
+원본의 206×22 치수에 해당하는 `compact`를 선택한다. 명시적인 `size`는 우선한다.
+독립 `InputField`의 기존 `regular` 기본 크기와 검색 변형의 크기는 그대로 유지된다.

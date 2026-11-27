@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeMenu.md",
-    "sha256": "6932210ee23b95e358ac0724f4bfd7b95597bafd10312a42b760811d98f047f9",
-    "bytes": 17819,
-    "line_count": 202,
+    "sha256": "0156f9b75ca9b7207a42a271f4708c035567cd9c058d08d8039a239a4d98ee39",
+    "bytes": 19824,
+    "line_count": 227,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -291,6 +291,65 @@
       "start_line": 202,
       "end_line": 202,
       "raw": "ContextMenuItem의 시각 상태는 iiGUI가 그린다. 모든 상태에서 항목 배경을 그리지 않고 활성 항목 호버 시 아이콘과 레이블을 1.1배 확대하며 레이블을 위로 1픽셀 이동한다.\n"
+    },
+    {
+      "id": "b000038",
+      "kind": "blank",
+      "start_line": 203,
+      "end_line": 203,
+      "raw": "\n"
+    },
+    {
+      "id": "b000039",
+      "kind": "heading",
+      "start_line": 204,
+      "end_line": 204,
+      "raw": "## 단축키의 기능키 기호\n",
+      "level": 2,
+      "title": "단축키의 기능키 기호",
+      "anchor": "단축키의-기능키-기호"
+    },
+    {
+      "id": "b000040",
+      "kind": "blank",
+      "start_line": 205,
+      "end_line": 205,
+      "raw": "\n"
+    },
+    {
+      "id": "b000041",
+      "kind": "paragraph",
+      "start_line": 206,
+      "end_line": 211,
+      "raw": "LVUI의 공통 `MenuItemBinding`은 일반 메뉴와 컨텍스트 메뉴, 목록·표의 메뉴 등\n같은 항목 호스트를 사용하는 모든 단축키를 표시할 때 기능키의 이름을 키보드 기호로\n바꾼다. 예를 들어 `Option+Shift+Command+i`는 `⌥⇧⌘i`, `Ctrl+Alt+F4`는\n`⌃⌥F4`로 그린다. Shift·Control·Option/Alt·Command와 Windows/Super를\n각각 `⇧`, `⌃`, `⌥`, `⌘`, `⊞`로 나타낸다. `Meta`는 Apple에서 `⌘`, 그 밖의\n플랫폼에서 `⊞`로 표시한다. 이 표시는 플랫폼의 물리 키 구분을 대신하지 않는다.\n"
+    },
+    {
+      "id": "b000042",
+      "kind": "blank",
+      "start_line": 212,
+      "end_line": 212,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "paragraph",
+      "start_line": 213,
+      "end_line": 218,
+      "raw": "Escape, Return/Enter, Backspace, Delete, Tab, Space, Caps Lock과 방향키도\n해당 키보드 기호를 사용한다. 문자·숫자·`F1`–`F12` 및 알 수 없는 키 이름은\n보존한다. `Ctrl++`처럼 더하기 문자가 실제 키인 경우와 쉼표 및 공백으로 구분한\n연속 단축키도 처리한다. 완성되지 않았거나 해석할 수 없는 조합은 원문을 유지한다.\n공개 C++ 함수 `lvui::format_shortcut`은 같은 표시 규칙이 필요한 다른 LVUI\n컴포넌트에서도 사용할 수 있다.\n"
+    },
+    {
+      "id": "b000044",
+      "kind": "blank",
+      "start_line": 219,
+      "end_line": 219,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "paragraph",
+      "start_line": 220,
+      "end_line": 227,
+      "raw": "변환은 표시를 위한 모델에서만 수행하며 앱이 전달한 단축키 문자열, 명령 연결,\n키보드 입력 판정은 바꾸지 않는다. 변환된 단축키가 표시될 때 접근성 이름에 원래\n단축키를 덧붙여 기호를 읽기 어려운 보조 기술에도 키 이름을 제공한다. 명시한\n접근성 이름을 우선하며, 단축키가 숨겨진 경우에는 이름에 추가하지 않는다.\n실제 단축키가 없을 때 보이는 `keyPlaceholder`에도 같은 표시 규칙을 적용한다.\n메뉴는 변환된 문자열을 실제 폭 계산과 그리기에 사용한다. Figma의 일반 메뉴와\n컨텍스트 메뉴 원본에는 같은 기호 예시와 동작 주석을 두었다. 글꼴 대체와 보조\n기술에서의 실제 발화는 플랫폼별 실행 검증이 별도로 필요하다.\n"
     }
   ],
   "outline": [
@@ -309,6 +368,14 @@
       "title": "컨텍스트 메뉴 호버",
       "anchor": "컨텍스트-메뉴-호버",
       "start_line": 200
+    },
+    {
+      "block_id": "b000039",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "단축키의 기능키 기호",
+      "anchor": "단축키의-기능키-기호",
+      "start_line": 204
     }
   ],
   "indexes": {

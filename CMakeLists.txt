@@ -61,7 +61,7 @@ add_custom_command(OUTPUT "${LVUI_BUILTIN_HUE_RING_HEADER}"
 add_custom_target(LVUIBuiltinHueRing DEPENDS "${LVUI_BUILTIN_HUE_RING_HEADER}")
 find_package(iiSDKCore 0.18.1 CONFIG REQUIRED COMPONENTS Contracts Observation)
 include(cmake/LVUICoreObservation.cmake)
-add_library(LVUI src/Compiler/Parser.cpp src/Language/Language.cpp src/Compiler/NativeMarkup.cpp src/Compiler/Compiler.cpp src/Compiler/FigmaComponents.cpp src/Language/ConstantExpression.cpp src/Style/StyleTokens.cpp)
+add_library(LVUI src/Compiler/Parser.cpp src/Language/Language.cpp src/Compiler/NativeMarkup.cpp src/Compiler/Compiler.cpp src/Compiler/FigmaComponents.cpp src/Language/ConstantExpression.cpp src/Style/StyleTokens.cpp src/Runtime/EditorPanels.cpp src/Runtime/EditorPanelViews.cpp)
 add_library(LVUI::LVUI ALIAS LVUI)
 target_compile_features(LVUI PUBLIC cxx_std_23)
 target_link_libraries(LVUI PUBLIC iiSDKCore::Contracts)
@@ -100,7 +100,7 @@ if(EMSCRIPTEN)
 endif()
 option(LVUI_BUILD_COMPILER_BRIDGE "Build the Python compiler bridge" ${_lvui_default_compiler_bridge})
 if(LVUI_BUILD_COMPILER_BRIDGE)
-    add_library(LVUICompilerBridge SHARED src/Python/CompilerBridge.cpp)
+    add_library(LVUICompilerBridge SHARED src/Python/CompilerBridge.cpp src/Python/EditorPanelsBridge.cpp)
     add_library(LVUI::CompilerBridge ALIAS LVUICompilerBridge)
     target_compile_features(LVUICompilerBridge PRIVATE cxx_std_23)
     target_compile_definitions(LVUICompilerBridge PRIVATE LVUI_COMPILER_BRIDGE_BUILD)
@@ -379,7 +379,10 @@ if(LVUI_BUILD_COMPILER_TOOLS)
 endif()
 install(FILES
     src/Compiler/Document.h
+    src/Runtime/EditorPanels.h
+    src/Runtime/EditorPanelViews.h
     src/Python/CompilerBridge.h
+    src/Python/EditorPanelsBridge.h
     src/Media/AuthoredIcons.h
     src/Media/NativeAuthoredIcons.h
     src/Controls/Card.h
@@ -647,6 +650,12 @@ install(DIRECTORY docs DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI PATTERN .DS_Sto
 install(FILES catalog/lvui-keywords.json catalog/lvui-style-tokens.json catalog/figma-lvui-components.json
     DESTINATION ${CMAKE_INSTALL_DATADIR}/LVUI/catalog)
 if(BUILD_TESTING AND LVUI_BUILD_COMPILER_TOOLS)
+    add_executable(LVUIEditorPanelsTests tests/editor_panels.cpp)
+    target_link_libraries(LVUIEditorPanelsTests PRIVATE LVUI::LVUI)
+    add_test(NAME LVUI.EditorPanels.Contracts COMMAND LVUIEditorPanelsTests)
+    add_executable(LVUIEditorPanelViewsTests tests/editor_panel_views.cpp)
+    target_link_libraries(LVUIEditorPanelViewsTests PRIVATE LVUI::LVUI)
+    add_test(NAME LVUI.EditorPanels.Views COMMAND LVUIEditorPanelViewsTests)
     if(BUILD_SHARED_LIBS AND NOT CMAKE_CROSSCOMPILING)
         set(_lvui_runtime_type)
         if(TARGET LVUIRuntime)
@@ -677,7 +686,10 @@ if(BUILD_TESTING AND LVUI_BUILD_COMPILER_TOOLS)
         target_link_libraries(LVUICompilerBridgeTests PRIVATE LVUICompilerBridge)
         add_test(NAME LVUI.PythonBridge.Native COMMAND LVUICompilerBridgeTests)
         add_test(NAME LVUI.PythonBridge.API COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_python_api.py")
+        add_test(NAME LVUI.EditorPanels.PythonViews COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_editor_panel_python.py")
         set_tests_properties(LVUI.PythonBridge.API PROPERTIES
+            ENVIRONMENT "LVUI_COMPILER_LIBRARY=$<TARGET_FILE:LVUICompilerBridge>" TIMEOUT 60)
+        set_tests_properties(LVUI.EditorPanels.PythonViews PROPERTIES
             ENVIRONMENT "LVUI_COMPILER_LIBRARY=$<TARGET_FILE:LVUICompilerBridge>" TIMEOUT 60)
     endif()
     add_executable(LVUINativeAppStringsTests tests/native_app_strings.cpp)
@@ -1673,7 +1685,7 @@ if(BUILD_TESTING AND LVUI_BUILD_COMPILER_TOOLS)
     endforeach()
     add_executable(LVUIWindowTests tests/window.cpp)
     target_link_libraries(LVUIWindowTests PRIVATE LVUI::LVUI)
-    foreach(_case dynamic accent constants diagnostics safe_area)
+    foreach(_case dynamic accent constants diagnostics safe_area chrome_defaults)
         add_test(NAME LVUI.Window.${_case} COMMAND LVUIWindowTests ${_case})
         set_tests_properties(LVUI.Window.${_case} PROPERTIES TIMEOUT 20)
     endforeach()
@@ -1803,6 +1815,54 @@ if(BUILD_TESTING AND LVUI_BUILD_COMPILER_TOOLS)
         add_test(NAME LVUI.IiGuiHeaderOverlay COMMAND ${CMAKE_COMMAND}
             "-DOVERLAY=${LVUI_IIGUI_TEST_HEADERS}" "-DGUI_SOURCE=${LVUI_IIGUI_SOURCE_DIR}"
             -P "${CMAKE_CURRENT_SOURCE_DIR}/tests/ii_gui_overlay.cmake")
+        lvui_generate(NAME EditorPanelFixture SOURCE tests/fixtures/EditorPanelViews.lvui EDITOR_PANELS
+            INCLUDES EditorPanelFixtureModel.h OUTPUT_VARIABLE _editor_panel_fixture)
+        add_executable(LVUIEditorPanelGeneratedTests tests/editor_panel_generated_compile.cpp "${_editor_panel_fixture}")
+        target_include_directories(LVUIEditorPanelGeneratedTests BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
+            "${LVUI_IIGUI_SOURCE_DIR}/src/ModuleImports"
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_TEST_HEADERS}" "${LVUI_IIGUI_HEADER_DIR}")
+        target_compile_definitions(LVUIEditorPanelGeneratedTests PRIVATE IISDK_IMPORT_IIGUI_FULL=1)
+        target_link_libraries(LVUIEditorPanelGeneratedTests PRIVATE LVUI::Native)
+        add_test(NAME LVUI.EditorPanels.GeneratedCpp COMMAND LVUIEditorPanelGeneratedTests)
+        lvui_generate(NAME EditorAutoPanel SOURCE tests/fixtures/EditorAutoPanel.lvui EDITOR_PANELS
+            INCLUDES EditorAutoPanelModel.h OUTPUT_VARIABLE _editor_auto_panel_fixture)
+        add_executable(LVUIEditorAutoPanelGeneratedTests tests/editor_auto_panel_generated_compile.cpp "${_editor_auto_panel_fixture}")
+        target_include_directories(LVUIEditorAutoPanelGeneratedTests BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
+            "${LVUI_IIGUI_SOURCE_DIR}/src/ModuleImports"
+            tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src" "${LVUI_IIGUI_TEST_HEADERS}" "${LVUI_IIGUI_HEADER_DIR}")
+        target_compile_definitions(LVUIEditorAutoPanelGeneratedTests PRIVATE IISDK_IMPORT_IIGUI_FULL=1)
+        target_link_libraries(LVUIEditorAutoPanelGeneratedTests PRIVATE LVUI::LVUI LVUI::Native)
+        add_test(NAME LVUI.EditorPanels.AutoGeneratedCpp COMMAND LVUIEditorAutoPanelGeneratedTests)
+        # The headless fixture uses iiGUI's private WidgetState API, whose ABI
+        # must match the checked-out headers. An installed iiGUI library can be
+        # from another revision, so the test host explicitly supplies matching
+        # runtime libraries rather than silently mixing the two revisions.
+        set(LVUI_IIGUI_HEADLESS_TEST_LIBRARIES "" CACHE STRING
+            "iiGUI runtime libraries built from LVUI_IIGUI_SOURCE_DIR for headless integration tests")
+        if(TARGET iiGUI::iiGUI AND TARGET iiSDKCore::Runtime AND LVUI_IIGUI_HEADLESS_TEST_LIBRARIES)
+            add_executable(LVUIEditorPanelHeadlessTests tests/editor_panel_generated_headless.cpp "${_editor_panel_fixture}")
+            target_include_directories(LVUIEditorPanelHeadlessTests BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
+                "${LVUI_IIGUI_SOURCE_DIR}/src/ModuleImports" tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src"
+                "${LVUI_IIGUI_TEST_HEADERS}" "${LVUI_IIGUI_HEADER_DIR}")
+            target_compile_definitions(LVUIEditorPanelHeadlessTests PRIVATE IISDK_IMPORT_IIGUI_FULL=1)
+            target_link_libraries(LVUIEditorPanelHeadlessTests PRIVATE LVUI::Native
+                ${LVUI_IIGUI_HEADLESS_TEST_LIBRARIES} iiGUI::iiGUI iiSDKCore::Runtime)
+            add_test(NAME LVUI.EditorPanels.Headless COMMAND LVUIEditorPanelHeadlessTests)
+            add_executable(LVUIEditorAutoPanelHeadlessTests tests/editor_auto_panel_generated_headless.cpp "${_editor_auto_panel_fixture}")
+            target_include_directories(LVUIEditorAutoPanelHeadlessTests BEFORE PRIVATE "${CMAKE_CURRENT_BINARY_DIR}"
+                "${LVUI_IIGUI_SOURCE_DIR}/src/ModuleImports" tests/fixtures "${LVUI_IIGUI_SOURCE_DIR}/src"
+                "${LVUI_IIGUI_TEST_HEADERS}" "${LVUI_IIGUI_HEADER_DIR}")
+            target_compile_definitions(LVUIEditorAutoPanelHeadlessTests PRIVATE IISDK_IMPORT_IIGUI_FULL=1)
+            target_link_libraries(LVUIEditorAutoPanelHeadlessTests PRIVATE LVUI::LVUI LVUI::Native
+                ${LVUI_IIGUI_HEADLESS_TEST_LIBRARIES} iiGUI::iiGUI iiSDKCore::Runtime)
+            add_test(NAME LVUI.EditorPanels.AutoHeadless COMMAND LVUIEditorAutoPanelHeadlessTests)
+        endif()
+        add_executable(LVUINativeAlertModelTests tests/native_alert_model.cpp)
+        target_include_directories(LVUINativeAlertModelTests BEFORE PRIVATE
+            "${LVUI_IIGUI_TEST_HEADERS}" "${LVUI_IIGUI_HEADER_DIR}" "${CMAKE_CURRENT_BINARY_DIR}/lvui-generated-icons")
+        target_link_libraries(LVUINativeAlertModelTests PRIVATE LVUI::Native)
+        add_test(NAME LVUI.NativeAlert.Model COMMAND LVUINativeAlertModelTests)
+        set_tests_properties(LVUI.NativeAlert.Model PROPERTIES TIMEOUT 30)
         if(TARGET iiGUI::iiGUI AND TARGET iiSDKCore::Runtime)
             lvui_generate(NAME WindowSafeArea SOURCE tests/fixtures/WindowSafeArea.lvui OUTPUT_VARIABLE _window_safe_area)
             lvui_generate(NAME WindowIgnoreSafeArea SOURCE tests/fixtures/WindowIgnoreSafeArea.lvui OUTPUT_VARIABLE _window_ignore_safe_area)
@@ -1906,7 +1966,9 @@ if(BUILD_TESTING AND LVUI_BUILD_COMPILER_TOOLS)
                 "${LVUI_IIGUI_TEST_HEADERS}" "${LVUI_IIGUI_HEADER_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures")
             target_link_libraries(LVUINativeScenesTests PRIVATE LVUI::Native iiGUI::iiGUI iiSDKCore::Runtime)
             add_test(NAME LVUI.Scene.Native COMMAND LVUINativeScenesTests)
+            add_test(NAME LVUI.Scene.Chrome COMMAND LVUINativeScenesTests chrome)
             set_tests_properties(LVUI.Scene.Native PROPERTIES TIMEOUT 30)
+            set_tests_properties(LVUI.Scene.Chrome PROPERTIES TIMEOUT 30)
         endif()
         if(TARGET LVUINativeSingleSceneFixture)
             add_executable(LVUINativeSingleSceneTests tests/native_scene_single.cpp "${_native_single_scene_generated}")
@@ -2460,6 +2522,18 @@ if(BUILD_TESTING AND LVUI_BUILD_COMPILER_TOOLS)
         target_link_libraries(LVUINativeListTests PRIVATE LVUI::Native)
         add_test(NAME LVUI.NativeLists COMMAND LVUINativeListTests)
         set_tests_properties(LVUI.NativeLists PROPERTIES TIMEOUT 15)
+        # AOT output imports the iiGUI module entry point. State-only and
+        # compile-only fixtures need its source-tree headers and capability
+        # selection even though they do not link or launch a GUI host.
+        foreach(_lvui_native_fixture IN ITEMS LVUINativeGeneratedTests LVUINativeNestedTests
+                LVUINativeViewValueTests LVUINativeComponentTests LVUINativeScalarInputTests LVUINativeListTests
+                LVUIOwnedImageCompile LVUIOwnedProgressCompile LVUIOwnedButtonCompile LVUIFigmaComponentCompile
+                LVUIOwnedDividerCompile LVUIOwnedCheckBoxCompile LVUIOwnedToggleSwitchCompile LVUIOwnedMaterialCompile
+                LVUIOwnedRadioButtonCompile LVUIOwnedPageRouterCompile LVUIOwnedLinkCompile LVUIOwnedAppCardCompile
+                LVUIOwnedAppHeaderCompile LVUIOwnedEventListenerCompile LVUIOwnedAvatarCompile)
+            target_include_directories(${_lvui_native_fixture} BEFORE PRIVATE "${LVUI_IIGUI_SOURCE_DIR}/src/ModuleImports")
+            target_compile_definitions(${_lvui_native_fixture} PRIVATE IISDK_IMPORT_IIGUI_FULL=1)
+        endforeach()
     endif()
     add_executable(LVUINativeBackendFactoryTests tests/native_backend_factories.cpp)
     target_link_libraries(LVUINativeBackendFactoryTests PRIVATE LVUI::Native)

@@ -1,0 +1,7 @@
+import vm EditorAutoPanelModel
+Window {
+    MenuCommandParameterForm(title: "Schema",
+        fields: [EditorAutoFields(model: vm.autoModel)], preview: [],
+        applyLabel: "Apply", cancelLabel: "Cancel", applyEnabled: true,
+        onApply: vm.execute, onCancel: vm.execute)
+}

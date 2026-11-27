@@ -1592,7 +1592,7 @@ Qt·LVRS 연결을 찾지 못했고 ad-hoc 서명을 검증했다. 주 실행 �
 
 후속 소스 대조에서 Vulkan과 D3D11의 배경 흐림·그림자 경로가 이미 존재함을
 확인했다. 이전 조사에서 두 경로가 효과 요청을 명시적으로 거부한다고 적은 것은
-잘못이어서 아래 표를 바로잡았다. 소스 경로의 존재는 실제 플랫폼 실행이나 Metal과의
+잘못이어서 아래 목록을 바로잡았다. 소스 경로의 존재는 실제 플랫폼 실행이나 Metal과의
 시각·성능 동등성을 증명하지 않는다.
 
 후속 변경의 macOS 검증에서는 LVUI 전체 헤드리스 회귀 532개와 설치 소비자 검사가
@@ -1866,11 +1866,9 @@ CMake 대상은 `App/Native/`를 사용하며 이 옛 진입점·호스트나 �
 
 2026-10-31 19:44에 빌드된 `SDK/LVUI/build/lvui-compile`의 SHA-256은 `f1a9247e3e862316ff722d30421e526726e4d2b0af1e7def7d8d97f105f13c51`이었다. 환경의 컴파일러·라이브러리 검색 변수를 제거하고 현재 제품의 스타일 프로필과 헤더 인자를 공급하여 아래 세 소스를 표준 출력으로만 생성 시도했다. GUI 실행이나 제품 빌드는 하지 않았다.
 
-| 화면 | 조사 당시 제품 설정 `--framework LVRS` | 해당 인자 생략 |
-|---|---|---|
-| `Main.lvui` | `Unsupported native framework; LVUI uses iiGUI` | 생성 성공 |
-| `Preferences.lvui` | 같은 오류 | `Unknown input 'editable' for List`, 37행 |
-| `CanvasSetup.lvui` | 같은 오류 | 생성 성공 |
+- 화면: `Main.lvui`; 조사 당시 제품 설정 `--framework LVRS`: `Unsupported native framework; LVUI uses iiGUI`; 해당 인자 생략: 생성 성공
+- 화면: `Preferences.lvui`; 조사 당시 제품 설정 `--framework LVRS`: 같은 오류; 해당 인자 생략: `Unknown input 'editable' for List`, 37행
+- 화면: `CanvasSetup.lvui`; 조사 당시 제품 설정 `--framework LVRS`: 같은 오류; 해당 인자 생략: 생성 성공
 
 생성 성공은 C++ 컴파일·링크·실행 또는 기능 동등성의 증거가 아니다. 당시 Main의 생성 출력에는 앱이 지정한 `LegacyEditorBackend.h`가 포함됐고, 이 백엔드는 `lvrs::ListModel`을 사용했다. 당시 Preferences List의 첫 오류 이외에도 속성·모델·아이콘의 별도 검사가 필요했다.
 
@@ -1882,10 +1880,8 @@ CMake 대상은 `App/Native/`를 사용하며 이 옛 진입점·호스트나 �
 
 다음은 각각 명시한 소스 디렉터리의 현재 `.qml` 파일을 읽어 단순 문자열·정규식으로 센 값이다. 주석·문자열·생성 경로의 의미를 완전히 해석하지 못하며, 파일 수·줄 수·출현 횟수는 기능 완성도나 작업량이 아니다. 빌드에 실제 포함되는 화면만 따로 판별한 수치도 아니다. 파일을 읽는 동안 크기나 수정 시각이 바뀐 파일은 없었으나 저장소 전체의 원자적 스냅샷은 아니다.
 
-| 범위 | QML 파일 / 줄 | LVRS import 파일 | `별칭.타입 {` 출현 / 타입명 | 기타 어휘 관측 |
-|---|---:|---:|---:|---|
-| `Product/Dreamscapes/src/App` | 82 / 18,115 | 80 | 1,058 / 37 | `Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334 |
-| `Product/Society/App` | 53 / 11,415 | 51 | 793 / 32 | `Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672 |
+- 범위: `Product/Dreamscapes/src/App`; QML 파일 / 줄: 82 / 18,115; LVRS import 파일: 80; `별칭.타입 {` 출현 / 타입명: 1,058 / 37; 기타 어휘 관측: `Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334
+- 범위: `Product/Society/App`; QML 파일 / 줄: 53 / 11,415; LVRS import 파일: 51; `별칭.타입 {` 출현 / 타입명: 793 / 32; 기타 어휘 관측: `Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672
 
 `별칭.타입 {`은 `import LVRS ... as 별칭`을 사용한 객체 선언만 센다. 래퍼·동적 타입·미한정 선언·타입 속성의 사용은 빠질 수 있다. Dreamscapes에는 단일 네이티브 [결과 갤러리 LVUI](../../../Product/Dreamscapes/src/App/Views/Result/NativeReviewGallery.lvui)가 있으나 이는 제품 전체의 전환 증거가 아니다. [현재 Dreamscapes CMake](../../../Product/Dreamscapes/CMakeLists.txt)는 LVRS와 Qt/QML 및 Qt 기반 SDK를 사용하며, Society도 [QML 모듈과 Qt Quick](../../../Product/Society/CMakeLists.txt)을 사용한다.
 
@@ -1898,14 +1894,12 @@ CMake 대상은 `App/Native/`를 사용하며 이 옛 진입점·호스트나 �
 이 절의 표와 자산 수치는 조사일의 기준선이다. 후속 이식과 최신 검증은 위의
 진행 기록 및 각 컴포넌트 계약을 기준으로 판단한다.
 
-| 영역 | 현재 가능한 부분 | 대체 전에 남은 비용 |
-|---|---|---|
-| 입력 | LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다. | 자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md) |
-| 메뉴 | 직접 자식·하위 메뉴와 키보드 탐색을 제공한다. | 조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md) |
-| 목록·계층·표 | 가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다. | 계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md) |
-| 이미지·폰트·자산 | 앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다. | 자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md) |
-| 재질·모션 | LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다. | 독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md) |
-| 시각·접근성 | 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다. | 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다. |
+- 영역: 입력; 현재 가능한 부분: LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다.; 대체 전에 남은 비용: 자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md)
+- 영역: 메뉴; 현재 가능한 부분: 직접 자식·하위 메뉴와 키보드 탐색을 제공한다.; 대체 전에 남은 비용: 조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md)
+- 영역: 목록·계층·표; 현재 가능한 부분: 가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다.; 대체 전에 남은 비용: 계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md)
+- 영역: 이미지·폰트·자산; 현재 가능한 부분: 앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다.; 대체 전에 남은 비용: 자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md)
+- 영역: 재질·모션; 현재 가능한 부분: LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다.; 대체 전에 남은 비용: 독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md)
+- 영역: 시각·접근성; 현재 가능한 부분: 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다.; 대체 전에 남은 비용: 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다.
 
 조사 당시 LVUI의 `resources/icons/*.svg`는 16개였다. 기존 아이콘 문서의 기본 이름 목록은 그보다 적어 당시 파일 목록보다 오래되었다. LVRS Figma 기준 매니페스트에는 2,846개 정규 아이콘이 있다. LVRS `resources/iconset/`의 SVG 파일 2,860개, 총 4,704,406바이트를 읽어 당시 [LVUI 임베더](../tools/embed_icons.py)의 이름·크기·XML 요소·`href`/`url(` 규칙에 맞추어 정적 예비 검사했다. 2,589개는 검사한 조건을 통과했고 271개는 하나 이상의 조건에 걸렸다. 원인은 `href`/`url(` 181개, 이름 패턴 114개, 64KiB 초과 2개, 이미지 요소 2개, 필터 요소 1개이며 중복 가능하므로 합산하지 않는다. 토큰 해석·symlink·실제 디코더와 픽셀 출력의 완전한 검증은 포함하지 않았다. 기존 2,846개 정규 아이콘과 폴더 2,860개는 서로 다른 집합이므로 비율로 비교하지 않는다.
 

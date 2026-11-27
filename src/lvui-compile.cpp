@@ -1,4 +1,5 @@
 #include <LVUI/Compiler.h>
+#include <LVUI/EditorPanelViews.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -8,6 +9,7 @@ int main(int argc, char** argv) {
     std::filesystem::path input_file;
     std::filesystem::path style_file;
     bool emit_styles = false;
+    bool editor_panels = false;
     std::string style_namespace = "lvui_style";
     for (int i = 1; i < argc; ++i) {
         const std::string_view arg = argv[i];
@@ -17,6 +19,10 @@ int main(int argc, char** argv) {
         }
         if (arg == "--view-factory") {
             options.view_factory_only = true;
+            continue;
+        }
+        if (arg == "--editor-panels") {
+            editor_panels = true;
             continue;
         }
         if ((arg == "--name" || arg == "--include" || arg == "--framework" || arg == "--style-mode" ||
@@ -44,7 +50,7 @@ int main(int argc, char** argv) {
         } else if (!arg.starts_with('-') && input_file.empty())
             input_file = argv[i];
         else {
-            std::cerr << "Usage: lvui-compile [--view-factory] [--name Name] [--include relative/header.h] [--framework "
+            std::cerr << "Usage: lvui-compile [--view-factory] [--editor-panels] [--name Name] [--include relative/header.h] [--framework "
                          "iiGUI] [--style-mode Collection=Mode] [--style-file Theme.lvui] file.lvui\n"
                          "       lvui-compile --emit-styles [--namespace App.Style] Theme.lvui\n";
             return 2;
@@ -52,6 +58,7 @@ int main(int argc, char** argv) {
     }
     if (input_file.empty()) { std::cerr << "An LVUI source file is required\n"; return 2; }
     if (emit_styles && options.view_factory_only) { std::cerr << "--view-factory cannot be combined with --emit-styles\n"; return 2; }
+    if (emit_styles && editor_panels) { std::cerr << "--editor-panels cannot be combined with --emit-styles\n"; return 2; }
     std::ifstream input(input_file, std::ios::binary);
     if (!input) { std::cerr << "Cannot open LVUI source: " << input_file.string() << '\n'; return 2; }
     std::string source(1024 * 1024 + 1, '\0');
@@ -89,7 +96,7 @@ int main(int argc, char** argv) {
         }
         result = lvui::compile_style_header(*profile, style_namespace);
     } else
-        result = lvui::compile_native(source, options);
+        result = editor_panels ? lvui::compile_editor_panel_views(source, options) : lvui::compile_native(source, options);
     if (!result) {
         const auto& e = result.error();
         std::cerr << input_file.string() << ':' << e.line << ':' << e.column << ": " << e.message << '\n'; return 1;

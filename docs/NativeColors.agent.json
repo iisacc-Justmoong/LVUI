@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeColors.md",
-    "sha256": "82225386a01d666708a596ab7a5b647f2549772873fed66319f1601767655cbc",
-    "bytes": 9897,
-    "line_count": 139,
+    "sha256": "cf65dcbdf0a80fa2d9b23d3e2b3acabb7023ab20391e344e6a4b0045f23ce71e",
+    "bytes": 9997,
+    "line_count": 137,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -333,83 +333,89 @@
     },
     {
       "id": "b000043",
-      "kind": "table",
       "start_line": 118,
-      "end_line": 129,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 193/193 통과 |\n| 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer | 122/122 통과 |\n| 작업·콜백·함수·색상 ThreadSanitizer | 32/32 통과, 빌린 Core Runtime 라이브러리는 비계측 |\n| iiGUI 창 없는 기존 동작·생성 C++ 통합 | 105/105 통과 |\n| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 105/105 통과, NativeBindings 구현은 별도 LVUI 검사 |\n| LVUI 설치·재배치 독립 소비자 | Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과 |\n| iiColorManager 일반 검사와 메모리 검사 | 각각 8/8 통과, 설치 소비자 자동 검사 포함 |\n| iiColorManager 값 전용·기존 Picker 설치/재배치 소비자 | 각각 1/1 통과 |\n| 생성 C++ 타입 계약 | 유효 4개 컴파일, 잘못된 14개 거부 |\n| LVRS 생성 C++ | 총 23개 팩터리 컴파일, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI 전체 Release CTest",
-          "193/193 통과"
-        ],
-        [
-          "관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer",
-          "122/122 통과"
-        ],
-        [
-          "작업·콜백·함수·색상 ThreadSanitizer",
-          "32/32 통과, 빌린 Core Runtime 라이브러리는 비계측"
-        ],
-        [
-          "iiGUI 창 없는 기존 동작·생성 C++ 통합",
-          "105/105 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-          "105/105 통과, NativeBindings 구현은 별도 LVUI 검사"
-        ],
-        [
-          "LVUI 설치·재배치 독립 소비자",
-          "Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과"
-        ],
-        [
-          "iiColorManager 일반 검사와 메모리 검사",
-          "각각 8/8 통과, 설치 소비자 자동 검사 포함"
-        ],
-        [
-          "iiColorManager 값 전용·기존 Picker 설치/재배치 소비자",
-          "각각 1/1 통과"
-        ],
-        [
-          "생성 C++ 타입 계약",
-          "유효 4개 컴파일, 잘못된 14개 거부"
-        ],
-        [
-          "LVRS 생성 C++",
-          "총 23개 팩터리 컴파일, 실행하지 않음"
-        ]
+      "end_line": 127,
+      "raw": "- 범위: LVUI 전체 Release CTest; 결과: 193/193 통과\n- 범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 122/122 통과\n- 범위: 작업·콜백·함수·색상 ThreadSanitizer; 결과: 32/32 통과, 빌린 Core Runtime 라이브러리는 비계측\n- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 105/105 통과\n- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 105/105 통과, NativeBindings 구현은 별도 LVUI 검사\n- 범위: LVUI 설치·재배치 독립 소비자; 결과: Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과\n- 범위: iiColorManager 일반 검사와 메모리 검사; 결과: 각각 8/8 통과, 설치 소비자 자동 검사 포함\n- 범위: iiColorManager 값 전용·기존 Picker 설치/재배치 소비자; 결과: 각각 1/1 통과\n- 범위: 생성 C++ 타입 계약; 결과: 유효 4개 컴파일, 잘못된 14개 거부\n- 범위: LVRS 생성 C++; 결과: 총 23개 팩터리 컴파일, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI 전체 Release CTest; 결과: 193/193 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 122/122 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 작업·콜백·함수·색상 ThreadSanitizer; 결과: 32/32 통과, 빌린 Core Runtime 라이브러리는 비계측",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 105/105 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 105/105 통과, NativeBindings 구현은 별도 LVUI 검사",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVUI 설치·재배치 독립 소비자; 결과: Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiColorManager 일반 검사와 메모리 검사; 결과: 각각 8/8 통과, 설치 소비자 자동 검사 포함",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiColorManager 값 전용·기존 Picker 설치/재배치 소비자; 결과: 각각 1/1 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 생성 C++ 타입 계약; 결과: 유효 4개 컴파일, 잘못된 14개 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVRS 생성 C++; 결과: 총 23개 팩터리 컴파일, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "paragraph",
-      "start_line": 131,
-      "end_line": 134,
+      "start_line": 129,
+      "end_line": 132,
       "raw": "일반·메모리 검사 빌드의 생성 C++ 헤더 26개가 동일함을 확인했다. 색상 전용 패키지는\nPicker 라이브러리 없이 설치·재배치하고 소비자가 컴파일·링크·실행한다. 전체 패키지의\n기존 기본 검색과 Picker 연결도 별도로 확인했다. 색상 표시가 파일 리비전을 바꾸지 않는지,\n관측 대상 Dreamscapes QML이 보존되는지도 검사한다.\n"
     },
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 135,
-      "end_line": 135,
+      "start_line": 133,
+      "end_line": 133,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 136,
-      "end_line": 139,
+      "start_line": 134,
+      "end_line": 137,
       "raw": "로그·소스 해시·의존성·제품 비변경 기록은\n`build/lvui-completion/native-colors-verification-20261026.json`에 보관한다. 이는\n[전체 LVUI·LVRS 완성](Completion.md)이나 제품의 UI 지연 시간 개선율을 입증한 기록은\n아니다. 동적 창 appearance와 남은 전체 타입·인터페이스·자원·플랫폼 계약은 유지한다.\n"
     }
   ],
@@ -557,60 +563,10 @@
         "label": "전체 LVUI·LVRS 완성",
         "target": "Completion.md",
         "kind": "relative",
-        "line": 138
+        "line": 136
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000043",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI 전체 Release CTest",
-            "193/193 통과"
-          ],
-          [
-            "관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer",
-            "122/122 통과"
-          ],
-          [
-            "작업·콜백·함수·색상 ThreadSanitizer",
-            "32/32 통과, 빌린 Core Runtime 라이브러리는 비계측"
-          ],
-          [
-            "iiGUI 창 없는 기존 동작·생성 C++ 통합",
-            "105/105 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-            "105/105 통과, NativeBindings 구현은 별도 LVUI 검사"
-          ],
-          [
-            "LVUI 설치·재배치 독립 소비자",
-            "Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과"
-          ],
-          [
-            "iiColorManager 일반 검사와 메모리 검사",
-            "각각 8/8 통과, 설치 소비자 자동 검사 포함"
-          ],
-          [
-            "iiColorManager 값 전용·기존 Picker 설치/재배치 소비자",
-            "각각 1/1 통과"
-          ],
-          [
-            "생성 C++ 타입 계약",
-            "유효 4개 컴파일, 잘못된 14개 거부"
-          ],
-          [
-            "LVRS 생성 C++",
-            "총 23개 팩터리 컴파일, 실행하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

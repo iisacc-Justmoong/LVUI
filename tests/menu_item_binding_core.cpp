@@ -6,7 +6,7 @@ template<class P>struct Model{using Policy=P;};template<class P>struct Host{usin
 enum class State{normal,selected,inactive};enum class Direction{automatic,right,left,up,down};
 int main(){
     using Binding=lvui::native::MenuItemBinding<Model,Host,Decoder,Widget,Snapshot>;
-    static_assert(std::same_as<Binding::Policy::Model,Model<lvui::MenuItemModelPolicy>>);
+    static_assert(std::same_as<Binding::Policy::Model,lvui::native::ShortcutMenuItemModel<Model<lvui::MenuItemModelPolicy>>>);
     static_assert(std::same_as<Binding::Policy::Input,lvui::native::MenuItemInputValue<Image>>);
     static_assert(std::same_as<Binding::Policy::ItemPort,lvui::native::MenuItemPortValue<Widget,Snapshot>>);
     if(lvui::native::menu_item_state(State::selected)!=lvui::MenuEntryState::selected||

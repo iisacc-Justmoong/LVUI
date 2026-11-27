@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/CompilationModel.md",
-    "sha256": "6d613d7ad00b247cede6a3b9d61848c867ccd98b09a04cd1a0fdc46f16d9f36f",
-    "bytes": 16809,
-    "line_count": 234,
+    "sha256": "9ba721fdb3a77f7263808993637934eb8b4867793a0f6951a8650961ce61a589",
+    "bytes": 17215,
+    "line_count": 230,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -273,111 +273,106 @@
     },
     {
       "id": "b000035",
-      "kind": "table",
       "start_line": 81,
-      "end_line": 87,
-      "raw": "| 대상 | 네이티브 위젯 코드의 대상 | 그래픽 가속 코드의 대상 |\n|---|---|---|\n| macOS | 공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다. | Metal과 Vulkan. |\n| Windows | 공통 iiGUI 위젯을 Win32 창·입력·접근성 어댑터에 연결하는 소스가 있다. | Direct3D 11과 Vulkan. |\n| Linux | 공통 iiGUI 위젯을 직접 Wayland 표면·입력에 연결하는 소스가 있다. X11은 레거시이다. | Vulkan. |\n| iOS·Android | 공통 위젯과 플랫폼 표면·입력 어댑터가 있다. 세부 기능은 플랫폼마다 다르다. | iOS Metal 및 선택적 MoltenVK, Android Vulkan. |\n| Web | 별도 WASM 배포 대상이 브라우저 표면·입력에 연결된다. | WebGL2. |\n",
-      "columns": [
-        "대상",
-        "네이티브 위젯 코드의 대상",
-        "그래픽 가속 코드의 대상"
-      ],
-      "rows": [
-        [
-          "macOS",
-          "공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다.",
-          "Metal과 Vulkan."
-        ],
-        [
-          "Windows",
-          "공통 iiGUI 위젯을 Win32 창·입력·접근성 어댑터에 연결하는 소스가 있다.",
-          "Direct3D 11과 Vulkan."
-        ],
-        [
-          "Linux",
-          "공통 iiGUI 위젯을 직접 Wayland 표면·입력에 연결하는 소스가 있다. X11은 레거시이다.",
-          "Vulkan."
-        ],
-        [
-          "iOS·Android",
-          "공통 위젯과 플랫폼 표면·입력 어댑터가 있다. 세부 기능은 플랫폼마다 다르다.",
-          "iOS Metal 및 선택적 MoltenVK, Android Vulkan."
-        ],
-        [
-          "Web",
-          "별도 WASM 배포 대상이 브라우저 표면·입력에 연결된다.",
-          "WebGL2."
-        ]
+      "end_line": 85,
+      "raw": "- 대상: macOS; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다.; 그래픽 가속 코드의 대상: Metal과 Vulkan.\n- 대상: Windows; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯을 Win32 창·입력·접근성 어댑터에 연결하는 소스가 있다.; 그래픽 가속 코드의 대상: Direct3D 11과 Vulkan.\n- 대상: Linux; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯을 직접 Wayland 표면·입력에 연결하는 소스가 있다. X11은 레거시이다.; 그래픽 가속 코드의 대상: Vulkan.\n- 대상: iOS·Android; 네이티브 위젯 코드의 대상: 공통 위젯과 플랫폼 표면·입력 어댑터가 있다. 세부 기능은 플랫폼마다 다르다.; 그래픽 가속 코드의 대상: iOS Metal 및 선택적 MoltenVK, Android Vulkan.\n- 대상: Web; 네이티브 위젯 코드의 대상: 별도 WASM 배포 대상이 브라우저 표면·입력에 연결된다.; 그래픽 가속 코드의 대상: WebGL2.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "대상: macOS; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다.; 그래픽 가속 코드의 대상: Metal과 Vulkan.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "대상: Windows; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯을 Win32 창·입력·접근성 어댑터에 연결하는 소스가 있다.; 그래픽 가속 코드의 대상: Direct3D 11과 Vulkan.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "대상: Linux; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯을 직접 Wayland 표면·입력에 연결하는 소스가 있다. X11은 레거시이다.; 그래픽 가속 코드의 대상: Vulkan.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "대상: iOS·Android; 네이티브 위젯 코드의 대상: 공통 위젯과 플랫폼 표면·입력 어댑터가 있다. 세부 기능은 플랫폼마다 다르다.; 그래픽 가속 코드의 대상: iOS Metal 및 선택적 MoltenVK, Android Vulkan.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "대상: Web; 네이티브 위젯 코드의 대상: 별도 WASM 배포 대상이 브라우저 표면·입력에 연결된다.; 그래픽 가속 코드의 대상: WebGL2.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 88,
-      "end_line": 88,
+      "start_line": 86,
+      "end_line": 86,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 89,
-      "end_line": 90,
+      "start_line": 87,
+      "end_line": 88,
       "raw": "소스의 존재가 모든 위젯의 완전한 기능이나 해당 플랫폼의 실제 실행 검증을 뜻하지\n않는다. 플랫폼별 범위와 확인 근거는 [iiGUI 호스트 계약](../../iiGUI/docs/HostPlatforms.md)을 따른다.\n"
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 91,
-      "end_line": 91,
+      "start_line": 89,
+      "end_line": 89,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "paragraph",
-      "start_line": 92,
-      "end_line": 96,
+      "start_line": 90,
+      "end_line": 94,
       "raw": "빌드 구성은 위젯 백엔드와 포함할 가속 백엔드를 정하고,\n생성한 코드·필요한 셰이더 자산·리소스 연결 정보를 대상 플랫폼용 산출물에 포함한다.\niiGUI는 전달받은 코드를 네이티브 호스트·UI 실행 영역·입력 전달·표시·자원 수명에 연결한다.\n버튼·레이블·레이아웃에 OS 컨트롤이나 OS 레이아웃을 사용하지 않는다.\nOS 글꼴 조형·래스터화와 IME·가상 접근성 서비스는 플랫폼 경계에 격리한다.\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 97,
-      "end_line": 97,
+      "start_line": 95,
+      "end_line": 95,
       "raw": "\n"
     },
     {
       "id": "b000041",
       "kind": "paragraph",
-      "start_line": 98,
-      "end_line": 101,
+      "start_line": 96,
+      "end_line": 99,
       "raw": "컴파일 타임에 생성하는 것은 위젯과 가속 경로의 실행 코드이다.\n실제 창·C++ 위젯·GPU 장치·스왑체인 등의 객체는 애플리케이션 실행 시 해당 코드가 생성한다.\n실행 시 장치 기능을 확인하거나 빌드에 포함된 가속 백엔드 중 사용 가능한 경로를 선택할 수 있다.\n이는 LVUI 소스의 재해석이나 실행 중 새로운 플랫폼 백엔드의 컴파일을 요구하지 않는다.\n"
     },
     {
       "id": "b000042",
+      "kind": "blank",
+      "start_line": 100,
+      "end_line": 100,
+      "raw": "\n"
+    },
+    {
+      "id": "b000043",
+      "kind": "html",
+      "start_line": 101,
+      "end_line": 101,
+      "raw": "<a id=\"build-time-responsibilities\"></a>\n"
+    },
+    {
+      "id": "b000044",
       "kind": "blank",
       "start_line": 102,
       "end_line": 102,
       "raw": "\n"
     },
     {
-      "id": "b000043",
-      "kind": "html",
-      "start_line": 103,
-      "end_line": 103,
-      "raw": "<a id=\"build-time-responsibilities\"></a>\n"
-    },
-    {
-      "id": "b000044",
-      "kind": "blank",
-      "start_line": 104,
-      "end_line": 104,
-      "raw": "\n"
-    },
-    {
       "id": "b000045",
       "kind": "heading",
-      "start_line": 105,
-      "end_line": 105,
+      "start_line": 103,
+      "end_line": 103,
       "raw": "## 빌드 시 책임\n",
       "level": 2,
       "title": "빌드 시 책임"
@@ -385,29 +380,29 @@
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
+      "start_line": 104,
+      "end_line": 104,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 107,
+      "start_line": 105,
+      "end_line": 105,
       "raw": "AOT 도구 체인은 배포 전에 채택한 언어 규칙을 처리해야 한다.\n"
     },
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 108,
-      "end_line": 108,
+      "start_line": 106,
+      "end_line": 106,
       "raw": "\n"
     },
     {
       "id": "b000049",
       "kind": "list",
-      "start_line": 109,
-      "end_line": 118,
+      "start_line": 107,
+      "end_line": 116,
       "raw": "- 선언·컴포넌트 구조·import·표현식을 파싱한다.\n- 시각적 요소의 공통 타입 `View`와 `{}`로 전달하는 자식 `View` 인자를 검사한다.\n- 이름·타입·C++ 공개 멤버·constness·호출 호환성을 확인한다.\n- 일반적인 멤버 접근·호출 표현식·인자 타입 규칙으로 컴포넌트 입력과 callable 시그니처를 검사한다.\n- `const`/`var` 선언과 지원하는 어노테이션 조합을 검증한다.\n- 네이티브 스코프 활성화, 백엔드 생성·파괴, 동작 호출, 바인딩 접근, 관찰 지원 코드를 생성한다.\n- 관찰 어노테이션 없이 비정적 값의 의존성 추적과 변경 전파를 제공한다.\n- 컴포넌트를 iiGUI 자체 C++ 위젯 생성 코드로 변환하고 속성·이벤트·레이아웃 연결 코드를 생성한다.\n- Metal·DirectX/Direct3D·Vulkan 중 빌드에 포함할 네이티브 가속 코드와 필요한 셰이더 자산을 준비한다.\n- 대상 플랫폼에 필요한 C++ 백엔드·iiSDK/iiGUI 계약과 네이티브 UI 코드를 링크한다.\n",
       "items": [
         {
@@ -465,85 +460,85 @@
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 119,
-      "end_line": 119,
+      "start_line": 117,
+      "end_line": 117,
       "raw": "\n"
     },
     {
       "id": "b000051",
       "kind": "paragraph",
-      "start_line": 120,
-      "end_line": 121,
+      "start_line": 118,
+      "end_line": 119,
       "raw": "소스 검증은 런타임 백엔드 인스턴스를 생성하지 않는다.\n가져온 객체는 계속 소유 스코프 활성화 시점에 생성한다.\n"
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 122,
-      "end_line": 122,
+      "start_line": 120,
+      "end_line": 120,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 123,
-      "end_line": 125,
+      "start_line": 121,
+      "end_line": 123,
       "raw": "컴파일러는 [메서드 참조와 명시적 호출의 구분](MethodReferences.md)을 유지한다.\n컴포넌트 인터페이스가 콜백 매개변수 타입을 제공하고, 컴파일된 구현이 이벤트 계기를 제공한다.\n언어 프런트엔드에는 `PushButton`이나 첫 번째 인자를 클릭 이벤트로 만드는 특별 규칙이 필요하지 않다.\n"
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 126,
-      "end_line": 126,
+      "start_line": 124,
+      "end_line": 124,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 127,
-      "end_line": 130,
+      "start_line": 125,
+      "end_line": 128,
       "raw": "C++23을 생성한 뒤 네이티브 컴파일러를 사용하거나,\n다른 AOT 백엔드에서 네이티브 코드를 생성하는 방식을 구현 선택으로 고려할 수 있다.\n컴파일러 백엔드·중간 언어·드라이버 이름·생성 파일 형식은 여기서 정하지 않는다.\n요구되는 결과는 실행 전에 생성한 네이티브 코드이다.\n"
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 131,
-      "end_line": 131,
+      "start_line": 129,
+      "end_line": 129,
       "raw": "\n"
     },
     {
       "id": "b000057",
       "kind": "paragraph",
-      "start_line": 132,
-      "end_line": 133,
+      "start_line": 130,
+      "end_line": 131,
       "raw": "컴파일된 데이터 테이블이나 디스크립터가 네이티브 콜백에 동반될 수 있다.\n그 존재가 LVUI 소스·바이트코드의 런타임 평가기를 허용한다는 뜻은 아니다.\n"
     },
     {
       "id": "b000058",
+      "kind": "blank",
+      "start_line": 132,
+      "end_line": 132,
+      "raw": "\n"
+    },
+    {
+      "id": "b000059",
+      "kind": "html",
+      "start_line": 133,
+      "end_line": 133,
+      "raw": "<a id=\"mounting-responsibilities\"></a>\n"
+    },
+    {
+      "id": "b000060",
       "kind": "blank",
       "start_line": 134,
       "end_line": 134,
       "raw": "\n"
     },
     {
-      "id": "b000059",
-      "kind": "html",
-      "start_line": 135,
-      "end_line": 135,
-      "raw": "<a id=\"mounting-responsibilities\"></a>\n"
-    },
-    {
-      "id": "b000060",
-      "kind": "blank",
-      "start_line": 136,
-      "end_line": 136,
-      "raw": "\n"
-    },
-    {
       "id": "b000061",
       "kind": "heading",
-      "start_line": 137,
-      "end_line": 137,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "## 마운트의 책임\n",
       "level": 2,
       "title": "마운트의 책임"
@@ -551,105 +546,108 @@
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 138,
-      "end_line": 138,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 139,
-      "end_line": 140,
+      "start_line": 137,
+      "end_line": 138,
       "raw": "마운트는 iiSDK 런타임에서 컴파일된 네이티브 위젯 코드와 가속 경로를 iiGUI의 GUI·그리기 대상에 연결한다.\n계약은 다음 책임을 다뤄야 한다. 이는 제안된 API 이름이 아닌 요구사항이다.\n"
     },
     {
       "id": "b000064",
       "kind": "blank",
-      "start_line": 141,
-      "end_line": 141,
+      "start_line": 139,
+      "end_line": 139,
       "raw": "\n"
     },
     {
       "id": "b000065",
-      "kind": "table",
-      "start_line": 142,
-      "end_line": 150,
-      "raw": "| 책임 | 필요한 동작 |\n|---|---|\n| 스코프 활성화 | 마운트된 뷰의 정체성을 설정하고 소유 import와 바인딩을 활성화한다. |\n| 호스트 문맥 | 대상의 뷰포트·배율·소유 UI 실행 영역을 제공한다. |\n| 네이티브 위젯 | 컴파일된 코드로 iiGUI 위젯을 생성하고 부모·자식 구조·속성·이벤트·수명에 연결한다. |\n| 입력과 동작 | 지원 입력을 컴파일된 네이티브 콜백과 기존 백엔드·쿼리 계약으로 전달한다. |\n| 상태 갱신 | 관찰된 변경을 의존 네이티브 뷰 상태에 적용하고 필요한 레이아웃·그리기 작업을 요청한다. |\n| 그리기와 가속 | 위젯이 내보낸 패널·글자·이미지·오버레이를 컴파일된 Metal·DirectX·Vulkan 렌더러로 표시한다. |\n| 마운트 해제 | 접수를 닫고 연결을 분리하며 활성 사용을 종료한 뒤 소유 객체·그리기 자원을 해제한다. |\n",
-      "columns": [
-        "책임",
-        "필요한 동작"
-      ],
-      "rows": [
-        [
-          "스코프 활성화",
-          "마운트된 뷰의 정체성을 설정하고 소유 import와 바인딩을 활성화한다."
-        ],
-        [
-          "호스트 문맥",
-          "대상의 뷰포트·배율·소유 UI 실행 영역을 제공한다."
-        ],
-        [
-          "네이티브 위젯",
-          "컴파일된 코드로 iiGUI 위젯을 생성하고 부모·자식 구조·속성·이벤트·수명에 연결한다."
-        ],
-        [
-          "입력과 동작",
-          "지원 입력을 컴파일된 네이티브 콜백과 기존 백엔드·쿼리 계약으로 전달한다."
-        ],
-        [
-          "상태 갱신",
-          "관찰된 변경을 의존 네이티브 뷰 상태에 적용하고 필요한 레이아웃·그리기 작업을 요청한다."
-        ],
-        [
-          "그리기와 가속",
-          "위젯이 내보낸 패널·글자·이미지·오버레이를 컴파일된 Metal·DirectX·Vulkan 렌더러로 표시한다."
-        ],
-        [
-          "마운트 해제",
-          "접수를 닫고 연결을 분리하며 활성 사용을 종료한 뒤 소유 객체·그리기 자원을 해제한다."
-        ]
+      "start_line": 140,
+      "end_line": 146,
+      "raw": "- 책임: 스코프 활성화; 필요한 동작: 마운트된 뷰의 정체성을 설정하고 소유 import와 바인딩을 활성화한다.\n- 책임: 호스트 문맥; 필요한 동작: 대상의 뷰포트·배율·소유 UI 실행 영역을 제공한다.\n- 책임: 네이티브 위젯; 필요한 동작: 컴파일된 코드로 iiGUI 위젯을 생성하고 부모·자식 구조·속성·이벤트·수명에 연결한다.\n- 책임: 입력과 동작; 필요한 동작: 지원 입력을 컴파일된 네이티브 콜백과 기존 백엔드·쿼리 계약으로 전달한다.\n- 책임: 상태 갱신; 필요한 동작: 관찰된 변경을 의존 네이티브 뷰 상태에 적용하고 필요한 레이아웃·그리기 작업을 요청한다.\n- 책임: 그리기와 가속; 필요한 동작: 위젯이 내보낸 패널·글자·이미지·오버레이를 컴파일된 Metal·DirectX·Vulkan 렌더러로 표시한다.\n- 책임: 마운트 해제; 필요한 동작: 접수를 닫고 연결을 분리하며 활성 사용을 종료한 뒤 소유 객체·그리기 자원을 해제한다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "책임: 스코프 활성화; 필요한 동작: 마운트된 뷰의 정체성을 설정하고 소유 import와 바인딩을 활성화한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "책임: 호스트 문맥; 필요한 동작: 대상의 뷰포트·배율·소유 UI 실행 영역을 제공한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "책임: 네이티브 위젯; 필요한 동작: 컴파일된 코드로 iiGUI 위젯을 생성하고 부모·자식 구조·속성·이벤트·수명에 연결한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "책임: 입력과 동작; 필요한 동작: 지원 입력을 컴파일된 네이티브 콜백과 기존 백엔드·쿼리 계약으로 전달한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "책임: 상태 갱신; 필요한 동작: 관찰된 변경을 의존 네이티브 뷰 상태에 적용하고 필요한 레이아웃·그리기 작업을 요청한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "책임: 그리기와 가속; 필요한 동작: 위젯이 내보낸 패널·글자·이미지·오버레이를 컴파일된 Metal·DirectX·Vulkan 렌더러로 표시한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "책임: 마운트 해제; 필요한 동작: 접수를 닫고 연결을 분리하며 활성 사용을 종료한 뒤 소유 객체·그리기 자원을 해제한다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000066",
+      "kind": "blank",
+      "start_line": 147,
+      "end_line": 147,
+      "raw": "\n"
+    },
+    {
+      "id": "b000067",
+      "kind": "paragraph",
+      "start_line": 148,
+      "end_line": 150,
+      "raw": "마운트 시 `.lvui` 소스를 파싱하거나 컴포넌트 선언을 해석하거나 버튼 클릭마다 백엔드를 생성하지 않는다.\n[스코프 기반 import](TypeImports.md)와 [종료](InvocationLifecycle.md) 계약은\n컴파일된 UI에도 계속 적용된다.\n"
+    },
+    {
+      "id": "b000068",
       "kind": "blank",
       "start_line": 151,
       "end_line": 151,
       "raw": "\n"
     },
     {
-      "id": "b000067",
-      "kind": "paragraph",
-      "start_line": 152,
-      "end_line": 154,
-      "raw": "마운트 시 `.lvui` 소스를 파싱하거나 컴포넌트 선언을 해석하거나 버튼 클릭마다 백엔드를 생성하지 않는다.\n[스코프 기반 import](TypeImports.md)와 [종료](InvocationLifecycle.md) 계약은\n컴파일된 UI에도 계속 적용된다.\n"
-    },
-    {
-      "id": "b000068",
-      "kind": "blank",
-      "start_line": 155,
-      "end_line": 155,
-      "raw": "\n"
-    },
-    {
       "id": "b000069",
       "kind": "html",
-      "start_line": 156,
-      "end_line": 156,
+      "start_line": 152,
+      "end_line": 152,
       "raw": "<a id=\"values-and-interactions-after-compilation\"></a>\n"
     },
     {
       "id": "b000070",
       "kind": "blank",
-      "start_line": 157,
-      "end_line": 157,
+      "start_line": 153,
+      "end_line": 153,
       "raw": "\n"
     },
     {
       "id": "b000071",
       "kind": "heading",
-      "start_line": 158,
-      "end_line": 158,
+      "start_line": 154,
+      "end_line": 154,
       "raw": "## 컴파일 이후의 값과 상호작용\n",
       "level": 2,
       "title": "컴파일 이후의 값과 상호작용"
@@ -657,71 +655,71 @@
     {
       "id": "b000072",
       "kind": "blank",
-      "start_line": 159,
-      "end_line": 159,
+      "start_line": 155,
+      "end_line": 155,
       "raw": "\n"
     },
     {
       "id": "b000073",
       "kind": "paragraph",
-      "start_line": 160,
-      "end_line": 162,
+      "start_line": 156,
+      "end_line": 158,
       "raw": "AOT 컴파일은 실행 동작을 미리 확정한다.\n뷰포트 크기·카운터 값·사용자 입력·쿼리 결과는 실행 중에도 달라질 수 있다.\n필요한 속성 평가·레이아웃·상태 갱신은 컴파일된 네이티브 코드가 수행한다.\n"
     },
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 163,
-      "end_line": 163,
+      "start_line": 159,
+      "end_line": 159,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "paragraph",
-      "start_line": 164,
-      "end_line": 168,
+      "start_line": 160,
+      "end_line": 164,
       "raw": "[기본 반응형 값 모델](ReactiveState.md)과 `@Static` 값 안정성은 컴파일되는 언어 의미이다.\n`@Observable`은 선택적인 명시적 표기이며 활성화 요구사항이 아니다.\n구현에는 네이티브 저장소·콜백·[Core 쿼리 계약](ViewModelQueries.md)을 사용할 수 있다.\n런타임 어노테이션 해석은 필요하지 않다. 정확한 `@Static` 수명 소유자는\n독립적인 [선언 설계 미정 사항](DeclarationAnnotations.md#open-questions)으로 남아 있다.\n"
     },
     {
       "id": "b000076",
       "kind": "blank",
-      "start_line": 169,
-      "end_line": 169,
+      "start_line": 165,
+      "end_line": 165,
       "raw": "\n"
     },
     {
       "id": "b000077",
       "kind": "paragraph",
-      "start_line": 170,
-      "end_line": 171,
+      "start_line": 166,
+      "end_line": 167,
       "raw": "VM과 C++ 서비스는 기존 책임을 유지한다.\n컴파일된 뷰의 마운트는 새 관리형 힙을 생성하거나 인스턴스 소유권을 변경하지 않는다.\n"
     },
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 172,
-      "end_line": 172,
+      "start_line": 168,
+      "end_line": 168,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "html",
-      "start_line": 173,
-      "end_line": 173,
+      "start_line": 169,
+      "end_line": 169,
       "raw": "<a id=\"dependency-boundaries\"></a>\n"
     },
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 174,
-      "end_line": 174,
+      "start_line": 170,
+      "end_line": 170,
       "raw": "\n"
     },
     {
       "id": "b000081",
       "kind": "heading",
-      "start_line": 175,
-      "end_line": 175,
+      "start_line": 171,
+      "end_line": 171,
       "raw": "## 의존성 경계\n",
       "level": 2,
       "title": "의존성 경계"
@@ -729,57 +727,57 @@
     {
       "id": "b000082",
       "kind": "blank",
-      "start_line": 176,
-      "end_line": 176,
+      "start_line": 172,
+      "end_line": 172,
       "raw": "\n"
     },
     {
       "id": "b000083",
       "kind": "paragraph",
-      "start_line": 177,
-      "end_line": 179,
+      "start_line": 173,
+      "end_line": 175,
       "raw": "애플리케이션과 생성된 UI 코드는 네이티브 런타임·그리기 계약을 사용한다.\nCore는 LVUI 소스 구문과 애플리케이션 ViewModel로부터 독립성을 유지한다.\n마운트 계약이 Core에 LVUI 컴파일러 import를 요구하거나 순환 의존성을 도입해서는 안 된다.\n"
     },
     {
       "id": "b000084",
+      "kind": "blank",
+      "start_line": 176,
+      "end_line": 176,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "paragraph",
+      "start_line": 177,
+      "end_line": 179,
+      "raw": "현재 `LVUI/Compiler.h`와 `lvui-compile`이 C++ 생성 도구를, iiGUI의\n`NativeWidgets.h`가 실행 중 마운트 인터페이스를 소유한다.\n런타임 그리기 대상은 이미 컴파일된 UI를 실행하기 위해 컴파일러 프런트엔드를 필요로 하지 않는다.\n"
+    },
+    {
+      "id": "b000086",
       "kind": "blank",
       "start_line": 180,
       "end_line": 180,
       "raw": "\n"
     },
     {
-      "id": "b000085",
-      "kind": "paragraph",
-      "start_line": 181,
-      "end_line": 183,
-      "raw": "현재 `LVUI/Compiler.h`와 `lvui-compile`이 C++ 생성 도구를, iiGUI의\n`NativeWidgets.h`가 실행 중 마운트 인터페이스를 소유한다.\n런타임 그리기 대상은 이미 컴파일된 UI를 실행하기 위해 컴파일러 프런트엔드를 필요로 하지 않는다.\n"
-    },
-    {
-      "id": "b000086",
-      "kind": "blank",
-      "start_line": 184,
-      "end_line": 184,
-      "raw": "\n"
-    },
-    {
       "id": "b000087",
       "kind": "html",
-      "start_line": 185,
-      "end_line": 185,
+      "start_line": 181,
+      "end_line": 181,
       "raw": "<a id=\"current-implementation-boundary\"></a>\n"
     },
     {
       "id": "b000088",
       "kind": "blank",
-      "start_line": 186,
-      "end_line": 186,
+      "start_line": 182,
+      "end_line": 182,
       "raw": "\n"
     },
     {
       "id": "b000089",
       "kind": "heading",
-      "start_line": 187,
-      "end_line": 187,
+      "start_line": 183,
+      "end_line": 183,
       "raw": "## 현재 구현 범위\n",
       "level": 2,
       "title": "현재 구현 범위"
@@ -787,43 +785,43 @@
     {
       "id": "b000090",
       "kind": "blank",
-      "start_line": 188,
-      "end_line": 188,
+      "start_line": 184,
+      "end_line": 184,
       "raw": "\n"
     },
     {
       "id": "b000091",
       "kind": "paragraph",
-      "start_line": 189,
-      "end_line": 194,
+      "start_line": 185,
+      "end_line": 190,
       "raw": "패키지는 별도 [레거시 문서 API](Language.md)와\n[즉시 선언형 컴포넌트 언어 프런트엔드](ComponentLanguage.md)를 제공한다.\n`Parser.cpp`는 기존 문서 파싱을, `Language.cpp`는 예약어·토큰·`View` 트리 파싱을 구현한다.\n`lvui-check`는 실제 컴포넌트 소스의 구문을 검사하는 네이티브 도구이다.\n구문 검사와 별도로 `lvui-compile`·`compile_native`가 일부 컴포넌트의 C++23 코드를 생성한다.\n`lvui_generate`가 CMake 빌드 의존성을 연결하고 네이티브 C++ 컴파일러가 실제 타입 검사·링크를 수행한다.\n"
     },
     {
       "id": "b000092",
       "kind": "blank",
-      "start_line": 195,
-      "end_line": 195,
+      "start_line": 191,
+      "end_line": 191,
       "raw": "\n"
     },
     {
       "id": "b000093",
       "kind": "paragraph",
-      "start_line": 196,
-      "end_line": 196,
+      "start_line": 192,
+      "end_line": 192,
       "raw": "기존 iiGUI 캔버스 연동은 이미 파싱한 `lvui::Document`를 받는다.\n"
     },
     {
       "id": "b000094",
       "kind": "blank",
-      "start_line": 197,
-      "end_line": 197,
+      "start_line": 193,
+      "end_line": 193,
       "raw": "\n"
     },
     {
       "id": "b000095",
       "kind": "list",
-      "start_line": 198,
-      "end_line": 200,
+      "start_line": 194,
+      "end_line": 196,
       "raw": "- `LVUI/NativeDocument.h`는 문서의 레이아웃과 앱 측 호스트 연결을 소유한다.\n- `iiGUI/Host.h`는 특정 상위 타입에 의존하지 않는 `set_view` 확장점과 `set_canvas`를 제공한다.\n- 앱이 LVUI 어댑터와 iiGUI를 함께 사용하면 LVUI가 계산한 프레임을 호스트에 제출한다.\n",
       "items": [
         {
@@ -846,43 +844,43 @@
     {
       "id": "b000096",
       "kind": "blank",
-      "start_line": 201,
-      "end_line": 201,
+      "start_line": 197,
+      "end_line": 197,
       "raw": "\n"
     },
     {
       "id": "b000097",
       "kind": "paragraph",
-      "start_line": 202,
-      "end_line": 206,
+      "start_line": 198,
+      "end_line": 202,
       "raw": "실제 AOT 경로는 이와 별개이다. 생성한 C++가 `Host::mount_widgets`에서\n`WidgetBuilder`의 직접 생성 함수를 호출한다. iiGUI가 C++ 위젯의 배치·입력·그리기를 담당하며\nAppKit 컨트롤과 Auto Layout을 사용하지 않는다. [지원 목록](LVUIIndependence.md)에 창·레이아웃·버튼·\n입력·범위 컨트롤·아이콘·탭과 타입을 가진 콜백을 명시한다. 앱에는 LVUI 소스·AST·컴파일러 호출이 필요 없다.\n반응형 필드 접근·나머지 예약 컴포넌트·다른 OS 입력 어댑터·추가 GPU 코드 생성은 미완성이다.\n"
     },
     {
       "id": "b000098",
       "kind": "blank",
-      "start_line": 207,
-      "end_line": 207,
+      "start_line": 203,
+      "end_line": 203,
       "raw": "\n"
     },
     {
       "id": "b000099",
       "kind": "html",
-      "start_line": 208,
-      "end_line": 208,
+      "start_line": 204,
+      "end_line": 204,
       "raw": "<a id=\"future-implementation-validation\"></a>\n"
     },
     {
       "id": "b000100",
       "kind": "blank",
-      "start_line": 209,
-      "end_line": 209,
+      "start_line": 205,
+      "end_line": 205,
       "raw": "\n"
     },
     {
       "id": "b000101",
       "kind": "heading",
-      "start_line": 210,
-      "end_line": 210,
+      "start_line": 206,
+      "end_line": 206,
       "raw": "## 향후 구현 검증\n",
       "level": 2,
       "title": "향후 구현 검증"
@@ -890,15 +888,15 @@
     {
       "id": "b000102",
       "kind": "blank",
-      "start_line": 211,
-      "end_line": 211,
+      "start_line": 207,
+      "end_line": 207,
       "raw": "\n"
     },
     {
       "id": "b000103",
       "kind": "list",
-      "start_line": 212,
-      "end_line": 217,
+      "start_line": 208,
+      "end_line": 213,
       "raw": "- `.lvui` 뷰를 iiGUI의 네이티브 C++ 위젯으로 빌드하고 OS 컨트롤 없이 생성·갱신·표시되는지 확인한다.\n- Metal·DirectX/Direct3D·Vulkan의 대상별 가속 코드가 빌드 산출물에 포함되고 iiGUI를 통해 실행되는지 확인한다.\n- 애플리케이션 실행 중 소스를 읽거나 언어 컴파일러·인터프리터·관리형 VM을 호출하지 않고 해당 UI를 실행·마운트한다.\n- 같은 소유 스코프 인스턴스를 유지하면서 컴파일된 네이티브 코드로 백엔드 동작·관찰·쿼리 전달을 수행한다.\n- iiGUI를 통해 마운트된 대상의 크기를 바꾸고 갱신·그리기를 수행한다.\n- 마운트를 해제하고 접수 종료·오래된 결과 거부·소유 백엔드와 그리기 자원의 사용 종료를 검증한다.\n",
       "items": [
         {
@@ -936,43 +934,43 @@
     {
       "id": "b000104",
       "kind": "blank",
-      "start_line": 218,
-      "end_line": 218,
+      "start_line": 214,
+      "end_line": 214,
       "raw": "\n"
     },
     {
       "id": "b000105",
       "kind": "paragraph",
-      "start_line": 219,
-      "end_line": 221,
+      "start_line": 215,
+      "end_line": 217,
       "raw": "위 목록은 전체 설계를 위한 수용 기준이다. macOS의 실제 위젯·스코프·직접 동작·크기 변경·종료와\n설치 소비자 검증은 [NativeAOTVerification.md](NativeAOTVerification.md)에 별도로 기록한다.\n일반 관찰·쿼리 바인딩과 GPU 코드 생성은 여전히 향후 기준이다.\n"
     },
     {
       "id": "b000106",
       "kind": "blank",
-      "start_line": 222,
-      "end_line": 222,
+      "start_line": 218,
+      "end_line": 218,
       "raw": "\n"
     },
     {
       "id": "b000107",
       "kind": "html",
-      "start_line": 223,
-      "end_line": 223,
+      "start_line": 219,
+      "end_line": 219,
       "raw": "<a id=\"open-questions\"></a>\n"
     },
     {
       "id": "b000108",
       "kind": "blank",
-      "start_line": 224,
-      "end_line": 224,
+      "start_line": 220,
+      "end_line": 220,
       "raw": "\n"
     },
     {
       "id": "b000109",
       "kind": "heading",
-      "start_line": 225,
-      "end_line": 225,
+      "start_line": 221,
+      "end_line": 221,
       "raw": "## 미정 사항\n",
       "level": 2,
       "title": "미정 사항"
@@ -980,15 +978,15 @@
     {
       "id": "b000110",
       "kind": "blank",
-      "start_line": 226,
-      "end_line": 226,
+      "start_line": 222,
+      "end_line": 222,
       "raw": "\n"
     },
     {
       "id": "b000111",
       "kind": "list",
-      "start_line": 227,
-      "end_line": 234,
+      "start_line": 223,
+      "end_line": 230,
       "raw": "- 현재 C++23 생성·CMake 연동 외의 네이티브 백엔드·대상 도구 체인 확대.\n- 공통 C++ 위젯의 Windows·Linux·모바일 입력·접근성·표시 어댑터와 지원 범위.\n- 가속 백엔드별 코드·셰이더 자산 형식과 자체 위젯·GPU 표면 합성 계약.\n- C++ 선언 탐색과 생성되는 네이티브 브리지.\n- 애플리케이션·라이브러리 패키징, 진입점, ABI 호환성.\n- 현재 자체 위젯 마운트를 넘어서는 비동기 활성 사용·추가 가속 표면 소유권.\n- 정확한 뷰포트·입력·갱신 계약과 그리기 제출 연동.\n- 소스 진단·디버깅 정보·증분 컴파일.\n",
       "items": [
         {
@@ -1073,7 +1071,7 @@
       "level": 2,
       "title": "빌드 시 책임",
       "anchor": "빌드-시-책임",
-      "start_line": 105
+      "start_line": 103
     },
     {
       "block_id": "b000061",
@@ -1081,7 +1079,7 @@
       "level": 2,
       "title": "마운트의 책임",
       "anchor": "마운트의-책임",
-      "start_line": 137
+      "start_line": 135
     },
     {
       "block_id": "b000071",
@@ -1089,7 +1087,7 @@
       "level": 2,
       "title": "컴파일 이후의 값과 상호작용",
       "anchor": "컴파일-이후의-값과-상호작용",
-      "start_line": 158
+      "start_line": 154
     },
     {
       "block_id": "b000081",
@@ -1097,7 +1095,7 @@
       "level": 2,
       "title": "의존성 경계",
       "anchor": "의존성-경계",
-      "start_line": 175
+      "start_line": 171
     },
     {
       "block_id": "b000089",
@@ -1105,7 +1103,7 @@
       "level": 2,
       "title": "현재 구현 범위",
       "anchor": "현재-구현-범위",
-      "start_line": 187
+      "start_line": 183
     },
     {
       "block_id": "b000101",
@@ -1113,7 +1111,7 @@
       "level": 2,
       "title": "향후 구현 검증",
       "anchor": "향후-구현-검증",
-      "start_line": 210
+      "start_line": 206
     },
     {
       "block_id": "b000109",
@@ -1121,7 +1119,7 @@
       "level": 2,
       "title": "미정 사항",
       "anchor": "미정-사항",
-      "start_line": 225
+      "start_line": 221
     }
   ],
   "indexes": {
@@ -1149,77 +1147,77 @@
       },
       {
         "block_id": "b000035",
-        "line": 83,
-        "text": "| macOS | 공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다. | Metal과 Vulkan. |",
+        "line": 81,
+        "text": "- 대상: macOS; 네이티브 위젯 코드의 대상: 공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다.; 그래픽 가속 코드의 대상: Metal과 Vulkan.",
         "basis": "lexical_match",
-        "context": "table"
+        "context": "list"
       },
       {
         "block_id": "b000039",
-        "line": 95,
+        "line": 93,
         "text": "버튼·레이블·레이아웃에 OS 컨트롤이나 OS 레이아웃을 사용하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000041",
-        "line": 101,
+        "line": 99,
         "text": "이는 LVUI 소스의 재해석이나 실행 중 새로운 플랫폼 백엔드의 컴파일을 요구하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000047",
-        "line": 107,
+        "line": 105,
         "text": "AOT 도구 체인은 배포 전에 채택한 언어 규칙을 처리해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000051",
-        "line": 120,
+        "line": 118,
         "text": "소스 검증은 런타임 백엔드 인스턴스를 생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000055",
-        "line": 129,
+        "line": 127,
         "text": "컴파일러 백엔드·중간 언어·드라이버 이름·생성 파일 형식은 여기서 정하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000067",
-        "line": 152,
+        "line": 148,
         "text": "마운트 시 `.lvui` 소스를 파싱하거나 컴포넌트 선언을 해석하거나 버튼 클릭마다 백엔드를 생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000077",
-        "line": 171,
+        "line": 167,
         "text": "컴파일된 뷰의 마운트는 새 관리형 힙을 생성하거나 인스턴스 소유권을 변경하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000083",
-        "line": 179,
+        "line": 175,
         "text": "마운트 계약이 Core에 LVUI 컴파일러 import를 요구하거나 순환 의존성을 도입해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000085",
-        "line": 183,
+        "line": 179,
         "text": "런타임 그리기 대상은 이미 컴파일된 UI를 실행하기 위해 컴파일러 프런트엔드를 필요로 하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000097",
-        "line": 204,
+        "line": 200,
         "text": "AppKit 컨트롤과 Auto Layout을 사용하지 않는다. [지원 목록](LVUIIndependence.md)에 창·레이아웃·버튼·",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -1274,153 +1272,80 @@
         "label": "iiGUI 호스트 계약",
         "target": "../../iiGUI/docs/HostPlatforms.md",
         "kind": "relative",
-        "line": 90
+        "line": 88
       },
       {
         "block_id": "b000053",
         "label": "메서드 참조와 명시적 호출의 구분",
         "target": "MethodReferences.md",
         "kind": "relative",
-        "line": 123
+        "line": 121
       },
       {
         "block_id": "b000067",
         "label": "스코프 기반 import",
         "target": "TypeImports.md",
         "kind": "relative",
-        "line": 153
+        "line": 149
       },
       {
         "block_id": "b000067",
         "label": "종료",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
-        "line": 153
+        "line": 149
       },
       {
         "block_id": "b000075",
         "label": "기본 반응형 값 모델",
         "target": "ReactiveState.md",
         "kind": "relative",
-        "line": 164
+        "line": 160
       },
       {
         "block_id": "b000075",
         "label": "Core 쿼리 계약",
         "target": "ViewModelQueries.md",
         "kind": "relative",
-        "line": 166
+        "line": 162
       },
       {
         "block_id": "b000075",
         "label": "선언 설계 미정 사항",
         "target": "DeclarationAnnotations.md#open-questions",
         "kind": "relative",
-        "line": 168
+        "line": 164
       },
       {
         "block_id": "b000091",
         "label": "레거시 문서 API",
         "target": "Language.md",
         "kind": "relative",
-        "line": 189
+        "line": 185
       },
       {
         "block_id": "b000091",
         "label": "즉시 선언형 컴포넌트 언어 프런트엔드",
         "target": "ComponentLanguage.md",
         "kind": "relative",
-        "line": 190
+        "line": 186
       },
       {
         "block_id": "b000097",
         "label": "지원 목록",
         "target": "LVUIIndependence.md",
         "kind": "relative",
-        "line": 204
+        "line": 200
       },
       {
         "block_id": "b000105",
         "label": "NativeAOTVerification.md",
         "target": "NativeAOTVerification.md",
         "kind": "relative",
-        "line": 220
+        "line": 216
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000035",
-        "columns": [
-          "대상",
-          "네이티브 위젯 코드의 대상",
-          "그래픽 가속 코드의 대상"
-        ],
-        "rows": [
-          [
-            "macOS",
-            "공통 iiGUI 위젯과 Cocoa 창·입력·접근성 어댑터. 컴포넌트별 OS 컨트롤은 생성하지 않는다.",
-            "Metal과 Vulkan."
-          ],
-          [
-            "Windows",
-            "공통 iiGUI 위젯을 Win32 창·입력·접근성 어댑터에 연결하는 소스가 있다.",
-            "Direct3D 11과 Vulkan."
-          ],
-          [
-            "Linux",
-            "공통 iiGUI 위젯을 직접 Wayland 표면·입력에 연결하는 소스가 있다. X11은 레거시이다.",
-            "Vulkan."
-          ],
-          [
-            "iOS·Android",
-            "공통 위젯과 플랫폼 표면·입력 어댑터가 있다. 세부 기능은 플랫폼마다 다르다.",
-            "iOS Metal 및 선택적 MoltenVK, Android Vulkan."
-          ],
-          [
-            "Web",
-            "별도 WASM 배포 대상이 브라우저 표면·입력에 연결된다.",
-            "WebGL2."
-          ]
-        ]
-      },
-      {
-        "block_id": "b000065",
-        "columns": [
-          "책임",
-          "필요한 동작"
-        ],
-        "rows": [
-          [
-            "스코프 활성화",
-            "마운트된 뷰의 정체성을 설정하고 소유 import와 바인딩을 활성화한다."
-          ],
-          [
-            "호스트 문맥",
-            "대상의 뷰포트·배율·소유 UI 실행 영역을 제공한다."
-          ],
-          [
-            "네이티브 위젯",
-            "컴파일된 코드로 iiGUI 위젯을 생성하고 부모·자식 구조·속성·이벤트·수명에 연결한다."
-          ],
-          [
-            "입력과 동작",
-            "지원 입력을 컴파일된 네이티브 콜백과 기존 백엔드·쿼리 계약으로 전달한다."
-          ],
-          [
-            "상태 갱신",
-            "관찰된 변경을 의존 네이티브 뷰 상태에 적용하고 필요한 레이아웃·그리기 작업을 요청한다."
-          ],
-          [
-            "그리기와 가속",
-            "위젯이 내보낸 패널·글자·이미지·오버레이를 컴파일된 Metal·DirectX·Vulkan 렌더러로 표시한다."
-          ],
-          [
-            "마운트 해제",
-            "접수를 닫고 연결을 분리하며 활성 사용을 종료한 뒤 소유 객체·그리기 자원을 해제한다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

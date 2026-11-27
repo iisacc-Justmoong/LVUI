@@ -1,4 +1,6 @@
 #include <LVUI/Material.h>
+#include <LVUI/NativeMaterialGradient.h>
+#include <iiGUI/MaterialGradient.h>
 #include <iiGUI/MaterialModel.h>
 using MaterialModel=ii::gui::BasicMaterial<lvui::MaterialModelPolicy>;
 #include <chrono>
@@ -9,6 +11,42 @@ using MaterialModel=ii::gui::BasicMaterial<lvui::MaterialModelPolicy>;
 namespace {
 void require(bool ok, const char* reason) { if (!ok) throw std::runtime_error(reason); }
 bool near(double a, double b) { return std::abs(a-b)<1e-6; }
+// The material edge follows the selected accent while retaining LVUI's blue baseline.
+void accentEdges() {
+    using Policy=lvui::native::MaterialGradientPolicy<MaterialModel>;
+    MaterialModel material;lvui::MaterialConfiguration config;
+    config.kind=lvui::MaterialKind::panel;config.motion_enabled=false;
+    require(material.set_configuration(config,{}),"Default material rejected");
+    const auto blue=Policy::edge_color(material);
+    for(std::size_t i=0;i<3;++i)
+        require(near(blue[i],lvui::material_radial_defaults::edge_rgb[i]),"Blue material baseline changed");
+    config.primary_color=lvui::figma_defaults::accent_red_default;
+    require(material.set_configuration(config,{}),"Red material rejected");
+    const auto red=Policy::edge_color(material);
+    require(near(red[0],1)&&near(red[1],.2760854959487915)&&near(red[2],.2760854959487915),
+            "Red material edge does not match LVUI accentRed");
+    config.primary_color=lvui::StyleColor{.4,.4,.4,1};
+    require(material.set_configuration(config,{}),"Neutral material rejected");
+    const auto neutral=Policy::edge_color(material);
+    require(near(neutral[0],neutral[1])&&near(neutral[1],neutral[2]),"Neutral material acquired a blue edge");
+}
+// Test the LVUI policy together with iiGUI's colored raster, including its edge.
+void redRaster() {
+    MaterialModel material;lvui::MaterialConfiguration config;
+    config.kind=lvui::MaterialKind::panel;config.motion_enabled=false;
+    config.primary_color=lvui::figma_defaults::accent_red_default;
+    require(material.set_configuration(config,{}),"Red material rejected");
+    lvui::native::MaterialGradientBinding<ii::gui::BasicMaterialGradient,MaterialModel> gradient;
+    const auto image=gradient.render_colored(material,240,180,1);
+    require(image&&*image,"Red material did not produce a raster");
+    std::size_t colored=0;
+    const auto rgba=(*image)->rgba();
+    for(std::size_t at=0;at+3<rgba.size();at+=4)if(rgba[at+3]>4){
+        ++colored;
+        require(rgba[at]>=rgba[at+2],"Red material raster contains blue edges");
+    }
+    require(colored>0,"Red material raster has no visible pixels");
+}
 void defaults() {
     MaterialModel value; lvui::MaterialConfiguration config;
     config.kind=lvui::MaterialKind::panel;
@@ -71,4 +109,4 @@ void motion() {
     require(value.set_configuration(config,t+200ms)&&!value.animating()&&near(value.displayed_primary().green,1),"Disabled motion did not update immediately");
 }
 }
-int main(){defaults();gradients_and_validation();motion();}
+int main(){defaults();gradients_and_validation();motion();accentEdges();redRaster();}

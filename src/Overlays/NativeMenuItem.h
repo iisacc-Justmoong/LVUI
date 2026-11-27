@@ -56,8 +56,53 @@ template<class Widget,class Snapshot>struct MenuItemPortValue final {
     std::function<ii::core::Result<Widget>()> widget;
     std::vector<Widget> layout_groups;
 };
+
+// Decorate the iiGUI model at the LVUI boundary so every menu construction
+// path shares one shortcut presentation policy without changing its input.
+template<class NativeModel>class ShortcutMenuItemModel final {
+    NativeModel model_;
+public:
+    // Validate authored values using the underlying native model's contract.
+    [[nodiscard]] static bool validate(const MenuItemConfiguration& value)noexcept{return NativeModel::validate(value);}
+
+    // Keep the authored shortcut readable to assistive technology while the
+    // native model measures and paints the corresponding keyboard symbols.
+    bool set_configuration(MenuItemConfiguration value){
+        if(!validate(value))return false;
+        if(value.key_visible){
+            auto& authored=value.shortcut.empty()?value.key_placeholder:value.shortcut;
+            auto display=format_shortcut(authored);
+            if(display!=authored&&display.size()<=65536){
+                auto accessible=value.accessibility_name.empty()?(value.label.empty()?std::string("Menu item"):value.label):value.accessibility_name;
+                if(accessible.size()+2+authored.size()<=65536){
+                    accessible+=", ";accessible+=authored;value.accessibility_name=std::move(accessible);
+                }
+                authored=std::move(display);
+            }
+        }
+        return model_.set_configuration(std::move(value));
+    }
+
+    // Return the prepared drawing configuration, including its accessible name.
+    [[nodiscard]] const MenuItemConfiguration& configuration()const noexcept{return model_.configuration();}
+    // Return the shortcut that the host measures and paints.
+    [[nodiscard]] std::string_view shortcut()const noexcept{return model_.shortcut();}
+    // Use the native model's resolved menu-item width.
+    [[nodiscard]] double width()const noexcept{return model_.width();}
+    // Use the native model's resolved menu-item height.
+    [[nodiscard]] double height()const noexcept{return model_.height();}
+    // Use the native model's submenu direction and expansion rules.
+    [[nodiscard]] MenuDirection direction()const noexcept{return model_.direction();}
+    // Delegate interaction precedence and palette selection to iiGUI.
+    [[nodiscard]] MenuItemVisual visual(MenuItemInteraction interaction)const noexcept{return model_.visual(interaction);}
+    // Delegate placement of measured content to the native layout model.
+    [[nodiscard]] std::optional<MenuItemGeometry> geometry(double width,double height,double label_width,double label_height,
+                                                           double shortcut_width,double shortcut_height)const noexcept{
+        return model_.geometry(width,height,label_width,label_height,shortcut_width,shortcut_height);
+    }
+};
 template<class NativeModel,class Decoder,class Widget,class Snapshot>struct MenuItemHostPolicy final {
-    using Model=NativeModel;using Input=MenuItemInputValue<typename Decoder::Image>;using Callbacks=NativeMenuItemCallbacks;
+    using Model=ShortcutMenuItemModel<NativeModel>;using Input=MenuItemInputValue<typename Decoder::Image>;using Callbacks=NativeMenuItemCallbacks;
     using Presentation=MenuItemPresentation;using Activation=MenuItemActivation;using CloseAction=MenuCloseAction;using ClosePlan=MenuClosePlan;
     using PopupPort=MenuPopupPortValue<Widget,Snapshot>;using ItemPort=MenuItemPortValue<Widget,Snapshot>;
     using Entry=MenuEntry;using EntryKind=MenuEntryKind;using EntryState=MenuEntryState;using Direction=MenuDirection;

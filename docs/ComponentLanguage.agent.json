@@ -10,7 +10,7 @@
   },
   "source": {
     "path": "docs/ComponentLanguage.md",
-    "sha256": "0c3ba0a1a5e18b6019080ca5317d8d141ceb0d8f396dd8195014015901ebe901",
+    "sha256": "13259de2a7ba95ff82327379fbda44a09a7f7046419e0f7697386b25a67bdc8d",
     "bytes": 9787,
     "line_count": 150,
     "encoding": "utf-8",
@@ -366,9 +366,9 @@
       "kind": "fenced_code",
       "start_line": 121,
       "end_line": 130,
-      "raw": "```sh\ncmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-check --keywords\ncmake --install build\n```\n",
+      "raw": "```sh\ncmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/Examples/ReservedComponents.lvui\n./build/lvui-check --keywords\ncmake --install build\n```\n",
       "language": "sh",
-      "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-check --keywords\ncmake --install build\n",
+      "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/Examples/ReservedComponents.lvui\n./build/lvui-check --keywords\ncmake --install build\n",
       "closed": true
     },
     {
@@ -383,7 +383,7 @@
       "kind": "paragraph",
       "start_line": 132,
       "end_line": 134,
-      "raw": "`lvui-check`는 성공하면 0, 구문 오류이면 행·열과 진단을 출력하고 1,\n파일·사용법 오류이면 2를 반환한다. [실제 검사 예제](examples/ReservedComponents.lvui)와\n[카운터 예제](examples/Counter.lvui)를 CTest로 검사한다.\n"
+      "raw": "`lvui-check`는 성공하면 0, 구문 오류이면 행·열과 진단을 출력하고 1,\n파일·사용법 오류이면 2를 반환한다. [실제 검사 예제](Examples/ReservedComponents.lvui)와\n[카운터 예제](Examples/Counter.lvui)를 CTest로 검사한다.\n"
     },
     {
       "id": "b000042",
@@ -515,7 +515,7 @@
       {
         "block_id": "b000039",
         "language": "sh",
-        "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/examples/ReservedComponents.lvui\n./build/lvui-check --keywords\ncmake --install build\n"
+        "code": "cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \\\n  -DiiSDKCore_DIR=/path/to/iiSDKCore/lib/cmake/iiSDKCore \\\n  -DCMAKE_INSTALL_PREFIX=\"$PWD/build/install\"\ncmake --build build --parallel 4\nctest --test-dir build --output-on-failure\n./build/lvui-check docs/Examples/ReservedComponents.lvui\n./build/lvui-check --keywords\ncmake --install build\n"
       }
     ],
     "links": [
@@ -592,14 +592,14 @@
       {
         "block_id": "b000041",
         "label": "실제 검사 예제",
-        "target": "examples/ReservedComponents.lvui",
+        "target": "Examples/ReservedComponents.lvui",
         "kind": "relative",
         "line": 133
       },
       {
         "block_id": "b000041",
         "label": "카운터 예제",
-        "target": "examples/Counter.lvui",
+        "target": "Examples/Counter.lvui",
         "kind": "relative",
         "line": 134
       },

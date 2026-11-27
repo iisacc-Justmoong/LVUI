@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/InvocationLifecycle.md",
-    "sha256": "2642e08dd0e7a4544fd63d5792b73dff0c4baa03c28244d543df5d7e6b1712fc",
-    "bytes": 9762,
-    "line_count": 179,
+    "sha256": "8733834244a34ad73108b99607bc29f03ff2c70310ed46c65eda311fb1ed632f",
+    "bytes": 9930,
+    "line_count": 177,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -303,95 +303,97 @@
     },
     {
       "id": "b000039",
-      "kind": "table",
       "start_line": 66,
-      "end_line": 73,
-      "raw": "| 사용 | 해당 사용의 종료 시점 |\n|---|---|\n| 독립 값으로 복사하는 일회성 읽기 | 읽기와 복사가 완료될 때이다. |\n| 동기 메서드 호출 | 호출이 반환되고 그로부터 발생한 차용 사용도 끝날 때이다. |\n| 속성 구독 | 구독이 분리될 때이다. |\n| 이벤트·메서드 연결 | 연결이 제거되고 활성 호출이 종료될 때이다. |\n| 인스턴스를 사용하는 비동기 작업 | 작업이 완료·취소되고 모든 인스턴스 접근과 캡처가 종료될 때이다. |\n| 사용 가능한 import 바인딩 또는 다른 미래 사용 경로 | 해당 바인딩·경로가 종료되어 더 이상 접근을 허용할 수 없을 때이다. |\n",
-      "columns": [
-        "사용",
-        "해당 사용의 종료 시점"
-      ],
-      "rows": [
-        [
-          "독립 값으로 복사하는 일회성 읽기",
-          "읽기와 복사가 완료될 때이다."
-        ],
-        [
-          "동기 메서드 호출",
-          "호출이 반환되고 그로부터 발생한 차용 사용도 끝날 때이다."
-        ],
-        [
-          "속성 구독",
-          "구독이 분리될 때이다."
-        ],
-        [
-          "이벤트·메서드 연결",
-          "연결이 제거되고 활성 호출이 종료될 때이다."
-        ],
-        [
-          "인스턴스를 사용하는 비동기 작업",
-          "작업이 완료·취소되고 모든 인스턴스 접근과 캡처가 종료될 때이다."
-        ],
-        [
-          "사용 가능한 import 바인딩 또는 다른 미래 사용 경로",
-          "해당 바인딩·경로가 종료되어 더 이상 접근을 허용할 수 없을 때이다."
-        ]
+      "end_line": 71,
+      "raw": "- 사용: 독립 값으로 복사하는 일회성 읽기; 해당 사용의 종료 시점: 읽기와 복사가 완료될 때이다.\n- 사용: 동기 메서드 호출; 해당 사용의 종료 시점: 호출이 반환되고 그로부터 발생한 차용 사용도 끝날 때이다.\n- 사용: 속성 구독; 해당 사용의 종료 시점: 구독이 분리될 때이다.\n- 사용: 이벤트·메서드 연결; 해당 사용의 종료 시점: 연결이 제거되고 활성 호출이 종료될 때이다.\n- 사용: 인스턴스를 사용하는 비동기 작업; 해당 사용의 종료 시점: 작업이 완료·취소되고 모든 인스턴스 접근과 캡처가 종료될 때이다.\n- 사용: 사용 가능한 import 바인딩 또는 다른 미래 사용 경로; 해당 사용의 종료 시점: 해당 바인딩·경로가 종료되어 더 이상 접근을 허용할 수 없을 때이다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "사용: 독립 값으로 복사하는 일회성 읽기; 해당 사용의 종료 시점: 읽기와 복사가 완료될 때이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "사용: 동기 메서드 호출; 해당 사용의 종료 시점: 호출이 반환되고 그로부터 발생한 차용 사용도 끝날 때이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "사용: 속성 구독; 해당 사용의 종료 시점: 구독이 분리될 때이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "사용: 이벤트·메서드 연결; 해당 사용의 종료 시점: 연결이 제거되고 활성 호출이 종료될 때이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "사용: 인스턴스를 사용하는 비동기 작업; 해당 사용의 종료 시점: 작업이 완료·취소되고 모든 인스턴스 접근과 캡처가 종료될 때이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "사용: 사용 가능한 import 바인딩 또는 다른 미래 사용 경로; 해당 사용의 종료 시점: 해당 바인딩·경로가 종료되어 더 이상 접근을 허용할 수 없을 때이다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 74,
-      "end_line": 74,
+      "start_line": 72,
+      "end_line": 72,
       "raw": "\n"
     },
     {
       "id": "b000041",
       "kind": "paragraph",
-      "start_line": 75,
-      "end_line": 76,
+      "start_line": 73,
+      "end_line": 74,
       "raw": "자체 데이터를 소유한 복사 결과는 백엔드보다 오래 유지될 수 있다.\n백엔드 저장소를 빌리는 결과는 계속 사용으로 계산하며 수명 계약이 필요하다.\n"
     },
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 77,
-      "end_line": 77,
+      "start_line": 75,
+      "end_line": 75,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 78,
-      "end_line": 79,
+      "start_line": 76,
+      "end_line": 77,
       "raw": "뷰를 숨기는 것은 스코프 제거와 같지 않다.\n숨겨진 뷰에도 구독, 동작 연결, 미래 소비자가 남아 있을 수 있다.\n"
     },
     {
       "id": "b000044",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000045",
+      "kind": "html",
+      "start_line": 79,
+      "end_line": 79,
+      "raw": "<a id=\"destruction-condition\"></a>\n"
+    },
+    {
+      "id": "b000046",
       "kind": "blank",
       "start_line": 80,
       "end_line": 80,
       "raw": "\n"
     },
     {
-      "id": "b000045",
-      "kind": "html",
-      "start_line": 81,
-      "end_line": 81,
-      "raw": "<a id=\"destruction-condition\"></a>\n"
-    },
-    {
-      "id": "b000046",
-      "kind": "blank",
-      "start_line": 82,
-      "end_line": 82,
-      "raw": "\n"
-    },
-    {
       "id": "b000047",
       "kind": "heading",
-      "start_line": 83,
-      "end_line": 83,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "## 파괴 조건\n",
       "level": 2,
       "title": "파괴 조건"
@@ -399,29 +401,29 @@
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 84,
-      "end_line": 84,
+      "start_line": 82,
+      "end_line": 82,
       "raw": "\n"
     },
     {
       "id": "b000049",
       "kind": "paragraph",
-      "start_line": 85,
-      "end_line": 85,
+      "start_line": 83,
+      "end_line": 83,
       "raw": "다음 조건을 만족하면 인스턴스를 즉시 파괴할 수 있다.\n"
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 86,
-      "end_line": 86,
+      "start_line": 84,
+      "end_line": 84,
       "raw": "\n"
     },
     {
       "id": "b000051",
       "kind": "list",
-      "start_line": 87,
-      "end_line": 89,
+      "start_line": 85,
+      "end_line": 87,
       "raw": "1. import 바인딩·연결·구독·다른 미래 경로 중 어느 것도 새 사용을 시작할 수 없다.\n2. 동기 호출·비동기 작업·콜백 캡처·네이티브 작업 중 어느 것도\n   인스턴스나 그 소유 자원을 더 이상 사용하지 않는다.\n",
       "items": [
         {
@@ -439,57 +441,57 @@
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 90,
-      "end_line": 90,
+      "start_line": 88,
+      "end_line": 88,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 91,
-      "end_line": 92,
+      "start_line": 89,
+      "end_line": 90,
       "raw": "이 경로들의 종료는 소유자가 통제한다.\n활성 차용은 파괴 책임을 자식에게 이전하거나 스코프를 암묵적으로 무한 연장하는 임의의 공유 소유권을 만들지 않는다.\n"
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 93,
-      "end_line": 93,
+      "start_line": 91,
+      "end_line": 91,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 94,
-      "end_line": 95,
+      "start_line": 92,
+      "end_line": 93,
       "raw": "조건을 만족하면 대응하는 파괴 계약을 정확히 한 번 실행하고 인스턴스 소유 자원을 반환한다.\n사용하지 않는 살아 있는 백엔드를 암묵적인 캐시에 보관하지 않는다.\n"
     },
     {
       "id": "b000056",
+      "kind": "blank",
+      "start_line": 94,
+      "end_line": 94,
+      "raw": "\n"
+    },
+    {
+      "id": "b000057",
+      "kind": "html",
+      "start_line": 95,
+      "end_line": 95,
+      "raw": "<a id=\"closing-sequence\"></a>\n"
+    },
+    {
+      "id": "b000058",
       "kind": "blank",
       "start_line": 96,
       "end_line": 96,
       "raw": "\n"
     },
     {
-      "id": "b000057",
-      "kind": "html",
-      "start_line": 97,
-      "end_line": 97,
-      "raw": "<a id=\"closing-sequence\"></a>\n"
-    },
-    {
-      "id": "b000058",
-      "kind": "blank",
-      "start_line": 98,
-      "end_line": 98,
-      "raw": "\n"
-    },
-    {
       "id": "b000059",
       "kind": "heading",
-      "start_line": 99,
-      "end_line": 99,
+      "start_line": 97,
+      "end_line": 97,
       "raw": "## 종료 순서\n",
       "level": 2,
       "title": "종료 순서"
@@ -497,15 +499,15 @@
     {
       "id": "b000060",
       "kind": "blank",
-      "start_line": 100,
-      "end_line": 100,
+      "start_line": 98,
+      "end_line": 98,
       "raw": "\n"
     },
     {
       "id": "b000061",
       "kind": "list",
-      "start_line": 101,
-      "end_line": 105,
+      "start_line": 99,
+      "end_line": 103,
       "raw": "1. 종료 상태로 들어가 새 호출과 전달을 거부한다.\n2. 이벤트 연결·속성 구독·자식 차용자를 분리한다.\n3. 백엔드가 소유한 대기 작업을 취소하고, 작업 계약이 지원하면 활성 작업의 취소도 요청한다.\n4. 활성 사용·콜백·캡처가 종료되도록 한다.\n5. 필요한 실행 영역에서 인스턴스를 파괴하고 소유 자원을 반환한다.\n",
       "items": [
         {
@@ -538,43 +540,43 @@
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 106,
-      "end_line": 106,
+      "start_line": 104,
+      "end_line": 104,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 107,
-      "end_line": 109,
+      "start_line": 105,
+      "end_line": 107,
       "raw": "종료는 미래 접근 권한을 즉시 회수한다.\n남아 있는 실제 사용이 끝나는 즉시 물리적 파괴가 뒤따른다.\n대기 작업은 사용이 종료된 인스턴스에 대한 사용을 시작해서는 안 된다.\n"
     },
     {
       "id": "b000064",
+      "kind": "blank",
+      "start_line": 108,
+      "end_line": 108,
+      "raw": "\n"
+    },
+    {
+      "id": "b000065",
+      "kind": "html",
+      "start_line": 109,
+      "end_line": 109,
+      "raw": "<a id=\"closing-from-inside-a-callback\"></a>\n"
+    },
+    {
+      "id": "b000066",
       "kind": "blank",
       "start_line": 110,
       "end_line": 110,
       "raw": "\n"
     },
     {
-      "id": "b000065",
-      "kind": "html",
-      "start_line": 111,
-      "end_line": 111,
-      "raw": "<a id=\"closing-from-inside-a-callback\"></a>\n"
-    },
-    {
-      "id": "b000066",
-      "kind": "blank",
-      "start_line": 112,
-      "end_line": 112,
-      "raw": "\n"
-    },
-    {
       "id": "b000067",
       "kind": "heading",
-      "start_line": 113,
-      "end_line": 113,
+      "start_line": 111,
+      "end_line": 111,
       "raw": "## 콜백 내부에서 종료하기\n",
       "level": 2,
       "title": "콜백 내부에서 종료하기"
@@ -582,71 +584,71 @@
     {
       "id": "b000068",
       "kind": "blank",
-      "start_line": 114,
-      "end_line": 114,
+      "start_line": 112,
+      "end_line": 112,
       "raw": "\n"
     },
     {
       "id": "b000069",
       "kind": "paragraph",
-      "start_line": 115,
-      "end_line": 116,
+      "start_line": 113,
+      "end_line": 114,
       "raw": "메서드가 자신의 창을 닫거나 자신의 컴포넌트를 제거할 수 있다.\n현재 호출 스택은 여전히 백엔드를 사용 중이다.\n"
     },
     {
       "id": "b000070",
       "kind": "blank",
-      "start_line": 117,
-      "end_line": 117,
+      "start_line": 115,
+      "end_line": 115,
       "raw": "\n"
     },
     {
       "id": "b000071",
       "kind": "paragraph",
-      "start_line": 118,
-      "end_line": 121,
+      "start_line": 116,
+      "end_line": 119,
       "raw": "즉시 접수를 닫고 미래 사용을 분리한 뒤 해당 호출 스택이 해제되도록 한다.\n최종 파괴는 활성 사용이 끝난 뒤에 수행한다.\n자신의 메서드 실행 중에 수신 객체를 동기적으로 파괴하거나,\n그 콜백 안에서 자기 자신이 끝나기를 기다려서는 안 된다.\n"
     },
     {
       "id": "b000072",
       "kind": "blank",
-      "start_line": 122,
-      "end_line": 122,
+      "start_line": 120,
+      "end_line": 120,
       "raw": "\n"
     },
     {
       "id": "b000073",
       "kind": "paragraph",
-      "start_line": 123,
-      "end_line": 125,
+      "start_line": 121,
+      "end_line": 123,
       "raw": "런타임은 종료를 비동기로 완료해야 할 수 있다.\n정확한 종료 핸들·실행기·스케줄링 프로토콜은 미정이다.\n파괴 전에 모든 사용이 끝나야 한다.\n"
     },
     {
       "id": "b000074",
+      "kind": "blank",
+      "start_line": 124,
+      "end_line": 124,
+      "raw": "\n"
+    },
+    {
+      "id": "b000075",
+      "kind": "html",
+      "start_line": 125,
+      "end_line": 125,
+      "raw": "<a id=\"asynchronous-work-and-longer-lived-jobs\"></a>\n"
+    },
+    {
+      "id": "b000076",
       "kind": "blank",
       "start_line": 126,
       "end_line": 126,
       "raw": "\n"
     },
     {
-      "id": "b000075",
-      "kind": "html",
-      "start_line": 127,
-      "end_line": 127,
-      "raw": "<a id=\"asynchronous-work-and-longer-lived-jobs\"></a>\n"
-    },
-    {
-      "id": "b000076",
-      "kind": "blank",
-      "start_line": 128,
-      "end_line": 128,
-      "raw": "\n"
-    },
-    {
       "id": "b000077",
       "kind": "heading",
-      "start_line": 129,
-      "end_line": 129,
+      "start_line": 127,
+      "end_line": 127,
       "raw": "## 비동기 작업과 더 오래 유지되는 작업\n",
       "level": 2,
       "title": "비동기 작업과 더 오래 유지되는 작업"
@@ -654,71 +656,71 @@
     {
       "id": "b000078",
       "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000079",
       "kind": "paragraph",
-      "start_line": 131,
-      "end_line": 133,
+      "start_line": 129,
+      "end_line": 131,
       "raw": "작업 핸들을 반환했다는 사실만으로 백엔드를 더 이상 사용하지 않는다고 판단할 수 없다.\n백엔드 소유 비동기 작업은 접근과 캡처가 종료될 때까지 같은 종료 경계에 속한다.\n협력적 취소는 요청이며, 활성 작업이 이미 중단되었다는 증거가 아니다.\n"
     },
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 134,
-      "end_line": 134,
+      "start_line": 132,
+      "end_line": 132,
       "raw": "\n"
     },
     {
       "id": "b000081",
       "kind": "paragraph",
-      "start_line": 135,
-      "end_line": 137,
+      "start_line": 133,
+      "end_line": 135,
       "raw": "뷰 제거 후에도 계속할 작업은 필요한 데이터와 소유권을 더 오래 사는 애플리케이션 작업이나 서비스에 명시적으로 이전해야 한다.\n이전 이후 종료 중인 뷰 백엔드에 추적되지 않는 접근이 남아서는 안 된다.\n뷰 소유 백엔드를 무기한 보관하는 것은 암묵적인 작업 수명 정책이 아니다.\n"
     },
     {
       "id": "b000082",
       "kind": "blank",
-      "start_line": 138,
-      "end_line": 138,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
       "id": "b000083",
       "kind": "paragraph",
-      "start_line": 139,
-      "end_line": 140,
+      "start_line": 137,
+      "end_line": 138,
       "raw": "UI 결과 전달은 수신 스코프의 종료 경계를 확인해야 한다.\n늦은 결과가 제거된 뷰나 나중의 활성화에서 생성된 다른 인스턴스를 갱신해서는 안 된다.\n"
     },
     {
       "id": "b000084",
+      "kind": "blank",
+      "start_line": 139,
+      "end_line": 139,
+      "raw": "\n"
+    },
+    {
+      "id": "b000085",
+      "kind": "html",
+      "start_line": 140,
+      "end_line": 140,
+      "raw": "<a id=\"queries-during-teardown\"></a>\n"
+    },
+    {
+      "id": "b000086",
       "kind": "blank",
       "start_line": 141,
       "end_line": 141,
       "raw": "\n"
     },
     {
-      "id": "b000085",
-      "kind": "html",
-      "start_line": 142,
-      "end_line": 142,
-      "raw": "<a id=\"queries-during-teardown\"></a>\n"
-    },
-    {
-      "id": "b000086",
-      "kind": "blank",
-      "start_line": 143,
-      "end_line": 143,
-      "raw": "\n"
-    },
-    {
       "id": "b000087",
       "kind": "heading",
-      "start_line": 144,
-      "end_line": 144,
+      "start_line": 142,
+      "end_line": 142,
       "raw": "## 종료 중 쿼리\n",
       "level": 2,
       "title": "종료 중 쿼리"
@@ -726,57 +728,57 @@
     {
       "id": "b000088",
       "kind": "blank",
-      "start_line": 145,
-      "end_line": 145,
+      "start_line": 143,
+      "end_line": 143,
       "raw": "\n"
     },
     {
       "id": "b000089",
       "kind": "paragraph",
-      "start_line": 146,
-      "end_line": 149,
+      "start_line": 144,
+      "end_line": 147,
       "raw": "[VM 객체 쿼리](ViewModelQueries.md)도 같은 종료 경계를 따른다.\n새 요청을 거부하고 대기 중인 소유 전달을 취소하며,\n수신 객체를 파괴하기 전에 활성 처리기와 캡처를 종료한다.\n큐에 들어간 완료 콜백은 취소로 억제될 수 있으므로 UI 전달을 보장한다고 취급해서는 안 된다.\n"
     },
     {
       "id": "b000090",
       "kind": "blank",
-      "start_line": 150,
-      "end_line": 150,
+      "start_line": 148,
+      "end_line": 148,
       "raw": "\n"
     },
     {
       "id": "b000091",
       "kind": "paragraph",
-      "start_line": 151,
-      "end_line": 153,
+      "start_line": 149,
+      "end_line": 151,
       "raw": "빌린 포트 참조는 소유 VM이나 어댑터보다 오래 유지되어서는 안 된다.\n살아 있는 수신 스코프를 통해 결과를 전달하고,\n제거된 스코프나 다른 활성화를 대상으로 하는 늦은 결과는 거부한다.\n"
     },
     {
       "id": "b000092",
+      "kind": "blank",
+      "start_line": 152,
+      "end_line": 152,
+      "raw": "\n"
+    },
+    {
+      "id": "b000093",
+      "kind": "html",
+      "start_line": 153,
+      "end_line": 153,
+      "raw": "<a id=\"validation-criteria-for-an-implementation\"></a>\n"
+    },
+    {
+      "id": "b000094",
       "kind": "blank",
       "start_line": 154,
       "end_line": 154,
       "raw": "\n"
     },
     {
-      "id": "b000093",
-      "kind": "html",
-      "start_line": 155,
-      "end_line": 155,
-      "raw": "<a id=\"validation-criteria-for-an-implementation\"></a>\n"
-    },
-    {
-      "id": "b000094",
-      "kind": "blank",
-      "start_line": 156,
-      "end_line": 156,
-      "raw": "\n"
-    },
-    {
       "id": "b000095",
       "kind": "heading",
-      "start_line": 157,
-      "end_line": 157,
+      "start_line": 155,
+      "end_line": 155,
       "raw": "## 구현 검증 기준\n",
       "level": 2,
       "title": "구현 검증 기준"
@@ -784,15 +786,15 @@
     {
       "id": "b000096",
       "kind": "blank",
-      "start_line": 158,
-      "end_line": 158,
+      "start_line": 156,
+      "end_line": 156,
       "raw": "\n"
     },
     {
       "id": "b000097",
       "kind": "list",
-      "start_line": 159,
-      "end_line": 166,
+      "start_line": 157,
+      "end_line": 164,
       "raw": "- 같은 가져온 타입을 별도로 활성화하면 독립 인스턴스를 생성한다.\n- 하나의 import를 여러 자식이 빌려도 추가 생성을 일으키지 않는다.\n- 반복 클릭과 속성 갱신에서 같은 활성 인스턴스를 유지한다.\n- 차용자 하나를 제거해도 다른 유효한 사용이 남아 있으면 인스턴스를 유지한다.\n- 소유자를 제거하면 새 접근을 차단하고 모든 사용이 종료된 뒤 인스턴스를 정확히 한 번 파괴한다.\n- 백엔드 콜백 내부 종료는 콜백 반환 전에 백엔드를 파괴하거나 자기 자신을 기다리는 교착 상태를 만들지 않는다.\n- 대기 작업과 늦은 결과는 사용이 종료된 백엔드나 새 활성화에 접근할 수 없다.\n- 종료 후 인스턴스 소유 자원 예약량은 기준 상태로 돌아온다.\n",
       "items": [
         {
@@ -840,43 +842,43 @@
     {
       "id": "b000098",
       "kind": "blank",
-      "start_line": 167,
-      "end_line": 167,
+      "start_line": 165,
+      "end_line": 165,
       "raw": "\n"
     },
     {
       "id": "b000099",
       "kind": "paragraph",
-      "start_line": 168,
-      "end_line": 168,
+      "start_line": 166,
+      "end_line": 166,
       "raw": "이는 향후 런타임 수용 기준이며, 런타임 테스트 통과 보고가 아니다.\n"
     },
     {
       "id": "b000100",
+      "kind": "blank",
+      "start_line": 167,
+      "end_line": 167,
+      "raw": "\n"
+    },
+    {
+      "id": "b000101",
+      "kind": "html",
+      "start_line": 168,
+      "end_line": 168,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000102",
       "kind": "blank",
       "start_line": 169,
       "end_line": 169,
       "raw": "\n"
     },
     {
-      "id": "b000101",
-      "kind": "html",
-      "start_line": 170,
-      "end_line": 170,
-      "raw": "<a id=\"open-questions\"></a>\n"
-    },
-    {
-      "id": "b000102",
-      "kind": "blank",
-      "start_line": 171,
-      "end_line": 171,
-      "raw": "\n"
-    },
-    {
       "id": "b000103",
       "kind": "heading",
-      "start_line": 172,
-      "end_line": 172,
+      "start_line": 170,
+      "end_line": 170,
       "raw": "## 미정 사항\n",
       "level": 2,
       "title": "미정 사항"
@@ -884,15 +886,15 @@
     {
       "id": "b000104",
       "kind": "blank",
-      "start_line": 173,
-      "end_line": 173,
+      "start_line": 171,
+      "end_line": 171,
       "raw": "\n"
     },
     {
       "id": "b000105",
       "kind": "list",
-      "start_line": 174,
-      "end_line": 179,
+      "start_line": 172,
+      "end_line": 177,
       "raw": "- 정확한 실행 영역 귀속과 비동기 종료 조정.\n- 작업별 취소·완료·실패 보고.\n- 호출 직렬화, 메서드 중첩 실행, 재진입 정책.\n- 메서드 인자, 오버로드, 반환값의 소유·차용 구분.\n- 부분 활성화와 정리 실패의 오류 처리.\n- 애플리케이션 소유 작업으로의 명시적 이전 API.\n",
       "items": [
         {
@@ -975,7 +977,7 @@
       "level": 2,
       "title": "파괴 조건",
       "anchor": "파괴-조건",
-      "start_line": 83
+      "start_line": 81
     },
     {
       "block_id": "b000059",
@@ -983,7 +985,7 @@
       "level": 2,
       "title": "종료 순서",
       "anchor": "종료-순서",
-      "start_line": 99
+      "start_line": 97
     },
     {
       "block_id": "b000067",
@@ -991,7 +993,7 @@
       "level": 2,
       "title": "콜백 내부에서 종료하기",
       "anchor": "콜백-내부에서-종료하기",
-      "start_line": 113
+      "start_line": 111
     },
     {
       "block_id": "b000077",
@@ -999,7 +1001,7 @@
       "level": 2,
       "title": "비동기 작업과 더 오래 유지되는 작업",
       "anchor": "비동기-작업과-더-오래-유지되는-작업",
-      "start_line": 129
+      "start_line": 127
     },
     {
       "block_id": "b000087",
@@ -1007,7 +1009,7 @@
       "level": 2,
       "title": "종료 중 쿼리",
       "anchor": "종료-중-쿼리",
-      "start_line": 144
+      "start_line": 142
     },
     {
       "block_id": "b000095",
@@ -1015,7 +1017,7 @@
       "level": 2,
       "title": "구현 검증 기준",
       "anchor": "구현-검증-기준",
-      "start_line": 157
+      "start_line": 155
     },
     {
       "block_id": "b000103",
@@ -1023,7 +1025,7 @@
       "level": 2,
       "title": "미정 사항",
       "anchor": "미정-사항",
-      "start_line": 172
+      "start_line": 170
     }
   ],
   "indexes": {
@@ -1051,56 +1053,56 @@
       },
       {
         "block_id": "b000051",
-        "line": 89,
+        "line": 87,
         "text": "인스턴스나 그 소유 자원을 더 이상 사용하지 않는다.",
         "basis": "lexical_match",
         "context": "list"
       },
       {
         "block_id": "b000055",
-        "line": 95,
+        "line": 93,
         "text": "사용하지 않는 살아 있는 백엔드를 암묵적인 캐시에 보관하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000063",
-        "line": 109,
+        "line": 107,
         "text": "대기 작업은 사용이 종료된 인스턴스에 대한 사용을 시작해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000079",
-        "line": 131,
+        "line": 129,
         "text": "작업 핸들을 반환했다는 사실만으로 백엔드를 더 이상 사용하지 않는다고 판단할 수 없다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000081",
-        "line": 135,
+        "line": 133,
         "text": "뷰 제거 후에도 계속할 작업은 필요한 데이터와 소유권을 더 오래 사는 애플리케이션 작업이나 서비스에 명시적으로 이전해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000083",
-        "line": 139,
+        "line": 137,
         "text": "UI 결과 전달은 수신 스코프의 종료 경계를 확인해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000083",
-        "line": 140,
+        "line": 138,
         "text": "늦은 결과가 제거된 뷰나 나중의 활성화에서 생성된 다른 인스턴스를 갱신해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000089",
-        "line": 149,
+        "line": 147,
         "text": "큐에 들어간 완료 콜백은 취소로 억제될 수 있으므로 UI 전달을 보장한다고 취급해서는 안 된다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -1141,44 +1143,10 @@
         "label": "VM 객체 쿼리",
         "target": "ViewModelQueries.md",
         "kind": "relative",
-        "line": 146
+        "line": 144
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000039",
-        "columns": [
-          "사용",
-          "해당 사용의 종료 시점"
-        ],
-        "rows": [
-          [
-            "독립 값으로 복사하는 일회성 읽기",
-            "읽기와 복사가 완료될 때이다."
-          ],
-          [
-            "동기 메서드 호출",
-            "호출이 반환되고 그로부터 발생한 차용 사용도 끝날 때이다."
-          ],
-          [
-            "속성 구독",
-            "구독이 분리될 때이다."
-          ],
-          [
-            "이벤트·메서드 연결",
-            "연결이 제거되고 활성 호출이 종료될 때이다."
-          ],
-          [
-            "인스턴스를 사용하는 비동기 작업",
-            "작업이 완료·취소되고 모든 인스턴스 접근과 캡처가 종료될 때이다."
-          ],
-          [
-            "사용 가능한 import 바인딩 또는 다른 미래 사용 경로",
-            "해당 바인딩·경로가 종료되어 더 이상 접근을 허용할 수 없을 때이다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

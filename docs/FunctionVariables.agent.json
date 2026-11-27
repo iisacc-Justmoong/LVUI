@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/FunctionVariables.md",
-    "sha256": "77373368df47223da0f3b93c9779b0636e2f915425610b458f74fadf4dbd595c",
-    "bytes": 6915,
-    "line_count": 99,
+    "sha256": "83af59ce2e1f29f201f22f33c2696433851b1ae4d2bc0aac509c6030166b4806",
+    "bytes": 6989,
+    "line_count": 97,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -275,75 +275,79 @@
     },
     {
       "id": "b000035",
-      "kind": "table",
       "start_line": 81,
-      "end_line": 90,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 177/177 통과 |\n| 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer | 100/100 통과 |\n| 작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer | 26/26 통과, 빌린 Core Runtime 라이브러리는 비계측 |\n| iiGUI 창 없는 기존 동작·생성 C++ 통합 | 85/85 통과 |\n| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 85/85 통과, NativeBindings 구현은 별도 LVUI 검사 |\n| 설치·재배치 독립 소비자 | Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과 |\n| 생성 C++ 타입 검사 | 유효 3개 컴파일, 잘못된 11개 거부 |\n| LVRS 생성 C++ | 가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI 전체 Release CTest",
-          "177/177 통과"
-        ],
-        [
-          "관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer",
-          "100/100 통과"
-        ],
-        [
-          "작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer",
-          "26/26 통과, 빌린 Core Runtime 라이브러리는 비계측"
-        ],
-        [
-          "iiGUI 창 없는 기존 동작·생성 C++ 통합",
-          "85/85 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-          "85/85 통과, NativeBindings 구현은 별도 LVUI 검사"
-        ],
-        [
-          "설치·재배치 독립 소비자",
-          "Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과"
-        ],
-        [
-          "생성 C++ 타입 검사",
-          "유효 3개 컴파일, 잘못된 11개 거부"
-        ],
-        [
-          "LVRS 생성 C++",
-          "가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음"
-        ]
+      "end_line": 88,
+      "raw": "- 범위: LVUI 전체 Release CTest; 결과: 177/177 통과\n- 범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 100/100 통과\n- 범위: 작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer; 결과: 26/26 통과, 빌린 Core Runtime 라이브러리는 비계측\n- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 85/85 통과\n- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 85/85 통과, NativeBindings 구현은 별도 LVUI 검사\n- 범위: 설치·재배치 독립 소비자; 결과: Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과\n- 범위: 생성 C++ 타입 검사; 결과: 유효 3개 컴파일, 잘못된 11개 거부\n- 범위: LVRS 생성 C++; 결과: 가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI 전체 Release CTest; 결과: 177/177 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 100/100 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer; 결과: 26/26 통과, 빌린 Core Runtime 라이브러리는 비계측",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 85/85 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 85/85 통과, NativeBindings 구현은 별도 LVUI 검사",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 설치·재배치 독립 소비자; 결과: Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 생성 C++ 타입 검사; 결과: 유효 3개 컴파일, 잘못된 11개 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVRS 생성 C++; 결과: 가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 91,
-      "end_line": 91,
+      "start_line": 89,
+      "end_line": 89,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 92,
-      "end_line": 95,
+      "start_line": 90,
+      "end_line": 93,
       "raw": "잘못된 함수 초기값과 네이티브 교체 결과는 생성 C++ 컴파일에서 거부한다. 이 거부 검사는\n구문 컴파일이며 sanitizer 실행 검증과 구분한다. 빈 함수 포인터를 받아들이는 실패를 먼저\n재현하고, 생성·교체·호출 경계에 검사를 추가했다. 메타데이터 자체를 제거하는 접수·추적·\n선택 콜백도 포함한다.\n"
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 96,
-      "end_line": 96,
+      "start_line": 94,
+      "end_line": 94,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "paragraph",
-      "start_line": 97,
-      "end_line": 99,
+      "start_line": 95,
+      "end_line": 97,
       "raw": "로그·소스 해시·설치 소비자·실행 파일 의존성·제품 비변경 기록은\n`build/lvui-completion/function-variables-verification-20261026.json`에 보관한다.\n이 결과는 실제 창·GPU·모든 플랫폼 또는 전체 언어·LVRS 완성을 선언하는 것이 아니다.\n"
     }
   ],
@@ -472,49 +476,7 @@
         "line": 64
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000035",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI 전체 Release CTest",
-            "177/177 통과"
-          ],
-          [
-            "관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer",
-            "100/100 통과"
-          ],
-          [
-            "작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer",
-            "26/26 통과, 빌린 Core Runtime 라이브러리는 비계측"
-          ],
-          [
-            "iiGUI 창 없는 기존 동작·생성 C++ 통합",
-            "85/85 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-            "85/85 통과, NativeBindings 구현은 별도 LVUI 검사"
-          ],
-          [
-            "설치·재배치 독립 소비자",
-            "Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과"
-          ],
-          [
-            "생성 C++ 타입 검사",
-            "유효 3개 컴파일, 잘못된 11개 거부"
-          ],
-          [
-            "LVRS 생성 C++",
-            "가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

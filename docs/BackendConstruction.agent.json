@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/BackendConstruction.md",
-    "sha256": "2e1a1b3aee40a8d44e4fcb08403708fccee3b9ce0742560a16b1b3987f2a3bc7",
-    "bytes": 9145,
-    "line_count": 130,
+    "sha256": "e7a4d295d2dd9d1342d61b149022750b4560caf13f645b11492f138a66b12247",
+    "bytes": 9193,
+    "line_count": 128,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -432,67 +432,69 @@
     },
     {
       "id": "b000051",
-      "kind": "table",
       "start_line": 113,
-      "end_line": 120,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 144/144 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 67/67 통과 |\n| iiGUI 창 없는 회귀·실제 생성 C++ 연결 | 53/53 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 53/53 통과 |\n| 설치·경로 이동 독립 소비자 | 코어 실행·컴파일러 소비자 2/2 통과, 새 공개 헤더와 생성 경로 포함 |\n| 실제 LVRS 생성 팩토리 | 비이동 백엔드·중첩·차용·생성 입력의 오브젝트 컴파일 통과, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI 전체 Release CTest",
-          "144/144 통과"
-        ],
-        [
-          "관련 언어·네이티브 런타임 ASan·UBSan",
-          "67/67 통과"
-        ],
-        [
-          "iiGUI 창 없는 회귀·실제 생성 C++ 연결",
-          "53/53 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++ ASan·UBSan",
-          "동일 53/53 통과"
-        ],
-        [
-          "설치·경로 이동 독립 소비자",
-          "코어 실행·컴파일러 소비자 2/2 통과, 새 공개 헤더와 생성 경로 포함"
-        ],
-        [
-          "실제 LVRS 생성 팩토리",
-          "비이동 백엔드·중첩·차용·생성 입력의 오브젝트 컴파일 통과, 실행하지 않음"
-        ]
+      "end_line": 118,
+      "raw": "- 범위: LVUI 전체 Release CTest; 결과: 144/144 통과\n- 범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 67/67 통과\n- 범위: iiGUI 창 없는 회귀·실제 생성 C++ 연결; 결과: 53/53 통과\n- 범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 53/53 통과\n- 범위: 설치·경로 이동 독립 소비자; 결과: 코어 실행·컴파일러 소비자 2/2 통과, 새 공개 헤더와 생성 경로 포함\n- 범위: 실제 LVRS 생성 팩토리; 결과: 비이동 백엔드·중첩·차용·생성 입력의 오브젝트 컴파일 통과, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI 전체 Release CTest; 결과: 144/144 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 67/67 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 회귀·실제 생성 C++ 연결; 결과: 53/53 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 53/53 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 설치·경로 이동 독립 소비자; 결과: 코어 실행·컴파일러 소비자 2/2 통과, 새 공개 헤더와 생성 경로 포함",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 실제 LVRS 생성 팩토리; 결과: 비이동 백엔드·중첩·차용·생성 입력의 오브젝트 컴파일 통과, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 121,
-      "end_line": 121,
+      "start_line": 119,
+      "end_line": 119,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 122,
-      "end_line": 125,
+      "start_line": 120,
+      "end_line": 123,
       "raw": "이동 전용 생성 함수, const 타입 분리, 이름별 입력, 활성화별 독립 객체, 파생 값·중첩 정책\n상속, 생성 실패 후 기존 화면 보존과 복구, 자원의 파괴 순서를 검사했다. 앱의 기존 Core\nRuntime을 실제 생성자로 전달하고 그 지속 워커에서 작업이 실행되는 것도 확인했다.\n이 검사가 불투명한 임의 비동기 캡처의 전체 종료를 입증하지는 않는다.\n"
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 126,
-      "end_line": 126,
+      "start_line": 124,
+      "end_line": 124,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 127,
-      "end_line": 130,
+      "start_line": 125,
+      "end_line": 128,
       "raw": "검사한 생성 위젯 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼이 없다.\nDreamscapes QML 관측 기준선 81개 파일은 변경하지 않았다. 원시 로그·설치 소비자·소스\n해시·실행 경계는 `build/lvui-completion/backend-construction-verification-20261026.json`에\n기록한다. 전체 언어·모듈과 실제 창·플랫폼의 완료는 별도의 감사 대상이다.\n"
     }
   ],
@@ -664,41 +666,7 @@
         "line": 98
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000051",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI 전체 Release CTest",
-            "144/144 통과"
-          ],
-          [
-            "관련 언어·네이티브 런타임 ASan·UBSan",
-            "67/67 통과"
-          ],
-          [
-            "iiGUI 창 없는 회귀·실제 생성 C++ 연결",
-            "53/53 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++ ASan·UBSan",
-            "동일 53/53 통과"
-          ],
-          [
-            "설치·경로 이동 독립 소비자",
-            "코어 실행·컴파일러 소비자 2/2 통과, 새 공개 헤더와 생성 경로 포함"
-          ],
-          [
-            "실제 LVRS 생성 팩토리",
-            "비이동 백엔드·중첩·차용·생성 입력의 오브젝트 컴파일 통과, 실행하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Components.md",
-    "sha256": "9680dca33facf3a8bb07968c7305282891a01190573dcef3e2eb28ffb2294fd1",
-    "bytes": 11258,
-    "line_count": 172,
+    "sha256": "3ec7b8547770ee61fd76a10f61b975d6fd2fc67951aaca4e16d1a9de26b9d738",
+    "bytes": 11335,
+    "line_count": 170,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -423,81 +423,76 @@
     },
     {
       "id": "b000055",
-      "kind": "table",
       "start_line": 148,
-      "end_line": 155,
-      "raw": "| 검사 | 결과 | 범위 |\n|---|---|---|\n| LVUI Release CTest | 103/103 통과 | 기존 언어·AOT·관측·설치 소비자와 신규 구성 검사 |\n| AddressSanitizer + UndefinedBehaviorSanitizer | 32/32 통과 | 구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프 |\n| iiGUI 창 없는 통합 검사 | 4/4 통과 | 퇴역·조건부 교체·View 입력·타입 매개변수 구성 |\n| 설치·재배치 독립 소비자 | 2/2 통과 | 네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러 |\n| 실행 파일 의존성 | Qt 동적 라이브러리 없음 | `lvui-compile`, `LVUINativeComponentTests`의 `otool -L` |\n| Dreamscapes 읽기 전용 관측 | QML 81개 해시 변경 0 | 별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선 |\n",
-      "columns": [
-        "검사",
-        "결과",
-        "범위"
-      ],
-      "rows": [
-        [
-          "LVUI Release CTest",
-          "103/103 통과",
-          "기존 언어·AOT·관측·설치 소비자와 신규 구성 검사"
-        ],
-        [
-          "AddressSanitizer + UndefinedBehaviorSanitizer",
-          "32/32 통과",
-          "구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프"
-        ],
-        [
-          "iiGUI 창 없는 통합 검사",
-          "4/4 통과",
-          "퇴역·조건부 교체·View 입력·타입 매개변수 구성"
-        ],
-        [
-          "설치·재배치 독립 소비자",
-          "2/2 통과",
-          "네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러"
-        ],
-        [
-          "실행 파일 의존성",
-          "Qt 동적 라이브러리 없음",
-          "`lvui-compile`, `LVUINativeComponentTests`의 `otool -L`"
-        ],
-        [
-          "Dreamscapes 읽기 전용 관측",
-          "QML 81개 해시 변경 0",
-          "별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선"
-        ]
+      "end_line": 153,
+      "raw": "- 검사: LVUI Release CTest; 결과: 103/103 통과; 범위: 기존 언어·AOT·관측·설치 소비자와 신규 구성 검사\n- 검사: AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 32/32 통과; 범위: 구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프\n- 검사: iiGUI 창 없는 통합 검사; 결과: 4/4 통과; 범위: 퇴역·조건부 교체·View 입력·타입 매개변수 구성\n- 검사: 설치·재배치 독립 소비자; 결과: 2/2 통과; 범위: 네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러\n- 검사: 실행 파일 의존성; 결과: Qt 동적 라이브러리 없음; 범위: `lvui-compile`, `LVUINativeComponentTests`의 `otool -L`\n- 검사: Dreamscapes 읽기 전용 관측; 결과: QML 81개 해시 변경 0; 범위: 별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "검사: LVUI Release CTest; 결과: 103/103 통과; 범위: 기존 언어·AOT·관측·설치 소비자와 신규 구성 검사",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 32/32 통과; 범위: 구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI 창 없는 통합 검사; 결과: 4/4 통과; 범위: 퇴역·조건부 교체·View 입력·타입 매개변수 구성",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 설치·재배치 독립 소비자; 결과: 2/2 통과; 범위: 네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 실행 파일 의존성; 결과: Qt 동적 라이브러리 없음; 범위: `lvui-compile`, `LVUINativeComponentTests`의 `otool -L`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: Dreamscapes 읽기 전용 관측; 결과: QML 81개 해시 변경 0; 범위: 별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 156,
-      "end_line": 156,
+      "start_line": 154,
+      "end_line": 154,
       "raw": "\n"
     },
     {
       "id": "b000057",
       "kind": "paragraph",
-      "start_line": 157,
-      "end_line": 160,
+      "start_line": 155,
+      "end_line": 158,
       "raw": "주요 테스트 소스는 [구문·차용·슬롯 검사](../tests/components.cpp),\n[생성 C++ 스코프 검사](../tests/native_components.cpp),\n[실제 위젯 구성 검사](../../iiGUI/tests/native_components.cpp)이다. 설치 소비자는\n[독립 CMake 프로젝트](../tests/native_consumer/CMakeLists.txt)를 사용한다.\n"
     },
     {
       "id": "b000058",
       "kind": "blank",
-      "start_line": 161,
-      "end_line": 161,
+      "start_line": 159,
+      "end_line": 159,
       "raw": "\n"
     },
     {
       "id": "b000059",
       "kind": "paragraph",
-      "start_line": 162,
-      "end_line": 164,
+      "start_line": 160,
+      "end_line": 162,
       "raw": "모든 생성·빌드·설치 스테이징은 `build/` 하위에 두었다. 실제 창·GPU·입력·접근성과\nLVRS 앱·테스트 실행은 전체 작업의 최종 일괄 검증 범위로 유지한다. 이 기록은\n[전체 언어·모듈 완성](Completion.md)을 선언하는 것이 아니다.\n"
     },
     {
       "id": "b000060",
       "kind": "heading",
-      "start_line": 165,
-      "end_line": 165,
+      "start_line": 163,
+      "end_line": 163,
       "raw": "# EventListener interaction notifications\n",
       "level": 1,
       "title": "EventListener interaction notifications"
@@ -505,15 +500,15 @@
     {
       "id": "b000061",
       "kind": "blank",
-      "start_line": 166,
-      "end_line": 166,
+      "start_line": 164,
+      "end_line": 164,
       "raw": "\n"
     },
     {
       "id": "b000062",
       "kind": "paragraph",
-      "start_line": 167,
-      "end_line": 172,
+      "start_line": 165,
+      "end_line": 170,
       "raw": "`EventListener` accepts `onHovered` and `onFocused` no-argument C++ callbacks.\nEach callback runs only when the listener or one of its descendants enters the\ncorresponding interactive state. A listener that has no such callbacks allocates\nno interaction subscription. The iiGUI interaction query delivers changes on\nthe owner thread, does not consume input, and is closed with the view. Hiding,\ndisabling, blocking, and retiring a listener do not trigger an entry callback.\n"
     }
   ],
@@ -572,7 +567,7 @@
       "level": 1,
       "title": "EventListener interaction notifications",
       "anchor": "eventlistener-interaction-notifications",
-      "start_line": 165
+      "start_line": 163
     }
   ],
   "indexes": {
@@ -642,7 +637,7 @@
       },
       {
         "block_id": "b000062",
-        "line": 172,
+        "line": 170,
         "text": "disabling, blocking, and retiring a listener do not trigger an entry callback.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -732,79 +727,38 @@
         "label": "구문·차용·슬롯 검사",
         "target": "../tests/components.cpp",
         "kind": "relative",
-        "line": 157
+        "line": 155
       },
       {
         "block_id": "b000057",
         "label": "생성 C++ 스코프 검사",
         "target": "../tests/native_components.cpp",
         "kind": "relative",
-        "line": 158
+        "line": 156
       },
       {
         "block_id": "b000057",
         "label": "실제 위젯 구성 검사",
         "target": "../../iiGUI/tests/native_components.cpp",
         "kind": "relative",
-        "line": 159
+        "line": 157
       },
       {
         "block_id": "b000057",
         "label": "독립 CMake 프로젝트",
         "target": "../tests/native_consumer/CMakeLists.txt",
         "kind": "relative",
-        "line": 160
+        "line": 158
       },
       {
         "block_id": "b000059",
         "label": "전체 언어·모듈 완성",
         "target": "Completion.md",
         "kind": "relative",
-        "line": 164
+        "line": 162
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000055",
-        "columns": [
-          "검사",
-          "결과",
-          "범위"
-        ],
-        "rows": [
-          [
-            "LVUI Release CTest",
-            "103/103 통과",
-            "기존 언어·AOT·관측·설치 소비자와 신규 구성 검사"
-          ],
-          [
-            "AddressSanitizer + UndefinedBehaviorSanitizer",
-            "32/32 통과",
-            "구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프"
-          ],
-          [
-            "iiGUI 창 없는 통합 검사",
-            "4/4 통과",
-            "퇴역·조건부 교체·View 입력·타입 매개변수 구성"
-          ],
-          [
-            "설치·재배치 독립 소비자",
-            "2/2 통과",
-            "네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러"
-          ],
-          [
-            "실행 파일 의존성",
-            "Qt 동적 라이브러리 없음",
-            "`lvui-compile`, `LVUINativeComponentTests`의 `otool -L`"
-          ],
-          [
-            "Dreamscapes 읽기 전용 관측",
-            "QML 81개 해시 변경 0",
-            "별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

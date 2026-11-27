@@ -2,244 +2,242 @@
 
 `tools/update_style_tokens.py`가 원본 Figma 스냅샷에서 생성하는 목록이다. 각 멤버는 원본 토큰 ID를 참조하며 모드·별칭·앱별 값 변경을 유지한다.
 
-| 멤버 | Figma 컬렉션 / 변수 |
-|---|---|
-| `Color.blue` | Theme Colors/Accent/Blue/Default |
-| `Color.blue.disabled` | Theme Colors/Accent/Blue/Disabled |
-| `Color.blue.hover` | Theme Colors/Accent/Blue/Hover |
-| `Color.blue.outline` | Theme Colors/Accent/Blue/Outline |
-| `Color.blue.overlay` | Theme Colors/Accent/Blue/Overlay |
-| `Color.blue.pressed` | Theme Colors/Accent/Blue/Pressed |
-| `Color.blue.selected` | Theme Colors/Accent/Blue/Selected |
-| `Color.blue.subtle` | Theme Colors/Accent/Blue/Subtle |
-| `Color.blue.text` | Theme Colors/Accent/Blue/Text |
-| `Color.brown` | Theme Colors/Accent/Brown/Default |
-| `Color.brown.disabled` | Theme Colors/Accent/Brown/Disabled |
-| `Color.brown.hover` | Theme Colors/Accent/Brown/Hover |
-| `Color.brown.outline` | Theme Colors/Accent/Brown/Outline |
-| `Color.brown.overlay` | Theme Colors/Accent/Brown/Overlay |
-| `Color.brown.pressed` | Theme Colors/Accent/Brown/Pressed |
-| `Color.brown.selected` | Theme Colors/Accent/Brown/Selected |
-| `Color.brown.subtle` | Theme Colors/Accent/Brown/Subtle |
-| `Color.brown.text` | Theme Colors/Accent/Brown/Text |
-| `Color.canvas` | Theme Colors/Panel/canvas |
-| `Color.cyan` | Theme Colors/Accent/Cyan/Default |
-| `Color.cyan.disabled` | Theme Colors/Accent/Cyan/Disabled |
-| `Color.cyan.hover` | Theme Colors/Accent/Cyan/Hover |
-| `Color.cyan.outline` | Theme Colors/Accent/Cyan/Outline |
-| `Color.cyan.overlay` | Theme Colors/Accent/Cyan/Overlay |
-| `Color.cyan.pressed` | Theme Colors/Accent/Cyan/Pressed |
-| `Color.cyan.selected` | Theme Colors/Accent/Cyan/Selected |
-| `Color.cyan.subtle` | Theme Colors/Accent/Cyan/Subtle |
-| `Color.cyan.text` | Theme Colors/Accent/Cyan/Text |
-| `Color.danger` | Theme Colors/Action/danger |
-| `Color.gray` | Theme Colors/Neutral/Gray |
-| `Color.green` | Theme Colors/Accent/Green/Default |
-| `Color.green.disabled` | Theme Colors/Accent/Green/Disabled |
-| `Color.green.hover` | Theme Colors/Accent/Green/Hover |
-| `Color.green.outline` | Theme Colors/Accent/Green/Outline |
-| `Color.green.overlay` | Theme Colors/Accent/Green/Overlay |
-| `Color.green.pressed` | Theme Colors/Accent/Green/Pressed |
-| `Color.green.selected` | Theme Colors/Accent/Green/Selected |
-| `Color.green.subtle` | Theme Colors/Accent/Green/Subtle |
-| `Color.green.text` | Theme Colors/Accent/Green/Text |
-| `Color.icon.accent.blue.pressed.darker` | Theme Colors/Icon/Accent/Blue/Pressed/Darker |
-| `Color.icon.accent.blue.selected.darker` | Theme Colors/Icon/Accent/Blue/Selected/Darker |
-| `Color.icon.accent.blue.subtle.darker` | Theme Colors/Icon/Accent/Blue/Subtle/Darker |
-| `Color.icon.accent.cyan.pressed.darker` | Theme Colors/Icon/Accent/Cyan/Pressed/Darker |
-| `Color.icon.accent.green.outline.darker` | Theme Colors/Icon/Accent/Green/Outline/Darker |
-| `Color.icon.accent.green.pressed.darker` | Theme Colors/Icon/Accent/Green/Pressed/Darker |
-| `Color.icon.accent.green.selected.darker` | Theme Colors/Icon/Accent/Green/Selected/Darker |
-| `Color.icon.accent.green.subtle.darker` | Theme Colors/Icon/Accent/Green/Subtle/Darker |
-| `Color.icon.accent.orange.pressed.darker` | Theme Colors/Icon/Accent/Orange/Pressed/Darker |
-| `Color.icon.accent.orange.selected.darker` | Theme Colors/Icon/Accent/Orange/Selected/Darker |
-| `Color.icon.accent.orange.subtle.darker` | Theme Colors/Icon/Accent/Orange/Subtle/Darker |
-| `Color.icon.accent.orange.text.darker` | Theme Colors/Icon/Accent/Orange/Text/Darker |
-| `Color.icon.accent.purple.pressed.darker` | Theme Colors/Icon/Accent/Purple/Pressed/Darker |
-| `Color.icon.accent.purple.selected.darker` | Theme Colors/Icon/Accent/Purple/Selected/Darker |
-| `Color.icon.accent.purple.subtle.darker` | Theme Colors/Icon/Accent/Purple/Subtle/Darker |
-| `Color.icon.accent.purple.text.darker` | Theme Colors/Icon/Accent/Purple/Text/Darker |
-| `Color.icon.accent.red.disabled.darker` | Theme Colors/Icon/Accent/Red/Disabled/Darker |
-| `Color.icon.accent.red.pressed.darker` | Theme Colors/Icon/Accent/Red/Pressed/Darker |
-| `Color.icon.accent.red.selected.darker` | Theme Colors/Icon/Accent/Red/Selected/Darker |
-| `Color.icon.accent.red.subtle.darker` | Theme Colors/Icon/Accent/Red/Subtle/Darker |
-| `Color.icon.accent.red.text.darker` | Theme Colors/Icon/Accent/Red/Text/Darker |
-| `Color.icon.accent.rose.pressed.darker` | Theme Colors/Icon/Accent/Rose/Pressed/Darker |
-| `Color.icon.accent.rose.selected.darker` | Theme Colors/Icon/Accent/Rose/Selected/Darker |
-| `Color.icon.accent.rose.subtle.darker` | Theme Colors/Icon/Accent/Rose/Subtle/Darker |
-| `Color.icon.accent.teal.pressed.darker` | Theme Colors/Icon/Accent/Teal/Pressed/Darker |
-| `Color.icon.accent.yellow.pressed.darker` | Theme Colors/Icon/Accent/Yellow/Pressed/Darker |
-| `Color.icon.accent.yellow.selected.darker` | Theme Colors/Icon/Accent/Yellow/Selected/Darker |
-| `Color.icon.accent.yellow.subtle.darker` | Theme Colors/Icon/Accent/Yellow/Subtle/Darker |
-| `Color.icon.accent.yellow.text.darker` | Theme Colors/Icon/Accent/Yellow/Text/Darker |
-| `Color.icon.search` | Theme Colors/Icon/search |
-| `Color.material.alert.actionBorder` | Material/Alert/actionBorder |
-| `Color.material.alert.border` | Material/Alert/border |
-| `Color.material.alert.canvas` | Material/Alert/canvas |
-| `Color.material.alert.divider` | Material/Alert/divider |
-| `Color.material.alert.surface` | Material/Alert/surface |
-| `Color.material.alert.textPrimary` | Material/Alert/textPrimary |
-| `Color.material.alert.textSecondary` | Material/Alert/textSecondary |
-| `Color.material.backdrop.base` | Material/Backdrop/Base |
-| `Color.material.glass.edge` | Material/Glass/Edge |
-| `Color.material.glass.fill` | Material/Glass/Fill |
-| `Color.material.glass.foreground` | Material/Glass/Foreground |
-| `Color.material.overlay.scrim` | Material/Overlay/Scrim |
-| `Color.material.surface.dense.edge` | Material/Surface/Dense/Edge |
-| `Color.material.surface.dense.fill` | Material/Surface/Dense/Fill |
-| `Color.material.surface.glass.edge` | Material/Surface/Glass/Edge |
-| `Color.material.surface.glass.fill` | Material/Surface/Glass/Fill |
-| `Color.material.textField.disabled` | Material/TextField/Disabled |
-| `Color.material.textField.fill` | Material/TextField/Fill |
-| `Color.material.textField.inline` | Material/TextField/Inline |
-| `Color.material.textField.reflection` | Material/TextField/Reflection |
-| `Color.orange` | Theme Colors/Accent/Orange/Default |
-| `Color.orange.disabled` | Theme Colors/Accent/Orange/Disabled |
-| `Color.orange.hover` | Theme Colors/Accent/Orange/Hover |
-| `Color.orange.outline` | Theme Colors/Accent/Orange/Outline |
-| `Color.orange.overlay` | Theme Colors/Accent/Orange/Overlay |
-| `Color.orange.pressed` | Theme Colors/Accent/Orange/Pressed |
-| `Color.orange.selected` | Theme Colors/Accent/Orange/Selected |
-| `Color.orange.subtle` | Theme Colors/Accent/Orange/Subtle |
-| `Color.orange.text` | Theme Colors/Accent/Orange/Text |
-| `Color.picker.current` | ColorPicker/Current color |
-| `Color.picker.hue` | ColorPicker/Hue color |
-| `Color.picker.previous` | ColorPicker/Previous color |
-| `Color.primary` | Theme Colors/Action/primary |
-| `Color.purple` | Theme Colors/Accent/Purple/Default |
-| `Color.purple.disabled` | Theme Colors/Accent/Purple/Disabled |
-| `Color.purple.hover` | Theme Colors/Accent/Purple/Hover |
-| `Color.purple.outline` | Theme Colors/Accent/Purple/Outline |
-| `Color.purple.overlay` | Theme Colors/Accent/Purple/Overlay |
-| `Color.purple.pressed` | Theme Colors/Accent/Purple/Pressed |
-| `Color.purple.selected` | Theme Colors/Accent/Purple/Selected |
-| `Color.purple.subtle` | Theme Colors/Accent/Purple/Subtle |
-| `Color.purple.text` | Theme Colors/Accent/Purple/Text |
-| `Color.red` | Theme Colors/Accent/Red/Default |
-| `Color.red.disabled` | Theme Colors/Accent/Red/Disabled |
-| `Color.red.hover` | Theme Colors/Accent/Red/Hover |
-| `Color.red.outline` | Theme Colors/Accent/Red/Outline |
-| `Color.red.overlay` | Theme Colors/Accent/Red/Overlay |
-| `Color.red.pressed` | Theme Colors/Accent/Red/Pressed |
-| `Color.red.selected` | Theme Colors/Accent/Red/Selected |
-| `Color.red.subtle` | Theme Colors/Accent/Red/Subtle |
-| `Color.red.text` | Theme Colors/Accent/Red/Text |
-| `Color.rose` | Theme Colors/Accent/Rose/Default |
-| `Color.rose.disabled` | Theme Colors/Accent/Rose/Disabled |
-| `Color.rose.hover` | Theme Colors/Accent/Rose/Hover |
-| `Color.rose.outline` | Theme Colors/Accent/Rose/Outline |
-| `Color.rose.overlay` | Theme Colors/Accent/Rose/Overlay |
-| `Color.rose.pressed` | Theme Colors/Accent/Rose/Pressed |
-| `Color.rose.selected` | Theme Colors/Accent/Rose/Selected |
-| `Color.rose.subtle` | Theme Colors/Accent/Rose/Subtle |
-| `Color.rose.text` | Theme Colors/Accent/Rose/Text |
-| `Color.subSurface` | Theme Colors/Panel/subSurface |
-| `Color.success` | Theme Colors/Action/success |
-| `Color.surfaceAlt` | Theme Colors/Panel/surfaceAlt |
-| `Color.surfaceControl` | Theme Colors/Panel/surfaceControl |
-| `Color.surfaceGhost` | Theme Colors/Panel/surfaceGhost |
-| `Color.surfaceInput` | Theme Colors/Panel/surfaceInput |
-| `Color.surfaceInputHover` | Theme Colors/Panel/surfaceInputHover |
-| `Color.surfaceInteractive` | Theme Colors/Panel/surfaceInteractive |
-| `Color.surfacePanel` | Theme Colors/Panel/surfacePanel |
-| `Color.surfaceRaised` | Theme Colors/Panel/surfaceRaised |
-| `Color.surfaceSolid` | Theme Colors/Panel/surfaceSolid |
-| `Color.teal` | Theme Colors/Accent/Teal/Default |
-| `Color.teal.disabled` | Theme Colors/Accent/Teal/Disabled |
-| `Color.teal.hover` | Theme Colors/Accent/Teal/Hover |
-| `Color.teal.outline` | Theme Colors/Accent/Teal/Outline |
-| `Color.teal.overlay` | Theme Colors/Accent/Teal/Overlay |
-| `Color.teal.pressed` | Theme Colors/Accent/Teal/Pressed |
-| `Color.teal.selected` | Theme Colors/Accent/Teal/Selected |
-| `Color.teal.subtle` | Theme Colors/Accent/Teal/Subtle |
-| `Color.teal.text` | Theme Colors/Accent/Teal/Text |
-| `Color.text.base` | Theme Colors/Text/textTokenBase |
-| `Color.text.body` | Theme Colors/Text/bodyColor |
-| `Color.text.caption` | Theme Colors/Text/captionColor |
-| `Color.text.description` | Theme Colors/Text/descriptionColor |
-| `Color.text.disabled` | Theme Colors/Text/disabledColor |
-| `Color.text.titleHeader` | Theme Colors/Text/titleHeaderColor |
-| `Color.transparent` | Theme Colors/Neutral/Transparent |
-| `Color.warning` | Theme Colors/Action/warning |
-| `Color.window` | Theme Colors/Panel/window |
-| `Color.windowAlt` | Theme Colors/Panel/windowAlt |
-| `Color.yellow` | Theme Colors/Accent/Yellow/Default |
-| `Color.yellow.disabled` | Theme Colors/Accent/Yellow/Disabled |
-| `Color.yellow.hover` | Theme Colors/Accent/Yellow/Hover |
-| `Color.yellow.outline` | Theme Colors/Accent/Yellow/Outline |
-| `Color.yellow.overlay` | Theme Colors/Accent/Yellow/Overlay |
-| `Color.yellow.pressed` | Theme Colors/Accent/Yellow/Pressed |
-| `Color.yellow.selected` | Theme Colors/Accent/Yellow/Selected |
-| `Color.yellow.subtle` | Theme Colors/Accent/Yellow/Subtle |
-| `Color.yellow.text` | Theme Colors/Accent/Yellow/Text |
-| `Metric.blur16` | Theme Metrics/Blur/16 |
-| `Metric.blur64` | Theme Metrics/Blur/64 |
-| `Metric.opacity11` | Theme Metrics/Opacity/11 |
-| `Metric.opacity32` | Theme Metrics/Opacity/32 |
-| `Metric.opacity40` | Theme Metrics/Opacity/40 |
-| `Metric.radius12` | Theme Metrics/Radius/12 |
-| `Metric.radius16` | Theme Metrics/Radius/16 |
-| `Metric.radius24` | Theme Metrics/Radius/24 |
-| `Metric.radius28` | Theme Metrics/Radius/28 |
-| `Metric.radius36` | Theme Metrics/Radius/36 |
-| `Metric.radius4` | Theme Metrics/Radius/4 |
-| `Metric.radius6` | Theme Metrics/Radius/6 |
-| `Metric.radius8` | Theme Metrics/Radius/8 |
-| `Metric.radius999` | Theme Metrics/Radius/999 |
-| `Metric.size140` | Theme Metrics/Size/140 |
-| `Metric.size2` | Theme Metrics/Size/2 |
-| `Metric.size22` | Theme Metrics/Size/22 |
-| `Metric.size24` | Theme Metrics/Size/24 |
-| `Metric.size256` | Theme Metrics/Size/256 |
-| `Metric.size280` | Theme Metrics/Size/280 |
-| `Metric.size32` | Theme Metrics/Size/32 |
-| `Metric.size400` | Theme Metrics/Size/400 |
-| `Metric.size44` | Theme Metrics/Size/44 |
-| `Metric.size48` | Theme Metrics/Size/48 |
-| `Metric.size500` | Theme Metrics/Size/500 |
-| `Metric.size56` | Theme Metrics/Size/56 |
-| `Metric.size72` | Theme Metrics/Size/72 |
-| `Metric.space0` | Theme Metrics/Space/0 |
-| `Metric.space10` | Theme Metrics/Space/10 |
-| `Metric.space12` | Theme Metrics/Space/12 |
-| `Metric.space14` | Theme Metrics/Space/14 |
-| `Metric.space16` | Theme Metrics/Space/16 |
-| `Metric.space18` | Theme Metrics/Space/18 |
-| `Metric.space2` | Theme Metrics/Space/2 |
-| `Metric.space20` | Theme Metrics/Space/20 |
-| `Metric.space24` | Theme Metrics/Space/24 |
-| `Metric.space28` | Theme Metrics/Space/28 |
-| `Metric.space32` | Theme Metrics/Space/32 |
-| `Metric.space36` | Theme Metrics/Space/36 |
-| `Metric.space4` | Theme Metrics/Space/4 |
-| `Metric.space40` | Theme Metrics/Space/40 |
-| `Metric.space42` | Theme Metrics/Space/42 |
-| `Metric.space46` | Theme Metrics/Space/46 |
-| `Metric.space6` | Theme Metrics/Space/6 |
-| `Metric.space8` | Theme Metrics/Space/8 |
-| `Metric.stroke1` | Theme Metrics/Stroke/1 |
-| `Metric.stroke1_5` | Theme Metrics/Stroke/1_5 |
-| `Metric.stroke2` | Theme Metrics/Stroke/2 |
-| `Metric.textBody` | Theme Typography/Body/textBody |
-| `Metric.textBodyLineHeight` | Theme Typography/Body/textBodyLineHeight |
-| `Metric.textCaption` | Theme Typography/Caption/textCaption |
-| `Metric.textCaptionLineHeight` | Theme Typography/Caption/textCaptionLineHeight |
-| `Metric.textDescription` | Theme Typography/Description/textDescription |
-| `Metric.textDescriptionLineHeight` | Theme Typography/Description/textDescriptionLineHeight |
-| `Metric.textFieldBorderWidth` | Theme Metrics/TextField/borderWidth |
-| `Metric.textFieldIconSize` | Theme Metrics/TextField/iconSize |
-| `Metric.textFieldPaddingHorizontal` | Theme Metrics/TextField/paddingHorizontal |
-| `Metric.textFieldPaddingVertical` | Theme Metrics/TextField/paddingVertical |
-| `Metric.textHeader` | Theme Typography/Header/textHeader |
-| `Metric.textHeaderLineHeight` | Theme Typography/Header/textHeaderLineHeight |
-| `Metric.textSubheader` | Theme Typography/Subheader/textSubheader |
-| `Metric.textSubheaderLineHeight` | Theme Typography/Subheader/textSubheaderLineHeight |
-| `Metric.textSubtitle` | Theme Typography/Subtitle/textSubtitle |
-| `Metric.textSubtitleLineHeight` | Theme Typography/Subtitle/textSubtitleLineHeight |
-| `Metric.textTitle` | Theme Typography/Title/textTitle |
-| `Metric.textTitleLineHeight` | Theme Typography/Title/textTitleLineHeight |
-| `Metric.trackingNormal` | Theme Typography/Tracking/Normal |
-| `Metric.weightBold` | Theme Typography/Weight/Bold |
-| `Metric.weightMedium` | Theme Typography/Weight/Medium |
-| `Metric.weightRegular` | Theme Typography/Weight/Regular |
-| `Metric.weightSemiBold` | Theme Typography/Weight/SemiBold |
+- 멤버: `Color.blue`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Default
+- 멤버: `Color.blue.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Disabled
+- 멤버: `Color.blue.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Hover
+- 멤버: `Color.blue.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Outline
+- 멤버: `Color.blue.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Overlay
+- 멤버: `Color.blue.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Pressed
+- 멤버: `Color.blue.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Selected
+- 멤버: `Color.blue.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Subtle
+- 멤버: `Color.blue.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Text
+- 멤버: `Color.brown`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Default
+- 멤버: `Color.brown.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Disabled
+- 멤버: `Color.brown.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Hover
+- 멤버: `Color.brown.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Outline
+- 멤버: `Color.brown.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Overlay
+- 멤버: `Color.brown.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Pressed
+- 멤버: `Color.brown.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Selected
+- 멤버: `Color.brown.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Subtle
+- 멤버: `Color.brown.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Text
+- 멤버: `Color.canvas`; Figma 컬렉션 / 변수: Theme Colors/Panel/canvas
+- 멤버: `Color.cyan`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Default
+- 멤버: `Color.cyan.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Disabled
+- 멤버: `Color.cyan.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Hover
+- 멤버: `Color.cyan.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Outline
+- 멤버: `Color.cyan.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Overlay
+- 멤버: `Color.cyan.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Pressed
+- 멤버: `Color.cyan.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Selected
+- 멤버: `Color.cyan.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Subtle
+- 멤버: `Color.cyan.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Text
+- 멤버: `Color.danger`; Figma 컬렉션 / 변수: Theme Colors/Action/danger
+- 멤버: `Color.gray`; Figma 컬렉션 / 변수: Theme Colors/Neutral/Gray
+- 멤버: `Color.green`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Default
+- 멤버: `Color.green.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Disabled
+- 멤버: `Color.green.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Hover
+- 멤버: `Color.green.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Outline
+- 멤버: `Color.green.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Overlay
+- 멤버: `Color.green.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Pressed
+- 멤버: `Color.green.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Selected
+- 멤버: `Color.green.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Subtle
+- 멤버: `Color.green.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Text
+- 멤버: `Color.icon.accent.blue.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Pressed/Darker
+- 멤버: `Color.icon.accent.blue.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Selected/Darker
+- 멤버: `Color.icon.accent.blue.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Subtle/Darker
+- 멤버: `Color.icon.accent.cyan.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Cyan/Pressed/Darker
+- 멤버: `Color.icon.accent.green.outline.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Outline/Darker
+- 멤버: `Color.icon.accent.green.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Pressed/Darker
+- 멤버: `Color.icon.accent.green.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Selected/Darker
+- 멤버: `Color.icon.accent.green.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Subtle/Darker
+- 멤버: `Color.icon.accent.orange.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Pressed/Darker
+- 멤버: `Color.icon.accent.orange.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Selected/Darker
+- 멤버: `Color.icon.accent.orange.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Subtle/Darker
+- 멤버: `Color.icon.accent.orange.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Text/Darker
+- 멤버: `Color.icon.accent.purple.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Pressed/Darker
+- 멤버: `Color.icon.accent.purple.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Selected/Darker
+- 멤버: `Color.icon.accent.purple.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Subtle/Darker
+- 멤버: `Color.icon.accent.purple.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Text/Darker
+- 멤버: `Color.icon.accent.red.disabled.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Disabled/Darker
+- 멤버: `Color.icon.accent.red.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Pressed/Darker
+- 멤버: `Color.icon.accent.red.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Selected/Darker
+- 멤버: `Color.icon.accent.red.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Subtle/Darker
+- 멤버: `Color.icon.accent.red.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Text/Darker
+- 멤버: `Color.icon.accent.rose.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Pressed/Darker
+- 멤버: `Color.icon.accent.rose.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Selected/Darker
+- 멤버: `Color.icon.accent.rose.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Subtle/Darker
+- 멤버: `Color.icon.accent.teal.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Teal/Pressed/Darker
+- 멤버: `Color.icon.accent.yellow.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Pressed/Darker
+- 멤버: `Color.icon.accent.yellow.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Selected/Darker
+- 멤버: `Color.icon.accent.yellow.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Subtle/Darker
+- 멤버: `Color.icon.accent.yellow.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Text/Darker
+- 멤버: `Color.icon.search`; Figma 컬렉션 / 변수: Theme Colors/Icon/search
+- 멤버: `Color.material.alert.actionBorder`; Figma 컬렉션 / 변수: Material/Alert/actionBorder
+- 멤버: `Color.material.alert.border`; Figma 컬렉션 / 변수: Material/Alert/border
+- 멤버: `Color.material.alert.canvas`; Figma 컬렉션 / 변수: Material/Alert/canvas
+- 멤버: `Color.material.alert.divider`; Figma 컬렉션 / 변수: Material/Alert/divider
+- 멤버: `Color.material.alert.surface`; Figma 컬렉션 / 변수: Material/Alert/surface
+- 멤버: `Color.material.alert.textPrimary`; Figma 컬렉션 / 변수: Material/Alert/textPrimary
+- 멤버: `Color.material.alert.textSecondary`; Figma 컬렉션 / 변수: Material/Alert/textSecondary
+- 멤버: `Color.material.backdrop.base`; Figma 컬렉션 / 변수: Material/Backdrop/Base
+- 멤버: `Color.material.glass.edge`; Figma 컬렉션 / 변수: Material/Glass/Edge
+- 멤버: `Color.material.glass.fill`; Figma 컬렉션 / 변수: Material/Glass/Fill
+- 멤버: `Color.material.glass.foreground`; Figma 컬렉션 / 변수: Material/Glass/Foreground
+- 멤버: `Color.material.overlay.scrim`; Figma 컬렉션 / 변수: Material/Overlay/Scrim
+- 멤버: `Color.material.surface.dense.edge`; Figma 컬렉션 / 변수: Material/Surface/Dense/Edge
+- 멤버: `Color.material.surface.dense.fill`; Figma 컬렉션 / 변수: Material/Surface/Dense/Fill
+- 멤버: `Color.material.surface.glass.edge`; Figma 컬렉션 / 변수: Material/Surface/Glass/Edge
+- 멤버: `Color.material.surface.glass.fill`; Figma 컬렉션 / 변수: Material/Surface/Glass/Fill
+- 멤버: `Color.material.textField.disabled`; Figma 컬렉션 / 변수: Material/TextField/Disabled
+- 멤버: `Color.material.textField.fill`; Figma 컬렉션 / 변수: Material/TextField/Fill
+- 멤버: `Color.material.textField.inline`; Figma 컬렉션 / 변수: Material/TextField/Inline
+- 멤버: `Color.material.textField.reflection`; Figma 컬렉션 / 변수: Material/TextField/Reflection
+- 멤버: `Color.orange`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Default
+- 멤버: `Color.orange.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Disabled
+- 멤버: `Color.orange.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Hover
+- 멤버: `Color.orange.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Outline
+- 멤버: `Color.orange.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Overlay
+- 멤버: `Color.orange.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Pressed
+- 멤버: `Color.orange.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Selected
+- 멤버: `Color.orange.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Subtle
+- 멤버: `Color.orange.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Text
+- 멤버: `Color.picker.current`; Figma 컬렉션 / 변수: ColorPicker/Current color
+- 멤버: `Color.picker.hue`; Figma 컬렉션 / 변수: ColorPicker/Hue color
+- 멤버: `Color.picker.previous`; Figma 컬렉션 / 변수: ColorPicker/Previous color
+- 멤버: `Color.primary`; Figma 컬렉션 / 변수: Theme Colors/Action/primary
+- 멤버: `Color.purple`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Default
+- 멤버: `Color.purple.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Disabled
+- 멤버: `Color.purple.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Hover
+- 멤버: `Color.purple.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Outline
+- 멤버: `Color.purple.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Overlay
+- 멤버: `Color.purple.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Pressed
+- 멤버: `Color.purple.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Selected
+- 멤버: `Color.purple.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Subtle
+- 멤버: `Color.purple.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Text
+- 멤버: `Color.red`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Default
+- 멤버: `Color.red.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Disabled
+- 멤버: `Color.red.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Hover
+- 멤버: `Color.red.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Outline
+- 멤버: `Color.red.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Overlay
+- 멤버: `Color.red.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Pressed
+- 멤버: `Color.red.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Selected
+- 멤버: `Color.red.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Subtle
+- 멤버: `Color.red.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Text
+- 멤버: `Color.rose`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Default
+- 멤버: `Color.rose.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Disabled
+- 멤버: `Color.rose.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Hover
+- 멤버: `Color.rose.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Outline
+- 멤버: `Color.rose.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Overlay
+- 멤버: `Color.rose.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Pressed
+- 멤버: `Color.rose.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Selected
+- 멤버: `Color.rose.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Subtle
+- 멤버: `Color.rose.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Text
+- 멤버: `Color.subSurface`; Figma 컬렉션 / 변수: Theme Colors/Panel/subSurface
+- 멤버: `Color.success`; Figma 컬렉션 / 변수: Theme Colors/Action/success
+- 멤버: `Color.surfaceAlt`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceAlt
+- 멤버: `Color.surfaceControl`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceControl
+- 멤버: `Color.surfaceGhost`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceGhost
+- 멤버: `Color.surfaceInput`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInput
+- 멤버: `Color.surfaceInputHover`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInputHover
+- 멤버: `Color.surfaceInteractive`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInteractive
+- 멤버: `Color.surfacePanel`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfacePanel
+- 멤버: `Color.surfaceRaised`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceRaised
+- 멤버: `Color.surfaceSolid`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceSolid
+- 멤버: `Color.teal`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Default
+- 멤버: `Color.teal.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Disabled
+- 멤버: `Color.teal.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Hover
+- 멤버: `Color.teal.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Outline
+- 멤버: `Color.teal.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Overlay
+- 멤버: `Color.teal.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Pressed
+- 멤버: `Color.teal.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Selected
+- 멤버: `Color.teal.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Subtle
+- 멤버: `Color.teal.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Text
+- 멤버: `Color.text.base`; Figma 컬렉션 / 변수: Theme Colors/Text/textTokenBase
+- 멤버: `Color.text.body`; Figma 컬렉션 / 변수: Theme Colors/Text/bodyColor
+- 멤버: `Color.text.caption`; Figma 컬렉션 / 변수: Theme Colors/Text/captionColor
+- 멤버: `Color.text.description`; Figma 컬렉션 / 변수: Theme Colors/Text/descriptionColor
+- 멤버: `Color.text.disabled`; Figma 컬렉션 / 변수: Theme Colors/Text/disabledColor
+- 멤버: `Color.text.titleHeader`; Figma 컬렉션 / 변수: Theme Colors/Text/titleHeaderColor
+- 멤버: `Color.transparent`; Figma 컬렉션 / 변수: Theme Colors/Neutral/Transparent
+- 멤버: `Color.warning`; Figma 컬렉션 / 변수: Theme Colors/Action/warning
+- 멤버: `Color.window`; Figma 컬렉션 / 변수: Theme Colors/Panel/window
+- 멤버: `Color.windowAlt`; Figma 컬렉션 / 변수: Theme Colors/Panel/windowAlt
+- 멤버: `Color.yellow`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Default
+- 멤버: `Color.yellow.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Disabled
+- 멤버: `Color.yellow.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Hover
+- 멤버: `Color.yellow.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Outline
+- 멤버: `Color.yellow.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Overlay
+- 멤버: `Color.yellow.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Pressed
+- 멤버: `Color.yellow.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Selected
+- 멤버: `Color.yellow.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Subtle
+- 멤버: `Color.yellow.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Text
+- 멤버: `Metric.blur16`; Figma 컬렉션 / 변수: Theme Metrics/Blur/16
+- 멤버: `Metric.blur64`; Figma 컬렉션 / 변수: Theme Metrics/Blur/64
+- 멤버: `Metric.opacity11`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/11
+- 멤버: `Metric.opacity32`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/32
+- 멤버: `Metric.opacity40`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/40
+- 멤버: `Metric.radius12`; Figma 컬렉션 / 변수: Theme Metrics/Radius/12
+- 멤버: `Metric.radius16`; Figma 컬렉션 / 변수: Theme Metrics/Radius/16
+- 멤버: `Metric.radius24`; Figma 컬렉션 / 변수: Theme Metrics/Radius/24
+- 멤버: `Metric.radius28`; Figma 컬렉션 / 변수: Theme Metrics/Radius/28
+- 멤버: `Metric.radius36`; Figma 컬렉션 / 변수: Theme Metrics/Radius/36
+- 멤버: `Metric.radius4`; Figma 컬렉션 / 변수: Theme Metrics/Radius/4
+- 멤버: `Metric.radius6`; Figma 컬렉션 / 변수: Theme Metrics/Radius/6
+- 멤버: `Metric.radius8`; Figma 컬렉션 / 변수: Theme Metrics/Radius/8
+- 멤버: `Metric.radius999`; Figma 컬렉션 / 변수: Theme Metrics/Radius/999
+- 멤버: `Metric.size140`; Figma 컬렉션 / 변수: Theme Metrics/Size/140
+- 멤버: `Metric.size2`; Figma 컬렉션 / 변수: Theme Metrics/Size/2
+- 멤버: `Metric.size22`; Figma 컬렉션 / 변수: Theme Metrics/Size/22
+- 멤버: `Metric.size24`; Figma 컬렉션 / 변수: Theme Metrics/Size/24
+- 멤버: `Metric.size256`; Figma 컬렉션 / 변수: Theme Metrics/Size/256
+- 멤버: `Metric.size280`; Figma 컬렉션 / 변수: Theme Metrics/Size/280
+- 멤버: `Metric.size32`; Figma 컬렉션 / 변수: Theme Metrics/Size/32
+- 멤버: `Metric.size400`; Figma 컬렉션 / 변수: Theme Metrics/Size/400
+- 멤버: `Metric.size44`; Figma 컬렉션 / 변수: Theme Metrics/Size/44
+- 멤버: `Metric.size48`; Figma 컬렉션 / 변수: Theme Metrics/Size/48
+- 멤버: `Metric.size500`; Figma 컬렉션 / 변수: Theme Metrics/Size/500
+- 멤버: `Metric.size56`; Figma 컬렉션 / 변수: Theme Metrics/Size/56
+- 멤버: `Metric.size72`; Figma 컬렉션 / 변수: Theme Metrics/Size/72
+- 멤버: `Metric.space0`; Figma 컬렉션 / 변수: Theme Metrics/Space/0
+- 멤버: `Metric.space10`; Figma 컬렉션 / 변수: Theme Metrics/Space/10
+- 멤버: `Metric.space12`; Figma 컬렉션 / 변수: Theme Metrics/Space/12
+- 멤버: `Metric.space14`; Figma 컬렉션 / 변수: Theme Metrics/Space/14
+- 멤버: `Metric.space16`; Figma 컬렉션 / 변수: Theme Metrics/Space/16
+- 멤버: `Metric.space18`; Figma 컬렉션 / 변수: Theme Metrics/Space/18
+- 멤버: `Metric.space2`; Figma 컬렉션 / 변수: Theme Metrics/Space/2
+- 멤버: `Metric.space20`; Figma 컬렉션 / 변수: Theme Metrics/Space/20
+- 멤버: `Metric.space24`; Figma 컬렉션 / 변수: Theme Metrics/Space/24
+- 멤버: `Metric.space28`; Figma 컬렉션 / 변수: Theme Metrics/Space/28
+- 멤버: `Metric.space32`; Figma 컬렉션 / 변수: Theme Metrics/Space/32
+- 멤버: `Metric.space36`; Figma 컬렉션 / 변수: Theme Metrics/Space/36
+- 멤버: `Metric.space4`; Figma 컬렉션 / 변수: Theme Metrics/Space/4
+- 멤버: `Metric.space40`; Figma 컬렉션 / 변수: Theme Metrics/Space/40
+- 멤버: `Metric.space42`; Figma 컬렉션 / 변수: Theme Metrics/Space/42
+- 멤버: `Metric.space46`; Figma 컬렉션 / 변수: Theme Metrics/Space/46
+- 멤버: `Metric.space6`; Figma 컬렉션 / 변수: Theme Metrics/Space/6
+- 멤버: `Metric.space8`; Figma 컬렉션 / 변수: Theme Metrics/Space/8
+- 멤버: `Metric.stroke1`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/1
+- 멤버: `Metric.stroke1_5`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/1_5
+- 멤버: `Metric.stroke2`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/2
+- 멤버: `Metric.textBody`; Figma 컬렉션 / 변수: Theme Typography/Body/textBody
+- 멤버: `Metric.textBodyLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Body/textBodyLineHeight
+- 멤버: `Metric.textCaption`; Figma 컬렉션 / 변수: Theme Typography/Caption/textCaption
+- 멤버: `Metric.textCaptionLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Caption/textCaptionLineHeight
+- 멤버: `Metric.textDescription`; Figma 컬렉션 / 변수: Theme Typography/Description/textDescription
+- 멤버: `Metric.textDescriptionLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Description/textDescriptionLineHeight
+- 멤버: `Metric.textFieldBorderWidth`; Figma 컬렉션 / 변수: Theme Metrics/TextField/borderWidth
+- 멤버: `Metric.textFieldIconSize`; Figma 컬렉션 / 변수: Theme Metrics/TextField/iconSize
+- 멤버: `Metric.textFieldPaddingHorizontal`; Figma 컬렉션 / 변수: Theme Metrics/TextField/paddingHorizontal
+- 멤버: `Metric.textFieldPaddingVertical`; Figma 컬렉션 / 변수: Theme Metrics/TextField/paddingVertical
+- 멤버: `Metric.textHeader`; Figma 컬렉션 / 변수: Theme Typography/Header/textHeader
+- 멤버: `Metric.textHeaderLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Header/textHeaderLineHeight
+- 멤버: `Metric.textSubheader`; Figma 컬렉션 / 변수: Theme Typography/Subheader/textSubheader
+- 멤버: `Metric.textSubheaderLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Subheader/textSubheaderLineHeight
+- 멤버: `Metric.textSubtitle`; Figma 컬렉션 / 변수: Theme Typography/Subtitle/textSubtitle
+- 멤버: `Metric.textSubtitleLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Subtitle/textSubtitleLineHeight
+- 멤버: `Metric.textTitle`; Figma 컬렉션 / 변수: Theme Typography/Title/textTitle
+- 멤버: `Metric.textTitleLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Title/textTitleLineHeight
+- 멤버: `Metric.trackingNormal`; Figma 컬렉션 / 변수: Theme Typography/Tracking/Normal
+- 멤버: `Metric.weightBold`; Figma 컬렉션 / 변수: Theme Typography/Weight/Bold
+- 멤버: `Metric.weightMedium`; Figma 컬렉션 / 변수: Theme Typography/Weight/Medium
+- 멤버: `Metric.weightRegular`; Figma 컬렉션 / 변수: Theme Typography/Weight/Regular
+- 멤버: `Metric.weightSemiBold`; Figma 컬렉션 / 변수: Theme Typography/Weight/SemiBold

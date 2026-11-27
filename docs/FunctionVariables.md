@@ -78,16 +78,14 @@ Window {
 macOS arm64의 현재 변경에서 다음 결과를 확인했다. 범위가 겹치는 검사를 합산하여
 독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.
 
-| 범위 | 결과 |
-|---|---|
-| LVUI 전체 Release CTest | 177/177 통과 |
-| 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer | 100/100 통과 |
-| 작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer | 26/26 통과, 빌린 Core Runtime 라이브러리는 비계측 |
-| iiGUI 창 없는 기존 동작·생성 C++ 통합 | 85/85 통과 |
-| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 85/85 통과, NativeBindings 구현은 별도 LVUI 검사 |
-| 설치·재배치 독립 소비자 | Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과 |
-| 생성 C++ 타입 검사 | 유효 3개 컴파일, 잘못된 11개 거부 |
-| LVRS 생성 C++ | 가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음 |
+- 범위: LVUI 전체 Release CTest; 결과: 177/177 통과
+- 범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 100/100 통과
+- 범위: 작업·공유 콜백·함수 값·가변 함수 ThreadSanitizer; 결과: 26/26 통과, 빌린 Core Runtime 라이브러리는 비계측
+- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 85/85 통과
+- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 85/85 통과, NativeBindings 구현은 별도 LVUI 검사
+- 범위: 설치·재배치 독립 소비자; 결과: Native 가변 함수·공개 컴파일러·선택적 Runtime 3/3 통과
+- 범위: 생성 C++ 타입 검사; 결과: 유효 3개 컴파일, 잘못된 11개 거부
+- 범위: LVRS 생성 C++; 결과: 가변 함수 표시·이벤트·지역 변수까지 17개 팩터리 컴파일, 실행하지 않음
 
 잘못된 함수 초기값과 네이티브 교체 결과는 생성 C++ 컴파일에서 거부한다. 이 거부 검사는
 구문 컴파일이며 sanitizer 실행 검증과 구분한다. 빈 함수 포인터를 받아들이는 실패를 먼저

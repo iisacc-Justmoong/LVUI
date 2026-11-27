@@ -52,13 +52,11 @@ Figma 원본에서 읽은 `catalog/lvui-search-field-material.json`,
 컬렉션과 모드에 대한 조회가 모호하거나 같은 토큰을 두 이름으로 중복 설정하면
 오류를 반환한다.
 
-| 컬렉션 | 변수 수 | 기본 모드 |
-|---|---:|---|
-| Theme Colors | 145 | Dark |
-| Material | 20 | Dark |
-| ColorPicker | 5 | Dark |
-| Theme Typography | 20 | Value |
-| Theme Metrics | 52 | Dark |
+- 컬렉션: Theme Colors; 변수 수: 145; 기본 모드: Dark
+- 컬렉션: Material; 변수 수: 20; 기본 모드: Dark
+- 컬렉션: ColorPicker; 변수 수: 5; 기본 모드: Dark
+- 컬렉션: Theme Typography; 변수 수: 20; 기본 모드: Value
+- 컬렉션: Theme Metrics; 변수 수: 52; 기본 모드: Dark
 
 타입은 Color 168개, Number 71개, String 3개이다. 이 중 29개는 Figma의 `Icon/Accent/.../Darker` 상태별 아이콘 토큰이다. 별칭 변수 6개를 값으로 펼치지 않고 보존한다. 현재 원본처럼 `ColorPicker/Previous color`와 호환용 `Action/primary`는 각각 `Accent/Blue/Default`를 직접 참조한다. 따라서 `Action/primary`만 변경해도 이전 색 토큰은 바뀌지 않는다. 이는 이전 별도 파일의 연쇄 별칭 동작과 다른 점이다. 공개 API는 이후 Boolean 변수도 받을 수 있다. 현재 원본에 Light 모드는 없으며 존재하지 않는 모드 요청은 오류이다.
 
@@ -105,28 +103,24 @@ ColorPicker의 채널 문자는 body 타이포그래피와 description 색상을
 
 옵션 없이 사용하는 `parse()`와 `compile_native()`에 카탈로그가 연결된다. 명시적인 컴포넌트 입력과 인라인 스타일이 기본값보다 우선한다.
 
-| 대상 | 기본 토큰 |
-|---|---|
-| 파서 루트 / AOT 창 배경 | Theme Colors / Panel/window |
-| 파서 기본 텍스트 | Text/bodyColor, Body/textBody, Weight/Medium |
-| 파서 h1 | Title/textTitle, Weight/Bold |
-| AOT 글꼴 | Theme Typography / Font/fontBody = Pretendard |
-| AOT 스택 간격·패딩 | Theme Metrics / Space/8, Space/0 |
-| AOT 버튼 높이·수평 패딩·반경 | Size/22, Space/8, Radius/8 |
-| AOT 기본 액션·상태 색상 | Action/primary, Accent/Blue/Hover, Accent/Blue/Pressed |
-| AOT 비활성 배경 | Panel/subSurface |
+- 대상: 파서 루트 / AOT 창 배경; 기본 토큰: Theme Colors / Panel/window
+- 대상: 파서 기본 텍스트; 기본 토큰: Text/bodyColor, Body/textBody, Weight/Medium
+- 대상: 파서 h1; 기본 토큰: Title/textTitle, Weight/Bold
+- 대상: AOT 글꼴; 기본 토큰: Theme Typography / Font/fontBody = Pretendard
+- 대상: AOT 스택 간격·패딩; 기본 토큰: Theme Metrics / Space/8, Space/0
+- 대상: AOT 버튼 높이·수평 패딩·반경; 기본 토큰: Size/22, Space/8, Radius/8
+- 대상: AOT 기본 액션·상태 색상; 기본 토큰: Action/primary, Accent/Blue/Hover, Accent/Blue/Pressed
+- 대상: AOT 비활성 배경; 기본 토큰: Panel/subSurface
 
 AOT Label의 기본 역할은 기존 description을 유지한다. 크기·줄 높이·굵기·색상은 다음 토큰 조합으로 결정한다.
 
-| 역할 | 크기 / 줄 높이 | 굵기 | 색상 |
-|---|---:|---:|---|
-| title | 26 / 26 | 700 | titleHeaderColor |
-| title2 | 22 / 22 | 700 | titleHeaderColor |
-| header | 17 / 17 | 600 | titleHeaderColor |
-| header2 | 15 / 15 | 600 | titleHeaderColor |
-| body | 13 / 13 | 500 | bodyColor |
-| description | 12 / 12 | 600 | descriptionColor |
-| caption / disabled | 11 / 11 | 400 | captionColor / disabledColor |
+- 역할: title; 크기 / 줄 높이: 26 / 26; 굵기: 700; 색상: titleHeaderColor
+- 역할: title2; 크기 / 줄 높이: 22 / 22; 굵기: 700; 색상: titleHeaderColor
+- 역할: header; 크기 / 줄 높이: 17 / 17; 굵기: 600; 색상: titleHeaderColor
+- 역할: header2; 크기 / 줄 높이: 15 / 15; 굵기: 600; 색상: titleHeaderColor
+- 역할: body; 크기 / 줄 높이: 13 / 13; 굵기: 500; 색상: bodyColor
+- 역할: description; 크기 / 줄 높이: 12 / 12; 굵기: 600; 색상: descriptionColor
+- 역할: caption / disabled; 크기 / 줄 높이: 11 / 11; 굵기: 400; 색상: captionColor / disabledColor
 
 이 표는 기본 스냅샷 값이며 앱별 설정으로 바뀔 수 있다. `fontSize`만 지정하면 해당 크기를 줄 높이로 사용하고, `lineHeight: 0`은 네이티브 글꼴 측정 규칙을 사용한다. 창 배경은 Panel/window를 사용한다. 창의 `accent`는 LVUI 자체 색상 선택 타입으로 기본 호스트와 기본 버튼에 적용하며, 상세 범위는 [Window 계약](NativeWindow.md)을 따른다.
 

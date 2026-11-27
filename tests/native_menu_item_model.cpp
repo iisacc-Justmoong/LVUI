@@ -1,9 +1,63 @@
 #include <LVUI/MenuItem.h>
+#include <LVUI/NativeMenuItem.h>
 #include <iiGUI/MenuItemModel.h>
+#include <iiGUI/NativeMenuItemView.h>
+#include <iiGUI/SvgImageCache.h>
 #include <limits>
 #include <stdexcept>
-namespace {void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}}
+namespace {
+void require(bool value,const char* message){if(!value)throw std::runtime_error(message);}
+struct TestImage {};
+struct TestDecoder {using Image=TestImage;};
+using BaseModel=ii::gui::BasicMenuItem<lvui::MenuItemModelPolicy>;
+using DisplayModel=lvui::native::MenuItemHostPolicy<BaseModel,TestDecoder,int,int>::Model;
+using NativeHost=lvui::native::MenuItemBinding<ii::gui::BasicMenuItem,ii::gui::BasicNativeMenuItem,
+    ii::gui::CachedSvgDecoder,ii::gui::Widget,ii::gui::WidgetSnapshot>;
+
+// Compile the decorated model through the installed iiGUI menu host, too.
+[[maybe_unused]] auto compile_native_host(ii::gui::WidgetBuilder& builder,ii::gui::Widget parent){
+    return NativeHost::create(builder,parent,"shortcut-test",{});
+}
+
+// Exercise the same model installed into every LVUI menu-item host.
+void shortcut_display(){
+    DisplayModel item;
+    lvui::MenuItemConfiguration value;value.label="Open";
+    const auto check=[&](std::string_view input,std::string_view expected){
+        value.shortcut=input;
+        require(item.set_configuration(value),"Shortcut configuration was rejected");
+        require(item.shortcut()==expected,"Shortcut symbols were not displayed correctly");
+    };
+    check("Option+Shift+Command+i","⌥⇧⌘i");
+    require(item.configuration().accessibility_name.find("Option+Shift+Command+i")!=std::string::npos,
+            "The original shortcut was lost to accessibility");
+    check("Ctrl+Alt+Shift+F4","⌃⌥⇧F4");
+    check("Control+Shift+Escape","⌃⇧⎋");
+    check("Ctrl++","⌃+");
+    check("Ctrl+Plus","⌃+");
+    check("Ctrl+한","⌃한");
+    check("⌘+Shift+I","⌘⇧I");
+    check(" Ctrl + K, Ctrl + C "," ⌃K, ⌃C ");
+    check("Shift+Tab","⇧⇥");
+    check("Command+,","⌘,");
+    check("Custom+Thing","Custom+Thing");
+    check("Ctrl+","Ctrl+");
+    check("Delete","⌦");
+    check("F12","F12");
+    value.shortcut="Command+I";value.accessibility_name="Open document";
+    require(item.set_configuration(value)&&item.configuration().accessibility_name.find("Open document")!=std::string::npos&&
+            item.configuration().accessibility_name.find("Command+I")!=std::string::npos,"Custom accessibility name was not preserved");
+    value.key_visible=false;
+    require(item.set_configuration(value)&&item.shortcut().empty()&&item.configuration().accessibility_name=="Open document",
+            "Hidden shortcut changed its accessibility name");
+    value.key_visible=true;value.shortcut.clear();value.key_placeholder="Shift+Command+I";
+    require(item.set_configuration(value)&&item.shortcut()=="⇧⌘I"&&
+            item.configuration().accessibility_name.find("Shift+Command+I")!=std::string::npos,
+            "The visible shortcut placeholder did not use the shared symbol policy");
+}
+}
 int main(){
+    shortcut_display();
     ii::gui::BasicMenuItem<lvui::MenuItemModelPolicy> item;auto value=item.configuration();value.label="Open";value.shortcut="⌘O";
     require(item.set_configuration(value)&&item.width()==161&&item.height()==24,"Regular menu item defaults are incorrect");
     auto geometry=item.geometry(161,24,40,13,18,13);
@@ -11,8 +65,8 @@ int main(){
             "Menu item layout is incorrect");
     require(item.visual({.hovered=true,.pressed=true}).background==value.palette.pressed,"Pressed menu item did not override hover");
     value.compact=true;value.state=lvui::MenuEntryState::selected;value.expanded=true;require(item.set_configuration(value),"Compact selection was rejected");
-    require(item.width()==141&&item.height()==18&&item.direction()==lvui::MenuDirection::down&&item.visual({}).background==value.palette.selected,
-            "Compact selection or automatic chevron direction is incorrect");
+    require(item.width()==141&&item.height()==18&&item.direction()==lvui::MenuDirection::down&&item.visual({}).background.alpha==0,
+            "Compact surface or automatic chevron direction is incorrect");
     value.state=lvui::MenuEntryState::inactive;require(item.set_configuration(value)&&!item.visual({.focused=true}).enabled&&!item.visual({.focused=true}).focused,
             "Inactive menu item retained interaction");
     value.key_visible=false;require(item.set_configuration(value)&&item.shortcut().empty(),"Hidden shortcut remained visible");

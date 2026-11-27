@@ -17,15 +17,13 @@ Window(title: state.title, width: state.width, minimumWidth: state.minimumWidth,
 
 ## 입력과 초기 창
 
-| 입력 | 네이티브 계약 |
-|---|---|
-| title | String, 유효한 UTF-8, NUL 없음, 최대 64 KiB |
-| width, height, minimumWidth, minimumHeight | Bool을 제외한 숫자, 유한한 1–32767 논리 단위 |
-| backgroundColor | 기존 Color 값·iiColorManager 공유 값과 동일한 색상 계약 |
-| fontFamily | 비어 있지 않은 UTF-8 String, NUL 없음, 최대 4096바이트 |
-| accent | `blue`, `purple`, `rose`, `red`, `orange`, `yellow`, `green`, `gray`, `brown`, `cyan`, `teal`, `white` |
-| onOpened, onClosed | `Application` 직계 창의 게시·해제 콜백. 창 지역 및 앱 스코프 참조 가능 |
-| id, initiallyOpen | `Application` 직계 창의 정적 식별자와 초기 열림 여부. 닫힌 상태로 시작하려면 이름 있는 보조 창이어야 함 |
+- 입력: title; 네이티브 계약: String, 유효한 UTF-8, NUL 없음, 최대 64 KiB
+- 입력: width, height, minimumWidth, minimumHeight; 네이티브 계약: Bool을 제외한 숫자, 유한한 1–32767 논리 단위
+- 입력: backgroundColor; 네이티브 계약: 기존 Color 값·iiColorManager 공유 값과 동일한 색상 계약
+- 입력: fontFamily; 네이티브 계약: 비어 있지 않은 UTF-8 String, NUL 없음, 최대 4096바이트
+- 입력: accent; 네이티브 계약: `blue`, `purple`, `rose`, `red`, `orange`, `yellow`, `green`, `gray`, `brown`, `cyan`, `teal`, `white`
+- 입력: onOpened, onClosed; 네이티브 계약: `Application` 직계 창의 게시·해제 콜백. 창 지역 및 앱 스코프 참조 가능
+- 입력: id, initiallyOpen; 네이티브 계약: `Application` 직계 창의 정적 식별자와 초기 열림 여부. 닫힌 상태로 시작하려면 이름 있는 보조 창이어야 함
 
 창별 콜백의 실행 순서, 실패 처리와 지원 범위는
 [애플리케이션 창 수명 이벤트](NativeApplication.md#창별-수명-이벤트-명세)를 따른다.
@@ -194,19 +192,17 @@ ConfigureNotify가 소유한다. iPadOS의 기본 scene 크기는 OS가 소유�
 일반 구성의 최종 전체 검사와
 메모리 검사 구성은 독립 실행이며, 두 구성의 건수를 서로 다른 기능 수로 합산하지 않는다.
 
-| 검사 | 확인 결과 |
-|---|---|
-| LVUI Release 전체 | 204/204 통과 |
-| LVUI 관련 ASan·UBSan | 133/133 통과 |
-| iiGUI 일반 창 없는 검사·패키지 | 최소 폭 보완 후 최종 141/141 통과 |
-| iiGUI ASan·UBSan | 141/141 통과, 같은 최소 폭 보완 포함 |
-| 새 Window 위젯 검사 | 각 구성 12건, 입력 보존·갱신·범위·거부·복구·종료 포함 |
-| 외부 C++ Window 타입 | 각 구성 유효 3개 컴파일, 부적합 6개 거부 |
-| LVUI 재배치 소비자 | Native 값·AOT 컴파일러·선택적 Runtime 3건 통과 |
-| iiGUI 재배치 소비자 | 일반·메모리 검사 구성 각각 컴파일·링크·제한된 실행 통과 |
-| 생성 위젯 헤더 | 두 구성의 39개 내용 일치 |
-| LVRS | 기존 34개와 Window 5개, 39개 팩터리를 두 구성에서 컴파일, 실행 미실시 |
-| Dreamscapes | QML 81개 해시 유지, 변환·재설치 없음 |
+- 검사: LVUI Release 전체; 확인 결과: 204/204 통과
+- 검사: LVUI 관련 ASan·UBSan; 확인 결과: 133/133 통과
+- 검사: iiGUI 일반 창 없는 검사·패키지; 확인 결과: 최소 폭 보완 후 최종 141/141 통과
+- 검사: iiGUI ASan·UBSan; 확인 결과: 141/141 통과, 같은 최소 폭 보완 포함
+- 검사: 새 Window 위젯 검사; 확인 결과: 각 구성 12건, 입력 보존·갱신·범위·거부·복구·종료 포함
+- 검사: 외부 C++ Window 타입; 확인 결과: 각 구성 유효 3개 컴파일, 부적합 6개 거부
+- 검사: LVUI 재배치 소비자; 확인 결과: Native 값·AOT 컴파일러·선택적 Runtime 3건 통과
+- 검사: iiGUI 재배치 소비자; 확인 결과: 일반·메모리 검사 구성 각각 컴파일·링크·제한된 실행 통과
+- 검사: 생성 위젯 헤더; 확인 결과: 두 구성의 39개 내용 일치
+- 검사: LVRS; 확인 결과: 기존 34개와 Window 5개, 39개 팩터리를 두 구성에서 컴파일, 실행 미실시
+- 검사: Dreamscapes; 확인 결과: QML 81개 해시 유지, 변환·재설치 없음
 
 최초 소스 검사에서는 동적 Window 입력의 미지원 상태를 재현했다. 일반 전체 검사의
 첫 실행에는 과거의 동적 Window Color 거부 기대값과 지역 스코프의 생성 주석 기대값이

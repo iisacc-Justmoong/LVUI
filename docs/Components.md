@@ -145,14 +145,12 @@ Menu의 자식 타입을 검사한다. 가변 View 교체와 일반 슬롯 프�
 현재 macOS arm64 작업 트리에서 다음 결과를 확인했다. 서로 겹치는 검사를 합산하여
 독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.
 
-| 검사 | 결과 | 범위 |
-|---|---|---|
-| LVUI Release CTest | 103/103 통과 | 기존 언어·AOT·관측·설치 소비자와 신규 구성 검사 |
-| AddressSanitizer + UndefinedBehaviorSanitizer | 32/32 통과 | 구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프 |
-| iiGUI 창 없는 통합 검사 | 4/4 통과 | 퇴역·조건부 교체·View 입력·타입 매개변수 구성 |
-| 설치·재배치 독립 소비자 | 2/2 통과 | 네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러 |
-| 실행 파일 의존성 | Qt 동적 라이브러리 없음 | `lvui-compile`, `LVUINativeComponentTests`의 `otool -L` |
-| Dreamscapes 읽기 전용 관측 | QML 81개 해시 변경 0 | 별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선 |
+- 검사: LVUI Release CTest; 결과: 103/103 통과; 범위: 기존 언어·AOT·관측·설치 소비자와 신규 구성 검사
+- 검사: AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 32/32 통과; 범위: 구성·View 값·조건부·네이티브 바인딩과 생성 C++ 스코프
+- 검사: iiGUI 창 없는 통합 검사; 결과: 4/4 통과; 범위: 퇴역·조건부 교체·View 입력·타입 매개변수 구성
+- 검사: 설치·재배치 독립 소비자; 결과: 2/2 통과; 범위: 네이티브 바인딩 및 공개 컴포넌트 파서·컴파일러
+- 검사: 실행 파일 의존성; 결과: Qt 동적 라이브러리 없음; 범위: `lvui-compile`, `LVUINativeComponentTests`의 `otool -L`
+- 검사: Dreamscapes 읽기 전용 관측; 결과: QML 81개 해시 변경 0; 범위: 별도 Dreamscapes 작업 이후 설정한 이 작업 구간의 기준선
 
 주요 테스트 소스는 [구문·차용·슬롯 검사](../tests/components.cpp),
 [생성 C++ 스코프 검사](../tests/native_components.cpp),

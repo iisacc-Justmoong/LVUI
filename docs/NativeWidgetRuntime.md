@@ -28,12 +28,10 @@ LVUI 소스·AST·바이트코드 실행기는 배포 UI를 실행하는 데 사
 `lvui_generated::MainView` 같은 클래스는 기본 생성할 수 있는 `final` C++ 타입이다.
 복사하지 않으며 다음 인터페이스를 제공한다.
 
-| API | 역할 |
-|---|---|
-| `View::options()` | 생성한 창 속성을 제공한다. |
-| `view.attach(host, configure)` | 실제 네이티브 위젯을 구성하고 뷰 정체성을 부착한다. |
-| `view.widgets()` | 해당 위젯의 약한 네이티브 핸들·ID 조회를 제공한다. |
-| `view.detach(host)` | 해당 세대의 네이티브 위젯을 해제하고 소유 C++ 스코프를 반환한다. |
+- API: `View::options()`; 역할: 생성한 창 속성을 제공한다.
+- API: `view.attach(host, configure)`; 역할: 실제 네이티브 위젯을 구성하고 뷰 정체성을 부착한다.
+- API: `view.widgets()`; 역할: 해당 위젯의 약한 네이티브 핸들·ID 조회를 제공한다.
+- API: `view.detach(host)`; 역할: 해당 세대의 네이티브 위젯을 해제하고 소유 C++ 스코프를 반환한다.
 
 기존 정적 `mount`는 직접 마운트하는 호출자를 위해 유지한다. Core가 앱을 소유하는
 새 경로는 위젯 객체를 만들어 `view_attachment`로 부착한다. 생성된 코드는 직접적인

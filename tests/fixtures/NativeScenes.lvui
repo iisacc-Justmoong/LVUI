@@ -17,7 +17,7 @@ Application {
             PushButton(id: "openDocument", text: "Open document callback", onClick: { openScene("tools") })
         }
     }
-    Scene(id: "tools", title: "Tools", initiallyOpen: false,
+    Scene(id: "tools", title: "Tools", titleBarVisible: true, initiallyOpen: false,
           onOpened: window.opened, onClosed: window.closed) {
         import window NativeWindowBackend
         var local: Int = 10

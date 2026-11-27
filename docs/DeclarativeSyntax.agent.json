@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/DeclarativeSyntax.md",
-    "sha256": "ef50d193177b0b2706253a0a0cc8cbdf037757f5484b49d01f453d88b1726148",
-    "bytes": 12866,
-    "line_count": 235,
+    "sha256": "1378c08d2c59ee176b851d92aa8d21f75ac2200e70cbbff76f3d0c72c4d6faa0",
+    "bytes": 13148,
+    "line_count": 233,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -554,113 +554,123 @@
     },
     {
       "id": "b000073",
-      "kind": "table",
       "start_line": 145,
-      "end_line": 160,
-      "raw": "| 형식 | 채택한 의미 |\n|---|---|\n| `View` | 시각적으로 표시되는 모든 요소의 공통 타입이다. |\n| `ParentView(...) { ChildView(...) }` | 바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다. |\n| `const constant: Int = 6` | `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다. |\n| `var variable: Int = 6` | `6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다. |\n| `vm.increment` | 기존 VM에 연결된 메서드를 호출하지 않고 참조한다. |\n| `vm.increment()` | 표현식을 평가할 때 메서드를 명시적으로 호출한다. |\n| `import document DocumentBackend` | 이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다. |\n| `ApplicationWindow(accent: .blue) { ... }` | 애플리케이션 창과 강조색 구성을 선언한다. |\n| `VStack() { ... }` | 자식 뷰의 세로 구성을 선언한다. |\n| `AppBodyView(backend: document)` | 기존 백엔드 인스턴스의 차용 참조를 전달한다. |\n| `Footer(status: document.status)` | 푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다. |\n| `PushButton(document.save)` | 연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다. |\n| `enabled: document.canSave` | 접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다. |\n| `tone: .borderless` | 버튼 외형을 설정한다. |\n",
-      "columns": [
-        "형식",
-        "채택한 의미"
-      ],
-      "rows": [
-        [
-          "`View`",
-          "시각적으로 표시되는 모든 요소의 공통 타입이다."
-        ],
-        [
-          "`ParentView(...) { ChildView(...) }`",
-          "바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다."
-        ],
-        [
-          "`const constant: Int = 6`",
-          "`6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다."
-        ],
-        [
-          "`var variable: Int = 6`",
-          "`6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다."
-        ],
-        [
-          "`vm.increment`",
-          "기존 VM에 연결된 메서드를 호출하지 않고 참조한다."
-        ],
-        [
-          "`vm.increment()`",
-          "표현식을 평가할 때 메서드를 명시적으로 호출한다."
-        ],
-        [
-          "`import document DocumentBackend`",
-          "이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다."
-        ],
-        [
-          "`ApplicationWindow(accent: .blue) { ... }`",
-          "애플리케이션 창과 강조색 구성을 선언한다."
-        ],
-        [
-          "`VStack() { ... }`",
-          "자식 뷰의 세로 구성을 선언한다."
-        ],
-        [
-          "`AppBodyView(backend: document)`",
-          "기존 백엔드 인스턴스의 차용 참조를 전달한다."
-        ],
-        [
-          "`Footer(status: document.status)`",
-          "푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다."
-        ],
-        [
-          "`PushButton(document.save)`",
-          "연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다."
-        ],
-        [
-          "`enabled: document.canSave`",
-          "접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다."
-        ],
-        [
-          "`tone: .borderless`",
-          "버튼 외형을 설정한다."
-        ]
+      "end_line": 158,
+      "raw": "- 형식: `View`; 채택한 의미: 시각적으로 표시되는 모든 요소의 공통 타입이다.\n- 형식: `ParentView(...) { ChildView(...) }`; 채택한 의미: 바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다.\n- 형식: `const constant: Int = 6`; 채택한 의미: `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다.\n- 형식: `var variable: Int = 6`; 채택한 의미: `6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다.\n- 형식: `vm.increment`; 채택한 의미: 기존 VM에 연결된 메서드를 호출하지 않고 참조한다.\n- 형식: `vm.increment()`; 채택한 의미: 표현식을 평가할 때 메서드를 명시적으로 호출한다.\n- 형식: `import document DocumentBackend`; 채택한 의미: 이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다.\n- 형식: `ApplicationWindow(accent: .blue) { ... }`; 채택한 의미: 애플리케이션 창과 강조색 구성을 선언한다.\n- 형식: `VStack() { ... }`; 채택한 의미: 자식 뷰의 세로 구성을 선언한다.\n- 형식: `AppBodyView(backend: document)`; 채택한 의미: 기존 백엔드 인스턴스의 차용 참조를 전달한다.\n- 형식: `Footer(status: document.status)`; 채택한 의미: 푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다.\n- 형식: `PushButton(document.save)`; 채택한 의미: 연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다.\n- 형식: `enabled: document.canSave`; 채택한 의미: 접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다.\n- 형식: `tone: .borderless`; 채택한 의미: 버튼 외형을 설정한다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "형식: `View`; 채택한 의미: 시각적으로 표시되는 모든 요소의 공통 타입이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `ParentView(...) { ChildView(...) }`; 채택한 의미: 바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `const constant: Int = 6`; 채택한 의미: `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `var variable: Int = 6`; 채택한 의미: `6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `vm.increment`; 채택한 의미: 기존 VM에 연결된 메서드를 호출하지 않고 참조한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `vm.increment()`; 채택한 의미: 표현식을 평가할 때 메서드를 명시적으로 호출한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `import document DocumentBackend`; 채택한 의미: 이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `ApplicationWindow(accent: .blue) { ... }`; 채택한 의미: 애플리케이션 창과 강조색 구성을 선언한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `VStack() { ... }`; 채택한 의미: 자식 뷰의 세로 구성을 선언한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `AppBodyView(backend: document)`; 채택한 의미: 기존 백엔드 인스턴스의 차용 참조를 전달한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `Footer(status: document.status)`; 채택한 의미: 푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `PushButton(document.save)`; 채택한 의미: 연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `enabled: document.canSave`; 채택한 의미: 접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "형식: `tone: .borderless`; 채택한 의미: 버튼 외형을 설정한다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000074",
       "kind": "blank",
-      "start_line": 161,
-      "end_line": 161,
+      "start_line": 159,
+      "end_line": 159,
       "raw": "\n"
     },
     {
       "id": "b000075",
       "kind": "paragraph",
-      "start_line": 162,
-      "end_line": 166,
+      "start_line": 160,
+      "end_line": 164,
       "raw": "이름이 붙은 애플리케이션 뷰는 예제이다.\n등록된 LVRS 시각 이름은 [실제 예약어 목록](ReservedWords.md)을 따른다.\n애플리케이션 전용 뷰는 [타입 매개변수 재사용 구성](Components.md)의\n`const Name(...): View = ...`로 선언할 수 있다. 스칼라 입력·부모 백엔드 차용·이름별 View\n슬롯은 현재 구현 범위이며, 전체 컴포넌트별 공개 입력 스키마와 동적 구성은 별도 완료 기준이다.\n"
     },
     {
       "id": "b000076",
+      "kind": "blank",
+      "start_line": 165,
+      "end_line": 165,
+      "raw": "\n"
+    },
+    {
+      "id": "b000077",
+      "kind": "html",
+      "start_line": 166,
+      "end_line": 166,
+      "raw": "<a id=\"event-connection-and-property-binding\"></a>\n"
+    },
+    {
+      "id": "b000078",
       "kind": "blank",
       "start_line": 167,
       "end_line": 167,
       "raw": "\n"
     },
     {
-      "id": "b000077",
-      "kind": "html",
-      "start_line": 168,
-      "end_line": 168,
-      "raw": "<a id=\"event-connection-and-property-binding\"></a>\n"
-    },
-    {
-      "id": "b000078",
-      "kind": "blank",
-      "start_line": 169,
-      "end_line": 169,
-      "raw": "\n"
-    },
-    {
       "id": "b000079",
       "kind": "heading",
-      "start_line": 170,
-      "end_line": 170,
+      "start_line": 168,
+      "end_line": 168,
       "raw": "## 이벤트 연결과 속성 바인딩\n",
       "level": 2,
       "title": "이벤트 연결과 속성 바인딩"
@@ -668,113 +678,113 @@
     {
       "id": "b000080",
       "kind": "blank",
-      "start_line": 171,
-      "end_line": 171,
+      "start_line": 169,
+      "end_line": 169,
       "raw": "\n"
     },
     {
       "id": "b000081",
       "kind": "paragraph",
-      "start_line": 172,
-      "end_line": 177,
+      "start_line": 170,
+      "end_line": 175,
       "raw": "`document.save`는 인스턴스에 연결된 메서드 참조이다.\n예제 `PushButton` 인터페이스는 첫 번째 입력으로 콜백을 받고,\n버튼 구현이 허용된 클릭에 대해 이를 호출한다.\n버튼 생성은 콜백을 실행하지 않고 전달·연결한다.\n클릭 의미는 컴포넌트에 속하며 언어는 일반 멤버 접근과 타입에 맞는 인자 전달을 처리한다.\n호출이 완료된 뒤에도 소유자와 사용이 활성 상태이면 기존 백엔드를 계속 사용할 수 있다.\n"
     },
     {
       "id": "b000082",
       "kind": "blank",
-      "start_line": 178,
-      "end_line": 178,
+      "start_line": 176,
+      "end_line": 176,
       "raw": "\n"
     },
     {
       "id": "b000083",
       "kind": "paragraph",
-      "start_line": 179,
-      "end_line": 181,
+      "start_line": 177,
+      "end_line": 179,
       "raw": "`document.status`와 `document.canSave`는 뷰 입력으로 사용할 때 기본적으로 상태 변경을 따르는 공개 멤버 읽기이다.\nAOT·네이티브 연동은 의존성 추적과 변경 정보를 제공해야 한다.\n공개 접근에는 export 표식이 필요하지 않으며 기본 반응성에는 관찰 어노테이션이 필요하지 않다.\n"
     },
     {
       "id": "b000084",
       "kind": "blank",
-      "start_line": 182,
-      "end_line": 182,
+      "start_line": 180,
+      "end_line": 180,
       "raw": "\n"
     },
     {
       "id": "b000085",
       "kind": "paragraph",
-      "start_line": 183,
-      "end_line": 187,
+      "start_line": 181,
+      "end_line": 185,
       "raw": "가져온 백엔드가 ViewModel 역할을 하면 상태는 기본적으로 뷰 바인딩에 참여한다.\n뷰는 `vm.value` 같은 멤버를 직접 사용하며 바인딩 어노테이션이나 래퍼 별칭은 필요하지 않다.\n편집 가능한 바인딩은 공개 계약이 쓰기를 허용하는 경우 같은 VM에 변경을 전달한다.\n읽기 전용 멤버는 읽기 전용 계약을 유지한다.\n[기본 ViewModel 바인딩](ViewModelQueries.md#default-viewmodel-binding)을 참조한다.\n"
     },
     {
       "id": "b000086",
       "kind": "blank",
-      "start_line": 188,
-      "end_line": 188,
+      "start_line": 186,
+      "end_line": 186,
       "raw": "\n"
     },
     {
       "id": "b000087",
       "kind": "paragraph",
-      "start_line": 189,
-      "end_line": 192,
-      "raw": "[증가·초기화 예제](examples/ReactiveCounter.lvui)는 `VStack() { ... }`과 `Label(text: vm.value)`를 사용한다.\n`vm.value`가 바뀌면 기본 바인딩을 통해 해당 레이블을 갱신한다.\n`@Static`은 해당 수명 동안 고정되는 값을 명시적으로 선택한다.\n일반 LVUI 변수도 같은 기본 반응형 모델을 따르며 VM 멤버에만 한정되지 않는다.\n"
+      "start_line": 187,
+      "end_line": 190,
+      "raw": "[증가·초기화 예제](Examples/ReactiveCounter.lvui)는 `VStack() { ... }`과 `Label(text: vm.value)`를 사용한다.\n`vm.value`가 바뀌면 기본 바인딩을 통해 해당 레이블을 갱신한다.\n`@Static`은 해당 수명 동안 고정되는 값을 명시적으로 선택한다.\n일반 LVUI 변수도 같은 기본 반응형 모델을 따르며 VM 멤버에만 한정되지 않는다.\n"
     },
     {
       "id": "b000088",
       "kind": "blank",
-      "start_line": 193,
-      "end_line": 193,
+      "start_line": 191,
+      "end_line": 191,
       "raw": "\n"
     },
     {
       "id": "b000089",
       "kind": "paragraph",
-      "start_line": 194,
-      "end_line": 197,
+      "start_line": 192,
+      "end_line": 195,
       "raw": "VM은 [Core 객체 쿼리](ViewModelQueries.md)를 통해 값을 송수신한다.\n어댑터는 공개 멤버 읽기·동작을 값·호출 쿼리에 연결할 수 있다.\n변경 쿼리는 필요한 최신 값 읽기를 유발한다.\n뷰 파일을 위한 별도 전송 구문은 채택하지 않았다.\n"
     },
     {
       "id": "b000090",
       "kind": "blank",
-      "start_line": 198,
-      "end_line": 198,
+      "start_line": 196,
+      "end_line": 196,
       "raw": "\n"
     },
     {
       "id": "b000091",
       "kind": "paragraph",
-      "start_line": 199,
-      "end_line": 203,
+      "start_line": 197,
+      "end_line": 201,
       "raw": "멤버 읽기와 메서드 참조는 명령을 암묵적으로 실행하지 않는다.\n명시적 호출 표현식은 인자 값을 얻는 용도로 사용하더라도 평가 시 호출을 시작한다.\n콜백이 필요한 곳에 반환값 없는 호출 결과를 전달하면 타입 오류이다.\n호환되는 callable을 반환하는 경우는 유효할 수 있다.\n정확한 표현식 규칙과 반응형 문맥의 효과 제한은 미정이다.\n"
     },
     {
       "id": "b000092",
+      "kind": "blank",
+      "start_line": 202,
+      "end_line": 202,
+      "raw": "\n"
+    },
+    {
+      "id": "b000093",
+      "kind": "html",
+      "start_line": 203,
+      "end_line": 203,
+      "raw": "<a id=\"view-updates-and-identity\"></a>\n"
+    },
+    {
+      "id": "b000094",
       "kind": "blank",
       "start_line": 204,
       "end_line": 204,
       "raw": "\n"
     },
     {
-      "id": "b000093",
-      "kind": "html",
-      "start_line": 205,
-      "end_line": 205,
-      "raw": "<a id=\"view-updates-and-identity\"></a>\n"
-    },
-    {
-      "id": "b000094",
-      "kind": "blank",
-      "start_line": 206,
-      "end_line": 206,
-      "raw": "\n"
-    },
-    {
       "id": "b000095",
       "kind": "heading",
-      "start_line": 207,
-      "end_line": 207,
+      "start_line": 205,
+      "end_line": 205,
       "raw": "## 뷰 갱신과 정체성\n",
       "level": 2,
       "title": "뷰 갱신과 정체성"
@@ -782,71 +792,71 @@
     {
       "id": "b000096",
       "kind": "blank",
-      "start_line": 208,
-      "end_line": 208,
+      "start_line": 206,
+      "end_line": 206,
       "raw": "\n"
     },
     {
       "id": "b000097",
       "kind": "paragraph",
-      "start_line": 209,
-      "end_line": 211,
+      "start_line": 207,
+      "end_line": 209,
       "raw": "같은 활성 소유 스코프에서 다시 그리기·레이아웃 재계산·속성 재평가는 가져온 인스턴스를 유지한다.\n뷰의 다른 인스턴스를 활성화하면 다른 백엔드 인스턴스를 생성한다.\n스코프를 제거한 뒤 다시 활성화하면 새 활성화를 위한 새 백엔드를 생성한다.\n"
     },
     {
       "id": "b000098",
       "kind": "blank",
-      "start_line": 212,
-      "end_line": 212,
+      "start_line": 210,
+      "end_line": 210,
       "raw": "\n"
     },
     {
       "id": "b000099",
       "kind": "paragraph",
-      "start_line": 213,
-      "end_line": 214,
+      "start_line": 211,
+      "end_line": 212,
       "raw": "여러 자식 뷰에 `document`를 전달하면 같은 인스턴스의 사용을 공유한다.\n각 자식에서 별도 import를 선언하면 독립적으로 소유하는 인스턴스를 생성한다.\n"
     },
     {
       "id": "b000100",
       "kind": "blank",
-      "start_line": 215,
-      "end_line": 215,
+      "start_line": 213,
+      "end_line": 213,
       "raw": "\n"
     },
     {
       "id": "b000101",
       "kind": "paragraph",
-      "start_line": 216,
-      "end_line": 217,
+      "start_line": 214,
+      "end_line": 215,
       "raw": "소유권은 [TypeImports.md](TypeImports.md),\n종료는 [InvocationLifecycle.md](InvocationLifecycle.md)를 참조한다.\n"
     },
     {
       "id": "b000102",
+      "kind": "blank",
+      "start_line": 216,
+      "end_line": 216,
+      "raw": "\n"
+    },
+    {
+      "id": "b000103",
+      "kind": "html",
+      "start_line": 217,
+      "end_line": 217,
+      "raw": "<a id=\"open-questions\"></a>\n"
+    },
+    {
+      "id": "b000104",
       "kind": "blank",
       "start_line": 218,
       "end_line": 218,
       "raw": "\n"
     },
     {
-      "id": "b000103",
-      "kind": "html",
-      "start_line": 219,
-      "end_line": 219,
-      "raw": "<a id=\"open-questions\"></a>\n"
-    },
-    {
-      "id": "b000104",
-      "kind": "blank",
-      "start_line": 220,
-      "end_line": 220,
-      "raw": "\n"
-    },
-    {
       "id": "b000105",
       "kind": "heading",
-      "start_line": 221,
-      "end_line": 221,
+      "start_line": 219,
+      "end_line": 219,
       "raw": "## 미정 사항\n",
       "level": 2,
       "title": "미정 사항"
@@ -854,15 +864,15 @@
     {
       "id": "b000106",
       "kind": "blank",
-      "start_line": 222,
-      "end_line": 222,
+      "start_line": 220,
+      "end_line": 220,
       "raw": "\n"
     },
     {
       "id": "b000107",
       "kind": "list",
-      "start_line": 223,
-      "end_line": 232,
+      "start_line": 221,
+      "end_line": 230,
       "raw": "- 채택한 선언·세미콜론 생략 규칙 외의 전체 문법, 줄 경계, 여러 줄 이어쓰기, 주석, 식별자 규칙.\n- 다양한 재사용 View 구성과 빈 괄호 생략 규칙의 전체 범위.\n- `View`의 구체적인 타입 표현·값 또는 참조 의미와 컴포넌트별 자식 인자 스키마.\n- 열거형·토큰·이름 지정 입력 구문.\n- 중복 속성 처리와 괄호 입력·중괄호 본문 속성 사이의 관계.\n- 속성 타입·기본값·바인딩 투영 구문·허용 표현식.\n- 레이아웃 크기·넘침·테마 상속·컴포넌트 지역 상태.\n- 동적 목록 정체성·조건부 뷰 활성화·상태 보존.\n- 메서드 인자·오버로드 선택·명시적 이벤트 처리 블록.\n- 별도 C++ API로 보존한 [레거시 문서 파서](Language.md) 소비자의 마이그레이션.\n",
       "items": [
         {
@@ -920,15 +930,15 @@
     {
       "id": "b000108",
       "kind": "blank",
-      "start_line": 233,
-      "end_line": 233,
+      "start_line": 231,
+      "end_line": 231,
       "raw": "\n"
     },
     {
       "id": "b000109",
       "kind": "paragraph",
-      "start_line": 234,
-      "end_line": 235,
+      "start_line": 232,
+      "end_line": 233,
       "raw": "채택한 예제에는 `view` 키워드와 명시적 `onClick` 속성이 필수적이지 않다.\n해당 구문은 아직 정하지 않았다.\n"
     }
   ],
@@ -995,7 +1005,7 @@
       "level": 2,
       "title": "이벤트 연결과 속성 바인딩",
       "anchor": "이벤트-연결과-속성-바인딩",
-      "start_line": 170
+      "start_line": 168
     },
     {
       "block_id": "b000095",
@@ -1003,7 +1013,7 @@
       "level": 2,
       "title": "뷰 갱신과 정체성",
       "anchor": "뷰-갱신과-정체성",
-      "start_line": 207
+      "start_line": 205
     },
     {
       "block_id": "b000105",
@@ -1011,7 +1021,7 @@
       "level": 2,
       "title": "미정 사항",
       "anchor": "미정-사항",
-      "start_line": 221
+      "start_line": 219
     }
   ],
   "indexes": {
@@ -1060,28 +1070,28 @@
       },
       {
         "block_id": "b000073",
-        "line": 149,
-        "text": "| `const constant: Int = 6` | `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다. |",
+        "line": 147,
+        "text": "- 형식: `const constant: Int = 6`; 채택한 의미: `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다.",
         "basis": "lexical_match",
-        "context": "table"
+        "context": "list"
       },
       {
         "block_id": "b000083",
-        "line": 180,
+        "line": 178,
         "text": "AOT·네이티브 연동은 의존성 추적과 변경 정보를 제공해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000091",
-        "line": 199,
+        "line": 197,
         "text": "멤버 읽기와 메서드 참조는 명령을 암묵적으로 실행하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000109",
-        "line": 234,
+        "line": 232,
         "text": "채택한 예제에는 `view` 키워드와 명시적 `onClick` 속성이 필수적이지 않다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -1150,125 +1160,59 @@
         "label": "실제 예약어 목록",
         "target": "ReservedWords.md",
         "kind": "relative",
-        "line": 163
+        "line": 161
       },
       {
         "block_id": "b000075",
         "label": "타입 매개변수 재사용 구성",
         "target": "Components.md",
         "kind": "relative",
-        "line": 164
+        "line": 162
       },
       {
         "block_id": "b000085",
         "label": "기본 ViewModel 바인딩",
         "target": "ViewModelQueries.md#default-viewmodel-binding",
         "kind": "relative",
-        "line": 187
+        "line": 185
       },
       {
         "block_id": "b000087",
         "label": "증가·초기화 예제",
-        "target": "examples/ReactiveCounter.lvui",
+        "target": "Examples/ReactiveCounter.lvui",
         "kind": "relative",
-        "line": 189
+        "line": 187
       },
       {
         "block_id": "b000089",
         "label": "Core 객체 쿼리",
         "target": "ViewModelQueries.md",
         "kind": "relative",
-        "line": 194
+        "line": 192
       },
       {
         "block_id": "b000101",
         "label": "TypeImports.md",
         "target": "TypeImports.md",
         "kind": "relative",
-        "line": 216
+        "line": 214
       },
       {
         "block_id": "b000101",
         "label": "InvocationLifecycle.md",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
-        "line": 217
+        "line": 215
       },
       {
         "block_id": "b000107",
         "label": "레거시 문서 파서",
         "target": "Language.md",
         "kind": "relative",
-        "line": 232
+        "line": 230
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000073",
-        "columns": [
-          "형식",
-          "채택한 의미"
-        ],
-        "rows": [
-          [
-            "`View`",
-            "시각적으로 표시되는 모든 요소의 공통 타입이다."
-          ],
-          [
-            "`ParentView(...) { ChildView(...) }`",
-            "바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다."
-          ],
-          [
-            "`const constant: Int = 6`",
-            "`6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다."
-          ],
-          [
-            "`var variable: Int = 6`",
-            "`6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다."
-          ],
-          [
-            "`vm.increment`",
-            "기존 VM에 연결된 메서드를 호출하지 않고 참조한다."
-          ],
-          [
-            "`vm.increment()`",
-            "표현식을 평가할 때 메서드를 명시적으로 호출한다."
-          ],
-          [
-            "`import document DocumentBackend`",
-            "이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다."
-          ],
-          [
-            "`ApplicationWindow(accent: .blue) { ... }`",
-            "애플리케이션 창과 강조색 구성을 선언한다."
-          ],
-          [
-            "`VStack() { ... }`",
-            "자식 뷰의 세로 구성을 선언한다."
-          ],
-          [
-            "`AppBodyView(backend: document)`",
-            "기존 백엔드 인스턴스의 차용 참조를 전달한다."
-          ],
-          [
-            "`Footer(status: document.status)`",
-            "푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다."
-          ],
-          [
-            "`PushButton(document.save)`",
-            "연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다."
-          ],
-          [
-            "`enabled: document.canSave`",
-            "접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다."
-          ],
-          [
-            "`tone: .borderless`",
-            "버튼 외형을 설정한다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

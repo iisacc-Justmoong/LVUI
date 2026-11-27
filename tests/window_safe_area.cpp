@@ -60,6 +60,8 @@ template<class View> void geometry(double inset, bool embedded = false) {
     good(view->close());
 }
 void custom_chrome() {
+    check(lvui_generated::WindowCustomTitleBar::options().chrome == ii::gui::WindowChrome::custom,
+          "An explicitly supplied title bar did not select the default custom frame");
     auto device = std::make_shared<Device>();
     auto view = take(PaintView::create(device, [](WidgetBuilder& widgets) {
         return lvui_generated::WindowCustomTitleBar::build_window_content(widgets);
@@ -88,6 +90,8 @@ void application_scene() {
 }
 int main() {
     try {
+        check(lvui_generated::WindowSafeArea::options().chrome == ii::gui::WindowChrome::custom,
+              "A default window did not omit system chrome");
         geometry<lvui_generated::WindowSafeArea>(16);
         geometry<lvui_generated::WindowIgnoreSafeArea>(0);
         geometry<lvui_generated::WindowSafeArea>(0, true);

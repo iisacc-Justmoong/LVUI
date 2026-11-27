@@ -82,9 +82,8 @@ def selector_document(data):
                 for v in data['variables'] if v['type'] in {'COLOR','FLOAT'})
     return ('# Color와 Metric 멤버 목록\n\n'
             '`tools/update_style_tokens.py`가 원본 Figma 스냅샷에서 생성하는 목록이다. '
-            '각 멤버는 원본 토큰 ID를 참조하며 모드·별칭·앱별 값 변경을 유지한다.\n\n'
-            '| 멤버 | Figma 컬렉션 / 변수 |\n|---|---|\n'+
-            ''.join('| `'+name+'` | '+source+' |\n' for name,source in rows))
+            '각 멤버는 원본 토큰 ID를 참조하며 모드·별칭·앱별 값 변경을 유지한다.\n\n'+
+            ''.join('- 멤버: `'+name+'`; Figma 컬렉션 / 변수: '+source+'\n' for name,source in rows))
 
 def literal(value):
     if isinstance(value,bool):return 'true' if value else 'false'

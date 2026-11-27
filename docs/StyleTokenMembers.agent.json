@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/StyleTokenMembers.md",
-    "sha256": "42ba9a1319f7bc775a66e4908b593abe58ddcbcb9df5b2cab7316cf58fab66d3",
-    "bytes": 15069,
-    "line_count": 245,
+    "sha256": "27c262804431755644c948b79b560804462efab8c5d2495111d9b7cff209139e",
+    "bytes": 22430,
+    "line_count": 243,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -54,971 +54,1206 @@
     },
     {
       "id": "b000005",
-      "kind": "table",
       "start_line": 5,
-      "end_line": 245,
-      "raw": "| 멤버 | Figma 컬렉션 / 변수 |\n|---|---|\n| `Color.blue` | Theme Colors/Accent/Blue/Default |\n| `Color.blue.disabled` | Theme Colors/Accent/Blue/Disabled |\n| `Color.blue.hover` | Theme Colors/Accent/Blue/Hover |\n| `Color.blue.outline` | Theme Colors/Accent/Blue/Outline |\n| `Color.blue.overlay` | Theme Colors/Accent/Blue/Overlay |\n| `Color.blue.pressed` | Theme Colors/Accent/Blue/Pressed |\n| `Color.blue.selected` | Theme Colors/Accent/Blue/Selected |\n| `Color.blue.subtle` | Theme Colors/Accent/Blue/Subtle |\n| `Color.blue.text` | Theme Colors/Accent/Blue/Text |\n| `Color.brown` | Theme Colors/Accent/Brown/Default |\n| `Color.brown.disabled` | Theme Colors/Accent/Brown/Disabled |\n| `Color.brown.hover` | Theme Colors/Accent/Brown/Hover |\n| `Color.brown.outline` | Theme Colors/Accent/Brown/Outline |\n| `Color.brown.overlay` | Theme Colors/Accent/Brown/Overlay |\n| `Color.brown.pressed` | Theme Colors/Accent/Brown/Pressed |\n| `Color.brown.selected` | Theme Colors/Accent/Brown/Selected |\n| `Color.brown.subtle` | Theme Colors/Accent/Brown/Subtle |\n| `Color.brown.text` | Theme Colors/Accent/Brown/Text |\n| `Color.canvas` | Theme Colors/Panel/canvas |\n| `Color.cyan` | Theme Colors/Accent/Cyan/Default |\n| `Color.cyan.disabled` | Theme Colors/Accent/Cyan/Disabled |\n| `Color.cyan.hover` | Theme Colors/Accent/Cyan/Hover |\n| `Color.cyan.outline` | Theme Colors/Accent/Cyan/Outline |\n| `Color.cyan.overlay` | Theme Colors/Accent/Cyan/Overlay |\n| `Color.cyan.pressed` | Theme Colors/Accent/Cyan/Pressed |\n| `Color.cyan.selected` | Theme Colors/Accent/Cyan/Selected |\n| `Color.cyan.subtle` | Theme Colors/Accent/Cyan/Subtle |\n| `Color.cyan.text` | Theme Colors/Accent/Cyan/Text |\n| `Color.danger` | Theme Colors/Action/danger |\n| `Color.gray` | Theme Colors/Neutral/Gray |\n| `Color.green` | Theme Colors/Accent/Green/Default |\n| `Color.green.disabled` | Theme Colors/Accent/Green/Disabled |\n| `Color.green.hover` | Theme Colors/Accent/Green/Hover |\n| `Color.green.outline` | Theme Colors/Accent/Green/Outline |\n| `Color.green.overlay` | Theme Colors/Accent/Green/Overlay |\n| `Color.green.pressed` | Theme Colors/Accent/Green/Pressed |\n| `Color.green.selected` | Theme Colors/Accent/Green/Selected |\n| `Color.green.subtle` | Theme Colors/Accent/Green/Subtle |\n| `Color.green.text` | Theme Colors/Accent/Green/Text |\n| `Color.icon.accent.blue.pressed.darker` | Theme Colors/Icon/Accent/Blue/Pressed/Darker |\n| `Color.icon.accent.blue.selected.darker` | Theme Colors/Icon/Accent/Blue/Selected/Darker |\n| `Color.icon.accent.blue.subtle.darker` | Theme Colors/Icon/Accent/Blue/Subtle/Darker |\n| `Color.icon.accent.cyan.pressed.darker` | Theme Colors/Icon/Accent/Cyan/Pressed/Darker |\n| `Color.icon.accent.green.outline.darker` | Theme Colors/Icon/Accent/Green/Outline/Darker |\n| `Color.icon.accent.green.pressed.darker` | Theme Colors/Icon/Accent/Green/Pressed/Darker |\n| `Color.icon.accent.green.selected.darker` | Theme Colors/Icon/Accent/Green/Selected/Darker |\n| `Color.icon.accent.green.subtle.darker` | Theme Colors/Icon/Accent/Green/Subtle/Darker |\n| `Color.icon.accent.orange.pressed.darker` | Theme Colors/Icon/Accent/Orange/Pressed/Darker |\n| `Color.icon.accent.orange.selected.darker` | Theme Colors/Icon/Accent/Orange/Selected/Darker |\n| `Color.icon.accent.orange.subtle.darker` | Theme Colors/Icon/Accent/Orange/Subtle/Darker |\n| `Color.icon.accent.orange.text.darker` | Theme Colors/Icon/Accent/Orange/Text/Darker |\n| `Color.icon.accent.purple.pressed.darker` | Theme Colors/Icon/Accent/Purple/Pressed/Darker |\n| `Color.icon.accent.purple.selected.darker` | Theme Colors/Icon/Accent/Purple/Selected/Darker |\n| `Color.icon.accent.purple.subtle.darker` | Theme Colors/Icon/Accent/Purple/Subtle/Darker |\n| `Color.icon.accent.purple.text.darker` | Theme Colors/Icon/Accent/Purple/Text/Darker |\n| `Color.icon.accent.red.disabled.darker` | Theme Colors/Icon/Accent/Red/Disabled/Darker |\n| `Color.icon.accent.red.pressed.darker` | Theme Colors/Icon/Accent/Red/Pressed/Darker |\n| `Color.icon.accent.red.selected.darker` | Theme Colors/Icon/Accent/Red/Selected/Darker |\n| `Color.icon.accent.red.subtle.darker` | Theme Colors/Icon/Accent/Red/Subtle/Darker |\n| `Color.icon.accent.red.text.darker` | Theme Colors/Icon/Accent/Red/Text/Darker |\n| `Color.icon.accent.rose.pressed.darker` | Theme Colors/Icon/Accent/Rose/Pressed/Darker |\n| `Color.icon.accent.rose.selected.darker` | Theme Colors/Icon/Accent/Rose/Selected/Darker |\n| `Color.icon.accent.rose.subtle.darker` | Theme Colors/Icon/Accent/Rose/Subtle/Darker |\n| `Color.icon.accent.teal.pressed.darker` | Theme Colors/Icon/Accent/Teal/Pressed/Darker |\n| `Color.icon.accent.yellow.pressed.darker` | Theme Colors/Icon/Accent/Yellow/Pressed/Darker |\n| `Color.icon.accent.yellow.selected.darker` | Theme Colors/Icon/Accent/Yellow/Selected/Darker |\n| `Color.icon.accent.yellow.subtle.darker` | Theme Colors/Icon/Accent/Yellow/Subtle/Darker |\n| `Color.icon.accent.yellow.text.darker` | Theme Colors/Icon/Accent/Yellow/Text/Darker |\n| `Color.icon.search` | Theme Colors/Icon/search |\n| `Color.material.alert.actionBorder` | Material/Alert/actionBorder |\n| `Color.material.alert.border` | Material/Alert/border |\n| `Color.material.alert.canvas` | Material/Alert/canvas |\n| `Color.material.alert.divider` | Material/Alert/divider |\n| `Color.material.alert.surface` | Material/Alert/surface |\n| `Color.material.alert.textPrimary` | Material/Alert/textPrimary |\n| `Color.material.alert.textSecondary` | Material/Alert/textSecondary |\n| `Color.material.backdrop.base` | Material/Backdrop/Base |\n| `Color.material.glass.edge` | Material/Glass/Edge |\n| `Color.material.glass.fill` | Material/Glass/Fill |\n| `Color.material.glass.foreground` | Material/Glass/Foreground |\n| `Color.material.overlay.scrim` | Material/Overlay/Scrim |\n| `Color.material.surface.dense.edge` | Material/Surface/Dense/Edge |\n| `Color.material.surface.dense.fill` | Material/Surface/Dense/Fill |\n| `Color.material.surface.glass.edge` | Material/Surface/Glass/Edge |\n| `Color.material.surface.glass.fill` | Material/Surface/Glass/Fill |\n| `Color.material.textField.disabled` | Material/TextField/Disabled |\n| `Color.material.textField.fill` | Material/TextField/Fill |\n| `Color.material.textField.inline` | Material/TextField/Inline |\n| `Color.material.textField.reflection` | Material/TextField/Reflection |\n| `Color.orange` | Theme Colors/Accent/Orange/Default |\n| `Color.orange.disabled` | Theme Colors/Accent/Orange/Disabled |\n| `Color.orange.hover` | Theme Colors/Accent/Orange/Hover |\n| `Color.orange.outline` | Theme Colors/Accent/Orange/Outline |\n| `Color.orange.overlay` | Theme Colors/Accent/Orange/Overlay |\n| `Color.orange.pressed` | Theme Colors/Accent/Orange/Pressed |\n| `Color.orange.selected` | Theme Colors/Accent/Orange/Selected |\n| `Color.orange.subtle` | Theme Colors/Accent/Orange/Subtle |\n| `Color.orange.text` | Theme Colors/Accent/Orange/Text |\n| `Color.picker.current` | ColorPicker/Current color |\n| `Color.picker.hue` | ColorPicker/Hue color |\n| `Color.picker.previous` | ColorPicker/Previous color |\n| `Color.primary` | Theme Colors/Action/primary |\n| `Color.purple` | Theme Colors/Accent/Purple/Default |\n| `Color.purple.disabled` | Theme Colors/Accent/Purple/Disabled |\n| `Color.purple.hover` | Theme Colors/Accent/Purple/Hover |\n| `Color.purple.outline` | Theme Colors/Accent/Purple/Outline |\n| `Color.purple.overlay` | Theme Colors/Accent/Purple/Overlay |\n| `Color.purple.pressed` | Theme Colors/Accent/Purple/Pressed |\n| `Color.purple.selected` | Theme Colors/Accent/Purple/Selected |\n| `Color.purple.subtle` | Theme Colors/Accent/Purple/Subtle |\n| `Color.purple.text` | Theme Colors/Accent/Purple/Text |\n| `Color.red` | Theme Colors/Accent/Red/Default |\n| `Color.red.disabled` | Theme Colors/Accent/Red/Disabled |\n| `Color.red.hover` | Theme Colors/Accent/Red/Hover |\n| `Color.red.outline` | Theme Colors/Accent/Red/Outline |\n| `Color.red.overlay` | Theme Colors/Accent/Red/Overlay |\n| `Color.red.pressed` | Theme Colors/Accent/Red/Pressed |\n| `Color.red.selected` | Theme Colors/Accent/Red/Selected |\n| `Color.red.subtle` | Theme Colors/Accent/Red/Subtle |\n| `Color.red.text` | Theme Colors/Accent/Red/Text |\n| `Color.rose` | Theme Colors/Accent/Rose/Default |\n| `Color.rose.disabled` | Theme Colors/Accent/Rose/Disabled |\n| `Color.rose.hover` | Theme Colors/Accent/Rose/Hover |\n| `Color.rose.outline` | Theme Colors/Accent/Rose/Outline |\n| `Color.rose.overlay` | Theme Colors/Accent/Rose/Overlay |\n| `Color.rose.pressed` | Theme Colors/Accent/Rose/Pressed |\n| `Color.rose.selected` | Theme Colors/Accent/Rose/Selected |\n| `Color.rose.subtle` | Theme Colors/Accent/Rose/Subtle |\n| `Color.rose.text` | Theme Colors/Accent/Rose/Text |\n| `Color.subSurface` | Theme Colors/Panel/subSurface |\n| `Color.success` | Theme Colors/Action/success |\n| `Color.surfaceAlt` | Theme Colors/Panel/surfaceAlt |\n| `Color.surfaceControl` | Theme Colors/Panel/surfaceControl |\n| `Color.surfaceGhost` | Theme Colors/Panel/surfaceGhost |\n| `Color.surfaceInput` | Theme Colors/Panel/surfaceInput |\n| `Color.surfaceInputHover` | Theme Colors/Panel/surfaceInputHover |\n| `Color.surfaceInteractive` | Theme Colors/Panel/surfaceInteractive |\n| `Color.surfacePanel` | Theme Colors/Panel/surfacePanel |\n| `Color.surfaceRaised` | Theme Colors/Panel/surfaceRaised |\n| `Color.surfaceSolid` | Theme Colors/Panel/surfaceSolid |\n| `Color.teal` | Theme Colors/Accent/Teal/Default |\n| `Color.teal.disabled` | Theme Colors/Accent/Teal/Disabled |\n| `Color.teal.hover` | Theme Colors/Accent/Teal/Hover |\n| `Color.teal.outline` | Theme Colors/Accent/Teal/Outline |\n| `Color.teal.overlay` | Theme Colors/Accent/Teal/Overlay |\n| `Color.teal.pressed` | Theme Colors/Accent/Teal/Pressed |\n| `Color.teal.selected` | Theme Colors/Accent/Teal/Selected |\n| `Color.teal.subtle` | Theme Colors/Accent/Teal/Subtle |\n| `Color.teal.text` | Theme Colors/Accent/Teal/Text |\n| `Color.text.base` | Theme Colors/Text/textTokenBase |\n| `Color.text.body` | Theme Colors/Text/bodyColor |\n| `Color.text.caption` | Theme Colors/Text/captionColor |\n| `Color.text.description` | Theme Colors/Text/descriptionColor |\n| `Color.text.disabled` | Theme Colors/Text/disabledColor |\n| `Color.text.titleHeader` | Theme Colors/Text/titleHeaderColor |\n| `Color.transparent` | Theme Colors/Neutral/Transparent |\n| `Color.warning` | Theme Colors/Action/warning |\n| `Color.window` | Theme Colors/Panel/window |\n| `Color.windowAlt` | Theme Colors/Panel/windowAlt |\n| `Color.yellow` | Theme Colors/Accent/Yellow/Default |\n| `Color.yellow.disabled` | Theme Colors/Accent/Yellow/Disabled |\n| `Color.yellow.hover` | Theme Colors/Accent/Yellow/Hover |\n| `Color.yellow.outline` | Theme Colors/Accent/Yellow/Outline |\n| `Color.yellow.overlay` | Theme Colors/Accent/Yellow/Overlay |\n| `Color.yellow.pressed` | Theme Colors/Accent/Yellow/Pressed |\n| `Color.yellow.selected` | Theme Colors/Accent/Yellow/Selected |\n| `Color.yellow.subtle` | Theme Colors/Accent/Yellow/Subtle |\n| `Color.yellow.text` | Theme Colors/Accent/Yellow/Text |\n| `Metric.blur16` | Theme Metrics/Blur/16 |\n| `Metric.blur64` | Theme Metrics/Blur/64 |\n| `Metric.opacity11` | Theme Metrics/Opacity/11 |\n| `Metric.opacity32` | Theme Metrics/Opacity/32 |\n| `Metric.opacity40` | Theme Metrics/Opacity/40 |\n| `Metric.radius12` | Theme Metrics/Radius/12 |\n| `Metric.radius16` | Theme Metrics/Radius/16 |\n| `Metric.radius24` | Theme Metrics/Radius/24 |\n| `Metric.radius28` | Theme Metrics/Radius/28 |\n| `Metric.radius36` | Theme Metrics/Radius/36 |\n| `Metric.radius4` | Theme Metrics/Radius/4 |\n| `Metric.radius6` | Theme Metrics/Radius/6 |\n| `Metric.radius8` | Theme Metrics/Radius/8 |\n| `Metric.radius999` | Theme Metrics/Radius/999 |\n| `Metric.size140` | Theme Metrics/Size/140 |\n| `Metric.size2` | Theme Metrics/Size/2 |\n| `Metric.size22` | Theme Metrics/Size/22 |\n| `Metric.size24` | Theme Metrics/Size/24 |\n| `Metric.size256` | Theme Metrics/Size/256 |\n| `Metric.size280` | Theme Metrics/Size/280 |\n| `Metric.size32` | Theme Metrics/Size/32 |\n| `Metric.size400` | Theme Metrics/Size/400 |\n| `Metric.size44` | Theme Metrics/Size/44 |\n| `Metric.size48` | Theme Metrics/Size/48 |\n| `Metric.size500` | Theme Metrics/Size/500 |\n| `Metric.size56` | Theme Metrics/Size/56 |\n| `Metric.size72` | Theme Metrics/Size/72 |\n| `Metric.space0` | Theme Metrics/Space/0 |\n| `Metric.space10` | Theme Metrics/Space/10 |\n| `Metric.space12` | Theme Metrics/Space/12 |\n| `Metric.space14` | Theme Metrics/Space/14 |\n| `Metric.space16` | Theme Metrics/Space/16 |\n| `Metric.space18` | Theme Metrics/Space/18 |\n| `Metric.space2` | Theme Metrics/Space/2 |\n| `Metric.space20` | Theme Metrics/Space/20 |\n| `Metric.space24` | Theme Metrics/Space/24 |\n| `Metric.space28` | Theme Metrics/Space/28 |\n| `Metric.space32` | Theme Metrics/Space/32 |\n| `Metric.space36` | Theme Metrics/Space/36 |\n| `Metric.space4` | Theme Metrics/Space/4 |\n| `Metric.space40` | Theme Metrics/Space/40 |\n| `Metric.space42` | Theme Metrics/Space/42 |\n| `Metric.space46` | Theme Metrics/Space/46 |\n| `Metric.space6` | Theme Metrics/Space/6 |\n| `Metric.space8` | Theme Metrics/Space/8 |\n| `Metric.stroke1` | Theme Metrics/Stroke/1 |\n| `Metric.stroke1_5` | Theme Metrics/Stroke/1_5 |\n| `Metric.stroke2` | Theme Metrics/Stroke/2 |\n| `Metric.textBody` | Theme Typography/Body/textBody |\n| `Metric.textBodyLineHeight` | Theme Typography/Body/textBodyLineHeight |\n| `Metric.textCaption` | Theme Typography/Caption/textCaption |\n| `Metric.textCaptionLineHeight` | Theme Typography/Caption/textCaptionLineHeight |\n| `Metric.textDescription` | Theme Typography/Description/textDescription |\n| `Metric.textDescriptionLineHeight` | Theme Typography/Description/textDescriptionLineHeight |\n| `Metric.textFieldBorderWidth` | Theme Metrics/TextField/borderWidth |\n| `Metric.textFieldIconSize` | Theme Metrics/TextField/iconSize |\n| `Metric.textFieldPaddingHorizontal` | Theme Metrics/TextField/paddingHorizontal |\n| `Metric.textFieldPaddingVertical` | Theme Metrics/TextField/paddingVertical |\n| `Metric.textHeader` | Theme Typography/Header/textHeader |\n| `Metric.textHeaderLineHeight` | Theme Typography/Header/textHeaderLineHeight |\n| `Metric.textSubheader` | Theme Typography/Subheader/textSubheader |\n| `Metric.textSubheaderLineHeight` | Theme Typography/Subheader/textSubheaderLineHeight |\n| `Metric.textSubtitle` | Theme Typography/Subtitle/textSubtitle |\n| `Metric.textSubtitleLineHeight` | Theme Typography/Subtitle/textSubtitleLineHeight |\n| `Metric.textTitle` | Theme Typography/Title/textTitle |\n| `Metric.textTitleLineHeight` | Theme Typography/Title/textTitleLineHeight |\n| `Metric.trackingNormal` | Theme Typography/Tracking/Normal |\n| `Metric.weightBold` | Theme Typography/Weight/Bold |\n| `Metric.weightMedium` | Theme Typography/Weight/Medium |\n| `Metric.weightRegular` | Theme Typography/Weight/Regular |\n| `Metric.weightSemiBold` | Theme Typography/Weight/SemiBold |\n",
-      "columns": [
-        "멤버",
-        "Figma 컬렉션 / 변수"
-      ],
-      "rows": [
-        [
-          "`Color.blue`",
-          "Theme Colors/Accent/Blue/Default"
-        ],
-        [
-          "`Color.blue.disabled`",
-          "Theme Colors/Accent/Blue/Disabled"
-        ],
-        [
-          "`Color.blue.hover`",
-          "Theme Colors/Accent/Blue/Hover"
-        ],
-        [
-          "`Color.blue.outline`",
-          "Theme Colors/Accent/Blue/Outline"
-        ],
-        [
-          "`Color.blue.overlay`",
-          "Theme Colors/Accent/Blue/Overlay"
-        ],
-        [
-          "`Color.blue.pressed`",
-          "Theme Colors/Accent/Blue/Pressed"
-        ],
-        [
-          "`Color.blue.selected`",
-          "Theme Colors/Accent/Blue/Selected"
-        ],
-        [
-          "`Color.blue.subtle`",
-          "Theme Colors/Accent/Blue/Subtle"
-        ],
-        [
-          "`Color.blue.text`",
-          "Theme Colors/Accent/Blue/Text"
-        ],
-        [
-          "`Color.brown`",
-          "Theme Colors/Accent/Brown/Default"
-        ],
-        [
-          "`Color.brown.disabled`",
-          "Theme Colors/Accent/Brown/Disabled"
-        ],
-        [
-          "`Color.brown.hover`",
-          "Theme Colors/Accent/Brown/Hover"
-        ],
-        [
-          "`Color.brown.outline`",
-          "Theme Colors/Accent/Brown/Outline"
-        ],
-        [
-          "`Color.brown.overlay`",
-          "Theme Colors/Accent/Brown/Overlay"
-        ],
-        [
-          "`Color.brown.pressed`",
-          "Theme Colors/Accent/Brown/Pressed"
-        ],
-        [
-          "`Color.brown.selected`",
-          "Theme Colors/Accent/Brown/Selected"
-        ],
-        [
-          "`Color.brown.subtle`",
-          "Theme Colors/Accent/Brown/Subtle"
-        ],
-        [
-          "`Color.brown.text`",
-          "Theme Colors/Accent/Brown/Text"
-        ],
-        [
-          "`Color.canvas`",
-          "Theme Colors/Panel/canvas"
-        ],
-        [
-          "`Color.cyan`",
-          "Theme Colors/Accent/Cyan/Default"
-        ],
-        [
-          "`Color.cyan.disabled`",
-          "Theme Colors/Accent/Cyan/Disabled"
-        ],
-        [
-          "`Color.cyan.hover`",
-          "Theme Colors/Accent/Cyan/Hover"
-        ],
-        [
-          "`Color.cyan.outline`",
-          "Theme Colors/Accent/Cyan/Outline"
-        ],
-        [
-          "`Color.cyan.overlay`",
-          "Theme Colors/Accent/Cyan/Overlay"
-        ],
-        [
-          "`Color.cyan.pressed`",
-          "Theme Colors/Accent/Cyan/Pressed"
-        ],
-        [
-          "`Color.cyan.selected`",
-          "Theme Colors/Accent/Cyan/Selected"
-        ],
-        [
-          "`Color.cyan.subtle`",
-          "Theme Colors/Accent/Cyan/Subtle"
-        ],
-        [
-          "`Color.cyan.text`",
-          "Theme Colors/Accent/Cyan/Text"
-        ],
-        [
-          "`Color.danger`",
-          "Theme Colors/Action/danger"
-        ],
-        [
-          "`Color.gray`",
-          "Theme Colors/Neutral/Gray"
-        ],
-        [
-          "`Color.green`",
-          "Theme Colors/Accent/Green/Default"
-        ],
-        [
-          "`Color.green.disabled`",
-          "Theme Colors/Accent/Green/Disabled"
-        ],
-        [
-          "`Color.green.hover`",
-          "Theme Colors/Accent/Green/Hover"
-        ],
-        [
-          "`Color.green.outline`",
-          "Theme Colors/Accent/Green/Outline"
-        ],
-        [
-          "`Color.green.overlay`",
-          "Theme Colors/Accent/Green/Overlay"
-        ],
-        [
-          "`Color.green.pressed`",
-          "Theme Colors/Accent/Green/Pressed"
-        ],
-        [
-          "`Color.green.selected`",
-          "Theme Colors/Accent/Green/Selected"
-        ],
-        [
-          "`Color.green.subtle`",
-          "Theme Colors/Accent/Green/Subtle"
-        ],
-        [
-          "`Color.green.text`",
-          "Theme Colors/Accent/Green/Text"
-        ],
-        [
-          "`Color.icon.accent.blue.pressed.darker`",
-          "Theme Colors/Icon/Accent/Blue/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.blue.selected.darker`",
-          "Theme Colors/Icon/Accent/Blue/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.blue.subtle.darker`",
-          "Theme Colors/Icon/Accent/Blue/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.cyan.pressed.darker`",
-          "Theme Colors/Icon/Accent/Cyan/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.green.outline.darker`",
-          "Theme Colors/Icon/Accent/Green/Outline/Darker"
-        ],
-        [
-          "`Color.icon.accent.green.pressed.darker`",
-          "Theme Colors/Icon/Accent/Green/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.green.selected.darker`",
-          "Theme Colors/Icon/Accent/Green/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.green.subtle.darker`",
-          "Theme Colors/Icon/Accent/Green/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.orange.pressed.darker`",
-          "Theme Colors/Icon/Accent/Orange/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.orange.selected.darker`",
-          "Theme Colors/Icon/Accent/Orange/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.orange.subtle.darker`",
-          "Theme Colors/Icon/Accent/Orange/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.orange.text.darker`",
-          "Theme Colors/Icon/Accent/Orange/Text/Darker"
-        ],
-        [
-          "`Color.icon.accent.purple.pressed.darker`",
-          "Theme Colors/Icon/Accent/Purple/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.purple.selected.darker`",
-          "Theme Colors/Icon/Accent/Purple/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.purple.subtle.darker`",
-          "Theme Colors/Icon/Accent/Purple/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.purple.text.darker`",
-          "Theme Colors/Icon/Accent/Purple/Text/Darker"
-        ],
-        [
-          "`Color.icon.accent.red.disabled.darker`",
-          "Theme Colors/Icon/Accent/Red/Disabled/Darker"
-        ],
-        [
-          "`Color.icon.accent.red.pressed.darker`",
-          "Theme Colors/Icon/Accent/Red/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.red.selected.darker`",
-          "Theme Colors/Icon/Accent/Red/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.red.subtle.darker`",
-          "Theme Colors/Icon/Accent/Red/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.red.text.darker`",
-          "Theme Colors/Icon/Accent/Red/Text/Darker"
-        ],
-        [
-          "`Color.icon.accent.rose.pressed.darker`",
-          "Theme Colors/Icon/Accent/Rose/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.rose.selected.darker`",
-          "Theme Colors/Icon/Accent/Rose/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.rose.subtle.darker`",
-          "Theme Colors/Icon/Accent/Rose/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.teal.pressed.darker`",
-          "Theme Colors/Icon/Accent/Teal/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.yellow.pressed.darker`",
-          "Theme Colors/Icon/Accent/Yellow/Pressed/Darker"
-        ],
-        [
-          "`Color.icon.accent.yellow.selected.darker`",
-          "Theme Colors/Icon/Accent/Yellow/Selected/Darker"
-        ],
-        [
-          "`Color.icon.accent.yellow.subtle.darker`",
-          "Theme Colors/Icon/Accent/Yellow/Subtle/Darker"
-        ],
-        [
-          "`Color.icon.accent.yellow.text.darker`",
-          "Theme Colors/Icon/Accent/Yellow/Text/Darker"
-        ],
-        [
-          "`Color.icon.search`",
-          "Theme Colors/Icon/search"
-        ],
-        [
-          "`Color.material.alert.actionBorder`",
-          "Material/Alert/actionBorder"
-        ],
-        [
-          "`Color.material.alert.border`",
-          "Material/Alert/border"
-        ],
-        [
-          "`Color.material.alert.canvas`",
-          "Material/Alert/canvas"
-        ],
-        [
-          "`Color.material.alert.divider`",
-          "Material/Alert/divider"
-        ],
-        [
-          "`Color.material.alert.surface`",
-          "Material/Alert/surface"
-        ],
-        [
-          "`Color.material.alert.textPrimary`",
-          "Material/Alert/textPrimary"
-        ],
-        [
-          "`Color.material.alert.textSecondary`",
-          "Material/Alert/textSecondary"
-        ],
-        [
-          "`Color.material.backdrop.base`",
-          "Material/Backdrop/Base"
-        ],
-        [
-          "`Color.material.glass.edge`",
-          "Material/Glass/Edge"
-        ],
-        [
-          "`Color.material.glass.fill`",
-          "Material/Glass/Fill"
-        ],
-        [
-          "`Color.material.glass.foreground`",
-          "Material/Glass/Foreground"
-        ],
-        [
-          "`Color.material.overlay.scrim`",
-          "Material/Overlay/Scrim"
-        ],
-        [
-          "`Color.material.surface.dense.edge`",
-          "Material/Surface/Dense/Edge"
-        ],
-        [
-          "`Color.material.surface.dense.fill`",
-          "Material/Surface/Dense/Fill"
-        ],
-        [
-          "`Color.material.surface.glass.edge`",
-          "Material/Surface/Glass/Edge"
-        ],
-        [
-          "`Color.material.surface.glass.fill`",
-          "Material/Surface/Glass/Fill"
-        ],
-        [
-          "`Color.material.textField.disabled`",
-          "Material/TextField/Disabled"
-        ],
-        [
-          "`Color.material.textField.fill`",
-          "Material/TextField/Fill"
-        ],
-        [
-          "`Color.material.textField.inline`",
-          "Material/TextField/Inline"
-        ],
-        [
-          "`Color.material.textField.reflection`",
-          "Material/TextField/Reflection"
-        ],
-        [
-          "`Color.orange`",
-          "Theme Colors/Accent/Orange/Default"
-        ],
-        [
-          "`Color.orange.disabled`",
-          "Theme Colors/Accent/Orange/Disabled"
-        ],
-        [
-          "`Color.orange.hover`",
-          "Theme Colors/Accent/Orange/Hover"
-        ],
-        [
-          "`Color.orange.outline`",
-          "Theme Colors/Accent/Orange/Outline"
-        ],
-        [
-          "`Color.orange.overlay`",
-          "Theme Colors/Accent/Orange/Overlay"
-        ],
-        [
-          "`Color.orange.pressed`",
-          "Theme Colors/Accent/Orange/Pressed"
-        ],
-        [
-          "`Color.orange.selected`",
-          "Theme Colors/Accent/Orange/Selected"
-        ],
-        [
-          "`Color.orange.subtle`",
-          "Theme Colors/Accent/Orange/Subtle"
-        ],
-        [
-          "`Color.orange.text`",
-          "Theme Colors/Accent/Orange/Text"
-        ],
-        [
-          "`Color.picker.current`",
-          "ColorPicker/Current color"
-        ],
-        [
-          "`Color.picker.hue`",
-          "ColorPicker/Hue color"
-        ],
-        [
-          "`Color.picker.previous`",
-          "ColorPicker/Previous color"
-        ],
-        [
-          "`Color.primary`",
-          "Theme Colors/Action/primary"
-        ],
-        [
-          "`Color.purple`",
-          "Theme Colors/Accent/Purple/Default"
-        ],
-        [
-          "`Color.purple.disabled`",
-          "Theme Colors/Accent/Purple/Disabled"
-        ],
-        [
-          "`Color.purple.hover`",
-          "Theme Colors/Accent/Purple/Hover"
-        ],
-        [
-          "`Color.purple.outline`",
-          "Theme Colors/Accent/Purple/Outline"
-        ],
-        [
-          "`Color.purple.overlay`",
-          "Theme Colors/Accent/Purple/Overlay"
-        ],
-        [
-          "`Color.purple.pressed`",
-          "Theme Colors/Accent/Purple/Pressed"
-        ],
-        [
-          "`Color.purple.selected`",
-          "Theme Colors/Accent/Purple/Selected"
-        ],
-        [
-          "`Color.purple.subtle`",
-          "Theme Colors/Accent/Purple/Subtle"
-        ],
-        [
-          "`Color.purple.text`",
-          "Theme Colors/Accent/Purple/Text"
-        ],
-        [
-          "`Color.red`",
-          "Theme Colors/Accent/Red/Default"
-        ],
-        [
-          "`Color.red.disabled`",
-          "Theme Colors/Accent/Red/Disabled"
-        ],
-        [
-          "`Color.red.hover`",
-          "Theme Colors/Accent/Red/Hover"
-        ],
-        [
-          "`Color.red.outline`",
-          "Theme Colors/Accent/Red/Outline"
-        ],
-        [
-          "`Color.red.overlay`",
-          "Theme Colors/Accent/Red/Overlay"
-        ],
-        [
-          "`Color.red.pressed`",
-          "Theme Colors/Accent/Red/Pressed"
-        ],
-        [
-          "`Color.red.selected`",
-          "Theme Colors/Accent/Red/Selected"
-        ],
-        [
-          "`Color.red.subtle`",
-          "Theme Colors/Accent/Red/Subtle"
-        ],
-        [
-          "`Color.red.text`",
-          "Theme Colors/Accent/Red/Text"
-        ],
-        [
-          "`Color.rose`",
-          "Theme Colors/Accent/Rose/Default"
-        ],
-        [
-          "`Color.rose.disabled`",
-          "Theme Colors/Accent/Rose/Disabled"
-        ],
-        [
-          "`Color.rose.hover`",
-          "Theme Colors/Accent/Rose/Hover"
-        ],
-        [
-          "`Color.rose.outline`",
-          "Theme Colors/Accent/Rose/Outline"
-        ],
-        [
-          "`Color.rose.overlay`",
-          "Theme Colors/Accent/Rose/Overlay"
-        ],
-        [
-          "`Color.rose.pressed`",
-          "Theme Colors/Accent/Rose/Pressed"
-        ],
-        [
-          "`Color.rose.selected`",
-          "Theme Colors/Accent/Rose/Selected"
-        ],
-        [
-          "`Color.rose.subtle`",
-          "Theme Colors/Accent/Rose/Subtle"
-        ],
-        [
-          "`Color.rose.text`",
-          "Theme Colors/Accent/Rose/Text"
-        ],
-        [
-          "`Color.subSurface`",
-          "Theme Colors/Panel/subSurface"
-        ],
-        [
-          "`Color.success`",
-          "Theme Colors/Action/success"
-        ],
-        [
-          "`Color.surfaceAlt`",
-          "Theme Colors/Panel/surfaceAlt"
-        ],
-        [
-          "`Color.surfaceControl`",
-          "Theme Colors/Panel/surfaceControl"
-        ],
-        [
-          "`Color.surfaceGhost`",
-          "Theme Colors/Panel/surfaceGhost"
-        ],
-        [
-          "`Color.surfaceInput`",
-          "Theme Colors/Panel/surfaceInput"
-        ],
-        [
-          "`Color.surfaceInputHover`",
-          "Theme Colors/Panel/surfaceInputHover"
-        ],
-        [
-          "`Color.surfaceInteractive`",
-          "Theme Colors/Panel/surfaceInteractive"
-        ],
-        [
-          "`Color.surfacePanel`",
-          "Theme Colors/Panel/surfacePanel"
-        ],
-        [
-          "`Color.surfaceRaised`",
-          "Theme Colors/Panel/surfaceRaised"
-        ],
-        [
-          "`Color.surfaceSolid`",
-          "Theme Colors/Panel/surfaceSolid"
-        ],
-        [
-          "`Color.teal`",
-          "Theme Colors/Accent/Teal/Default"
-        ],
-        [
-          "`Color.teal.disabled`",
-          "Theme Colors/Accent/Teal/Disabled"
-        ],
-        [
-          "`Color.teal.hover`",
-          "Theme Colors/Accent/Teal/Hover"
-        ],
-        [
-          "`Color.teal.outline`",
-          "Theme Colors/Accent/Teal/Outline"
-        ],
-        [
-          "`Color.teal.overlay`",
-          "Theme Colors/Accent/Teal/Overlay"
-        ],
-        [
-          "`Color.teal.pressed`",
-          "Theme Colors/Accent/Teal/Pressed"
-        ],
-        [
-          "`Color.teal.selected`",
-          "Theme Colors/Accent/Teal/Selected"
-        ],
-        [
-          "`Color.teal.subtle`",
-          "Theme Colors/Accent/Teal/Subtle"
-        ],
-        [
-          "`Color.teal.text`",
-          "Theme Colors/Accent/Teal/Text"
-        ],
-        [
-          "`Color.text.base`",
-          "Theme Colors/Text/textTokenBase"
-        ],
-        [
-          "`Color.text.body`",
-          "Theme Colors/Text/bodyColor"
-        ],
-        [
-          "`Color.text.caption`",
-          "Theme Colors/Text/captionColor"
-        ],
-        [
-          "`Color.text.description`",
-          "Theme Colors/Text/descriptionColor"
-        ],
-        [
-          "`Color.text.disabled`",
-          "Theme Colors/Text/disabledColor"
-        ],
-        [
-          "`Color.text.titleHeader`",
-          "Theme Colors/Text/titleHeaderColor"
-        ],
-        [
-          "`Color.transparent`",
-          "Theme Colors/Neutral/Transparent"
-        ],
-        [
-          "`Color.warning`",
-          "Theme Colors/Action/warning"
-        ],
-        [
-          "`Color.window`",
-          "Theme Colors/Panel/window"
-        ],
-        [
-          "`Color.windowAlt`",
-          "Theme Colors/Panel/windowAlt"
-        ],
-        [
-          "`Color.yellow`",
-          "Theme Colors/Accent/Yellow/Default"
-        ],
-        [
-          "`Color.yellow.disabled`",
-          "Theme Colors/Accent/Yellow/Disabled"
-        ],
-        [
-          "`Color.yellow.hover`",
-          "Theme Colors/Accent/Yellow/Hover"
-        ],
-        [
-          "`Color.yellow.outline`",
-          "Theme Colors/Accent/Yellow/Outline"
-        ],
-        [
-          "`Color.yellow.overlay`",
-          "Theme Colors/Accent/Yellow/Overlay"
-        ],
-        [
-          "`Color.yellow.pressed`",
-          "Theme Colors/Accent/Yellow/Pressed"
-        ],
-        [
-          "`Color.yellow.selected`",
-          "Theme Colors/Accent/Yellow/Selected"
-        ],
-        [
-          "`Color.yellow.subtle`",
-          "Theme Colors/Accent/Yellow/Subtle"
-        ],
-        [
-          "`Color.yellow.text`",
-          "Theme Colors/Accent/Yellow/Text"
-        ],
-        [
-          "`Metric.blur16`",
-          "Theme Metrics/Blur/16"
-        ],
-        [
-          "`Metric.blur64`",
-          "Theme Metrics/Blur/64"
-        ],
-        [
-          "`Metric.opacity11`",
-          "Theme Metrics/Opacity/11"
-        ],
-        [
-          "`Metric.opacity32`",
-          "Theme Metrics/Opacity/32"
-        ],
-        [
-          "`Metric.opacity40`",
-          "Theme Metrics/Opacity/40"
-        ],
-        [
-          "`Metric.radius12`",
-          "Theme Metrics/Radius/12"
-        ],
-        [
-          "`Metric.radius16`",
-          "Theme Metrics/Radius/16"
-        ],
-        [
-          "`Metric.radius24`",
-          "Theme Metrics/Radius/24"
-        ],
-        [
-          "`Metric.radius28`",
-          "Theme Metrics/Radius/28"
-        ],
-        [
-          "`Metric.radius36`",
-          "Theme Metrics/Radius/36"
-        ],
-        [
-          "`Metric.radius4`",
-          "Theme Metrics/Radius/4"
-        ],
-        [
-          "`Metric.radius6`",
-          "Theme Metrics/Radius/6"
-        ],
-        [
-          "`Metric.radius8`",
-          "Theme Metrics/Radius/8"
-        ],
-        [
-          "`Metric.radius999`",
-          "Theme Metrics/Radius/999"
-        ],
-        [
-          "`Metric.size140`",
-          "Theme Metrics/Size/140"
-        ],
-        [
-          "`Metric.size2`",
-          "Theme Metrics/Size/2"
-        ],
-        [
-          "`Metric.size22`",
-          "Theme Metrics/Size/22"
-        ],
-        [
-          "`Metric.size24`",
-          "Theme Metrics/Size/24"
-        ],
-        [
-          "`Metric.size256`",
-          "Theme Metrics/Size/256"
-        ],
-        [
-          "`Metric.size280`",
-          "Theme Metrics/Size/280"
-        ],
-        [
-          "`Metric.size32`",
-          "Theme Metrics/Size/32"
-        ],
-        [
-          "`Metric.size400`",
-          "Theme Metrics/Size/400"
-        ],
-        [
-          "`Metric.size44`",
-          "Theme Metrics/Size/44"
-        ],
-        [
-          "`Metric.size48`",
-          "Theme Metrics/Size/48"
-        ],
-        [
-          "`Metric.size500`",
-          "Theme Metrics/Size/500"
-        ],
-        [
-          "`Metric.size56`",
-          "Theme Metrics/Size/56"
-        ],
-        [
-          "`Metric.size72`",
-          "Theme Metrics/Size/72"
-        ],
-        [
-          "`Metric.space0`",
-          "Theme Metrics/Space/0"
-        ],
-        [
-          "`Metric.space10`",
-          "Theme Metrics/Space/10"
-        ],
-        [
-          "`Metric.space12`",
-          "Theme Metrics/Space/12"
-        ],
-        [
-          "`Metric.space14`",
-          "Theme Metrics/Space/14"
-        ],
-        [
-          "`Metric.space16`",
-          "Theme Metrics/Space/16"
-        ],
-        [
-          "`Metric.space18`",
-          "Theme Metrics/Space/18"
-        ],
-        [
-          "`Metric.space2`",
-          "Theme Metrics/Space/2"
-        ],
-        [
-          "`Metric.space20`",
-          "Theme Metrics/Space/20"
-        ],
-        [
-          "`Metric.space24`",
-          "Theme Metrics/Space/24"
-        ],
-        [
-          "`Metric.space28`",
-          "Theme Metrics/Space/28"
-        ],
-        [
-          "`Metric.space32`",
-          "Theme Metrics/Space/32"
-        ],
-        [
-          "`Metric.space36`",
-          "Theme Metrics/Space/36"
-        ],
-        [
-          "`Metric.space4`",
-          "Theme Metrics/Space/4"
-        ],
-        [
-          "`Metric.space40`",
-          "Theme Metrics/Space/40"
-        ],
-        [
-          "`Metric.space42`",
-          "Theme Metrics/Space/42"
-        ],
-        [
-          "`Metric.space46`",
-          "Theme Metrics/Space/46"
-        ],
-        [
-          "`Metric.space6`",
-          "Theme Metrics/Space/6"
-        ],
-        [
-          "`Metric.space8`",
-          "Theme Metrics/Space/8"
-        ],
-        [
-          "`Metric.stroke1`",
-          "Theme Metrics/Stroke/1"
-        ],
-        [
-          "`Metric.stroke1_5`",
-          "Theme Metrics/Stroke/1_5"
-        ],
-        [
-          "`Metric.stroke2`",
-          "Theme Metrics/Stroke/2"
-        ],
-        [
-          "`Metric.textBody`",
-          "Theme Typography/Body/textBody"
-        ],
-        [
-          "`Metric.textBodyLineHeight`",
-          "Theme Typography/Body/textBodyLineHeight"
-        ],
-        [
-          "`Metric.textCaption`",
-          "Theme Typography/Caption/textCaption"
-        ],
-        [
-          "`Metric.textCaptionLineHeight`",
-          "Theme Typography/Caption/textCaptionLineHeight"
-        ],
-        [
-          "`Metric.textDescription`",
-          "Theme Typography/Description/textDescription"
-        ],
-        [
-          "`Metric.textDescriptionLineHeight`",
-          "Theme Typography/Description/textDescriptionLineHeight"
-        ],
-        [
-          "`Metric.textFieldBorderWidth`",
-          "Theme Metrics/TextField/borderWidth"
-        ],
-        [
-          "`Metric.textFieldIconSize`",
-          "Theme Metrics/TextField/iconSize"
-        ],
-        [
-          "`Metric.textFieldPaddingHorizontal`",
-          "Theme Metrics/TextField/paddingHorizontal"
-        ],
-        [
-          "`Metric.textFieldPaddingVertical`",
-          "Theme Metrics/TextField/paddingVertical"
-        ],
-        [
-          "`Metric.textHeader`",
-          "Theme Typography/Header/textHeader"
-        ],
-        [
-          "`Metric.textHeaderLineHeight`",
-          "Theme Typography/Header/textHeaderLineHeight"
-        ],
-        [
-          "`Metric.textSubheader`",
-          "Theme Typography/Subheader/textSubheader"
-        ],
-        [
-          "`Metric.textSubheaderLineHeight`",
-          "Theme Typography/Subheader/textSubheaderLineHeight"
-        ],
-        [
-          "`Metric.textSubtitle`",
-          "Theme Typography/Subtitle/textSubtitle"
-        ],
-        [
-          "`Metric.textSubtitleLineHeight`",
-          "Theme Typography/Subtitle/textSubtitleLineHeight"
-        ],
-        [
-          "`Metric.textTitle`",
-          "Theme Typography/Title/textTitle"
-        ],
-        [
-          "`Metric.textTitleLineHeight`",
-          "Theme Typography/Title/textTitleLineHeight"
-        ],
-        [
-          "`Metric.trackingNormal`",
-          "Theme Typography/Tracking/Normal"
-        ],
-        [
-          "`Metric.weightBold`",
-          "Theme Typography/Weight/Bold"
-        ],
-        [
-          "`Metric.weightMedium`",
-          "Theme Typography/Weight/Medium"
-        ],
-        [
-          "`Metric.weightRegular`",
-          "Theme Typography/Weight/Regular"
-        ],
-        [
-          "`Metric.weightSemiBold`",
-          "Theme Typography/Weight/SemiBold"
-        ]
+      "end_line": 243,
+      "raw": "- 멤버: `Color.blue`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Default\n- 멤버: `Color.blue.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Disabled\n- 멤버: `Color.blue.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Hover\n- 멤버: `Color.blue.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Outline\n- 멤버: `Color.blue.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Overlay\n- 멤버: `Color.blue.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Pressed\n- 멤버: `Color.blue.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Selected\n- 멤버: `Color.blue.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Subtle\n- 멤버: `Color.blue.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Text\n- 멤버: `Color.brown`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Default\n- 멤버: `Color.brown.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Disabled\n- 멤버: `Color.brown.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Hover\n- 멤버: `Color.brown.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Outline\n- 멤버: `Color.brown.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Overlay\n- 멤버: `Color.brown.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Pressed\n- 멤버: `Color.brown.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Selected\n- 멤버: `Color.brown.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Subtle\n- 멤버: `Color.brown.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Text\n- 멤버: `Color.canvas`; Figma 컬렉션 / 변수: Theme Colors/Panel/canvas\n- 멤버: `Color.cyan`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Default\n- 멤버: `Color.cyan.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Disabled\n- 멤버: `Color.cyan.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Hover\n- 멤버: `Color.cyan.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Outline\n- 멤버: `Color.cyan.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Overlay\n- 멤버: `Color.cyan.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Pressed\n- 멤버: `Color.cyan.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Selected\n- 멤버: `Color.cyan.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Subtle\n- 멤버: `Color.cyan.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Text\n- 멤버: `Color.danger`; Figma 컬렉션 / 변수: Theme Colors/Action/danger\n- 멤버: `Color.gray`; Figma 컬렉션 / 변수: Theme Colors/Neutral/Gray\n- 멤버: `Color.green`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Default\n- 멤버: `Color.green.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Disabled\n- 멤버: `Color.green.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Hover\n- 멤버: `Color.green.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Outline\n- 멤버: `Color.green.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Overlay\n- 멤버: `Color.green.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Pressed\n- 멤버: `Color.green.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Selected\n- 멤버: `Color.green.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Subtle\n- 멤버: `Color.green.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Text\n- 멤버: `Color.icon.accent.blue.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Pressed/Darker\n- 멤버: `Color.icon.accent.blue.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Selected/Darker\n- 멤버: `Color.icon.accent.blue.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Subtle/Darker\n- 멤버: `Color.icon.accent.cyan.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Cyan/Pressed/Darker\n- 멤버: `Color.icon.accent.green.outline.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Outline/Darker\n- 멤버: `Color.icon.accent.green.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Pressed/Darker\n- 멤버: `Color.icon.accent.green.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Selected/Darker\n- 멤버: `Color.icon.accent.green.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Subtle/Darker\n- 멤버: `Color.icon.accent.orange.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Pressed/Darker\n- 멤버: `Color.icon.accent.orange.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Selected/Darker\n- 멤버: `Color.icon.accent.orange.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Subtle/Darker\n- 멤버: `Color.icon.accent.orange.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Text/Darker\n- 멤버: `Color.icon.accent.purple.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Pressed/Darker\n- 멤버: `Color.icon.accent.purple.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Selected/Darker\n- 멤버: `Color.icon.accent.purple.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Subtle/Darker\n- 멤버: `Color.icon.accent.purple.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Text/Darker\n- 멤버: `Color.icon.accent.red.disabled.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Disabled/Darker\n- 멤버: `Color.icon.accent.red.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Pressed/Darker\n- 멤버: `Color.icon.accent.red.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Selected/Darker\n- 멤버: `Color.icon.accent.red.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Subtle/Darker\n- 멤버: `Color.icon.accent.red.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Text/Darker\n- 멤버: `Color.icon.accent.rose.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Pressed/Darker\n- 멤버: `Color.icon.accent.rose.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Selected/Darker\n- 멤버: `Color.icon.accent.rose.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Subtle/Darker\n- 멤버: `Color.icon.accent.teal.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Teal/Pressed/Darker\n- 멤버: `Color.icon.accent.yellow.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Pressed/Darker\n- 멤버: `Color.icon.accent.yellow.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Selected/Darker\n- 멤버: `Color.icon.accent.yellow.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Subtle/Darker\n- 멤버: `Color.icon.accent.yellow.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Text/Darker\n- 멤버: `Color.icon.search`; Figma 컬렉션 / 변수: Theme Colors/Icon/search\n- 멤버: `Color.material.alert.actionBorder`; Figma 컬렉션 / 변수: Material/Alert/actionBorder\n- 멤버: `Color.material.alert.border`; Figma 컬렉션 / 변수: Material/Alert/border\n- 멤버: `Color.material.alert.canvas`; Figma 컬렉션 / 변수: Material/Alert/canvas\n- 멤버: `Color.material.alert.divider`; Figma 컬렉션 / 변수: Material/Alert/divider\n- 멤버: `Color.material.alert.surface`; Figma 컬렉션 / 변수: Material/Alert/surface\n- 멤버: `Color.material.alert.textPrimary`; Figma 컬렉션 / 변수: Material/Alert/textPrimary\n- 멤버: `Color.material.alert.textSecondary`; Figma 컬렉션 / 변수: Material/Alert/textSecondary\n- 멤버: `Color.material.backdrop.base`; Figma 컬렉션 / 변수: Material/Backdrop/Base\n- 멤버: `Color.material.glass.edge`; Figma 컬렉션 / 변수: Material/Glass/Edge\n- 멤버: `Color.material.glass.fill`; Figma 컬렉션 / 변수: Material/Glass/Fill\n- 멤버: `Color.material.glass.foreground`; Figma 컬렉션 / 변수: Material/Glass/Foreground\n- 멤버: `Color.material.overlay.scrim`; Figma 컬렉션 / 변수: Material/Overlay/Scrim\n- 멤버: `Color.material.surface.dense.edge`; Figma 컬렉션 / 변수: Material/Surface/Dense/Edge\n- 멤버: `Color.material.surface.dense.fill`; Figma 컬렉션 / 변수: Material/Surface/Dense/Fill\n- 멤버: `Color.material.surface.glass.edge`; Figma 컬렉션 / 변수: Material/Surface/Glass/Edge\n- 멤버: `Color.material.surface.glass.fill`; Figma 컬렉션 / 변수: Material/Surface/Glass/Fill\n- 멤버: `Color.material.textField.disabled`; Figma 컬렉션 / 변수: Material/TextField/Disabled\n- 멤버: `Color.material.textField.fill`; Figma 컬렉션 / 변수: Material/TextField/Fill\n- 멤버: `Color.material.textField.inline`; Figma 컬렉션 / 변수: Material/TextField/Inline\n- 멤버: `Color.material.textField.reflection`; Figma 컬렉션 / 변수: Material/TextField/Reflection\n- 멤버: `Color.orange`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Default\n- 멤버: `Color.orange.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Disabled\n- 멤버: `Color.orange.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Hover\n- 멤버: `Color.orange.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Outline\n- 멤버: `Color.orange.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Overlay\n- 멤버: `Color.orange.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Pressed\n- 멤버: `Color.orange.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Selected\n- 멤버: `Color.orange.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Subtle\n- 멤버: `Color.orange.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Text\n- 멤버: `Color.picker.current`; Figma 컬렉션 / 변수: ColorPicker/Current color\n- 멤버: `Color.picker.hue`; Figma 컬렉션 / 변수: ColorPicker/Hue color\n- 멤버: `Color.picker.previous`; Figma 컬렉션 / 변수: ColorPicker/Previous color\n- 멤버: `Color.primary`; Figma 컬렉션 / 변수: Theme Colors/Action/primary\n- 멤버: `Color.purple`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Default\n- 멤버: `Color.purple.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Disabled\n- 멤버: `Color.purple.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Hover\n- 멤버: `Color.purple.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Outline\n- 멤버: `Color.purple.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Overlay\n- 멤버: `Color.purple.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Pressed\n- 멤버: `Color.purple.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Selected\n- 멤버: `Color.purple.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Subtle\n- 멤버: `Color.purple.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Text\n- 멤버: `Color.red`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Default\n- 멤버: `Color.red.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Disabled\n- 멤버: `Color.red.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Hover\n- 멤버: `Color.red.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Outline\n- 멤버: `Color.red.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Overlay\n- 멤버: `Color.red.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Pressed\n- 멤버: `Color.red.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Selected\n- 멤버: `Color.red.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Subtle\n- 멤버: `Color.red.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Text\n- 멤버: `Color.rose`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Default\n- 멤버: `Color.rose.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Disabled\n- 멤버: `Color.rose.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Hover\n- 멤버: `Color.rose.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Outline\n- 멤버: `Color.rose.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Overlay\n- 멤버: `Color.rose.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Pressed\n- 멤버: `Color.rose.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Selected\n- 멤버: `Color.rose.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Subtle\n- 멤버: `Color.rose.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Text\n- 멤버: `Color.subSurface`; Figma 컬렉션 / 변수: Theme Colors/Panel/subSurface\n- 멤버: `Color.success`; Figma 컬렉션 / 변수: Theme Colors/Action/success\n- 멤버: `Color.surfaceAlt`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceAlt\n- 멤버: `Color.surfaceControl`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceControl\n- 멤버: `Color.surfaceGhost`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceGhost\n- 멤버: `Color.surfaceInput`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInput\n- 멤버: `Color.surfaceInputHover`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInputHover\n- 멤버: `Color.surfaceInteractive`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInteractive\n- 멤버: `Color.surfacePanel`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfacePanel\n- 멤버: `Color.surfaceRaised`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceRaised\n- 멤버: `Color.surfaceSolid`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceSolid\n- 멤버: `Color.teal`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Default\n- 멤버: `Color.teal.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Disabled\n- 멤버: `Color.teal.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Hover\n- 멤버: `Color.teal.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Outline\n- 멤버: `Color.teal.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Overlay\n- 멤버: `Color.teal.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Pressed\n- 멤버: `Color.teal.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Selected\n- 멤버: `Color.teal.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Subtle\n- 멤버: `Color.teal.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Text\n- 멤버: `Color.text.base`; Figma 컬렉션 / 변수: Theme Colors/Text/textTokenBase\n- 멤버: `Color.text.body`; Figma 컬렉션 / 변수: Theme Colors/Text/bodyColor\n- 멤버: `Color.text.caption`; Figma 컬렉션 / 변수: Theme Colors/Text/captionColor\n- 멤버: `Color.text.description`; Figma 컬렉션 / 변수: Theme Colors/Text/descriptionColor\n- 멤버: `Color.text.disabled`; Figma 컬렉션 / 변수: Theme Colors/Text/disabledColor\n- 멤버: `Color.text.titleHeader`; Figma 컬렉션 / 변수: Theme Colors/Text/titleHeaderColor\n- 멤버: `Color.transparent`; Figma 컬렉션 / 변수: Theme Colors/Neutral/Transparent\n- 멤버: `Color.warning`; Figma 컬렉션 / 변수: Theme Colors/Action/warning\n- 멤버: `Color.window`; Figma 컬렉션 / 변수: Theme Colors/Panel/window\n- 멤버: `Color.windowAlt`; Figma 컬렉션 / 변수: Theme Colors/Panel/windowAlt\n- 멤버: `Color.yellow`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Default\n- 멤버: `Color.yellow.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Disabled\n- 멤버: `Color.yellow.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Hover\n- 멤버: `Color.yellow.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Outline\n- 멤버: `Color.yellow.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Overlay\n- 멤버: `Color.yellow.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Pressed\n- 멤버: `Color.yellow.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Selected\n- 멤버: `Color.yellow.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Subtle\n- 멤버: `Color.yellow.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Text\n- 멤버: `Metric.blur16`; Figma 컬렉션 / 변수: Theme Metrics/Blur/16\n- 멤버: `Metric.blur64`; Figma 컬렉션 / 변수: Theme Metrics/Blur/64\n- 멤버: `Metric.opacity11`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/11\n- 멤버: `Metric.opacity32`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/32\n- 멤버: `Metric.opacity40`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/40\n- 멤버: `Metric.radius12`; Figma 컬렉션 / 변수: Theme Metrics/Radius/12\n- 멤버: `Metric.radius16`; Figma 컬렉션 / 변수: Theme Metrics/Radius/16\n- 멤버: `Metric.radius24`; Figma 컬렉션 / 변수: Theme Metrics/Radius/24\n- 멤버: `Metric.radius28`; Figma 컬렉션 / 변수: Theme Metrics/Radius/28\n- 멤버: `Metric.radius36`; Figma 컬렉션 / 변수: Theme Metrics/Radius/36\n- 멤버: `Metric.radius4`; Figma 컬렉션 / 변수: Theme Metrics/Radius/4\n- 멤버: `Metric.radius6`; Figma 컬렉션 / 변수: Theme Metrics/Radius/6\n- 멤버: `Metric.radius8`; Figma 컬렉션 / 변수: Theme Metrics/Radius/8\n- 멤버: `Metric.radius999`; Figma 컬렉션 / 변수: Theme Metrics/Radius/999\n- 멤버: `Metric.size140`; Figma 컬렉션 / 변수: Theme Metrics/Size/140\n- 멤버: `Metric.size2`; Figma 컬렉션 / 변수: Theme Metrics/Size/2\n- 멤버: `Metric.size22`; Figma 컬렉션 / 변수: Theme Metrics/Size/22\n- 멤버: `Metric.size24`; Figma 컬렉션 / 변수: Theme Metrics/Size/24\n- 멤버: `Metric.size256`; Figma 컬렉션 / 변수: Theme Metrics/Size/256\n- 멤버: `Metric.size280`; Figma 컬렉션 / 변수: Theme Metrics/Size/280\n- 멤버: `Metric.size32`; Figma 컬렉션 / 변수: Theme Metrics/Size/32\n- 멤버: `Metric.size400`; Figma 컬렉션 / 변수: Theme Metrics/Size/400\n- 멤버: `Metric.size44`; Figma 컬렉션 / 변수: Theme Metrics/Size/44\n- 멤버: `Metric.size48`; Figma 컬렉션 / 변수: Theme Metrics/Size/48\n- 멤버: `Metric.size500`; Figma 컬렉션 / 변수: Theme Metrics/Size/500\n- 멤버: `Metric.size56`; Figma 컬렉션 / 변수: Theme Metrics/Size/56\n- 멤버: `Metric.size72`; Figma 컬렉션 / 변수: Theme Metrics/Size/72\n- 멤버: `Metric.space0`; Figma 컬렉션 / 변수: Theme Metrics/Space/0\n- 멤버: `Metric.space10`; Figma 컬렉션 / 변수: Theme Metrics/Space/10\n- 멤버: `Metric.space12`; Figma 컬렉션 / 변수: Theme Metrics/Space/12\n- 멤버: `Metric.space14`; Figma 컬렉션 / 변수: Theme Metrics/Space/14\n- 멤버: `Metric.space16`; Figma 컬렉션 / 변수: Theme Metrics/Space/16\n- 멤버: `Metric.space18`; Figma 컬렉션 / 변수: Theme Metrics/Space/18\n- 멤버: `Metric.space2`; Figma 컬렉션 / 변수: Theme Metrics/Space/2\n- 멤버: `Metric.space20`; Figma 컬렉션 / 변수: Theme Metrics/Space/20\n- 멤버: `Metric.space24`; Figma 컬렉션 / 변수: Theme Metrics/Space/24\n- 멤버: `Metric.space28`; Figma 컬렉션 / 변수: Theme Metrics/Space/28\n- 멤버: `Metric.space32`; Figma 컬렉션 / 변수: Theme Metrics/Space/32\n- 멤버: `Metric.space36`; Figma 컬렉션 / 변수: Theme Metrics/Space/36\n- 멤버: `Metric.space4`; Figma 컬렉션 / 변수: Theme Metrics/Space/4\n- 멤버: `Metric.space40`; Figma 컬렉션 / 변수: Theme Metrics/Space/40\n- 멤버: `Metric.space42`; Figma 컬렉션 / 변수: Theme Metrics/Space/42\n- 멤버: `Metric.space46`; Figma 컬렉션 / 변수: Theme Metrics/Space/46\n- 멤버: `Metric.space6`; Figma 컬렉션 / 변수: Theme Metrics/Space/6\n- 멤버: `Metric.space8`; Figma 컬렉션 / 변수: Theme Metrics/Space/8\n- 멤버: `Metric.stroke1`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/1\n- 멤버: `Metric.stroke1_5`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/1_5\n- 멤버: `Metric.stroke2`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/2\n- 멤버: `Metric.textBody`; Figma 컬렉션 / 변수: Theme Typography/Body/textBody\n- 멤버: `Metric.textBodyLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Body/textBodyLineHeight\n- 멤버: `Metric.textCaption`; Figma 컬렉션 / 변수: Theme Typography/Caption/textCaption\n- 멤버: `Metric.textCaptionLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Caption/textCaptionLineHeight\n- 멤버: `Metric.textDescription`; Figma 컬렉션 / 변수: Theme Typography/Description/textDescription\n- 멤버: `Metric.textDescriptionLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Description/textDescriptionLineHeight\n- 멤버: `Metric.textFieldBorderWidth`; Figma 컬렉션 / 변수: Theme Metrics/TextField/borderWidth\n- 멤버: `Metric.textFieldIconSize`; Figma 컬렉션 / 변수: Theme Metrics/TextField/iconSize\n- 멤버: `Metric.textFieldPaddingHorizontal`; Figma 컬렉션 / 변수: Theme Metrics/TextField/paddingHorizontal\n- 멤버: `Metric.textFieldPaddingVertical`; Figma 컬렉션 / 변수: Theme Metrics/TextField/paddingVertical\n- 멤버: `Metric.textHeader`; Figma 컬렉션 / 변수: Theme Typography/Header/textHeader\n- 멤버: `Metric.textHeaderLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Header/textHeaderLineHeight\n- 멤버: `Metric.textSubheader`; Figma 컬렉션 / 변수: Theme Typography/Subheader/textSubheader\n- 멤버: `Metric.textSubheaderLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Subheader/textSubheaderLineHeight\n- 멤버: `Metric.textSubtitle`; Figma 컬렉션 / 변수: Theme Typography/Subtitle/textSubtitle\n- 멤버: `Metric.textSubtitleLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Subtitle/textSubtitleLineHeight\n- 멤버: `Metric.textTitle`; Figma 컬렉션 / 변수: Theme Typography/Title/textTitle\n- 멤버: `Metric.textTitleLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Title/textTitleLineHeight\n- 멤버: `Metric.trackingNormal`; Figma 컬렉션 / 변수: Theme Typography/Tracking/Normal\n- 멤버: `Metric.weightBold`; Figma 컬렉션 / 변수: Theme Typography/Weight/Bold\n- 멤버: `Metric.weightMedium`; Figma 컬렉션 / 변수: Theme Typography/Weight/Medium\n- 멤버: `Metric.weightRegular`; Figma 컬렉션 / 변수: Theme Typography/Weight/Regular\n- 멤버: `Metric.weightSemiBold`; Figma 컬렉션 / 변수: Theme Typography/Weight/SemiBold\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.blue.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Blue/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.brown.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Brown/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.canvas`; Figma 컬렉션 / 변수: Theme Colors/Panel/canvas",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.cyan.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Cyan/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.danger`; Figma 컬렉션 / 변수: Theme Colors/Action/danger",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.gray`; Figma 컬렉션 / 변수: Theme Colors/Neutral/Gray",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.green.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Green/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.blue.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.blue.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.blue.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Blue/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.cyan.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Cyan/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.green.outline.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Outline/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.green.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.green.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.green.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Green/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.orange.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.orange.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.orange.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.orange.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Orange/Text/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.purple.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.purple.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.purple.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.purple.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Purple/Text/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.red.disabled.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Disabled/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.red.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.red.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.red.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.red.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Red/Text/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.rose.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.rose.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.rose.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Rose/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.teal.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Teal/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.yellow.pressed.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Pressed/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.yellow.selected.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Selected/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.yellow.subtle.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Subtle/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.accent.yellow.text.darker`; Figma 컬렉션 / 변수: Theme Colors/Icon/Accent/Yellow/Text/Darker",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.icon.search`; Figma 컬렉션 / 변수: Theme Colors/Icon/search",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.actionBorder`; Figma 컬렉션 / 변수: Material/Alert/actionBorder",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.border`; Figma 컬렉션 / 변수: Material/Alert/border",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.canvas`; Figma 컬렉션 / 변수: Material/Alert/canvas",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.divider`; Figma 컬렉션 / 변수: Material/Alert/divider",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.surface`; Figma 컬렉션 / 변수: Material/Alert/surface",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.textPrimary`; Figma 컬렉션 / 변수: Material/Alert/textPrimary",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.alert.textSecondary`; Figma 컬렉션 / 변수: Material/Alert/textSecondary",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.backdrop.base`; Figma 컬렉션 / 변수: Material/Backdrop/Base",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.glass.edge`; Figma 컬렉션 / 변수: Material/Glass/Edge",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.glass.fill`; Figma 컬렉션 / 변수: Material/Glass/Fill",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.glass.foreground`; Figma 컬렉션 / 변수: Material/Glass/Foreground",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.overlay.scrim`; Figma 컬렉션 / 변수: Material/Overlay/Scrim",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.surface.dense.edge`; Figma 컬렉션 / 변수: Material/Surface/Dense/Edge",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.surface.dense.fill`; Figma 컬렉션 / 변수: Material/Surface/Dense/Fill",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.surface.glass.edge`; Figma 컬렉션 / 변수: Material/Surface/Glass/Edge",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.surface.glass.fill`; Figma 컬렉션 / 변수: Material/Surface/Glass/Fill",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.textField.disabled`; Figma 컬렉션 / 변수: Material/TextField/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.textField.fill`; Figma 컬렉션 / 변수: Material/TextField/Fill",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.textField.inline`; Figma 컬렉션 / 변수: Material/TextField/Inline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.material.textField.reflection`; Figma 컬렉션 / 변수: Material/TextField/Reflection",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.orange.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Orange/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.picker.current`; Figma 컬렉션 / 변수: ColorPicker/Current color",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.picker.hue`; Figma 컬렉션 / 변수: ColorPicker/Hue color",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.picker.previous`; Figma 컬렉션 / 변수: ColorPicker/Previous color",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.primary`; Figma 컬렉션 / 변수: Theme Colors/Action/primary",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.purple.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Purple/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.red.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Red/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.rose.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Rose/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.subSurface`; Figma 컬렉션 / 변수: Theme Colors/Panel/subSurface",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.success`; Figma 컬렉션 / 변수: Theme Colors/Action/success",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceAlt`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceAlt",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceControl`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceControl",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceGhost`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceGhost",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceInput`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInput",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceInputHover`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInputHover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceInteractive`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceInteractive",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfacePanel`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfacePanel",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceRaised`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceRaised",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.surfaceSolid`; Figma 컬렉션 / 변수: Theme Colors/Panel/surfaceSolid",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.teal.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Teal/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.text.base`; Figma 컬렉션 / 변수: Theme Colors/Text/textTokenBase",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.text.body`; Figma 컬렉션 / 변수: Theme Colors/Text/bodyColor",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.text.caption`; Figma 컬렉션 / 변수: Theme Colors/Text/captionColor",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.text.description`; Figma 컬렉션 / 변수: Theme Colors/Text/descriptionColor",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.text.disabled`; Figma 컬렉션 / 변수: Theme Colors/Text/disabledColor",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.text.titleHeader`; Figma 컬렉션 / 변수: Theme Colors/Text/titleHeaderColor",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.transparent`; Figma 컬렉션 / 변수: Theme Colors/Neutral/Transparent",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.warning`; Figma 컬렉션 / 변수: Theme Colors/Action/warning",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.window`; Figma 컬렉션 / 변수: Theme Colors/Panel/window",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.windowAlt`; Figma 컬렉션 / 변수: Theme Colors/Panel/windowAlt",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Default",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.disabled`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Disabled",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.hover`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Hover",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.outline`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Outline",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.overlay`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Overlay",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.pressed`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Pressed",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.selected`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Selected",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.subtle`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Subtle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Color.yellow.text`; Figma 컬렉션 / 변수: Theme Colors/Accent/Yellow/Text",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.blur16`; Figma 컬렉션 / 변수: Theme Metrics/Blur/16",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.blur64`; Figma 컬렉션 / 변수: Theme Metrics/Blur/64",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.opacity11`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/11",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.opacity32`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/32",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.opacity40`; Figma 컬렉션 / 변수: Theme Metrics/Opacity/40",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius12`; Figma 컬렉션 / 변수: Theme Metrics/Radius/12",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius16`; Figma 컬렉션 / 변수: Theme Metrics/Radius/16",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius24`; Figma 컬렉션 / 변수: Theme Metrics/Radius/24",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius28`; Figma 컬렉션 / 변수: Theme Metrics/Radius/28",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius36`; Figma 컬렉션 / 변수: Theme Metrics/Radius/36",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius4`; Figma 컬렉션 / 변수: Theme Metrics/Radius/4",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius6`; Figma 컬렉션 / 변수: Theme Metrics/Radius/6",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius8`; Figma 컬렉션 / 변수: Theme Metrics/Radius/8",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.radius999`; Figma 컬렉션 / 변수: Theme Metrics/Radius/999",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size140`; Figma 컬렉션 / 변수: Theme Metrics/Size/140",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size2`; Figma 컬렉션 / 변수: Theme Metrics/Size/2",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size22`; Figma 컬렉션 / 변수: Theme Metrics/Size/22",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size24`; Figma 컬렉션 / 변수: Theme Metrics/Size/24",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size256`; Figma 컬렉션 / 변수: Theme Metrics/Size/256",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size280`; Figma 컬렉션 / 변수: Theme Metrics/Size/280",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size32`; Figma 컬렉션 / 변수: Theme Metrics/Size/32",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size400`; Figma 컬렉션 / 변수: Theme Metrics/Size/400",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size44`; Figma 컬렉션 / 변수: Theme Metrics/Size/44",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size48`; Figma 컬렉션 / 변수: Theme Metrics/Size/48",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size500`; Figma 컬렉션 / 변수: Theme Metrics/Size/500",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size56`; Figma 컬렉션 / 변수: Theme Metrics/Size/56",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.size72`; Figma 컬렉션 / 변수: Theme Metrics/Size/72",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space0`; Figma 컬렉션 / 변수: Theme Metrics/Space/0",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space10`; Figma 컬렉션 / 변수: Theme Metrics/Space/10",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space12`; Figma 컬렉션 / 변수: Theme Metrics/Space/12",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space14`; Figma 컬렉션 / 변수: Theme Metrics/Space/14",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space16`; Figma 컬렉션 / 변수: Theme Metrics/Space/16",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space18`; Figma 컬렉션 / 변수: Theme Metrics/Space/18",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space2`; Figma 컬렉션 / 변수: Theme Metrics/Space/2",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space20`; Figma 컬렉션 / 변수: Theme Metrics/Space/20",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space24`; Figma 컬렉션 / 변수: Theme Metrics/Space/24",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space28`; Figma 컬렉션 / 변수: Theme Metrics/Space/28",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space32`; Figma 컬렉션 / 변수: Theme Metrics/Space/32",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space36`; Figma 컬렉션 / 변수: Theme Metrics/Space/36",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space4`; Figma 컬렉션 / 변수: Theme Metrics/Space/4",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space40`; Figma 컬렉션 / 변수: Theme Metrics/Space/40",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space42`; Figma 컬렉션 / 변수: Theme Metrics/Space/42",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space46`; Figma 컬렉션 / 변수: Theme Metrics/Space/46",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space6`; Figma 컬렉션 / 변수: Theme Metrics/Space/6",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.space8`; Figma 컬렉션 / 변수: Theme Metrics/Space/8",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.stroke1`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/1",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.stroke1_5`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/1_5",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.stroke2`; Figma 컬렉션 / 변수: Theme Metrics/Stroke/2",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textBody`; Figma 컬렉션 / 변수: Theme Typography/Body/textBody",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textBodyLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Body/textBodyLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textCaption`; Figma 컬렉션 / 변수: Theme Typography/Caption/textCaption",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textCaptionLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Caption/textCaptionLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textDescription`; Figma 컬렉션 / 변수: Theme Typography/Description/textDescription",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textDescriptionLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Description/textDescriptionLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textFieldBorderWidth`; Figma 컬렉션 / 변수: Theme Metrics/TextField/borderWidth",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textFieldIconSize`; Figma 컬렉션 / 변수: Theme Metrics/TextField/iconSize",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textFieldPaddingHorizontal`; Figma 컬렉션 / 변수: Theme Metrics/TextField/paddingHorizontal",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textFieldPaddingVertical`; Figma 컬렉션 / 변수: Theme Metrics/TextField/paddingVertical",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textHeader`; Figma 컬렉션 / 변수: Theme Typography/Header/textHeader",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textHeaderLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Header/textHeaderLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textSubheader`; Figma 컬렉션 / 변수: Theme Typography/Subheader/textSubheader",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textSubheaderLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Subheader/textSubheaderLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textSubtitle`; Figma 컬렉션 / 변수: Theme Typography/Subtitle/textSubtitle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textSubtitleLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Subtitle/textSubtitleLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textTitle`; Figma 컬렉션 / 변수: Theme Typography/Title/textTitle",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.textTitleLineHeight`; Figma 컬렉션 / 변수: Theme Typography/Title/textTitleLineHeight",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.trackingNormal`; Figma 컬렉션 / 변수: Theme Typography/Tracking/Normal",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.weightBold`; Figma 컬렉션 / 변수: Theme Typography/Weight/Bold",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.weightMedium`; Figma 컬렉션 / 변수: Theme Typography/Weight/Medium",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.weightRegular`; Figma 컬렉션 / 변수: Theme Typography/Weight/Regular",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "멤버: `Metric.weightSemiBold`; Figma 컬렉션 / 변수: Theme Typography/Weight/SemiBold",
+          "checked": null
+        }
       ]
     }
   ],
@@ -1036,973 +1271,7 @@
     "directive_candidates": [],
     "commands": [],
     "links": [],
-    "tables": [
-      {
-        "block_id": "b000005",
-        "columns": [
-          "멤버",
-          "Figma 컬렉션 / 변수"
-        ],
-        "rows": [
-          [
-            "`Color.blue`",
-            "Theme Colors/Accent/Blue/Default"
-          ],
-          [
-            "`Color.blue.disabled`",
-            "Theme Colors/Accent/Blue/Disabled"
-          ],
-          [
-            "`Color.blue.hover`",
-            "Theme Colors/Accent/Blue/Hover"
-          ],
-          [
-            "`Color.blue.outline`",
-            "Theme Colors/Accent/Blue/Outline"
-          ],
-          [
-            "`Color.blue.overlay`",
-            "Theme Colors/Accent/Blue/Overlay"
-          ],
-          [
-            "`Color.blue.pressed`",
-            "Theme Colors/Accent/Blue/Pressed"
-          ],
-          [
-            "`Color.blue.selected`",
-            "Theme Colors/Accent/Blue/Selected"
-          ],
-          [
-            "`Color.blue.subtle`",
-            "Theme Colors/Accent/Blue/Subtle"
-          ],
-          [
-            "`Color.blue.text`",
-            "Theme Colors/Accent/Blue/Text"
-          ],
-          [
-            "`Color.brown`",
-            "Theme Colors/Accent/Brown/Default"
-          ],
-          [
-            "`Color.brown.disabled`",
-            "Theme Colors/Accent/Brown/Disabled"
-          ],
-          [
-            "`Color.brown.hover`",
-            "Theme Colors/Accent/Brown/Hover"
-          ],
-          [
-            "`Color.brown.outline`",
-            "Theme Colors/Accent/Brown/Outline"
-          ],
-          [
-            "`Color.brown.overlay`",
-            "Theme Colors/Accent/Brown/Overlay"
-          ],
-          [
-            "`Color.brown.pressed`",
-            "Theme Colors/Accent/Brown/Pressed"
-          ],
-          [
-            "`Color.brown.selected`",
-            "Theme Colors/Accent/Brown/Selected"
-          ],
-          [
-            "`Color.brown.subtle`",
-            "Theme Colors/Accent/Brown/Subtle"
-          ],
-          [
-            "`Color.brown.text`",
-            "Theme Colors/Accent/Brown/Text"
-          ],
-          [
-            "`Color.canvas`",
-            "Theme Colors/Panel/canvas"
-          ],
-          [
-            "`Color.cyan`",
-            "Theme Colors/Accent/Cyan/Default"
-          ],
-          [
-            "`Color.cyan.disabled`",
-            "Theme Colors/Accent/Cyan/Disabled"
-          ],
-          [
-            "`Color.cyan.hover`",
-            "Theme Colors/Accent/Cyan/Hover"
-          ],
-          [
-            "`Color.cyan.outline`",
-            "Theme Colors/Accent/Cyan/Outline"
-          ],
-          [
-            "`Color.cyan.overlay`",
-            "Theme Colors/Accent/Cyan/Overlay"
-          ],
-          [
-            "`Color.cyan.pressed`",
-            "Theme Colors/Accent/Cyan/Pressed"
-          ],
-          [
-            "`Color.cyan.selected`",
-            "Theme Colors/Accent/Cyan/Selected"
-          ],
-          [
-            "`Color.cyan.subtle`",
-            "Theme Colors/Accent/Cyan/Subtle"
-          ],
-          [
-            "`Color.cyan.text`",
-            "Theme Colors/Accent/Cyan/Text"
-          ],
-          [
-            "`Color.danger`",
-            "Theme Colors/Action/danger"
-          ],
-          [
-            "`Color.gray`",
-            "Theme Colors/Neutral/Gray"
-          ],
-          [
-            "`Color.green`",
-            "Theme Colors/Accent/Green/Default"
-          ],
-          [
-            "`Color.green.disabled`",
-            "Theme Colors/Accent/Green/Disabled"
-          ],
-          [
-            "`Color.green.hover`",
-            "Theme Colors/Accent/Green/Hover"
-          ],
-          [
-            "`Color.green.outline`",
-            "Theme Colors/Accent/Green/Outline"
-          ],
-          [
-            "`Color.green.overlay`",
-            "Theme Colors/Accent/Green/Overlay"
-          ],
-          [
-            "`Color.green.pressed`",
-            "Theme Colors/Accent/Green/Pressed"
-          ],
-          [
-            "`Color.green.selected`",
-            "Theme Colors/Accent/Green/Selected"
-          ],
-          [
-            "`Color.green.subtle`",
-            "Theme Colors/Accent/Green/Subtle"
-          ],
-          [
-            "`Color.green.text`",
-            "Theme Colors/Accent/Green/Text"
-          ],
-          [
-            "`Color.icon.accent.blue.pressed.darker`",
-            "Theme Colors/Icon/Accent/Blue/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.blue.selected.darker`",
-            "Theme Colors/Icon/Accent/Blue/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.blue.subtle.darker`",
-            "Theme Colors/Icon/Accent/Blue/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.cyan.pressed.darker`",
-            "Theme Colors/Icon/Accent/Cyan/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.green.outline.darker`",
-            "Theme Colors/Icon/Accent/Green/Outline/Darker"
-          ],
-          [
-            "`Color.icon.accent.green.pressed.darker`",
-            "Theme Colors/Icon/Accent/Green/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.green.selected.darker`",
-            "Theme Colors/Icon/Accent/Green/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.green.subtle.darker`",
-            "Theme Colors/Icon/Accent/Green/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.orange.pressed.darker`",
-            "Theme Colors/Icon/Accent/Orange/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.orange.selected.darker`",
-            "Theme Colors/Icon/Accent/Orange/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.orange.subtle.darker`",
-            "Theme Colors/Icon/Accent/Orange/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.orange.text.darker`",
-            "Theme Colors/Icon/Accent/Orange/Text/Darker"
-          ],
-          [
-            "`Color.icon.accent.purple.pressed.darker`",
-            "Theme Colors/Icon/Accent/Purple/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.purple.selected.darker`",
-            "Theme Colors/Icon/Accent/Purple/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.purple.subtle.darker`",
-            "Theme Colors/Icon/Accent/Purple/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.purple.text.darker`",
-            "Theme Colors/Icon/Accent/Purple/Text/Darker"
-          ],
-          [
-            "`Color.icon.accent.red.disabled.darker`",
-            "Theme Colors/Icon/Accent/Red/Disabled/Darker"
-          ],
-          [
-            "`Color.icon.accent.red.pressed.darker`",
-            "Theme Colors/Icon/Accent/Red/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.red.selected.darker`",
-            "Theme Colors/Icon/Accent/Red/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.red.subtle.darker`",
-            "Theme Colors/Icon/Accent/Red/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.red.text.darker`",
-            "Theme Colors/Icon/Accent/Red/Text/Darker"
-          ],
-          [
-            "`Color.icon.accent.rose.pressed.darker`",
-            "Theme Colors/Icon/Accent/Rose/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.rose.selected.darker`",
-            "Theme Colors/Icon/Accent/Rose/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.rose.subtle.darker`",
-            "Theme Colors/Icon/Accent/Rose/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.teal.pressed.darker`",
-            "Theme Colors/Icon/Accent/Teal/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.yellow.pressed.darker`",
-            "Theme Colors/Icon/Accent/Yellow/Pressed/Darker"
-          ],
-          [
-            "`Color.icon.accent.yellow.selected.darker`",
-            "Theme Colors/Icon/Accent/Yellow/Selected/Darker"
-          ],
-          [
-            "`Color.icon.accent.yellow.subtle.darker`",
-            "Theme Colors/Icon/Accent/Yellow/Subtle/Darker"
-          ],
-          [
-            "`Color.icon.accent.yellow.text.darker`",
-            "Theme Colors/Icon/Accent/Yellow/Text/Darker"
-          ],
-          [
-            "`Color.icon.search`",
-            "Theme Colors/Icon/search"
-          ],
-          [
-            "`Color.material.alert.actionBorder`",
-            "Material/Alert/actionBorder"
-          ],
-          [
-            "`Color.material.alert.border`",
-            "Material/Alert/border"
-          ],
-          [
-            "`Color.material.alert.canvas`",
-            "Material/Alert/canvas"
-          ],
-          [
-            "`Color.material.alert.divider`",
-            "Material/Alert/divider"
-          ],
-          [
-            "`Color.material.alert.surface`",
-            "Material/Alert/surface"
-          ],
-          [
-            "`Color.material.alert.textPrimary`",
-            "Material/Alert/textPrimary"
-          ],
-          [
-            "`Color.material.alert.textSecondary`",
-            "Material/Alert/textSecondary"
-          ],
-          [
-            "`Color.material.backdrop.base`",
-            "Material/Backdrop/Base"
-          ],
-          [
-            "`Color.material.glass.edge`",
-            "Material/Glass/Edge"
-          ],
-          [
-            "`Color.material.glass.fill`",
-            "Material/Glass/Fill"
-          ],
-          [
-            "`Color.material.glass.foreground`",
-            "Material/Glass/Foreground"
-          ],
-          [
-            "`Color.material.overlay.scrim`",
-            "Material/Overlay/Scrim"
-          ],
-          [
-            "`Color.material.surface.dense.edge`",
-            "Material/Surface/Dense/Edge"
-          ],
-          [
-            "`Color.material.surface.dense.fill`",
-            "Material/Surface/Dense/Fill"
-          ],
-          [
-            "`Color.material.surface.glass.edge`",
-            "Material/Surface/Glass/Edge"
-          ],
-          [
-            "`Color.material.surface.glass.fill`",
-            "Material/Surface/Glass/Fill"
-          ],
-          [
-            "`Color.material.textField.disabled`",
-            "Material/TextField/Disabled"
-          ],
-          [
-            "`Color.material.textField.fill`",
-            "Material/TextField/Fill"
-          ],
-          [
-            "`Color.material.textField.inline`",
-            "Material/TextField/Inline"
-          ],
-          [
-            "`Color.material.textField.reflection`",
-            "Material/TextField/Reflection"
-          ],
-          [
-            "`Color.orange`",
-            "Theme Colors/Accent/Orange/Default"
-          ],
-          [
-            "`Color.orange.disabled`",
-            "Theme Colors/Accent/Orange/Disabled"
-          ],
-          [
-            "`Color.orange.hover`",
-            "Theme Colors/Accent/Orange/Hover"
-          ],
-          [
-            "`Color.orange.outline`",
-            "Theme Colors/Accent/Orange/Outline"
-          ],
-          [
-            "`Color.orange.overlay`",
-            "Theme Colors/Accent/Orange/Overlay"
-          ],
-          [
-            "`Color.orange.pressed`",
-            "Theme Colors/Accent/Orange/Pressed"
-          ],
-          [
-            "`Color.orange.selected`",
-            "Theme Colors/Accent/Orange/Selected"
-          ],
-          [
-            "`Color.orange.subtle`",
-            "Theme Colors/Accent/Orange/Subtle"
-          ],
-          [
-            "`Color.orange.text`",
-            "Theme Colors/Accent/Orange/Text"
-          ],
-          [
-            "`Color.picker.current`",
-            "ColorPicker/Current color"
-          ],
-          [
-            "`Color.picker.hue`",
-            "ColorPicker/Hue color"
-          ],
-          [
-            "`Color.picker.previous`",
-            "ColorPicker/Previous color"
-          ],
-          [
-            "`Color.primary`",
-            "Theme Colors/Action/primary"
-          ],
-          [
-            "`Color.purple`",
-            "Theme Colors/Accent/Purple/Default"
-          ],
-          [
-            "`Color.purple.disabled`",
-            "Theme Colors/Accent/Purple/Disabled"
-          ],
-          [
-            "`Color.purple.hover`",
-            "Theme Colors/Accent/Purple/Hover"
-          ],
-          [
-            "`Color.purple.outline`",
-            "Theme Colors/Accent/Purple/Outline"
-          ],
-          [
-            "`Color.purple.overlay`",
-            "Theme Colors/Accent/Purple/Overlay"
-          ],
-          [
-            "`Color.purple.pressed`",
-            "Theme Colors/Accent/Purple/Pressed"
-          ],
-          [
-            "`Color.purple.selected`",
-            "Theme Colors/Accent/Purple/Selected"
-          ],
-          [
-            "`Color.purple.subtle`",
-            "Theme Colors/Accent/Purple/Subtle"
-          ],
-          [
-            "`Color.purple.text`",
-            "Theme Colors/Accent/Purple/Text"
-          ],
-          [
-            "`Color.red`",
-            "Theme Colors/Accent/Red/Default"
-          ],
-          [
-            "`Color.red.disabled`",
-            "Theme Colors/Accent/Red/Disabled"
-          ],
-          [
-            "`Color.red.hover`",
-            "Theme Colors/Accent/Red/Hover"
-          ],
-          [
-            "`Color.red.outline`",
-            "Theme Colors/Accent/Red/Outline"
-          ],
-          [
-            "`Color.red.overlay`",
-            "Theme Colors/Accent/Red/Overlay"
-          ],
-          [
-            "`Color.red.pressed`",
-            "Theme Colors/Accent/Red/Pressed"
-          ],
-          [
-            "`Color.red.selected`",
-            "Theme Colors/Accent/Red/Selected"
-          ],
-          [
-            "`Color.red.subtle`",
-            "Theme Colors/Accent/Red/Subtle"
-          ],
-          [
-            "`Color.red.text`",
-            "Theme Colors/Accent/Red/Text"
-          ],
-          [
-            "`Color.rose`",
-            "Theme Colors/Accent/Rose/Default"
-          ],
-          [
-            "`Color.rose.disabled`",
-            "Theme Colors/Accent/Rose/Disabled"
-          ],
-          [
-            "`Color.rose.hover`",
-            "Theme Colors/Accent/Rose/Hover"
-          ],
-          [
-            "`Color.rose.outline`",
-            "Theme Colors/Accent/Rose/Outline"
-          ],
-          [
-            "`Color.rose.overlay`",
-            "Theme Colors/Accent/Rose/Overlay"
-          ],
-          [
-            "`Color.rose.pressed`",
-            "Theme Colors/Accent/Rose/Pressed"
-          ],
-          [
-            "`Color.rose.selected`",
-            "Theme Colors/Accent/Rose/Selected"
-          ],
-          [
-            "`Color.rose.subtle`",
-            "Theme Colors/Accent/Rose/Subtle"
-          ],
-          [
-            "`Color.rose.text`",
-            "Theme Colors/Accent/Rose/Text"
-          ],
-          [
-            "`Color.subSurface`",
-            "Theme Colors/Panel/subSurface"
-          ],
-          [
-            "`Color.success`",
-            "Theme Colors/Action/success"
-          ],
-          [
-            "`Color.surfaceAlt`",
-            "Theme Colors/Panel/surfaceAlt"
-          ],
-          [
-            "`Color.surfaceControl`",
-            "Theme Colors/Panel/surfaceControl"
-          ],
-          [
-            "`Color.surfaceGhost`",
-            "Theme Colors/Panel/surfaceGhost"
-          ],
-          [
-            "`Color.surfaceInput`",
-            "Theme Colors/Panel/surfaceInput"
-          ],
-          [
-            "`Color.surfaceInputHover`",
-            "Theme Colors/Panel/surfaceInputHover"
-          ],
-          [
-            "`Color.surfaceInteractive`",
-            "Theme Colors/Panel/surfaceInteractive"
-          ],
-          [
-            "`Color.surfacePanel`",
-            "Theme Colors/Panel/surfacePanel"
-          ],
-          [
-            "`Color.surfaceRaised`",
-            "Theme Colors/Panel/surfaceRaised"
-          ],
-          [
-            "`Color.surfaceSolid`",
-            "Theme Colors/Panel/surfaceSolid"
-          ],
-          [
-            "`Color.teal`",
-            "Theme Colors/Accent/Teal/Default"
-          ],
-          [
-            "`Color.teal.disabled`",
-            "Theme Colors/Accent/Teal/Disabled"
-          ],
-          [
-            "`Color.teal.hover`",
-            "Theme Colors/Accent/Teal/Hover"
-          ],
-          [
-            "`Color.teal.outline`",
-            "Theme Colors/Accent/Teal/Outline"
-          ],
-          [
-            "`Color.teal.overlay`",
-            "Theme Colors/Accent/Teal/Overlay"
-          ],
-          [
-            "`Color.teal.pressed`",
-            "Theme Colors/Accent/Teal/Pressed"
-          ],
-          [
-            "`Color.teal.selected`",
-            "Theme Colors/Accent/Teal/Selected"
-          ],
-          [
-            "`Color.teal.subtle`",
-            "Theme Colors/Accent/Teal/Subtle"
-          ],
-          [
-            "`Color.teal.text`",
-            "Theme Colors/Accent/Teal/Text"
-          ],
-          [
-            "`Color.text.base`",
-            "Theme Colors/Text/textTokenBase"
-          ],
-          [
-            "`Color.text.body`",
-            "Theme Colors/Text/bodyColor"
-          ],
-          [
-            "`Color.text.caption`",
-            "Theme Colors/Text/captionColor"
-          ],
-          [
-            "`Color.text.description`",
-            "Theme Colors/Text/descriptionColor"
-          ],
-          [
-            "`Color.text.disabled`",
-            "Theme Colors/Text/disabledColor"
-          ],
-          [
-            "`Color.text.titleHeader`",
-            "Theme Colors/Text/titleHeaderColor"
-          ],
-          [
-            "`Color.transparent`",
-            "Theme Colors/Neutral/Transparent"
-          ],
-          [
-            "`Color.warning`",
-            "Theme Colors/Action/warning"
-          ],
-          [
-            "`Color.window`",
-            "Theme Colors/Panel/window"
-          ],
-          [
-            "`Color.windowAlt`",
-            "Theme Colors/Panel/windowAlt"
-          ],
-          [
-            "`Color.yellow`",
-            "Theme Colors/Accent/Yellow/Default"
-          ],
-          [
-            "`Color.yellow.disabled`",
-            "Theme Colors/Accent/Yellow/Disabled"
-          ],
-          [
-            "`Color.yellow.hover`",
-            "Theme Colors/Accent/Yellow/Hover"
-          ],
-          [
-            "`Color.yellow.outline`",
-            "Theme Colors/Accent/Yellow/Outline"
-          ],
-          [
-            "`Color.yellow.overlay`",
-            "Theme Colors/Accent/Yellow/Overlay"
-          ],
-          [
-            "`Color.yellow.pressed`",
-            "Theme Colors/Accent/Yellow/Pressed"
-          ],
-          [
-            "`Color.yellow.selected`",
-            "Theme Colors/Accent/Yellow/Selected"
-          ],
-          [
-            "`Color.yellow.subtle`",
-            "Theme Colors/Accent/Yellow/Subtle"
-          ],
-          [
-            "`Color.yellow.text`",
-            "Theme Colors/Accent/Yellow/Text"
-          ],
-          [
-            "`Metric.blur16`",
-            "Theme Metrics/Blur/16"
-          ],
-          [
-            "`Metric.blur64`",
-            "Theme Metrics/Blur/64"
-          ],
-          [
-            "`Metric.opacity11`",
-            "Theme Metrics/Opacity/11"
-          ],
-          [
-            "`Metric.opacity32`",
-            "Theme Metrics/Opacity/32"
-          ],
-          [
-            "`Metric.opacity40`",
-            "Theme Metrics/Opacity/40"
-          ],
-          [
-            "`Metric.radius12`",
-            "Theme Metrics/Radius/12"
-          ],
-          [
-            "`Metric.radius16`",
-            "Theme Metrics/Radius/16"
-          ],
-          [
-            "`Metric.radius24`",
-            "Theme Metrics/Radius/24"
-          ],
-          [
-            "`Metric.radius28`",
-            "Theme Metrics/Radius/28"
-          ],
-          [
-            "`Metric.radius36`",
-            "Theme Metrics/Radius/36"
-          ],
-          [
-            "`Metric.radius4`",
-            "Theme Metrics/Radius/4"
-          ],
-          [
-            "`Metric.radius6`",
-            "Theme Metrics/Radius/6"
-          ],
-          [
-            "`Metric.radius8`",
-            "Theme Metrics/Radius/8"
-          ],
-          [
-            "`Metric.radius999`",
-            "Theme Metrics/Radius/999"
-          ],
-          [
-            "`Metric.size140`",
-            "Theme Metrics/Size/140"
-          ],
-          [
-            "`Metric.size2`",
-            "Theme Metrics/Size/2"
-          ],
-          [
-            "`Metric.size22`",
-            "Theme Metrics/Size/22"
-          ],
-          [
-            "`Metric.size24`",
-            "Theme Metrics/Size/24"
-          ],
-          [
-            "`Metric.size256`",
-            "Theme Metrics/Size/256"
-          ],
-          [
-            "`Metric.size280`",
-            "Theme Metrics/Size/280"
-          ],
-          [
-            "`Metric.size32`",
-            "Theme Metrics/Size/32"
-          ],
-          [
-            "`Metric.size400`",
-            "Theme Metrics/Size/400"
-          ],
-          [
-            "`Metric.size44`",
-            "Theme Metrics/Size/44"
-          ],
-          [
-            "`Metric.size48`",
-            "Theme Metrics/Size/48"
-          ],
-          [
-            "`Metric.size500`",
-            "Theme Metrics/Size/500"
-          ],
-          [
-            "`Metric.size56`",
-            "Theme Metrics/Size/56"
-          ],
-          [
-            "`Metric.size72`",
-            "Theme Metrics/Size/72"
-          ],
-          [
-            "`Metric.space0`",
-            "Theme Metrics/Space/0"
-          ],
-          [
-            "`Metric.space10`",
-            "Theme Metrics/Space/10"
-          ],
-          [
-            "`Metric.space12`",
-            "Theme Metrics/Space/12"
-          ],
-          [
-            "`Metric.space14`",
-            "Theme Metrics/Space/14"
-          ],
-          [
-            "`Metric.space16`",
-            "Theme Metrics/Space/16"
-          ],
-          [
-            "`Metric.space18`",
-            "Theme Metrics/Space/18"
-          ],
-          [
-            "`Metric.space2`",
-            "Theme Metrics/Space/2"
-          ],
-          [
-            "`Metric.space20`",
-            "Theme Metrics/Space/20"
-          ],
-          [
-            "`Metric.space24`",
-            "Theme Metrics/Space/24"
-          ],
-          [
-            "`Metric.space28`",
-            "Theme Metrics/Space/28"
-          ],
-          [
-            "`Metric.space32`",
-            "Theme Metrics/Space/32"
-          ],
-          [
-            "`Metric.space36`",
-            "Theme Metrics/Space/36"
-          ],
-          [
-            "`Metric.space4`",
-            "Theme Metrics/Space/4"
-          ],
-          [
-            "`Metric.space40`",
-            "Theme Metrics/Space/40"
-          ],
-          [
-            "`Metric.space42`",
-            "Theme Metrics/Space/42"
-          ],
-          [
-            "`Metric.space46`",
-            "Theme Metrics/Space/46"
-          ],
-          [
-            "`Metric.space6`",
-            "Theme Metrics/Space/6"
-          ],
-          [
-            "`Metric.space8`",
-            "Theme Metrics/Space/8"
-          ],
-          [
-            "`Metric.stroke1`",
-            "Theme Metrics/Stroke/1"
-          ],
-          [
-            "`Metric.stroke1_5`",
-            "Theme Metrics/Stroke/1_5"
-          ],
-          [
-            "`Metric.stroke2`",
-            "Theme Metrics/Stroke/2"
-          ],
-          [
-            "`Metric.textBody`",
-            "Theme Typography/Body/textBody"
-          ],
-          [
-            "`Metric.textBodyLineHeight`",
-            "Theme Typography/Body/textBodyLineHeight"
-          ],
-          [
-            "`Metric.textCaption`",
-            "Theme Typography/Caption/textCaption"
-          ],
-          [
-            "`Metric.textCaptionLineHeight`",
-            "Theme Typography/Caption/textCaptionLineHeight"
-          ],
-          [
-            "`Metric.textDescription`",
-            "Theme Typography/Description/textDescription"
-          ],
-          [
-            "`Metric.textDescriptionLineHeight`",
-            "Theme Typography/Description/textDescriptionLineHeight"
-          ],
-          [
-            "`Metric.textFieldBorderWidth`",
-            "Theme Metrics/TextField/borderWidth"
-          ],
-          [
-            "`Metric.textFieldIconSize`",
-            "Theme Metrics/TextField/iconSize"
-          ],
-          [
-            "`Metric.textFieldPaddingHorizontal`",
-            "Theme Metrics/TextField/paddingHorizontal"
-          ],
-          [
-            "`Metric.textFieldPaddingVertical`",
-            "Theme Metrics/TextField/paddingVertical"
-          ],
-          [
-            "`Metric.textHeader`",
-            "Theme Typography/Header/textHeader"
-          ],
-          [
-            "`Metric.textHeaderLineHeight`",
-            "Theme Typography/Header/textHeaderLineHeight"
-          ],
-          [
-            "`Metric.textSubheader`",
-            "Theme Typography/Subheader/textSubheader"
-          ],
-          [
-            "`Metric.textSubheaderLineHeight`",
-            "Theme Typography/Subheader/textSubheaderLineHeight"
-          ],
-          [
-            "`Metric.textSubtitle`",
-            "Theme Typography/Subtitle/textSubtitle"
-          ],
-          [
-            "`Metric.textSubtitleLineHeight`",
-            "Theme Typography/Subtitle/textSubtitleLineHeight"
-          ],
-          [
-            "`Metric.textTitle`",
-            "Theme Typography/Title/textTitle"
-          ],
-          [
-            "`Metric.textTitleLineHeight`",
-            "Theme Typography/Title/textTitleLineHeight"
-          ],
-          [
-            "`Metric.trackingNormal`",
-            "Theme Typography/Tracking/Normal"
-          ],
-          [
-            "`Metric.weightBold`",
-            "Theme Typography/Weight/Bold"
-          ],
-          [
-            "`Metric.weightMedium`",
-            "Theme Typography/Weight/Medium"
-          ],
-          [
-            "`Metric.weightRegular`",
-            "Theme Typography/Weight/Regular"
-          ],
-          [
-            "`Metric.weightSemiBold`",
-            "Theme Typography/Weight/SemiBold"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

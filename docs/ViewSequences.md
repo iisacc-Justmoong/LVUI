@@ -60,15 +60,13 @@ C++ 구성으로 확장하며, 조건부·반복 항목은 기존 네이티브 �
 macOS arm64의 현재 변경에서 다음 결과를 확인했다. 서로 겹치는 검사를 합산하여 독립
 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.
 
-| 범위 | 결과 |
-|---|---|
-| LVUI 전체 Release CTest | 183/183 통과 |
-| 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer | 106/106 통과 |
-| iiGUI 창 없는 기존 동작·생성 C++ 통합 | 95/95 통과 |
-| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 95/95 통과, NativeBindings 구현은 별도 LVUI 검사 |
-| 설치·재배치 독립 소비자 | Native·공개 파서/컴파일러·선택적 Runtime 3/3 통과 |
-| 생성 C++ 함수 타입 회귀 | 유효 3개 컴파일, 잘못된 11개 거부 |
-| LVRS 생성 C++ | 목록·이름 가림·TabBar·Menu·Modal을 포함한 총 22개 팩터리 컴파일, 실행하지 않음 |
+- 범위: LVUI 전체 Release CTest; 결과: 183/183 통과
+- 범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 106/106 통과
+- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 95/95 통과
+- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 95/95 통과, NativeBindings 구현은 별도 LVUI 검사
+- 범위: 설치·재배치 독립 소비자; 결과: Native·공개 파서/컴파일러·선택적 Runtime 3/3 통과
+- 범위: 생성 C++ 함수 타입 회귀; 결과: 유효 3개 컴파일, 잘못된 11개 거부
+- 범위: LVRS 생성 C++; 결과: 목록·이름 가림·TabBar·Menu·Modal을 포함한 총 22개 팩터리 컴파일, 실행하지 않음
 
 단일 View로 잘못 재선언한 목록 별칭과 이벤트로 오인된 빈 슬롯을 재현한 후 거부·정상
 처리 경로를 추가했다. AOT 도구가 동일한 헤더를 다시 써서 소비 C++를 재컴파일하던

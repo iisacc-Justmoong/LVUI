@@ -76,16 +76,14 @@ LVRS 생성 코드는 컴파일로 확인하며 실제 LVRS 앱·테스트 실�
 
 현재 macOS arm64에서 다음 결과를 확인했다. 겹치는 검사 수를 독립 기능 수로 합산하지 않는다.
 
-| 검사 | 결과 | 범위 |
-|---|---|---|
-| LVUI Release CTest | 157/157 통과 | 기존 언어·AOT·관측·설치 소비자와 콜백 서명 검사 |
-| AddressSanitizer + UndefinedBehaviorSanitizer | 80/80 통과 | 관련 네이티브 구현·생성 스코프와 계측한 AOT 도구, C++ 거부 검사는 구문 컴파일 |
-| iiGUI 창 없는 통합 검사 | 64/64 통과 | 기존 입력·목록·스코프와 콜백 입력 5개 동작 |
-| iiGUI AddressSanitizer + UndefinedBehaviorSanitizer | 64/64 통과 | iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings는 별도 LVUI 검사 |
-| 마지막 진단 보강 후 재검사 | 일반 15/15·메모리 15/15 통과 | 구성·반환 콜백·비동기 활성화·콜백 입력, 생성 헤더 4개는 보강 전과 바이트 동일 |
-| 생성 C++ 타입 검증 | 유효 1개 컴파일·잘못된 6개 거부 | 반환 타입·이벤트 arity·payload 타입·필수 인자·private 멤버·반환 없는 즉시 호출 |
-| 설치·재배치 소비자 | 3/3 통과 | 공개 AST·컴파일러·Native·선택적 Runtime, 설치 헤더의 잘못된 콜백 계약도 거부 |
-| LVRS 생성 C++ | 10개 팩터리 컴파일 | 인자 없는 method·ButtonEvent·이동 전용 반환 callable 포함, 실행 보류 |
+- 검사: LVUI Release CTest; 결과: 157/157 통과; 범위: 기존 언어·AOT·관측·설치 소비자와 콜백 서명 검사
+- 검사: AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 80/80 통과; 범위: 관련 네이티브 구현·생성 스코프와 계측한 AOT 도구, C++ 거부 검사는 구문 컴파일
+- 검사: iiGUI 창 없는 통합 검사; 결과: 64/64 통과; 범위: 기존 입력·목록·스코프와 콜백 입력 5개 동작
+- 검사: iiGUI AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 64/64 통과; 범위: iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings는 별도 LVUI 검사
+- 검사: 마지막 진단 보강 후 재검사; 결과: 일반 15/15·메모리 15/15 통과; 범위: 구성·반환 콜백·비동기 활성화·콜백 입력, 생성 헤더 4개는 보강 전과 바이트 동일
+- 검사: 생성 C++ 타입 검증; 결과: 유효 1개 컴파일·잘못된 6개 거부; 범위: 반환 타입·이벤트 arity·payload 타입·필수 인자·private 멤버·반환 없는 즉시 호출
+- 검사: 설치·재배치 소비자; 결과: 3/3 통과; 범위: 공개 AST·컴파일러·Native·선택적 Runtime, 설치 헤더의 잘못된 콜백 계약도 거부
+- 검사: LVRS 생성 C++; 결과: 10개 팩터리 컴파일; 범위: 인자 없는 method·ButtonEvent·이동 전용 반환 callable 포함, 실행 보류
 
 생성된 위젯 실행 파일의 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 검사한다.
 Dreamscapes의 관측 QML 81개 기준선 해시는 보존하며 제품 변환·재설치는 수행하지 않는다.

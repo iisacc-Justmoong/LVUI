@@ -142,22 +142,20 @@ LVUI 언어는 멤버 표현식이나 모든 첫 번째 인자에 클릭 의미�
 
 ## 선언의 의미
 
-| 형식 | 채택한 의미 |
-|---|---|
-| `View` | 시각적으로 표시되는 모든 요소의 공통 타입이다. |
-| `ParentView(...) { ChildView(...) }` | 바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다. |
-| `const constant: Int = 6` | `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다. |
-| `var variable: Int = 6` | `6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다. |
-| `vm.increment` | 기존 VM에 연결된 메서드를 호출하지 않고 참조한다. |
-| `vm.increment()` | 표현식을 평가할 때 메서드를 명시적으로 호출한다. |
-| `import document DocumentBackend` | 이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다. |
-| `ApplicationWindow(accent: .blue) { ... }` | 애플리케이션 창과 강조색 구성을 선언한다. |
-| `VStack() { ... }` | 자식 뷰의 세로 구성을 선언한다. |
-| `AppBodyView(backend: document)` | 기존 백엔드 인스턴스의 차용 참조를 전달한다. |
-| `Footer(status: document.status)` | 푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다. |
-| `PushButton(document.save)` | 연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다. |
-| `enabled: document.canSave` | 접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다. |
-| `tone: .borderless` | 버튼 외형을 설정한다. |
+- 형식: `View`; 채택한 의미: 시각적으로 표시되는 모든 요소의 공통 타입이다.
+- 형식: `ParentView(...) { ChildView(...) }`; 채택한 의미: 바깥 뷰에 자식 `View`를 중괄호 인자로 전달한다. 이름은 구조를 설명하는 표기이다.
+- 형식: `const constant: Int = 6`; 채택한 의미: `6`으로 초기화한 `Int` 상수를 선언하며 재대입을 허용하지 않는다.
+- 형식: `var variable: Int = 6`; 채택한 의미: `6`으로 초기화한 변경 가능한 `Int` 변수를 선언한다.
+- 형식: `vm.increment`; 채택한 의미: 기존 VM에 연결된 메서드를 호출하지 않고 참조한다.
+- 형식: `vm.increment()`; 채택한 의미: 표현식을 평가할 때 메서드를 명시적으로 호출한다.
+- 형식: `import document DocumentBackend`; 채택한 의미: 이름 `document`를 새로 생성한 스코프 소유 `DocumentBackend` 인스턴스에 연결한다.
+- 형식: `ApplicationWindow(accent: .blue) { ... }`; 채택한 의미: 애플리케이션 창과 강조색 구성을 선언한다.
+- 형식: `VStack() { ... }`; 채택한 의미: 자식 뷰의 세로 구성을 선언한다.
+- 형식: `AppBodyView(backend: document)`; 채택한 의미: 기존 백엔드 인스턴스의 차용 참조를 전달한다.
+- 형식: `Footer(status: document.status)`; 채택한 의미: 푸터 입력을 해당 인스턴스가 노출하는 속성에 바인딩한다.
+- 형식: `PushButton(document.save)`; 채택한 의미: 연결된 메서드를 첫 번째 입력에 전달한다. 클릭 시 호출은 예제 버튼의 콜백 계약으로 정의한다.
+- 형식: `enabled: document.canSave`; 채택한 의미: 접근 가능한 공개 멤버를 읽고 속성 관찰 계약을 통해 변경을 관찰한다.
+- 형식: `tone: .borderless`; 채택한 의미: 버튼 외형을 설정한다.
 
 이름이 붙은 애플리케이션 뷰는 예제이다.
 등록된 LVRS 시각 이름은 [실제 예약어 목록](ReservedWords.md)을 따른다.
@@ -186,7 +184,7 @@ AOT·네이티브 연동은 의존성 추적과 변경 정보를 제공해야 �
 읽기 전용 멤버는 읽기 전용 계약을 유지한다.
 [기본 ViewModel 바인딩](ViewModelQueries.md#default-viewmodel-binding)을 참조한다.
 
-[증가·초기화 예제](examples/ReactiveCounter.lvui)는 `VStack() { ... }`과 `Label(text: vm.value)`를 사용한다.
+[증가·초기화 예제](Examples/ReactiveCounter.lvui)는 `VStack() { ... }`과 `Label(text: vm.value)`를 사용한다.
 `vm.value`가 바뀌면 기본 바인딩을 통해 해당 레이블을 갱신한다.
 `@Static`은 해당 수명 동안 고정되는 값을 명시적으로 선택한다.
 일반 LVUI 변수도 같은 기본 반응형 모델을 따르며 VM 멤버에만 한정되지 않는다.

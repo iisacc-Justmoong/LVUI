@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativePopover.md",
-    "sha256": "dfe1167c7c1aa9d98c8fbdfa19515a50dfa02ea8c643a022c9c6769ec67aa3de",
-    "bytes": 6465,
-    "line_count": 87,
+    "sha256": "b81220deba104d5901f310c935ddb823ca7388bf9960e9fb7ae083cc929033e9",
+    "bytes": 6837,
+    "line_count": 91,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -129,21 +129,21 @@
       "id": "b000015",
       "kind": "paragraph",
       "start_line": 44,
-      "end_line": 49,
-      "raw": "공통 재질의 다색 방사형 정지점과 투명도를 채색된 밑그림으로 전달한다.\n블러가 켜진 경우 경계 밖 악센트도 공통 재질의 흐림 입력으로 제공한다.\n흐림을 끈 불투명 폴백에도 악센트와 안쪽 광택을 유지하고 이전 화면은 캡처하지\n않는다. 이 합성은 GPU 재질 경로를 사용한다. 플랫폼별 실제 표시와 보조 기술\n동작은 별도 검증이 필요하다.\n헤드리스 상태 검사는 창이나 GPU를 실행한 결과가 아니다.\n"
+      "end_line": 53,
+      "raw": "공통 재질의 다색 방사형 정지점과 투명도를 채색된 밑그림으로 전달한다.\n중심과 가장자리 정지점은 현재 강조색을 따른다. 가장자리색은 LVUI 원본 재질의\n채도·명도 관계를 현재 색상에 적용하며, 기본 파란 재질의 기존 색상은 유지한다.\n이 기능에는 동적 가장자리 색상 API가 있는 iiGUI가 필요하다. LVUI 지원 여부는\n`LVUI_MATERIAL_DYNAMIC_EDGE_API`로 확인한다.\n블러가 켜진 경우 경계 밖 악센트도 공통 재질의 흐림 입력으로 제공한다.\n흐림을 끈 불투명 폴백에도 악센트와 안쪽 광택을 유지하고 이전 화면은 캡처하지\n않는다. 이 합성은 GPU 재질 경로를 사용한다. 플랫폼별 실제 표시와 보조 기술\n동작은 별도 검증이 필요하다.\n헤드리스 상태 검사는 창이나 GPU를 실행한 결과가 아니다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 50,
-      "end_line": 50,
+      "start_line": 54,
+      "end_line": 54,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "heading",
-      "start_line": 51,
-      "end_line": 51,
+      "start_line": 55,
+      "end_line": 55,
       "raw": "## 창 강조색 이식 계약\n",
       "level": 2,
       "title": "창 강조색 이식 계약"
@@ -151,29 +151,29 @@
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 52,
-      "end_line": 52,
+      "start_line": 56,
+      "end_line": 56,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "paragraph",
-      "start_line": 53,
-      "end_line": 62,
+      "start_line": 57,
+      "end_line": 66,
       "raw": "`primaryColor`를 생략한 선언형 팝오버는 정적·반응형 창 `accent`의 공통 기본색을\n상속한다. 재사용 View의 팝오버도 같은 범위를 따르며, 명시한 `primaryColor`는\n창 값보다 우선한다. 창에 강조색이 없으면 기본 파랑을 사용한다. C++에서는\n`PopoverConfiguration::primary_color`로 지정할 수 있다. 열린 팝오버의 강조색\n변경은 팝오버 인스턴스나 콘텐츠를 교체하지 않고 반영하며, RGB만 바뀌면\n기존 기하 계산을 재사용하고 채색된 래스터는 다시 만든다. 유효하지 않은 색상이나 거부된 창 변경은 마지막\n유효 색상을 보존한다. 관련 단위 및 생성 위젯 검사는 운영체제 창과 GPU를 열지\n않는다. `PopoverConfiguration`에 선택적 색상 필드가 추가되었으므로 이전 헤더로\n컴파일한 C++ 소비자는 새 헤더와 함께 다시 빌드해야 한다. 설치된 Python 컴파일\nAPI에서도 선언형 `primaryColor` 입력이 생성 코드로 이어지는지 검사한다.\n"
     },
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 63,
-      "end_line": 63,
+      "start_line": 67,
+      "end_line": 67,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "heading",
-      "start_line": 64,
-      "end_line": 64,
+      "start_line": 68,
+      "end_line": 68,
       "raw": "## 팝오버 모션\n",
       "level": 2,
       "title": "팝오버 모션"
@@ -181,43 +181,43 @@
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 65,
-      "end_line": 65,
+      "start_line": 69,
+      "end_line": 69,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 66,
-      "end_line": 71,
+      "start_line": 70,
+      "end_line": 75,
       "raw": "기존 공통 팝오버의 동작을 기준으로, 열릴 때 불투명도는 160ms 동안 선형으로\n증가하고 크기는 중앙을 기준으로 0.92에서 1까지 420ms `OutBack` 곡선과\n1.45의 오버슈트로 변한다. 닫힐 때는 당시 크기를 유지하고 불투명도만 150ms\n동안 줄인다. 각 시간은 공통 모션 설정의 속도와 축소 모션을 따른다. 닫힘 즉시\n입력을 차단하되 퇴장 프레임이 끝날 때까지 그리기 상태를 유지한다. 닫히는 중\n다시 열리면 현재 표시값에서 연속적으로 이어진다.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 76,
+      "end_line": 76,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "paragraph",
-      "start_line": 73,
-      "end_line": 83,
+      "start_line": 77,
+      "end_line": 87,
       "raw": "선언형 `motionEnabled`와 C++ `motion_enabled`는 기본 활성화이며 각 팝오버에\n개별 적용한다. 실행 중 끄면 진행 중인 전환을 즉시 완료하고 다른 팝오버나 공통\n환경설정은 바꾸지 않는다. 프레임 소스가 없는 호스트에서는 생성과 입력을\n실패시키지 않고 전환을 즉시 완료한다. 명시적으로 끈 팝오버는 프레임 공급기\n오류가 있어도 동작하며, 이후 전환을 켜려 할 때 오류를 전달한다. 프레임 소스\n이외의 오류와 애니메이션을 지원하지 않는 동적 콘텐츠 오류는 호출자에게\n전달하며, 속성 갱신 실패 시 마지막 유효 설정과 콘텐츠를 보존한다. 재질과\n그림자도 콘텐츠와 함께 변환되며 퇴장 중 유지된다. 이 동작은 iiGUI의\n`IIGUI_POPOVER_COMBINED_MATERIAL_MOTION_API`와 새 심볼이 필요하다. 채색된\n밑그림에는 `IIGUI_POPOVER_UNTINTED_UNDERLAY_API`와 해당 심볼이 필요하다. 헤드리스\n검사는 프레임을 모사하며 실제 운영체제 창이나 GPU 표시를 검증하지 않는다.\n"
     },
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 84,
-      "end_line": 84,
+      "start_line": 88,
+      "end_line": 88,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 85,
-      "end_line": 87,
+      "start_line": 89,
+      "end_line": 91,
       "raw": "팝오버가 폐기되면 콜백·배경 공급자와 그라데이션 캐시를 해제한다. macOS arm64의\n독립 iiGUI 설치 소비자와 LVUI 생성·모션·윈도우 악센트 검사를 창 없이 통과했다.\n구형 표면 API에 대한 호환성 검사는 iiGUI에서 유지한다.\n"
     }
   ],
@@ -236,7 +236,7 @@
       "level": 2,
       "title": "창 강조색 이식 계약",
       "anchor": "창-강조색-이식-계약",
-      "start_line": 51
+      "start_line": 55
     },
     {
       "block_id": "b000021",
@@ -244,7 +244,7 @@
       "level": 2,
       "title": "팝오버 모션",
       "anchor": "팝오버-모션",
-      "start_line": 64
+      "start_line": 68
     }
   ],
   "indexes": {
@@ -272,14 +272,14 @@
       },
       {
         "block_id": "b000019",
-        "line": 61,
+        "line": 65,
         "text": "컴파일한 C++ 소비자는 새 헤더와 함께 다시 빌드해야 한다. 설치된 Python 컴파일",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000025",
-        "line": 83,
+        "line": 87,
         "text": "검사는 프레임을 모사하며 실제 운영체제 창이나 GPU 표시를 검증하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"

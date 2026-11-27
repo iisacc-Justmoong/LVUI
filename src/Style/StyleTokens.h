@@ -22,6 +22,7 @@ namespace figma_defaults {
 }
 inline constexpr StyleColor material_alert_action_border{0.3490196168422699, 0.3803921639919281, 0.40784314274787903, 1.0};
 inline constexpr StyleColor material_alert_canvas{0.0694509819149971, 0.0744117721915245, 0.07937255501747131, 1.0};
+inline constexpr StyleColor material_alert_divider{0.21176470816135406, 0.23137255012989044, 0.24705882370471954, 1.0};
 inline constexpr StyleColor material_alert_surface{0.1438627392053604, 0.15378431975841522, 0.16370590031147003, 1.0};
 inline constexpr StyleColor material_backdrop_base{0.05456862971186638, 0.08929412066936493, 0.15874511003494263, 1.0};
 inline constexpr StyleColor material_glass_fill{0.1438627392053604, 0.15378431975841522, 0.16370590031147003, 0.7200000286102295};

@@ -34,6 +34,7 @@ struct AlertPalette final {
     StyleColor border{1, 1, 1, .2};
     StyleColor title{1, 1, 1, .9};
     StyleColor description{1, 1, 1, .8};
+    StyleColor divider{figma_defaults::material_alert_divider};
     friend bool operator==(const AlertPalette&, const AlertPalette&) = default;
 };
 
@@ -41,6 +42,8 @@ struct AlertLayoutMetrics final {
     double action_horizontal_inset=24,action_gap=14,action_height=56,tertiary_action_height=44;
     double three_top_spacing=18,three_bottom_spacing=18,action_vertical_gap=12,two_top_spacing=28,bottom_spacing=32;
     double rounded_radius_fraction=.4;
+    // The separator is separate from the surrounding card border.
+    double divider_thickness=1;
     friend bool operator==(const AlertLayoutMetrics&,const AlertLayoutMetrics&)=default;
 };
 
@@ -78,7 +81,7 @@ struct AlertAction final {
 // Child rectangles are local to the centered frame. Text heights are measured
 // by the host using the width and fonts selected by the application adapter.
 struct AlertLayout final {
-    AlertRect frame, icon, title, description;
+    AlertRect frame, icon, title, description, divider;
     std::array<AlertRect, 3> actions;
     double radius = 0;
 };

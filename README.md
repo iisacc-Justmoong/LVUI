@@ -440,7 +440,7 @@ cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="$HOME/.local/SDK/LVUI"
 cmake --build build --parallel 4
 ctest --test-dir build --output-on-failure
-./build/lvui-check docs/examples/ReservedComponents.lvui
+./build/lvui-check docs/Examples/ReservedComponents.lvui
 ./build/lvui-compile --name HelloWorld /path/to/HelloWorld.lvui
 cmake --install build
 ```

@@ -5,7 +5,7 @@
 int main(){
     auto code=lvui::compile_native("import vm Model\nWindow { InputField(id: \"field\", text: vm.text, placeholder: vm.placeholder, width: vm.width, enabled: vm.enabled, readOnly: vm.readOnly, password: vm.password, multiline: true, wrapEnabled: vm.wrap, maximumLength: vm.maxLength, onEdited: vm.edited, onSubmit: vm.submit) }");
     if(!code)throw std::runtime_error(code.error().message);
-    for(auto token:{"#include <LVUI/NativeInputField.h>","#include <iiGUI/NativeInputFieldView.h>","lvui_generated::detail_input::NativeInputField::create(","lvui::InputFieldConfiguration","value.wrap_enabled","value.maximum_length","component.set_options(value)"})
+    for(auto token:{"#include <LVUI>","#include <iiGUI>","lvui_generated::detail_input::NativeInputField::create(","lvui::InputFieldConfiguration","value.wrap_enabled","value.maximum_length","component.set_options(value)"})
         if(code->find(token)==code->npos)throw std::runtime_error(std::string("Generated input field lost ")+token);
     if(code->find("widgets.input_field(")!=code->npos||code->find("lvrs::")!=code->npos||code->find("<LVRS/")!=code->npos||code->find("<Qt")!=code->npos)
         throw std::runtime_error("Generated input field depends on a prebuilt or legacy control");

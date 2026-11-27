@@ -3319,6 +3319,7 @@ class Generator final {
                 std::pair{"configuration.palette.border","--lvui-material-glass-edge"},
                 std::pair{"configuration.palette.title","--lvui-material-alert-text-primary"},
                 std::pair{"configuration.palette.description","--lvui-material-glass-foreground"},
+                std::pair{"configuration.palette.divider","--lvui-material-alert-divider"},
                 std::pair{"style.icon_background","--lvui-theme-colors-accent-blue-subtle"},
                 std::pair{"style.icon_border","--lvui-theme-colors-accent-blue-outline"},
                 std::pair{"style.action_text","--lvui-material-alert-text-primary"},
@@ -5561,7 +5562,7 @@ class Generator final {
         std::string title, appearance, palette;
         double width=0, height=0, minimum_width=0, minimum_height=0;
         std::string opened, closed, close_requested;
-        bool custom_chrome=false;
+        bool custom_chrome=true;
     };
     WindowOutput prepare_window(const View& root, bool apply_default_safe_area = true) {
         if(component_kinds(root.children).size()!=1)error(root.position,"ApplicationWindow requires exactly one child View after sequence expansion");
@@ -5572,7 +5573,9 @@ class Generator final {
         if(scene_events&&!application_generation)error(root.position,"Window lifecycle events require an Application root");
         scene_lifecycle_runtime=scene_lifecycle_runtime||scene_events;
         const auto opened=action(values,"onOpened"),closed=action(values,"onClosed"),close_requested=close_decision(values);
-        bool custom_chrome=false;
+        // Window creation defaults to a title-bar-free frame; system chrome
+        // and an LVUI titleBar are supplied only by explicit window inputs.
+        bool custom_chrome=true;
         if (auto found=values.find("windowChrome");found!=values.end()) {
             const auto& input=*found->second;
             if (native_expression(input.value)) error(input.position,"windowChrome requires a static .system or .custom value");
@@ -8645,7 +8648,8 @@ public:
         const auto options_value = [&](const WindowOutput& value) {
             return "ii::gui::HostOptions{.title = " + literal(value.title) +
                 ", .size = {" + decimal(value.width) + ", " + decimal(value.height) + "}, .minimum_size = {" + decimal(value.minimum_width) + ", " + decimal(value.minimum_height) + "}" +
-                (value.custom_chrome ? ", .chrome = ii::gui::WindowChrome::custom" : "") + "}";
+                (value.custom_chrome ? ", .chrome = ii::gui::WindowChrome::custom" :
+                                       ", .chrome = ii::gui::WindowChrome::system") + "}";
         };
         result += "\nnamespace lvui_generated {\n";
         if (owned_list_item_composite_runtime) result +=

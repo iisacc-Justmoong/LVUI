@@ -95,6 +95,8 @@
 #include <LVUI/Compiler.h>
 #include <LVUI/ConstantExpression.h>
 #include <LVUI/NativeBindings.h>
+#include <LVUI/EditorPanels.h>
+#include <LVUI/EditorPanelViews.h>
 #include <LVUI/NativeInputEvents.h>
 #include <LVUI/NativeComponentInputs.h>
 #include <LVUI/NativeObjectInputs.h>
@@ -244,6 +246,7 @@
 
 #if defined(IISDK_IMPORT_LVUI_BRIDGE)
 #include <LVUI/CompilerBridge.h>
+#include <LVUI/EditorPanelsBridge.h>
 #endif
 
 #if defined(IISDK_IMPORT_LVUI_RUNTIME)

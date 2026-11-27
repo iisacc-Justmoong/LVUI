@@ -124,7 +124,7 @@ macOS arm64 C++23 Release에서 선언형 본문의 쉼표와 줄바꿈, 고정 
 원본 LVRS와 네이티브 API를 합친 소스 229개를 다시 조사했다. 선언 149개·시각 예약어
 107개·시각 수정자 3개·전체 예약어 116개라는 분류는 유지한다. 새 네이티브 API 네 파일의
 해시를 포함하며 기존 원본 QML 선언을 제거하거나 구현 완료로 바꾸지 않았다.
-`examples/NativeAlertGallery`의 생성 헤더는 실제 C++23 앱으로 빌드되어 여섯 액션 위치와
+`Examples/NativeAlertGallery`의 생성 헤더는 실제 C++23 앱으로 빌드되어 여섯 액션 위치와
 독립 버튼, 메서드→클릭 순서, 원본 SVG, 실제 GPU 흐림과 Core 수명을 검사한다.
 전체 이식 상태와 플랫폼 범위는 [LVRS 검증 기록](../../LVRS/docs/native/Verification.md)을 따른다.
 

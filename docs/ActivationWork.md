@@ -128,17 +128,15 @@ Core의 `TaskScopePoll.*`는 비차단 완료·캡처·할당량·cleanup의 공
 현재 macOS arm64 작업 트리에서 다음 결과를 확인했다. 중복되는 검사를 합산하여
 독립 기능 수로 표시하지 않는다.
 
-| 검사 | 결과 | 범위 |
-|---|---|---|
-| LVUI Release CTest | 152/152 통과 | 언어·AOT·관측·설치 소비자와 작업 도메인 8개 검사 |
-| AddressSanitizer + UndefinedBehaviorSanitizer | 75/75 통과 | 관련 언어·생성 C++·네이티브 바인딩·작업 런타임 |
-| ThreadSanitizer | 8/8 통과 | LVUI 작업 런타임·바인딩, 빌린 Core 라이브러리는 이 구성에서 계측하지 않음 |
-| iiGUI 창 없는 통합 검사 | 59/59 통과 | 기존 구성·목록·입력과 비동기 활성화 6개 검사 |
-| iiGUI AddressSanitizer + UndefinedBehaviorSanitizer | 59/59 통과 | iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings는 별도 LVUI 검사 |
-| Core 런타임 회귀 검사 | 11/11 통과 | 비차단 종료·cleanup·Runtime·Thread·QueryPort·Operation·Concurrent |
-| Core 비차단 종료와 cleanup | 6/6 일반·6/6 메모리 검사 통과 | 활성 작업·캡처·슬롯 퇴역과 cleanup 오류 |
-| 설치·재배치 소비자 | 3/3 통과 | Native·공개 컴파일러·선택적 Runtime 패키지 |
-| LVRS 생성 C++ | 컴파일 통과 | 작업 도메인을 포함한 8개 팩터리, LVRS 앱·테스트 실행은 보류 |
+- 검사: LVUI Release CTest; 결과: 152/152 통과; 범위: 언어·AOT·관측·설치 소비자와 작업 도메인 8개 검사
+- 검사: AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 75/75 통과; 범위: 관련 언어·생성 C++·네이티브 바인딩·작업 런타임
+- 검사: ThreadSanitizer; 결과: 8/8 통과; 범위: LVUI 작업 런타임·바인딩, 빌린 Core 라이브러리는 이 구성에서 계측하지 않음
+- 검사: iiGUI 창 없는 통합 검사; 결과: 59/59 통과; 범위: 기존 구성·목록·입력과 비동기 활성화 6개 검사
+- 검사: iiGUI AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 59/59 통과; 범위: iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings는 별도 LVUI 검사
+- 검사: Core 런타임 회귀 검사; 결과: 11/11 통과; 범위: 비차단 종료·cleanup·Runtime·Thread·QueryPort·Operation·Concurrent
+- 검사: Core 비차단 종료와 cleanup; 결과: 6/6 일반·6/6 메모리 검사 통과; 범위: 활성 작업·캡처·슬롯 퇴역과 cleanup 오류
+- 검사: 설치·재배치 소비자; 결과: 3/3 통과; 범위: Native·공개 컴파일러·선택적 Runtime 패키지
+- 검사: LVRS 생성 C++; 결과: 컴파일 통과; 범위: 작업 도메인을 포함한 8개 팩터리, LVRS 앱·테스트 실행은 보류
 
 코어 라이브러리와 일반·메모리 검사 Runtime 아카이브의 macOS 최소 버전 메타데이터는
 12.0이다. 이는 실제 macOS 12 장치나 다른 플랫폼에서 실행했다는 의미가 아니다.

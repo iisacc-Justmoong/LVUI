@@ -1,5 +1,6 @@
 #include "CompilerBridge.h"
 #include <LVUI/Compiler.h>
+#include <LVUI/EditorPanelViews.h>
 #include <iiSDKCore/Core/Text/Utf8.h>
 #include <new>
 #include <string>
@@ -40,7 +41,7 @@ template<class Work>lvui_compiler_result* execute(Work&& work)noexcept{
 
 extern "C" {
 int lvui_compiler_abi_version(void)noexcept{return 1;}
-lvui_compiler_result* lvui_compiler_compile(lvui_compiler_bytes source,lvui_compiler_bytes name,
+static lvui_compiler_result* compile_source(bool editor_panels,lvui_compiler_bytes source,lvui_compiler_bytes name,
         const lvui_compiler_bytes* includes,std::size_t include_count,const lvui_compiler_bytes* style_profile)noexcept{
     return execute([&](auto& result){
         if(!valid(source,source_limit,true)||!valid(name,argument_limit)||include_count>include_limit||
@@ -57,10 +58,18 @@ lvui_compiler_result* lvui_compiler_compile(lvui_compiler_bytes source,lvui_comp
             if(!style){diagnostic(result,style.error(),LVUI_COMPILER_STYLE);return;}
             options.style_tokens=std::move(*style);
         }
-        auto compiled=lvui::compile_native(view(source),options);
+        auto compiled=editor_panels?lvui::compile_editor_panel_views(view(source),options):lvui::compile_native(view(source),options);
         if(!compiled){diagnostic(result,compiled.error(),LVUI_COMPILER_SOURCE);return;}
         result.data=std::move(*compiled);
     });
+}
+lvui_compiler_result* lvui_compiler_compile(lvui_compiler_bytes source,lvui_compiler_bytes name,
+        const lvui_compiler_bytes* includes,std::size_t include_count,const lvui_compiler_bytes* style_profile)noexcept{
+    return compile_source(false,source,name,includes,include_count,style_profile);
+}
+lvui_compiler_result* lvui_compiler_compile_editor_panels(lvui_compiler_bytes source,lvui_compiler_bytes name,
+        const lvui_compiler_bytes* includes,std::size_t include_count,const lvui_compiler_bytes* style_profile)noexcept{
+    return compile_source(true,source,name,includes,include_count,style_profile);
 }
 lvui_compiler_result* lvui_compiler_styles(lvui_compiler_bytes profile,lvui_compiler_bytes cpp_namespace)noexcept{
     return execute([&](auto& result){

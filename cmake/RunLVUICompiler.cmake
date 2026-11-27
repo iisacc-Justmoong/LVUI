@@ -1,4 +1,7 @@
 set(_arguments)
+if(LVUI_AOT_EDITOR_PANELS)
+    list(APPEND _arguments --editor-panels)
+endif()
 if(LVUI_AOT_NAME)
     list(APPEND _arguments --name "${LVUI_AOT_NAME}")
 endif()

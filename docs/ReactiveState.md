@@ -57,7 +57,7 @@ LVUI 값은 기본적으로 `@State`와 `@Bindable`의 역할을 갖는다. 뷰�
 
 ## 증가·초기화 카운터
 
-제공된 예제를 [examples/ReactiveCounter.lvui](examples/ReactiveCounter.lvui)에 저장하였다.
+제공된 예제를 [Examples/ReactiveCounter.lvui](Examples/ReactiveCounter.lvui)에 저장하였다.
 
 ```text
 import vm CounterViewModel

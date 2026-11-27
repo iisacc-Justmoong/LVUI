@@ -35,7 +35,7 @@ Application {
     }
     Window(id: "legacy") { Label() }
 })");
-    require(code.find("LVUI/Scene.h") != code.npos, "Scene descriptor header is missing");
+    require(code.find("#include <LVUI>") != code.npos, "LVUI module import is missing");
     require(code.find("SceneDescriptor") != code.npos && code.find("scenes{") != code.npos,
             "Scene descriptors were not emitted");
     require(code.find("assign_value(") != code.npos && code.find("scene_registry") != code.npos,

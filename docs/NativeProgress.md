@@ -72,14 +72,12 @@ shared/weak StateSource, 변경 가능한 제공자 선택, 타입 지정 View �
 
 ## 입력
 
-| 영역 | 입력 |
-|---|---|
-| 직접 값 | minimumValue, maximumValue 또는 endValue, startValue, currentValue |
-| 상태 제공자 | stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey |
-| 크기·모양 | size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius |
-| 색상 | trackColor, fillColor |
-| 모션 | motionEnabled, motion |
-| 표시값 직접 제어 | displayedStart, displayedProgress |
+- 영역: 직접 값; 입력: minimumValue, maximumValue 또는 endValue, startValue, currentValue
+- 영역: 상태 제공자; 입력: stateModel, minimumValueStateKey, maximumValueStateKey, startValueStateKey, currentValueStateKey
+- 영역: 크기·모양; 입력: size, shapeStyle, width, height, largeHeight, regularHeight, cornerRadius
+- 영역: 색상; 입력: trackColor, fillColor
+- 영역: 모션; 입력: motionEnabled, motion
+- 영역: 표시값 직접 제어; 입력: displayedStart, displayedProgress
 
 `size`는 `.large`/`.regular` 또는 정수 0/1이며 `shapeStyle`은
 `.shapeRoundRect`/`.shapeCylinder` 또는 정수 0/1이다. C++ 제공자는 대응하는 native enum

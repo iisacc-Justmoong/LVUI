@@ -21,128 +21,126 @@ iiGUI의 NativeView는 `external_source_files`에 별도 구현 해시를 기록
 
 ## 예약어 목록
 
-| 예약어 | 분류 | 원본 | 내부 타입 |
-|---|---|---|---|
-| `AbstractButton` | View | `src/qml/components/control/buttons/AbstractButton.qml:5` | 아니오 |
-| `AbstractInputBar` | View | `src/qml/components/control/input/AbstractInputBar.qml:5` | 아니오 |
-| `ActionSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:99` | 예 |
-| `AdaptiveLayoutHost` | View | `src/qml/ApplicationWindow.qml:566` | 예 |
-| `Alert` | View | `src/qml/components/surfaces/Alert.qml:6` | 아니오 |
-| `AlertButton` | View | `src/qml/components/surfaces/AlertButton.qml:4` | 아니오 |
-| `AppBootstrapWindow` | View | `src/qml/AppBootstrapWindow.qml:4` | 아니오 |
-| `AppCard` | View | `src/qml/components/surfaces/AppCard.qml:6` | 아니오 |
-| `AppHeader` | View | `src/qml/components/layout/AppHeader.qml:6` | 아니오 |
-| `AppShell` | View | `src/qml/AppShell.qml:4` | 아니오 |
-| `ApplicationWindow` | View | `src/qml/ApplicationWindow.qml:8` | 아니오 |
-| `Avatar` | View | `src/qml/components/control/display/Avatar.qml:5` | 아니오 |
-| `BodyText` | View | `src/qml/components/navigation/ListItemComposite.qml:16` | 예 |
-| `CaptionText` | View | `src/qml/components/navigation/ListItemComposite.qml:27` | 예 |
-| `Card` | View | `src/qml/components/surfaces/Card.qml:6` | 아니오 |
-| `CardImageContent` | View | `src/qml/components/surfaces/CardImageContent.qml:5` | 예 |
-| `CardInformationContent` | View | `src/qml/components/surfaces/CardInformationContent.qml:5` | 예 |
-| `ChannelRow` | View | `src/qml/components/control/input/ColorPicker.qml:131` | 예 |
-| `CheckBox` | View | `src/qml/components/control/check/CheckBox.qml:4` | 아니오 |
-| `CodeEditor` | View | `src/qml/components/control/input/CodeEditor.qml:5` | 아니오 |
-| `Color` | 타입 | LVUI 언어 | 아니오 |
-| `ColorField` | View | `src/qml/components/control/input/ColorPicker.qml:225` | 예 |
-| `ColorInput` | View | `src/qml/components/control/input/ColorPicker.qml:71` | 예 |
-| `ColorPicker` | View | `src/qml/components/control/input/ColorPicker.qml:5` | 아니오 |
-| `ColorPickerButton` | View | `src/qml/components/control/buttons/ColorPickerButton.qml:5` | 아니오 |
-| `ColorPickerSurface` | View | `src/backend/graphics/colorpickersurface.h:13` | 아니오 |
-| `ComboBox` | View | `src/qml/components/control/buttons/ComboBox.qml:4` | 아니오 |
-| `ContentText` | View | `src/qml/components/navigation/ListItemComposite.qml:82` | 예 |
-| `ContextMenu` | View | `src/qml/components/navigation/ContextMenu.qml:6` | 아니오 |
-| `ContextMenuDivider` | View | `src/qml/components/navigation/ContextMenuDivider.qml:5` | 아니오 |
-| `ContextMenuItem` | View | `src/qml/components/navigation/ContextMenuItem.qml:5` | 아니오 |
-| `DetailRow` | View | `src/qml/components/surfaces/CardInformationContent.qml:10` | 예 |
-| `DropdownButton` | View | `src/qml/components/control/buttons/DropdownButton.qml:4` | 아니오 |
-| `Endpoint` | View | `src/qml/components/control/input/Slider.qml:103` | 예 |
-| `EventListener` | View | `src/qml/components/control/util/EventListener.qml:5` | 아니오 |
-| `FocusRing` | View | `src/qml/components/control/util/FocusRing.qml:4` | 아니오 |
-| `Glyph` | View | `src/qml/components/navigation/ListItemComposite.qml:41` | 예 |
-| `HStack` | View | `src/qml/components/layout/HStack.qml:5` | 아니오 |
-| `HelpButton` | View | `src/qml/components/control/buttons/HelpButton.qml:5` | 아니오 |
-| `Hierarchy` | View | `src/qml/components/navigation/Hierarchy.qml:5` | 아니오 |
-| `HierarchyItem` | View | `src/qml/components/navigation/HierarchyItem.qml:5` | 아니오 |
-| `HierarchyList` | View | `src/qml/components/navigation/HierarchyList.qml:4` | 아니오 |
-| `HierarchyToolbar` | View | `src/qml/components/navigation/HierarchyToolbar.qml:5` | 아니오 |
-| `IconButton` | View | `src/qml/components/control/buttons/IconButton.qml:4` | 아니오 |
-| `IconMenuButton` | View | `src/qml/components/control/buttons/IconMenuButton.qml:4` | 아니오 |
-| `IconSegmentedControl` | View | `src/qml/components/control/buttons/IconSegmentedControl.qml:4` | 아니오 |
-| `Image` | View | `src/LVRS/Image.h:6` | 아니오 |
-| `InputField` | View | `src/qml/components/control/input/InputField.qml:7` | 아니오 |
-| `InputMethodGuard` | View | `src/qml/components/control/util/InputMethodGuard.qml:4` | 아니오 |
-| `InputSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:227` | 예 |
-| `InteractionMotion` | 시각 보조 | `src/qml/components/control/util/InteractionMotion.qml:4` | 아니오 |
-| `Label` | View | `src/qml/components/control/display/Label.qml:4` | 아니오 |
-| `LabelButton` | View | `src/qml/components/control/buttons/LabelButton.qml:4` | 아니오 |
-| `LabelMenuButton` | View | `src/qml/components/control/buttons/LabelMenuButton.qml:4` | 아니오 |
-| `LabelSegmentedControl` | View | `src/qml/components/control/buttons/LabelSegmentedControl.qml:4` | 아니오 |
-| `Link` | View | `src/qml/components/navigation/Link.qml:4` | 아니오 |
-| `List` | View | `src/qml/components/navigation/List.qml:6` | 아니오 |
-| `ListFooter` | View | `src/qml/components/navigation/ListFooter.qml:6` | 아니오 |
-| `ListItem` | View | `src/qml/components/navigation/ListItem.qml:4` | 아니오 |
-| `ListItemComposite` | View | `src/qml/components/navigation/ListItemComposite.qml:6` | 아니오 |
-| `ListItemSelector` | View | `src/qml/components/navigation/ListItemSelector.qml:5` | 아니오 |
-| `ListToolbar` | View | `src/qml/components/navigation/ListToolbar.qml:6` | 아니오 |
-| `Material` | View | `src/qml/components/control/input/Slider.qml:140` | 예 |
-| `MaterialSurface` | View | `src/qml/components/surfaces/MaterialSurface.qml:7` | 아니오 |
-| `Menu` | View | `src/qml/components/navigation/Menu.qml:5` | 아니오 |
-| `MenuDivider` | View | `src/qml/components/navigation/MenuDivider.qml:4` | 아니오 |
-| `MenuItem` | View | `src/qml/components/navigation/MenuItem.qml:4` | 아니오 |
-| `Metric` | 타입 | LVUI 언어 | 아니오 |
-| `MobileNavigationBar` | View | `src/qml/components/navigation/MobileNavigationBar.qml:6` | 아니오 |
-| `MobileNavigationTab` | View | `src/qml/components/navigation/MobileNavigationTab.qml:6` | 아니오 |
-| `MobileTab` | View | `src/qml/components/navigation/MobileTab.qml:6` | 아니오 |
-| `MobileTabBar` | View | `src/qml/components/navigation/MobileTabBar.qml:5` | 아니오 |
-| `Modal` | View | `src/qml/components/surfaces/Modal.qml:5` | 아니오 |
-| `MoreSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:118` | 예 |
-| `NativeView` | View | `../iiGUI/src/iiGUI/NativeView.h:20` | 아니오 |
-| `PageRouter` | View | `src/qml/components/navigation/PageRouter.qml:5` | 아니오 |
-| `PanelMaterial` | View | `src/qml/components/surfaces/PanelMaterial.qml:4` | 아니오 |
-| `Popover` | View | `src/qml/components/surfaces/Popover.qml:5` | 아니오 |
-| `PreviewSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:292` | 예 |
-| `ProgressBar` | View | `src/qml/components/control/display/ProgressBar.qml:4` | 아니오 |
-| `PushButton` | View | `src/qml/components/control/buttons/PushButton.qml:5` | 아니오 |
-| `QuantityControl` | View | `src/qml/components/navigation/ListItemComposite.qml:189` | 예 |
-| `QuantitySlot` | View | `src/qml/components/navigation/ListItemComposite.qml:257` | 예 |
-| `RadialLayer` | View | `src/qml/components/surfaces/MaterialSurface.qml:95` | 예 |
-| `RadioButton` | View | `src/qml/components/control/check/RadioButton.qml:4` | 아니오 |
-| `SegmentsSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:263` | 예 |
-| `SelectionSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:162` | 예 |
-| `SelectorSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:175` | 예 |
-| `Sheet` | View | `src/qml/components/surfaces/Sheet.qml:5` | 아니오 |
-| `Slider` | View | `src/qml/components/control/input/Slider.qml:6` | 아니오 |
-| `Slot` | View | `src/qml/components/navigation/ListItemComposite.qml:62` | 예 |
-| `Spacer` | View | `src/qml/components/layout/Spacer.qml:4` | 아니오 |
-| `SpringBehavior` | 시각 보조 | `src/qml/components/control/util/SpringBehavior.qml:4` | 아니오 |
-| `StateColorBehavior` | 시각 보조 | `src/qml/components/control/util/StateColorBehavior.qml:4` | 아니오 |
-| `Stepper` | View | `src/qml/components/control/buttons/Stepper.qml:4` | 아니오 |
-| `Swatch` | View | `src/qml/components/control/input/ColorPicker.qml:102` | 예 |
-| `Tab` | View | `src/qml/components/navigation/Tab.qml:6` | 아니오 |
-| `TabBar` | View | `src/qml/components/navigation/TabBar.qml:6` | 아니오 |
-| `Table` | View | `src/qml/components/control/display/Table.qml:5` | 아니오 |
-| `TableCellItem` | View | `src/qml/components/control/display/TableCellItem.qml:4` | 아니오 |
-| `TableHeader` | View | `src/qml/components/control/display/TableHeader.qml:5` | 아니오 |
-| `TableRow` | View | `src/qml/components/control/display/TableRow.qml:5` | 아니오 |
-| `TextEditor` | View | `src/qml/components/control/input/TextEditor.qml:5` | 아니오 |
-| `ToggleSlot` | View | `src/qml/components/navigation/ListItemComposite.qml:150` | 예 |
-| `ToggleSwitch` | View | `src/qml/components/control/check/ToggleSwitch.qml:6` | 아니오 |
-| `ToolbarButton` | View | `src/qml/components/navigation/ToolbarButton.qml:4` | 아니오 |
-| `Tooltip` | View | `src/qml/components/surfaces/Tooltip.qml:5` | 아니오 |
-| `VStack` | View | `src/qml/components/layout/VStack.qml:5` | 아니오 |
-| `View` | 타입 | LVUI 언어 | 아니오 |
-| `WheelScrollGuard` | View | `src/qml/components/control/util/WheelScrollGuard.qml:4` | 아니오 |
-| `Window` | View | `src/qml/Window.qml:5` | 아니오 |
-| `WindowChromeInteraction` | View | `src/qml/WindowChromeInteraction.qml:5` | 아니오 |
-| `WindowMaterial` | View | `src/qml/components/surfaces/WindowMaterial.qml:5` | 아니오 |
-| `WindowNoiseTexture` | View | `src/backend/graphics/windownoisetexture.h:15` | 아니오 |
-| `ZStack` | View | `src/qml/components/layout/ZStack.qml:3` | 아니오 |
-| `false` | 리터럴 | LVUI 언어 | 아니오 |
-| `import` | 선언 | LVUI 언어 | 아니오 |
-| `let` | 선언 | LVUI 언어 | 아니오 |
-| `true` | 리터럴 | LVUI 언어 | 아니오 |
-| `var` | 선언 | LVUI 언어 | 아니오 |
+- 예약어: `AbstractButton`; 분류: View; 원본: `src/qml/components/control/buttons/AbstractButton.qml:5`; 내부 타입: 아니오
+- 예약어: `AbstractInputBar`; 분류: View; 원본: `src/qml/components/control/input/AbstractInputBar.qml:5`; 내부 타입: 아니오
+- 예약어: `ActionSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:99`; 내부 타입: 예
+- 예약어: `AdaptiveLayoutHost`; 분류: View; 원본: `src/qml/ApplicationWindow.qml:566`; 내부 타입: 예
+- 예약어: `Alert`; 분류: View; 원본: `src/qml/components/surfaces/Alert.qml:6`; 내부 타입: 아니오
+- 예약어: `AlertButton`; 분류: View; 원본: `src/qml/components/surfaces/AlertButton.qml:4`; 내부 타입: 아니오
+- 예약어: `AppBootstrapWindow`; 분류: View; 원본: `src/qml/AppBootstrapWindow.qml:4`; 내부 타입: 아니오
+- 예약어: `AppCard`; 분류: View; 원본: `src/qml/components/surfaces/AppCard.qml:6`; 내부 타입: 아니오
+- 예약어: `AppHeader`; 분류: View; 원본: `src/qml/components/layout/AppHeader.qml:6`; 내부 타입: 아니오
+- 예약어: `AppShell`; 분류: View; 원본: `src/qml/AppShell.qml:4`; 내부 타입: 아니오
+- 예약어: `ApplicationWindow`; 분류: View; 원본: `src/qml/ApplicationWindow.qml:8`; 내부 타입: 아니오
+- 예약어: `Avatar`; 분류: View; 원본: `src/qml/components/control/display/Avatar.qml:5`; 내부 타입: 아니오
+- 예약어: `BodyText`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:16`; 내부 타입: 예
+- 예약어: `CaptionText`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:27`; 내부 타입: 예
+- 예약어: `Card`; 분류: View; 원본: `src/qml/components/surfaces/Card.qml:6`; 내부 타입: 아니오
+- 예약어: `CardImageContent`; 분류: View; 원본: `src/qml/components/surfaces/CardImageContent.qml:5`; 내부 타입: 예
+- 예약어: `CardInformationContent`; 분류: View; 원본: `src/qml/components/surfaces/CardInformationContent.qml:5`; 내부 타입: 예
+- 예약어: `ChannelRow`; 분류: View; 원본: `src/qml/components/control/input/ColorPicker.qml:131`; 내부 타입: 예
+- 예약어: `CheckBox`; 분류: View; 원본: `src/qml/components/control/check/CheckBox.qml:4`; 내부 타입: 아니오
+- 예약어: `CodeEditor`; 분류: View; 원본: `src/qml/components/control/input/CodeEditor.qml:5`; 내부 타입: 아니오
+- 예약어: `Color`; 분류: 타입; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `ColorField`; 분류: View; 원본: `src/qml/components/control/input/ColorPicker.qml:225`; 내부 타입: 예
+- 예약어: `ColorInput`; 분류: View; 원본: `src/qml/components/control/input/ColorPicker.qml:71`; 내부 타입: 예
+- 예약어: `ColorPicker`; 분류: View; 원본: `src/qml/components/control/input/ColorPicker.qml:5`; 내부 타입: 아니오
+- 예약어: `ColorPickerButton`; 분류: View; 원본: `src/qml/components/control/buttons/ColorPickerButton.qml:5`; 내부 타입: 아니오
+- 예약어: `ColorPickerSurface`; 분류: View; 원본: `src/backend/graphics/colorpickersurface.h:13`; 내부 타입: 아니오
+- 예약어: `ComboBox`; 분류: View; 원본: `src/qml/components/control/buttons/ComboBox.qml:4`; 내부 타입: 아니오
+- 예약어: `ContentText`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:82`; 내부 타입: 예
+- 예약어: `ContextMenu`; 분류: View; 원본: `src/qml/components/navigation/ContextMenu.qml:6`; 내부 타입: 아니오
+- 예약어: `ContextMenuDivider`; 분류: View; 원본: `src/qml/components/navigation/ContextMenuDivider.qml:5`; 내부 타입: 아니오
+- 예약어: `ContextMenuItem`; 분류: View; 원본: `src/qml/components/navigation/ContextMenuItem.qml:5`; 내부 타입: 아니오
+- 예약어: `DetailRow`; 분류: View; 원본: `src/qml/components/surfaces/CardInformationContent.qml:10`; 내부 타입: 예
+- 예약어: `DropdownButton`; 분류: View; 원본: `src/qml/components/control/buttons/DropdownButton.qml:4`; 내부 타입: 아니오
+- 예약어: `Endpoint`; 분류: View; 원본: `src/qml/components/control/input/Slider.qml:103`; 내부 타입: 예
+- 예약어: `EventListener`; 분류: View; 원본: `src/qml/components/control/util/EventListener.qml:5`; 내부 타입: 아니오
+- 예약어: `FocusRing`; 분류: View; 원본: `src/qml/components/control/util/FocusRing.qml:4`; 내부 타입: 아니오
+- 예약어: `Glyph`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:41`; 내부 타입: 예
+- 예약어: `HStack`; 분류: View; 원본: `src/qml/components/layout/HStack.qml:5`; 내부 타입: 아니오
+- 예약어: `HelpButton`; 분류: View; 원본: `src/qml/components/control/buttons/HelpButton.qml:5`; 내부 타입: 아니오
+- 예약어: `Hierarchy`; 분류: View; 원본: `src/qml/components/navigation/Hierarchy.qml:5`; 내부 타입: 아니오
+- 예약어: `HierarchyItem`; 분류: View; 원본: `src/qml/components/navigation/HierarchyItem.qml:5`; 내부 타입: 아니오
+- 예약어: `HierarchyList`; 분류: View; 원본: `src/qml/components/navigation/HierarchyList.qml:4`; 내부 타입: 아니오
+- 예약어: `HierarchyToolbar`; 분류: View; 원본: `src/qml/components/navigation/HierarchyToolbar.qml:5`; 내부 타입: 아니오
+- 예약어: `IconButton`; 분류: View; 원본: `src/qml/components/control/buttons/IconButton.qml:4`; 내부 타입: 아니오
+- 예약어: `IconMenuButton`; 분류: View; 원본: `src/qml/components/control/buttons/IconMenuButton.qml:4`; 내부 타입: 아니오
+- 예약어: `IconSegmentedControl`; 분류: View; 원본: `src/qml/components/control/buttons/IconSegmentedControl.qml:4`; 내부 타입: 아니오
+- 예약어: `Image`; 분류: View; 원본: `src/LVRS/Image.h:6`; 내부 타입: 아니오
+- 예약어: `InputField`; 분류: View; 원본: `src/qml/components/control/input/InputField.qml:7`; 내부 타입: 아니오
+- 예약어: `InputMethodGuard`; 분류: View; 원본: `src/qml/components/control/util/InputMethodGuard.qml:4`; 내부 타입: 아니오
+- 예약어: `InputSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:227`; 내부 타입: 예
+- 예약어: `InteractionMotion`; 분류: 시각 보조; 원본: `src/qml/components/control/util/InteractionMotion.qml:4`; 내부 타입: 아니오
+- 예약어: `Label`; 분류: View; 원본: `src/qml/components/control/display/Label.qml:4`; 내부 타입: 아니오
+- 예약어: `LabelButton`; 분류: View; 원본: `src/qml/components/control/buttons/LabelButton.qml:4`; 내부 타입: 아니오
+- 예약어: `LabelMenuButton`; 분류: View; 원본: `src/qml/components/control/buttons/LabelMenuButton.qml:4`; 내부 타입: 아니오
+- 예약어: `LabelSegmentedControl`; 분류: View; 원본: `src/qml/components/control/buttons/LabelSegmentedControl.qml:4`; 내부 타입: 아니오
+- 예약어: `Link`; 분류: View; 원본: `src/qml/components/navigation/Link.qml:4`; 내부 타입: 아니오
+- 예약어: `List`; 분류: View; 원본: `src/qml/components/navigation/List.qml:6`; 내부 타입: 아니오
+- 예약어: `ListFooter`; 분류: View; 원본: `src/qml/components/navigation/ListFooter.qml:6`; 내부 타입: 아니오
+- 예약어: `ListItem`; 분류: View; 원본: `src/qml/components/navigation/ListItem.qml:4`; 내부 타입: 아니오
+- 예약어: `ListItemComposite`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:6`; 내부 타입: 아니오
+- 예약어: `ListItemSelector`; 분류: View; 원본: `src/qml/components/navigation/ListItemSelector.qml:5`; 내부 타입: 아니오
+- 예약어: `ListToolbar`; 분류: View; 원본: `src/qml/components/navigation/ListToolbar.qml:6`; 내부 타입: 아니오
+- 예약어: `Material`; 분류: View; 원본: `src/qml/components/control/input/Slider.qml:140`; 내부 타입: 예
+- 예약어: `MaterialSurface`; 분류: View; 원본: `src/qml/components/surfaces/MaterialSurface.qml:7`; 내부 타입: 아니오
+- 예약어: `Menu`; 분류: View; 원본: `src/qml/components/navigation/Menu.qml:5`; 내부 타입: 아니오
+- 예약어: `MenuDivider`; 분류: View; 원본: `src/qml/components/navigation/MenuDivider.qml:4`; 내부 타입: 아니오
+- 예약어: `MenuItem`; 분류: View; 원본: `src/qml/components/navigation/MenuItem.qml:4`; 내부 타입: 아니오
+- 예약어: `Metric`; 분류: 타입; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `MobileNavigationBar`; 분류: View; 원본: `src/qml/components/navigation/MobileNavigationBar.qml:6`; 내부 타입: 아니오
+- 예약어: `MobileNavigationTab`; 분류: View; 원본: `src/qml/components/navigation/MobileNavigationTab.qml:6`; 내부 타입: 아니오
+- 예약어: `MobileTab`; 분류: View; 원본: `src/qml/components/navigation/MobileTab.qml:6`; 내부 타입: 아니오
+- 예약어: `MobileTabBar`; 분류: View; 원본: `src/qml/components/navigation/MobileTabBar.qml:5`; 내부 타입: 아니오
+- 예약어: `Modal`; 분류: View; 원본: `src/qml/components/surfaces/Modal.qml:5`; 내부 타입: 아니오
+- 예약어: `MoreSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:118`; 내부 타입: 예
+- 예약어: `NativeView`; 분류: View; 원본: `../iiGUI/src/iiGUI/NativeView.h:20`; 내부 타입: 아니오
+- 예약어: `PageRouter`; 분류: View; 원본: `src/qml/components/navigation/PageRouter.qml:5`; 내부 타입: 아니오
+- 예약어: `PanelMaterial`; 분류: View; 원본: `src/qml/components/surfaces/PanelMaterial.qml:4`; 내부 타입: 아니오
+- 예약어: `Popover`; 분류: View; 원본: `src/qml/components/surfaces/Popover.qml:5`; 내부 타입: 아니오
+- 예약어: `PreviewSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:292`; 내부 타입: 예
+- 예약어: `ProgressBar`; 분류: View; 원본: `src/qml/components/control/display/ProgressBar.qml:4`; 내부 타입: 아니오
+- 예약어: `PushButton`; 분류: View; 원본: `src/qml/components/control/buttons/PushButton.qml:5`; 내부 타입: 아니오
+- 예약어: `QuantityControl`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:189`; 내부 타입: 예
+- 예약어: `QuantitySlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:257`; 내부 타입: 예
+- 예약어: `RadialLayer`; 분류: View; 원본: `src/qml/components/surfaces/MaterialSurface.qml:95`; 내부 타입: 예
+- 예약어: `RadioButton`; 분류: View; 원본: `src/qml/components/control/check/RadioButton.qml:4`; 내부 타입: 아니오
+- 예약어: `SegmentsSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:263`; 내부 타입: 예
+- 예약어: `SelectionSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:162`; 내부 타입: 예
+- 예약어: `SelectorSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:175`; 내부 타입: 예
+- 예약어: `Sheet`; 분류: View; 원본: `src/qml/components/surfaces/Sheet.qml:5`; 내부 타입: 아니오
+- 예약어: `Slider`; 분류: View; 원본: `src/qml/components/control/input/Slider.qml:6`; 내부 타입: 아니오
+- 예약어: `Slot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:62`; 내부 타입: 예
+- 예약어: `Spacer`; 분류: View; 원본: `src/qml/components/layout/Spacer.qml:4`; 내부 타입: 아니오
+- 예약어: `SpringBehavior`; 분류: 시각 보조; 원본: `src/qml/components/control/util/SpringBehavior.qml:4`; 내부 타입: 아니오
+- 예약어: `StateColorBehavior`; 분류: 시각 보조; 원본: `src/qml/components/control/util/StateColorBehavior.qml:4`; 내부 타입: 아니오
+- 예약어: `Stepper`; 분류: View; 원본: `src/qml/components/control/buttons/Stepper.qml:4`; 내부 타입: 아니오
+- 예약어: `Swatch`; 분류: View; 원본: `src/qml/components/control/input/ColorPicker.qml:102`; 내부 타입: 예
+- 예약어: `Tab`; 분류: View; 원본: `src/qml/components/navigation/Tab.qml:6`; 내부 타입: 아니오
+- 예약어: `TabBar`; 분류: View; 원본: `src/qml/components/navigation/TabBar.qml:6`; 내부 타입: 아니오
+- 예약어: `Table`; 분류: View; 원본: `src/qml/components/control/display/Table.qml:5`; 내부 타입: 아니오
+- 예약어: `TableCellItem`; 분류: View; 원본: `src/qml/components/control/display/TableCellItem.qml:4`; 내부 타입: 아니오
+- 예약어: `TableHeader`; 분류: View; 원본: `src/qml/components/control/display/TableHeader.qml:5`; 내부 타입: 아니오
+- 예약어: `TableRow`; 분류: View; 원본: `src/qml/components/control/display/TableRow.qml:5`; 내부 타입: 아니오
+- 예약어: `TextEditor`; 분류: View; 원본: `src/qml/components/control/input/TextEditor.qml:5`; 내부 타입: 아니오
+- 예약어: `ToggleSlot`; 분류: View; 원본: `src/qml/components/navigation/ListItemComposite.qml:150`; 내부 타입: 예
+- 예약어: `ToggleSwitch`; 분류: View; 원본: `src/qml/components/control/check/ToggleSwitch.qml:6`; 내부 타입: 아니오
+- 예약어: `ToolbarButton`; 분류: View; 원본: `src/qml/components/navigation/ToolbarButton.qml:4`; 내부 타입: 아니오
+- 예약어: `Tooltip`; 분류: View; 원본: `src/qml/components/surfaces/Tooltip.qml:5`; 내부 타입: 아니오
+- 예약어: `VStack`; 분류: View; 원본: `src/qml/components/layout/VStack.qml:5`; 내부 타입: 아니오
+- 예약어: `View`; 분류: 타입; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `WheelScrollGuard`; 분류: View; 원본: `src/qml/components/control/util/WheelScrollGuard.qml:4`; 내부 타입: 아니오
+- 예약어: `Window`; 분류: View; 원본: `src/qml/Window.qml:5`; 내부 타입: 아니오
+- 예약어: `WindowChromeInteraction`; 분류: View; 원본: `src/qml/WindowChromeInteraction.qml:5`; 내부 타입: 아니오
+- 예약어: `WindowMaterial`; 분류: View; 원본: `src/qml/components/surfaces/WindowMaterial.qml:5`; 내부 타입: 아니오
+- 예약어: `WindowNoiseTexture`; 분류: View; 원본: `src/backend/graphics/windownoisetexture.h:15`; 내부 타입: 아니오
+- 예약어: `ZStack`; 분류: View; 원본: `src/qml/components/layout/ZStack.qml:3`; 내부 타입: 아니오
+- 예약어: `false`; 분류: 리터럴; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `import`; 분류: 선언; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `let`; 분류: 선언; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `true`; 분류: 리터럴; 원본: LVUI 언어; 내부 타입: 아니오
+- 예약어: `var`; 분류: 선언; 원본: LVUI 언어; 내부 타입: 아니오
 
 ## 비시각 객체
 

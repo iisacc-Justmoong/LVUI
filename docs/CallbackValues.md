@@ -100,16 +100,14 @@ auto second = value;
 현재 macOS arm64 작업 트리에서 다음 결과를 확인했다. 겹치는 검사 수를 합산하여
 독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.
 
-| 검사 | 결과 | 범위 |
-|---|---|---|
-| LVUI Release CTest | 162/162 통과 | 언어·AOT·구성·목록·작업·공유 값과 설치 소비자 |
-| AddressSanitizer + UndefinedBehaviorSanitizer | 85/85 통과 | 관련 네이티브 구현·생성 스코프·계측 AOT 도구, C++ 거부 검사는 구문 컴파일 |
-| ThreadSanitizer | 13/13 통과 | 작업 8개·공유 값 5개, 작업 검사의 빌린 Core Runtime 라이브러리는 비계측 |
-| iiGUI 창 없는 통합 검사 | 71/71 통과 | 기존 회귀 검사와 공유 값 7개 시나리오 |
-| iiGUI AddressSanitizer + UndefinedBehaviorSanitizer | 71/71 통과 | iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings 구현은 별도 LVUI 검사 |
-| 설치·재배치 독립 소비자 | 3/3 통과 | Native 공유 값·공개 컴파일러·선택적 Runtime, 잘못된 콜백 계약 거부 |
-| 생성 C++ 타입 검사 | 유효 1개 컴파일·잘못된 6개 거부 | 반환 타입·인자 수·payload 타입·필수 인자·private 접근·반환 없는 즉시 호출 |
-| LVRS 생성 C++ | 14개 팩터리 컴파일 | 공유·독립·창 루트·조건부·차용 참조를 포함하며 실행은 최종 일괄 검증으로 유지 |
+- 검사: LVUI Release CTest; 결과: 162/162 통과; 범위: 언어·AOT·구성·목록·작업·공유 값과 설치 소비자
+- 검사: AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 85/85 통과; 범위: 관련 네이티브 구현·생성 스코프·계측 AOT 도구, C++ 거부 검사는 구문 컴파일
+- 검사: ThreadSanitizer; 결과: 13/13 통과; 범위: 작업 8개·공유 값 5개, 작업 검사의 빌린 Core Runtime 라이브러리는 비계측
+- 검사: iiGUI 창 없는 통합 검사; 결과: 71/71 통과; 범위: 기존 회귀 검사와 공유 값 7개 시나리오
+- 검사: iiGUI AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 71/71 통과; 범위: iiGUI·생성 C++·LVUI Runtime·Core 구현, NativeBindings 구현은 별도 LVUI 검사
+- 검사: 설치·재배치 독립 소비자; 결과: 3/3 통과; 범위: Native 공유 값·공개 컴파일러·선택적 Runtime, 잘못된 콜백 계약 거부
+- 검사: 생성 C++ 타입 검사; 결과: 유효 1개 컴파일·잘못된 6개 거부; 범위: 반환 타입·인자 수·payload 타입·필수 인자·private 접근·반환 없는 즉시 호출
+- 검사: LVRS 생성 C++; 결과: 14개 팩터리 컴파일; 범위: 공유·독립·창 루트·조건부·차용 참조를 포함하며 실행은 최종 일괄 검증으로 유지
 
 생성 위젯 실행 파일의 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 검사한다.
 Dreamscapes 관측 QML 81개의 기준선 해시를 보존하며 제품 변환·재설치는 수행하지 않는다.

@@ -124,14 +124,14 @@ cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Debug \
   -DCMAKE_INSTALL_PREFIX="$PWD/build/install"
 cmake --build build --parallel 4
 ctest --test-dir build --output-on-failure
-./build/lvui-check docs/examples/ReservedComponents.lvui
+./build/lvui-check docs/Examples/ReservedComponents.lvui
 ./build/lvui-check --keywords
 cmake --install build
 ```
 
 `lvui-check`는 성공하면 0, 구문 오류이면 행·열과 진단을 출력하고 1,
-파일·사용법 오류이면 2를 반환한다. [실제 검사 예제](examples/ReservedComponents.lvui)와
-[카운터 예제](examples/Counter.lvui)를 CTest로 검사한다.
+파일·사용법 오류이면 2를 반환한다. [실제 검사 예제](Examples/ReservedComponents.lvui)와
+[카운터 예제](Examples/Counter.lvui)를 CTest로 검사한다.
 
 선택적인 레거시 조사 테스트만 LVRS 소스와 과거 스냅샷을 대조한다. 기본 빌드에서는
 인접 LVRS 소스를 읽지 않는다. LVRS 소스가 없는 환경에서도

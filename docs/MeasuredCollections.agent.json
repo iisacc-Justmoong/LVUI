@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/MeasuredCollections.md",
-    "sha256": "20864ed70c0e83267106d930d11f53886520a95b7052b68b90d2cae5af912d37",
-    "bytes": 10004,
-    "line_count": 139,
+    "sha256": "5b69869bb00c436db1528900fd6693ff8a327f525c99e1f32addccea25db3016",
+    "bytes": 10052,
+    "line_count": 137,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -424,67 +424,69 @@
     },
     {
       "id": "b000049",
-      "kind": "table",
       "start_line": 123,
-      "end_line": 130,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release 검사 | 129/129 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 52/52 통과 |\n| iiGUI 창 없는 회귀·생성 C++ 통합 | 34/34 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 34/34 통과 |\n| 설치·경로 이동 소비자 | 네이티브 실행·컴파일 소비자 2/2 통과 |\n| LVRS 실제 생성 팩토리 | 자연 높이 행을 포함한 C++ 오브젝트 컴파일 통과, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI 전체 Release 검사",
-          "129/129 통과"
-        ],
-        [
-          "관련 언어·네이티브 런타임 ASan·UBSan",
-          "52/52 통과"
-        ],
-        [
-          "iiGUI 창 없는 회귀·생성 C++ 통합",
-          "34/34 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++ ASan·UBSan",
-          "동일 34/34 통과"
-        ],
-        [
-          "설치·경로 이동 소비자",
-          "네이티브 실행·컴파일 소비자 2/2 통과"
-        ],
-        [
-          "LVRS 실제 생성 팩토리",
-          "자연 높이 행을 포함한 C++ 오브젝트 컴파일 통과, 실행하지 않음"
-        ]
+      "end_line": 128,
+      "raw": "- 범위: LVUI 전체 Release 검사; 결과: 129/129 통과\n- 범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 52/52 통과\n- 범위: iiGUI 창 없는 회귀·생성 C++ 통합; 결과: 34/34 통과\n- 범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 34/34 통과\n- 범위: 설치·경로 이동 소비자; 결과: 네이티브 실행·컴파일 소비자 2/2 통과\n- 범위: LVRS 실제 생성 팩토리; 결과: 자연 높이 행을 포함한 C++ 오브젝트 컴파일 통과, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI 전체 Release 검사; 결과: 129/129 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 52/52 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 회귀·생성 C++ 통합; 결과: 34/34 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 34/34 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 설치·경로 이동 소비자; 결과: 네이티브 실행·컴파일 소비자 2/2 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVRS 실제 생성 팩토리; 결과: 자연 높이 행을 포함한 C++ 오브젝트 컴파일 통과, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 131,
-      "end_line": 131,
+      "start_line": 129,
+      "end_line": 129,
       "raw": "\n"
     },
     {
       "id": "b000051",
       "kind": "paragraph",
-      "start_line": 132,
-      "end_line": 136,
+      "start_line": 130,
+      "end_line": 134,
       "raw": "1,000개 모델의 실제 줄바꿈과 높이 변경, 그리드의 최대 높이, 기준점 보정·지역 상태,\n200개 빈 행의 퇴역·복구, 화면 밖 공유 항목의 명시적 변경 통지를 검사했다. 별도 C++\n검사는 1,000개 중 높이가 있는 두 항목만 비연속 인덱스로 마운트하는 투영을 검사한다.\n자연 크기 피드백으로 모델 컬렉션·백엔드의 문서 리비전이 바뀌지 않는 것도 확인했다.\n이 결과는 실제 제품의 프레임 지연 측정이나 전체 LVUI 완성의 증거가 아니다.\n"
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 137,
-      "end_line": 137,
+      "start_line": 135,
+      "end_line": 135,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 138,
-      "end_line": 139,
+      "start_line": 136,
+      "end_line": 137,
       "raw": "검증 범위·원시 로그·제품 보존·실행 파일 경계는\n`build/lvui-completion/measured-collection-verification-20261026.json`에 기록한다.\n"
     }
   ],
@@ -628,41 +630,7 @@
         "line": 117
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000049",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI 전체 Release 검사",
-            "129/129 통과"
-          ],
-          [
-            "관련 언어·네이티브 런타임 ASan·UBSan",
-            "52/52 통과"
-          ],
-          [
-            "iiGUI 창 없는 회귀·생성 C++ 통합",
-            "34/34 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++ ASan·UBSan",
-            "동일 34/34 통과"
-          ],
-          [
-            "설치·경로 이동 소비자",
-            "네이티브 실행·컴파일 소비자 2/2 통과"
-          ],
-          [
-            "LVRS 실제 생성 팩토리",
-            "자연 높이 행을 포함한 C++ 오브젝트 컴파일 통과, 실행하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

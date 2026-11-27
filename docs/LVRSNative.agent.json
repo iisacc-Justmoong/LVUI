@@ -10,7 +10,7 @@
   },
   "source": {
     "path": "docs/LVRSNative.md",
-    "sha256": "05e742fe48f0b20fd5c38477dda773cd659f191f9d0bfa966af37e5a2ec93d3b",
+    "sha256": "865a8dcccdf5dbd23290dd89b39a2410cdf0cd798a91c48d7a81311bd644950f",
     "bytes": 23390,
     "line_count": 325,
     "encoding": "utf-8",
@@ -437,7 +437,7 @@
       "kind": "paragraph",
       "start_line": 171,
       "end_line": 174,
-      "raw": "변경은 동일한 모델의 명시적 API를 통해 전달된다. 임의 C++ 대입을 자동으로 관찰하거나 모델\n멤버의 포인터 재대입을 자동 연결하는 기능은 아직 없다. 명시적 `set_color_model`로 연결을\n교체할 수 있다. 이것은 일반 반응형 언어 계약의 완료 선언이 아니다. 여섯 표면 예제는\nLVRS의 `examples/NativeColorGallery`이다.\n"
+      "raw": "변경은 동일한 모델의 명시적 API를 통해 전달된다. 임의 C++ 대입을 자동으로 관찰하거나 모델\n멤버의 포인터 재대입을 자동 연결하는 기능은 아직 없다. 명시적 `set_color_model`로 연결을\n교체할 수 있다. 이것은 일반 반응형 언어 계약의 완료 선언이 아니다. 여섯 표면 예제는\nLVRS의 `Examples/NativeColorGallery`이다.\n"
     },
     {
       "id": "b000058",
@@ -495,7 +495,7 @@
       "kind": "paragraph",
       "start_line": 190,
       "end_line": 193,
-      "raw": "옵션은 생성 시 상수이며 일반 반응형 재연결은 아직 없다. C++의 `lvrs::ColorPicker` 핸들은\n타입·폭·숨김·활성·최근 색상을 같은 마운트에서 바꿀 수 있다. 합성 모델 포인터의 변경은\n재마운트한다. 원본 전체 시각·상속 계약의 완료를 뜻하지 않는다. 전용 설치 예제는\n`examples/NativePickerGallery`이며 상세 계약은 LVRS의 `docs/native/ColorPicker.md`이다.\n"
+      "raw": "옵션은 생성 시 상수이며 일반 반응형 재연결은 아직 없다. C++의 `lvrs::ColorPicker` 핸들은\n타입·폭·숨김·활성·최근 색상을 같은 마운트에서 바꿀 수 있다. 합성 모델 포인터의 변경은\n재마운트한다. 원본 전체 시각·상속 계약의 완료를 뜻하지 않는다. 전용 설치 예제는\n`Examples/NativePickerGallery`이며 상세 계약은 LVRS의 `docs/native/ColorPicker.md`이다.\n"
     },
     {
       "id": "b000066",
@@ -525,7 +525,7 @@
       "kind": "paragraph",
       "start_line": 197,
       "end_line": 208,
-      "raw": "원본 Modal의 동적 콘텐츠 수명을 위한 iiGUI C++ 팩토리 경로도 추가했다. 현재는 빈\n`Popover`를 AOT로 만든 뒤 C++에서 `set_popup_content`를 연결한다. 콘텐츠 위젯은 매번\n열 때 만들고 닫으면 소유권을 해제하지만 바깥 LVUI 백엔드는 유지한다. 현재 콘텐츠의\n조회는 `popup_content(local_id)`이며 이전 활성화 핸들은 재사용할 수 없다.\n이제 `Modal { ... }`의 자식을 별도의 `ModalContentFactory`로 AOT 생성하며 전용 Modal\n조합도 제공한다. 기본 헤더·아이콘·최대 세 액션과 가운데 배치는 LVRS가 구성한다.\n`open: true`는 마운트 후 최초 개방한다. 자식 ID와 context menu 대상은 콘텐츠 내부 범위에서\n해석하며 바깥 백엔드는 기존 스코프를 빌린다. 부모 백엔드의 재생성은 없다. 호출식 대신 메서드\n참조를 쓰는 규칙도 같다. 초기 개방을 요구하는 중첩 생성 함수와 범위 간 target 참조는 진단한다.\n전체 지원 입력과 남은 차이는 LVRS의 `docs/native/Modal.md`에 기록한다.\n예제는 LVRS의 `examples/NativeActivationGallery`, 상세 계약은\n`docs/native/ActivationContent.md`이다.\n"
+      "raw": "원본 Modal의 동적 콘텐츠 수명을 위한 iiGUI C++ 팩토리 경로도 추가했다. 현재는 빈\n`Popover`를 AOT로 만든 뒤 C++에서 `set_popup_content`를 연결한다. 콘텐츠 위젯은 매번\n열 때 만들고 닫으면 소유권을 해제하지만 바깥 LVUI 백엔드는 유지한다. 현재 콘텐츠의\n조회는 `popup_content(local_id)`이며 이전 활성화 핸들은 재사용할 수 없다.\n이제 `Modal { ... }`의 자식을 별도의 `ModalContentFactory`로 AOT 생성하며 전용 Modal\n조합도 제공한다. 기본 헤더·아이콘·최대 세 액션과 가운데 배치는 LVRS가 구성한다.\n`open: true`는 마운트 후 최초 개방한다. 자식 ID와 context menu 대상은 콘텐츠 내부 범위에서\n해석하며 바깥 백엔드는 기존 스코프를 빌린다. 부모 백엔드의 재생성은 없다. 호출식 대신 메서드\n참조를 쓰는 규칙도 같다. 초기 개방을 요구하는 중첩 생성 함수와 범위 간 target 참조는 진단한다.\n전체 지원 입력과 남은 차이는 LVRS의 `docs/native/Modal.md`에 기록한다.\n예제는 LVRS의 `Examples/NativeActivationGallery`, 상세 계약은\n`docs/native/ActivationContent.md`이다.\n"
     },
     {
       "id": "b000070",

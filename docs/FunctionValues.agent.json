@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/FunctionValues.md",
-    "sha256": "43f10962860f48c37ec93c25d3f6c35a4067e4ca71a66b9446e5f9d6f707d430",
-    "bytes": 12292,
-    "line_count": 164,
+    "sha256": "72ba88e2a803fe4194ccb17679c6d37071c6a6cd6c977b156ee21fc9668674a5",
+    "bytes": 12440,
+    "line_count": 160,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -389,89 +389,93 @@
     },
     {
       "id": "b000051",
-      "kind": "table",
       "start_line": 120,
-      "end_line": 129,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI Release CTest | 167/167 통과 |\n| 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer | 90/90 통과 |\n| 작업·공유 콜백·반환 함수 ThreadSanitizer | 17/17 통과, 빌린 Core Runtime 라이브러리는 비계측 |\n| iiGUI 창 없는 기존 동작·생성 C++ 통합 검사 | 75/75 통과 |\n| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 75/75 통과, NativeBindings 구현은 별도 LVUI 검사 |\n| 설치·재배치 독립 소비자 | Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과 |\n| 생성 C++ 타입 검사 | 유효 2개 컴파일, 잘못된 9개 거부 |\n| LVRS 생성 C++ | 함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI Release CTest",
-          "167/167 통과"
-        ],
-        [
-          "관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer",
-          "90/90 통과"
-        ],
-        [
-          "작업·공유 콜백·반환 함수 ThreadSanitizer",
-          "17/17 통과, 빌린 Core Runtime 라이브러리는 비계측"
-        ],
-        [
-          "iiGUI 창 없는 기존 동작·생성 C++ 통합 검사",
-          "75/75 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-          "75/75 통과, NativeBindings 구현은 별도 LVUI 검사"
-        ],
-        [
-          "설치·재배치 독립 소비자",
-          "Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과"
-        ],
-        [
-          "생성 C++ 타입 검사",
-          "유효 2개 컴파일, 잘못된 9개 거부"
-        ],
-        [
-          "LVRS 생성 C++",
-          "함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음"
-        ]
+      "end_line": 127,
+      "raw": "- 범위: LVUI Release CTest; 결과: 167/167 통과\n- 범위: 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 90/90 통과\n- 범위: 작업·공유 콜백·반환 함수 ThreadSanitizer; 결과: 17/17 통과, 빌린 Core Runtime 라이브러리는 비계측\n- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합 검사; 결과: 75/75 통과\n- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 75/75 통과, NativeBindings 구현은 별도 LVUI 검사\n- 범위: 설치·재배치 독립 소비자; 결과: Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과\n- 범위: 생성 C++ 타입 검사; 결과: 유효 2개 컴파일, 잘못된 9개 거부\n- 범위: LVRS 생성 C++; 결과: 함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI Release CTest; 결과: 167/167 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 90/90 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 작업·공유 콜백·반환 함수 ThreadSanitizer; 결과: 17/17 통과, 빌린 Core Runtime 라이브러리는 비계측",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 기존 동작·생성 C++ 통합 검사; 결과: 75/75 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 75/75 통과, NativeBindings 구현은 별도 LVUI 검사",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 설치·재배치 독립 소비자; 결과: Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 생성 C++ 타입 검사; 결과: 유효 2개 컴파일, 잘못된 9개 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVRS 생성 C++; 결과: 함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 130,
-      "end_line": 130,
+      "start_line": 128,
+      "end_line": 128,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 131,
-      "end_line": 134,
+      "start_line": 129,
+      "end_line": 132,
       "raw": "잘못된 Bool·String·Void 결과, 이벤트 인자 수·타입, 필수 인자, private 접근을 생성 C++\n컴파일에서 거부한다. 이 거부 검사는 구문 컴파일 검사이며 sanitizer 실행 검사와 구분한다.\n기존 소비자의 함수 값 갱신, `@Static` 팩터리의 초기 선택 유지, 실패 후 이전 표시 보존·복구,\n자신의 화면 종료 중 반환, 종료 후 결과 요구와 잘못된 실행 영역을 검사한다.\n"
     },
     {
       "id": "b000054",
       "kind": "blank",
-      "start_line": 135,
-      "end_line": 135,
+      "start_line": 133,
+      "end_line": 133,
       "raw": "\n"
     },
     {
       "id": "b000055",
       "kind": "paragraph",
-      "start_line": 136,
-      "end_line": 139,
+      "start_line": 134,
+      "end_line": 137,
       "raw": "실행 파일의 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼은 없으며, 관측 QML 81개의\n해시 변경은 0개이다. 제품 지연 시간·실제 창·GPU·모든 플랫폼·전체 언어 완성은\n이 기록의 주장 범위에 포함하지 않는다. 로그·해시·설치 소비자·실행 경계는\n`build/lvui-completion/function-values-verification-20261026.json`에 기록한다.\n"
     },
     {
       "id": "b000056",
       "kind": "blank",
-      "start_line": 140,
-      "end_line": 140,
+      "start_line": 138,
+      "end_line": 138,
       "raw": "\n"
     },
     {
       "id": "b000057",
       "kind": "heading",
-      "start_line": 141,
-      "end_line": 141,
+      "start_line": 139,
+      "end_line": 139,
       "raw": "## 함수 버전 스냅샷 후속 검증\n",
       "level": 2,
       "title": "함수 버전 스냅샷 후속 검증"
@@ -479,95 +483,99 @@
     {
       "id": "b000058",
       "kind": "blank",
-      "start_line": 142,
-      "end_line": 142,
+      "start_line": 140,
+      "end_line": 140,
       "raw": "\n"
     },
     {
       "id": "b000059",
       "kind": "paragraph",
-      "start_line": 143,
-      "end_line": 144,
+      "start_line": 141,
+      "end_line": 142,
       "raw": "스냅샷 변경과 차용 참조 수명 수정을 포함한 macOS arm64 검증이다. 이전 단계의 검사 수와\n합산하지 않는다.\n"
     },
     {
       "id": "b000060",
       "kind": "blank",
-      "start_line": 145,
-      "end_line": 145,
+      "start_line": 143,
+      "end_line": 143,
       "raw": "\n"
     },
     {
       "id": "b000061",
-      "kind": "table",
-      "start_line": 146,
-      "end_line": 155,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI Release CTest | 169/169 통과 |\n| 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer | 92/92 통과 |\n| 작업·공유 콜백·반환 함수 ThreadSanitizer | 19/19 통과, 빌린 Core Runtime 라이브러리는 비계측 |\n| iiGUI 창 없는 기존 동작·생성 C++ 통합 검사 | 77/77 통과 |\n| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 77/77 통과, NativeBindings 구현은 별도 LVUI 검사 |\n| 설치·재배치 독립 소비자 | Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과 |\n| 생성 C++ 타입 검사 | 유효 2개 컴파일, 잘못된 9개 거부 |\n| LVRS 생성 C++ | Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI Release CTest",
-          "169/169 통과"
-        ],
-        [
-          "관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer",
-          "92/92 통과"
-        ],
-        [
-          "작업·공유 콜백·반환 함수 ThreadSanitizer",
-          "19/19 통과, 빌린 Core Runtime 라이브러리는 비계측"
-        ],
-        [
-          "iiGUI 창 없는 기존 동작·생성 C++ 통합 검사",
-          "77/77 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-          "77/77 통과, NativeBindings 구현은 별도 LVUI 검사"
-        ],
-        [
-          "설치·재배치 독립 소비자",
-          "Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과"
-        ],
-        [
-          "생성 C++ 타입 검사",
-          "유효 2개 컴파일, 잘못된 9개 거부"
-        ],
-        [
-          "LVRS 생성 C++",
-          "Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음"
-        ]
+      "start_line": 144,
+      "end_line": 151,
+      "raw": "- 범위: LVUI Release CTest; 결과: 169/169 통과\n- 범위: 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 92/92 통과\n- 범위: 작업·공유 콜백·반환 함수 ThreadSanitizer; 결과: 19/19 통과, 빌린 Core Runtime 라이브러리는 비계측\n- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합 검사; 결과: 77/77 통과\n- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 77/77 통과, NativeBindings 구현은 별도 LVUI 검사\n- 범위: 설치·재배치 독립 소비자; 결과: Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과\n- 범위: 생성 C++ 타입 검사; 결과: 유효 2개 컴파일, 잘못된 9개 거부\n- 범위: LVRS 생성 C++; 결과: Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI Release CTest; 결과: 169/169 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 92/92 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 작업·공유 콜백·반환 함수 ThreadSanitizer; 결과: 19/19 통과, 빌린 Core Runtime 라이브러리는 비계측",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 기존 동작·생성 C++ 통합 검사; 결과: 77/77 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 77/77 통과, NativeBindings 구현은 별도 LVUI 검사",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 설치·재배치 독립 소비자; 결과: Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 생성 C++ 타입 검사; 결과: 유효 2개 컴파일, 잘못된 9개 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: LVRS 생성 C++; 결과: Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000062",
       "kind": "blank",
-      "start_line": 156,
-      "end_line": 156,
+      "start_line": 152,
+      "end_line": 152,
       "raw": "\n"
     },
     {
       "id": "b000063",
       "kind": "paragraph",
-      "start_line": 157,
-      "end_line": 160,
+      "start_line": 153,
+      "end_line": 156,
       "raw": "이동·복사 불가능한 const 함수 객체의 참조를 선택한 뒤 원본을 닫는 검사를 추가했다.\n원래 수신자가 스냅샷 때문에 남는 실패를 먼저 재현하고, 실행 중 차용과 대기 중 버전\n보유를 구분하여 수정했다. 소유한 함수 버전의 캡처는 선택한 그래프가 정리하며, 차용한\n함수의 원래 수신자는 종료 후 다시 호출하거나 수명을 연장하지 않는다.\n"
     },
     {
       "id": "b000064",
       "kind": "blank",
-      "start_line": 161,
-      "end_line": 161,
+      "start_line": 157,
+      "end_line": 157,
       "raw": "\n"
     },
     {
       "id": "b000065",
       "kind": "paragraph",
-      "start_line": 162,
-      "end_line": 164,
+      "start_line": 158,
+      "end_line": 160,
       "raw": "로그·소스 해시·설치 소비자·제품 비변경과 실행 경계는\n`build/lvui-completion/function-snapshots-verification-20261026.json`에 기록한다.\n이는 전체 LVUI·LVRS 완성을 선언하는 결과가 아니다.\n"
     }
   ],
@@ -626,7 +634,7 @@
       "level": 2,
       "title": "함수 버전 스냅샷 후속 검증",
       "anchor": "함수-버전-스냅샷-후속-검증",
-      "start_line": 141
+      "start_line": 139
     }
   ],
   "indexes": {
@@ -675,28 +683,28 @@
       },
       {
         "block_id": "b000053",
-        "line": 131,
+        "line": 129,
         "text": "잘못된 Bool·String·Void 결과, 이벤트 인자 수·타입, 필수 인자, private 접근을 생성 C++",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000055",
-        "line": 138,
+        "line": 136,
         "text": "이 기록의 주장 범위에 포함하지 않는다. 로그·해시·설치 소비자·실행 경계는",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000059",
-        "line": 144,
+        "line": 142,
         "text": "합산하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000063",
-        "line": 160,
+        "line": 156,
         "text": "함수의 원래 수신자는 종료 후 다시 호출하거나 수명을 연장하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -775,90 +783,7 @@
         "line": 112
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000051",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI Release CTest",
-            "167/167 통과"
-          ],
-          [
-            "관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer",
-            "90/90 통과"
-          ],
-          [
-            "작업·공유 콜백·반환 함수 ThreadSanitizer",
-            "17/17 통과, 빌린 Core Runtime 라이브러리는 비계측"
-          ],
-          [
-            "iiGUI 창 없는 기존 동작·생성 C++ 통합 검사",
-            "75/75 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-            "75/75 통과, NativeBindings 구현은 별도 LVUI 검사"
-          ],
-          [
-            "설치·재배치 독립 소비자",
-            "Native 함수·공개 컴파일러·선택적 Runtime 3/3 통과"
-          ],
-          [
-            "생성 C++ 타입 검사",
-            "유효 2개 컴파일, 잘못된 9개 거부"
-          ],
-          [
-            "LVRS 생성 C++",
-            "함수 결과·TableValidation 입력을 포함한 16개 팩터리 컴파일, 실행하지 않음"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000061",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI Release CTest",
-            "169/169 통과"
-          ],
-          [
-            "관련 언어·네이티브 런타임 AddressSanitizer + UndefinedBehaviorSanitizer",
-            "92/92 통과"
-          ],
-          [
-            "작업·공유 콜백·반환 함수 ThreadSanitizer",
-            "19/19 통과, 빌린 Core Runtime 라이브러리는 비계측"
-          ],
-          [
-            "iiGUI 창 없는 기존 동작·생성 C++ 통합 검사",
-            "77/77 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer",
-            "77/77 통과, NativeBindings 구현은 별도 LVUI 검사"
-          ],
-          [
-            "설치·재배치 독립 소비자",
-            "Native 스냅샷·공개 컴파일러·선택적 Runtime 3/3 통과"
-          ],
-          [
-            "생성 C++ 타입 검사",
-            "유효 2개 컴파일, 잘못된 9개 거부"
-          ],
-          [
-            "LVRS 생성 C++",
-            "Static 함수·TableValidation 스냅샷을 포함한 16개 팩터리 컴파일, 실행하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

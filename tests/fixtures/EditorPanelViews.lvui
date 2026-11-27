@@ -1,0 +1,12 @@
+import vm EditorPanelFixtureModel
+Window {
+    NonDestructivePreviewPanel(title: vm.text,
+        fields: [EditorTextControl(label: vm.text, value: vm.text, enabled: vm.enabled, onEdited: vm.execute),
+                 EditorToggleControl(label: vm.text, checked: vm.checked, enabled: vm.enabled, onToggled: vm.execute),
+                 EditorRangeControl(label: vm.text, value: vm.amount, minimum: vm.minimum, maximum: vm.maximum,
+                                    enabled: vm.enabled, onMoved: vm.execute),
+                 EditorChoiceControl(label: vm.text, selector: ListItemSelector(options: vm.choices,
+                     currentIndex: vm.index, enabled: vm.enabled, onCurrentIndexChanged: vm.execute))],
+        preview: [Label(text: vm.text)], applyLabel: vm.text, cancelLabel: vm.text,
+        applyEnabled: vm.enabled, onApply: vm.execute, onCancel: vm.execute)
+}

@@ -6,8 +6,16 @@ import os
 from pathlib import Path
 import sys
 import threading
+from .editor import (EditorError, EditorFieldKind, MenuEntryKind, EditorPanelKind, EditorPanelPhase, EditorPanelAction, EditorEffectKind,
+                     load_editor_library, EditorAutoFormBinding, MenuActionStateBinding, MenuSubmenuItemsBinding, MenuCommandParameterForm,
+                     NonDestructivePreviewPanel, MaskRefinementControls, LayerContentOptionsPanel, FilterGalleryPanel,
+                     ColorProfilePicker, SoftProofSettingsPanel, TimelineEditOptionsPanel, ExportFormatOptionsPanel)
 
-__all__ = ['CompileError', 'compile_native', 'compile_style_header']
+__all__ = ['CompileError', 'compile_native', 'compile_style_header', 'EditorError', 'EditorFieldKind', 'MenuEntryKind', 'EditorPanelKind',
+           'EditorPanelPhase', 'EditorPanelAction', 'EditorEffectKind', 'load_editor_library', 'EditorAutoFormBinding', 'MenuActionStateBinding',
+           'MenuSubmenuItemsBinding', 'MenuCommandParameterForm', 'NonDestructivePreviewPanel', 'MaskRefinementControls',
+           'LayerContentOptionsPanel', 'FilterGalleryPanel', 'ColorProfilePicker', 'SoftProofSettingsPanel',
+           'TimelineEditOptionsPanel', 'ExportFormatOptionsPanel']
 _SOURCE_LIMIT = 1024 * 1024
 _ARGUMENT_LIMIT = 4096
 _INCLUDE_LIMIT = 256
@@ -44,6 +52,35 @@ def _bytes(value: bytes) -> _Bytes:
     return _Bytes(value, len(value))
 
 
+def _configure_compiler(lib):
+    """Configure one caller-supplied bridge without changing its ownership."""
+    lib.lvui_compiler_abi_version.argtypes = []
+    lib.lvui_compiler_abi_version.restype = ctypes.c_int
+    if lib.lvui_compiler_abi_version() != 1:
+        raise RuntimeError('unsupported compiler bridge ABI')
+    lib.lvui_compiler_compile.argtypes = [_Bytes, _Bytes, ctypes.POINTER(_Bytes), ctypes.c_size_t, ctypes.POINTER(_Bytes)]
+    lib.lvui_compiler_compile.restype = ctypes.c_void_p
+    editor_compile = getattr(lib, 'lvui_compiler_compile_editor_panels', None)
+    if editor_compile is not None:
+        editor_compile.argtypes = lib.lvui_compiler_compile.argtypes
+        editor_compile.restype = ctypes.c_void_p
+    lib.lvui_compiler_styles.argtypes = [_Bytes, _Bytes]
+    lib.lvui_compiler_styles.restype = ctypes.c_void_p
+    for function in ('status', 'stage'):
+        entry = getattr(lib, 'lvui_compiler_result_' + function)
+        entry.argtypes = [ctypes.c_void_p]
+        entry.restype = ctypes.c_int
+    for function in ('offset', 'line', 'column', 'size'):
+        entry = getattr(lib, 'lvui_compiler_result_' + function)
+        entry.argtypes = [ctypes.c_void_p]
+        entry.restype = ctypes.c_size_t
+    lib.lvui_compiler_result_data.argtypes = [ctypes.c_void_p]
+    lib.lvui_compiler_result_data.restype = ctypes.c_void_p
+    lib.lvui_compiler_result_free.argtypes = [ctypes.c_void_p]
+    lib.lvui_compiler_result_free.restype = None
+    return lib
+
+
 def _native():
     global _library
     if _library is not None:
@@ -65,28 +102,7 @@ def _native():
             if not path.is_file():
                 continue
             try:
-                lib = ctypes.CDLL(str(path))
-                lib.lvui_compiler_abi_version.argtypes = []
-                lib.lvui_compiler_abi_version.restype = ctypes.c_int
-                if lib.lvui_compiler_abi_version() != 1:
-                    raise RuntimeError('unsupported compiler bridge ABI')
-                lib.lvui_compiler_compile.argtypes = [_Bytes, _Bytes, ctypes.POINTER(_Bytes),
-                                                       ctypes.c_size_t, ctypes.POINTER(_Bytes)]
-                lib.lvui_compiler_compile.restype = ctypes.c_void_p
-                lib.lvui_compiler_styles.argtypes = [_Bytes, _Bytes]
-                lib.lvui_compiler_styles.restype = ctypes.c_void_p
-                for function in ('status', 'stage'):
-                    entry = getattr(lib, 'lvui_compiler_result_' + function)
-                    entry.argtypes = [ctypes.c_void_p]
-                    entry.restype = ctypes.c_int
-                for function in ('offset', 'line', 'column', 'size'):
-                    entry = getattr(lib, 'lvui_compiler_result_' + function)
-                    entry.argtypes = [ctypes.c_void_p]
-                    entry.restype = ctypes.c_size_t
-                lib.lvui_compiler_result_data.argtypes = [ctypes.c_void_p]
-                lib.lvui_compiler_result_data.restype = ctypes.c_void_p
-                lib.lvui_compiler_result_free.argtypes = [ctypes.c_void_p]
-                lib.lvui_compiler_result_free.restype = None
+                lib = _configure_compiler(ctypes.CDLL(str(path)))
             except (OSError, AttributeError, RuntimeError) as error:
                 failures.append(f'{path}: {error}')
                 continue
@@ -122,8 +138,12 @@ def _result(lib, handle) -> str:
 
 
 def compile_native(source: str, *, name: str = 'MainView', includes=(),
-                   style_profile: str | None = None) -> str:
-    """Compile one LVUI view into C++23 without opening a window or writing files."""
+                   style_profile: str | None = None, editor_panels: bool = False, library=None) -> str:
+    """Compile LVUI to C++23; editor panels require an explicit native binding."""
+    if not isinstance(editor_panels, bool):
+        raise TypeError('editor_panels must be a bool')
+    if editor_panels and library is None:
+        raise TypeError('editor panels require an explicit native compiler library')
     source_bytes = _encode(source, 'source', _SOURCE_LIMIT, allow_nul=True)
     name_bytes = _encode(name, 'name', _ARGUMENT_LIMIT)
     if isinstance(includes, (str, bytes)):
@@ -136,9 +156,12 @@ def compile_native(source: str, *, name: str = 'MainView', includes=(),
     include_array = (_Bytes * len(items))(*(_bytes(item) for item in items)) if items else None
     profile_bytes = None if style_profile is None else _encode(style_profile, 'style_profile', _SOURCE_LIMIT, allow_nul=True)
     profile = None if profile_bytes is None else _bytes(profile_bytes)
-    lib = _native()
-    return _result(lib, lib.lvui_compiler_compile(_bytes(source_bytes), _bytes(name_bytes), include_array,
-                                                   len(items), None if profile is None else ctypes.byref(profile)))
+    lib = _native() if library is None else _configure_compiler(library)
+    compiler = getattr(lib, 'lvui_compiler_compile_editor_panels', None) if editor_panels else lib.lvui_compiler_compile
+    if compiler is None:
+        raise RuntimeError('the native LVUI compiler does not support editor panels')
+    return _result(lib, compiler(_bytes(source_bytes), _bytes(name_bytes), include_array,
+                                len(items), None if profile is None else ctypes.byref(profile)))
 
 
 def compile_style_header(profile: str, *, namespace: str = 'lvui_style') -> str:

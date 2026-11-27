@@ -27,6 +27,9 @@ LVUI_COMPILER_EXPORT int lvui_compiler_abi_version(void) LVUI_COMPILER_NOEXCEPT;
 LVUI_COMPILER_EXPORT lvui_compiler_result* lvui_compiler_compile(
     lvui_compiler_bytes source, lvui_compiler_bytes name, const lvui_compiler_bytes* includes,
     size_t include_count, const lvui_compiler_bytes* style_profile) LVUI_COMPILER_NOEXCEPT;
+LVUI_COMPILER_EXPORT lvui_compiler_result* lvui_compiler_compile_editor_panels(
+    lvui_compiler_bytes source, lvui_compiler_bytes name, const lvui_compiler_bytes* includes,
+    size_t include_count, const lvui_compiler_bytes* style_profile) LVUI_COMPILER_NOEXCEPT;
 LVUI_COMPILER_EXPORT lvui_compiler_result* lvui_compiler_styles(
     lvui_compiler_bytes profile, lvui_compiler_bytes cpp_namespace) LVUI_COMPILER_NOEXCEPT;
 LVUI_COMPILER_EXPORT int lvui_compiler_result_status(const lvui_compiler_result*) LVUI_COMPILER_NOEXCEPT;

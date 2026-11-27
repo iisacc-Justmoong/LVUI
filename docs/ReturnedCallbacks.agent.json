@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/ReturnedCallbacks.md",
-    "sha256": "70452407fb47c8181ebed70e573ae24bf7e2a2d0eda001dc53780a214367f984",
-    "bytes": 7147,
-    "line_count": 103,
+    "sha256": "b19cdbdb7c0dd8c697086bbbf941ae9358132ec3eef4eaa0dfb66a3c96de24b7",
+    "bytes": 7208,
+    "line_count": 101,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -316,71 +316,74 @@
     },
     {
       "id": "b000037",
-      "kind": "table",
       "start_line": 86,
-      "end_line": 94,
-      "raw": "| 범위 | 결과 |\n|---|---|\n| LVUI 전체 Release CTest | 140/140 통과 |\n| 관련 언어·네이티브 런타임 ASan·UBSan | 63/63 통과 |\n| iiGUI 창 없는 회귀·생성 C++ 연결 | 48/48 통과 |\n| iiGUI 구현·생성 C++ ASan·UBSan | 동일 48/48 통과 |\n| 설치·재배치 독립 소비자 | 코어 실행·컴파일러 소비자 2/2 통과 |\n| 잘못된 C++ 콜백 결과 | 독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인 |\n| 실제 LVRS 버튼·문자열 콜백 | 생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음 |\n",
-      "columns": [
-        "범위",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI 전체 Release CTest",
-          "140/140 통과"
-        ],
-        [
-          "관련 언어·네이티브 런타임 ASan·UBSan",
-          "63/63 통과"
-        ],
-        [
-          "iiGUI 창 없는 회귀·생성 C++ 연결",
-          "48/48 통과"
-        ],
-        [
-          "iiGUI 구현·생성 C++ ASan·UBSan",
-          "동일 48/48 통과"
-        ],
-        [
-          "설치·재배치 독립 소비자",
-          "코어 실행·컴파일러 소비자 2/2 통과"
-        ],
-        [
-          "잘못된 C++ 콜백 결과",
-          "독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인"
-        ],
-        [
-          "실제 LVRS 버튼·문자열 콜백",
-          "생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음"
-        ]
+      "end_line": 92,
+      "raw": "- 범위: LVUI 전체 Release CTest; 결과: 140/140 통과\n- 범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 63/63 통과\n- 범위: iiGUI 창 없는 회귀·생성 C++ 연결; 결과: 48/48 통과\n- 범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 48/48 통과\n- 범위: 설치·재배치 독립 소비자; 결과: 코어 실행·컴파일러 소비자 2/2 통과\n- 범위: 잘못된 C++ 콜백 결과; 결과: 독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인\n- 범위: 실제 LVRS 버튼·문자열 콜백; 결과: 생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: LVUI 전체 Release CTest; 결과: 140/140 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 관련 언어·네이티브 런타임 ASan·UBSan; 결과: 63/63 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 창 없는 회귀·생성 C++ 연결; 결과: 48/48 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: iiGUI 구현·생성 C++ ASan·UBSan; 결과: 동일 48/48 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 설치·재배치 독립 소비자; 결과: 코어 실행·컴파일러 소비자 2/2 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 잘못된 C++ 콜백 결과; 결과: 독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: 실제 LVRS 버튼·문자열 콜백; 결과: 생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 95,
-      "end_line": 95,
+      "start_line": 93,
+      "end_line": 93,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "paragraph",
-      "start_line": 96,
-      "end_line": 100,
+      "start_line": 94,
+      "end_line": 98,
       "raw": "호출 전 팩토리 평가와 의존 갱신, 이동 전용 함수, 실패 후 이전 함수 유지·복구, 재사용\nView의 수신자 포획, 문자열 이벤트, 자신의 조건부 분기와 창을 닫는 동작을 검사했다.\n검사 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.\nDreamscapes QML 관측 기준선 81개 파일의 변경은 0개이다. 이는 제품 프레임 지연·전체\n플랫폼 실행·전체 언어 완성을 입증하는 결과가 아니다.\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 101,
-      "end_line": 101,
+      "start_line": 99,
+      "end_line": 99,
       "raw": "\n"
     },
     {
       "id": "b000041",
       "kind": "paragraph",
-      "start_line": 102,
-      "end_line": 103,
+      "start_line": 100,
+      "end_line": 101,
       "raw": "원시 로그·소스 해시·설치 소비자·실행 경계는\n`build/lvui-completion/returned-callbacks-verification-20261026.json`에 기록한다.\n"
     }
   ],
@@ -486,7 +489,7 @@
       },
       {
         "block_id": "b000039",
-        "line": 98,
+        "line": 96,
         "text": "검사 실행 파일은 Qt 동적 의존성과 LVUI 파서·컴파일러 실행 심볼을 포함하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -530,45 +533,7 @@
         "line": 71
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000037",
-        "columns": [
-          "범위",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI 전체 Release CTest",
-            "140/140 통과"
-          ],
-          [
-            "관련 언어·네이티브 런타임 ASan·UBSan",
-            "63/63 통과"
-          ],
-          [
-            "iiGUI 창 없는 회귀·생성 C++ 연결",
-            "48/48 통과"
-          ],
-          [
-            "iiGUI 구현·생성 C++ ASan·UBSan",
-            "동일 48/48 통과"
-          ],
-          [
-            "설치·재배치 독립 소비자",
-            "코어 실행·컴파일러 소비자 2/2 통과"
-          ],
-          [
-            "잘못된 C++ 콜백 결과",
-            "독립 소비자 구성에서 `void`·숫자 반환 모두 컴파일 거부 확인"
-          ],
-          [
-            "실제 LVRS 버튼·문자열 콜백",
-            "생성 팩토리의 C++ 오브젝트 컴파일 통과, 실행하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

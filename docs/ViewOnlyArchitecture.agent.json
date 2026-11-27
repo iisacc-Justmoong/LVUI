@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/ViewOnlyArchitecture.md",
-    "sha256": "2e1c3fdd3b39cf1b1a13b680a642e64ea5adf6447542403cf0ad8dad6a8caf2c",
-    "bytes": 6013,
-    "line_count": 88,
+    "sha256": "d6d692fd690f6aee7d2ef5ac47a819255af5d00d3157be1022954749beb1c8a5",
+    "bytes": 6188,
+    "line_count": 86,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -115,92 +115,87 @@
     },
     {
       "id": "b000013",
-      "kind": "table",
       "start_line": 39,
-      "end_line": 44,
-      "raw": "| SwiftUI의 관리 개념 | LVUI와 C++에서의 대응 | 현재 범위 |\n|---|---|---|\n| `@StateObject` | 활성 뷰의 `import name Type`이 C++ 객체를 소유 | 활성화별 생성, 재그리기 시 유지 |\n| `@ObservedObject` | 상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용 | 전달과 수명을 명시해야 함 |\n| `@State` | 화면에만 속하는 임시 표시 상태를 해당 활성화에 둠 | 앱·도메인 상태의 대안이 아님 |\n| `@EnvironmentObject` | 공유 객체를 상위에서 자식에 명시적으로 전달 | 범용 계층 환경 주입은 아직 제공하지 않음 |\n",
-      "columns": [
-        "SwiftUI의 관리 개념",
-        "LVUI와 C++에서의 대응",
-        "현재 범위"
-      ],
-      "rows": [
-        [
-          "`@StateObject`",
-          "활성 뷰의 `import name Type`이 C++ 객체를 소유",
-          "활성화별 생성, 재그리기 시 유지"
-        ],
-        [
-          "`@ObservedObject`",
-          "상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용",
-          "전달과 수명을 명시해야 함"
-        ],
-        [
-          "`@State`",
-          "화면에만 속하는 임시 표시 상태를 해당 활성화에 둠",
-          "앱·도메인 상태의 대안이 아님"
-        ],
-        [
-          "`@EnvironmentObject`",
-          "공유 객체를 상위에서 자식에 명시적으로 전달",
-          "범용 계층 환경 주입은 아직 제공하지 않음"
-        ]
+      "end_line": 42,
+      "raw": "- SwiftUI의 관리 개념: `@StateObject`; LVUI와 C++에서의 대응: 활성 뷰의 `import name Type`이 C++ 객체를 소유; 현재 범위: 활성화별 생성, 재그리기 시 유지\n- SwiftUI의 관리 개념: `@ObservedObject`; LVUI와 C++에서의 대응: 상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용; 현재 범위: 전달과 수명을 명시해야 함\n- SwiftUI의 관리 개념: `@State`; LVUI와 C++에서의 대응: 화면에만 속하는 임시 표시 상태를 해당 활성화에 둠; 현재 범위: 앱·도메인 상태의 대안이 아님\n- SwiftUI의 관리 개념: `@EnvironmentObject`; LVUI와 C++에서의 대응: 공유 객체를 상위에서 자식에 명시적으로 전달; 현재 범위: 범용 계층 환경 주입은 아직 제공하지 않음\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "SwiftUI의 관리 개념: `@StateObject`; LVUI와 C++에서의 대응: 활성 뷰의 `import name Type`이 C++ 객체를 소유; 현재 범위: 활성화별 생성, 재그리기 시 유지",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "SwiftUI의 관리 개념: `@ObservedObject`; LVUI와 C++에서의 대응: 상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용; 현재 범위: 전달과 수명을 명시해야 함",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "SwiftUI의 관리 개념: `@State`; LVUI와 C++에서의 대응: 화면에만 속하는 임시 표시 상태를 해당 활성화에 둠; 현재 범위: 앱·도메인 상태의 대안이 아님",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "SwiftUI의 관리 개념: `@EnvironmentObject`; LVUI와 C++에서의 대응: 공유 객체를 상위에서 자식에 명시적으로 전달; 현재 범위: 범용 계층 환경 주입은 아직 제공하지 않음",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 45,
-      "end_line": 45,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 46,
-      "end_line": 47,
+      "start_line": 44,
+      "end_line": 45,
       "raw": "이 표는 소유·관측 관계를 비교하는 것이며 Swift의 속성 래퍼 문법이나 모든\nSwiftUI의 동작을 그대로 제공한다는 의미는 아니다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 48,
-      "end_line": 48,
+      "start_line": 46,
+      "end_line": 46,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 49,
-      "end_line": 56,
+      "start_line": 47,
+      "end_line": 54,
       "raw": "`ii::core::Observable` 같은 명시적 알림이나 쿼리 연결로 읽은 원본의 변경을\n관측한다. 알림 없는 임의 C++ 필드를 자동으로 감지한다고 가정하지 않는다.\n관측 가능한 값은 해당 값의 변경을 통해 갱신하며 매 프레임 뷰모델 전체를\n폴링하지 않는다. 현재 일반 C++ 필드는 이벤트 명령 후 백엔드 revision을 통해\n같은 백엔드의 일반 필드 바인딩을 함께 재평가하는 폴백이 있다. 이는 필드 단위의\n선택적 갱신과 구분하며 변경 여부를 추정하지 않는 명시적 알림이 더 적합하다. 비동기\n결과는 소유 실행 영역에 전달하고, 퇴역한 뷰에 늦은 결과를 반영하지 않는다.\nSwiftUI 자체, Swift 런타임, Qt 또는 인터프리터에 대한 의존성을 뜻하지 않는다.\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 57,
-      "end_line": 57,
+      "start_line": 55,
+      "end_line": 55,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "paragraph",
-      "start_line": 58,
-      "end_line": 62,
+      "start_line": 56,
+      "end_line": 60,
       "raw": "화면에만 속하는 펼침 여부 같은 일시적 표시 상태는 뷰 활성화가 보유할 수 있다.\n문서·계정·작업·미디어 등 앱 전반에서 의미를 갖는 상태와 그 변경 규칙은 C++\n뷰모델에 둔다. 색상·치수 상수와 재사용 `View` 선언은 뷰 구성의 일부이다.\nLVUI 값의 기본 계약은 `@State`와 `@Bindable`이며, 실제 쓰기 권한과\n명시적 `@Static` 예외는 [기본 반응형 값](ReactiveState.md)을 따른다.\n"
     },
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 63,
-      "end_line": 63,
+      "start_line": 61,
+      "end_line": 61,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "heading",
-      "start_line": 64,
-      "end_line": 64,
+      "start_line": 62,
+      "end_line": 62,
       "raw": "## 현재 구현과 전환\n",
       "level": 2,
       "title": "현재 구현과 전환"
@@ -208,57 +203,57 @@
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 65,
-      "end_line": 65,
+      "start_line": 63,
+      "end_line": 63,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 66,
-      "end_line": 72,
+      "start_line": 64,
+      "end_line": 70,
       "raw": "스코프 소유 C++ import, 공개 멤버 바인딩과 메서드 참조는 구현되어 있다.\n이벤트 블록은 뷰 상태 대입과 가져온 C++ 메서드 호출을 순서대로 실행할 수 있다.\n호출의 수명과 접수 경계는 [즉시 선언형 View](ImmediateDeclaration.md)를 따른다.\nLVUI는 객체 리터럴이나 이름 붙인 스크립트 본문을 선언하지 않는다. 객체 타입과\n구현은 C++에서 정의하고 `import`로 연결한다. C++ 메서드 참조를 상수로 연결하는\n것과 View의 콘텐츠를 선언하는 것은 메서드 정의가 아니다. 매개변수가 있는\n재사용 View도 빌드 시 View를 구성하는 선언이며 일반 메서드 본문을 정의하지 않는다.\n"
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 73,
-      "end_line": 73,
+      "start_line": 71,
+      "end_line": 71,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "paragraph",
-      "start_line": 74,
-      "end_line": 77,
+      "start_line": 72,
+      "end_line": 75,
       "raw": "[검증용 카운터](../example/GettingStarted/CppViewModelCounter.lvui)는\n[C++ 뷰모델](../example/GettingStarted/CppViewModelCounter.h)의 상태와 메서드만\n연결한다. 네이티브 검사는 독립 활성화·반응형 갱신·퇴역을 다루며,\n플랫폼 창이나 제품 앱의 실행 증거는 아니다.\n"
     },
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 78,
-      "end_line": 78,
+      "start_line": 76,
+      "end_line": 76,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "paragraph",
-      "start_line": 79,
-      "end_line": 80,
+      "start_line": 77,
+      "end_line": 78,
       "raw": "macOS arm64에서 일치하는 iiSDKCore·iiGUI 테스트 패키지로 구성한 기존 `build/`를\n사용하여 다음 검사를 수행했다. 생성된 위젯을 창 없이 검사한다.\n"
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 81,
-      "end_line": 81,
+      "start_line": 79,
+      "end_line": 79,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "fenced_code",
-      "start_line": 82,
-      "end_line": 85,
+      "start_line": 80,
+      "end_line": 83,
       "raw": "```sh\ncmake --build build --target LVUINativeViewOnlyTests\nctest --test-dir build --output-on-failure -R '^LVUI\\.NativeViewOnly$'\n```\n",
       "language": "sh",
       "code": "cmake --build build --target LVUINativeViewOnlyTests\nctest --test-dir build --output-on-failure -R '^LVUI\\.NativeViewOnly$'\n",
@@ -267,15 +262,15 @@
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 86,
-      "end_line": 86,
+      "start_line": 84,
+      "end_line": 84,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 87,
-      "end_line": 88,
+      "start_line": 85,
+      "end_line": 86,
       "raw": "별도 import·네이티브 메서드 참조·객체 전달·관측·쿼리·세션 검사 15건을 함께\n통과했다. 다른 운영체제의 빌드와 실제 GUI 실행을 검증한 결과는 아니다.\n"
     }
   ],
@@ -302,7 +297,7 @@
       "level": 2,
       "title": "현재 구현과 전환",
       "anchor": "현재-구현과-전환",
-      "start_line": 64
+      "start_line": 62
     }
   ],
   "indexes": {
@@ -316,42 +311,42 @@
       },
       {
         "block_id": "b000017",
-        "line": 50,
+        "line": 48,
         "text": "관측한다. 알림 없는 임의 C++ 필드를 자동으로 감지한다고 가정하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 52,
+        "line": 50,
         "text": "폴링하지 않는다. 현재 일반 C++ 필드는 이벤트 명령 후 백엔드 revision을 통해",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 55,
+        "line": 53,
         "text": "결과는 소유 실행 영역에 전달하고, 퇴역한 뷰에 늦은 결과를 반영하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 56,
+        "line": 54,
         "text": "SwiftUI 자체, Swift 런타임, Qt 또는 인터프리터에 대한 의존성을 뜻하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000023",
-        "line": 69,
+        "line": 67,
         "text": "LVUI는 객체 리터럴이나 이름 붙인 스크립트 본문을 선언하지 않는다. 객체 타입과",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000023",
-        "line": 72,
+        "line": 70,
         "text": "재사용 View도 빌드 시 View를 구성하는 선언이며 일반 메서드 본문을 정의하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -391,62 +386,31 @@
         "label": "기본 반응형 값",
         "target": "ReactiveState.md",
         "kind": "relative",
-        "line": 62
+        "line": 60
       },
       {
         "block_id": "b000023",
         "label": "즉시 선언형 View",
         "target": "ImmediateDeclaration.md",
         "kind": "relative",
-        "line": 68
+        "line": 66
       },
       {
         "block_id": "b000025",
         "label": "검증용 카운터",
         "target": "../example/GettingStarted/CppViewModelCounter.lvui",
         "kind": "relative",
-        "line": 74
+        "line": 72
       },
       {
         "block_id": "b000025",
         "label": "C++ 뷰모델",
         "target": "../example/GettingStarted/CppViewModelCounter.h",
         "kind": "relative",
-        "line": 75
+        "line": 73
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000013",
-        "columns": [
-          "SwiftUI의 관리 개념",
-          "LVUI와 C++에서의 대응",
-          "현재 범위"
-        ],
-        "rows": [
-          [
-            "`@StateObject`",
-            "활성 뷰의 `import name Type`이 C++ 객체를 소유",
-            "활성화별 생성, 재그리기 시 유지"
-          ],
-          [
-            "`@ObservedObject`",
-            "상위 소유 C++ 객체를 타입 지정 자식 입력으로 차용",
-            "전달과 수명을 명시해야 함"
-          ],
-          [
-            "`@State`",
-            "화면에만 속하는 임시 표시 상태를 해당 활성화에 둠",
-            "앱·도메인 상태의 대안이 아님"
-          ],
-          [
-            "`@EnvironmentObject`",
-            "공유 객체를 상위에서 자식에 명시적으로 전달",
-            "범용 계층 환경 주입은 아직 제공하지 않음"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

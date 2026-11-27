@@ -30,9 +30,12 @@ void generation() {
     const auto custom_window = compile("ApplicationWindow(windowChrome: .custom) { Label() }");
     check(custom_window.find(".chrome = ii::gui::WindowChrome::custom") != std::string::npos,
           "Custom window chrome was not forwarded to iiGUI");
-    const auto system_window = compile("ApplicationWindow { Label() }");
-    check(system_window.find("WindowChrome::custom") == std::string::npos,
-          "System window chrome must remain the default");
+    const auto default_window = compile("ApplicationWindow { Label() }");
+    check(default_window.find(".chrome = ii::gui::WindowChrome::custom") != std::string::npos,
+          "A default window must omit system chrome");
+    const auto system_window = compile("ApplicationWindow(windowChrome: .system) { Label() }");
+    check(system_window.find(".chrome = ii::gui::WindowChrome::system") != std::string::npos,
+          "Explicit system window chrome was not forwarded to iiGUI");
     bad("ApplicationWindow(windowChrome: .unknown) { Label() }", "windowChrome");
     bad("import vm Backend\nApplicationWindow(windowChrome: vm.chrome) { Label() }", "windowChrome");
     const auto custom_scene = compile("Application { Window(windowChrome: .custom) { Label() } }");

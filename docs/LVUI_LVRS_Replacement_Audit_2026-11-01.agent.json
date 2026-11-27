@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/LVUI_LVRS_Replacement_Audit_2026-11-01.md",
-    "sha256": "ef458ae8436d7495475357468f966cceacb75c4554748db54b8745f37df70ef2",
-    "bytes": 184494,
-    "line_count": 1930,
+    "sha256": "c3e93e88396b101dd3d78e6b44964cbe5c9f4f76c97db0d0dfe77dbc47a05ca9",
+    "bytes": 184951,
+    "line_count": 1924,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -1937,7 +1937,7 @@
       "kind": "paragraph",
       "start_line": 1593,
       "end_line": 1596,
-      "raw": "후속 소스 대조에서 Vulkan과 D3D11의 배경 흐림·그림자 경로가 이미 존재함을\n확인했다. 이전 조사에서 두 경로가 효과 요청을 명시적으로 거부한다고 적은 것은\n잘못이어서 아래 표를 바로잡았다. 소스 경로의 존재는 실제 플랫폼 실행이나 Metal과의\n시각·성능 동등성을 증명하지 않는다.\n"
+      "raw": "후속 소스 대조에서 Vulkan과 D3D11의 배경 흐림·그림자 경로가 이미 존재함을\n확인했다. 이전 조사에서 두 경로가 효과 요청을 명시적으로 거부한다고 적은 것은\n잘못이어서 아래 목록을 바로잡았다. 소스 경로의 존재는 실제 플랫폼 실행이나 Metal과의\n시각·성능 동등성을 증명하지 않는다.\n"
     },
     {
       "id": "b000274",
@@ -2452,87 +2452,82 @@
     },
     {
       "id": "b000343",
-      "kind": "table",
       "start_line": 1869,
-      "end_line": 1873,
-      "raw": "| 화면 | 조사 당시 제품 설정 `--framework LVRS` | 해당 인자 생략 |\n|---|---|---|\n| `Main.lvui` | `Unsupported native framework; LVUI uses iiGUI` | 생성 성공 |\n| `Preferences.lvui` | 같은 오류 | `Unknown input 'editable' for List`, 37행 |\n| `CanvasSetup.lvui` | 같은 오류 | 생성 성공 |\n",
-      "columns": [
-        "화면",
-        "조사 당시 제품 설정 `--framework LVRS`",
-        "해당 인자 생략"
-      ],
-      "rows": [
-        [
-          "`Main.lvui`",
-          "`Unsupported native framework; LVUI uses iiGUI`",
-          "생성 성공"
-        ],
-        [
-          "`Preferences.lvui`",
-          "같은 오류",
-          "`Unknown input 'editable' for List`, 37행"
-        ],
-        [
-          "`CanvasSetup.lvui`",
-          "같은 오류",
-          "생성 성공"
-        ]
+      "end_line": 1871,
+      "raw": "- 화면: `Main.lvui`; 조사 당시 제품 설정 `--framework LVRS`: `Unsupported native framework; LVUI uses iiGUI`; 해당 인자 생략: 생성 성공\n- 화면: `Preferences.lvui`; 조사 당시 제품 설정 `--framework LVRS`: 같은 오류; 해당 인자 생략: `Unknown input 'editable' for List`, 37행\n- 화면: `CanvasSetup.lvui`; 조사 당시 제품 설정 `--framework LVRS`: 같은 오류; 해당 인자 생략: 생성 성공\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "화면: `Main.lvui`; 조사 당시 제품 설정 `--framework LVRS`: `Unsupported native framework; LVUI uses iiGUI`; 해당 인자 생략: 생성 성공",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "화면: `Preferences.lvui`; 조사 당시 제품 설정 `--framework LVRS`: 같은 오류; 해당 인자 생략: `Unknown input 'editable' for List`, 37행",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "화면: `CanvasSetup.lvui`; 조사 당시 제품 설정 `--framework LVRS`: 같은 오류; 해당 인자 생략: 생성 성공",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000344",
+      "kind": "blank",
+      "start_line": 1872,
+      "end_line": 1872,
+      "raw": "\n"
+    },
+    {
+      "id": "b000345",
+      "kind": "paragraph",
+      "start_line": 1873,
+      "end_line": 1873,
+      "raw": "생성 성공은 C++ 컴파일·링크·실행 또는 기능 동등성의 증거가 아니다. 당시 Main의 생성 출력에는 앱이 지정한 `LegacyEditorBackend.h`가 포함됐고, 이 백엔드는 `lvrs::ListModel`을 사용했다. 당시 Preferences List의 첫 오류 이외에도 속성·모델·아이콘의 별도 검사가 필요했다.\n"
+    },
+    {
+      "id": "b000346",
       "kind": "blank",
       "start_line": 1874,
       "end_line": 1874,
       "raw": "\n"
     },
     {
-      "id": "b000345",
+      "id": "b000347",
       "kind": "paragraph",
       "start_line": 1875,
       "end_line": 1875,
-      "raw": "생성 성공은 C++ 컴파일·링크·실행 또는 기능 동등성의 증거가 아니다. 당시 Main의 생성 출력에는 앱이 지정한 `LegacyEditorBackend.h`가 포함됐고, 이 백엔드는 `lvrs::ListModel`을 사용했다. 당시 Preferences List의 첫 오류 이외에도 속성·모델·아이콘의 별도 검사가 필요했다.\n"
+      "raw": "대조군으로 직전 Congregation 후보 빌드가 사용한 `resources/.iisacc-p0-kit-t16vqcud/bin/lvui-compile`에 같은 현재 입력과 `--framework LVRS`를 전달했을 때 세 화면 모두 생성에 성공했다. 현재 독립 소스와 이 구형 패키지는 둘 다 버전 `0.1.0`으로 표기된다. 따라서 버전 숫자만 만족하는 `find_package`는 필요한 생성 기능을 구분하지 못한다. 직전 후보 빌드의 성공과 실제 계정 로그인은 구형 패키지 조합의 증거이지 현재 독립 LVUI 조합의 증거가 아니다.\n"
     },
     {
-      "id": "b000346",
+      "id": "b000348",
       "kind": "blank",
       "start_line": 1876,
       "end_line": 1876,
       "raw": "\n"
     },
     {
-      "id": "b000347",
+      "id": "b000349",
       "kind": "paragraph",
       "start_line": 1877,
       "end_line": 1877,
-      "raw": "대조군으로 직전 Congregation 후보 빌드가 사용한 `resources/.iisacc-p0-kit-t16vqcud/bin/lvui-compile`에 같은 현재 입력과 `--framework LVRS`를 전달했을 때 세 화면 모두 생성에 성공했다. 현재 독립 소스와 이 구형 패키지는 둘 다 버전 `0.1.0`으로 표기된다. 따라서 버전 숫자만 만족하는 `find_package`는 필요한 생성 기능을 구분하지 못한다. 직전 후보 빌드의 성공과 실제 계정 로그인은 구형 패키지 조합의 증거이지 현재 독립 LVUI 조합의 증거가 아니다.\n"
+      "raw": "조사 당시 Congregation에는 독립 `PresentationList`가 있었지만 Application은 LVUI용과 `lvrs::ListModel`용 목록을 함께 발행했다. 직접 LVRS 타입이나 호출을 포함하는 Native 소스는 정적 검색상 11개 파일이었으며, WidgetStyle의 공통 빌더를 통한 간접 호출도 별도로 있었다. 이후 활성 경로를 독립 LVUI로 전환했다. 당시 숫자는 이식해야 할 총 파일 수도 현재 잔존 의존성 수도 아니다.\n"
     },
     {
-      "id": "b000348",
+      "id": "b000350",
       "kind": "blank",
       "start_line": 1878,
       "end_line": 1878,
       "raw": "\n"
     },
     {
-      "id": "b000349",
-      "kind": "paragraph",
-      "start_line": 1879,
-      "end_line": 1879,
-      "raw": "조사 당시 Congregation에는 독립 `PresentationList`가 있었지만 Application은 LVUI용과 `lvrs::ListModel`용 목록을 함께 발행했다. 직접 LVRS 타입이나 호출을 포함하는 Native 소스는 정적 검색상 11개 파일이었으며, WidgetStyle의 공통 빌더를 통한 간접 호출도 별도로 있었다. 이후 활성 경로를 독립 LVUI로 전환했다. 당시 숫자는 이식해야 할 총 파일 수도 현재 잔존 의존성 수도 아니다.\n"
-    },
-    {
-      "id": "b000350",
-      "kind": "blank",
-      "start_line": 1880,
-      "end_line": 1880,
-      "raw": "\n"
-    },
-    {
       "id": "b000351",
       "kind": "heading",
-      "start_line": 1881,
-      "end_line": 1881,
+      "start_line": 1879,
+      "end_line": 1879,
       "raw": "## 실제 제품 사용 범위\n",
       "level": 2,
       "title": "실제 제품 사용 범위"
@@ -2540,108 +2535,97 @@
     {
       "id": "b000352",
       "kind": "blank",
-      "start_line": 1882,
-      "end_line": 1882,
+      "start_line": 1880,
+      "end_line": 1880,
       "raw": "\n"
     },
     {
       "id": "b000353",
       "kind": "paragraph",
-      "start_line": 1883,
-      "end_line": 1883,
+      "start_line": 1881,
+      "end_line": 1881,
       "raw": "다음은 각각 명시한 소스 디렉터리의 현재 `.qml` 파일을 읽어 단순 문자열·정규식으로 센 값이다. 주석·문자열·생성 경로의 의미를 완전히 해석하지 못하며, 파일 수·줄 수·출현 횟수는 기능 완성도나 작업량이 아니다. 빌드에 실제 포함되는 화면만 따로 판별한 수치도 아니다. 파일을 읽는 동안 크기나 수정 시각이 바뀐 파일은 없었으나 저장소 전체의 원자적 스냅샷은 아니다.\n"
     },
     {
       "id": "b000354",
       "kind": "blank",
-      "start_line": 1884,
-      "end_line": 1884,
+      "start_line": 1882,
+      "end_line": 1882,
       "raw": "\n"
     },
     {
       "id": "b000355",
-      "kind": "table",
-      "start_line": 1885,
-      "end_line": 1888,
-      "raw": "| 범위 | QML 파일 / 줄 | LVRS import 파일 | `별칭.타입 {` 출현 / 타입명 | 기타 어휘 관측 |\n|---|---:|---:|---:|---|\n| `Product/Dreamscapes/src/App` | 82 / 18,115 | 80 | 1,058 / 37 | `Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334 |\n| `Product/Society/App` | 53 / 11,415 | 51 | 793 / 32 | `Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672 |\n",
-      "columns": [
-        "범위",
-        "QML 파일 / 줄",
-        "LVRS import 파일",
-        "`별칭.타입 {` 출현 / 타입명",
-        "기타 어휘 관측"
-      ],
-      "rows": [
-        [
-          "`Product/Dreamscapes/src/App`",
-          "82 / 18,115",
-          "80",
-          "1,058 / 37",
-          "`Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334"
-        ],
-        [
-          "`Product/Society/App`",
-          "53 / 11,415",
-          "51",
-          "793 / 32",
-          "`Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672"
-        ]
+      "start_line": 1883,
+      "end_line": 1884,
+      "raw": "- 범위: `Product/Dreamscapes/src/App`; QML 파일 / 줄: 82 / 18,115; LVRS import 파일: 80; `별칭.타입 {` 출현 / 타입명: 1,058 / 37; 기타 어휘 관측: `Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334\n- 범위: `Product/Society/App`; QML 파일 / 줄: 53 / 11,415; LVRS import 파일: 51; `별칭.타입 {` 출현 / 타입명: 793 / 32; 기타 어휘 관측: `Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "범위: `Product/Dreamscapes/src/App`; QML 파일 / 줄: 82 / 18,115; LVRS import 파일: 80; `별칭.타입 {` 출현 / 타입명: 1,058 / 37; 기타 어휘 관측: `Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "범위: `Product/Society/App`; QML 파일 / 줄: 53 / 11,415; LVRS import 파일: 51; `별칭.타입 {` 출현 / 타입명: 793 / 32; 기타 어휘 관측: `Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000356",
+      "kind": "blank",
+      "start_line": 1885,
+      "end_line": 1885,
+      "raw": "\n"
+    },
+    {
+      "id": "b000357",
+      "kind": "paragraph",
+      "start_line": 1886,
+      "end_line": 1886,
+      "raw": "`별칭.타입 {`은 `import LVRS ... as 별칭`을 사용한 객체 선언만 센다. 래퍼·동적 타입·미한정 선언·타입 속성의 사용은 빠질 수 있다. Dreamscapes에는 단일 네이티브 [결과 갤러리 LVUI](../../../Product/Dreamscapes/src/App/Views/Result/NativeReviewGallery.lvui)가 있으나 이는 제품 전체의 전환 증거가 아니다. [현재 Dreamscapes CMake](../../../Product/Dreamscapes/CMakeLists.txt)는 LVRS와 Qt/QML 및 Qt 기반 SDK를 사용하며, Society도 [QML 모듈과 Qt Quick](../../../Product/Society/CMakeLists.txt)을 사용한다.\n"
+    },
+    {
+      "id": "b000358",
+      "kind": "blank",
+      "start_line": 1887,
+      "end_line": 1887,
+      "raw": "\n"
+    },
+    {
+      "id": "b000359",
+      "kind": "paragraph",
+      "start_line": 1888,
+      "end_line": 1888,
+      "raw": "예를 들어 Dreamscapes의 [프롬프트 편집기](../../../Product/Dreamscapes/src/App/Views/Home/DesktopGenerationComposer.qml)는 `LV.TextEditor`, QML 이벤트, 사용자 속성과 입력 상태를 결합한다. [그래픽 행](../../../Product/Dreamscapes/src/App/Views/Editor/EditorGraphicRow.qml)은 Loader·동적 분기·반복·Canvas 그리기를 결합한다. 현재 LVUI에서 비슷한 결과를 만들 수 있더라도 QML 소스가 자동으로 변환된다는 뜻은 아니다. 앱의 QObject/Q_PROPERTY, QVariant, QQuickItem, 비동기·모델 경계도 함께 교체하거나 어댑터로 분리해야 한다.\n"
+    },
+    {
+      "id": "b000360",
       "kind": "blank",
       "start_line": 1889,
       "end_line": 1889,
       "raw": "\n"
     },
     {
-      "id": "b000357",
+      "id": "b000361",
       "kind": "paragraph",
       "start_line": 1890,
       "end_line": 1890,
-      "raw": "`별칭.타입 {`은 `import LVRS ... as 별칭`을 사용한 객체 선언만 센다. 래퍼·동적 타입·미한정 선언·타입 속성의 사용은 빠질 수 있다. Dreamscapes에는 단일 네이티브 [결과 갤러리 LVUI](../../../Product/Dreamscapes/src/App/Views/Result/NativeReviewGallery.lvui)가 있으나 이는 제품 전체의 전환 증거가 아니다. [현재 Dreamscapes CMake](../../../Product/Dreamscapes/CMakeLists.txt)는 LVRS와 Qt/QML 및 Qt 기반 SDK를 사용하며, Society도 [QML 모듈과 Qt Quick](../../../Product/Society/CMakeLists.txt)을 사용한다.\n"
+      "raw": "관측 파일 집합을 재확인할 수 있도록 정렬된 상대 경로의 바이트 길이 4바이트 big-endian, 경로 UTF-8 바이트, 각 파일 SHA-256의 32바이트를 순서대로 연결한 SHA-256은 Dreamscapes `92a6ca44bc1a6f5a8345d5bf83c20c61bb75c4cd7e70ad8684b078f48de92504`, Society `5960ab87189d29d222a931d0cb839e9f7e9ce6d346b4281d826774c9b30b90c6`이다. 경로 기준은 표의 각 소스 루트다.\n"
     },
     {
-      "id": "b000358",
+      "id": "b000362",
       "kind": "blank",
       "start_line": 1891,
       "end_line": 1891,
       "raw": "\n"
     },
     {
-      "id": "b000359",
-      "kind": "paragraph",
-      "start_line": 1892,
-      "end_line": 1892,
-      "raw": "예를 들어 Dreamscapes의 [프롬프트 편집기](../../../Product/Dreamscapes/src/App/Views/Home/DesktopGenerationComposer.qml)는 `LV.TextEditor`, QML 이벤트, 사용자 속성과 입력 상태를 결합한다. [그래픽 행](../../../Product/Dreamscapes/src/App/Views/Editor/EditorGraphicRow.qml)은 Loader·동적 분기·반복·Canvas 그리기를 결합한다. 현재 LVUI에서 비슷한 결과를 만들 수 있더라도 QML 소스가 자동으로 변환된다는 뜻은 아니다. 앱의 QObject/Q_PROPERTY, QVariant, QQuickItem, 비동기·모델 경계도 함께 교체하거나 어댑터로 분리해야 한다.\n"
-    },
-    {
-      "id": "b000360",
-      "kind": "blank",
-      "start_line": 1893,
-      "end_line": 1893,
-      "raw": "\n"
-    },
-    {
-      "id": "b000361",
-      "kind": "paragraph",
-      "start_line": 1894,
-      "end_line": 1894,
-      "raw": "관측 파일 집합을 재확인할 수 있도록 정렬된 상대 경로의 바이트 길이 4바이트 big-endian, 경로 UTF-8 바이트, 각 파일 SHA-256의 32바이트를 순서대로 연결한 SHA-256은 Dreamscapes `92a6ca44bc1a6f5a8345d5bf83c20c61bb75c4cd7e70ad8684b078f48de92504`, Society `5960ab87189d29d222a931d0cb839e9f7e9ce6d346b4281d826774c9b30b90c6`이다. 경로 기준은 표의 각 소스 루트다.\n"
-    },
-    {
-      "id": "b000362",
-      "kind": "blank",
-      "start_line": 1895,
-      "end_line": 1895,
-      "raw": "\n"
-    },
-    {
       "id": "b000363",
       "kind": "heading",
-      "start_line": 1896,
-      "end_line": 1896,
+      "start_line": 1892,
+      "end_line": 1892,
       "raw": "## 컴포넌트·자산·플랫폼 차이\n",
       "level": 2,
       "title": "컴포넌트·자산·플랫폼 차이"
@@ -2649,108 +2633,103 @@
     {
       "id": "b000364",
       "kind": "blank",
-      "start_line": 1897,
-      "end_line": 1897,
+      "start_line": 1893,
+      "end_line": 1893,
       "raw": "\n"
     },
     {
       "id": "b000365",
       "kind": "paragraph",
-      "start_line": 1898,
-      "end_line": 1899,
+      "start_line": 1894,
+      "end_line": 1895,
       "raw": "이 절의 표와 자산 수치는 조사일의 기준선이다. 후속 이식과 최신 검증은 위의\n진행 기록 및 각 컴포넌트 계약을 기준으로 판단한다.\n"
     },
     {
       "id": "b000366",
       "kind": "blank",
-      "start_line": 1900,
-      "end_line": 1900,
+      "start_line": 1896,
+      "end_line": 1896,
       "raw": "\n"
     },
     {
       "id": "b000367",
-      "kind": "table",
-      "start_line": 1901,
-      "end_line": 1908,
-      "raw": "| 영역 | 현재 가능한 부분 | 대체 전에 남은 비용 |\n|---|---|---|\n| 입력 | LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다. | 자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md) |\n| 메뉴 | 직접 자식·하위 메뉴와 키보드 탐색을 제공한다. | 조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md) |\n| 목록·계층·표 | 가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다. | 계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md) |\n| 이미지·폰트·자산 | 앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다. | 자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md) |\n| 재질·모션 | LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다. | 독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md) |\n| 시각·접근성 | 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다. | 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다. |\n",
-      "columns": [
-        "영역",
-        "현재 가능한 부분",
-        "대체 전에 남은 비용"
-      ],
-      "rows": [
-        [
-          "입력",
-          "LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다.",
-          "자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md)"
-        ],
-        [
-          "메뉴",
-          "직접 자식·하위 메뉴와 키보드 탐색을 제공한다.",
-          "조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md)"
-        ],
-        [
-          "목록·계층·표",
-          "가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다.",
-          "계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md)"
-        ],
-        [
-          "이미지·폰트·자산",
-          "앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다.",
-          "자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md)"
-        ],
-        [
-          "재질·모션",
-          "LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다.",
-          "독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md)"
-        ],
-        [
-          "시각·접근성",
-          "일부 호스트는 역할·입력·그리기 인터페이스를 제공한다.",
-          "각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다."
-        ]
+      "start_line": 1897,
+      "end_line": 1902,
+      "raw": "- 영역: 입력; 현재 가능한 부분: LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다.; 대체 전에 남은 비용: 자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md)\n- 영역: 메뉴; 현재 가능한 부분: 직접 자식·하위 메뉴와 키보드 탐색을 제공한다.; 대체 전에 남은 비용: 조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md)\n- 영역: 목록·계층·표; 현재 가능한 부분: 가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다.; 대체 전에 남은 비용: 계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md)\n- 영역: 이미지·폰트·자산; 현재 가능한 부분: 앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다.; 대체 전에 남은 비용: 자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md)\n- 영역: 재질·모션; 현재 가능한 부분: LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다.; 대체 전에 남은 비용: 독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md)\n- 영역: 시각·접근성; 현재 가능한 부분: 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다.; 대체 전에 남은 비용: 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "영역: 입력; 현재 가능한 부분: LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다.; 대체 전에 남은 비용: 자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 메뉴; 현재 가능한 부분: 직접 자식·하위 메뉴와 키보드 탐색을 제공한다.; 대체 전에 남은 비용: 조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 목록·계층·표; 현재 가능한 부분: 가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다.; 대체 전에 남은 비용: 계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 이미지·폰트·자산; 현재 가능한 부분: 앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다.; 대체 전에 남은 비용: 자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 재질·모션; 현재 가능한 부분: LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다.; 대체 전에 남은 비용: 독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md)",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "영역: 시각·접근성; 현재 가능한 부분: 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다.; 대체 전에 남은 비용: 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000368",
       "kind": "blank",
-      "start_line": 1909,
-      "end_line": 1909,
+      "start_line": 1903,
+      "end_line": 1903,
       "raw": "\n"
     },
     {
       "id": "b000369",
       "kind": "paragraph",
-      "start_line": 1910,
-      "end_line": 1910,
+      "start_line": 1904,
+      "end_line": 1904,
       "raw": "조사 당시 LVUI의 `resources/icons/*.svg`는 16개였다. 기존 아이콘 문서의 기본 이름 목록은 그보다 적어 당시 파일 목록보다 오래되었다. LVRS Figma 기준 매니페스트에는 2,846개 정규 아이콘이 있다. LVRS `resources/iconset/`의 SVG 파일 2,860개, 총 4,704,406바이트를 읽어 당시 [LVUI 임베더](../tools/embed_icons.py)의 이름·크기·XML 요소·`href`/`url(` 규칙에 맞추어 정적 예비 검사했다. 2,589개는 검사한 조건을 통과했고 271개는 하나 이상의 조건에 걸렸다. 원인은 `href`/`url(` 181개, 이름 패턴 114개, 64KiB 초과 2개, 이미지 요소 2개, 필터 요소 1개이며 중복 가능하므로 합산하지 않는다. 토큰 해석·symlink·실제 디코더와 픽셀 출력의 완전한 검증은 포함하지 않았다. 기존 2,846개 정규 아이콘과 폴더 2,860개는 서로 다른 집합이므로 비율로 비교하지 않는다.\n"
     },
     {
       "id": "b000370",
       "kind": "blank",
-      "start_line": 1911,
-      "end_line": 1911,
+      "start_line": 1905,
+      "end_line": 1905,
       "raw": "\n"
     },
     {
       "id": "b000371",
       "kind": "paragraph",
-      "start_line": 1912,
-      "end_line": 1912,
+      "start_line": 1906,
+      "end_line": 1906,
       "raw": "제품의 문자 리터럴 `iconName`만 비교하면 Society 26개 중 21개, Dreamscapes 45개 중 42개, Congregation의 네 `.lvui` 파일 7개 중 7개가 LVUI 기본 파일명과 일치하지 않았다. 동적으로 만들어지는 이름·별칭·앱 공급 아이콘은 센 값에 포함되지 않는다. 별도의 `IconSource`를 제공하거나 LVRS 자산을 적법하게 이전하면 해결할 수 있으나, 파일 복사만으로 현재 기본 임베더와 시각 동등성이 해결되는 것은 아니다.\n"
     },
     {
       "id": "b000372",
       "kind": "blank",
-      "start_line": 1913,
-      "end_line": 1913,
+      "start_line": 1907,
+      "end_line": 1907,
       "raw": "\n"
     },
     {
       "id": "b000373",
       "kind": "heading",
-      "start_line": 1914,
-      "end_line": 1914,
+      "start_line": 1908,
+      "end_line": 1908,
       "raw": "## 플랫폼과 검증 증거\n",
       "level": 2,
       "title": "플랫폼과 검증 증거"
@@ -2758,57 +2737,57 @@
     {
       "id": "b000374",
       "kind": "blank",
-      "start_line": 1915,
-      "end_line": 1915,
+      "start_line": 1909,
+      "end_line": 1909,
       "raw": "\n"
     },
     {
       "id": "b000375",
       "kind": "paragraph",
-      "start_line": 1916,
-      "end_line": 1916,
+      "start_line": 1910,
+      "end_line": 1910,
       "raw": "iiGUI의 현재 [호스트 계약](../../iiGUI/docs/HostPlatforms.md)은 macOS/Metal, Windows/D3D11, Linux/Wayland·X11/Vulkan, Android/Vulkan, iOS/Metal과 Web/WebGL2를 기술한다. 이는 빌드에 구현된 계약이며 모든 기능의 실기기 동작을 뜻하지 않는다. Wayland는 IME preedit·접근성·태블릿/터치·DnD·보조 창 등이 없고, Android는 편집용 Unicode shaping/IME·접근성 등이 남아 있다. [iOS 계약](../../iiGUI/docs/IPADOS.md)은 확정 문자 입력과 Pencil 샘플을 제공하지만 전체 marked-text 계약과 외부 드래그 앤 드롭 검증을 포함하지 않는다.\n"
     },
     {
       "id": "b000376",
       "kind": "blank",
-      "start_line": 1917,
-      "end_line": 1917,
+      "start_line": 1911,
+      "end_line": 1911,
       "raw": "\n"
     },
     {
       "id": "b000377",
       "kind": "paragraph",
-      "start_line": 1918,
-      "end_line": 1918,
+      "start_line": 1912,
+      "end_line": 1912,
       "raw": "2026-10-27 iiGUI 기록은 macOS Metal 창과 Web 브라우저 실행을 기재하고, Windows/Linux는 교차 빌드와 설치 소비자 링크만 기재한다. LVUI의 2026-10-29 독립 경로 기록은 Qt·LVRS 패키지 탐색을 끈 macOS 설치 소비자의 컴파일·링크와 헤드리스 회귀를 기재하지만, Qt·LVRS 파일 자체를 차단한 완전 클린 환경이나 최신 전체 제품의 실행을 증명하지 않는다. 해당 문서는 525개 중 최초 524개 통과와 패키지 검사 실패 후 재시도 결과도 따로 남긴다. 이후 소스·자산이 변경됐고 이번 조사에서 최신 전체 빌드·테스트, 실제 GUI·장치·스크린 리더 검사는 실행하지 않았다. `build/Testing/Temporary/LastTest.log`는 2026-10-31 개별 토큰 검사만 포함하며 전체 최신 회귀의 결과가 아니다. `LastTestsFailed.log`에 남은 두 항목만으로 현재 실패 여부를 단정하지 않는다.\n"
     },
     {
       "id": "b000378",
       "kind": "blank",
-      "start_line": 1919,
-      "end_line": 1919,
+      "start_line": 1913,
+      "end_line": 1913,
       "raw": "\n"
     },
     {
       "id": "b000379",
       "kind": "paragraph",
-      "start_line": 1920,
-      "end_line": 1920,
+      "start_line": 1914,
+      "end_line": 1914,
       "raw": "이전 LVUI 감사의 149개 선언·완료 상태는 과거 LVRS 리비전과 당시 감사 범위의 자료다. 현재 커버리지 비율이나 기존 제품의 전환률로 사용하지 않는다. 제품별 이식 시간, 개발 인건비, 런타임 지연, 바이너리 크기, 메모리 및 지원 비용의 동조건 비교도 확보되지 않았다.\n"
     },
     {
       "id": "b000380",
       "kind": "blank",
-      "start_line": 1921,
-      "end_line": 1921,
+      "start_line": 1915,
+      "end_line": 1915,
       "raw": "\n"
     },
     {
       "id": "b000381",
       "kind": "heading",
-      "start_line": 1922,
-      "end_line": 1922,
+      "start_line": 1916,
+      "end_line": 1916,
       "raw": "## 권고와 비용을 확정하는 방법\n",
       "level": 2,
       "title": "권고와 비용을 확정하는 방법"
@@ -2816,15 +2795,15 @@
     {
       "id": "b000382",
       "kind": "blank",
-      "start_line": 1923,
-      "end_line": 1923,
+      "start_line": 1917,
+      "end_line": 1917,
       "raw": "\n"
     },
     {
       "id": "b000383",
       "kind": "list",
-      "start_line": 1924,
-      "end_line": 1928,
+      "start_line": 1918,
+      "end_line": 1922,
       "raw": "1. **즉시 호환성 고정:** 기존 제품에는 동작이 검증된 LVUI·LVRS·iiGUI 패키지 조합을 고정하고 독립 경로의 기능 표기와 서로 다른 버전을 배포 계약에 반영한다. 하나의 `0.1.0` 버전만으로 호환을 추정하지 않는다. 기존 앱과 신규 앱이 필요한 기간 동안 구형 패키지와 신규 패키지를 격리하되 독립 구현에 LVRS 런타임 의존성을 다시 추가하지 않는다.\n2. **Congregation 수직 단면:** Preferences의 멤버 목록을 `PresentationList`와 LVUI의 실제 목록 계약에 연결하고 해당 생성 코드와 앱을 빌드한다. 상태 보존·선택·변경·취소, 아이콘과 화면을 검증한 뒤 공통 빌더, 색상·재질, 타임라인 순으로 LVRS 타입을 제거한다. 기존 모델과 신규 모델의 이중 발행이 끝나는 시점을 명시한다.\n3. **공유 자산:** 자산 목록·별칭을 LVUI 소유 데이터로 이전하고 내부 참조, 이미지 포함, 64KiB 제한, 토큰 연결을 명시적으로 처리한다. 교체 가능한 `IconSource`와 기존 자산을 사용하되 동일 원본의 색상·크기·DPI·상태별 결과를 별도 비교한다. 렌더러·포맷 제한을 우회해 유효하지 않은 SVG를 조용히 허용하지 않는다.\n4. **제품별 우선순위:** 다국어 프롬프트, 목록·동적 콘텐츠, 팝업·IME·접근성 같은 실제 사용도가 높은 기능을 먼저 완성하고 이후 복합 표·고급 편집기 등 필요 기능으로 확장한다. LVRS 네이티브의 소스·테스트·자산을 사용 가능한 범위에서 옮겨 기존 LVUI 구현과 통합한다.\n5. **견적 전 유료 작업량 측정:** 첫 1~2개 수직 단면에 최대 5~10인일을 조사 예산으로 배정하고, 이 숫자를 완료 예상치로 취급하지 않는다. 기능·자산·모델 이식, 테스트 및 플랫폼별 검증 시간을 분리해서 기록한다. 화면·상태별 대조표와 남은 항목을 바탕으로 전체 제품 견적을 다시 산정한다. 런타임 화면·기기 검증은 별도의 명시적 실행 요청을 받은 범위에서 실시한다.\n",
       "items": [
         {
@@ -2857,15 +2836,15 @@
     {
       "id": "b000384",
       "kind": "blank",
-      "start_line": 1929,
-      "end_line": 1929,
+      "start_line": 1923,
+      "end_line": 1923,
       "raw": "\n"
     },
     {
       "id": "b000385",
       "kind": "paragraph",
-      "start_line": 1930,
-      "end_line": 1930,
+      "start_line": 1924,
+      "end_line": 1924,
       "raw": "비용 모델은 `공통 SDK 보완 + 제품별 UI·모델 변환 + 자산/시각 검증 + OS별 검증 + 배포·유지보수`다. Qt 제거의 기대 효과는 배포 크기, 라이선스·업데이트·문제 대응과 제품별 개발 시간의 실제 측정으로 산정해야 한다. 비교 가능한 시간이나 운영비가 없으므로 지금은 손익분기 시점이나 금액을 수치로 확정할 근거가 없다.\n"
     }
   ],
@@ -2924,7 +2903,7 @@
       "level": 2,
       "title": "실제 제품 사용 범위",
       "anchor": "실제-제품-사용-범위",
-      "start_line": 1881
+      "start_line": 1879
     },
     {
       "block_id": "b000363",
@@ -2932,7 +2911,7 @@
       "level": 2,
       "title": "컴포넌트·자산·플랫폼 차이",
       "anchor": "컴포넌트자산플랫폼-차이",
-      "start_line": 1896
+      "start_line": 1892
     },
     {
       "block_id": "b000373",
@@ -2940,7 +2919,7 @@
       "level": 2,
       "title": "플랫폼과 검증 증거",
       "anchor": "플랫폼과-검증-증거",
-      "start_line": 1914
+      "start_line": 1908
     },
     {
       "block_id": "b000381",
@@ -2948,7 +2927,7 @@
       "level": 2,
       "title": "권고와 비용을 확정하는 방법",
       "anchor": "권고와-비용을-확정하는-방법",
-      "start_line": 1922
+      "start_line": 1916
     }
   ],
   "indexes": {
@@ -3760,70 +3739,70 @@
       },
       {
         "block_id": "b000359",
-        "line": 1892,
+        "line": 1888,
         "text": "예를 들어 Dreamscapes의 [프롬프트 편집기](../../../Product/Dreamscapes/src/App/Views/Home/DesktopGenerationComposer.qml)는 `LV.TextEditor`, QML 이벤트, 사용자 속성과 입력 상태를 결합한다. [그래픽 행](../../../Product/Dreamscapes/src/App/Views/Editor/EditorGraphicRow.qml)은 Loader·동적 분기·반복·Canvas 그리기를 결합한다. 현재 LVUI에서 비슷한 결과를 만들 수 있더라도 QML 소스가 자동으로 변환된다는 뜻은 아니다. 앱의 QObject/Q_PROPERTY, QVariant, QQuickItem, 비동기·모델 경계도 함께 교체하거나 어댑터로 분리해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000367",
-        "line": 1908,
-        "text": "| 시각·접근성 | 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다. | 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다. |",
+        "line": 1902,
+        "text": "- 영역: 시각·접근성; 현재 가능한 부분: 일부 호스트는 역할·입력·그리기 인터페이스를 제공한다.; 대체 전에 남은 비용: 각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다.",
         "basis": "lexical_match",
-        "context": "table"
+        "context": "list"
       },
       {
         "block_id": "b000369",
-        "line": 1910,
+        "line": 1904,
         "text": "조사 당시 LVUI의 `resources/icons/*.svg`는 16개였다. 기존 아이콘 문서의 기본 이름 목록은 그보다 적어 당시 파일 목록보다 오래되었다. LVRS Figma 기준 매니페스트에는 2,846개 정규 아이콘이 있다. LVRS `resources/iconset/`의 SVG 파일 2,860개, 총 4,704,406바이트를 읽어 당시 [LVUI 임베더](../tools/embed_icons.py)의 이름·크기·XML 요소·`href`/`url(` 규칙에 맞추어 정적 예비 검사했다. 2,589개는 검사한 조건을 통과했고 271개는 하나 이상의 조건에 걸렸다. 원인은 `href`/`url(` 181개, 이름 패턴 114개, 64KiB 초과 2개, 이미지 요소 2개, 필터 요소 1개이며 중복 가능하므로 합산하지 않는다. 토큰 해석·symlink·실제 디코더와 픽셀 출력의 완전한 검증은 포함하지 않았다. 기존 2,846개 정규 아이콘과 폴더 2,860개는 서로 다른 집합이므로 비율로 비교하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000375",
-        "line": 1916,
+        "line": 1910,
         "text": "iiGUI의 현재 [호스트 계약](../../iiGUI/docs/HostPlatforms.md)은 macOS/Metal, Windows/D3D11, Linux/Wayland·X11/Vulkan, Android/Vulkan, iOS/Metal과 Web/WebGL2를 기술한다. 이는 빌드에 구현된 계약이며 모든 기능의 실기기 동작을 뜻하지 않는다. Wayland는 IME preedit·접근성·태블릿/터치·DnD·보조 창 등이 없고, Android는 편집용 Unicode shaping/IME·접근성 등이 남아 있다. [iOS 계약](../../iiGUI/docs/IPADOS.md)은 확정 문자 입력과 Pencil 샘플을 제공하지만 전체 marked-text 계약과 외부 드래그 앤 드롭 검증을 포함하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000377",
-        "line": 1918,
+        "line": 1912,
         "text": "2026-10-27 iiGUI 기록은 macOS Metal 창과 Web 브라우저 실행을 기재하고, Windows/Linux는 교차 빌드와 설치 소비자 링크만 기재한다. LVUI의 2026-10-29 독립 경로 기록은 Qt·LVRS 패키지 탐색을 끈 macOS 설치 소비자의 컴파일·링크와 헤드리스 회귀를 기재하지만, Qt·LVRS 파일 자체를 차단한 완전 클린 환경이나 최신 전체 제품의 실행을 증명하지 않는다. 해당 문서는 525개 중 최초 524개 통과와 패키지 검사 실패 후 재시도 결과도 따로 남긴다. 이후 소스·자산이 변경됐고 이번 조사에서 최신 전체 빌드·테스트, 실제 GUI·장치·스크린 리더 검사는 실행하지 않았다. `build/Testing/Temporary/LastTest.log`는 2026-10-31 개별 토큰 검사만 포함하며 전체 최신 회귀의 결과가 아니다. `LastTestsFailed.log`에 남은 두 항목만으로 현재 실패 여부를 단정하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000379",
-        "line": 1920,
+        "line": 1914,
         "text": "이전 LVUI 감사의 149개 선언·완료 상태는 과거 LVRS 리비전과 당시 감사 범위의 자료다. 현재 커버리지 비율이나 기존 제품의 전환률로 사용하지 않는다. 제품별 이식 시간, 개발 인건비, 런타임 지연, 바이너리 크기, 메모리 및 지원 비용의 동조건 비교도 확보되지 않았다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000383",
-        "line": 1924,
+        "line": 1918,
         "text": "1. **즉시 호환성 고정:** 기존 제품에는 동작이 검증된 LVUI·LVRS·iiGUI 패키지 조합을 고정하고 독립 경로의 기능 표기와 서로 다른 버전을 배포 계약에 반영한다. 하나의 `0.1.0` 버전만으로 호환을 추정하지 않는다. 기존 앱과 신규 앱이 필요한 기간 동안 구형 패키지와 신규 패키지를 격리하되 독립 구현에 LVRS 런타임 의존성을 다시 추가하지 않는다.",
         "basis": "lexical_match",
         "context": "list"
       },
       {
         "block_id": "b000383",
-        "line": 1926,
+        "line": 1920,
         "text": "3. **공유 자산:** 자산 목록·별칭을 LVUI 소유 데이터로 이전하고 내부 참조, 이미지 포함, 64KiB 제한, 토큰 연결을 명시적으로 처리한다. 교체 가능한 `IconSource`와 기존 자산을 사용하되 동일 원본의 색상·크기·DPI·상태별 결과를 별도 비교한다. 렌더러·포맷 제한을 우회해 유효하지 않은 SVG를 조용히 허용하지 않는다.",
         "basis": "lexical_match",
         "context": "list"
       },
       {
         "block_id": "b000383",
-        "line": 1928,
+        "line": 1922,
         "text": "5. **견적 전 유료 작업량 측정:** 첫 1~2개 수직 단면에 최대 5~10인일을 조사 예산으로 배정하고, 이 숫자를 완료 예상치로 취급하지 않는다. 기능·자산·모델 이식, 테스트 및 플랫폼별 검증 시간을 분리해서 기록한다. 화면·상태별 대조표와 남은 항목을 바탕으로 전체 제품 견적을 다시 산정한다. 런타임 화면·기기 검증은 별도의 명시적 실행 요청을 받은 범위에서 실시한다.",
         "basis": "lexical_match",
         "context": "list"
       },
       {
         "block_id": "b000385",
-        "line": 1930,
+        "line": 1924,
         "text": "비용 모델은 `공통 SDK 보완 + 제품별 UI·모델 변환 + 자산/시각 검증 + OS별 검증 + 배포·유지보수`다. Qt 제거의 기대 효과는 배포 크기, 라이선스·업데이트·문제 대응과 제품별 개발 시간의 실제 측정으로 산정해야 한다. 비교 가능한 시간이나 운영비가 없으므로 지금은 손익분기 시점이나 금액을 수치로 확정할 근거가 없다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -4263,207 +4242,115 @@
         "label": "결과 갤러리 LVUI",
         "target": "../../../Product/Dreamscapes/src/App/Views/Result/NativeReviewGallery.lvui",
         "kind": "relative",
-        "line": 1890
+        "line": 1886
       },
       {
         "block_id": "b000357",
         "label": "현재 Dreamscapes CMake",
         "target": "../../../Product/Dreamscapes/CMakeLists.txt",
         "kind": "relative",
-        "line": 1890
+        "line": 1886
       },
       {
         "block_id": "b000357",
         "label": "QML 모듈과 Qt Quick",
         "target": "../../../Product/Society/CMakeLists.txt",
         "kind": "relative",
-        "line": 1890
+        "line": 1886
       },
       {
         "block_id": "b000359",
         "label": "프롬프트 편집기",
         "target": "../../../Product/Dreamscapes/src/App/Views/Home/DesktopGenerationComposer.qml",
         "kind": "relative",
-        "line": 1892
+        "line": 1888
       },
       {
         "block_id": "b000359",
         "label": "그래픽 행",
         "target": "../../../Product/Dreamscapes/src/App/Views/Editor/EditorGraphicRow.qml",
         "kind": "relative",
-        "line": 1892
+        "line": 1888
       },
       {
         "block_id": "b000367",
         "label": "입력 계약",
         "target": "NativeInputField.md",
         "kind": "relative",
-        "line": 1903
+        "line": 1897
       },
       {
         "block_id": "b000367",
         "label": "메뉴 계약",
         "target": "NativeMenu.md",
         "kind": "relative",
-        "line": 1904
+        "line": 1898
       },
       {
         "block_id": "b000367",
         "label": "계층 목록",
         "target": "NativeOwnedHierarchyList.md",
         "kind": "relative",
-        "line": 1905
+        "line": 1899
       },
       {
         "block_id": "b000367",
         "label": "표",
         "target": "NativeOwnedTable.md",
         "kind": "relative",
-        "line": 1905
+        "line": 1899
       },
       {
         "block_id": "b000367",
         "label": "이미지",
         "target": "NativeImage.md",
         "kind": "relative",
-        "line": 1906
+        "line": 1900
       },
       {
         "block_id": "b000367",
         "label": "아이콘",
         "target": "NativeIcons.md",
         "kind": "relative",
-        "line": 1906
+        "line": 1900
       },
       {
         "block_id": "b000367",
         "label": "재질",
         "target": "NativeMaterials.md",
         "kind": "relative",
-        "line": 1907
+        "line": 1901
       },
       {
         "block_id": "b000367",
         "label": "iiGUI backdrop",
         "target": "../../iiGUI/docs/BackdropMaterials.md",
         "kind": "relative",
-        "line": 1907
+        "line": 1901
       },
       {
         "block_id": "b000369",
         "label": "LVUI 임베더",
         "target": "../tools/embed_icons.py",
         "kind": "relative",
-        "line": 1910
+        "line": 1904
       },
       {
         "block_id": "b000375",
         "label": "호스트 계약",
         "target": "../../iiGUI/docs/HostPlatforms.md",
         "kind": "relative",
-        "line": 1916
+        "line": 1910
       },
       {
         "block_id": "b000375",
         "label": "iOS 계약",
         "target": "../../iiGUI/docs/IPADOS.md",
         "kind": "relative",
-        "line": 1916
+        "line": 1910
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000343",
-        "columns": [
-          "화면",
-          "조사 당시 제품 설정 `--framework LVRS`",
-          "해당 인자 생략"
-        ],
-        "rows": [
-          [
-            "`Main.lvui`",
-            "`Unsupported native framework; LVUI uses iiGUI`",
-            "생성 성공"
-          ],
-          [
-            "`Preferences.lvui`",
-            "같은 오류",
-            "`Unknown input 'editable' for List`, 37행"
-          ],
-          [
-            "`CanvasSetup.lvui`",
-            "같은 오류",
-            "생성 성공"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000355",
-        "columns": [
-          "범위",
-          "QML 파일 / 줄",
-          "LVRS import 파일",
-          "`별칭.타입 {` 출현 / 타입명",
-          "기타 어휘 관측"
-        ],
-        "rows": [
-          [
-            "`Product/Dreamscapes/src/App`",
-            "82 / 18,115",
-            "80",
-            "1,058 / 37",
-            "`Repeater` 129, `Loader` 39, `Connections` 33, `Canvas` 9, `onX:` 1,334"
-          ],
-          [
-            "`Product/Society/App`",
-            "53 / 11,415",
-            "51",
-            "793 / 32",
-            "`Repeater` 61, `Loader` 10, `Connections` 23, `Canvas` 0, `onX:` 672"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000367",
-        "columns": [
-          "영역",
-          "현재 가능한 부분",
-          "대체 전에 남은 비용"
-        ],
-        "rows": [
-          [
-            "입력",
-            "LVUI 입력 필드는 선택·조합 상태와 호스트 입력 연결을 소유한다.",
-            "자동 줄바꿈, 입력 Undo/Redo, 더블 클릭 단어 선택이 없다. Android·웹 편집용 글자 배치와 실제 플랫폼 IME·접근성 검증이 미완료다. [입력 계약](NativeInputField.md)"
-          ],
-          [
-            "메뉴",
-            "직접 자식·하위 메뉴와 키보드 탐색을 제공한다.",
-            "조건·반복 자식, 포인터 하위 메뉴 전환과 플랫폼 보조 기술 검증이 남는다. [메뉴 계약](NativeMenu.md)"
-          ],
-          [
-            "목록·계층·표",
-            "가상 목록, 편집 경계, 두 축 표, 선택·드래그 모델이 있다.",
-            "계층 목록의 사용자 행 대리자·가변 높이·생성 행 countView, 표 셀별 접근성·병합·일부 구조 편집 UI 등이 남는다. [계층 목록](NativeOwnedHierarchyList.md), [표](NativeOwnedTable.md)"
-          ],
-          [
-            "이미지·폰트·자산",
-            "앱이 교체 가능한 아이콘 및 픽셀 공급자를 주입할 수 있다.",
-            "자산 이름과 픽셀·SVG 공급, 글꼴 배포·대체·라이선스·기기별 렌더링을 제품 계약에 맞춰야 한다. [이미지](NativeImage.md), [아이콘](NativeIcons.md)"
-          ],
-          [
-            "재질·모션",
-            "LVUI 소유 재질 모델과 iiGUI 효과 경계가 있다.",
-            "독립 경로의 강조색 자동 상속과 일부 배경 입력, GPU 및 기존 디자인 동등성은 별도다. Vulkan·D3D11 소스에는 배경 흐림과 그림자 경로가 있으나 실제 OS별 화면과 성능 검증이 필요하다. [재질](NativeMaterials.md), [iiGUI backdrop](../../iiGUI/docs/BackdropMaterials.md)"
-          ],
-          [
-            "시각·접근성",
-            "일부 호스트는 역할·입력·그리기 인터페이스를 제공한다.",
-            "각 컴포넌트의 상태, 포커스, 보조 기술과 픽셀 결과를 각 OS에서 검증해야 한다. 고정 토큰만으로는 시각·행동 동등성을 보장하지 못한다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

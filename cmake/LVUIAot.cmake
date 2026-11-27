@@ -1,7 +1,7 @@
 include_guard(GLOBAL)
 function(lvui_generate)
     set(_runner "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/RunLVUICompiler.cmake")
-    cmake_parse_arguments(PARSE_ARGV 0 ARG "" "NAME;SOURCE;OUTPUT_VARIABLE;FRAMEWORK;STYLE_FILE" "INCLUDES;STYLE_MODES")
+    cmake_parse_arguments(PARSE_ARGV 0 ARG "EDITOR_PANELS" "NAME;SOURCE;OUTPUT_VARIABLE;FRAMEWORK;STYLE_FILE" "INCLUDES;STYLE_MODES")
     if(ARG_UNPARSED_ARGUMENTS OR ARG_KEYWORDS_MISSING_VALUES OR NOT ARG_NAME MATCHES "^[A-Za-z][A-Za-z0-9_]*$" OR NOT ARG_SOURCE OR NOT ARG_OUTPUT_VARIABLE)
         message(FATAL_ERROR "lvui_generate requires NAME, SOURCE, OUTPUT_VARIABLE and optional INCLUDES")
     endif()
@@ -31,13 +31,14 @@ function(lvui_generate)
             "-DLVUI_AOT_FRAMEWORK=${ARG_FRAMEWORK}"
             "-DLVUI_AOT_STYLE_MODES=${ARG_STYLE_MODES}"
             "-DLVUI_AOT_STYLE_FILE=${_style_file}"
+            "-DLVUI_AOT_EDITOR_PANELS=${ARG_EDITOR_PANELS}"
             -P "${_runner}"
         DEPENDS "${_source}" ${_style_file} ${_dependency} "${_runner}"
         VERBATIM COMMENT "AOT compiling ${ARG_NAME}.lvui into native C++23")
     set(${ARG_OUTPUT_VARIABLE} "${_output}" PARENT_SCOPE)
 endfunction()
 function(lvui_add_application target)
-    cmake_parse_arguments(PARSE_ARGV 1 ARG "" "NAME;SOURCE;STYLE_FILE;OUTPUT_VARIABLE;CONFIGURE_SOURCE" "INCLUDES;STYLE_MODES;SOURCES;LIBRARIES")
+    cmake_parse_arguments(PARSE_ARGV 1 ARG "EDITOR_PANELS" "NAME;SOURCE;STYLE_FILE;OUTPUT_VARIABLE;CONFIGURE_SOURCE" "INCLUDES;STYLE_MODES;SOURCES;LIBRARIES")
     if(ARG_UNPARSED_ARGUMENTS OR ARG_KEYWORDS_MISSING_VALUES OR
        NOT target MATCHES "^[A-Za-z][A-Za-z0-9_]*$" OR NOT ARG_SOURCE)
         message(FATAL_ERROR "lvui_add_application requires an identifier target and SOURCE")
@@ -67,6 +68,9 @@ function(lvui_add_application target)
     endif()
 
     set(_arguments NAME "${ARG_NAME}" SOURCE "${ARG_SOURCE}" OUTPUT_VARIABLE _generated)
+    if(ARG_EDITOR_PANELS)
+        list(APPEND _arguments EDITOR_PANELS)
+    endif()
     if(ARG_INCLUDES)
         list(APPEND _arguments INCLUDES ${ARG_INCLUDES})
     endif()
@@ -198,7 +202,7 @@ endfunction()
 
 # Compose the existing AOT application and Web host contracts for an LVUI app.
 function(lvui_add_web_application target)
-    cmake_parse_arguments(PARSE_ARGV 1 ARG "NO_DEFAULT_FONTS"
+    cmake_parse_arguments(PARSE_ARGV 1 ARG "NO_DEFAULT_FONTS;EDITOR_PANELS"
         "NAME;SOURCE;STYLE_FILE;OUTPUT_VARIABLE;CONFIGURE_SOURCE;SHELL_FILE;INSTALL_DESTINATION"
         "INCLUDES;STYLE_MODES;SOURCES;LIBRARIES;RESOURCES")
     if(ARG_UNPARSED_ARGUMENTS OR ARG_KEYWORDS_MISSING_VALUES OR NOT ARG_SOURCE)
@@ -230,6 +234,9 @@ function(lvui_add_web_application target)
     list(APPEND _resources ${ARG_RESOURCES})
 
     set(_application_args SOURCE "${ARG_SOURCE}" OUTPUT_VARIABLE _generated)
+    if(ARG_EDITOR_PANELS)
+        list(APPEND _application_args EDITOR_PANELS)
+    endif()
     foreach(_key IN ITEMS NAME STYLE_FILE CONFIGURE_SOURCE)
         if(DEFINED ARG_${_key})
             list(APPEND _application_args ${_key} "${ARG_${_key}}")

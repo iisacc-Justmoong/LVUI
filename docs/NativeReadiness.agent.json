@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeReadiness.md",
-    "sha256": "8322441f06d57af23f61306ef5b3781efb6da26ff4b37ac9431d5538e9a2f312",
-    "bytes": 4982,
-    "line_count": 56,
+    "sha256": "06daa749f35d34889235ee752c60d0d7370c55b5399828e47b975d55dc1668a1",
+    "bytes": 5775,
+    "line_count": 54,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -84,109 +84,104 @@
     },
     {
       "id": "b000009",
-      "kind": "table",
       "start_line": 14,
-      "end_line": 28,
-      "raw": "| 제품에 필요한 영역 | 네이티브 작성 경로 | 증거·관문 |\n|---|---|---|\n| 창·반응형 배치·패널 | Window, 스택, flex, 동적 배치 입력 | NativeWindow·NativeLayout 검사, 작업 공간 크기 변경 |\n| 프롬프트·숫자·파라미터 | 실제 InputField·선택·버튼, C++ 검증·상태 | 생성 C++ 입력 검사와 작업 공간 파라미터 |\n| 상태·진행·큐 결과 | Core Observable, 소유 루프 전달, NativeBindings | ActivationWork 검사와 실제 비동기 픽셀 작업 |\n| 최근 파일·결과·검토 | 키 기반 반복·가상화·선택과 C++ 모델 | Repetition·CollectionNavigation 및 생성 결과 행 |\n| 캔버스·오버레이 | NativeView, WidgetDrawing/이미지, C++ paint handler | 실제 장면 데이터·GPU 픽셀 대조 |\n| 포인터·펜·휠·드래그 | typed WidgetInput, 캡처·포커스·취소 | NativeView 입력 검사, 실제 캔버스 팬·타임라인 탐색 |\n| 타임라인·눈금·재생 | 유지되는 C++ 뷰와 기존 Core 프레임 루프 | 눈금·탐색·프레임 진행 및 문서 revision 비변경 |\n| 이미지·비디오 프레임 | 불변 RasterImage, 유지되는 위젯의 프레임 데이터 갱신 | 24프레임 검사, 대기 중 마지막 정상 프레임 유지 |\n| 텍스트·IME·키보드 | 기존 iiGUI 텍스트 서비스·입력·조상 단축키 경계 | 네이티브 텍스트·편집기·입력 회귀 |\n| 메뉴·툴팁·팝업·대화상자 | LVRS 네이티브 구성과 Host 서비스 | 해당 모델·위젯·실제 호스트 최종 실행 |\n| 색상·계층·도구 패널 | 기존 LVRS C++ 모델과 구성, 필요 시 NativeView | 모델·AOT·수명 검사와 공개 API 소비자 |\n| 게시·설정 등 동적 폼 | 같은 입력·목록·조건부 뷰와 C++ 명령 | 폼 작성 가능성을 검증하며 외부 SNS 업로드 실행과 구분 |\n| 배포·설치 | AOT 코드·iiSDKCore 앱·iiGUI/LVRS 네이티브 패키지 | Qt/QML·소스 해석기 없는 설치 소비자·해시 검증 |\n",
-      "columns": [
-        "제품에 필요한 영역",
-        "네이티브 작성 경로",
-        "증거·관문"
-      ],
-      "rows": [
-        [
-          "창·반응형 배치·패널",
-          "Window, 스택, flex, 동적 배치 입력",
-          "NativeWindow·NativeLayout 검사, 작업 공간 크기 변경"
-        ],
-        [
-          "프롬프트·숫자·파라미터",
-          "실제 InputField·선택·버튼, C++ 검증·상태",
-          "생성 C++ 입력 검사와 작업 공간 파라미터"
-        ],
-        [
-          "상태·진행·큐 결과",
-          "Core Observable, 소유 루프 전달, NativeBindings",
-          "ActivationWork 검사와 실제 비동기 픽셀 작업"
-        ],
-        [
-          "최근 파일·결과·검토",
-          "키 기반 반복·가상화·선택과 C++ 모델",
-          "Repetition·CollectionNavigation 및 생성 결과 행"
-        ],
-        [
-          "캔버스·오버레이",
-          "NativeView, WidgetDrawing/이미지, C++ paint handler",
-          "실제 장면 데이터·GPU 픽셀 대조"
-        ],
-        [
-          "포인터·펜·휠·드래그",
-          "typed WidgetInput, 캡처·포커스·취소",
-          "NativeView 입력 검사, 실제 캔버스 팬·타임라인 탐색"
-        ],
-        [
-          "타임라인·눈금·재생",
-          "유지되는 C++ 뷰와 기존 Core 프레임 루프",
-          "눈금·탐색·프레임 진행 및 문서 revision 비변경"
-        ],
-        [
-          "이미지·비디오 프레임",
-          "불변 RasterImage, 유지되는 위젯의 프레임 데이터 갱신",
-          "24프레임 검사, 대기 중 마지막 정상 프레임 유지"
-        ],
-        [
-          "텍스트·IME·키보드",
-          "기존 iiGUI 텍스트 서비스·입력·조상 단축키 경계",
-          "네이티브 텍스트·편집기·입력 회귀"
-        ],
-        [
-          "메뉴·툴팁·팝업·대화상자",
-          "LVRS 네이티브 구성과 Host 서비스",
-          "해당 모델·위젯·실제 호스트 최종 실행"
-        ],
-        [
-          "색상·계층·도구 패널",
-          "기존 LVRS C++ 모델과 구성, 필요 시 NativeView",
-          "모델·AOT·수명 검사와 공개 API 소비자"
-        ],
-        [
-          "게시·설정 등 동적 폼",
-          "같은 입력·목록·조건부 뷰와 C++ 명령",
-          "폼 작성 가능성을 검증하며 외부 SNS 업로드 실행과 구분"
-        ],
-        [
-          "배포·설치",
-          "AOT 코드·iiSDKCore 앱·iiGUI/LVRS 네이티브 패키지",
-          "Qt/QML·소스 해석기 없는 설치 소비자·해시 검증"
-        ]
+      "end_line": 26,
+      "raw": "- 제품에 필요한 영역: 창·반응형 배치·패널; 네이티브 작성 경로: Window, 스택, flex, 동적 배치 입력; 증거·관문: NativeWindow·NativeLayout 검사, 작업 공간 크기 변경\n- 제품에 필요한 영역: 프롬프트·숫자·파라미터; 네이티브 작성 경로: 실제 InputField·선택·버튼, C++ 검증·상태; 증거·관문: 생성 C++ 입력 검사와 작업 공간 파라미터\n- 제품에 필요한 영역: 상태·진행·큐 결과; 네이티브 작성 경로: Core Observable, 소유 루프 전달, NativeBindings; 증거·관문: ActivationWork 검사와 실제 비동기 픽셀 작업\n- 제품에 필요한 영역: 최근 파일·결과·검토; 네이티브 작성 경로: 키 기반 반복·가상화·선택과 C++ 모델; 증거·관문: Repetition·CollectionNavigation 및 생성 결과 행\n- 제품에 필요한 영역: 캔버스·오버레이; 네이티브 작성 경로: NativeView, WidgetDrawing/이미지, C++ paint handler; 증거·관문: 실제 장면 데이터·GPU 픽셀 대조\n- 제품에 필요한 영역: 포인터·펜·휠·드래그; 네이티브 작성 경로: typed WidgetInput, 캡처·포커스·취소; 증거·관문: NativeView 입력 검사, 실제 캔버스 팬·타임라인 탐색\n- 제품에 필요한 영역: 타임라인·눈금·재생; 네이티브 작성 경로: 유지되는 C++ 뷰와 기존 Core 프레임 루프; 증거·관문: 눈금·탐색·프레임 진행 및 문서 revision 비변경\n- 제품에 필요한 영역: 이미지·비디오 프레임; 네이티브 작성 경로: 불변 RasterImage, 유지되는 위젯의 프레임 데이터 갱신; 증거·관문: 24프레임 검사, 대기 중 마지막 정상 프레임 유지\n- 제품에 필요한 영역: 텍스트·IME·키보드; 네이티브 작성 경로: 기존 iiGUI 텍스트 서비스·입력·조상 단축키 경계; 증거·관문: 네이티브 텍스트·편집기·입력 회귀\n- 제품에 필요한 영역: 메뉴·툴팁·팝업·대화상자; 네이티브 작성 경로: LVRS 네이티브 구성과 Host 서비스; 증거·관문: 해당 모델·위젯·실제 호스트 최종 실행\n- 제품에 필요한 영역: 색상·계층·도구 패널; 네이티브 작성 경로: 기존 LVRS C++ 모델과 구성, 필요 시 NativeView; 증거·관문: 모델·AOT·수명 검사와 공개 API 소비자\n- 제품에 필요한 영역: 게시·설정 등 동적 폼; 네이티브 작성 경로: 같은 입력·목록·조건부 뷰와 C++ 명령; 증거·관문: 폼 작성 가능성을 검증하며 외부 SNS 업로드 실행과 구분\n- 제품에 필요한 영역: 배포·설치; 네이티브 작성 경로: AOT 코드·iiSDKCore 앱·iiGUI/LVRS 네이티브 패키지; 증거·관문: Qt/QML·소스 해석기 없는 설치 소비자·해시 검증\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 창·반응형 배치·패널; 네이티브 작성 경로: Window, 스택, flex, 동적 배치 입력; 증거·관문: NativeWindow·NativeLayout 검사, 작업 공간 크기 변경",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 프롬프트·숫자·파라미터; 네이티브 작성 경로: 실제 InputField·선택·버튼, C++ 검증·상태; 증거·관문: 생성 C++ 입력 검사와 작업 공간 파라미터",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 상태·진행·큐 결과; 네이티브 작성 경로: Core Observable, 소유 루프 전달, NativeBindings; 증거·관문: ActivationWork 검사와 실제 비동기 픽셀 작업",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 최근 파일·결과·검토; 네이티브 작성 경로: 키 기반 반복·가상화·선택과 C++ 모델; 증거·관문: Repetition·CollectionNavigation 및 생성 결과 행",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 캔버스·오버레이; 네이티브 작성 경로: NativeView, WidgetDrawing/이미지, C++ paint handler; 증거·관문: 실제 장면 데이터·GPU 픽셀 대조",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 포인터·펜·휠·드래그; 네이티브 작성 경로: typed WidgetInput, 캡처·포커스·취소; 증거·관문: NativeView 입력 검사, 실제 캔버스 팬·타임라인 탐색",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 타임라인·눈금·재생; 네이티브 작성 경로: 유지되는 C++ 뷰와 기존 Core 프레임 루프; 증거·관문: 눈금·탐색·프레임 진행 및 문서 revision 비변경",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 이미지·비디오 프레임; 네이티브 작성 경로: 불변 RasterImage, 유지되는 위젯의 프레임 데이터 갱신; 증거·관문: 24프레임 검사, 대기 중 마지막 정상 프레임 유지",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 텍스트·IME·키보드; 네이티브 작성 경로: 기존 iiGUI 텍스트 서비스·입력·조상 단축키 경계; 증거·관문: 네이티브 텍스트·편집기·입력 회귀",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 메뉴·툴팁·팝업·대화상자; 네이티브 작성 경로: LVRS 네이티브 구성과 Host 서비스; 증거·관문: 해당 모델·위젯·실제 호스트 최종 실행",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 색상·계층·도구 패널; 네이티브 작성 경로: 기존 LVRS C++ 모델과 구성, 필요 시 NativeView; 증거·관문: 모델·AOT·수명 검사와 공개 API 소비자",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 게시·설정 등 동적 폼; 네이티브 작성 경로: 같은 입력·목록·조건부 뷰와 C++ 명령; 증거·관문: 폼 작성 가능성을 검증하며 외부 SNS 업로드 실행과 구분",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "제품에 필요한 영역: 배포·설치; 네이티브 작성 경로: AOT 코드·iiSDKCore 앱·iiGUI/LVRS 네이티브 패키지; 증거·관문: Qt/QML·소스 해석기 없는 설치 소비자·해시 검증",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000010",
       "kind": "blank",
-      "start_line": 29,
-      "end_line": 29,
+      "start_line": 27,
+      "end_line": 27,
       "raw": "\n"
     },
     {
       "id": "b000011",
       "kind": "paragraph",
-      "start_line": 30,
-      "end_line": 32,
+      "start_line": 28,
+      "end_line": 30,
       "raw": "표의 경로는 작성 계약이며 각 행의 실행 통과를 자동 의미하지 않는다. 최종 준비 보고서는\n실제 실행·컴파일·설치 증거를 구분하고, 실패와 재실행 이력을 보존해야 한다. 다른 OS와\nGPU, 사용하지 않는 원본 API의 미완료 상태를 준비 보고서에서 숨기지 않는다.\n"
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 33,
-      "end_line": 33,
+      "start_line": 31,
+      "end_line": 31,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "heading",
-      "start_line": 34,
-      "end_line": 34,
+      "start_line": 32,
+      "end_line": 32,
       "raw": "## 통합 예제\n",
       "level": 2,
       "title": "통합 예제"
@@ -194,43 +189,43 @@
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 35,
-      "end_line": 35,
+      "start_line": 33,
+      "end_line": 33,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 36,
-      "end_line": 39,
+      "start_line": 34,
+      "end_line": 37,
       "raw": "LVRS의 `example/NativeCreationWorkbench`는 배치와 입력 전달을 LVUI에 두고,\n파라미터 검증·절차적 RGBA 계산·결과 선택·팬·탐색·재생을 C++에 둔다. 실제 작업 큐에서\n프레임 24개를 만들고 같은 앱의 소유 루프로 전달한다. 캔버스와 타임라인은 두 개의 유지되는\nNativeView이며 프레임마다 원천이나 트리를 재생성하지 않는다.\n"
     },
     {
       "id": "b000016",
       "kind": "blank",
-      "start_line": 40,
-      "end_line": 40,
+      "start_line": 38,
+      "end_line": 38,
       "raw": "\n"
     },
     {
       "id": "b000017",
       "kind": "paragraph",
-      "start_line": 41,
-      "end_line": 43,
+      "start_line": 39,
+      "end_line": 41,
       "raw": "self-test는 실제 GPU 캔버스 픽셀, 포인터 탐색·팬, 결과 행의 C++ 명령, 편집 값 보존,\n창 크기 변경, 프레임 콜백과 종료를 확인한다. AI 추론·파일 저장소·SNS 전송의 제품 통합을\n실행한 것으로 표현하지 않는다. 최종 단계 전의 빌드 성공은 self-test 통과가 아니다.\n"
     },
     {
       "id": "b000018",
       "kind": "blank",
-      "start_line": 44,
-      "end_line": 44,
+      "start_line": 42,
+      "end_line": 42,
       "raw": "\n"
     },
     {
       "id": "b000019",
       "kind": "heading",
-      "start_line": 45,
-      "end_line": 45,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "## 종료와 설치 관문\n",
       "level": 2,
       "title": "종료와 설치 관문"
@@ -238,15 +233,15 @@
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 46,
-      "end_line": 46,
+      "start_line": 44,
+      "end_line": 44,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "list",
-      "start_line": 47,
-      "end_line": 52,
+      "start_line": 45,
+      "end_line": 50,
       "raw": "1. 언어·네이티브 접점·기존 동작의 적절한 일반/오류 검출 회귀를 수행한다.\n2. 대표 작업 공간과 필요한 LVRS 앱·테스트를 최종 일괄 단계에서 실제 실행한다.\n3. 실패 보존·퇴역·입력·프레임·뷰/파일 상태 분리를 확인한다.\n4. 독립·재배치한 소비자의 컴파일·링크·실행과 Qt/QML 의존성 부재를 확인한다.\n5. 문서·JSON 색인·공개 헤더·라이브러리·패키지 출처를 대조한다.\n6. 검증된 패키지를 시스템 SDK 위치에 설치하고 설치본만 참조하는 소비자로 다시 확인한다.\n",
       "items": [
         {
@@ -284,15 +279,15 @@
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 53,
-      "end_line": 53,
+      "start_line": 51,
+      "end_line": 51,
       "raw": "\n"
     },
     {
       "id": "b000023",
       "kind": "paragraph",
-      "start_line": 54,
-      "end_line": 56,
+      "start_line": 52,
+      "end_line": 54,
       "raw": "실행·설치 완료 여부는 [최신 검증 기록](NativeReadinessVerification.md)과 최종 JSON으로 판정한다. 설치 대상은\nSDK이며 Dreamscapes 제품의 기존 기능이나 생성 파라미터를 제거하는 작업은 하지 않는다.\n설치된 다른 패키지·기존 Qt SDK·활성 앱·작업을 보존한다.\n"
     }
   ],
@@ -319,7 +314,7 @@
       "level": 2,
       "title": "통합 예제",
       "anchor": "통합-예제",
-      "start_line": 34
+      "start_line": 32
     },
     {
       "block_id": "b000019",
@@ -327,7 +322,7 @@
       "level": 2,
       "title": "종료와 설치 관문",
       "anchor": "종료와-설치-관문",
-      "start_line": 45
+      "start_line": 43
     }
   ],
   "indexes": {
@@ -348,35 +343,35 @@
       },
       {
         "block_id": "b000011",
-        "line": 30,
+        "line": 28,
         "text": "표의 경로는 작성 계약이며 각 행의 실행 통과를 자동 의미하지 않는다. 최종 준비 보고서는",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000011",
-        "line": 31,
+        "line": 29,
         "text": "실제 실행·컴파일·설치 증거를 구분하고, 실패와 재실행 이력을 보존해야 한다. 다른 OS와",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000015",
-        "line": 39,
+        "line": 37,
         "text": "NativeView이며 프레임마다 원천이나 트리를 재생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000017",
-        "line": 43,
+        "line": 41,
         "text": "실행한 것으로 표현하지 않는다. 최종 단계 전의 빌드 성공은 self-test 통과가 아니다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000023",
-        "line": 55,
+        "line": 53,
         "text": "SDK이며 Dreamscapes 제품의 기존 기능이나 생성 파라미터를 제거하는 작업은 하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -389,86 +384,10 @@
         "label": "최신 검증 기록",
         "target": "NativeReadinessVerification.md",
         "kind": "relative",
-        "line": 54
+        "line": 52
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000009",
-        "columns": [
-          "제품에 필요한 영역",
-          "네이티브 작성 경로",
-          "증거·관문"
-        ],
-        "rows": [
-          [
-            "창·반응형 배치·패널",
-            "Window, 스택, flex, 동적 배치 입력",
-            "NativeWindow·NativeLayout 검사, 작업 공간 크기 변경"
-          ],
-          [
-            "프롬프트·숫자·파라미터",
-            "실제 InputField·선택·버튼, C++ 검증·상태",
-            "생성 C++ 입력 검사와 작업 공간 파라미터"
-          ],
-          [
-            "상태·진행·큐 결과",
-            "Core Observable, 소유 루프 전달, NativeBindings",
-            "ActivationWork 검사와 실제 비동기 픽셀 작업"
-          ],
-          [
-            "최근 파일·결과·검토",
-            "키 기반 반복·가상화·선택과 C++ 모델",
-            "Repetition·CollectionNavigation 및 생성 결과 행"
-          ],
-          [
-            "캔버스·오버레이",
-            "NativeView, WidgetDrawing/이미지, C++ paint handler",
-            "실제 장면 데이터·GPU 픽셀 대조"
-          ],
-          [
-            "포인터·펜·휠·드래그",
-            "typed WidgetInput, 캡처·포커스·취소",
-            "NativeView 입력 검사, 실제 캔버스 팬·타임라인 탐색"
-          ],
-          [
-            "타임라인·눈금·재생",
-            "유지되는 C++ 뷰와 기존 Core 프레임 루프",
-            "눈금·탐색·프레임 진행 및 문서 revision 비변경"
-          ],
-          [
-            "이미지·비디오 프레임",
-            "불변 RasterImage, 유지되는 위젯의 프레임 데이터 갱신",
-            "24프레임 검사, 대기 중 마지막 정상 프레임 유지"
-          ],
-          [
-            "텍스트·IME·키보드",
-            "기존 iiGUI 텍스트 서비스·입력·조상 단축키 경계",
-            "네이티브 텍스트·편집기·입력 회귀"
-          ],
-          [
-            "메뉴·툴팁·팝업·대화상자",
-            "LVRS 네이티브 구성과 Host 서비스",
-            "해당 모델·위젯·실제 호스트 최종 실행"
-          ],
-          [
-            "색상·계층·도구 패널",
-            "기존 LVRS C++ 모델과 구성, 필요 시 NativeView",
-            "모델·AOT·수명 검사와 공개 API 소비자"
-          ],
-          [
-            "게시·설정 등 동적 폼",
-            "같은 입력·목록·조건부 뷰와 C++ 명령",
-            "폼 작성 가능성을 검증하며 외부 SNS 업로드 실행과 구분"
-          ],
-          [
-            "배포·설치",
-            "AOT 코드·iiSDKCore 앱·iiGUI/LVRS 네이티브 패키지",
-            "Qt/QML·소스 해석기 없는 설치 소비자·해시 검증"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

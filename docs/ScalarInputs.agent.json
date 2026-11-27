@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/ScalarInputs.md",
-    "sha256": "c6c8aff84b30787c3aa0695c375f2ae873e977eacff41f50ccefde951b80f032",
-    "bytes": 7019,
-    "line_count": 99,
+    "sha256": "39620855cf05094455444c0b9b7384065745d7b37a5d0dc3ae68e20ec500b8e1",
+    "bytes": 7093,
+    "line_count": 97,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -287,75 +287,79 @@
     },
     {
       "id": "b000029",
-      "kind": "table",
       "start_line": 79,
-      "end_line": 88,
-      "raw": "| 검사 | 결과 |\n|---|---|\n| LVUI Release 전체 | 194/194 통과 |\n| 관련 ASan·UBSan | 123건 통과: 최초 121건, 시간 제한 2건은 독립 재실행 통과 |\n| iiGUI 창 없는 회귀 | 일반 114건 통과, ASan·UBSan 114/114 통과 |\n| 최종 스칼라 위젯 검사 | 초기 실패 롤백을 포함해 일반·ASan·UBSan 각각 9/9 통과 |\n| 설치·재배치 소비자 | Native·공개 컴파일러·선택 Runtime 3/3 통과 |\n| 저장소 선택자의 잘못된 C++ 계약 | 값 복사·소유자 부재 2개 입력의 컴파일 거부 |\n| LVRS 팩터리 | 기존 23개와 신규 6개를 일반·ASan·UBSan 구성에서 컴파일, 실행 미실시 |\n| Dreamscapes | QML 81개 해시 변경 0 |\n",
-      "columns": [
-        "검사",
-        "결과"
-      ],
-      "rows": [
-        [
-          "LVUI Release 전체",
-          "194/194 통과"
-        ],
-        [
-          "관련 ASan·UBSan",
-          "123건 통과: 최초 121건, 시간 제한 2건은 독립 재실행 통과"
-        ],
-        [
-          "iiGUI 창 없는 회귀",
-          "일반 114건 통과, ASan·UBSan 114/114 통과"
-        ],
-        [
-          "최종 스칼라 위젯 검사",
-          "초기 실패 롤백을 포함해 일반·ASan·UBSan 각각 9/9 통과"
-        ],
-        [
-          "설치·재배치 소비자",
-          "Native·공개 컴파일러·선택 Runtime 3/3 통과"
-        ],
-        [
-          "저장소 선택자의 잘못된 C++ 계약",
-          "값 복사·소유자 부재 2개 입력의 컴파일 거부"
-        ],
-        [
-          "LVRS 팩터리",
-          "기존 23개와 신규 6개를 일반·ASan·UBSan 구성에서 컴파일, 실행 미실시"
-        ],
-        [
-          "Dreamscapes",
-          "QML 81개 해시 변경 0"
-        ]
+      "end_line": 86,
+      "raw": "- 검사: LVUI Release 전체; 결과: 194/194 통과\n- 검사: 관련 ASan·UBSan; 결과: 123건 통과: 최초 121건, 시간 제한 2건은 독립 재실행 통과\n- 검사: iiGUI 창 없는 회귀; 결과: 일반 114건 통과, ASan·UBSan 114/114 통과\n- 검사: 최종 스칼라 위젯 검사; 결과: 초기 실패 롤백을 포함해 일반·ASan·UBSan 각각 9/9 통과\n- 검사: 설치·재배치 소비자; 결과: Native·공개 컴파일러·선택 Runtime 3/3 통과\n- 검사: 저장소 선택자의 잘못된 C++ 계약; 결과: 값 복사·소유자 부재 2개 입력의 컴파일 거부\n- 검사: LVRS 팩터리; 결과: 기존 23개와 신규 6개를 일반·ASan·UBSan 구성에서 컴파일, 실행 미실시\n- 검사: Dreamscapes; 결과: QML 81개 해시 변경 0\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "검사: LVUI Release 전체; 결과: 194/194 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 관련 ASan·UBSan; 결과: 123건 통과: 최초 121건, 시간 제한 2건은 독립 재실행 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI 창 없는 회귀; 결과: 일반 114건 통과, ASan·UBSan 114/114 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 최종 스칼라 위젯 검사; 결과: 초기 실패 롤백을 포함해 일반·ASan·UBSan 각각 9/9 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 설치·재배치 소비자; 결과: Native·공개 컴파일러·선택 Runtime 3/3 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 저장소 선택자의 잘못된 C++ 계약; 결과: 값 복사·소유자 부재 2개 입력의 컴파일 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVRS 팩터리; 결과: 기존 23개와 신규 6개를 일반·ASan·UBSan 구성에서 컴파일, 실행 미실시",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: Dreamscapes; 결과: QML 81개 해시 변경 0",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 89,
-      "end_line": 89,
+      "start_line": 87,
+      "end_line": 87,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 90,
-      "end_line": 93,
+      "start_line": 88,
+      "end_line": 91,
       "raw": "메모리·스왑 사용량이 높은 병렬 검사에서 기존 구성·View 목록 검사 두 항목이 시간 제한에\n걸렸다. 다른 빌드가 종료된 후 각각 다시 실행하여 통과한 결과이며 첫 실행 로그도 보존한다.\n이를 단일 실행의 123/123 통과나 제품 성능 향상 수치로 표시하지 않는다. 최종 기록은\n`build/lvui-completion/scalar-inputs-verification-20261026.json`에 보관한다.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 94,
-      "end_line": 94,
+      "start_line": 92,
+      "end_line": 92,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 95,
-      "end_line": 99,
+      "start_line": 93,
+      "end_line": 97,
       "raw": "회귀 소스는 [생성 C++ 값 검사](../tests/native_scalar_inputs.cpp),\n[실제 위젯 검사](../../iiGUI/tests/native_scalar_inputs.cpp),\n[독립 설치 소비자](../tests/native_consumer/main.cpp),\n[공개 컴파일러 소비자](../tests/native_consumer/compiler.cpp),\n[LVRS 컴파일 검사](../tests/lvrs_scalar_inputs_compile.cpp)이다.\n"
     }
   ],
@@ -447,7 +451,7 @@
       },
       {
         "block_id": "b000031",
-        "line": 92,
+        "line": 90,
         "text": "이를 단일 실행의 123/123 통과나 제품 성능 향상 수치로 표시하지 않는다. 최종 기록은",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -481,80 +485,38 @@
         "label": "생성 C++ 값 검사",
         "target": "../tests/native_scalar_inputs.cpp",
         "kind": "relative",
-        "line": 95
+        "line": 93
       },
       {
         "block_id": "b000033",
         "label": "실제 위젯 검사",
         "target": "../../iiGUI/tests/native_scalar_inputs.cpp",
         "kind": "relative",
-        "line": 96
+        "line": 94
       },
       {
         "block_id": "b000033",
         "label": "독립 설치 소비자",
         "target": "../tests/native_consumer/main.cpp",
         "kind": "relative",
-        "line": 97
+        "line": 95
       },
       {
         "block_id": "b000033",
         "label": "공개 컴파일러 소비자",
         "target": "../tests/native_consumer/compiler.cpp",
         "kind": "relative",
-        "line": 98
+        "line": 96
       },
       {
         "block_id": "b000033",
         "label": "LVRS 컴파일 검사",
         "target": "../tests/lvrs_scalar_inputs_compile.cpp",
         "kind": "relative",
-        "line": 99
+        "line": 97
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000029",
-        "columns": [
-          "검사",
-          "결과"
-        ],
-        "rows": [
-          [
-            "LVUI Release 전체",
-            "194/194 통과"
-          ],
-          [
-            "관련 ASan·UBSan",
-            "123건 통과: 최초 121건, 시간 제한 2건은 독립 재실행 통과"
-          ],
-          [
-            "iiGUI 창 없는 회귀",
-            "일반 114건 통과, ASan·UBSan 114/114 통과"
-          ],
-          [
-            "최종 스칼라 위젯 검사",
-            "초기 실패 롤백을 포함해 일반·ASan·UBSan 각각 9/9 통과"
-          ],
-          [
-            "설치·재배치 소비자",
-            "Native·공개 컴파일러·선택 Runtime 3/3 통과"
-          ],
-          [
-            "저장소 선택자의 잘못된 C++ 계약",
-            "값 복사·소유자 부재 2개 입력의 컴파일 거부"
-          ],
-          [
-            "LVRS 팩터리",
-            "기존 23개와 신규 6개를 일반·ASan·UBSan 구성에서 컴파일, 실행 미실시"
-          ],
-          [
-            "Dreamscapes",
-            "QML 81개 해시 변경 0"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

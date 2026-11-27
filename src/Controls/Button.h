@@ -53,7 +53,7 @@ struct ButtonConfiguration final {
     bool motion_enabled = true;
     bool enter_key_activation = true;
     ButtonSelectionStyle selection_style = ButtonSelectionStyle::accent;
-    // Pointer focus remains logical focus; only keyboard focus draws its ring by default.
+    // Kept for source compatibility; pointer focus never draws a focus indicator.
     bool pointer_focus_visible = false;
     friend bool operator==(const ButtonConfiguration&,const ButtonConfiguration&) = default;
 };

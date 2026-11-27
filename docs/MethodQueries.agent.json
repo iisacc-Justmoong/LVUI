@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/MethodQueries.md",
-    "sha256": "d73d69e7d756204f796121459e0ff77869cb07759ecdb1b0b00eea3b75af6d9f",
-    "bytes": 11952,
-    "line_count": 155,
+    "sha256": "27c1331f1f4c6acc4ddad55183be07809ab88857a4083a1f76d96ce179e60db3",
+    "bytes": 12442,
+    "line_count": 151,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -317,91 +317,99 @@
     },
     {
       "id": "b000041",
-      "kind": "table",
       "start_line": 97,
-      "end_line": 110,
-      "raw": "| 검사 | 확인 결과 |\n|---|---|\n| Core Observable·범위 수집 | 기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과 |\n| Core 새 패키지 | 일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과 |\n| LVUI 일반 전체 | 229/229 통과 |\n| LVUI 관련 ASan·UBSan | 158/158 통과 |\n| iiGUI 일반 창 없는 회귀·패키지 | 170/170 통과 |\n| iiGUI ASan·UBSan | 170/170 통과 |\n| 신규 조회 검사 | 컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과 |\n| 생성 C++ 타입 계약 | 두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함 |\n| 설치·재배치 | LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부 |\n| 생성 헤더·LVRS | 일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시 |\n| 바이너리·제품 경계 | 조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지 |\n| 공유모듈 회귀 | **실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건 |\n",
-      "columns": [
-        "검사",
-        "확인 결과"
-      ],
-      "rows": [
-        [
-          "Core Observable·범위 수집",
-          "기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과"
-        ],
-        [
-          "Core 새 패키지",
-          "일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과"
-        ],
-        [
-          "LVUI 일반 전체",
-          "229/229 통과"
-        ],
-        [
-          "LVUI 관련 ASan·UBSan",
-          "158/158 통과"
-        ],
-        [
-          "iiGUI 일반 창 없는 회귀·패키지",
-          "170/170 통과"
-        ],
-        [
-          "iiGUI ASan·UBSan",
-          "170/170 통과"
-        ],
-        [
-          "신규 조회 검사",
-          "컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과"
-        ],
-        [
-          "생성 C++ 타입 계약",
-          "두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함"
-        ],
-        [
-          "설치·재배치",
-          "LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부"
-        ],
-        [
-          "생성 헤더·LVRS",
-          "일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시"
-        ],
-        [
-          "바이너리·제품 경계",
-          "조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지"
-        ],
-        [
-          "공유모듈 회귀",
-          "**실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건"
-        ]
+      "end_line": 108,
+      "raw": "- 검사: Core Observable·범위 수집; 확인 결과: 기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과\n- 검사: Core 새 패키지; 확인 결과: 일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과\n- 검사: LVUI 일반 전체; 확인 결과: 229/229 통과\n- 검사: LVUI 관련 ASan·UBSan; 확인 결과: 158/158 통과\n- 검사: iiGUI 일반 창 없는 회귀·패키지; 확인 결과: 170/170 통과\n- 검사: iiGUI ASan·UBSan; 확인 결과: 170/170 통과\n- 검사: 신규 조회 검사; 확인 결과: 컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과\n- 검사: 생성 C++ 타입 계약; 확인 결과: 두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함\n- 검사: 설치·재배치; 확인 결과: LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부\n- 검사: 생성 헤더·LVRS; 확인 결과: 일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시\n- 검사: 바이너리·제품 경계; 확인 결과: 조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지\n- 검사: 공유모듈 회귀; 확인 결과: **실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "검사: Core Observable·범위 수집; 확인 결과: 기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: Core 새 패키지; 확인 결과: 일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVUI 일반 전체; 확인 결과: 229/229 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVUI 관련 ASan·UBSan; 확인 결과: 158/158 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI 일반 창 없는 회귀·패키지; 확인 결과: 170/170 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI ASan·UBSan; 확인 결과: 170/170 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 신규 조회 검사; 확인 결과: 컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 생성 C++ 타입 계약; 확인 결과: 두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 설치·재배치; 확인 결과: LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 생성 헤더·LVRS; 확인 결과: 일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 바이너리·제품 경계; 확인 결과: 조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 공유모듈 회귀; 확인 결과: **실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 111,
-      "end_line": 111,
+      "start_line": 109,
+      "end_line": 109,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 112,
-      "end_line": 116,
+      "start_line": 110,
+      "end_line": 114,
       "raw": "공유모듈 수용 조건은 수집 1건과 변경 통지 1건이며, 실패한 검사를 완화하거나 건너뛰지\n않았다. 해당 fixture도 컴파일·링크했고 Core의 필수 상속 정책 검사를 통과했다. 재현\n결과와 알려진 실패를 `build/lvui-completion/method-query-verification-20261026.json`에\n소스 해시·각 로그·설치 결과와 함께 기록한다. 이 단계의 통과만으로 모든 SDK 경유\n메서드·전체 언어·플랫폼을 완료로 표시하지 않는다.\n"
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 117,
-      "end_line": 117,
+      "start_line": 115,
+      "end_line": 115,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "heading",
-      "start_line": 118,
-      "end_line": 118,
+      "start_line": 116,
+      "end_line": 116,
       "raw": "## 공유 관측 실행부의 검증\n",
       "level": 2,
       "title": "공유 관측 실행부의 검증"
@@ -409,127 +417,132 @@
     {
       "id": "b000046",
       "kind": "blank",
-      "start_line": 119,
-      "end_line": 119,
+      "start_line": 117,
+      "end_line": 117,
       "raw": "\n"
     },
     {
       "id": "b000047",
       "kind": "paragraph",
-      "start_line": 120,
-      "end_line": 122,
+      "start_line": 118,
+      "end_line": 120,
       "raw": "후속 구현은 Core의 독립 `Observation` 실행부로 같은 수집 범위를 사용한다. 기존 공유모듈\n회귀의 수집 1건·변경 통지 1건이라는 수용 조건은 그대로 유지한다. 중첩 수집, 예외 복구,\n스레드 분리, 공통 깊이 한도, 원본 제거 후 구독 수명도 독립 공유 라이브러리에서 검사한다.\n"
     },
     {
       "id": "b000048",
       "kind": "blank",
-      "start_line": 123,
-      "end_line": 123,
+      "start_line": 121,
+      "end_line": 121,
       "raw": "\n"
     },
     {
       "id": "b000049",
       "kind": "paragraph",
-      "start_line": 124,
-      "end_line": 127,
+      "start_line": 122,
+      "end_line": 125,
       "raw": "LVUI의 `NativeSharedMethod.lvui`를 iiGUI 위젯과 LVRS 팩터리로 각각 생성한다. iiGUI는\n창 없는 실제 위젯에서 표시 갱신·편집 보존·제거를 실행하고, LVRS는 이 단계에서 컴파일만\n수행한다. 같은 Core 설치본을 사용하는 일반·ASan·UBSan 구성과 설치 후 재배치 소비자의\n결과를 아래에 기록한다. 이 단계 검증도 전체 언어와 플랫폼 완료를 뜻하지 않는다.\n"
     },
     {
       "id": "b000050",
       "kind": "blank",
-      "start_line": 128,
-      "end_line": 128,
+      "start_line": 126,
+      "end_line": 126,
       "raw": "\n"
     },
     {
       "id": "b000051",
-      "kind": "table",
-      "start_line": 129,
-      "end_line": 139,
-      "raw": "| 검사 | 2026-10-26 후속 확인 결과 |\n|---|---|\n| Core 관측·공유모듈·의존 경계·설치 | 독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행 |\n| 기존 공유모듈 재현 | 반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건 |\n| LVUI 일반 회귀 | 성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인 |\n| LVUI 관련 ASan·UBSan | 158건과 별도 설치·재배치 검사 1건 통과 |\n| iiGUI 창 없는 회귀 | 일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함 |\n| 설치 도구와 소비자 | 두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부 |\n| 생성 C++·LVRS | 일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시 |\n| 바이너리 의존성 | 위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거 |\n| 제품 관측 경계 | Dreamscapes QML 81개 기준 해시 유지 |\n",
-      "columns": [
-        "검사",
-        "2026-10-26 후속 확인 결과"
-      ],
-      "rows": [
-        [
-          "Core 관측·공유모듈·의존 경계·설치",
-          "독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행"
-        ],
-        [
-          "기존 공유모듈 재현",
-          "반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건"
-        ],
-        [
-          "LVUI 일반 회귀",
-          "성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인"
-        ],
-        [
-          "LVUI 관련 ASan·UBSan",
-          "158건과 별도 설치·재배치 검사 1건 통과"
-        ],
-        [
-          "iiGUI 창 없는 회귀",
-          "일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함"
-        ],
-        [
-          "설치 도구와 소비자",
-          "두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부"
-        ],
-        [
-          "생성 C++·LVRS",
-          "일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시"
-        ],
-        [
-          "바이너리 의존성",
-          "위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거"
-        ],
-        [
-          "제품 관측 경계",
-          "Dreamscapes QML 81개 기준 해시 유지"
-        ]
+      "start_line": 127,
+      "end_line": 135,
+      "raw": "- 검사: Core 관측·공유모듈·의존 경계·설치; 2026-10-26 후속 확인 결과: 독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행\n- 검사: 기존 공유모듈 재현; 2026-10-26 후속 확인 결과: 반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건\n- 검사: LVUI 일반 회귀; 2026-10-26 후속 확인 결과: 성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인\n- 검사: LVUI 관련 ASan·UBSan; 2026-10-26 후속 확인 결과: 158건과 별도 설치·재배치 검사 1건 통과\n- 검사: iiGUI 창 없는 회귀; 2026-10-26 후속 확인 결과: 일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함\n- 검사: 설치 도구와 소비자; 2026-10-26 후속 확인 결과: 두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부\n- 검사: 생성 C++·LVRS; 2026-10-26 후속 확인 결과: 일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시\n- 검사: 바이너리 의존성; 2026-10-26 후속 확인 결과: 위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거\n- 검사: 제품 관측 경계; 2026-10-26 후속 확인 결과: Dreamscapes QML 81개 기준 해시 유지\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "검사: Core 관측·공유모듈·의존 경계·설치; 2026-10-26 후속 확인 결과: 독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 기존 공유모듈 재현; 2026-10-26 후속 확인 결과: 반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVUI 일반 회귀; 2026-10-26 후속 확인 결과: 성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: LVUI 관련 ASan·UBSan; 2026-10-26 후속 확인 결과: 158건과 별도 설치·재배치 검사 1건 통과",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: iiGUI 창 없는 회귀; 2026-10-26 후속 확인 결과: 일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 설치 도구와 소비자; 2026-10-26 후속 확인 결과: 두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 생성 C++·LVRS; 2026-10-26 후속 확인 결과: 일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 바이너리 의존성; 2026-10-26 후속 확인 결과: 위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "검사: 제품 관측 경계; 2026-10-26 후속 확인 결과: Dreamscapes QML 81개 기준 해시 유지",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000052",
       "kind": "blank",
-      "start_line": 140,
-      "end_line": 140,
+      "start_line": 136,
+      "end_line": 136,
       "raw": "\n"
     },
     {
       "id": "b000053",
       "kind": "paragraph",
-      "start_line": 141,
-      "end_line": 145,
+      "start_line": 137,
+      "end_line": 141,
       "raw": "현재 검증 자료는 `build/lvui-completion/shared-observation-verification-20261026.json`에\n각 로그·소스 해시·생성 헤더·설치 결과와 함께 기록한다. 최초 제한 시간 초과와 위젯 ID\n조회·설치 도구 연결 실패의 로그도 보존한다. 이 결과는 macOS arm64의 창 없는 실행이며\n다른 플랫폼과 OS 창·GPU·LVRS 실제 실행을 대신하지 않는다. 동적 라이브러리의 언로드\n수명도 별도 계약으로 남아 있다.\n"
     },
     {
       "id": "b000054",
+      "kind": "blank",
+      "start_line": 142,
+      "end_line": 142,
+      "raw": "\n"
+    },
+    {
+      "id": "b000055",
+      "kind": "paragraph",
+      "start_line": 143,
+      "end_line": 145,
+      "raw": "설치 소비자 검사는 임시 위치에서 여러 CMake 구성과 정상·부적합 C++ 소비자를 새로\n빌드한다. 내부 소비자 실행이 통과해도 전체 60초 한도가 초과되던 관측을 보존하고,\n이 빌드 검사의 한도는 180초로 조정한다. UI 반응시간의 수용 조건을 바꾸는 조정은 아니다.\n"
+    },
+    {
+      "id": "b000056",
       "kind": "blank",
       "start_line": 146,
       "end_line": 146,
       "raw": "\n"
     },
     {
-      "id": "b000055",
-      "kind": "paragraph",
-      "start_line": 147,
-      "end_line": 149,
-      "raw": "설치 소비자 검사는 임시 위치에서 여러 CMake 구성과 정상·부적합 C++ 소비자를 새로\n빌드한다. 내부 소비자 실행이 통과해도 전체 60초 한도가 초과되던 관측을 보존하고,\n이 빌드 검사의 한도는 180초로 조정한다. UI 반응시간의 수용 조건을 바꾸는 조정은 아니다.\n"
-    },
-    {
-      "id": "b000056",
-      "kind": "blank",
-      "start_line": 150,
-      "end_line": 150,
-      "raw": "\n"
-    },
-    {
       "id": "b000057",
       "kind": "paragraph",
-      "start_line": 151,
-      "end_line": 155,
+      "start_line": 147,
+      "end_line": 151,
       "raw": "AOT 호스트 도구는 네이티브 바인딩을 실행하지 않고 텍스트를 생성한다. 하위 호환 공개\n타깃의 전이 연결 때문에 사용하지 않는 관측 DLL이 도구에 남으면 설치 후 재배치 시\n라이브러리를 찾지 못할 수 있다. 지원 링커의 미사용 동적 의존성 제거를 도구에 적용한다.\n설치 검사는 C++ 소비자뿐 아니라 재배치한 `lvui-check`와 `lvui-compile`도 직접 실행한다.\n실제 관측을 실행하는 생성 앱의 Observation 의존성은 유지한다.\n"
     }
   ],
@@ -580,7 +593,7 @@
       "level": 2,
       "title": "공유 관측 실행부의 검증",
       "anchor": "공유-관측-실행부의-검증",
-      "start_line": 118
+      "start_line": 116
     }
   ],
   "indexes": {
@@ -643,28 +656,28 @@
       },
       {
         "block_id": "b000043",
-        "line": 113,
+        "line": 111,
         "text": "않았다. 해당 fixture도 컴파일·링크했고 Core의 필수 상속 정책 검사를 통과했다. 재현",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000043",
-        "line": 116,
+        "line": 114,
         "text": "메서드·전체 언어·플랫폼을 완료로 표시하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000049",
-        "line": 127,
+        "line": 125,
         "text": "결과를 아래에 기록한다. 이 단계 검증도 전체 언어와 플랫폼 완료를 뜻하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000053",
-        "line": 144,
+        "line": 140,
         "text": "다른 플랫폼과 OS 창·GPU·LVRS 실제 실행을 대신하지 않는다. 동적 라이브러리의 언로드",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -715,110 +728,7 @@
         "line": 82
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000041",
-        "columns": [
-          "검사",
-          "확인 결과"
-        ],
-        "rows": [
-          [
-            "Core Observable·범위 수집",
-            "기본 build와 독립 일반·ASan·UBSan 구성에서 각각 8건 통과"
-          ],
-          [
-            "Core 새 패키지",
-            "일반·메모리 구성의 Runtime·Embedded 빌드와 스테이징 설치, 구조·의존 경계 검사 통과"
-          ],
-          [
-            "LVUI 일반 전체",
-            "229/229 통과"
-          ],
-          [
-            "LVUI 관련 ASan·UBSan",
-            "158/158 통과"
-          ],
-          [
-            "iiGUI 일반 창 없는 회귀·패키지",
-            "170/170 통과"
-          ],
-          [
-            "iiGUI ASan·UBSan",
-            "170/170 통과"
-          ],
-          [
-            "신규 조회 검사",
-            "컴파일러 4건·네이티브 그래프 6건·위젯 10건 통과"
-          ],
-          [
-            "생성 C++ 타입 계약",
-            "두 구성 각각 유효 5개 컴파일·부적합 8개 거부, const·private·arity·반환·참조 한정자 포함"
-          ],
-          [
-            "설치·재배치",
-            "LVUI Native·컴파일러·선택 Runtime 3건, iiGUI 두 구성 소비자 통과, 예전 Core 기능 부재 거부"
-          ],
-          [
-            "생성 헤더·LVRS",
-            "일반·메모리 위젯 헤더 47개 내용 일치, LVRS 팩터리 47개 컴파일, LVRS 실행 미실시"
-          ],
-          [
-            "바이너리·제품 경계",
-            "조회 위젯에 Qt 동적 의존성·파서/컴파일러 심볼 없음, Dreamscapes QML 81개 해시 유지"
-          ],
-          [
-            "공유모듈 회귀",
-            "**실패**: `iiSDKCore.ObservableModuleBoundary`, 수집·변경 통지 각각 0건"
-          ]
-        ]
-      },
-      {
-        "block_id": "b000051",
-        "columns": [
-          "검사",
-          "2026-10-26 후속 확인 결과"
-        ],
-        "rows": [
-          [
-            "Core 관측·공유모듈·의존 경계·설치",
-            "독립 일반·ASan·UBSan 구성 각각 17건 통과; 설치 검사 안에서 공유모듈 6건과 Contracts 단독 2건도 실행"
-          ],
-          [
-            "기존 공유모듈 재현",
-            "반환 6→10, 앱·라이브러리 수집 범위 모두 활성, 읽기 수집 1건·변경 통지 1건"
-          ],
-          [
-            "LVUI 일반 회귀",
-            "성공한 228건 유지, 설치 검사 제한 시간 조정·재검증으로 229건 확인"
-          ],
-          [
-            "LVUI 관련 ASan·UBSan",
-            "158건과 별도 설치·재배치 검사 1건 통과"
-          ],
-          [
-            "iiGUI 창 없는 회귀",
-            "일반·ASan·UBSan 구성 각각 173건 통과, 공유 모델 갱신·편집 보존·제거 포함"
-          ],
-          [
-            "설치 도구와 소비자",
-            "두 구성의 재배치 CLI 직접 실행, 네이티브·컴파일러·선택 Runtime 소비자 통과, 예전 Core 기능 부재 거부"
-          ],
-          [
-            "생성 C++·LVRS",
-            "일반·메모리 위젯 헤더 48개 일치, LVRS 팩터리 48개 두 구성에서 컴파일, LVRS 실행 미실시"
-          ],
-          [
-            "바이너리 의존성",
-            "위젯의 Qt 의존성·파서/컴파일러 심볼 없음; 숨김 모델에 GUI·작업자 Runtime 의존성 없음; 호스트 도구의 미사용 관측 DLL 의존성 제거"
-          ],
-          [
-            "제품 관측 경계",
-            "Dreamscapes QML 81개 기준 해시 유지"
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

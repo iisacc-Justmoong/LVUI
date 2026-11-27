@@ -115,18 +115,16 @@ Sheet에 SDK 색상을 전달하는 팩터리는 중간 단계에서 컴파일�
 macOS arm64의 현재 작업 트리에서 다음 결과를 확인했다. 범위가 겹치는 검사를 합산하여
 독립 기능 수나 전체 플랫폼 지원 수로 표시하지 않는다.
 
-| 범위 | 결과 |
-|---|---|
-| LVUI 전체 Release CTest | 193/193 통과 |
-| 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer | 122/122 통과 |
-| 작업·콜백·함수·색상 ThreadSanitizer | 32/32 통과, 빌린 Core Runtime 라이브러리는 비계측 |
-| iiGUI 창 없는 기존 동작·생성 C++ 통합 | 105/105 통과 |
-| iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer | 105/105 통과, NativeBindings 구현은 별도 LVUI 검사 |
-| LVUI 설치·재배치 독립 소비자 | Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과 |
-| iiColorManager 일반 검사와 메모리 검사 | 각각 8/8 통과, 설치 소비자 자동 검사 포함 |
-| iiColorManager 값 전용·기존 Picker 설치/재배치 소비자 | 각각 1/1 통과 |
-| 생성 C++ 타입 계약 | 유효 4개 컴파일, 잘못된 14개 거부 |
-| LVRS 생성 C++ | 총 23개 팩터리 컴파일, 실행하지 않음 |
+- 범위: LVUI 전체 Release CTest; 결과: 193/193 통과
+- 범위: 관련 언어·네이티브 구현 AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 122/122 통과
+- 범위: 작업·콜백·함수·색상 ThreadSanitizer; 결과: 32/32 통과, 빌린 Core Runtime 라이브러리는 비계측
+- 범위: iiGUI 창 없는 기존 동작·생성 C++ 통합; 결과: 105/105 통과
+- 범위: iiGUI 구현·생성 C++·LVUI Runtime·Core AddressSanitizer + UndefinedBehaviorSanitizer; 결과: 105/105 통과, NativeBindings 구현은 별도 LVUI 검사
+- 범위: LVUI 설치·재배치 독립 소비자; 결과: Native 색상 값·공개 컴파일러·선택적 Runtime 3/3 통과
+- 범위: iiColorManager 일반 검사와 메모리 검사; 결과: 각각 8/8 통과, 설치 소비자 자동 검사 포함
+- 범위: iiColorManager 값 전용·기존 Picker 설치/재배치 소비자; 결과: 각각 1/1 통과
+- 범위: 생성 C++ 타입 계약; 결과: 유효 4개 컴파일, 잘못된 14개 거부
+- 범위: LVRS 생성 C++; 결과: 총 23개 팩터리 컴파일, 실행하지 않음
 
 일반·메모리 검사 빌드의 생성 C++ 헤더 26개가 동일함을 확인했다. 색상 전용 패키지는
 Picker 라이브러리 없이 설치·재배치하고 소비자가 컴파일·링크·실행한다. 전체 패키지의

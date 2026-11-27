@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/Language.md",
-    "sha256": "a1688538f6ab16e24e40c50a0c0ff647aa252f784049a39b92daaa095d02486b",
-    "bytes": 8132,
-    "line_count": 112,
+    "sha256": "2231d91eb639d931c3eed66dec13242fb55d617242f2772772d5f994cfb29d4c",
+    "bytes": 8354,
+    "line_count": 108,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -96,83 +96,82 @@
     },
     {
       "id": "b000011",
-      "kind": "table",
       "start_line": 20,
-      "end_line": 24,
-      "raw": "| 요소 | 의미 |\n|---|---|\n| `view`, `main`, `div`, `section` | 자식 요소를 담는 컨테이너이며 기본 배치는 열 방향이다. |\n| `text`, `p`, `span` | 타이포그래피를 상속하는 일반 텍스트 말단 요소이다. |\n| `h1` | 기본 글자 크기가 28 논리 픽셀이며 굵게 표시되는 일반 텍스트 말단 요소이다. |\n",
-      "columns": [
-        "요소",
-        "의미"
-      ],
-      "rows": [
-        [
-          "`view`, `main`, `div`, `section`",
-          "자식 요소를 담는 컨테이너이며 기본 배치는 열 방향이다."
-        ],
-        [
-          "`text`, `p`, `span`",
-          "타이포그래피를 상속하는 일반 텍스트 말단 요소이다."
-        ],
-        [
-          "`h1`",
-          "기본 글자 크기가 28 논리 픽셀이며 굵게 표시되는 일반 텍스트 말단 요소이다."
-        ]
+      "end_line": 22,
+      "raw": "- 요소: `view`, `main`, `div`, `section`; 의미: 자식 요소를 담는 컨테이너이며 기본 배치는 열 방향이다.\n- 요소: `text`, `p`, `span`; 의미: 타이포그래피를 상속하는 일반 텍스트 말단 요소이다.\n- 요소: `h1`; 의미: 기본 글자 크기가 28 논리 픽셀이며 굵게 표시되는 일반 텍스트 말단 요소이다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "요소: `view`, `main`, `div`, `section`; 의미: 자식 요소를 담는 컨테이너이며 기본 배치는 열 방향이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "요소: `text`, `p`, `span`; 의미: 타이포그래피를 상속하는 일반 텍스트 말단 요소이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "요소: `h1`; 의미: 기본 글자 크기가 28 논리 픽셀이며 굵게 표시되는 일반 텍스트 말단 요소이다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000012",
       "kind": "blank",
-      "start_line": 25,
-      "end_line": 25,
+      "start_line": 23,
+      "end_line": 23,
       "raw": "\n"
     },
     {
       "id": "b000013",
       "kind": "paragraph",
-      "start_line": 26,
-      "end_line": 33,
+      "start_line": 24,
+      "end_line": 31,
       "raw": "모든 요소는 박스이다. `span`은 인라인 흐름이 아닌 텍스트 박스이다.\n컨테이너의 텍스트는 텍스트 요소 안에 배치해야 한다. 텍스트 말단 요소는 다른 요소를\n포함할 수 없다. 텍스트의 연속된 ASCII 공백은 하나로 합쳐지며 앞뒤 ASCII 공백은 제거된다.\n`&amp;`, `&lt;`, `&gt;`, `&quot;`, `&apos;`, `&nbsp;`, 10진수 `&#...;`,\n16진수 `&#x...;` 유니코드 스칼라 참조를 디코딩한다. NUL, 서로게이트,\n범위를 벗어나는 스칼라 참조는 오류가 된다. 일반 텍스트는 네이티브 글자 조형에 전달되며,\n마크업을 네이티브 HTML 가져오기 기능에 전달하지 않는다.\n줄바꿈과 정확한 글리프 치수는 설치된 글꼴에 따라 달라진다.\n"
     },
     {
       "id": "b000014",
       "kind": "blank",
-      "start_line": 34,
-      "end_line": 34,
+      "start_line": 32,
+      "end_line": 32,
       "raw": "\n"
     },
     {
       "id": "b000015",
       "kind": "paragraph",
-      "start_line": 35,
-      "end_line": 40,
+      "start_line": 33,
+      "end_line": 38,
       "raw": "속성은 `id`와 `style`만 존재한다. 속성값은 작은따옴표 또는 큰따옴표로 감싸야 하며,\n그 안의 엔티티도 디코딩한다. ID는 고유한 ASCII 식별자이며, 문자 또는 밑줄로 시작하고\n이후에는 문자, 숫자, `_`, `-`를 사용할 수 있다.\n중복 속성은 오류가 된다. 알 수 없는 태그·속성·속성 항목과 지원하지 않는 값도 오류가 된다.\n스크립트, 이벤트 속성, 선택자, 외부 리소스, URL, JavaScript, `<style>`,\n임의의 웹 콘텐츠를 실행하는 경로는 없다.\n"
     },
     {
       "id": "b000016",
+      "kind": "blank",
+      "start_line": 39,
+      "end_line": 39,
+      "raw": "\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "html",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "<a id=\"inline-styles\"></a>\n"
+    },
+    {
+      "id": "b000018",
       "kind": "blank",
       "start_line": 41,
       "end_line": 41,
       "raw": "\n"
     },
     {
-      "id": "b000017",
-      "kind": "html",
-      "start_line": 42,
-      "end_line": 42,
-      "raw": "<a id=\"inline-styles\"></a>\n"
-    },
-    {
-      "id": "b000018",
-      "kind": "blank",
-      "start_line": 43,
-      "end_line": 43,
-      "raw": "\n"
-    },
-    {
       "id": "b000019",
       "kind": "heading",
-      "start_line": 44,
-      "end_line": 44,
+      "start_line": 42,
+      "end_line": 42,
       "raw": "## 인라인 스타일\n",
       "level": 2,
       "title": "인라인 스타일"
@@ -180,121 +179,128 @@
     {
       "id": "b000020",
       "kind": "blank",
-      "start_line": 45,
-      "end_line": 45,
+      "start_line": 43,
+      "end_line": 43,
       "raw": "\n"
     },
     {
       "id": "b000021",
       "kind": "paragraph",
-      "start_line": 46,
-      "end_line": 48,
+      "start_line": 44,
+      "end_line": 46,
       "raw": "스타일은 세미콜론으로 구분하는 `property:value` 선언이며, 같은 속성을 여러 번 선언하면\n마지막 선언이 적용된다. 마지막 세미콜론은 생략할 수 있다.\n익숙한 표기를 사용하는 소규모 LVUI 어휘이며 CSS 엔진은 아니다.\n"
     },
     {
       "id": "b000022",
       "kind": "blank",
-      "start_line": 49,
-      "end_line": 49,
+      "start_line": 47,
+      "end_line": 47,
       "raw": "\n"
     },
     {
       "id": "b000023",
-      "kind": "table",
-      "start_line": 50,
-      "end_line": 62,
-      "raw": "| 속성 | 값과 기본값 |\n|---|---|\n| `width`, `height` | `auto`, 음수가 아닌 수, `px`, `0%`..`100%`; 기본값은 `auto`이다. |\n| `display` | `flex`만 지원하며, 모든 컨테이너는 이미 흐름 레이아웃을 사용한다. |\n| `flex-direction` | `column`이 기본값이며 `row`도 지원한다. |\n| `padding` | CSS의 위·오른쪽·아래·왼쪽 순서로 음수가 아닌 픽셀 길이 1~4개를 지정한다. 기본값은 0이다. |\n| `gap` | 자식 박스 사이의 음수가 아닌 픽셀 길이이며 기본값은 0이다. |\n| `background`, `background-color` | 단일 단색이며 기본값은 투명이다. |\n| `border-radius` | 음수가 아닌 픽셀 길이이며 짧은 박스 변의 절반 이하로 제한한다. 기본값은 0이다. |\n| `color` | 텍스트 색상을 상속하며 루트 기본값은 검정이다. |\n| `font-size` | 8..256 논리 픽셀 범위에서 상속하며 루트 기본값은 14이다. |\n| `font-weight` | `normal` / `400` 또는 `bold` / `700`을 상속하며 루트 기본값은 400이다. |\n| `text-align` | `left`, `center`, `right`를 상속하며 루트 기본값은 왼쪽이다. |\n",
-      "columns": [
-        "속성",
-        "값과 기본값"
-      ],
-      "rows": [
-        [
-          "`width`, `height`",
-          "`auto`, 음수가 아닌 수, `px`, `0%`..`100%`; 기본값은 `auto`이다."
-        ],
-        [
-          "`display`",
-          "`flex`만 지원하며, 모든 컨테이너는 이미 흐름 레이아웃을 사용한다."
-        ],
-        [
-          "`flex-direction`",
-          "`column`이 기본값이며 `row`도 지원한다."
-        ],
-        [
-          "`padding`",
-          "CSS의 위·오른쪽·아래·왼쪽 순서로 음수가 아닌 픽셀 길이 1~4개를 지정한다. 기본값은 0이다."
-        ],
-        [
-          "`gap`",
-          "자식 박스 사이의 음수가 아닌 픽셀 길이이며 기본값은 0이다."
-        ],
-        [
-          "`background`, `background-color`",
-          "단일 단색이며 기본값은 투명이다."
-        ],
-        [
-          "`border-radius`",
-          "음수가 아닌 픽셀 길이이며 짧은 박스 변의 절반 이하로 제한한다. 기본값은 0이다."
-        ],
-        [
-          "`color`",
-          "텍스트 색상을 상속하며 루트 기본값은 검정이다."
-        ],
-        [
-          "`font-size`",
-          "8..256 논리 픽셀 범위에서 상속하며 루트 기본값은 14이다."
-        ],
-        [
-          "`font-weight`",
-          "`normal` / `400` 또는 `bold` / `700`을 상속하며 루트 기본값은 400이다."
-        ],
-        [
-          "`text-align`",
-          "`left`, `center`, `right`를 상속하며 루트 기본값은 왼쪽이다."
-        ]
+      "start_line": 48,
+      "end_line": 58,
+      "raw": "- 속성: `width`, `height`; 값과 기본값: `auto`, 음수가 아닌 수, `px`, `0%`..`100%`; 기본값은 `auto`이다.\n- 속성: `display`; 값과 기본값: `flex`만 지원하며, 모든 컨테이너는 이미 흐름 레이아웃을 사용한다.\n- 속성: `flex-direction`; 값과 기본값: `column`이 기본값이며 `row`도 지원한다.\n- 속성: `padding`; 값과 기본값: CSS의 위·오른쪽·아래·왼쪽 순서로 음수가 아닌 픽셀 길이 1~4개를 지정한다. 기본값은 0이다.\n- 속성: `gap`; 값과 기본값: 자식 박스 사이의 음수가 아닌 픽셀 길이이며 기본값은 0이다.\n- 속성: `background`, `background-color`; 값과 기본값: 단일 단색이며 기본값은 투명이다.\n- 속성: `border-radius`; 값과 기본값: 음수가 아닌 픽셀 길이이며 짧은 박스 변의 절반 이하로 제한한다. 기본값은 0이다.\n- 속성: `color`; 값과 기본값: 텍스트 색상을 상속하며 루트 기본값은 검정이다.\n- 속성: `font-size`; 값과 기본값: 8..256 논리 픽셀 범위에서 상속하며 루트 기본값은 14이다.\n- 속성: `font-weight`; 값과 기본값: `normal` / `400` 또는 `bold` / `700`을 상속하며 루트 기본값은 400이다.\n- 속성: `text-align`; 값과 기본값: `left`, `center`, `right`를 상속하며 루트 기본값은 왼쪽이다.\n",
+      "kind": "list",
+      "items": [
+        {
+          "marker": "-",
+          "text": "속성: `width`, `height`; 값과 기본값: `auto`, 음수가 아닌 수, `px`, `0%`..`100%`; 기본값은 `auto`이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `display`; 값과 기본값: `flex`만 지원하며, 모든 컨테이너는 이미 흐름 레이아웃을 사용한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `flex-direction`; 값과 기본값: `column`이 기본값이며 `row`도 지원한다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `padding`; 값과 기본값: CSS의 위·오른쪽·아래·왼쪽 순서로 음수가 아닌 픽셀 길이 1~4개를 지정한다. 기본값은 0이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `gap`; 값과 기본값: 자식 박스 사이의 음수가 아닌 픽셀 길이이며 기본값은 0이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `background`, `background-color`; 값과 기본값: 단일 단색이며 기본값은 투명이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `border-radius`; 값과 기본값: 음수가 아닌 픽셀 길이이며 짧은 박스 변의 절반 이하로 제한한다. 기본값은 0이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `color`; 값과 기본값: 텍스트 색상을 상속하며 루트 기본값은 검정이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `font-size`; 값과 기본값: 8..256 논리 픽셀 범위에서 상속하며 루트 기본값은 14이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `font-weight`; 값과 기본값: `normal` / `400` 또는 `bold` / `700`을 상속하며 루트 기본값은 400이다.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "속성: `text-align`; 값과 기본값: `left`, `center`, `right`를 상속하며 루트 기본값은 왼쪽이다.",
+          "checked": null
+        }
       ]
     },
     {
       "id": "b000024",
       "kind": "blank",
-      "start_line": 63,
-      "end_line": 63,
+      "start_line": 59,
+      "end_line": 59,
       "raw": "\n"
     },
     {
       "id": "b000025",
       "kind": "paragraph",
-      "start_line": 64,
-      "end_line": 67,
+      "start_line": 60,
+      "end_line": 63,
       "raw": "단위가 없는 수는 논리 픽셀이다. 픽셀 길이는 유한해야 하며 최대 8192이다.\n음수, NaN, 무한대, 알 수 없는 단위는 오류가 된다. 색상은 sRGB로 인코딩된\n`#RGB`, `#RGBA`, `#RRGGBB`, `#RRGGBBAA`, `black`, `white`, `transparent`를 지원한다.\niiGUI는 GPU 합성을 위해 이를 선형광 값으로 변환한다.\n"
     },
     {
       "id": "b000026",
       "kind": "blank",
-      "start_line": 68,
-      "end_line": 68,
+      "start_line": 64,
+      "end_line": 64,
       "raw": "\n"
     },
     {
       "id": "b000027",
       "kind": "html",
-      "start_line": 69,
-      "end_line": 69,
+      "start_line": 65,
+      "end_line": 65,
       "raw": "<a id=\"iigui-layout\"></a>\n"
     },
     {
       "id": "b000028",
       "kind": "blank",
-      "start_line": 70,
-      "end_line": 70,
+      "start_line": 66,
+      "end_line": 66,
       "raw": "\n"
     },
     {
       "id": "b000029",
       "kind": "heading",
-      "start_line": 71,
-      "end_line": 71,
+      "start_line": 67,
+      "end_line": 67,
       "raw": "## iiGUI 레이아웃\n",
       "level": 2,
       "title": "iiGUI 레이아웃"
@@ -302,85 +308,85 @@
     {
       "id": "b000030",
       "kind": "blank",
-      "start_line": 72,
-      "end_line": 72,
+      "start_line": 68,
+      "end_line": 68,
       "raw": "\n"
     },
     {
       "id": "b000031",
       "kind": "paragraph",
-      "start_line": 73,
-      "end_line": 77,
+      "start_line": 69,
+      "end_line": 73,
       "raw": "루트의 자동 크기는 논리 뷰포트를 채운다. 모든 크기는 패딩을 포함하는 border-box 방식이다.\n열 방향에서 너비가 자동인 자식은 부모 콘텐츠의 너비를 채운다.\n행 방향에서 너비가 자동인 자식은 고정 너비·백분율 너비·간격을 제외한 남은 너비를 균등 분배한다.\n행 방향 자식은 위쪽에 정렬한다. flex 축소, 콘텐츠 기반 최소 너비, 절대 위치,\n마진, 스크롤, 일반적인 CSS flex 알고리즘은 지원하지 않는다.\n"
     },
     {
       "id": "b000032",
       "kind": "blank",
-      "start_line": 78,
-      "end_line": 78,
+      "start_line": 74,
+      "end_line": 74,
       "raw": "\n"
     },
     {
       "id": "b000033",
       "kind": "paragraph",
-      "start_line": 79,
-      "end_line": 84,
+      "start_line": 75,
+      "end_line": 80,
       "raw": "백분율은 부모 콘텐츠의 사용 가능한 크기를 기준으로 계산한다.\n높이가 자동인 컨테이너는 부모로부터 받은 사용 가능 높이를 자손에게 전달한다.\n높이가 자동인 열은 자식 높이·간격·패딩을 합산한다.\n높이가 자동인 행은 가장 높은 자식의 높이에 패딩을 더한다.\n높이가 자동인 텍스트는 네이티브 줄바꿈 측정값을 사용한다.\n텍스트 높이를 명시하면 콘텐츠 사각형에 맞춰 잘라내며 글꼴 크기는 바꾸지 않는다.\n"
     },
     {
       "id": "b000034",
       "kind": "blank",
-      "start_line": 85,
-      "end_line": 85,
+      "start_line": 81,
+      "end_line": 81,
       "raw": "\n"
     },
     {
       "id": "b000035",
       "kind": "paragraph",
-      "start_line": 86,
-      "end_line": 90,
+      "start_line": 82,
+      "end_line": 86,
       "raw": "자식이 고정된 컨테이너의 너비나 높이를 초과하면 Core의 `out_of_range` 오류로\n레이아웃에 실패한다. 크기가 0인 빈 컨테이너는 허용하며 패널을 생성하지 않는다.\n텍스트 박스의 콘텐츠 너비는 양수여야 한다. 둥근 배경은 자손에 대한 둥근 클리핑을 제공하지 않는다.\n텍스트는 자신의 콘텐츠 사각형에서 잘리고, 전체 장면은 뷰포트에서 잘린다.\n컨테이너를 자식보다 먼저 그린 다음, 겹치지 않는 텍스트 레이어를 그린다.\n"
     },
     {
       "id": "b000036",
       "kind": "blank",
-      "start_line": 91,
-      "end_line": 91,
+      "start_line": 87,
+      "end_line": 87,
       "raw": "\n"
     },
     {
       "id": "b000037",
       "kind": "paragraph",
-      "start_line": 92,
-      "end_line": 97,
+      "start_line": 88,
+      "end_line": 93,
       "raw": "앱이 `LVUI/NativeDocument.h`를 포함하면 `lvui::native::layout_document(document, size)`가\nCanvasFrame과 ID가 있는 요소의 논리 경계를 반환한다. `Host::set_view(document)`는\nLVUI 측 확장점을 통해 현재 창 크기를 사용하여 기존의 갱신 병합 캔버스 API로\n프레임을 접수한다. 값 스냅샷 방식이므로 Document를 유지하고 크기 변경 콜백에서 다시 호출해야 한다.\n유효하지 않은 레이아웃은 이전에 접수한 장면을 보존한다.\n숨겨진 폴링이나 애플리케이션 인터프리터를 도입하지 않는다.\n"
     },
     {
       "id": "b000038",
       "kind": "blank",
-      "start_line": 98,
-      "end_line": 98,
+      "start_line": 94,
+      "end_line": 94,
       "raw": "\n"
     },
     {
       "id": "b000039",
       "kind": "html",
-      "start_line": 99,
-      "end_line": 99,
+      "start_line": 95,
+      "end_line": 95,
       "raw": "<a id=\"limits-and-diagnostics\"></a>\n"
     },
     {
       "id": "b000040",
       "kind": "blank",
-      "start_line": 100,
-      "end_line": 100,
+      "start_line": 96,
+      "end_line": 96,
       "raw": "\n"
     },
     {
       "id": "b000041",
       "kind": "heading",
-      "start_line": 101,
-      "end_line": 101,
+      "start_line": 97,
+      "end_line": 97,
       "raw": "## 제한과 진단\n",
       "level": 2,
       "title": "제한과 진단"
@@ -388,29 +394,29 @@
     {
       "id": "b000042",
       "kind": "blank",
-      "start_line": 102,
-      "end_line": 102,
+      "start_line": 98,
+      "end_line": 98,
       "raw": "\n"
     },
     {
       "id": "b000043",
       "kind": "paragraph",
-      "start_line": 103,
-      "end_line": 106,
+      "start_line": 99,
+      "end_line": 102,
       "raw": "파서는 UTF-8 입력 최대 1 MiB, 요소 4096개, 루트를 포함한 중첩 깊이 64단계까지 허용한다.\nNUL은 거부한다. 진단에는 0부터 시작하는 바이트 오프셋과 1부터 시작하는 행·유니코드 스칼라 열이 포함된다.\n유효하지 않은 UTF-8은 오프셋 0으로 진단한다. 엔티티를 디코딩한 스타일 문자열 내부의 오류는\n원본 속성의 위치를 가리킨다. 소유된 불변 트리는 입력 버퍼보다 오래 유지될 수 있다.\n"
     },
     {
       "id": "b000044",
       "kind": "blank",
-      "start_line": 107,
-      "end_line": 107,
+      "start_line": 103,
+      "end_line": 103,
       "raw": "\n"
     },
     {
       "id": "b000045",
       "kind": "paragraph",
-      "start_line": 108,
-      "end_line": 112,
+      "start_line": 104,
+      "end_line": 108,
       "raw": "렌더러는 iiGUI 캔버스 기하, 물리 텍스처, 텍스트 예산도 적용한다.\n각 차원의 최대 크기는 8192 논리/장치 픽셀이며, 패널과 텍스트 실행 단위는 4096개,\n텍스트 실행 단위당 64 KiB, 전체 텍스트는 1 MiB와 사용 가능한 장치 메모리로 제한한다.\n따라서 파싱에 성공한 문서도 레이아웃이나 장치 접수 단계에서 실패할 수 있다.\n이 구분을 통해 언어는 특정 그래픽 호스트로부터 독립성을 유지한다.\n"
     }
   ],
@@ -429,7 +435,7 @@
       "level": 2,
       "title": "인라인 스타일",
       "anchor": "인라인-스타일",
-      "start_line": 44
+      "start_line": 42
     },
     {
       "block_id": "b000029",
@@ -437,7 +443,7 @@
       "level": 2,
       "title": "iiGUI 레이아웃",
       "anchor": "iigui-레이아웃",
-      "start_line": 71
+      "start_line": 67
     },
     {
       "block_id": "b000041",
@@ -445,7 +451,7 @@
       "level": 2,
       "title": "제한과 진단",
       "anchor": "제한과-진단",
-      "start_line": 101
+      "start_line": 97
     }
   ],
   "indexes": {
@@ -459,49 +465,49 @@
       },
       {
         "block_id": "b000013",
-        "line": 27,
+        "line": 25,
         "text": "컨테이너의 텍스트는 텍스트 요소 안에 배치해야 한다. 텍스트 말단 요소는 다른 요소를",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000013",
-        "line": 32,
+        "line": 30,
         "text": "마크업을 네이티브 HTML 가져오기 기능에 전달하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000031",
-        "line": 77,
+        "line": 73,
         "text": "마진, 스크롤, 일반적인 CSS flex 알고리즘은 지원하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000035",
-        "line": 87,
+        "line": 83,
         "text": "레이아웃에 실패한다. 크기가 0인 빈 컨테이너는 허용하며 패널을 생성하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000035",
-        "line": 88,
+        "line": 84,
         "text": "텍스트 박스의 콘텐츠 너비는 양수여야 한다. 둥근 배경은 자손에 대한 둥근 클리핑을 제공하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000037",
-        "line": 95,
+        "line": 91,
         "text": "프레임을 접수한다. 값 스냅샷 방식이므로 Document를 유지하고 크기 변경 콜백에서 다시 호출해야 한다.",
         "basis": "lexical_match",
         "context": "paragraph"
       },
       {
         "block_id": "b000037",
-        "line": 97,
+        "line": 93,
         "text": "숨겨진 폴링이나 애플리케이션 인터프리터를 도입하지 않는다.",
         "basis": "lexical_match",
         "context": "paragraph"
@@ -531,82 +537,7 @@
         "line": 11
       }
     ],
-    "tables": [
-      {
-        "block_id": "b000011",
-        "columns": [
-          "요소",
-          "의미"
-        ],
-        "rows": [
-          [
-            "`view`, `main`, `div`, `section`",
-            "자식 요소를 담는 컨테이너이며 기본 배치는 열 방향이다."
-          ],
-          [
-            "`text`, `p`, `span`",
-            "타이포그래피를 상속하는 일반 텍스트 말단 요소이다."
-          ],
-          [
-            "`h1`",
-            "기본 글자 크기가 28 논리 픽셀이며 굵게 표시되는 일반 텍스트 말단 요소이다."
-          ]
-        ]
-      },
-      {
-        "block_id": "b000023",
-        "columns": [
-          "속성",
-          "값과 기본값"
-        ],
-        "rows": [
-          [
-            "`width`, `height`",
-            "`auto`, 음수가 아닌 수, `px`, `0%`..`100%`; 기본값은 `auto`이다."
-          ],
-          [
-            "`display`",
-            "`flex`만 지원하며, 모든 컨테이너는 이미 흐름 레이아웃을 사용한다."
-          ],
-          [
-            "`flex-direction`",
-            "`column`이 기본값이며 `row`도 지원한다."
-          ],
-          [
-            "`padding`",
-            "CSS의 위·오른쪽·아래·왼쪽 순서로 음수가 아닌 픽셀 길이 1~4개를 지정한다. 기본값은 0이다."
-          ],
-          [
-            "`gap`",
-            "자식 박스 사이의 음수가 아닌 픽셀 길이이며 기본값은 0이다."
-          ],
-          [
-            "`background`, `background-color`",
-            "단일 단색이며 기본값은 투명이다."
-          ],
-          [
-            "`border-radius`",
-            "음수가 아닌 픽셀 길이이며 짧은 박스 변의 절반 이하로 제한한다. 기본값은 0이다."
-          ],
-          [
-            "`color`",
-            "텍스트 색상을 상속하며 루트 기본값은 검정이다."
-          ],
-          [
-            "`font-size`",
-            "8..256 논리 픽셀 범위에서 상속하며 루트 기본값은 14이다."
-          ],
-          [
-            "`font-weight`",
-            "`normal` / `400` 또는 `bold` / `700`을 상속하며 루트 기본값은 400이다."
-          ],
-          [
-            "`text-align`",
-            "`left`, `center`, `right`를 상속하며 루트 기본값은 왼쪽이다."
-          ]
-        ]
-      }
-    ]
+    "tables": []
   },
   "provenance": {
     "generator": "workspace-docs",

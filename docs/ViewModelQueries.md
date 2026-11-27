@@ -133,12 +133,10 @@ private·protected 접근 제한과 C++ constness는 유지된다.
 
 `ObjectProperties`는 `queries()`를 통해 수신 측을 노출한다.
 
-| 작업 | 기존 목적 |
-|---|---|
-| `PropertyRead` | 요청한 값을 선택해 반환한다. |
-| `PropertyWrite` | 수신 측 타입·접근·검증 규칙에 따라 값을 쓴다. |
-| `PropertyInvoke` | 명시적 인자 값으로 메서드를 호출하고 결과를 반환한다. |
-| `PropertyChange` | 변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다. |
+- 작업: `PropertyRead`; 기존 목적: 요청한 값을 선택해 반환한다.
+- 작업: `PropertyWrite`; 기존 목적: 수신 측 타입·접근·검증 규칙에 따라 값을 쓴다.
+- 작업: `PropertyInvoke`; 기존 목적: 명시적 인자 값으로 메서드를 호출하고 결과를 반환한다.
+- 작업: `PropertyChange`; 기존 목적: 변경 확정 후 수신 측에 변경 종류·경로·리비전을 알린다.
 
 `PropertyChange`는 새 값이나 객체 전체를 자동으로 포함하지 않는다.
 수신 측은 선택한 최신 값을 요청할 수 있다.
@@ -152,11 +150,9 @@ private·protected 접근 제한과 C++ constness는 유지된다.
 
 ## 실행과 응답 전달
 
-| Core 작업 | ViewModel에 관련된 계약 |
-|---|---|
-| `send(request)` | 호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다. |
-| 바인딩된 포트의 `post(request, completion)` | 설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다. |
-| `post(executor, request, completion)` | 바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다. |
+- Core 작업: `send(request)`; ViewModel에 관련된 계약: 호출자 스레드에서 동기 실행한다. 바인딩된 포트는 소유 영역 밖의 호출자를 `wrong_executor`로 거부한다.
+- Core 작업: 바인딩된 포트의 `post(request, completion)`; ViewModel에 관련된 계약: 설정된 `SerialQueue`에 넣으며 완료 콜백은 해당 수신 영역에서 실행한다.
+- Core 작업: `post(executor, request, completion)`; ViewModel에 관련된 계약: 바인딩된 수신 측의 실행기 검사를 준수하는 명시적 큐 전달이다.
 
 `post` 결과는 접수 여부를 나타내며 실행 완료나 도메인 결과 성공을 뜻하지 않는다.
 취소·종료로 처리기와 완료 콜백이 억제될 수 있다.

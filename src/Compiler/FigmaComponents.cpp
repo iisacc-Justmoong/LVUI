@@ -232,6 +232,11 @@ bool normalize_figma_component(View& view, const std::function<bool(const Value&
             } else if (selected == "Search") { select_component(view, "SearchField"); kind = "SearchField"; }
             changed = true;
         }
+        // The Figma TextField variants are 22px high. Preserve an explicitly
+        // authored size and the separate native InputField compatibility default.
+        if (original == "TextField" && kind == "InputField" && !input(view, "size")) {
+            add(view, "size", ValueKind::enumeration, ".compact"); changed = true;
+        }
         if (auto* style = input(view, "style")) {
             choice(*style, {"Rounded", "Cylinder", "Inline"}, is_binding);
             const auto selected = choice_name(style->value);

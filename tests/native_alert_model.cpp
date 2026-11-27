@@ -29,17 +29,19 @@ int main() {
             layout->icon == lvui::AlertRect{207, 46, 86, 86} &&
             layout->title == lvui::AlertRect{24, 160, 452, 26} &&
             layout->description == lvui::AlertRect{24, 200, 452, 26} &&
-            layout->actions[1] == lvui::AlertRect{24, 290, 219, 56} &&
-            layout->actions[0] == lvui::AlertRect{257, 290, 219, 56} &&
+            layout->divider == lvui::AlertRect{24, 262, 452, 1} &&
+            layout->actions[1] == lvui::AlertRect{24, 291, 219, 56} &&
+            layout->actions[0] == lvui::AlertRect{257, 291, 219, 56} &&
             layout->radius == 36, "Two-action alert geometry changed");
     config.action_text[2] = "Later";
     require(alert.set_configuration(config) && alert.action_count() == 3 &&
             alert.action(1).destructive && alert.action(1).tone == lvui::ButtonTone::normal,
             "Three-action alert did not select the default destructive secondary action");
     layout = alert.layout(800, 600, 26, 26);
-    require(layout && layout->frame.height == 479 && layout->actions[0] == lvui::AlertRect{24, 280, 452, 56} &&
-            layout->actions[1] == lvui::AlertRect{24, 348, 452, 56} &&
-            layout->actions[2] == lvui::AlertRect{24, 416, 452, 44},
+    require(layout && layout->frame.height == 479 && layout->divider == lvui::AlertRect{0, 262, 500, 1} &&
+            layout->actions[0] == lvui::AlertRect{24, 281, 452, 56} &&
+            layout->actions[1] == lvui::AlertRect{24, 349, 452, 56} &&
+            layout->actions[2] == lvui::AlertRect{24, 417, 452, 44},
             "Three-action alert geometry changed");
     config.action_count = 1; config.action_text[0].clear(); config.show_icon = false;
     config.description = "Override"; config.shape = lvui::AlertShape::cylinder;
@@ -48,7 +50,8 @@ int main() {
             "Explicit count, empty label or description override failed");
     layout = alert.layout(300, 400, 26, 13);
     require(layout && layout->frame.width == 252 && layout->frame.x == 24 &&
-            layout->icon.width == 0 && layout->radius == std::min(layout->frame.width, layout->frame.height) / 2,
+            layout->icon.width == 0 && layout->divider.x == 24 && layout->divider.width == 204 &&
+            layout->divider.height == 1 && layout->radius == std::min(layout->frame.width, layout->frame.height) / 2,
             "Narrow or icon-free alert geometry failed");
     auto configurable=config;configurable.metrics.action_horizontal_inset=40;configurable.metrics.action_gap=10;
     configurable.action_count=2;configurable.shape=lvui::AlertShape::rounded;

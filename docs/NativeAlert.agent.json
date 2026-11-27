@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/NativeAlert.md",
-    "sha256": "fc7a157f37261adc4df5762c2cda293af7e9f6a4d692509399a30fc0f18000f8",
-    "bytes": 6185,
-    "line_count": 77,
+    "sha256": "dc03a73844c3c2f18c4607f1c604b80bc7d58152b6364b60120c9a001865fd32",
+    "bytes": 6604,
+    "line_count": 82,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -173,6 +173,20 @@
       "start_line": 74,
       "end_line": 77,
       "raw": "`iiGUI/AlertPresentation.h`는 아이콘 기하, 제목·설명 표현과 액션 입력 구성을\n담당한다. 보이지 않는 액션도 세 슬롯 안에서 준비할 수 있으며 범위를 벗어난\n인덱스는 거부한다. Core 단독 바인딩과 macOS arm64 독립 설치 소비자·생성 및\n호스트 검사는 창 없이 통과했다.\n"
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 78,
+      "end_line": 78,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 79,
+      "end_line": 82,
+      "raw": "콘텐츠와 액션 사이의 구분선은 공통 `Alert/divider` 색상과 1px 두께를 사용한다.\n두 액션과 단일 액션에서는 콘텐츠 좌우 여백에 맞추고, 세 액션에서는 카드의 전체\n너비를 사용한다. 구분선은 카드 테두리와 독립적이며 액션 배치보다 앞에 놓인다.\nFigma 기본 두 액션 시안은 500×379, 세 액션 시안은 500×479 논리 px이다.\n"
     }
   ],
   "outline": [

@@ -2793,7 +2793,7 @@
             },
             "Key#1189:8": {
               "type": "TEXT",
-              "defaultValue": "key"
+              "defaultValue": "⇧⌘I"
             },
             "Label#1189:12": {
               "type": "TEXT",
@@ -2857,7 +2857,7 @@
             },
             "Key#1244:240": {
               "type": "TEXT",
-              "defaultValue": "key"
+              "defaultValue": "⇧⌘I"
             },
             "Label#1244:241": {
               "type": "TEXT",
