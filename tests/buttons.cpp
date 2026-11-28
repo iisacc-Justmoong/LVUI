@@ -12,6 +12,10 @@ int main(){
     require(code.find("#include <LVUI>")!=code.npos && code.find("lvui::native::ButtonBinding<")!=code.npos &&
             code.find("lvui::native::ButtonInputValue<ii::gui::RasterImage>{")!=code.npos && code.find("component.set_options(value)")!=code.npos &&
             code.find("widgets.button(")==code.npos && code.find("lvrs::")==code.npos,"Button is not LVUI-owned");
+    require(code.find("#include <LVUI/NativeButton.h>")!=code.npos &&
+            code.find("#include <iiGUI/NativeButtonView.h>")!=code.npos &&
+            code.find("#include <iiGUI/NativeImageView.h>")==code.npos,
+            "Generated button dependencies must be explicit, scoped, and Qt-free");
     auto empty=lvui::compile_native("Window { IconButton() }");
     require(empty && empty->find("projectStructure") != empty->npos,
             "IconButton did not use the Figma default icon");

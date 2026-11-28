@@ -26,13 +26,15 @@ namespace {
     throw Diagnostic{at.offset, at.line, at.column, std::move(message)};
 }
 
-// Generated view features request their own headers in the prologue. Publish
-// one import per SDK, in first-use order, before app-supplied C++ headers are
-// appended. Keep feature checks and all non-SDK directives in place.
+// Generated views publish each SDK umbrella once and retain the actual
+// component headers in first-use order. The explicit list lets consumers audit
+// renderer dependencies while the umbrella remains the supported module entry.
+// Deduplicate repeated includes without moving feature checks or app headers.
 std::string module_import_prologue(std::string_view prologue) {
     constexpr std::string_view include = "#include <";
     constexpr std::array<std::string_view, 2> modules{"iiGUI", "LVUI"};
     std::array<bool, modules.size()> imported{};
+    std::vector<std::string_view> component_headers;
     std::string output;
     output.reserve(prologue.size());
     while (!prologue.empty()) {
@@ -52,6 +54,10 @@ std::string module_import_prologue(std::string_view prologue) {
                         output += *module;
                         output += ">\n";
                         imported[index] = true;
+                    }
+                    if (std::ranges::find(component_headers,line)==component_headers.end()) {
+                        component_headers.push_back(line);
+                        output += line;
                     }
                     continue;
                 }
@@ -8401,6 +8407,9 @@ public:
                 container.component = find_keyword("VStack");
                 container.position = root.position;
                 // This stack is a structural owner, not an authored layout.
+                // Its identity must not depend on optional window chrome or
+                // safe-area helper variables allocated before its emission.
+                container.inputs.push_back({"id", {ValueKind::string, "@lvui/0", {}, root.position}, root.position});
                 container.inputs.push_back({"spacing", {ValueKind::number, "0", {}, root.position}, root.position});
                 container.children.push_back(std::move(root));
                 root = std::move(container);

@@ -406,7 +406,7 @@
       "document_id": "urn:iisacc:document:caab44a8bf62d55545a55822cba54f55a5e587627c2a14040333febb8c275ba7",
       "source": "docs/NativeAOT.md",
       "agent_json": "docs/NativeAOT.agent.json",
-      "source_sha256": "adb4d48581c89ee58997e26d063ee242d8b68127eaa9093be2e9ec69eb4a2a28",
+      "source_sha256": "0dbb45504b5f002db34ebf318ca6976ad2e43cea7080d60b8d9a97c68851ecc2",
       "role": "guide"
     },
     {
@@ -1113,7 +1113,7 @@
       "document_id": "urn:iisacc:document:3778551219dd5b5ba2e84ae9eac5a1f6656755783cf6df50a12357e1da07e5af",
       "source": "docs/README.md",
       "agent_json": "docs/README.agent.json",
-      "source_sha256": "8a7254ec1df61c1ca30bc6d02d43cb27bd5c3dcf650c4056510adceb9fc23ca0",
+      "source_sha256": "d0408bc24e3fbff5d64774473ea4456cf11594ea08842aa90d460ac3fe79d94b",
       "role": "overview"
     },
     {
@@ -1384,7 +1384,7 @@
     "source_authority": "markdown"
   },
   "provenance": {
-    "generator": "manual-projection",
+    "generator": "codex-document-projection",
     "version": "1.0.0",
     "profile": "lossless-blocks-v1",
     "derived": true

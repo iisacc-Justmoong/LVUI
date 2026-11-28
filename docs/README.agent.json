@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "docs/README.md",
-    "sha256": "8a7254ec1df61c1ca30bc6d02d43cb27bd5c3dcf650c4056510adceb9fc23ca0",
-    "bytes": 40309,
+    "sha256": "d0408bc24e3fbff5d64774473ea4456cf11594ea08842aa90d460ac3fe79d94b",
+    "bytes": 40445,
     "line_count": 437,
     "encoding": "utf-8",
     "language": "ko"
@@ -397,11 +397,18 @@
       "id": "b000006",
       "kind": "blank",
       "start_line": 70,
-      "end_line": 71,
-      "raw": "\n\n"
+      "end_line": 70,
+      "raw": "\n"
     },
     {
       "id": "b000007",
+      "kind": "blank",
+      "start_line": 71,
+      "end_line": 71,
+      "raw": "\n"
+    },
+    {
+      "id": "b000008",
       "kind": "list",
       "start_line": 72,
       "end_line": 72,
@@ -415,56 +422,56 @@
       ]
     },
     {
-      "id": "b000008",
+      "id": "b000009",
       "kind": "blank",
       "start_line": 73,
       "end_line": 73,
       "raw": "\n"
     },
     {
-      "id": "b000009",
+      "id": "b000010",
       "kind": "paragraph",
       "start_line": 74,
       "end_line": 76,
       "raw": "This directory separates the current implementation contract from the selected\nLVUI language and runtime design, including the native widget and acceleration\ncontract and the `View` type/child-argument rules clarified on 2026-10-22.\n"
     },
     {
-      "id": "b000010",
+      "id": "b000011",
       "kind": "blank",
       "start_line": 77,
       "end_line": 77,
       "raw": "\n"
     },
     {
-      "id": "b000011",
       "kind": "paragraph",
       "start_line": 78,
       "end_line": 82,
-      "raw": "LVUI is an AOT-compiled native language. Its current LVRS path targets iiGUI's\nown C++ widgets and the selected Metal, DirectX/Direct3D or Vulkan graphics path.\nPlatform APIs provide windows, input and presentation. Core owns the application\nlifetime; native widgets and GPU resources are instantiated by compiled C++.\nIts execution model does not include a source interpreter or language VM.\n"
+      "raw": "LVUI is an AOT-compiled native language. Its current generation path targets iiGUI's\nown C++ widgets and the selected Metal, DirectX/Direct3D or Vulkan graphics path. The legacy `FRAMEWORK LVRS` generation path has been removed; [LVRSNative.md](LVRSNative.md) is a historical record of that path.\nPlatform APIs provide windows, input and presentation. Core owns the application\nlifetime; native widgets and GPU resources are instantiated by compiled C++.\nIts execution model does not include a source interpreter or language VM.\n",
+      "id": "b000012"
     },
     {
-      "id": "b000012",
+      "id": "b000013",
       "kind": "blank",
       "start_line": 83,
       "end_line": 83,
       "raw": "\n"
     },
     {
-      "id": "b000013",
+      "id": "b000014",
       "kind": "paragraph",
       "start_line": 84,
       "end_line": 85,
       "raw": "The selected design follows the supplied scoped-ownership proposal. The earlier\nmetadata-only import and per-click instance model is retired.\n"
     },
     {
-      "id": "b000014",
+      "id": "b000015",
       "kind": "blank",
       "start_line": 86,
       "end_line": 86,
       "raw": "\n"
     },
     {
-      "id": "b000015",
+      "id": "b000016",
       "kind": "heading",
       "start_line": 87,
       "end_line": 87,
@@ -473,14 +480,14 @@
       "title": "Reading map"
     },
     {
-      "id": "b000016",
+      "id": "b000017",
       "kind": "blank",
       "start_line": 88,
       "end_line": 88,
       "raw": "\n"
     },
     {
-      "id": "b000017",
+      "id": "b000018",
       "start_line": 89,
       "end_line": 110,
       "raw": "- Document: [NativeApplication.md](NativeApplication.md); Scope: `Application` root, Scene and window scopes, generated entry and failure contract; Status: AOT and headless multi-window coverage; target-platform execution is separate\n- Document: [NativeWidgetRuntime.md](NativeWidgetRuntime.md); Scope: Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment; Status: Implemented macOS path; Core remains independent of GUI/DSL\n- Document: [CoreWidgetVerification.md](CoreWidgetVerification.md); Scope: Core entrypoint, C++ widget lifetime, native LVRS appearance and installed consumer; Status: Verification of the Core-owned application path\n- Document: [CompilationModel.md](CompilationModel.md); Scope: AOT native widget compilation, Metal/DirectX/Vulkan acceleration and delivery to iiGUI; Status: Self-rendered iiGUI C++ widgets; platform execution coverage audited separately\n- Document: [NativeAOT.md](NativeAOT.md); Scope: Initial C++ generation, supported inputs, scoped callbacks and CMake; Status: Initial AOT subset; later bindings, components, functions and ownership are linked above\n- Document: [EmbeddedPages.md](EmbeddedPages.md); Scope: Independent view-body scopes in an existing builder and LVRS PageRouter AOT; Status: Code generation and compilation verified; actual execution deferred\n- Document: [NativeAOTVerification.md](NativeAOTVerification.md); Scope: Earlier Hello World, AppKit tests, binary and relocated installed-consumer checks; Status: Historical macOS arm64 evidence; not full current-widget execution proof\n- Document: [Language.md](Language.md); Scope: Earlier HTML-shaped `parse`/`Document` API; Status: Legacy C++ API; not current `.lvui` syntax\n- Document: [ComponentLanguage.md](ComponentLanguage.md); Scope: Native C++23 tokenizer, reserved identifiers, typed child View AST and lvui-check; Status: Implemented front end; feeds the separate native AOT generator\n- Document: [ReservedWords.md](ReservedWords.md); Scope: All 107 visual LVRS component keywords, three modifiers and six core words with source evidence; Status: Generated from the audited source snapshot; verified against the actual parser\n- Document: [Verification.md](Verification.md); Scope: Earlier source inventory, front-end tests, CLI diagnostics and staged installed consumer; Status: Historical front-end evidence; see NativeAOTVerification for native execution\n- Document: [DeclarativeSyntax.md](DeclarativeSyntax.md); Scope: Common `View` type, `{}` child-view arguments, component declarations, imported instance names, bound actions and properties; Status: Selected design; draft grammar\n- Document: [MethodReferences.md](MethodReferences.md); Scope: Method references versus immediate calls, typed callback inputs and component-owned event semantics; Status: Typed event and result-valued inputs implemented; remaining general protocols are audited separately\n- Document: [ReactiveState.md](ReactiveState.md); Scope: Reactive values by default, the static exception and the supplied [increment/reset counter](Examples/ReactiveCounter.lvui); Status: Scalar native tracking and static snapshots implemented; complete input/lifecycle coverage remains pending\n- Document: [VariableDeclarations.md](VariableDeclarations.md); Scope: `const` constants, `var` variables, typed initializers and no-semicolon syntax; Status: Selected declaration rules; full type system remains open\n- Document: [DeclarationAnnotations.md](DeclarationAnnotations.md); Scope: `@Observable` and `@Static` prefix annotations; default VM binding; Status: Selected meanings; targets, combinations and static lifetime ownership remain open\n- Document: [TypeImports.md](TypeImports.md); Scope: Scoped imports that create and own C++ backend instances with public-member access; Status: Selected ownership and access semantics\n- Document: [InvocationLifecycle.md](InvocationLifecycle.md); Scope: Use tracking, scope teardown, asynchronous work and deterministic destruction; Status: Selected lifecycle semantics\n- Document: [RuntimeContracts.md](RuntimeContracts.md); Scope: C++ access, bridge information, property observation, Core integration and resource ownership; Status: Required design capabilities; concrete APIs remain open\n- Document: [ViewModelQueries.md](ViewModelQueries.md); Scope: Default VM binding, Core query value exchange, notifications, execution domains and teardown; Status: Typed request and stream connections implemented; automatic ordinary-field observation remains open\n- Document: [QueryConnections.md](QueryConnections.md); Scope: Typed QueryStream-to-View connections, UI delivery, bounds and lifecycle; Status: Native AOT and host-owned query registry\n- Document: [CounterExample.md](CounterExample.md); Scope: An application window with an observable counter and increment/decrement buttons; [source](Examples/Counter.lvui); Status: Hypothetical scoped-backend example\n",
@@ -599,28 +606,28 @@
       ]
     },
     {
-      "id": "b000018",
+      "id": "b000019",
       "kind": "blank",
       "start_line": 111,
       "end_line": 111,
       "raw": "\n"
     },
     {
-      "id": "b000019",
+      "id": "b000020",
       "kind": "paragraph",
       "start_line": 112,
       "end_line": 114,
       "raw": "The existing filenames `TypeImports.md` and `InvocationLifecycle.md` are retained\nso earlier document links continue to work. Their contents now describe scoped\ninstance ownership.\n"
     },
     {
-      "id": "b000020",
+      "id": "b000021",
       "kind": "blank",
       "start_line": 115,
       "end_line": 115,
       "raw": "\n"
     },
     {
-      "id": "b000021",
+      "id": "b000022",
       "kind": "heading",
       "start_line": 116,
       "end_line": 116,
@@ -629,14 +636,14 @@
       "title": "Selected rules"
     },
     {
-      "id": "b000022",
+      "id": "b000023",
       "kind": "blank",
       "start_line": 117,
       "end_line": 117,
       "raw": "\n"
     },
     {
-      "id": "b000023",
+      "id": "b000024",
       "kind": "list",
       "start_line": 118,
       "end_line": 176,
@@ -725,14 +732,14 @@
       ]
     },
     {
-      "id": "b000024",
+      "id": "b000025",
       "kind": "blank",
       "start_line": 177,
       "end_line": 177,
       "raw": "\n"
     },
     {
-      "id": "b000025",
+      "id": "b000026",
       "kind": "heading",
       "start_line": 178,
       "end_line": 178,
@@ -741,56 +748,56 @@
       "title": "Implementation boundary"
     },
     {
-      "id": "b000026",
+      "id": "b000027",
       "kind": "blank",
       "start_line": 179,
       "end_line": 179,
       "raw": "\n"
     },
     {
-      "id": "b000027",
+      "id": "b000028",
       "kind": "paragraph",
       "start_line": 180,
       "end_line": 187,
       "raw": "The package retains the `parse`/`Document` C++ API for its separate\n[legacy grammar](Language.md). Current `.lvui` source uses\n`tokenize`/`parse_view`/`ViewDocument` and the [component grammar](ComponentLanguage.md).\nThe current front end uses the LVUI-owned\nreserved-word catalog and owns typed child Views, inputs, scalar declarations and\nimport syntax. The native `lvui-check` tool validates component source files.\nThe language and native-binding targets depend on iiSDKCore Contracts; the\noptional `LVUI::Runtime` target also uses the existing Core Runtime.\n"
     },
     {
-      "id": "b000028",
+      "id": "b000029",
       "kind": "blank",
       "start_line": 188,
       "end_line": 188,
       "raw": "\n"
     },
     {
-      "id": "b000029",
+      "id": "b000030",
       "kind": "paragraph",
       "start_line": 189,
       "end_line": 199,
       "raw": "Parsing alone does not activate C++ objects or execute a UI. The separate\n`compile_native`/`lvui-compile` path generates C++23 for the documented native\nsubset. LVUI is replacing legacy components with its own C++ models and paint\nrecipes on application-supplied iiGUI host primitives. The legacy\n`FRAMEWORK LVRS` generation path has been removed; missing component features\nremain in the migration roadmap. The\ngenerated activation owns imported C++ backends, reactive\nbindings, typed reusable views, function inputs, conditional content and keyed\nor virtual collections. Runtime property reads, calls and updates execute as\ncompiled native C++; there is no LVUI source evaluator or QML dependency in this\npath. OS integration stays at the window, surface and input boundaries.\n"
     },
     {
-      "id": "b000030",
+      "id": "b000031",
       "kind": "blank",
       "start_line": 200,
       "end_line": 200,
       "raw": "\n"
     },
     {
-      "id": "b000031",
+      "id": "b000032",
       "kind": "paragraph",
       "start_line": 201,
       "end_line": 206,
       "raw": "The optional activation runtime uses the existing Core workers, serial queues\nand task scopes for explicitly registered work and retirement. Complete type\nand slot protocols, all inherited LVRS properties and behavior, rendering and\nplatform execution remain subject to the [completion audit](Completion.md).\nHeadless generated-widget execution, compile-only LVRS factories and actual\nwindow/GPU execution are distinct verification boundaries.\n"
     },
     {
-      "id": "b000032",
+      "id": "b000033",
       "kind": "blank",
       "start_line": 207,
       "end_line": 207,
       "raw": "\n"
     },
     {
-      "id": "b000033",
+      "id": "b000034",
       "kind": "heading",
       "start_line": 208,
       "end_line": 208,
@@ -799,14 +806,14 @@
       "title": "Remaining design work"
     },
     {
-      "id": "b000034",
+      "id": "b000035",
       "kind": "blank",
       "start_line": 209,
       "end_line": 209,
       "raw": "\n"
     },
     {
-      "id": "b000035",
+      "id": "b000036",
       "kind": "list",
       "start_line": 210,
       "end_line": 219,
@@ -865,28 +872,28 @@
       ]
     },
     {
-      "id": "b000036",
+      "id": "b000037",
       "kind": "blank",
       "start_line": 220,
       "end_line": 220,
       "raw": "\n"
     },
     {
-      "id": "b000037",
+      "id": "b000038",
       "kind": "paragraph",
       "start_line": 221,
       "end_line": 224,
       "raw": "The ownership model and native AOT execution model are selected. The C++23/Cocoa\nsubset has concrete code generation and mounting APIs. Full language syntax,\nreactive binding formats, asynchronous scope ownership and remaining backends\nstill require implementation work.\n"
     },
     {
-      "id": "b000038",
+      "id": "b000039",
       "kind": "blank",
       "start_line": 225,
       "end_line": 225,
       "raw": "\n"
     },
     {
-      "id": "b000039",
+      "id": "b000040",
       "kind": "list",
       "start_line": 226,
       "end_line": 226,
@@ -900,14 +907,14 @@
       ]
     },
     {
-      "id": "b000040",
+      "id": "b000041",
       "kind": "blank",
       "start_line": 227,
       "end_line": 227,
       "raw": "\n"
     },
     {
-      "id": "b000041",
+      "id": "b000042",
       "kind": "list",
       "start_line": 228,
       "end_line": 228,
@@ -921,14 +928,14 @@
       ]
     },
     {
-      "id": "b000042",
+      "id": "b000043",
       "kind": "blank",
       "start_line": 229,
       "end_line": 229,
       "raw": "\n"
     },
     {
-      "id": "b000043",
+      "id": "b000044",
       "kind": "list",
       "start_line": 230,
       "end_line": 236,
@@ -972,21 +979,21 @@
       ]
     },
     {
-      "id": "b000044",
+      "id": "b000045",
       "kind": "blank",
       "start_line": 237,
       "end_line": 237,
       "raw": "\n"
     },
     {
-      "id": "b000045",
+      "id": "b000046",
       "kind": "html",
       "start_line": 238,
       "end_line": 238,
       "raw": "<!-- workspace-docs:document-map:start -->\n"
     },
     {
-      "id": "b000046",
+      "id": "b000047",
       "kind": "heading",
       "start_line": 239,
       "end_line": 239,
@@ -995,28 +1002,28 @@
       "title": "Human and agent document map"
     },
     {
-      "id": "b000047",
+      "id": "b000048",
       "kind": "blank",
       "start_line": 240,
       "end_line": 240,
       "raw": "\n"
     },
     {
-      "id": "b000048",
+      "id": "b000049",
       "kind": "paragraph",
       "start_line": 241,
       "end_line": 241,
       "raw": "Markdown is the maintained human source. Agent JSON is a structured, source-traceable projection.\n"
     },
     {
-      "id": "b000049",
+      "id": "b000050",
       "kind": "blank",
       "start_line": 242,
       "end_line": 242,
       "raw": "\n"
     },
     {
-      "id": "b000050",
+      "id": "b000051",
       "start_line": 243,
       "end_line": 432,
       "raw": "- Document: [`AGENT.md`](../AGENT.md); Agent JSON: [JSON](Entrypoints/AGENT.agent.json)\n- Document: [`README.md`](../README.md); Agent JSON: [JSON](Entrypoints/README.agent.json)\n- Document: [`docs/ActivationWork.md`](ActivationWork.md); Agent JSON: [JSON](ActivationWork.agent.json)\n- Document: [`docs/AppSurfaces.md`](AppSurfaces.md); Agent JSON: [JSON](AppSurfaces.agent.json)\n- Document: [`docs/BackendConstruction.md`](BackendConstruction.md); Agent JSON: [JSON](BackendConstruction.agent.json)\n- Document: [`docs/BuildLayout.md`](BuildLayout.md); Agent JSON: [JSON](BuildLayout.agent.json)\n- Document: [`docs/CallableFields.md`](CallableFields.md); Agent JSON: [JSON](CallableFields.agent.json)\n- Document: [`docs/CallableInputs.md`](CallableInputs.md); Agent JSON: [JSON](CallableInputs.agent.json)\n- Document: [`docs/CallbackValues.md`](CallbackValues.md); Agent JSON: [JSON](CallbackValues.agent.json)\n- Document: [`docs/CodeDocument.md`](CodeDocument.md); Agent JSON: [JSON](CodeDocument.agent.json)\n- Document: [`docs/CollectionNavigation.md`](CollectionNavigation.md); Agent JSON: [JSON](CollectionNavigation.agent.json)\n- Document: [`docs/ColorSelection.md`](ColorSelection.md); Agent JSON: [JSON](ColorSelection.agent.json)\n- Document: [`docs/ColorSurfaceRasterReuse.md`](ColorSurfaceRasterReuse.md); Agent JSON: [JSON](ColorSurfaceRasterReuse.agent.json)\n- Document: [`docs/CompilationModel.md`](CompilationModel.md); Agent JSON: [JSON](CompilationModel.agent.json)\n- Document: [`docs/Completion.md`](Completion.md); Agent JSON: [JSON](Completion.agent.json)\n- Document: [`docs/ComponentLanguage.md`](ComponentLanguage.md); Agent JSON: [JSON](ComponentLanguage.agent.json)\n- Document: [`docs/Components.md`](Components.md); Agent JSON: [JSON](Components.agent.json)\n- Document: [`docs/ConditionalViews.md`](ConditionalViews.md); Agent JSON: [JSON](ConditionalViews.agent.json)\n- Document: [`docs/CoreWidgetVerification.md`](CoreWidgetVerification.md); Agent JSON: [JSON](CoreWidgetVerification.agent.json)\n- Document: [`docs/CounterExample.md`](CounterExample.md); Agent JSON: [JSON](CounterExample.agent.json)\n- Document: [`docs/CustomWindowChrome.md`](CustomWindowChrome.md); Agent JSON: [JSON](CustomWindowChrome.agent.json)\n- Document: [`docs/DeclarationAnnotations.md`](DeclarationAnnotations.md); Agent JSON: [JSON](DeclarationAnnotations.agent.json)\n- Document: [`docs/DeclarativeSyntax.md`](DeclarativeSyntax.md); Agent JSON: [JSON](DeclarativeSyntax.agent.json)\n- Document: [`docs/DesignIconCatalog.md`](DesignIconCatalog.md); Agent JSON: [JSON](DesignIconCatalog.agent.json)\n- Document: [`docs/DynamicLinking.md`](DynamicLinking.md); Agent JSON: [JSON](DynamicLinking.agent.json)\n- Document: [`docs/EditorAppearance.md`](EditorAppearance.md); Agent JSON: [JSON](EditorAppearance.agent.json)\n- Document: [`docs/EmbeddedPages.md`](EmbeddedPages.md); Agent JSON: [JSON](EmbeddedPages.agent.json)\n- Document: [`docs/Expressions.md`](Expressions.md); Agent JSON: [JSON](Expressions.agent.json)\n- Document: [`docs/FactoryCaptures.md`](FactoryCaptures.md); Agent JSON: [JSON](FactoryCaptures.agent.json)\n- Document: [`docs/FigmaComponentContracts.md`](FigmaComponentContracts.md); Agent JSON: [JSON](FigmaComponentContracts.agent.json)\n- Document: [`docs/FunctionValues.md`](FunctionValues.md); Agent JSON: [JSON](FunctionValues.agent.json)\n- Document: [`docs/FunctionVariables.md`](FunctionVariables.md); Agent JSON: [JSON](FunctionVariables.agent.json)\n- Document: [`docs/GettingStarted.md`](GettingStarted.md); Agent JSON: [JSON](GettingStarted.agent.json)\n- Document: [`docs/GraphicsBoundary.md`](GraphicsBoundary.md); Agent JSON: [JSON](GraphicsBoundary.agent.json)\n- Document: [`docs/HierarchyDrag.md`](HierarchyDrag.md); Agent JSON: [JSON](HierarchyDrag.agent.json)\n- Document: [`docs/ImmediateDeclaration.md`](ImmediateDeclaration.md); Agent JSON: [JSON](ImmediateDeclaration.agent.json)\n- Document: [`docs/IndependenceWorkSnapshot-2026-10-29.md`](IndependenceWorkSnapshot-2026-10-29.md); Agent JSON: [JSON](IndependenceWorkSnapshot-2026-10-29.agent.json)\n- Document: [`docs/InferredValues.md`](InferredValues.md); Agent JSON: [JSON](InferredValues.agent.json)\n- Document: [`docs/InvocationLifecycle.md`](InvocationLifecycle.md); Agent JSON: [JSON](InvocationLifecycle.agent.json)\n- Document: [`docs/KeywordRegistry.md`](KeywordRegistry.md); Agent JSON: [JSON](KeywordRegistry.agent.json)\n- Document: [`docs/LVRSNative.md`](LVRSNative.md); Agent JSON: [JSON](LVRSNative.agent.json)\n- Document: [`docs/LVUIIndependence.md`](LVUIIndependence.md); Agent JSON: [JSON](LVUIIndependence.agent.json)\n- Document: [`docs/LVUI_LVRS_Replacement_Audit_2026-11-01.md`](LVUI_LVRS_Replacement_Audit_2026-11-01.md); Agent JSON: [JSON](LVUI_LVRS_Replacement_Audit_2026-11-01.agent.json)\n- Document: [`docs/Language.md`](Language.md); Agent JSON: [JSON](Language.agent.json)\n- Document: [`docs/ListItemDetail.md`](ListItemDetail.md); Agent JSON: [JSON](ListItemDetail.agent.json)\n- Document: [`docs/ListItemQuantity.md`](ListItemQuantity.md); Agent JSON: [JSON](ListItemQuantity.agent.json)\n- Document: [`docs/ListItemSelector.md`](ListItemSelector.md); Agent JSON: [JSON](ListItemSelector.agent.json)\n- Document: [`docs/ListItemValue.md`](ListItemValue.md); Agent JSON: [JSON](ListItemValue.agent.json)\n- Document: [`docs/LocalScopes.md`](LocalScopes.md); Agent JSON: [JSON](LocalScopes.agent.json)\n- Document: [`docs/Localization.md`](Localization.md); Agent JSON: [JSON](Localization.agent.json)\n- Document: [`docs/MeasuredCollections.md`](MeasuredCollections.md); Agent JSON: [JSON](MeasuredCollections.agent.json)\n- Document: [`docs/MethodQueries.md`](MethodQueries.md); Agent JSON: [JSON](MethodQueries.agent.json)\n- Document: [`docs/MethodReferences.md`](MethodReferences.md); Agent JSON: [JSON](MethodReferences.agent.json)\n- Document: [`docs/MobileTabEffects.md`](MobileTabEffects.md); Agent JSON: [JSON](MobileTabEffects.agent.json)\n- Document: [`docs/NativeAOT.md`](NativeAOT.md); Agent JSON: [JSON](NativeAOT.agent.json)\n- Document: [`docs/NativeAOTVerification.md`](NativeAOTVerification.md); Agent JSON: [JSON](NativeAOTVerification.agent.json)\n- Document: [`docs/NativeAlert.md`](NativeAlert.md); Agent JSON: [JSON](NativeAlert.agent.json)\n- Document: [`docs/NativeAlertButton.md`](NativeAlertButton.md); Agent JSON: [JSON](NativeAlertButton.agent.json)\n- Document: [`docs/NativeAppCard.md`](NativeAppCard.md); Agent JSON: [JSON](NativeAppCard.agent.json)\n- Document: [`docs/NativeAppHeader.md`](NativeAppHeader.md); Agent JSON: [JSON](NativeAppHeader.agent.json)\n- Document: [`docs/NativeApplication.md`](NativeApplication.md); Agent JSON: [JSON](NativeApplication.agent.json)\n- Document: [`docs/NativeBindings.md`](NativeBindings.md); Agent JSON: [JSON](NativeBindings.agent.json)\n- Document: [`docs/NativeButton.md`](NativeButton.md); Agent JSON: [JSON](NativeButton.agent.json)\n- Document: [`docs/NativeCardOpen.md`](NativeCardOpen.md); Agent JSON: [JSON](NativeCardOpen.agent.json)\n- Document: [`docs/NativeCheckBox.md`](NativeCheckBox.md); Agent JSON: [JSON](NativeCheckBox.agent.json)\n- Document: [`docs/NativeCodeEditor.md`](NativeCodeEditor.md); Agent JSON: [JSON](NativeCodeEditor.agent.json)\n- Document: [`docs/NativeColorChannel.md`](NativeColorChannel.md); Agent JSON: [JSON](NativeColorChannel.agent.json)\n- Document: [`docs/NativeColorPicker.md`](NativeColorPicker.md); Agent JSON: [JSON](NativeColorPicker.agent.json)\n- Document: [`docs/NativeColorPickerButton.md`](NativeColorPickerButton.md); Agent JSON: [JSON](NativeColorPickerButton.agent.json)\n- Document: [`docs/NativeColorSurface.md`](NativeColorSurface.md); Agent JSON: [JSON](NativeColorSurface.agent.json)\n- Document: [`docs/NativeColors.md`](NativeColors.md); Agent JSON: [JSON](NativeColors.agent.json)\n- Document: [`docs/NativeComboBox.md`](NativeComboBox.md); Agent JSON: [JSON](NativeComboBox.agent.json)\n- Document: [`docs/NativeCompilerCoverage.md`](NativeCompilerCoverage.md); Agent JSON: [JSON](NativeCompilerCoverage.agent.json)\n- Document: [`docs/NativeCoreValues.md`](NativeCoreValues.md); Agent JSON: [JSON](NativeCoreValues.agent.json)\n- Document: [`docs/NativeDivider.md`](NativeDivider.md); Agent JSON: [JSON](NativeDivider.agent.json)\n- Document: [`docs/NativeDocument.md`](NativeDocument.md); Agent JSON: [JSON](NativeDocument.agent.json)\n- Document: [`docs/NativeDropdownButton.md`](NativeDropdownButton.md); Agent JSON: [JSON](NativeDropdownButton.agent.json)\n- Document: [`docs/NativeEditorCanvas.md`](NativeEditorCanvas.md); Agent JSON: [JSON](NativeEditorCanvas.agent.json)\n- Document: [`docs/NativeEditorTimeline.md`](NativeEditorTimeline.md); Agent JSON: [JSON](NativeEditorTimeline.agent.json)\n- Document: [`docs/NativeEmbeddedViews.md`](NativeEmbeddedViews.md); Agent JSON: [JSON](NativeEmbeddedViews.agent.json)\n- Document: [`docs/NativeEventListener.md`](NativeEventListener.md); Agent JSON: [JSON](NativeEventListener.agent.json)\n- Document: [`docs/NativeFonts.md`](NativeFonts.md); Agent JSON: [JSON](NativeFonts.agent.json)\n- Document: [`docs/NativeHelpButton.md`](NativeHelpButton.md); Agent JSON: [JSON](NativeHelpButton.agent.json)\n- Document: [`docs/NativeHierarchy.md`](NativeHierarchy.md); Agent JSON: [JSON](NativeHierarchy.agent.json)\n- Document: [`docs/NativeHierarchyPanel.md`](NativeHierarchyPanel.md); Agent JSON: [JSON](NativeHierarchyPanel.agent.json)\n- Document: [`docs/NativeHistory.md`](NativeHistory.md); Agent JSON: [JSON](NativeHistory.agent.json)\n- Document: [`docs/NativeIcons.md`](NativeIcons.md); Agent JSON: [JSON](NativeIcons.agent.json)\n- Document: [`docs/NativeImage.md`](NativeImage.md); Agent JSON: [JSON](NativeImage.agent.json)\n- Document: [`docs/NativeImageLoading.md`](NativeImageLoading.md); Agent JSON: [JSON](NativeImageLoading.agent.json)\n- Document: [`docs/NativeImages.md`](NativeImages.md); Agent JSON: [JSON](NativeImages.agent.json)\n- Document: [`docs/NativeInputField.md`](NativeInputField.md); Agent JSON: [JSON](NativeInputField.agent.json)\n- Document: [`docs/NativeLabel.md`](NativeLabel.md); Agent JSON: [JSON](NativeLabel.agent.json)\n- Document: [`docs/NativeLayout.md`](NativeLayout.md); Agent JSON: [JSON](NativeLayout.agent.json)\n- Document: [`docs/NativeLinks.md`](NativeLinks.md); Agent JSON: [JSON](NativeLinks.agent.json)\n- Document: [`docs/NativeMarkup.md`](NativeMarkup.md); Agent JSON: [JSON](NativeMarkup.agent.json)\n- Document: [`docs/NativeMaterials.md`](NativeMaterials.md); Agent JSON: [JSON](NativeMaterials.agent.json)\n- Document: [`docs/NativeMedia.md`](NativeMedia.md); Agent JSON: [JSON](NativeMedia.agent.json)\n- Document: [`docs/NativeMenu.md`](NativeMenu.md); Agent JSON: [JSON](NativeMenu.agent.json)\n- Document: [`docs/NativeMigrationRoadmap.md`](NativeMigrationRoadmap.md); Agent JSON: [JSON](NativeMigrationRoadmap.agent.json)\n- Document: [`docs/NativeMobileNavigation.md`](NativeMobileNavigation.md); Agent JSON: [JSON](NativeMobileNavigation.agent.json)\n- Document: [`docs/NativeModal.md`](NativeModal.md); Agent JSON: [JSON](NativeModal.agent.json)\n- Document: [`docs/NativeModelSources.md`](NativeModelSources.md); Agent JSON: [JSON](NativeModelSources.agent.json)\n- Document: [`docs/NativeMotion.md`](NativeMotion.md); Agent JSON: [JSON](NativeMotion.agent.json)\n- Document: [`docs/NativeNavigationHistory.md`](NativeNavigationHistory.md); Agent JSON: [JSON](NativeNavigationHistory.agent.json)\n- Document: [`docs/NativeOpacity.md`](NativeOpacity.md); Agent JSON: [JSON](NativeOpacity.agent.json)\n- Document: [`docs/NativeOwnedCard.md`](NativeOwnedCard.md); Agent JSON: [JSON](NativeOwnedCard.agent.json)\n- Document: [`docs/NativeOwnedHierarchyItem.md`](NativeOwnedHierarchyItem.md); Agent JSON: [JSON](NativeOwnedHierarchyItem.agent.json)\n- Document: [`docs/NativeOwnedHierarchyList.md`](NativeOwnedHierarchyList.md); Agent JSON: [JSON](NativeOwnedHierarchyList.agent.json)\n- Document: [`docs/NativeOwnedHierarchyToolbar.md`](NativeOwnedHierarchyToolbar.md); Agent JSON: [JSON](NativeOwnedHierarchyToolbar.agent.json)\n- Document: [`docs/NativeOwnedListFooter.md`](NativeOwnedListFooter.md); Agent JSON: [JSON](NativeOwnedListFooter.agent.json)\n- Document: [`docs/NativeOwnedListItem.md`](NativeOwnedListItem.md); Agent JSON: [JSON](NativeOwnedListItem.agent.json)\n- Document: [`docs/NativeOwnedListItemSelector.md`](NativeOwnedListItemSelector.md); Agent JSON: [JSON](NativeOwnedListItemSelector.agent.json)\n- Document: [`docs/NativeOwnedListPanel.md`](NativeOwnedListPanel.md); Agent JSON: [JSON](NativeOwnedListPanel.agent.json)\n- Document: [`docs/NativeOwnedListToolbar.md`](NativeOwnedListToolbar.md); Agent JSON: [JSON](NativeOwnedListToolbar.agent.json)\n- Document: [`docs/NativeOwnedListView.md`](NativeOwnedListView.md); Agent JSON: [JSON](NativeOwnedListView.agent.json)\n- Document: [`docs/NativeOwnedTable.md`](NativeOwnedTable.md); Agent JSON: [JSON](NativeOwnedTable.agent.json)\n- Document: [`docs/NativeOwnedTableCellItem.md`](NativeOwnedTableCellItem.md); Agent JSON: [JSON](NativeOwnedTableCellItem.agent.json)\n- Document: [`docs/NativeOwnedTableHeader.md`](NativeOwnedTableHeader.md); Agent JSON: [JSON](NativeOwnedTableHeader.agent.json)\n- Document: [`docs/NativeOwnedTableRow.md`](NativeOwnedTableRow.md); Agent JSON: [JSON](NativeOwnedTableRow.agent.json)\n- Document: [`docs/NativeOwnedToolbarButton.md`](NativeOwnedToolbarButton.md); Agent JSON: [JSON](NativeOwnedToolbarButton.agent.json)\n- Document: [`docs/NativePageRouter.md`](NativePageRouter.md); Agent JSON: [JSON](NativePageRouter.agent.json)\n- Document: [`docs/NativePlatform.md`](NativePlatform.md); Agent JSON: [JSON](NativePlatform.agent.json)\n- Document: [`docs/NativePopover.md`](NativePopover.md); Agent JSON: [JSON](NativePopover.agent.json)\n- Document: [`docs/NativePopupOpen.md`](NativePopupOpen.md); Agent JSON: [JSON](NativePopupOpen.agent.json)\n- Document: [`docs/NativeProgress.md`](NativeProgress.md); Agent JSON: [JSON](NativeProgress.agent.json)\n- Document: [`docs/NativeRadioButton.md`](NativeRadioButton.md); Agent JSON: [JSON](NativeRadioButton.agent.json)\n- Document: [`docs/NativeReadiness.md`](NativeReadiness.md); Agent JSON: [JSON](NativeReadiness.agent.json)\n- Document: [`docs/NativeReadinessVerification.md`](NativeReadinessVerification.md); Agent JSON: [JSON](NativeReadinessVerification.agent.json)\n- Document: [`docs/NativeRendering.md`](NativeRendering.md); Agent JSON: [JSON](NativeRendering.agent.json)\n- Document: [`docs/NativeRouteModels.md`](NativeRouteModels.md); Agent JSON: [JSON](NativeRouteModels.agent.json)\n- Document: [`docs/NativeRoutes.md`](NativeRoutes.md); Agent JSON: [JSON](NativeRoutes.agent.json)\n- Document: [`docs/NativeScrollView.md`](NativeScrollView.md); Agent JSON: [JSON](NativeScrollView.agent.json)\n- Document: [`docs/NativeSearchField.md`](NativeSearchField.md); Agent JSON: [JSON](NativeSearchField.agent.json)\n- Document: [`docs/NativeSegmentedControl.md`](NativeSegmentedControl.md); Agent JSON: [JSON](NativeSegmentedControl.agent.json)\n- Document: [`docs/NativeSheet.md`](NativeSheet.md); Agent JSON: [JSON](NativeSheet.agent.json)\n- Document: [`docs/NativeSlider.md`](NativeSlider.md); Agent JSON: [JSON](NativeSlider.agent.json)\n- Document: [`docs/NativeStepper.md`](NativeStepper.md); Agent JSON: [JSON](NativeStepper.agent.json)\n- Document: [`docs/NativeTableCardComposition.md`](NativeTableCardComposition.md); Agent JSON: [JSON](NativeTableCardComposition.agent.json)\n- Document: [`docs/NativeTabs.md`](NativeTabs.md); Agent JSON: [JSON](NativeTabs.agent.json)\n- Document: [`docs/NativeTextEditor.md`](NativeTextEditor.md); Agent JSON: [JSON](NativeTextEditor.agent.json)\n- Document: [`docs/NativeToggleSwitch.md`](NativeToggleSwitch.md); Agent JSON: [JSON](NativeToggleSwitch.agent.json)\n- Document: [`docs/NativeTooltip.md`](NativeTooltip.md); Agent JSON: [JSON](NativeTooltip.agent.json)\n- Document: [`docs/NativeTooltipModel.md`](NativeTooltipModel.md); Agent JSON: [JSON](NativeTooltipModel.agent.json)\n- Document: [`docs/NativeViews.md`](NativeViews.md); Agent JSON: [JSON](NativeViews.agent.json)\n- Document: [`docs/NativeWidgetRuntime.md`](NativeWidgetRuntime.md); Agent JSON: [JSON](NativeWidgetRuntime.agent.json)\n- Document: [`docs/NativeWindow.md`](NativeWindow.md); Agent JSON: [JSON](NativeWindow.agent.json)\n- Document: [`docs/ObjectInputs.md`](ObjectInputs.md); Agent JSON: [JSON](ObjectInputs.agent.json)\n- Document: [`docs/ObjectMethodReferences.md`](ObjectMethodReferences.md); Agent JSON: [JSON](ObjectMethodReferences.agent.json)\n- Document: [`docs/OwnedHierarchyModel.md`](OwnedHierarchyModel.md); Agent JSON: [JSON](OwnedHierarchyModel.agent.json)\n- Document: [`docs/OwnedListModel.md`](OwnedListModel.md); Agent JSON: [JSON](OwnedListModel.agent.json)\n- Document: [`docs/OwnedTableModel.md`](OwnedTableModel.md); Agent JSON: [JSON](OwnedTableModel.agent.json)\n- Document: [`docs/ProductComponentCoverage.md`](ProductComponentCoverage.md); Agent JSON: [JSON](ProductComponentCoverage.agent.json)\n- Document: [`docs/PythonAPI.md`](PythonAPI.md); Agent JSON: [JSON](PythonAPI.agent.json)\n- Document: [`docs/QueryConnections.md`](QueryConnections.md); Agent JSON: [JSON](QueryConnections.agent.json)\n- Document: [`docs/ReactiveState.md`](ReactiveState.md); Agent JSON: [JSON](ReactiveState.agent.json)\n- Document: [`docs/ReadonlyMembers.md`](ReadonlyMembers.md); Agent JSON: [JSON](ReadonlyMembers.agent.json)\n- Document: [`docs/Repetition.md`](Repetition.md); Agent JSON: [JSON](Repetition.agent.json)\n- Document: [`docs/ReservedWords.md`](ReservedWords.md); Agent JSON: [JSON](ReservedWords.agent.json)\n- Document: [`docs/ReturnedCallbacks.md`](ReturnedCallbacks.md); Agent JSON: [JSON](ReturnedCallbacks.agent.json)\n- Document: [`docs/RuntimeContracts.md`](RuntimeContracts.md); Agent JSON: [JSON](RuntimeContracts.agent.json)\n- Document: [`docs/ScalarInputs.md`](ScalarInputs.md); Agent JSON: [JSON](ScalarInputs.agent.json)\n- Document: [`docs/Scenes.md`](Scenes.md); Agent JSON: [JSON](Scenes.agent.json)\n- Document: [`docs/SocietyDreamscapesMigrationPlan.md`](SocietyDreamscapesMigrationPlan.md); Agent JSON: [JSON](SocietyDreamscapesMigrationPlan.agent.json)\n- Document: [`docs/SourceLayout.md`](SourceLayout.md); Agent JSON: [JSON](SourceLayout.agent.json)\n- Document: [`docs/StyleProfiles.md`](StyleProfiles.md); Agent JSON: [JSON](StyleProfiles.agent.json)\n- Document: [`docs/StyleTokenMembers.md`](StyleTokenMembers.md); Agent JSON: [JSON](StyleTokenMembers.agent.json)\n- Document: [`docs/StyleTokens.md`](StyleTokens.md); Agent JSON: [JSON](StyleTokens.agent.json)\n- Document: [`docs/StyleTypes.md`](StyleTypes.md); Agent JSON: [JSON](StyleTypes.agent.json)\n- Document: [`docs/TableClipboard.md`](TableClipboard.md); Agent JSON: [JSON](TableClipboard.agent.json)\n- Document: [`docs/TableEditing.md`](TableEditing.md); Agent JSON: [JSON](TableEditing.agent.json)\n- Document: [`docs/TableMerge.md`](TableMerge.md); Agent JSON: [JSON](TableMerge.agent.json)\n- Document: [`docs/TableSorting.md`](TableSorting.md); Agent JSON: [JSON](TableSorting.agent.json)\n- Document: [`docs/TableStructure.md`](TableStructure.md); Agent JSON: [JSON](TableStructure.agent.json)\n- Document: [`docs/TextInput.md`](TextInput.md); Agent JSON: [JSON](TextInput.agent.json)\n- Document: [`docs/TextWrapFallback.md`](TextWrapFallback.md); Agent JSON: [JSON](TextWrapFallback.agent.json)\n- Document: [`docs/Toolbars.md`](Toolbars.md); Agent JSON: [JSON](Toolbars.agent.json)\n- Document: [`docs/TypeImports.md`](TypeImports.md); Agent JSON: [JSON](TypeImports.agent.json)\n- Document: [`docs/VariableDeclarations.md`](VariableDeclarations.md); Agent JSON: [JSON](VariableDeclarations.agent.json)\n- Document: [`docs/Verification.md`](Verification.md); Agent JSON: [JSON](Verification.agent.json)\n- Document: [`docs/ViewModelQueries.md`](ViewModelQueries.md); Agent JSON: [JSON](ViewModelQueries.agent.json)\n- Document: [`docs/ViewOnlyArchitecture.md`](ViewOnlyArchitecture.md); Agent JSON: [JSON](ViewOnlyArchitecture.agent.json)\n- Document: [`docs/ViewSequences.md`](ViewSequences.md); Agent JSON: [JSON](ViewSequences.agent.json)\n- Document: [`docs/ViewSessions.md`](ViewSessions.md); Agent JSON: [JSON](ViewSessions.agent.json)\n- Document: [`docs/ViewValues.md`](ViewValues.md); Agent JSON: [JSON](ViewValues.agent.json)\n- Document: [`docs/WindowsValidation.md`](WindowsValidation.md); Agent JSON: [JSON](WindowsValidation.agent.json)\n- Document: [`docs/documentation-structure.md`](documentation-structure.md); Agent JSON: [JSON](documentation-structure.agent.json)\n- Document: [`example/README.md`](../example/README.md); Agent JSON: [JSON](Mirrors/Example/README.agent.json)\n- Document: [`example/HelloAndroid/README.md`](../example/HelloAndroid/README.md); Agent JSON: [JSON](Mirrors/Example/HelloAndroid/README.agent.json)\n- Document: [`example/HelloHosts/README.md`](../example/HelloHosts/README.md); Agent JSON: [JSON](Mirrors/Example/HelloHosts/README.agent.json)\n- Document: [`example/StyleTokens/README.md`](../example/StyleTokens/README.md); Agent JSON: [JSON](Mirrors/Example/StyleTokens/README.agent.json)\n",
@@ -1975,21 +1982,21 @@
       ]
     },
     {
-      "id": "b000051",
+      "id": "b000052",
       "kind": "html",
       "start_line": 433,
       "end_line": 433,
       "raw": "<!-- workspace-docs:document-map:end -->\n"
     },
     {
-      "id": "b000052",
+      "id": "b000053",
       "kind": "blank",
       "start_line": 434,
       "end_line": 434,
       "raw": "\n"
     },
     {
-      "id": "b000053",
+      "id": "b000054",
       "kind": "heading",
       "start_line": 435,
       "end_line": 435,
@@ -1998,14 +2005,14 @@
       "title": "Editor panels"
     },
     {
-      "id": "b000054",
+      "id": "b000055",
       "kind": "blank",
       "start_line": 436,
       "end_line": 436,
       "raw": "\n"
     },
     {
-      "id": "b000055",
+      "id": "b000056",
       "kind": "list",
       "start_line": 437,
       "end_line": 437,
@@ -2029,7 +2036,7 @@
       "start_line": 1
     },
     {
-      "block_id": "b000015",
+      "block_id": "b000016",
       "parent_id": "b000001",
       "level": 2,
       "title": "Reading map",
@@ -2037,7 +2044,7 @@
       "start_line": 87
     },
     {
-      "block_id": "b000021",
+      "block_id": "b000022",
       "parent_id": "b000001",
       "level": 2,
       "title": "Selected rules",
@@ -2045,7 +2052,7 @@
       "start_line": 116
     },
     {
-      "block_id": "b000025",
+      "block_id": "b000026",
       "parent_id": "b000001",
       "level": 2,
       "title": "Implementation boundary",
@@ -2053,7 +2060,7 @@
       "start_line": 178
     },
     {
-      "block_id": "b000033",
+      "block_id": "b000034",
       "parent_id": "b000001",
       "level": 2,
       "title": "Remaining design work",
@@ -2061,7 +2068,7 @@
       "start_line": 208
     },
     {
-      "block_id": "b000046",
+      "block_id": "b000047",
       "parent_id": "b000001",
       "level": 2,
       "title": "Human and agent document map",
@@ -2069,7 +2076,7 @@
       "start_line": 239
     },
     {
-      "block_id": "b000053",
+      "block_id": "b000054",
       "parent_id": "b000001",
       "level": 2,
       "title": "Editor panels",
@@ -2080,25 +2087,67 @@
   "indexes": {
     "directive_candidates": [
       {
-        "block_id": "b000017",
+        "block_id": "b000003",
+        "line": 46,
+        "text": "- [Value expressions and compiler-only constant folding](Expressions.md)",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000014",
+        "line": 85,
+        "text": "metadata-only import and per-click instance model is retired.",
+        "basis": "lexical_match",
+        "context": "paragraph"
+      },
+      {
+        "block_id": "b000018",
+        "line": 90,
+        "text": "- Document: [NativeWidgetRuntime.md](NativeWidgetRuntime.md); Scope: Instantiable C++ widgets, LVRS-only appearance, Core application/entrypoint/attachment; Status: Implemented macOS path; Core remains independent of GUI/DSL",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000018",
         "line": 107,
         "text": "- Document: [RuntimeContracts.md](RuntimeContracts.md); Scope: C++ access, bridge information, property observation, Core integration and resource ownership; Status: Required design capabilities; concrete APIs remain open",
         "basis": "lexical_match",
         "context": "list"
       },
       {
-        "block_id": "b000023",
+        "block_id": "b000024",
+        "line": 122,
+        "text": "is not implemented. See [view-only architecture](ViewOnlyArchitecture.md).",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000024",
         "line": 137,
         "text": "clicks, property evaluation and redraw do not recreate it.",
         "basis": "lexical_match",
         "context": "list"
       },
       {
-        "block_id": "b000023",
+        "block_id": "b000024",
         "line": 144,
         "text": "9. Shared runtime infrastructure has a separate owner. Work that must outlive",
         "basis": "lexical_match",
         "context": "list"
+      },
+      {
+        "block_id": "b000024",
+        "line": 171,
+        "text": "This does not relax `const`, read-only or C++ constness restrictions.",
+        "basis": "lexical_match",
+        "context": "list"
+      },
+      {
+        "block_id": "b000032",
+        "line": 205,
+        "text": "Headless generated-widget execution, compile-only LVRS factories and actual",
+        "basis": "lexical_match",
+        "context": "paragraph"
       }
     ],
     "commands": [],
@@ -2566,3013 +2615,3020 @@
         "line": 69
       },
       {
-        "block_id": "b000007",
+        "block_id": "b000008",
         "label": "Historical LVRS native code generation",
         "target": "LVRSNative.md",
         "kind": "relative",
         "line": 72
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000012",
+        "label": "LVRSNative.md",
+        "target": "LVRSNative.md",
+        "kind": "relative",
+        "line": 79
+      },
+      {
+        "block_id": "b000018",
         "label": "NativeApplication.md",
         "target": "NativeApplication.md",
         "kind": "relative",
         "line": 89
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "NativeWidgetRuntime.md",
         "target": "NativeWidgetRuntime.md",
         "kind": "relative",
         "line": 90
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "CoreWidgetVerification.md",
         "target": "CoreWidgetVerification.md",
         "kind": "relative",
         "line": 91
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "CompilationModel.md",
         "target": "CompilationModel.md",
         "kind": "relative",
         "line": 92
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "NativeAOT.md",
         "target": "NativeAOT.md",
         "kind": "relative",
         "line": 93
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "EmbeddedPages.md",
         "target": "EmbeddedPages.md",
         "kind": "relative",
         "line": 94
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "NativeAOTVerification.md",
         "target": "NativeAOTVerification.md",
         "kind": "relative",
         "line": 95
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "Language.md",
         "target": "Language.md",
         "kind": "relative",
         "line": 96
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "ComponentLanguage.md",
         "target": "ComponentLanguage.md",
         "kind": "relative",
         "line": 97
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "ReservedWords.md",
         "target": "ReservedWords.md",
         "kind": "relative",
         "line": 98
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "Verification.md",
         "target": "Verification.md",
         "kind": "relative",
         "line": 99
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "DeclarativeSyntax.md",
         "target": "DeclarativeSyntax.md",
         "kind": "relative",
         "line": 100
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "MethodReferences.md",
         "target": "MethodReferences.md",
         "kind": "relative",
         "line": 101
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "ReactiveState.md",
         "target": "ReactiveState.md",
         "kind": "relative",
         "line": 102
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "increment/reset counter",
         "target": "Examples/ReactiveCounter.lvui",
         "kind": "relative",
         "line": 102
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "VariableDeclarations.md",
         "target": "VariableDeclarations.md",
         "kind": "relative",
         "line": 103
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "DeclarationAnnotations.md",
         "target": "DeclarationAnnotations.md",
         "kind": "relative",
         "line": 104
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "TypeImports.md",
         "target": "TypeImports.md",
         "kind": "relative",
         "line": 105
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "InvocationLifecycle.md",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
         "line": 106
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "RuntimeContracts.md",
         "target": "RuntimeContracts.md",
         "kind": "relative",
         "line": 107
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "ViewModelQueries.md",
         "target": "ViewModelQueries.md",
         "kind": "relative",
         "line": 108
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "QueryConnections.md",
         "target": "QueryConnections.md",
         "kind": "relative",
         "line": 109
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "CounterExample.md",
         "target": "CounterExample.md",
         "kind": "relative",
         "line": 110
       },
       {
-        "block_id": "b000017",
+        "block_id": "b000018",
         "label": "source",
         "target": "Examples/Counter.lvui",
         "kind": "relative",
         "line": 110
       },
       {
-        "block_id": "b000023",
+        "block_id": "b000024",
         "label": "view-only architecture",
         "target": "ViewOnlyArchitecture.md",
         "kind": "relative",
         "line": 122
       },
       {
-        "block_id": "b000027",
+        "block_id": "b000028",
         "label": "legacy grammar",
         "target": "Language.md",
         "kind": "relative",
         "line": 181
       },
       {
-        "block_id": "b000027",
+        "block_id": "b000028",
         "label": "component grammar",
         "target": "ComponentLanguage.md",
         "kind": "relative",
         "line": 182
       },
       {
-        "block_id": "b000031",
+        "block_id": "b000032",
         "label": "completion audit",
         "target": "Completion.md",
         "kind": "relative",
         "line": 204
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Native code generation and compiled-target mounting",
         "target": "CompilationModel.md#open-questions",
         "kind": "relative",
         "line": 210
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Grammar, component definitions and expressions",
         "target": "DeclarativeSyntax.md#open-questions",
         "kind": "relative",
         "line": 211
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Callable types and component callback interfaces",
         "target": "MethodReferences.md#open-questions",
         "kind": "relative",
         "line": 212
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Type rules, variable scopes and initialization",
         "target": "VariableDeclarations.md#open-questions",
         "kind": "relative",
         "line": 213
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Annotation targets, binding projections and static lifetimes",
         "target": "DeclarationAnnotations.md#open-questions",
         "kind": "relative",
         "line": 214
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Constructor inputs and import activation details",
         "target": "TypeImports.md#open-questions",
         "kind": "relative",
         "line": 215
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Cancellation, teardown scheduling and invocation policies",
         "target": "InvocationLifecycle.md#open-questions",
         "kind": "relative",
         "line": 216
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "C++ bridge information, execution domains and runtime adapters",
         "target": "RuntimeContracts.md#open-questions",
         "kind": "relative",
         "line": 217
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "Default ViewModel binding, query mapping and value delivery",
         "target": "ViewModelQueries.md",
         "kind": "relative",
         "line": 218
       },
       {
-        "block_id": "b000035",
+        "block_id": "b000036",
         "label": "General reactive values and the static exception",
         "target": "ReactiveState.md",
         "kind": "relative",
         "line": 219
       },
       {
-        "block_id": "b000039",
+        "block_id": "b000040",
         "label": "Shared application style profiles",
         "target": "StyleProfiles.md",
         "kind": "relative",
         "line": 226
       },
       {
-        "block_id": "b000041",
+        "block_id": "b000042",
         "label": "Native Window properties",
         "target": "NativeWindow.md",
         "kind": "relative",
         "line": 228
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Readonly C++ members",
         "target": "ReadonlyMembers.md",
         "kind": "relative",
         "line": 230
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Typed C++ component inputs",
         "target": "ObjectInputs.md",
         "kind": "relative",
         "line": 231
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Native object method queries",
         "target": "MethodQueries.md",
         "kind": "relative",
         "line": 232
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Object method references",
         "target": "ObjectMethodReferences.md",
         "kind": "relative",
         "line": 233
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Callable fields",
         "target": "CallableFields.md",
         "kind": "relative",
         "line": 234
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Returned factory captures",
         "target": "FactoryCaptures.md",
         "kind": "relative",
         "line": 235
       },
       {
-        "block_id": "b000043",
+        "block_id": "b000044",
         "label": "Inferred native values",
         "target": "InferredValues.md",
         "kind": "relative",
         "line": 236
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`AGENT.md`",
         "target": "../AGENT.md",
         "kind": "relative",
         "line": 243
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Entrypoints/AGENT.agent.json",
         "kind": "relative",
         "line": 243
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`README.md`",
         "target": "../README.md",
         "kind": "relative",
         "line": 244
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Entrypoints/README.agent.json",
         "kind": "relative",
         "line": 244
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ActivationWork.md`",
         "target": "ActivationWork.md",
         "kind": "relative",
         "line": 245
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ActivationWork.agent.json",
         "kind": "relative",
         "line": 245
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/AppSurfaces.md`",
         "target": "AppSurfaces.md",
         "kind": "relative",
         "line": 246
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "AppSurfaces.agent.json",
         "kind": "relative",
         "line": 246
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/BackendConstruction.md`",
         "target": "BackendConstruction.md",
         "kind": "relative",
         "line": 247
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "BackendConstruction.agent.json",
         "kind": "relative",
         "line": 247
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/BuildLayout.md`",
         "target": "BuildLayout.md",
         "kind": "relative",
         "line": 248
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "BuildLayout.agent.json",
         "kind": "relative",
         "line": 248
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CallableFields.md`",
         "target": "CallableFields.md",
         "kind": "relative",
         "line": 249
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CallableFields.agent.json",
         "kind": "relative",
         "line": 249
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CallableInputs.md`",
         "target": "CallableInputs.md",
         "kind": "relative",
         "line": 250
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CallableInputs.agent.json",
         "kind": "relative",
         "line": 250
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CallbackValues.md`",
         "target": "CallbackValues.md",
         "kind": "relative",
         "line": 251
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CallbackValues.agent.json",
         "kind": "relative",
         "line": 251
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CodeDocument.md`",
         "target": "CodeDocument.md",
         "kind": "relative",
         "line": 252
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CodeDocument.agent.json",
         "kind": "relative",
         "line": 252
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CollectionNavigation.md`",
         "target": "CollectionNavigation.md",
         "kind": "relative",
         "line": 253
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CollectionNavigation.agent.json",
         "kind": "relative",
         "line": 253
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ColorSelection.md`",
         "target": "ColorSelection.md",
         "kind": "relative",
         "line": 254
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ColorSelection.agent.json",
         "kind": "relative",
         "line": 254
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ColorSurfaceRasterReuse.md`",
         "target": "ColorSurfaceRasterReuse.md",
         "kind": "relative",
         "line": 255
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ColorSurfaceRasterReuse.agent.json",
         "kind": "relative",
         "line": 255
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CompilationModel.md`",
         "target": "CompilationModel.md",
         "kind": "relative",
         "line": 256
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CompilationModel.agent.json",
         "kind": "relative",
         "line": 256
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Completion.md`",
         "target": "Completion.md",
         "kind": "relative",
         "line": 257
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Completion.agent.json",
         "kind": "relative",
         "line": 257
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ComponentLanguage.md`",
         "target": "ComponentLanguage.md",
         "kind": "relative",
         "line": 258
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ComponentLanguage.agent.json",
         "kind": "relative",
         "line": 258
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Components.md`",
         "target": "Components.md",
         "kind": "relative",
         "line": 259
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Components.agent.json",
         "kind": "relative",
         "line": 259
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ConditionalViews.md`",
         "target": "ConditionalViews.md",
         "kind": "relative",
         "line": 260
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ConditionalViews.agent.json",
         "kind": "relative",
         "line": 260
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CoreWidgetVerification.md`",
         "target": "CoreWidgetVerification.md",
         "kind": "relative",
         "line": 261
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CoreWidgetVerification.agent.json",
         "kind": "relative",
         "line": 261
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CounterExample.md`",
         "target": "CounterExample.md",
         "kind": "relative",
         "line": 262
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CounterExample.agent.json",
         "kind": "relative",
         "line": 262
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/CustomWindowChrome.md`",
         "target": "CustomWindowChrome.md",
         "kind": "relative",
         "line": 263
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "CustomWindowChrome.agent.json",
         "kind": "relative",
         "line": 263
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/DeclarationAnnotations.md`",
         "target": "DeclarationAnnotations.md",
         "kind": "relative",
         "line": 264
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "DeclarationAnnotations.agent.json",
         "kind": "relative",
         "line": 264
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/DeclarativeSyntax.md`",
         "target": "DeclarativeSyntax.md",
         "kind": "relative",
         "line": 265
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "DeclarativeSyntax.agent.json",
         "kind": "relative",
         "line": 265
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/DesignIconCatalog.md`",
         "target": "DesignIconCatalog.md",
         "kind": "relative",
         "line": 266
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "DesignIconCatalog.agent.json",
         "kind": "relative",
         "line": 266
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/DynamicLinking.md`",
         "target": "DynamicLinking.md",
         "kind": "relative",
         "line": 267
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "DynamicLinking.agent.json",
         "kind": "relative",
         "line": 267
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/EditorAppearance.md`",
         "target": "EditorAppearance.md",
         "kind": "relative",
         "line": 268
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "EditorAppearance.agent.json",
         "kind": "relative",
         "line": 268
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/EmbeddedPages.md`",
         "target": "EmbeddedPages.md",
         "kind": "relative",
         "line": 269
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "EmbeddedPages.agent.json",
         "kind": "relative",
         "line": 269
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Expressions.md`",
         "target": "Expressions.md",
         "kind": "relative",
         "line": 270
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Expressions.agent.json",
         "kind": "relative",
         "line": 270
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/FactoryCaptures.md`",
         "target": "FactoryCaptures.md",
         "kind": "relative",
         "line": 271
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "FactoryCaptures.agent.json",
         "kind": "relative",
         "line": 271
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/FigmaComponentContracts.md`",
         "target": "FigmaComponentContracts.md",
         "kind": "relative",
         "line": 272
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "FigmaComponentContracts.agent.json",
         "kind": "relative",
         "line": 272
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/FunctionValues.md`",
         "target": "FunctionValues.md",
         "kind": "relative",
         "line": 273
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "FunctionValues.agent.json",
         "kind": "relative",
         "line": 273
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/FunctionVariables.md`",
         "target": "FunctionVariables.md",
         "kind": "relative",
         "line": 274
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "FunctionVariables.agent.json",
         "kind": "relative",
         "line": 274
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/GettingStarted.md`",
         "target": "GettingStarted.md",
         "kind": "relative",
         "line": 275
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "GettingStarted.agent.json",
         "kind": "relative",
         "line": 275
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/GraphicsBoundary.md`",
         "target": "GraphicsBoundary.md",
         "kind": "relative",
         "line": 276
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "GraphicsBoundary.agent.json",
         "kind": "relative",
         "line": 276
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/HierarchyDrag.md`",
         "target": "HierarchyDrag.md",
         "kind": "relative",
         "line": 277
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "HierarchyDrag.agent.json",
         "kind": "relative",
         "line": 277
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ImmediateDeclaration.md`",
         "target": "ImmediateDeclaration.md",
         "kind": "relative",
         "line": 278
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ImmediateDeclaration.agent.json",
         "kind": "relative",
         "line": 278
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/IndependenceWorkSnapshot-2026-10-29.md`",
         "target": "IndependenceWorkSnapshot-2026-10-29.md",
         "kind": "relative",
         "line": 279
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "IndependenceWorkSnapshot-2026-10-29.agent.json",
         "kind": "relative",
         "line": 279
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/InferredValues.md`",
         "target": "InferredValues.md",
         "kind": "relative",
         "line": 280
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "InferredValues.agent.json",
         "kind": "relative",
         "line": 280
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/InvocationLifecycle.md`",
         "target": "InvocationLifecycle.md",
         "kind": "relative",
         "line": 281
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "InvocationLifecycle.agent.json",
         "kind": "relative",
         "line": 281
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/KeywordRegistry.md`",
         "target": "KeywordRegistry.md",
         "kind": "relative",
         "line": 282
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "KeywordRegistry.agent.json",
         "kind": "relative",
         "line": 282
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/LVRSNative.md`",
         "target": "LVRSNative.md",
         "kind": "relative",
         "line": 283
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "LVRSNative.agent.json",
         "kind": "relative",
         "line": 283
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/LVUIIndependence.md`",
         "target": "LVUIIndependence.md",
         "kind": "relative",
         "line": 284
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "LVUIIndependence.agent.json",
         "kind": "relative",
         "line": 284
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/LVUI_LVRS_Replacement_Audit_2026-11-01.md`",
         "target": "LVUI_LVRS_Replacement_Audit_2026-11-01.md",
         "kind": "relative",
         "line": 285
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "LVUI_LVRS_Replacement_Audit_2026-11-01.agent.json",
         "kind": "relative",
         "line": 285
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Language.md`",
         "target": "Language.md",
         "kind": "relative",
         "line": 286
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Language.agent.json",
         "kind": "relative",
         "line": 286
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ListItemDetail.md`",
         "target": "ListItemDetail.md",
         "kind": "relative",
         "line": 287
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ListItemDetail.agent.json",
         "kind": "relative",
         "line": 287
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ListItemQuantity.md`",
         "target": "ListItemQuantity.md",
         "kind": "relative",
         "line": 288
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ListItemQuantity.agent.json",
         "kind": "relative",
         "line": 288
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ListItemSelector.md`",
         "target": "ListItemSelector.md",
         "kind": "relative",
         "line": 289
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ListItemSelector.agent.json",
         "kind": "relative",
         "line": 289
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ListItemValue.md`",
         "target": "ListItemValue.md",
         "kind": "relative",
         "line": 290
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ListItemValue.agent.json",
         "kind": "relative",
         "line": 290
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/LocalScopes.md`",
         "target": "LocalScopes.md",
         "kind": "relative",
         "line": 291
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "LocalScopes.agent.json",
         "kind": "relative",
         "line": 291
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Localization.md`",
         "target": "Localization.md",
         "kind": "relative",
         "line": 292
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Localization.agent.json",
         "kind": "relative",
         "line": 292
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/MeasuredCollections.md`",
         "target": "MeasuredCollections.md",
         "kind": "relative",
         "line": 293
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "MeasuredCollections.agent.json",
         "kind": "relative",
         "line": 293
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/MethodQueries.md`",
         "target": "MethodQueries.md",
         "kind": "relative",
         "line": 294
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "MethodQueries.agent.json",
         "kind": "relative",
         "line": 294
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/MethodReferences.md`",
         "target": "MethodReferences.md",
         "kind": "relative",
         "line": 295
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "MethodReferences.agent.json",
         "kind": "relative",
         "line": 295
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/MobileTabEffects.md`",
         "target": "MobileTabEffects.md",
         "kind": "relative",
         "line": 296
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "MobileTabEffects.agent.json",
         "kind": "relative",
         "line": 296
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeAOT.md`",
         "target": "NativeAOT.md",
         "kind": "relative",
         "line": 297
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeAOT.agent.json",
         "kind": "relative",
         "line": 297
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeAOTVerification.md`",
         "target": "NativeAOTVerification.md",
         "kind": "relative",
         "line": 298
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeAOTVerification.agent.json",
         "kind": "relative",
         "line": 298
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeAlert.md`",
         "target": "NativeAlert.md",
         "kind": "relative",
         "line": 299
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeAlert.agent.json",
         "kind": "relative",
         "line": 299
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeAlertButton.md`",
         "target": "NativeAlertButton.md",
         "kind": "relative",
         "line": 300
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeAlertButton.agent.json",
         "kind": "relative",
         "line": 300
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeAppCard.md`",
         "target": "NativeAppCard.md",
         "kind": "relative",
         "line": 301
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeAppCard.agent.json",
         "kind": "relative",
         "line": 301
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeAppHeader.md`",
         "target": "NativeAppHeader.md",
         "kind": "relative",
         "line": 302
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeAppHeader.agent.json",
         "kind": "relative",
         "line": 302
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeApplication.md`",
         "target": "NativeApplication.md",
         "kind": "relative",
         "line": 303
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeApplication.agent.json",
         "kind": "relative",
         "line": 303
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeBindings.md`",
         "target": "NativeBindings.md",
         "kind": "relative",
         "line": 304
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeBindings.agent.json",
         "kind": "relative",
         "line": 304
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeButton.md`",
         "target": "NativeButton.md",
         "kind": "relative",
         "line": 305
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeButton.agent.json",
         "kind": "relative",
         "line": 305
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeCardOpen.md`",
         "target": "NativeCardOpen.md",
         "kind": "relative",
         "line": 306
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeCardOpen.agent.json",
         "kind": "relative",
         "line": 306
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeCheckBox.md`",
         "target": "NativeCheckBox.md",
         "kind": "relative",
         "line": 307
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeCheckBox.agent.json",
         "kind": "relative",
         "line": 307
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeCodeEditor.md`",
         "target": "NativeCodeEditor.md",
         "kind": "relative",
         "line": 308
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeCodeEditor.agent.json",
         "kind": "relative",
         "line": 308
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeColorChannel.md`",
         "target": "NativeColorChannel.md",
         "kind": "relative",
         "line": 309
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeColorChannel.agent.json",
         "kind": "relative",
         "line": 309
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeColorPicker.md`",
         "target": "NativeColorPicker.md",
         "kind": "relative",
         "line": 310
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeColorPicker.agent.json",
         "kind": "relative",
         "line": 310
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeColorPickerButton.md`",
         "target": "NativeColorPickerButton.md",
         "kind": "relative",
         "line": 311
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeColorPickerButton.agent.json",
         "kind": "relative",
         "line": 311
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeColorSurface.md`",
         "target": "NativeColorSurface.md",
         "kind": "relative",
         "line": 312
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeColorSurface.agent.json",
         "kind": "relative",
         "line": 312
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeColors.md`",
         "target": "NativeColors.md",
         "kind": "relative",
         "line": 313
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeColors.agent.json",
         "kind": "relative",
         "line": 313
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeComboBox.md`",
         "target": "NativeComboBox.md",
         "kind": "relative",
         "line": 314
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeComboBox.agent.json",
         "kind": "relative",
         "line": 314
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeCompilerCoverage.md`",
         "target": "NativeCompilerCoverage.md",
         "kind": "relative",
         "line": 315
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeCompilerCoverage.agent.json",
         "kind": "relative",
         "line": 315
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeCoreValues.md`",
         "target": "NativeCoreValues.md",
         "kind": "relative",
         "line": 316
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeCoreValues.agent.json",
         "kind": "relative",
         "line": 316
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeDivider.md`",
         "target": "NativeDivider.md",
         "kind": "relative",
         "line": 317
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeDivider.agent.json",
         "kind": "relative",
         "line": 317
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeDocument.md`",
         "target": "NativeDocument.md",
         "kind": "relative",
         "line": 318
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeDocument.agent.json",
         "kind": "relative",
         "line": 318
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeDropdownButton.md`",
         "target": "NativeDropdownButton.md",
         "kind": "relative",
         "line": 319
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeDropdownButton.agent.json",
         "kind": "relative",
         "line": 319
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeEditorCanvas.md`",
         "target": "NativeEditorCanvas.md",
         "kind": "relative",
         "line": 320
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeEditorCanvas.agent.json",
         "kind": "relative",
         "line": 320
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeEditorTimeline.md`",
         "target": "NativeEditorTimeline.md",
         "kind": "relative",
         "line": 321
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeEditorTimeline.agent.json",
         "kind": "relative",
         "line": 321
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeEmbeddedViews.md`",
         "target": "NativeEmbeddedViews.md",
         "kind": "relative",
         "line": 322
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeEmbeddedViews.agent.json",
         "kind": "relative",
         "line": 322
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeEventListener.md`",
         "target": "NativeEventListener.md",
         "kind": "relative",
         "line": 323
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeEventListener.agent.json",
         "kind": "relative",
         "line": 323
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeFonts.md`",
         "target": "NativeFonts.md",
         "kind": "relative",
         "line": 324
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeFonts.agent.json",
         "kind": "relative",
         "line": 324
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeHelpButton.md`",
         "target": "NativeHelpButton.md",
         "kind": "relative",
         "line": 325
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeHelpButton.agent.json",
         "kind": "relative",
         "line": 325
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeHierarchy.md`",
         "target": "NativeHierarchy.md",
         "kind": "relative",
         "line": 326
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeHierarchy.agent.json",
         "kind": "relative",
         "line": 326
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeHierarchyPanel.md`",
         "target": "NativeHierarchyPanel.md",
         "kind": "relative",
         "line": 327
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeHierarchyPanel.agent.json",
         "kind": "relative",
         "line": 327
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeHistory.md`",
         "target": "NativeHistory.md",
         "kind": "relative",
         "line": 328
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeHistory.agent.json",
         "kind": "relative",
         "line": 328
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeIcons.md`",
         "target": "NativeIcons.md",
         "kind": "relative",
         "line": 329
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeIcons.agent.json",
         "kind": "relative",
         "line": 329
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeImage.md`",
         "target": "NativeImage.md",
         "kind": "relative",
         "line": 330
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeImage.agent.json",
         "kind": "relative",
         "line": 330
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeImageLoading.md`",
         "target": "NativeImageLoading.md",
         "kind": "relative",
         "line": 331
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeImageLoading.agent.json",
         "kind": "relative",
         "line": 331
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeImages.md`",
         "target": "NativeImages.md",
         "kind": "relative",
         "line": 332
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeImages.agent.json",
         "kind": "relative",
         "line": 332
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeInputField.md`",
         "target": "NativeInputField.md",
         "kind": "relative",
         "line": 333
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeInputField.agent.json",
         "kind": "relative",
         "line": 333
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeLabel.md`",
         "target": "NativeLabel.md",
         "kind": "relative",
         "line": 334
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeLabel.agent.json",
         "kind": "relative",
         "line": 334
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeLayout.md`",
         "target": "NativeLayout.md",
         "kind": "relative",
         "line": 335
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeLayout.agent.json",
         "kind": "relative",
         "line": 335
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeLinks.md`",
         "target": "NativeLinks.md",
         "kind": "relative",
         "line": 336
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeLinks.agent.json",
         "kind": "relative",
         "line": 336
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMarkup.md`",
         "target": "NativeMarkup.md",
         "kind": "relative",
         "line": 337
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMarkup.agent.json",
         "kind": "relative",
         "line": 337
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMaterials.md`",
         "target": "NativeMaterials.md",
         "kind": "relative",
         "line": 338
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMaterials.agent.json",
         "kind": "relative",
         "line": 338
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMedia.md`",
         "target": "NativeMedia.md",
         "kind": "relative",
         "line": 339
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMedia.agent.json",
         "kind": "relative",
         "line": 339
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMenu.md`",
         "target": "NativeMenu.md",
         "kind": "relative",
         "line": 340
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMenu.agent.json",
         "kind": "relative",
         "line": 340
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMigrationRoadmap.md`",
         "target": "NativeMigrationRoadmap.md",
         "kind": "relative",
         "line": 341
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMigrationRoadmap.agent.json",
         "kind": "relative",
         "line": 341
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMobileNavigation.md`",
         "target": "NativeMobileNavigation.md",
         "kind": "relative",
         "line": 342
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMobileNavigation.agent.json",
         "kind": "relative",
         "line": 342
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeModal.md`",
         "target": "NativeModal.md",
         "kind": "relative",
         "line": 343
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeModal.agent.json",
         "kind": "relative",
         "line": 343
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeModelSources.md`",
         "target": "NativeModelSources.md",
         "kind": "relative",
         "line": 344
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeModelSources.agent.json",
         "kind": "relative",
         "line": 344
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeMotion.md`",
         "target": "NativeMotion.md",
         "kind": "relative",
         "line": 345
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeMotion.agent.json",
         "kind": "relative",
         "line": 345
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeNavigationHistory.md`",
         "target": "NativeNavigationHistory.md",
         "kind": "relative",
         "line": 346
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeNavigationHistory.agent.json",
         "kind": "relative",
         "line": 346
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOpacity.md`",
         "target": "NativeOpacity.md",
         "kind": "relative",
         "line": 347
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOpacity.agent.json",
         "kind": "relative",
         "line": 347
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedCard.md`",
         "target": "NativeOwnedCard.md",
         "kind": "relative",
         "line": 348
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedCard.agent.json",
         "kind": "relative",
         "line": 348
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedHierarchyItem.md`",
         "target": "NativeOwnedHierarchyItem.md",
         "kind": "relative",
         "line": 349
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedHierarchyItem.agent.json",
         "kind": "relative",
         "line": 349
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedHierarchyList.md`",
         "target": "NativeOwnedHierarchyList.md",
         "kind": "relative",
         "line": 350
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedHierarchyList.agent.json",
         "kind": "relative",
         "line": 350
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedHierarchyToolbar.md`",
         "target": "NativeOwnedHierarchyToolbar.md",
         "kind": "relative",
         "line": 351
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedHierarchyToolbar.agent.json",
         "kind": "relative",
         "line": 351
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedListFooter.md`",
         "target": "NativeOwnedListFooter.md",
         "kind": "relative",
         "line": 352
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedListFooter.agent.json",
         "kind": "relative",
         "line": 352
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedListItem.md`",
         "target": "NativeOwnedListItem.md",
         "kind": "relative",
         "line": 353
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedListItem.agent.json",
         "kind": "relative",
         "line": 353
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedListItemSelector.md`",
         "target": "NativeOwnedListItemSelector.md",
         "kind": "relative",
         "line": 354
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedListItemSelector.agent.json",
         "kind": "relative",
         "line": 354
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedListPanel.md`",
         "target": "NativeOwnedListPanel.md",
         "kind": "relative",
         "line": 355
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedListPanel.agent.json",
         "kind": "relative",
         "line": 355
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedListToolbar.md`",
         "target": "NativeOwnedListToolbar.md",
         "kind": "relative",
         "line": 356
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedListToolbar.agent.json",
         "kind": "relative",
         "line": 356
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedListView.md`",
         "target": "NativeOwnedListView.md",
         "kind": "relative",
         "line": 357
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedListView.agent.json",
         "kind": "relative",
         "line": 357
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedTable.md`",
         "target": "NativeOwnedTable.md",
         "kind": "relative",
         "line": 358
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedTable.agent.json",
         "kind": "relative",
         "line": 358
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedTableCellItem.md`",
         "target": "NativeOwnedTableCellItem.md",
         "kind": "relative",
         "line": 359
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedTableCellItem.agent.json",
         "kind": "relative",
         "line": 359
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedTableHeader.md`",
         "target": "NativeOwnedTableHeader.md",
         "kind": "relative",
         "line": 360
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedTableHeader.agent.json",
         "kind": "relative",
         "line": 360
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedTableRow.md`",
         "target": "NativeOwnedTableRow.md",
         "kind": "relative",
         "line": 361
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedTableRow.agent.json",
         "kind": "relative",
         "line": 361
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeOwnedToolbarButton.md`",
         "target": "NativeOwnedToolbarButton.md",
         "kind": "relative",
         "line": 362
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeOwnedToolbarButton.agent.json",
         "kind": "relative",
         "line": 362
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativePageRouter.md`",
         "target": "NativePageRouter.md",
         "kind": "relative",
         "line": 363
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativePageRouter.agent.json",
         "kind": "relative",
         "line": 363
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativePlatform.md`",
         "target": "NativePlatform.md",
         "kind": "relative",
         "line": 364
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativePlatform.agent.json",
         "kind": "relative",
         "line": 364
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativePopover.md`",
         "target": "NativePopover.md",
         "kind": "relative",
         "line": 365
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativePopover.agent.json",
         "kind": "relative",
         "line": 365
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativePopupOpen.md`",
         "target": "NativePopupOpen.md",
         "kind": "relative",
         "line": 366
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativePopupOpen.agent.json",
         "kind": "relative",
         "line": 366
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeProgress.md`",
         "target": "NativeProgress.md",
         "kind": "relative",
         "line": 367
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeProgress.agent.json",
         "kind": "relative",
         "line": 367
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeRadioButton.md`",
         "target": "NativeRadioButton.md",
         "kind": "relative",
         "line": 368
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeRadioButton.agent.json",
         "kind": "relative",
         "line": 368
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeReadiness.md`",
         "target": "NativeReadiness.md",
         "kind": "relative",
         "line": 369
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeReadiness.agent.json",
         "kind": "relative",
         "line": 369
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeReadinessVerification.md`",
         "target": "NativeReadinessVerification.md",
         "kind": "relative",
         "line": 370
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeReadinessVerification.agent.json",
         "kind": "relative",
         "line": 370
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeRendering.md`",
         "target": "NativeRendering.md",
         "kind": "relative",
         "line": 371
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeRendering.agent.json",
         "kind": "relative",
         "line": 371
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeRouteModels.md`",
         "target": "NativeRouteModels.md",
         "kind": "relative",
         "line": 372
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeRouteModels.agent.json",
         "kind": "relative",
         "line": 372
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeRoutes.md`",
         "target": "NativeRoutes.md",
         "kind": "relative",
         "line": 373
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeRoutes.agent.json",
         "kind": "relative",
         "line": 373
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeScrollView.md`",
         "target": "NativeScrollView.md",
         "kind": "relative",
         "line": 374
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeScrollView.agent.json",
         "kind": "relative",
         "line": 374
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeSearchField.md`",
         "target": "NativeSearchField.md",
         "kind": "relative",
         "line": 375
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeSearchField.agent.json",
         "kind": "relative",
         "line": 375
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeSegmentedControl.md`",
         "target": "NativeSegmentedControl.md",
         "kind": "relative",
         "line": 376
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeSegmentedControl.agent.json",
         "kind": "relative",
         "line": 376
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeSheet.md`",
         "target": "NativeSheet.md",
         "kind": "relative",
         "line": 377
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeSheet.agent.json",
         "kind": "relative",
         "line": 377
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeSlider.md`",
         "target": "NativeSlider.md",
         "kind": "relative",
         "line": 378
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeSlider.agent.json",
         "kind": "relative",
         "line": 378
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeStepper.md`",
         "target": "NativeStepper.md",
         "kind": "relative",
         "line": 379
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeStepper.agent.json",
         "kind": "relative",
         "line": 379
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeTableCardComposition.md`",
         "target": "NativeTableCardComposition.md",
         "kind": "relative",
         "line": 380
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeTableCardComposition.agent.json",
         "kind": "relative",
         "line": 380
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeTabs.md`",
         "target": "NativeTabs.md",
         "kind": "relative",
         "line": 381
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeTabs.agent.json",
         "kind": "relative",
         "line": 381
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeTextEditor.md`",
         "target": "NativeTextEditor.md",
         "kind": "relative",
         "line": 382
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeTextEditor.agent.json",
         "kind": "relative",
         "line": 382
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeToggleSwitch.md`",
         "target": "NativeToggleSwitch.md",
         "kind": "relative",
         "line": 383
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeToggleSwitch.agent.json",
         "kind": "relative",
         "line": 383
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeTooltip.md`",
         "target": "NativeTooltip.md",
         "kind": "relative",
         "line": 384
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeTooltip.agent.json",
         "kind": "relative",
         "line": 384
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeTooltipModel.md`",
         "target": "NativeTooltipModel.md",
         "kind": "relative",
         "line": 385
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeTooltipModel.agent.json",
         "kind": "relative",
         "line": 385
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeViews.md`",
         "target": "NativeViews.md",
         "kind": "relative",
         "line": 386
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeViews.agent.json",
         "kind": "relative",
         "line": 386
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeWidgetRuntime.md`",
         "target": "NativeWidgetRuntime.md",
         "kind": "relative",
         "line": 387
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeWidgetRuntime.agent.json",
         "kind": "relative",
         "line": 387
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/NativeWindow.md`",
         "target": "NativeWindow.md",
         "kind": "relative",
         "line": 388
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "NativeWindow.agent.json",
         "kind": "relative",
         "line": 388
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ObjectInputs.md`",
         "target": "ObjectInputs.md",
         "kind": "relative",
         "line": 389
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ObjectInputs.agent.json",
         "kind": "relative",
         "line": 389
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ObjectMethodReferences.md`",
         "target": "ObjectMethodReferences.md",
         "kind": "relative",
         "line": 390
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ObjectMethodReferences.agent.json",
         "kind": "relative",
         "line": 390
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/OwnedHierarchyModel.md`",
         "target": "OwnedHierarchyModel.md",
         "kind": "relative",
         "line": 391
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "OwnedHierarchyModel.agent.json",
         "kind": "relative",
         "line": 391
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/OwnedListModel.md`",
         "target": "OwnedListModel.md",
         "kind": "relative",
         "line": 392
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "OwnedListModel.agent.json",
         "kind": "relative",
         "line": 392
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/OwnedTableModel.md`",
         "target": "OwnedTableModel.md",
         "kind": "relative",
         "line": 393
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "OwnedTableModel.agent.json",
         "kind": "relative",
         "line": 393
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ProductComponentCoverage.md`",
         "target": "ProductComponentCoverage.md",
         "kind": "relative",
         "line": 394
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ProductComponentCoverage.agent.json",
         "kind": "relative",
         "line": 394
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/PythonAPI.md`",
         "target": "PythonAPI.md",
         "kind": "relative",
         "line": 395
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "PythonAPI.agent.json",
         "kind": "relative",
         "line": 395
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/QueryConnections.md`",
         "target": "QueryConnections.md",
         "kind": "relative",
         "line": 396
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "QueryConnections.agent.json",
         "kind": "relative",
         "line": 396
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ReactiveState.md`",
         "target": "ReactiveState.md",
         "kind": "relative",
         "line": 397
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ReactiveState.agent.json",
         "kind": "relative",
         "line": 397
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ReadonlyMembers.md`",
         "target": "ReadonlyMembers.md",
         "kind": "relative",
         "line": 398
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ReadonlyMembers.agent.json",
         "kind": "relative",
         "line": 398
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Repetition.md`",
         "target": "Repetition.md",
         "kind": "relative",
         "line": 399
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Repetition.agent.json",
         "kind": "relative",
         "line": 399
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ReservedWords.md`",
         "target": "ReservedWords.md",
         "kind": "relative",
         "line": 400
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ReservedWords.agent.json",
         "kind": "relative",
         "line": 400
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ReturnedCallbacks.md`",
         "target": "ReturnedCallbacks.md",
         "kind": "relative",
         "line": 401
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ReturnedCallbacks.agent.json",
         "kind": "relative",
         "line": 401
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/RuntimeContracts.md`",
         "target": "RuntimeContracts.md",
         "kind": "relative",
         "line": 402
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "RuntimeContracts.agent.json",
         "kind": "relative",
         "line": 402
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ScalarInputs.md`",
         "target": "ScalarInputs.md",
         "kind": "relative",
         "line": 403
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ScalarInputs.agent.json",
         "kind": "relative",
         "line": 403
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Scenes.md`",
         "target": "Scenes.md",
         "kind": "relative",
         "line": 404
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Scenes.agent.json",
         "kind": "relative",
         "line": 404
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/SocietyDreamscapesMigrationPlan.md`",
         "target": "SocietyDreamscapesMigrationPlan.md",
         "kind": "relative",
         "line": 405
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "SocietyDreamscapesMigrationPlan.agent.json",
         "kind": "relative",
         "line": 405
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/SourceLayout.md`",
         "target": "SourceLayout.md",
         "kind": "relative",
         "line": 406
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "SourceLayout.agent.json",
         "kind": "relative",
         "line": 406
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/StyleProfiles.md`",
         "target": "StyleProfiles.md",
         "kind": "relative",
         "line": 407
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "StyleProfiles.agent.json",
         "kind": "relative",
         "line": 407
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/StyleTokenMembers.md`",
         "target": "StyleTokenMembers.md",
         "kind": "relative",
         "line": 408
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "StyleTokenMembers.agent.json",
         "kind": "relative",
         "line": 408
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/StyleTokens.md`",
         "target": "StyleTokens.md",
         "kind": "relative",
         "line": 409
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "StyleTokens.agent.json",
         "kind": "relative",
         "line": 409
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/StyleTypes.md`",
         "target": "StyleTypes.md",
         "kind": "relative",
         "line": 410
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "StyleTypes.agent.json",
         "kind": "relative",
         "line": 410
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TableClipboard.md`",
         "target": "TableClipboard.md",
         "kind": "relative",
         "line": 411
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TableClipboard.agent.json",
         "kind": "relative",
         "line": 411
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TableEditing.md`",
         "target": "TableEditing.md",
         "kind": "relative",
         "line": 412
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TableEditing.agent.json",
         "kind": "relative",
         "line": 412
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TableMerge.md`",
         "target": "TableMerge.md",
         "kind": "relative",
         "line": 413
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TableMerge.agent.json",
         "kind": "relative",
         "line": 413
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TableSorting.md`",
         "target": "TableSorting.md",
         "kind": "relative",
         "line": 414
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TableSorting.agent.json",
         "kind": "relative",
         "line": 414
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TableStructure.md`",
         "target": "TableStructure.md",
         "kind": "relative",
         "line": 415
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TableStructure.agent.json",
         "kind": "relative",
         "line": 415
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TextInput.md`",
         "target": "TextInput.md",
         "kind": "relative",
         "line": 416
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TextInput.agent.json",
         "kind": "relative",
         "line": 416
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TextWrapFallback.md`",
         "target": "TextWrapFallback.md",
         "kind": "relative",
         "line": 417
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TextWrapFallback.agent.json",
         "kind": "relative",
         "line": 417
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Toolbars.md`",
         "target": "Toolbars.md",
         "kind": "relative",
         "line": 418
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Toolbars.agent.json",
         "kind": "relative",
         "line": 418
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/TypeImports.md`",
         "target": "TypeImports.md",
         "kind": "relative",
         "line": 419
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "TypeImports.agent.json",
         "kind": "relative",
         "line": 419
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/VariableDeclarations.md`",
         "target": "VariableDeclarations.md",
         "kind": "relative",
         "line": 420
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "VariableDeclarations.agent.json",
         "kind": "relative",
         "line": 420
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/Verification.md`",
         "target": "Verification.md",
         "kind": "relative",
         "line": 421
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Verification.agent.json",
         "kind": "relative",
         "line": 421
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ViewModelQueries.md`",
         "target": "ViewModelQueries.md",
         "kind": "relative",
         "line": 422
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ViewModelQueries.agent.json",
         "kind": "relative",
         "line": 422
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ViewOnlyArchitecture.md`",
         "target": "ViewOnlyArchitecture.md",
         "kind": "relative",
         "line": 423
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ViewOnlyArchitecture.agent.json",
         "kind": "relative",
         "line": 423
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ViewSequences.md`",
         "target": "ViewSequences.md",
         "kind": "relative",
         "line": 424
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ViewSequences.agent.json",
         "kind": "relative",
         "line": 424
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ViewSessions.md`",
         "target": "ViewSessions.md",
         "kind": "relative",
         "line": 425
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ViewSessions.agent.json",
         "kind": "relative",
         "line": 425
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/ViewValues.md`",
         "target": "ViewValues.md",
         "kind": "relative",
         "line": 426
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "ViewValues.agent.json",
         "kind": "relative",
         "line": 426
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/WindowsValidation.md`",
         "target": "WindowsValidation.md",
         "kind": "relative",
         "line": 427
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "WindowsValidation.agent.json",
         "kind": "relative",
         "line": 427
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`docs/documentation-structure.md`",
         "target": "documentation-structure.md",
         "kind": "relative",
         "line": 428
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "documentation-structure.agent.json",
         "kind": "relative",
         "line": 428
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`example/README.md`",
         "target": "../example/README.md",
         "kind": "relative",
         "line": 429
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Mirrors/Example/README.agent.json",
         "kind": "relative",
         "line": 429
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`example/HelloAndroid/README.md`",
         "target": "../example/HelloAndroid/README.md",
         "kind": "relative",
         "line": 430
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Mirrors/Example/HelloAndroid/README.agent.json",
         "kind": "relative",
         "line": 430
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`example/HelloHosts/README.md`",
         "target": "../example/HelloHosts/README.md",
         "kind": "relative",
         "line": 431
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Mirrors/Example/HelloHosts/README.agent.json",
         "kind": "relative",
         "line": 431
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "`example/StyleTokens/README.md`",
         "target": "../example/StyleTokens/README.md",
         "kind": "relative",
         "line": 432
       },
       {
-        "block_id": "b000050",
+        "block_id": "b000051",
         "label": "JSON",
         "target": "Mirrors/Example/StyleTokens/README.agent.json",
         "kind": "relative",
         "line": 432
       },
       {
-        "block_id": "b000055",
-        "line": 437,
+        "block_id": "b000056",
         "label": "App-provided menu and editor panel contracts",
         "target": "EditorPanels.md",
-        "kind": "relative"
+        "kind": "relative",
+        "line": 437
       }
     ],
     "tables": []
   },
   "provenance": {
-    "generator": "manual-projection",
+    "generator": "codex-document-projection",
     "version": "1.0.0",
     "profile": "lossless-blocks-v1",
     "derived": true

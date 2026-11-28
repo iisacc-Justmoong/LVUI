@@ -75,8 +75,8 @@ This directory separates the current implementation contract from the selected
 LVUI language and runtime design, including the native widget and acceleration
 contract and the `View` type/child-argument rules clarified on 2026-10-22.
 
-LVUI is an AOT-compiled native language. Its current LVRS path targets iiGUI's
-own C++ widgets and the selected Metal, DirectX/Direct3D or Vulkan graphics path.
+LVUI is an AOT-compiled native language. Its current generation path targets iiGUI's
+own C++ widgets and the selected Metal, DirectX/Direct3D or Vulkan graphics path. The legacy `FRAMEWORK LVRS` generation path has been removed; [LVRSNative.md](LVRSNative.md) is a historical record of that path.
 Platform APIs provide windows, input and presentation. Core owns the application
 lifetime; native widgets and GPU resources are instantiated by compiled C++.
 Its execution model does not include a source interpreter or language VM.
